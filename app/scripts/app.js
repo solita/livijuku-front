@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name jsunittestingApp
+ * @name livijukufrontApp
  * @description
- * # jsunittestingApp
+ * # livijukufrontApp
  *
  * Main module of the application.
  */
 angular
-  .module('jsunittestingApp', [
+  .module('livijukufrontApp', [
     'controllers.MainCtrl',
     'ngRoute'
   ])

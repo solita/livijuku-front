@@ -1,0 +1,16 @@
+input.form-control {
+  @include border-radius(5px);
+}
+.form-control::-webkit-input-placeholder {
+  @include placeholder($gray-lighter);
+}
+button.btn-default {
+  background: $navbar-default-bg;
+  @include border-radius(5px);
+  color: $navbar-default-link-color;
+
+  &:hover {
+    background: $navbar-default-link-hover-bg;
+    color: $navbar-default-link-color;
+  }
+}

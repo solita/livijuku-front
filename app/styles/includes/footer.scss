@@ -1,0 +1,14 @@
+#footer {
+  background: #204285;
+  color: #fff;
+  padding-top: 15px;
+
+  h3 {
+    font-size: $font-size-base + 2;
+    padding: 0px 0px 6px 0px;
+    margin: 0;
+  }
+  p {
+    @include ws-vert(1px);
+  }
+}

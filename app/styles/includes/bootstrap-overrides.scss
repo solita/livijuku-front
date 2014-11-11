@@ -1,0 +1,6 @@
+.navbar-default,
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .active > a
+{
+  background-image: none; // Navigaatiolle tulee jostain syystä pakotetusti gradientti, poistamme sen
+}

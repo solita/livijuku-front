@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name jsunittestingApp.things
+ * @name livijukufrontApp.things
  * @description
  * # things
- * Factory in the jsunittestingApp.
+ * Factory in the livijukufrontApp.
  */
 angular.module('services.things', [])
   .factory('things', function () {

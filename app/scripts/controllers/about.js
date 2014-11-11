@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name jsunittestingApp.controller:AboutCtrl
+ * @name livijukufrontApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the jsunittestingApp
+ * Controller of the livijukufrontApp
  */
 angular.module('jsunittestingApp')
   .controller('AboutCtrl', function ($scope) {
