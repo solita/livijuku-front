@@ -2,7 +2,7 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>JUKU | Liikennevirasto</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -12,6 +12,7 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
     <!-- endbuild -->
   </head>
   <body ng-app="livijukufrontApp">
@@ -22,18 +23,107 @@
     <!-- Add your site or application content here -->
     <div class="container">
       <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
+        <ul class="pull-right list-inline" id="login-logout">
+          <li id="logged-in-user">
+            <div class="dropdown">
+              <button class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-user"></span> Taija Tarkastaja
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Omat tiedot</a></li>
+              </ul>
+            </div>
+          </li>
         </ul>
-        <h3 class="text-muted">jsunittesting</h3>
+        <h1>JUKU</h1>
       </div>
 
-      <div ng-view=""></div>
+    <!--  <div ng-view=""></div> -->
+      <div id="main-content" class="shadow">
+        <div class="row" id="frontpage">
+          <div class="col-md-16">
+            <div class="well-sm" id="search">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Etsi taitorakenteita" />
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+              </div>
+            </div>
 
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+            <h3>Viimeksi katsotut</h3>
+
+            <div class="row" id="latest">
+              <div class="col-md-6">
+                <figure>
+                  <a href="#" class="thumbnail missing">
+                    <span class="glyphicon glyphicon-picture"></span>
+                  </a>
+                </figure>
+                <h4>H167 Urjalankylän silta</h4>
+                <ul class="details list-inline">
+                  <li data-meta-class="maakunta">Pirkanmaa</li>
+                  <li data-meta-class="kunta">Urjala</li>
+                  <li data-meta-class="tyyppi">Maantiesilta</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <figure>
+                  <a href="#" class="thumbnail missing">
+                    <span class="glyphicon glyphicon-picture"></span>
+                  </a>
+                </figure>
+                <h4>U3 Bembölen silta</h4>
+                <ul class="details list-inline">
+                  <li data-meta-class="maakunta">Uusimaa</li>
+                  <li data-meta-class="kunta">Espoo</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3 style="margin-top: 100px;">Testejä</h3>
+            <div id="example"></div>
+            <div id="map" style="width: 600px; height: 400px"></div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="footer" xclass="container-fluid">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="row">
+                <div class="col-md-6">
+                  <address>
+                    <strong>Taitorakennerekisteri</strong>
+                    <p>taitorakennerekisteri@liikennevirasto.fi</p>
+                    <p>+358 123 123 123</p>
+                    <p>PL 123</p>
+                    <p>001230 Helsinki</p>
+                  </address>
+                </div>
+                <div class="col-md-6">
+                  <address>
+                    <p>Liikennevirasto</p>
+                    <p>+358 123 123 123</p>
+                    <p>PL 123</p>
+                    <p>001230 Helsinki</p>
+                    <p>Käyntiosoite: xxxxx xx, xxxx</p>
+                  </address>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <p>TODO: Lähetä palautetta palvelusta</p>
+              <p>TODO: Palautelomake</p>
+              <p>TODO: Muutokset käyttäjätietoihin, uudet tunnukset</p>
+              <p>TODO: Yhteydenottolomake</p>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
 
