@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name livijukufrontApp
+ * @name jukufrontApp
  * @description
- * # livijukufrontApp
+ * # jukufrontApp
  *
  * Main module of the application.
  */
 angular
-  .module('livijukufrontApp', [
+  .module('jukufrontApp', [
     'controllers.MainCtrl',
     'ngRoute'
   ])
@@ -18,6 +18,10 @@ angular
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
+      })
+      .when('/avustushakemus', {
+        templateUrl: 'views/avustushakemus.html',
+        controller: 'AvustushakemusCtrl'
       })
       .when('/about', {
         templateUrl: 'views/about.html',

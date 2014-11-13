@@ -58,7 +58,6 @@ module.exports = function (grunt) {
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
-          '.tmp/styles/fonts/bootstrap/{,*/}*.{eot,svg,ttf,woff}',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
@@ -156,7 +155,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '.tmp/styles/',
           src: '{,*/}*.css',
-          dest: '<%= yeoman.dist %>/styles/'
+          dest: '.tmp/styles/'
         }]
       }
     },
@@ -196,7 +195,7 @@ module.exports = function (grunt) {
           src: ['*.scss'],
           dest: '.tmp/styles',
           ext: '.css'
-        } ]
+        }]
       }
     },
 
@@ -349,21 +348,16 @@ module.exports = function (grunt) {
           src: ['generated/*']
         }, {
           expand: true,
-          cwd: 'bower_components/bootstrap-sass-official/assets/fonts',
-          src: '**',
-          dest: '<%= yeoman.dist %>/styles/fonts'
-        }, {
-          expand: true,
-          cwd: 'bower_components/bootstrap-sass-official/assets/fonts',
-          src: '**',
-          dest: '.tmp/styles/fonts'
+          cwd: '.',
+          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+          dest: '<%= yeoman.dist %>'
         }]
       },
       styles: {
-          expand: true,
-          dest: '<%= yeoman.dist %>/styles',
-          cwd: '.tmp/styles/',
-          src: '*/*'
+        expand: true,
+        cwd: '<%= yeoman.app %>/styles',
+        dest: '.tmp/styles/',
+        src: '{,*/}*.css'
       }
     },
 
@@ -371,8 +365,7 @@ module.exports = function (grunt) {
     concurrent: {
       server: [
         'sass:server',
-        'copy:styles',
-        'copy:dist'
+        'copy:styles'
       ],
       test: [
         'copy:styles'
@@ -380,7 +373,6 @@ module.exports = function (grunt) {
       dist: [
         'sass',
         'copy:styles',
-        'copy:dist',
         'imagemin',
         'svgmin'
       ]

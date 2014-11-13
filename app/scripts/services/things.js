@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name livijukufrontApp.things
+ * @name jukufrontApp.things
  * @description
  * # things
- * Factory in the livijukufrontApp.
+ * Factory in the jukufrontApp.
  */
 angular.module('services.things', [])
   .factory('things', function () {

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name livijukufrontApp.controller:AboutCtrl
+ * @name jukufrontApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the livijukufrontApp
+ * Controller of the jukufrontApp
  */
-angular.module('jsunittestingApp')
+angular.module('jukufrontApp')
   .controller('AboutCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
