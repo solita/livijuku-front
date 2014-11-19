@@ -9,7 +9,7 @@
  */
 angular.module('jukufrontApp')
   .controller('AboutCtrl', function ($scope) {
-    $scope.awesomeThings = [
+    $scope.someThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'

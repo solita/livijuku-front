@@ -9,5 +9,9 @@
   {
     "name": "Karma",
     "description": "Spectacular Test Runner for JavaScript."
+  },
+  {
+    "name": "JEG",
+    "description": "Testiä."
   }
 ]

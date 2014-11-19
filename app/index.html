@@ -12,6 +12,7 @@
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"/>
   <!-- endbuild -->
 </head>
 <body ng-app="jukufrontApp">
@@ -33,8 +34,10 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a ng-href="#/avustushakemus">Hakemukset</a></li>
-        <li><a ng-href="#/about">About</a></li>
+        <li class="active"><a ng-href="#/l/hakemukset">Hakemukset</a></li>
+        <li><a ng-href="#/l/tietoajukusta">Tietoa JUKUsta</a></li>
+        <li><a ng-href="#/l/hakemus">Hakemus</a></li>
+        <li><a ng-href="#/main">Main</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tiina Tarkastaja <b class="caret"></b></a>
           <ul class="dropdown-menu">
@@ -47,9 +50,38 @@
     <div ng-view=""></div>
   </div>
 
-  <div id="footer">
+  <div id="footer" xclass="container-fluid">
     <div class="container">
-      <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-6">
+              <address>
+                <strong>Taitorakennerekisteri</strong>
+                <p>taitorakennerekisteri@liikennevirasto.fi</p>
+                <p>+358 123 123 123</p>
+                <p>PL 123</p>
+                <p>001230 Helsinki</p>
+              </address>
+            </div>
+            <div class="col-md-6">
+              <address>
+                <p>Liikennevirasto</p>
+                <p>+358 123 123 123</p>
+                <p>PL 123</p>
+                <p>001230 Helsinki</p>
+                <p>Käyntiosoite: xxxxx xx, xxxx</p>
+              </address>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <p>TODO: Lähetä palautetta palvelusta</p>
+          <p>TODO: Palautelomake</p>
+          <p>TODO: Muutokset käyttäjätietoihin, uudet tunnukset</p>
+          <p>TODO: Yhteydenottolomake</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -106,6 +138,9 @@
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/about.js"></script>
+<script src="scripts/controllers/lahHakemus.js"></script>
+<script src="scripts/controllers/lahHakemukset.js"></script>
+<script src="scripts/services/dataApi.js"></script>
 <script src="scripts/services/thingsAsPromised.js"></script>
 <!-- endbuild -->
 </body>

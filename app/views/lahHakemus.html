@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-16">
+      <a href="#"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
+      <a href="#/l/hakemus" class="btn btn-primary">Avustushakemus 2016</a>
+      <a href="#" class="btn btn-default disabled">1. maksatushakemus</a>
+      <a href="#" class="btn btn-default disabled">2. maksatushakemus</a>
+    </div>
+  </div>
+  <h3><b>JOUKKOLIIKENTEEEN VALTIONAVUSTUSHAKEMUS 2016</b></h3>
+
+  <form name="hakemusForm">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Kunnan nimi:</label>
+          <input type="text" ng-model="hakemus.kuntaNimi" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Postiosoite:</label>
+          <input type="text" ng-model="hakemus.kuntaPostiosoite" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Postinumero:</label>
+          <input type="text" ng-model="hakemus.kuntaPostinumero" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Postitoimipaikka:</label>
+          <input type="text" ng-model="hakemus.kuntaPostitoimipaikka" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Pankkitilin numero:</label>
+          <input type="text" ng-model="hakemus.kuntaPankkitili" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Yhteyshenkilö:</label>
+          <input type="text" ng-model="hakemus.kuntaYhteysHlo" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Yhteyshenkilön virka-asema:</label>
+          <input type="text" ng-model="hakemus.kuntaYhteysHloVirkaAsema" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Yhteyshenkilön puhelin:</label>
+          <input type="text" ng-model="hakemus.kuntaYhteysHloPuh" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Yhteyshenkilön sähköposti:</label>
+          <input type="text" ng-model="hakemus.kuntaYhteysHloSahkoposti" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-6">
+      <button data-ng-click="saveHakemus(hakemus)" class="btn btn-default">Tallenna</button>
+      <button data-ng-click="addHakemus(hakemus)" class="btn btn-default">Lähetä hakemus</button>
+    </div>
+  </form>
+  <div>
+    <p>{{hakemukset | json}}</p>
+  </div>
+</div>

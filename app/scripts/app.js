@@ -11,23 +11,40 @@
 angular
   .module('jukufrontApp', [
     'controllers.MainCtrl',
+    'services.dataApi',
     'ngRoute'
   ])
-  .config(function ($routeProvider) {
+  .config(['$routeProvider',function ($routeProvider) {
     $routeProvider
       .when('/', {
+        templateUrl: 'views/lahHakemukset.html',
+        controller: 'LahHakemuksetCtrl'
+      })
+      .when('/l/hakemus', {
+        templateUrl: 'views/lahHakemus.html',
+        controller: 'LahHakemusCtrl'
+      })
+      .when('/l/hakemukset', {
+        templateUrl: 'views/lahHakemukset.html',
+        controller: 'LahHakemuksetCtrl'
+      })
+      .when('/l/tietoajukusta', {
+        templateUrl: 'views/lahTietoajukusta.html',
+        controller: 'AboutCtrl'
+      })
+      .when('/k/hakemus', {
+        templateUrl: 'views/kasHakemus.html',
+        controller: 'KasHakemusCtrl'
+      })
+      .when('/k/hakemukset', {
+        templateUrl: 'views/kasHakemukset.html',
+        controller: 'KasHakemuksetCtrl'
+      })
+      .when('/main', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
-      })
-      .when('/avustushakemus', {
-        templateUrl: 'views/avustushakemus.html',
-        controller: 'AvustushakemusCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
       })
       .otherwise({
         redirectTo: '/'
       });
-  });
+  }]);
