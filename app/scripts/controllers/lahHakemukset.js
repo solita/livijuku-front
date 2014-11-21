@@ -10,12 +10,12 @@
 
 angular.module('jukufrontApp')
   .controller('LahHakemuksetCtrl', function ($scope, HakemuksetOsasto) {
-    HakemuksetOsasto.getHakemuksetOsastoAktiiviset()
-    .then(function(data) {
-      $scope.hakemOsastoAktiiviset = data;
-    });
-    HakemuksetOsasto.getHakemuksetOsastoVanhat()
-      .then(function(data) {
+    HakemuksetOsasto.getHakemuksetOsastoAktiiviset('Pori')
+      .then(function (data) {
+        $scope.hakemOsastoAktiiviset = data;
+      });
+    HakemuksetOsasto.getHakemuksetOsastoVanhat('Pori')
+      .then(function (data) {
         $scope.hakemOsastoVanhat = data;
       });
-});
+  });

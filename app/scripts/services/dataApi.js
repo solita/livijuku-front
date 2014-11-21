@@ -9,14 +9,14 @@
  */
 angular.module('services.dataApi', [])
   .factory('HakemuksetOsasto', function ($http) {
-    var getHakemuksetOsastoAktiiviset = function () {
-      return $http({method: 'GET', url: 'resources/hakemuksetOsastoAktiiviset.json'})
+    var getHakemuksetOsastoAktiiviset = function (osasto) {
+      return $http({method: 'GET', url: '/api/'+osasto+'/aktiivisethakemukset/'})
         .then(function (response) {
           return response.data;
         });
     };
-    var getHakemuksetOsastoVanhat = function () {
-      return $http({method: 'GET', url: 'resources/hakemuksetOsastoVanhat.json'})
+    var getHakemuksetOsastoVanhat = function (osasto) {
+      return $http({method: 'GET', url: '/api/'+osasto+'/vanhathakemukset/'})
         .then(function (response) {
           return response.data;
         });
@@ -24,7 +24,11 @@ angular.module('services.dataApi', [])
 
     // Public API here
     return {
-      getHakemuksetOsastoAktiiviset: getHakemuksetOsastoAktiiviset,
-      getHakemuksetOsastoVanhat: getHakemuksetOsastoVanhat
+      getHakemuksetOsastoAktiiviset: function (osasto){
+        return getHakemuksetOsastoAktiiviset(osasto);
+      },
+      getHakemuksetOsastoVanhat: function (osasto){
+        return getHakemuksetOsastoVanhat(osasto);
+      }
     };
   });

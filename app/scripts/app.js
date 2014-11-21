@@ -12,9 +12,10 @@ angular
   .module('jukufrontApp', [
     'controllers.MainCtrl',
     'services.dataApi',
-    'ngRoute'
+    'ngRoute',
+    'ngMockE2E'
   ])
-  .config(['$routeProvider',function ($routeProvider) {
+  .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/lahHakemukset.html',
