@@ -5,3 +5,5 @@ bower_components
 dist
 node_modules
 .idea
+app/_pgbackup
+app/pinegrow.json
