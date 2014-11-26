@@ -12,6 +12,8 @@ angular
   .module('jukufrontApp', [
     'controllers.MainCtrl',
     'services.dataApi',
+    'ui.grid',
+    'ui.grid.autoResize',
     'ngRoute',
     'ngMockE2E'
   ])

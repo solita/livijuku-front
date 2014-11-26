@@ -1,5 +1,5 @@
 <h3><b>AKTIIVISET JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET</b></h3>
-<div class="row marketing" ng-repeat="hakemus in hakemOsastoAktiiviset">
+<div ng-repeat="hakemus in hakemOsastoAktiiviset">
   <div class="row">
     <div class="col-md-3">
       <h2>{{hakemus.vuosi}}</h2>
@@ -23,12 +23,12 @@
       <h5>{{hakemus.toinenmaksatusstatus}}</h5>
       <h5></h5>
       <h5>Hakuaika:</h5>
-      <h5>{{toinenmaksatushakuaika}}</h5>
+      <h5>{{hakemus.toinenmaksatushakuaika}}</h5>
     </div>
   </div>
 </div>
 <h3><b>PÄÄTTYNEET HAKEMUKSET</b></h3>
-<div class="row marketing" ng-repeat="hakemus in hakemOsastoVanhat">
+<div ng-repeat="hakemus in hakemOsastoVanhat">
   <div class="row">
     <div class="col-md-3">
       <h2>{{hakemus.vuosi}}</h2>
@@ -52,7 +52,7 @@
       <h5>{{hakemus.toinenmaksatusstatus}}</h5>
       <h5></h5>
       <h5>Hakuaika:</h5>
-      <h5>{{toinenmaksatushakuaika}}</h5>
+      <h5>{{hakemus.toinenmaksatushakuaika}}</h5>
     </div>
   </div>
 </div>

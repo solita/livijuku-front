@@ -27,23 +27,69 @@ angular.module('jukufrontApp')
     var hakemukset = [{
       vuosi: '2015',
       osasto: 'Pori',
-      aikaleima:'',
+      diaarinumero: '123/223',
+      kasittelija: 'Ei määritelty',
+      aikaleima: '2014-11-25T08:21:45.206Z',
       avustushakemusstatus: 'Keskeneräinen',
       avustushakemushakuaika: '1.9-31.12.2014',
       paikallisliikenne: true,
-      paikallisliikenneValtionavustus: '111',
-      paikallisliikenneRahoitusosuus: '222',
+      paikallisliikenneValtionavustus: '100000',
+      paikallisliikenneRahoitusosuus: '100000',
       integroitupalvelulinja: true,
-      integroitupalvelulinjaValtionavustus: '333',
-      integroitupalvelulinjaRahoitusosuus: '444',
+      integroitupalvelulinjaValtionavustus: '200000',
+      integroitupalvelulinjaRahoitusosuus: '200000',
       muupsa: true,
-      muupsaValtionavustus: '555',
-      muupsaRahoitusosuus: '666',
+      muupsaValtionavustus: '300000',
+      muupsaRahoitusosuus: '300000',
       ensimmaksatusstatus: 'Ei käynnissä',
       ensimmaksatushakuaika: '1.1-30.6.2015',
       toinenmaksatusstatus: 'Ei käynnissä',
       toinenmaksatushakuaika: '1.7-31.12.2015'
     },
+      {
+        vuosi: '2015',
+        osasto: 'Helsingin seudun liikenne',
+        diaarinumero: '121/221',
+        kasittelija: 'Jenni Eskola',
+        aikaleima: '2014-11-23T11:41:32.206Z',
+        avustushakemusstatus: 'Tarkastettu',
+        avustushakemushakuaika: '1.9-31.12.2014',
+        paikallisliikenne: true,
+        paikallisliikenneValtionavustus: '100000',
+        paikallisliikenneRahoitusosuus: '100000',
+        integroitupalvelulinja: true,
+        integroitupalvelulinjaValtionavustus: '200000',
+        integroitupalvelulinjaRahoitusosuus: '200000',
+        muupsa: true,
+        muupsaValtionavustus: '300000',
+        muupsaRahoitusosuus: '300000',
+        ensimmaksatusstatus: 'Ei käynnissä',
+        ensimmaksatushakuaika: '1.1-30.6.2015',
+        toinenmaksatusstatus: 'Ei käynnissä',
+        toinenmaksatushakuaika: '1.7-31.12.2015'
+      },
+      {
+        vuosi: '2015',
+        osasto: 'Hämeenlinna',
+        diaarinumero: '111/241',
+        kasittelija: 'Toni Bärman',
+        aikaleima: '2014-11-20T12:01:21.206Z',
+        avustushakemusstatus: 'Käsittelyssä',
+        avustushakemushakuaika: '1.9-31.12.2014',
+        paikallisliikenne: true,
+        paikallisliikenneValtionavustus: '100000',
+        paikallisliikenneRahoitusosuus: '100000',
+        integroitupalvelulinja: true,
+        integroitupalvelulinjaValtionavustus: '200000',
+        integroitupalvelulinjaRahoitusosuus: '200000',
+        muupsa: true,
+        muupsaValtionavustus: '300000',
+        muupsaRahoitusosuus: '300000',
+        ensimmaksatusstatus: 'Ei käynnissä',
+        ensimmaksatushakuaika: '1.1-30.6.2015',
+        toinenmaksatusstatus: 'Ei käynnissä',
+        toinenmaksatushakuaika: '1.7-31.12.2015'
+      },
       {
         vuosi: '2014',
         osasto: 'Pori',
@@ -71,10 +117,21 @@ angular.module('jukufrontApp')
       var tulos = _.find(hakemukset, {'osasto': osasto, 'vuosi': vuosi});
       return [200, JSON.stringify(tulos)];
     });
+    $httpBackend.whenGET(/api\/(\d+)\/avustushakemukset/).respond(function (method, url, data) {
+      var urlSplit = url.split('/');
+      var vuosi = urlSplit[2];
+      var tulos = _.filter(hakemukset, {'vuosi': vuosi});
+      return [200, JSON.stringify(tulos)];
+    });
     $httpBackend.whenGET(/api\/(\w+)\/aktiivisethakemukset/).respond(function (method, url, data) {
       var urlSplit = url.split('/');
       var osasto = urlSplit[2];
-      var tulos = _.reject(hakemukset, {'osasto': osasto, 'avustushakemusstatus': 'Päätetty'});
+      var tulos = _.union(_.filter(hakemukset, {
+        'osasto': osasto, 'avustushakemusstatus': 'Keskeneräinen'
+      }), _.filter(hakemukset, {
+        'osasto': osasto,
+        'avustushakemusstatus': 'Lähetetty'
+      }), _.filter(hakemukset, {'osasto': osasto, 'avustushakemusstatus': 'Tarkastettu'}));
       return [200, JSON.stringify(tulos)];
     });
     $httpBackend.whenGET(/api\/(\w+)\/vanhathakemukset/).respond(function (method, url, data) {
@@ -89,7 +146,7 @@ angular.module('jukufrontApp')
       var tulos = _.find(kayttajaOsasto, {'osasto': osasto});
       return [200, JSON.stringify(tulos)];
     });
-    $httpBackend.whenPOST(/api\/(\w+)\/(\d+)\/tallennaavustushakemus/).respond(function(method, url, data) {
+    $httpBackend.whenPOST(/api\/(\w+)\/(\d+)\/tallennaavustushakemus/).respond(function (method, url, data) {
       var params = angular.fromJson(data);
       var urlSplit = url.split('/');
       var osasto = urlSplit[2];
@@ -106,7 +163,7 @@ angular.module('jukufrontApp')
       hakemukset[indeksi].muupsa = params.muupsa;
       hakemukset[indeksi].muupsaValtionavustus = params.muupsaValtionavustus;
       hakemukset[indeksi].muupsaRahoitusosuus = params.muupsaRahoitusosuus;
-      if (params.avustushakemusstatus === 'Keskeneräinen'){
+      if (params.avustushakemusstatus === 'Keskeneräinen') {
         return [201, 'Save ok'];
       } else {
         return [201, 'Send ok'];

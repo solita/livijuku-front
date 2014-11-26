@@ -8,14 +8,15 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
-  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/main.css" />
   <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"/>
   <!-- endbuild -->
-  <link rel="stylesheet" href="styles/bootstrap.css">
-  <link rel="stylesheet" href="styles/navbar.css">
+  <link rel="stylesheet" href="styles/bootstrap.css" />
+  <link rel="stylesheet" href="styles/navbar.css" />
 </head>
 <body ng-app="jukufrontApp">
 <!--[if lt IE 7]>
@@ -24,77 +25,60 @@
 <![endif]-->
 <!-- Add your site or application content here -->
 <div class="container">
-  <div class="navbar navbar-default" role="navigation">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">JUKU</a>
-    </div>
-    <div class="navbar-collapse" collapse>
-      <ul class="nav navbar-nav">
-        <li class="active">
-          <a ng-href="#/l/hakemukset">Hakemukset</a>
-        </li>
-        <!--
-                <li>
-                  <a ng-href="#/l/tietoajukusta">Tietoa JUKUsta</a>
-                </li>
-                <li>
-                  <a ng-href="#/l/hakemus">Hakemus</a>
-                </li>
-                <li>
-                  <a ng-href="#/main">Main</a>
-                </li>
+  <div ng-controller="NaviCtrl">
+    <div class="navbar navbar-default" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">JUKU</a>
+      </div>
+      <div class="navbar-collapse" collapse>
+        <ul class="nav navbar-nav">
+          <li ng-class="{active:isActive('/l/hakemukset')}">
+            <a ng-href="#/l/hakemukset">Hakemukset</a>
+          </li>
+          <li ng-class="{active:isActive('/k/hakemukset')}">
+            <a ng-href="#/k/hakemukset">Käsittelijän hakemukset</a>
+          </li>
+          <!--
+                  <li>
+                    <a ng-href="#/l/tietoajukusta">Tietoa JUKUsta</a>
+                  </li>
+                  <li>
+                    <a ng-href="#/l/hakemus">Hakemus</a>
+                  </li>
+                  <li>
+                    <a ng-href="#/main">Main</a>
+                  </li>
 
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tiina Tarkastaja <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a href="#">Omat Tiedot</a>
-                    </li>
-                  </ul>
-                </li>
-        -->
-      </ul>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tiina Tarkastaja <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="#">Omat Tiedot</a>
+                      </li>
+                    </ul>
+                  </li>
+          -->
+        </ul>
+      </div>
     </div>
     <div ng-view=""></div>
-
-    <div id="footer">
-      <div class="col-md-4">
-              <address><strong>Taitorakennerekisteri</strong>
-
-                <p>taitorakennerekisteri@liikennevirasto.fi</p>
-
-                <p>+358 123 123 123</p>
-
-                <p>PL 123</p>
-
-                <p>001230 Helsinki</p></address>
+    <div class="footer">
+      <div class="col-md-2">
+        <h2>JUKU</h2>
+      </div>
+      <div class="col-md-2">
+        <h5>Yhteyshenkilöt</h5>
       </div>
       <div class="col-md-4">
-              <address><p>Liikennevirasto</p>
-
-                <p>+358 123 123 123</p>
-
-                <p>PL 123</p>
-
-                <p>001230 Helsinki</p>
-
-                <p>Käyntiosoite: xxxxx xx, xxxx</p></address>
+        <h5>Anna palautetta</h5>
       </div>
       <div class="col-md-4">
-          <p>TODO: Lähetä palautetta palvelusta</p>
-
-          <p>TODO: Palautelomake</p>
-
-          <p>TODO: Muutokset käyttäjätietoihin, uudet tunnukset</p>
-
-          <p>TODO: Yhteydenottolomake</p>
-
-          <p>TODO: avataan Pinegrowssa tyyleineen</p>
+        <h5>Liikennevirasto</h5>
       </div>
     </div>
   </div>
@@ -140,6 +124,7 @@
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/lodash/dist/lodash.compat.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-ui-grid/ui-grid.js"></script>
 <script src="bower_components/angular-mocks/angular-mocks.js"></script>
 <script src="bower_components/angular-scenario/angular-scenario.js"></script>
 <!-- endbower -->
@@ -149,7 +134,10 @@
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/about.js"></script>
 <script src="scripts/controllers/lahHakemus.js"></script>
+<script src="scripts/controllers/navi.js"></script>
 <script src="scripts/controllers/lahHakemukset.js"></script>
+<script src="scripts/controllers/kasHakemukset.js"></script>
+<script src="scripts/controllers/kasHakemus.js"></script>
 <script src="scripts/services/dataApi.js"></script>
 <script src="scripts/services/thingsAsPromised.js"></script>
 <script src="scripts/services/mockbackendApi.js"></script>

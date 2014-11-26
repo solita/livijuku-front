@@ -9,8 +9,14 @@
  */
 angular.module('services.dataApi', [])
   .factory('HakemuksetOsasto', function ($http) {
-    var getAvustushakemus = function (osasto, vuosi) {
+    var getAvustushakemusOsastoVuosi = function (osasto, vuosi) {
       return $http({method: 'GET', url: '/api/'+osasto+'/'+vuosi+'/avustushakemus/'})
+        .then(function (response) {
+          return response.data;
+        });
+    };
+    var getAvustushakemuksetVuosi = function (vuosi) {
+      return $http({method: 'GET', url: '/api/'+vuosi+'/avustushakemukset/'})
         .then(function (response) {
           return response.data;
         });
@@ -37,7 +43,10 @@ angular.module('services.dataApi', [])
     // Public API here
     return {
       getAvustushakemus: function (osasto, vuosi){
-        return getAvustushakemus(osasto, vuosi);
+        return getAvustushakemusOsastoVuosi(osasto, vuosi);
+      },
+      getAvustushakemuksetVuosi: function (vuosi){
+        return getAvustushakemuksetVuosi(vuosi);
       },
       getHakemuksetOsastoAktiiviset: function (osasto){
         return getHakemuksetOsastoAktiiviset(osasto);

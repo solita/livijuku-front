@@ -1,1 +1,101 @@
-<h1>Käsittelijä:Hakemus (avustushakemus, 1.maksatushakemus, 2.maksatushakemus)</h1>
+<div class="row">
+  <div class="col-md-12">
+    <h2><b>JOUKKOLIIKENTEEEN VALTIONAVUSTUSHAKEMUS {{avustushakemus.vuosi}}</b></h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h3>Hakijan tiedot</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <h4>Kunnan nimi</h4>
+    <h5>{{osastoTiedot.kuntaNimi}}</h5>
+    <h4>Postiosoite</h4>
+    <h5>{{osastoTiedot.kuntaPostiosoite}}</h5>
+    <h4>Postinumero</h4>
+    <h5>{{osastoTiedot.kuntaPostinumero}}</h5>
+    <h4>Postitoimipaikka</h4>
+    <h5>{{osastoTiedot.kuntaPostitoimipaikka}}</h5>
+    <h4>Pankkitilin numero</h4>
+    <h5>{{osastoTiedot.kuntaPankkitili}}</h5>
+  </div>
+  <div class="col-md-4">
+    <h4>Hakijat</h4>
+    <h5>{{osastoTiedot.kuntaYhteysHlo}}</h5>
+    <h5>{{osastoTiedot.kuntaYhteysHloVirkaAsema}}</h5>
+    <h5>{{osastoTiedot.kuntaYhteysHloPuh}}</h5>
+    <h5>{{osastoTiedot.kuntaYhteysHloSahkoposti}}</h5>
+    <br>
+    <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHlo}}</h5>
+    <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHloVirkaAsema}}</h5>
+    <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHloPuh}}</h5>
+    <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHloSahkoposti}}</h5>
+  </div>
+  <div class="col-md-4">
+    <br>
+    <h5>{{osastoTiedot.kuntaToinenYhteysHlo}}</h5>
+    <h5>{{osastoTiedot.kuntaToinenYhteysHloVirkaAsema}}</h5>
+    <h5>{{osastoTiedot.kuntaToinenYhteysHloPuh}}</h5>
+    <h5>{{osastoTiedot.kuntaToinenYhteysHloSahkoposti}}</h5>
+  </div>
+</div>
+<div>
+  <form name="avustusHakemusTarkastusForm">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Valtionavustuksen kohde ja haettava valtionavustuksen määrä</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <h4>PSA:n mukaisen liikenteen hankinta</h4>
+      </div>
+      <div class="col-md-3">
+        <h4>xxx xxx,xx €</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Paikallisliikenne</h4>
+      </div>
+      <div class="col-md-6">
+        <h5>Haettava valtionavustus: {{avustushakemus.paikallisliikenneValtionavustus}} (euroa)</h5>
+      </div>
+      <div class="col-md-6">
+        <h5>Kunnan oma rahoitusosuus: {{avustushakemus.paikallisliikenneRahoitusosuus}} (euroa)</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Integroitu palvelulinja, kaikille avointa</h4>
+      </div>
+      <div class="col-md-6">
+        <h5>Haettava valtionavustus: {{avustushakemus.integroitupalvelulinjaValtionavustus}} (euroa)</h5>
+      </div>
+      <div class="col-md-6">
+        <h5>Kunnan oma rahoitusosuus {{avustushakemus.integroitupalvelulinjaRahoitusosuus}} (euroa)</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Muu PSA:n mukaisen liikenteen järjestäminen</h4>
+      </div>
+      <div class="col-md-6">
+        <h5>Haettava valtionavustus: {{avustushakemus.muupsaValtionavustus}} (euroa)</h5>
+      </div>
+      <div class="col-md-6">
+        <h5>Kunnan oma rahoitusosuus: {{avustushakemus.muupsaRahoitusosuus}} (euroa)</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10"></div>
+      <div class="col-md-2">
+        <button data-ng-click="tarkastaAvustushakemus()" class="btn btn-default">Hakemus OK</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
