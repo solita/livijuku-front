@@ -170,6 +170,7 @@ angular.module('jukufrontApp')
       }
 
     });
+    $httpBackend.whenGET(/app/).passThrough();
     $httpBackend.whenGET(/\.html$/).passThrough();
     $httpBackend.whenGET(/\.json$/).passThrough();
   });

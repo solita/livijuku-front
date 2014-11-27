@@ -43,6 +43,10 @@ angular
         templateUrl: 'views/kasHakemukset.html',
         controller: 'KasHakemuksetCtrl'
       })
+      .when('/k/hakemuskaudenhallinta', {
+        templateUrl: 'views/kasHakemuskaudenHallinta.html',
+        controller: 'KasHakemuskaudenHallintaCtrl'
+      })
       .when('/main', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
