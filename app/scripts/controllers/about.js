@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc function
- * @name jsunittestingApp.controller:AboutCtrl
+ * @name jukufrontApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the jsunittestingApp
+ * Controller of the jukufrontApp
  */
-angular.module('jsunittestingApp')
+angular.module('jukufrontApp')
   .controller('AboutCtrl', function ($scope) {
-    $scope.awesomeThings = [
+    $scope.someThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'

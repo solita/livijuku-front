@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name jsunittestingApp.controller:MainCtrl
+ * @name jukufrontApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the jsunittestingApp
+ * Controller of the jukufrontApp
  */
 angular.module('controllers.MainCtrl', ['services.thingsAsPromised'])
   .controller('MainCtrl', function ($scope, things) {

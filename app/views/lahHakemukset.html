@@ -1,0 +1,60 @@
+<h3><b>AKTIIVISET JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET</b></h3>
+<div ng-repeat="hakemus in hakemOsastoAktiiviset">
+  <div class="row">
+    <div class="col-md-3">
+      <h2>{{hakemus.vuosi}}</h2>
+    </div>
+    <div class="col-md-3">
+      <h5><b>Avustushakemus</b></h5>
+      <h5><a href="#/l/hakemus">{{hakemus.avustushakemusstatus}}</a></h5>
+      <h5></h5>
+      <h5>Hakuaika:</h5>
+      <h5>{{hakemus.avustushakemushakuaika}}</h5>
+    </div>
+    <div class="col-md-3">
+      <h5>1. maksatushakemus</h5>
+      <h5>{{hakemus.ensimmaksatusstatus}}</h5>
+      <h5></h5>
+      <h5>Hakuaika:</h5>
+      <h5>{{hakemus.ensimmaksatushakuaika}}</h5>
+    </div>
+    <div class="col-md-3">
+      <h5>2. maksatushakemus</h5>
+      <h5>{{hakemus.toinenmaksatusstatus}}</h5>
+      <h5></h5>
+      <h5>Hakuaika:</h5>
+      <h5>{{hakemus.toinenmaksatushakuaika}}</h5>
+    </div>
+  </div>
+</div>
+<h3><b>PÄÄTTYNEET HAKEMUKSET</b></h3>
+<div ng-repeat="hakemus in hakemOsastoVanhat">
+  <div class="row">
+    <div class="col-md-3">
+      <h2>{{hakemus.vuosi}}</h2>
+    </div>
+    <div class="col-md-3">
+      <h5><b>Avustushakemus</b></h5>
+      <h5>{{hakemus.avustushakemusstatus}}</h5>
+      <h5></h5>
+      <h5>Hakuaika:</h5>
+      <h5>{{hakemus.avustushakemushakuaika}}</h5>
+    </div>
+    <div class="col-md-3">
+      <h5>1. maksatushakemus</h5>
+      <h5>{{hakemus.ensimmaksatusstatus}}</h5>
+      <h5></h5>
+      <h5>Hakuaika:</h5>
+      <h5>{{hakemus.ensimmaksatushakuaika}}</h5>
+    </div>
+    <div class="col-md-3">
+      <h5>2. maksatushakemus</h5>
+      <h5>{{hakemus.toinenmaksatusstatus}}</h5>
+      <h5></h5>
+      <h5>Hakuaika:</h5>
+      <h5>{{hakemus.toinenmaksatushakuaika}}</h5>
+    </div>
+  </div>
+</div>
+
+

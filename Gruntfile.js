@@ -71,18 +71,37 @@ module.exports = function (grunt) {
         hostname: 'localhost',
         livereload: 35729
       },
+      proxies: [{
+        context: '/app', // the context of the data service
+        host: 'localhost', // wherever the data service is running
+        port: 3000,
+        changeOrigin: true,
+        rewrite: {
+          // the key '^/api' is a regex for the path to be rewritten
+          // the value is the context of the data service
+          '^/app': ''
+        }
+      }],
       livereload: {
         options: {
           open: true,
           middleware: function (connect) {
-            return [
-              connect.static('.tmp'),
+            var middlewares = [];
+
+            // Setup the proxy
+            middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
+
+            middlewares.push(connect.static('.tmp'));
+
+            middlewares.push(
               connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
-              ),
-              connect.static(appConfig.app)
-            ];
+              )
+            );
+            middlewares.push(connect.static(appConfig.app));
+
+            return middlewares;
           }
         }
       },
@@ -164,7 +183,12 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath: /\.\.\//
+      },
+      dev: {
+        devDependencies: true,
+        src: ['<%= yeoman.app %>/index.html'],
+        ignorePath: /\.\.\//
       },
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -235,7 +259,7 @@ module.exports = function (grunt) {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
-        assetsDirs: ['<%= yeoman.dist %>','<%= yeoman.dist %>/images']
+        assetsDirs: ['<%= yeoman.dist %>', '<%= yeoman.dist %>/images']
       }
     },
 
@@ -401,6 +425,7 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
+      'configureProxies:server',
       'autoprefixer',
       'connect:livereload',
       'watch'
@@ -412,7 +437,7 @@ module.exports = function (grunt) {
     grunt.task.run(['serve:' + target]);
   });
 
-  grunt.registerTask('test', '', function(testMode) {
+  grunt.registerTask('test', '', function (testMode) {
     var mode = testMode || 'unit';
     grunt.task.run([
       'clean:server',
