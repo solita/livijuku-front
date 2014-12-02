@@ -12,6 +12,7 @@ angular
   .module('jukufrontApp', [
     'controllers.MainCtrl',
     'services.dataApi',
+    'ui.bootstrap',
     'ui.grid',
     'ui.grid.autoResize',
     'ngRoute',

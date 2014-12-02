@@ -10,6 +10,9 @@
 
 angular.module('jukufrontApp')
   .controller('LahHakemusCtrl', function ($scope, $location, Osasto, HakemuksetOsasto){
+    $scope.psaOpen = false;
+    $scope.hvkOpen = false;
+    $scope.lskOpen = false;
     Osasto.getOsasto('Pori')
       .then(function (data) {
         $scope.osastoTiedot = data;
