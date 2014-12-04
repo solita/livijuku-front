@@ -15,6 +15,8 @@ angular
     'ui.bootstrap',
     'ui.grid',
     'ui.grid.autoResize',
+    'monospaced.elastic',
+    'angularFileUpload',
     'ngRoute',
     'ngMockE2E'
   ])

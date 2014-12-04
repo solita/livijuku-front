@@ -2,46 +2,37 @@
   <div class="col-md-12">
     <a href="#"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
     <a href="#/l/hakemus" class="btn btn-primary">Avustushakemus {{avustushakemus.vuosi}}</a>
-    <a href="#" class="btn btn-default disabled">1. maksatushakemus</a>
-    <a href="#" class="btn btn-default disabled">2. maksatushakemus</a>
+    <a href="#" class="btn btn-primary disabled">1. maksatushakemus</a>
+    <a href="#" class="btn btn-primary disabled">2. maksatushakemus</a>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
-    <h2><b>JOUKKOLIIKENTEEEN VALTIONAVUSTUSHAKEMUS {{avustushakemus.vuosi}}</b></h2>
+    <h2><b>Joukkoliikenten valtionavustushakemus {{avustushakemus.vuosi}}</b></h2>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
-    <h3>Hakijan tiedot</h3>
+    <div class="alaviiva">
+      <h3>HAKIJAN TIEDOT</h3>
+    </div>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4">
-    <h4>Kunnan nimi</h4>
+  <div class="col-md-3">
+    <h4><b>Kunnan nimi</b></h4>
     <h5>{{osastoTiedot.kuntaNimi}}</h5>
-    <h4>Postiosoite</h4>
-    <h5>{{osastoTiedot.kuntaPostiosoite}}</h5>
-    <h4>Postinumero</h4>
-    <h5>{{osastoTiedot.kuntaPostinumero}}</h5>
-    <h4>Postitoimipaikka</h4>
-    <h5>{{osastoTiedot.kuntaPostitoimipaikka}}</h5>
     <h4>Pankkitilin numero</h4>
     <h5>{{osastoTiedot.kuntaPankkitili}}</h5>
   </div>
-  <div class="col-md-4">
-    <h4>Hakijat</h4>
+  <div class="col-md-3">
+    <h4><b>Hakijat</b></h4>
     <h5>{{osastoTiedot.kuntaYhteysHlo}}</h5>
     <h5>{{osastoTiedot.kuntaYhteysHloVirkaAsema}}</h5>
     <h5>{{osastoTiedot.kuntaYhteysHloPuh}}</h5>
     <h5>{{osastoTiedot.kuntaYhteysHloSahkoposti}}</h5>
-    <br>
-    <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHlo}}</h5>
-    <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHloVirkaAsema}}</h5>
-    <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHloPuh}}</h5>
-    <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHloSahkoposti}}</h5>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <br>
     <h5>{{osastoTiedot.kuntaToinenYhteysHlo}}</h5>
     <h5>{{osastoTiedot.kuntaToinenYhteysHloVirkaAsema}}</h5>
@@ -49,229 +40,335 @@
     <h5>{{osastoTiedot.kuntaToinenYhteysHloSahkoposti}}</h5>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-3">
+    <br>
+    <h4><b>Päätöksentekijä</b></h4>
+    <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHlo}}</h5>
+    <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHloVirkaAsema}}</h5>
+    <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHloPuh}}</h5>
+    <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHloSahkoposti}}</h5>
+  </div>
+</div>
 <div>
   <form name="avustusHakemusForm">
     <div class="row">
       <div class="col-md-12">
-        <h3>Valtionavustuksen kohde ja haettava valtionavustuksen määrä</h3>
+        <div class="alaviiva">
+          <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ<a href=""><span class='glyphicon glyphicon-question-sign'></span></a></h3>
+        </div>
       </div>
     </div>
-    <accordion close-others="false">
-      <accordion-group is-open="psaOpen">
-        <accordion-heading>
-          <div class="row">
-            <div class="col-md-9">
-              <h4><i class="pull-left glyphicon"
-                     ng-class="{'glyphicon-chevron-down': psaOpen, 'glyphicon-chevron-right': !psaOpen}"> PSA:n mukaisen
-                liikenteen hankinta</i></h4>
-            </div>
-            <div class="col-md-3">
-              <h4>xxx xxx,xx €</h4>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-9">
+            <h4 class="panel-title">PSA:n mukaisen liikenteen hankinta</h4>
+          </div>
+          <div class="col-md-3">
+            <div class="pull-right">
+              <h4 class="panel-title">xxx xxx,xx €</h4>
             </div>
           </div>
-        </accordion-heading>
-        <div class="row">
-          <div class="col-md-12">
-            <h5><input type="checkbox" ng-model="avustushakemus.paikallisliikenne"> paikallisliikenne</h5>
-          </div>
-          <div class="col-md-6">
-            <h5>Haettava valtionavustus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.paikallisliikenneValtionavustus"/>
-          </div>
-          <div class="col-md-6">
-            <h5>Kunnan oma rahoitusosuus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.paikallisliikenneRahoitusosuus"/>
-          </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <h5><input type="checkbox" ng-model="avustushakemus.integroitupalvelulinja"> integroitu palvelulinja,
-              kaikille
-              avointa</h5>
-          </div>
-          <div class="col-md-6">
-            <h5>Haettava valtionavustus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.integroitupalvelulinjaValtionavustus"/>
-          </div>
-          <div class="col-md-6">
-            <h5>Kunnan oma rahoitusosuus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.integroitupalvelulinjaRahoitusosuus"/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <h5><input type="checkbox" ng-model="avustushakemus.muupsa"> muu PSA:n mukaisen liikenteen järjestäminen
-            </h5>
-          </div>
-          <div class="col-md-6">
-            <h5>Haettava valtionavustus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.muupsaValtionavustus"/>
-          </div>
-          <div class="col-md-6">
-            <h5>Kunnan oma rahoitusosuus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.muupsaRahoitusosuus"/>
-          </div>
-        </div>
-      </accordion-group>
-      <accordion-group is-open="hvaOpen">
-        <accordion-heading>
-          <div class="row">
-            <div class="col-md-9">
-              <h4><i class="pull-left glyphicon"
-                     ng-class="{'glyphicon-chevron-down': hvaOpen, 'glyphicon-chevron-right': !hvaOpen}">
-                Hintavelvoitteiden korvaaminen</i></h4>
-            </div>
-            <div class="col-md-3">
-              <h4>xxx xxx,xx €</h4>
-            </div>
-          </div>
-        </accordion-heading>
-        <div class="row">
-          <div class="col-md-12">
-            <h5><input type="checkbox" ng-model="avustushakemus.seutulippu"> seutulippu</h5>
-          </div>
-          <div class="col-md-6">
-            <h5>Haettava valtionavustus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.seutulippuValtionavustus"/>
-          </div>
-          <div class="col-md-6">
-            <h5>Kunnan oma rahoitusosuus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.seutulippuRahoitusosuus"/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <h5><input type="checkbox" ng-model="avustushakemus.kaupunkikuntalippu"> kaupunki-/kuntalippu</h5>
-          </div>
-          <div class="col-md-6">
-            <h5>Haettava valtionavustus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.kaupunkikuntalippuValtionavustus"/>
-          </div>
-          <div class="col-md-6">
-            <h5>Kunnan oma rahoitusosuus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.kaupunkikuntalippuRahoitusosuus"/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <h5><input type="checkbox" ng-model="avustushakemus.liityntalippu"> liityntälippu (esim. VR,
-              pääkaupunkiseudun)
-            </h5>
-          </div>
-          <div class="col-md-6">
-            <h5>Haettava valtionavustus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.liityntalippuValtionavustus"/>
-          </div>
-          <div class="col-md-6">
-            <h5>Kunnan oma rahoitusosuus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.liityntalippuRahoitusosuus"/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <h5><input type="checkbox" ng-model="avustushakemus.tyomatkalippu"> työmatkalippu
-            </h5>
-          </div>
-          <div class="col-md-6">
-            <h5>Haettava valtionavustus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.tyomatkalippuValtionavustus"/>
-          </div>
-          <div class="col-md-6">
-            <h5>Kunnan oma rahoitusosuus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.tyomatkalippuRahoitusosuus"/>
-          </div>
-        </div>
-      </accordion-group>
-      <accordion-group is-open="lskOpen">
-        <accordion-heading>
-          <div class="row">
-            <div class="col-md-9">
-              <h4><i class="pull-left glyphicon"
-                     ng-class="{'glyphicon-chevron-down': lskOpen, 'glyphicon-chevron-right': !lskOpen}">
-                Liikenteen suunnittelu- ja kehittämishankkeet</i></h4>
-            </div>
-            <div class="col-md-3">
-              <h4>xxx xxx,xx €</h4>
-            </div>
-          </div>
-        </accordion-heading>
-        <div class="row">
-          <div class="col-md-12">
-            <h5><input type="checkbox" ng-model="avustushakemus.informMaksujarjKehittaminen"> informaatio- ja maksujärjestelmien kehittäminen</h5>
-          </div>
-          <div class="col-md-6">
-            <h5>Haettava valtionavustus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.informMaksujarjKehittaminenValtionavustus"/>
-          </div>
-          <div class="col-md-6">
-            <h5>Kunnan oma rahoitusosuus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.informMaksujarjKehittaminenRahoitusosuus"/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <h5><input type="checkbox" ng-model="avustushakemus.matkapalvelukeskus"> matkapalvelukeskuksen suunnittelu ja kehittäminen</h5>
-          </div>
-          <div class="col-md-6">
-            <h5>Haettava valtionavustus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.matkapalvelukeskusValtionavustus"/>
-          </div>
-          <div class="col-md-6">
-            <h5>Kunnan oma rahoitusosuus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.matkapalvelukeskusRahoitusosuus"/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <h5><input type="checkbox" ng-model="avustushakemus.matkakeskus"> matkakeskuksen suunnittelu ja kehittäminen
-            </h5>
-          </div>
-          <div class="col-md-6">
-            <h5>Haettava valtionavustus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.matkakeskusValtionavustus"/>
-          </div>
-          <div class="col-md-6">
-            <h5>Kunnan oma rahoitusosuus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.matkakeskusRahoitusosuus"/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <h5><input type="checkbox" ng-model="avustushakemus.raitiotie"> raitiotien suunnittelu
-            </h5>
-          </div>
-          <div class="col-md-6">
-            <h5>Haettava valtionavustus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.raitiotieValtionavustus"/>
-          </div>
-          <div class="col-md-6">
-            <h5>Kunnan oma rahoitusosuus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.raitiotieRahoitusosuus"/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <h5><input type="checkbox" ng-model="avustushakemus.muuhanke"> muu hanke, mikä?
-            </h5>
-          </div>
-          <div class="col-md-6">
-            <h5>Haettava valtionavustus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.muuhankeValtionavustus"/>
-          </div>
-          <div class="col-md-6">
-            <h5>Kunnan oma rahoitusosuus (euroa)</h5>
-            <input type="text" class="form-control" ng-model="avustushakemus.muuhankeRahoitusosuus"/>
-          </div>
-        </div>
-      </accordion-group>
-    </accordion>
-    <div class="row">
-      <div class="col-md-6"></div>
-      <div class="col-md-6">
-        <button data-ng-click="saveAvustushakemus()" class="btn btn-default">Tallenna</button>
-        <button data-ng-click="sendAvustushakemus()" class="btn btn-default">Lähetä hakemus</button>
       </div>
-  </form>
+      <div class="panel-body">
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-12">
+              <h5>Paikallisliikenne</h5>
+            </div>
+            <div class="col-md-6">
+              <label>Haettava valtionavustus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.paikallisliikenneValtionavustus"/>
+            </div>
+            <div class="col-md-6">
+              <label>Kunnan oma rahoitusosuus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.paikallisliikenneRahoitusosuus"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-12">
+              <h5>Integroitu palvelulinja, kaikille avointa</h5>
+            </div>
+            <div class="col-md-6">
+              <label>Haettava valtionavustus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.integroitupalvelulinjaValtionavustus"/>
+            </div>
+            <div class="col-md-6">
+              <label>Kunnan oma rahoitusosuus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.integroitupalvelulinjaRahoitusosuus"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-12">
+              <h5>Muu PSA:n mukaisen liikenteen järjestäminen</h5>
+            </div>
+            <div class="col-md-6">
+              <label>Haettava valtionavustus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.muupsaValtionavustus"/>
+            </div>
+            <div class="col-md-6">
+              <label>Kunnan oma rahoitusosuus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.muupsaRahoitusosuus"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-9">
+            <h4 class="panel-title">Hintavelvoitteiden korvaaminen</h4>
+          </div>
+          <div class="col-md-3">
+            <div class="pull-right">
+              <h4 class="panel-title">xxx xxx,xx €</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-12">
+              <h5>Seutulippu</h5>
+            </div>
+            <div class="col-md-6">
+              <label>Haettava valtionavustus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.seutulippuValtionavustus"/>
+            </div>
+            <div class="col-md-6">
+              <label>Kunnan oma rahoitusosuus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.seutulippuRahoitusosuus"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-12">
+              <h5>Kaupunkilippu / kuntalippu</h5>
+            </div>
+            <div class="col-md-6">
+              <label>Haettava valtionavustus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.kaupunkikuntalippuValtionavustus"/>
+            </div>
+            <div class="col-md-6">
+              <label>Kunnan oma rahoitusosuus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.kaupunkikuntalippuRahoitusosuus"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-12">
+              <h5>Liityntälippu (esim. VR, pääkaupunkiseudun)</h5>
+            </div>
+            <div class="col-md-6">
+              <label>Haettava valtionavustus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.liityntalippuValtionavustus"/>
+            </div>
+            <div class="col-md-6">
+              <label>Kunnan oma rahoitusosuus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.liityntalippuRahoitusosuus"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-12">
+              <h5>Työmatkalippu</h5>
+            </div>
+            <div class="col-md-6">
+              <label>Haettava valtionavustus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.tyomatkalippuValtionavustus"/>
+            </div>
+            <div class="col-md-6">
+              <label>Kunnan oma rahoitusosuus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.tyomatkalippuRahoitusosuus"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-9">
+            <h4 class="panel-title">Liikenteen suunnittelu- ja kehittämishankkeet</h4>
+          </div>
+          <div class="col-md-3">
+            <div class="pull-right">
+              <h4 class="panel-title">xxx xxx,xx €</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-12">
+              <h5>Informaatio- ja maksujärjestelmien kehittäminen</h5>
+            </div>
+            <div class="col-md-6">
+              <label>Haettava valtionavustus (euroa)</label>
+              <input type="text" class="form-control"
+                     ng-model="avustushakemus.informMaksujarjKehittaminenValtionavustus"/>
+            </div>
+            <div class="col-md-6">
+              <label>Kunnan oma rahoitusosuus (euroa)</label>
+              <input type="text" class="form-control"
+                     ng-model="avustushakemus.informMaksujarjKehittaminenRahoitusosuus"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-12">
+              <h5>Matkapalvelukeskuksen suunnittelu ja kehittäminen</h5>
+            </div>
+            <div class="col-md-6">
+              <label>Haettava valtionavustus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.matkapalvelukeskusValtionavustus"/>
+            </div>
+            <div class="col-md-6">
+              <label>Kunnan oma rahoitusosuus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.matkapalvelukeskusRahoitusosuus"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-12">
+              <h5>Matkakeskuksen suunnittelu ja kehittäminen</h5>
+            </div>
+            <div class="col-md-6">
+              <label>Haettava valtionavustus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.matkakeskusValtionavustus"/>
+            </div>
+            <div class="col-md-6">
+              <label>Kunnan oma rahoitusosuus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.matkakeskusRahoitusosuus"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-12">
+              <h5>Raitiotien suunnittelu</h5>
+            </div>
+            <div class="col-md-6">
+              <label>Haettava valtionavustus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.raitiotieValtionavustus"/>
+            </div>
+            <div class="col-md-6">
+              <label>Kunnan oma rahoitusosuus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.raitiotieRahoitusosuus"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-12">
+              <h5>Muu hanke, mikä?</h5>
+            </div>
+            <div class="col-md-6">
+              <label>Haettava valtionavustus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.muuhankeValtionavustus"/>
+            </div>
+            <div class="col-md-6">
+              <label>Kunnan oma rahoitusosuus (euroa)</label>
+              <input type="text" class="form-control" ng-model="avustushakemus.muuhankeRahoitusosuus"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <h4><b>JOUKKOLIIKENTEEN VALTIONAVUSTUSHAKEMUS YHTEENSÄ:</b></h4>
+      </div>
+      <div class="col-md-3">
+        <div class="pull-right">
+          <h4><b>XXX XXX,XX €</b></h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-12">
+          <label>Lisätietoja avustusten kohteista<a href=""><span class='glyphicon glyphicon-question-sign'></span></a></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <textarea class="animate msd-elastic: \n;" ng-model="avustushakemus.lisatietoja"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Liitetiedostot</legend>
+            <div ng-file-drop="" ng-model="files" class="drop-box ng-isolate-scope ng-valid ng-dirty well"
+                 drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" multiple="true"
+                 allow-dir="true"
+                 accept="image/*,*pdf" ng-file-change="upload(files)">Raahaa kuvat tai PDF:t tähän
+            </div>
+            <div style="display: none;" ng-no-file-drop="" class="drop-box">File Farg&amp;Drop not supported on your
+              browser
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <a href="#"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
+      </div>
+      <div class="col-md-6">
+        <button data-ng-click="saveAvustushakemus()" class="pull-right btn btn-primary">Tallenna tiedot</button>
+        <button data-ng-click="showAvustushakemus()" class="pull-right btn btn-primary">Hakemuksen esikatselu</button>
+      </div>
+    </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="alaviiva">
+      <h3>HAKEMUKSEN PÄIVÄMÄÄRÄ JA PÄÄTÖKSENTEKIJÄ</h3>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h4>Oikeudet hakemuksen lähettämiseen on käyttäjillä, joka toimivat organisaatiossa hakemuksen hyväksyjinä ja
+      päätöksentekijöinä.</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h5>Päivämäärä</h5>
+    <h6>{{aikaleima | date:'dd.MM.yyyy'}}</h6>
+  </div>
+  <div class="col-md-6">
+    <h5>Päätöksentekijä</h5>
+    <h6>_kirjautuneen päätöksentekijän nimi_</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <button data-ng-click="sendAvustushakemus()" class="pull-right btn btn-success">Lähetä hakemus</button>
+  </div>
+</div>
+</form>
 </div>
 
 

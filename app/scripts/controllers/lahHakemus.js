@@ -10,9 +10,7 @@
 
 angular.module('jukufrontApp')
   .controller('LahHakemusCtrl', function ($scope, $location, Osasto, HakemuksetOsasto){
-    $scope.psaOpen = false;
-    $scope.hvkOpen = false;
-    $scope.lskOpen = false;
+    $scope.aikaleima = Date.now();
     Osasto.getOsasto('Pori')
       .then(function (data) {
         $scope.osastoTiedot = data;
@@ -39,5 +37,8 @@ angular.module('jukufrontApp')
         .then(function (data) {
           $scope.saveAvustushakemusStatus = data;
         });
+    };
+
+    $scope.showAvustushakemus = function () {
     };
   });
