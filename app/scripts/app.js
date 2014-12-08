@@ -11,6 +11,7 @@
 angular
   .module('jukufrontApp', [
     'controllers.MainCtrl',
+    'ngResource',
     'services.dataApi',
     'ui.bootstrap',
     'ui.grid',

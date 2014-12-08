@@ -170,7 +170,11 @@ angular.module('jukufrontApp')
       }
 
     });
-    $httpBackend.whenGET(/app/).passThrough();
+
+    $httpBackend.whenPOST(/api\/hakemuskausi/).passThrough();
+    $httpBackend.whenGET(/api\/hakemukset/).passThrough();
+    $httpBackend.whenGET(/api\/hakemuskaudet/).passThrough();
+    $httpBackend.whenGET(/api\/organisaatiot/).passThrough();
     $httpBackend.whenGET(/\.html$/).passThrough();
     $httpBackend.whenGET(/\.json$/).passThrough();
   });

@@ -74,9 +74,40 @@ angular.module('services.dataApi', [])
       }
     };
   })
-  .factory('Hakemuskausi', function ($http) {
-    var getHakemuskausi = function (hakemuskausi) {
-      return $http({method: 'GET', url: '/app/hakemukset/hakija?osastoid=1'})
+
+  .factory('HakemuskausiFactory', function ($resource) {
+    return $resource('/api/hakemuskaudet', {}, {
+      query: {method: 'GET', isArray: true},
+      create: {
+        url: '/api/hakemuskausi',
+        method: 'POST',
+        params: {},
+        data: {vuosi: '@vuosi'},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        transformRequest: function (obj) {
+          var str = [];
+          for (var key in obj) {
+            if (obj[key] instanceof Array) {
+              for (var idx in obj[key]) {
+                var subObj = obj[key][idx];
+                for (var subKey in subObj) {
+                  str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
+                }
+              }
+            }
+            else {
+              str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
+            }
+          }
+          return str.join("&");
+        }
+      }
+    });
+  })
+
+  .factory('Organisaatiot', function ($http) {
+    var getOrganisaatiot = function (organisaatiot) {
+      return $http({method: 'GET', url: '/api/organisaatiot'})
         .then(function (response) {
           return response.data;
         });
@@ -84,8 +115,8 @@ angular.module('services.dataApi', [])
 
     // Public API here
     return {
-      getHakemuskausi: function (hakemuskausi) {
-        return getHakemuskausi(hakemuskausi);
+      getOrganisaatiot: function (organisaatiot) {
+        return getOrganisaatiot(organisaatiot);
       }
     };
   });

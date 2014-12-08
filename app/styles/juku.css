@@ -2,6 +2,16 @@
   border-bottom: solid;
   margin-bottom: 20px;
 }
+
+.uusihakemuskausi{
+  border-style: dashed;
+  border-width: 4px;
+  border-radius: 4px;
+  color: #0067ce;
+  margin-bottom: 30px;
+  padding: 20px;
+}
+
 textarea{
   width: 100%;
 }

@@ -72,14 +72,14 @@ module.exports = function (grunt) {
         livereload: 35729
       },
       proxies: [{
-        context: '/app', // the context of the data service
+        context: '/api', // the context of the data service
         host: 'localhost', // wherever the data service is running
         port: 3000,
         changeOrigin: true,
         rewrite: {
           // the key '^/api' is a regex for the path to be rewritten
           // the value is the context of the data service
-          '^/app': ''
+          '^/api': ''
         }
       }],
       livereload: {
