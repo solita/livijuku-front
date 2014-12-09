@@ -1,16 +1,48 @@
-<div class="col-md-12">
-  <a href="#" class="btn btn-primary">Avustushakemukset</a>
-  <a href="#" class="btn btn-default disabled">Maksatushakemukset</a>
-  <a href="#/k/hakemuskaudenhallinta" class="btn btn-primary">Hakemuskauden hallinta</a>
+<div class="row">
+  <div class="col-md-3">
+    <a href="#/k/hakemukset" class="btn btn-primary">Avustushakemukset<span class="badge badge-notify">3</span></a>
+  </div>
+  <div class="col-md-3">
+    <a href="#/k/hakemukset" class="btn btn-default disabled">1. maksatushakemukset<span
+      class="badge badge-notify">10</span></a>
+  </div>
+  <div class="col-md-3">
+    <a href="#/k/hakemukset" class="btn btn-default disabled">2. maksatushakemukset<span
+      class="badge badge-notify">10</span></a>
+  </div>
+  <div class="col-md-3">
+    <a href="#/k/hakemuskaudenhallinta" class="btn btn-default">Hakemuskauden hallinta</a>
+  </div>
 </div>
 <h2>JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET 2015</h2>
-<div id="grid1" ui-grid="gridOptions" class="grid" ui-grid-auto-resize></div>
+<table st-table="displayed" class="table table-striped" st-safe-src=hakemuksetVuosi>
+  <thead>
+  <tr>
+    <th st-sort="hakija">Hakija</th>
+    <th st-sort="hakemuksenTila">Hakemuksen tila</th>
+    <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
+    <th st-sort="diaarinumero">Diaarinumero</th>
+    <th st-sort="kasittelija">Käsittelijä</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="hakemus in displayed">
+    <td>{{hakemus.hakija}}</td>
+    <td><span class="label label-success">{{hakemus.hakemuksenTila}}</span></td>
+    <td>{{hakemus.viimeisinMuutos}}</td>
+    <td>{{hakemus.diaarinumero}}</td>
+    <td><span class='glyphicon glyphicon-user'/>{{hakemus.kasittelija}}</td>
+  </tr>
+  </tbody>
+</table>
 
 <div class="row">
   <div class="col-md-8">
   </div>
   <div class="col-md-4">
-    <a href="#" class="btn btn-primary">Siirry suunnittelunäkymään</a>
+    <div class="pull-right">
+      <a href="#" class="btn btn-primary">Suunnittelu ja päätöksenteko<span class='glyphicon glyphicon-play'/></a>
+    </div>
   </div>
 </div>
 <h2>JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET 2014</h2>

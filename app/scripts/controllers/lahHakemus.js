@@ -9,18 +9,29 @@
  * */
 
 angular.module('jukufrontApp')
-  .controller('LahHakemusCtrl', function ($scope, $location, Osasto, HakemuksetOsasto){
-    $scope.aikaleima = Date.now();
-    Osasto.getOsasto('Pori')
-      .then(function (data) {
+  .controller('LahHakemusCtrl', function ($scope, $location, Osasto, $routeParams, HakemusFactory) {
+    var loadData = function () {
+      HakemusFactory.get({'id': $routeParams.id}, function (data) {
+        $scope.avustushakemus = data;
+      }, function (error) {
+        console.log('lahHakemus.js' + error.toString());
+      });
+    };
+    loadData();
+  });
+
+/**
+ $scope.aikaleima = Date.now();
+ Osasto.getOsasto('Pori')
+ .then(function (data) {
         $scope.osastoTiedot = data;
       });
-    HakemuksetOsasto.getAvustushakemus('Pori', '2015')
-      .then(function (data) {
+ HakemuksetOsasto.getAvustushakemus('Pori', '2015')
+ .then(function (data) {
         $scope.avustushakemus = data;
       });
 
-    $scope.sendAvustushakemus = function () {
+ $scope.sendAvustushakemus = function () {
       $scope.avustushakemus.avustushakemusstatus = 'Lähetetty';
       $scope.avustushakemus.aikaleima =  new Date();
       HakemuksetOsasto.saveAvustushakemus('Pori', '2015',$scope.avustushakemus )
@@ -30,7 +41,7 @@ angular.module('jukufrontApp')
       $location.path('/');
     };
 
-    $scope.saveAvustushakemus = function () {
+ $scope.saveAvustushakemus = function () {
       $scope.avustushakemus.avustushakemusstatus = 'Keskeneräinen';
       $scope.avustushakemus.aikaleima =  new Date();
       HakemuksetOsasto.saveAvustushakemus('Pori', '2015',$scope.avustushakemus )
@@ -39,6 +50,6 @@ angular.module('jukufrontApp')
         });
     };
 
-    $scope.showAvustushakemus = function () {
+ $scope.showAvustushakemus = function () {
     };
-  });
+ */

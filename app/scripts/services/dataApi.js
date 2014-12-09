@@ -75,6 +75,13 @@ angular.module('services.dataApi', [])
     };
   })
 
+  .factory('HakemusFactory', function ($resource) {
+    return $resource('/api/hakemukset/hakija/:id', {}, {
+      get: { url: '/api/hakemus/:id', method: 'GET', params:{id:'@id'}, isArray: false},
+      query: {method: 'GET', params:{id:'@id'}, isArray: true}
+     });
+  })
+
   .factory('HakemuskausiFactory', function ($resource) {
     return $resource('/api/hakemuskaudet', {}, {
       query: {method: 'GET', isArray: true},
@@ -91,15 +98,15 @@ angular.module('services.dataApi', [])
               for (var idx in obj[key]) {
                 var subObj = obj[key][idx];
                 for (var subKey in subObj) {
-                  str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
+                  str.push(encodeURIComponent(key) + '[' + idx + '][' + encodeURIComponent(subKey) + ']=' + encodeURIComponent(subObj[subKey]));
                 }
               }
             }
             else {
-              str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
+              str.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
             }
           }
-          return str.join("&");
+          return str.join('&');
         }
       }
     });

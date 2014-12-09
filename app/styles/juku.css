@@ -15,3 +15,13 @@
 textarea{
   width: 100%;
 }
+
+/* CSS used here will be applied after bootstrap.css */
+.badge.badge-notify{
+  background:red;
+  color:white;
+  position:relative;
+  top: -20px;
+  left: 20px;
+}
+

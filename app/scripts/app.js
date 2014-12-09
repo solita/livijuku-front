@@ -13,9 +13,8 @@ angular
     'controllers.MainCtrl',
     'ngResource',
     'services.dataApi',
+    'smart-table',
     'ui.bootstrap',
-    'ui.grid',
-    'ui.grid.autoResize',
     'monospaced.elastic',
     'angularFileUpload',
     'ngRoute',
@@ -27,7 +26,7 @@ angular
         templateUrl: 'views/lahHakemukset.html',
         controller: 'LahHakemuksetCtrl'
       })
-      .when('/l/hakemus', {
+      .when('/l/hakemus/:id', {
         templateUrl: 'views/lahHakemus.html',
         controller: 'LahHakemusCtrl'
       })

@@ -1,3 +1,17 @@
+<div class="row">
+  <div class="col-md-3">
+    <a href="#/k/hakemukset" class="btn btn-primary">Avustushakemukset<span class="badge badge-notify">3</span></a>
+  </div>
+  <div class="col-md-3">
+    <a href="#/k/hakemukset" class="btn btn-default disabled">1. maksatushakemukset<span class="badge badge-notify">10</span></a>
+  </div>
+  <div class="col-md-3">
+    <a href="#/k/hakemukset" class="btn btn-default disabled">2. maksatushakemukset<span class="badge badge-notify">10</span></a>
+  </div>
+  <div class="col-md-3">
+    <a href="#/k/hakemuskaudenhallinta" class="btn btn-default">Hakemuskauden hallinta</a>
+  </div>
+</div>
 <div ng-repeat="hakemuskausi in hakemuskaudet">
   <div ng-if="hakemuskausi.uusi" class="uusihakemuskausi">
     <div class="row">
@@ -38,7 +52,6 @@
             <h4>{{hakemuskausi.avustushakemusAlkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.avustushakemusLoppupvm |
               date:'dd.MM yyyy'}}</h4>
           </div>
-
         </div>
       </div>
       <div class="col-md-3 text-center">

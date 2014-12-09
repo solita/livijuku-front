@@ -56,7 +56,8 @@
     <div class="row">
       <div class="col-md-12">
         <div class="alaviiva">
-          <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ<a href=""><span class='glyphicon glyphicon-question-sign'></span></a></h3>
+          <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ<a href=""><span
+            class='glyphicon glyphicon-question-sign'></span></a></h3>
         </div>
       </div>
     </div>
@@ -339,37 +340,37 @@
         <button data-ng-click="showAvustushakemus()" class="pull-right btn btn-primary">Hakemuksen esikatselu</button>
       </div>
     </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
-    <div class="alaviiva">
-      <h3>HAKEMUKSEN PÄIVÄMÄÄRÄ JA PÄÄTÖKSENTEKIJÄ</h3>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alaviiva">
+          <h3>HAKEMUKSEN PÄIVÄMÄÄRÄ JA PÄÄTÖKSENTEKIJÄ</h3>
+        </div>
+      </div>
     </div>
-  </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Oikeudet hakemuksen lähettämiseen on käyttäjillä, joka toimivat organisaatiossa hakemuksen hyväksyjinä ja
+          päätöksentekijöinä.</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h5>Päivämäärä</h5>
+        <h6>{{aikaleima | date:'dd.MM.yyyy'}}</h6>
+      </div>
+      <div class="col-md-6">
+        <h5>Päätöksentekijä</h5>
+        <h6>_kirjautuneen päätöksentekijän nimi_</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button data-ng-click="sendAvustushakemus()" class="pull-right btn btn-success">Lähetä hakemus</button>
+      </div>
+    </div>
+  </form>
 </div>
-<div class="row">
-  <div class="col-md-12">
-    <h4>Oikeudet hakemuksen lähettämiseen on käyttäjillä, joka toimivat organisaatiossa hakemuksen hyväksyjinä ja
-      päätöksentekijöinä.</h4>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6">
-    <h5>Päivämäärä</h5>
-    <h6>{{aikaleima | date:'dd.MM.yyyy'}}</h6>
-  </div>
-  <div class="col-md-6">
-    <h5>Päätöksentekijä</h5>
-    <h6>_kirjautuneen päätöksentekijän nimi_</h6>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
-    <button data-ng-click="sendAvustushakemus()" class="pull-right btn btn-success">Lähetä hakemus</button>
-  </div>
-</div>
-</form>
-</div>
+{{avustushakemus | json}}
 
 
 
