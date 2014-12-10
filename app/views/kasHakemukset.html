@@ -15,7 +15,7 @@
   </div>
 </div>
 <h2>JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET 2015</h2>
-<table st-table="displayed" class="table table-striped" st-safe-src=hakemuksetVuosi>
+<table st-table="displayed" class="table table-hover table-condensed table-striped" st-safe-src=hakemuksetVuosi>
   <thead>
   <tr>
     <th st-sort="hakija">Hakija</th>
@@ -26,9 +26,9 @@
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="hakemus in displayed">
+  <tr ng-repeat="hakemus in displayed" ng-click="getKasHakemus(hakemus.id)">
     <td>{{hakemus.hakija}}</td>
-    <td><span class="label label-success">{{hakemus.hakemuksenTila}}</span></td>
+    <td><hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label></td>
     <td>{{hakemus.viimeisinMuutos}}</td>
     <td>{{hakemus.diaarinumero}}</td>
     <td><span class='glyphicon glyphicon-user'/>{{hakemus.kasittelija}}</td>

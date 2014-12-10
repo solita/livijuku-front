@@ -13,8 +13,8 @@
           <div class="panel-heading">
             <h3 class="panel-title">Avustushakemus</h3>
           </div>
-          <div class="panel-body">
-            <h3><button data-ng-click="getHakemus(hakemuskausi.avustushakemusId)" class="btn btn-warning">{{hakemuskausi.avustushakemusTilatunnus |tila}}</button></h3>
+          <div class="panel-body" data-ng-click="getHakemus(hakemuskausi.avustushakemusId)">
+            <h3><hakemus-label tila ="{{hakemuskausi.avustushakemusTilatunnus}}"></hakemus-label></h3>
             <h4>Hakuaika:</h4>
             <h4>{{hakemuskausi.avustushakemusAlkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.avustushakemusLoppupvm |
               date:'dd.MM yyyy'}}</h4>
@@ -26,8 +26,8 @@
           <div class="panel-heading">
             <h3 class="panel-title">1. maksatushakemus</h3>
           </div>
-          <div class="panel-body">
-            <h3><button data-ng-click="getHakemus(hakemuskausi.maksatushakemus1Id)" class="btn btn-warning">{{hakemuskausi.maksatushakemus1Tilatunnus |tila}}</button></h3>
+          <div class="panel-body" data-ng-click="getHakemus(hakemuskausi.maksatushakemus1Id)">
+            <h3><hakemus-label tila="{{hakemuskausi.maksatushakemus1Tilatunnus}}"></hakemus-label></h3>
             <h4>Hakuaika:</h4>
             <h4>{{hakemuskausi.maksatushakemus1Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus1Loppupvm |
               date:'dd.MM yyyy'}}</h4>
@@ -39,8 +39,8 @@
           <div class="panel-heading">
             <h3 class="panel-title">2. maksatushakemus</h3>
           </div>
-          <div class="panel-body">
-            <h3><button data-ng-click="getHakemus(hakemuskausi.maksatushakemus2Id)" class="btn btn-warning">{{hakemuskausi.maksatushakemus2Tilatunnus |tila}}</button></h3>
+          <div class="panel-body" data-ng-click="getHakemus(hakemuskausi.maksatushakemus2Id)">
+            <h3><hakemus-label tila="{{hakemuskausi.maksatushakemus2Tilatunnus}}"></hakemus-label></h3>
             <h4>Hakuaika:</h4>
             <h4>{{hakemuskausi.maksatushakemus2Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus2Loppupvm |
               date:'dd.MM yyyy'}}</h4>

@@ -25,3 +25,10 @@ textarea{
   left: 20px;
 }
 
+.panel-body {
+  transition: background 200ms;
+}
+
+.panel-body:hover {
+  background: greenyellow;
+}

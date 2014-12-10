@@ -47,7 +47,7 @@
             <h3 class="panel-title">Avustushakemus</h3>
           </div>
           <div class="panel-body">
-            <h3><span class="label label-warning">{{hakemuskausi.avustushakemusTilatunnus |tila}}</span></h3>
+            <h3><hakemus-label tila="{{hakemuskausi.avustushakemusTilatunnus}}"></hakemus-label></h3>
             <h4>Hakuaika:</h4>
             <h4>{{hakemuskausi.avustushakemusAlkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.avustushakemusLoppupvm |
               date:'dd.MM yyyy'}}</h4>
@@ -60,7 +60,7 @@
             <h3 class="panel-title">1. maksatushakemus</h3>
           </div>
           <div class="panel-body">
-            <h3><span class="label label-default">{{hakemuskausi.maksatushakemus1Tilatunnus |tila}}</span></h3>
+            <h3><hakemus-label tila="{{hakemuskausi.maksatushakemus1Tilatunnus}}"></hakemus-label></h3>
             <h4>Hakuaika:</h4>
             <h4>{{hakemuskausi.maksatushakemus1Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus1Loppupvm |
               date:'dd.MM yyyy'}}</h4>
@@ -73,7 +73,7 @@
             <h3 class="panel-title">2. maksatushakemus</h3>
           </div>
           <div class="panel-body">
-            <h3><span class="label label-default">{{hakemuskausi.maksatushakemus2Tilatunnus |tila}}</span></h3>
+            <h3><hakemus-label tila="{{hakemuskausi.maksatushakemus2Tilatunnus}}"></hakemus-label></h3>
             <h4>Hakuaika:</h4>
             <h4>{{hakemuskausi.maksatushakemus2Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus2Loppupvm |
               date:'dd.MM yyyy'}}</h4>

@@ -9,19 +9,7 @@
  * */
 
 angular.module('jukufrontApp')
-  .filter('tila', function () {
-    return function (tilatunnus) {
-      var tila = '';
-      switch (tilatunnus) {
-        case 'K':
-          tila = 'Käynnissä';
-          break;
-      }
-      return tila;
-    };
-  })
-  .controller('KasHakemuskaudenHallintaCtrl', function ($scope, $location, $route, $log, HakemuskausiFactory) {
-
+   .controller('KasHakemuskaudenHallintaCtrl', function ($scope, $location, $route, $log, HakemuskausiFactory) {
     var loadData = function () {
       HakemuskausiFactory.query(function (data) {
         var hakemuskaudetTmp = [];

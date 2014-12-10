@@ -9,7 +9,8 @@
  * */
 
 angular.module('jukufrontApp')
-  .controller('KasHakemuksetCtrl', function ($scope, $filter, HakemuksetOsasto) {
+  .controller('KasHakemuksetCtrl', function ($scope, $filter, $location, HakemuksetOsasto) {
+
     $scope.displayed=[];
     var loadData = function () {
       HakemuksetOsasto.getAvustushakemuksetVuosi('2015')
@@ -21,10 +22,15 @@ angular.module('jukufrontApp')
               hakemuksenTila: hakemus.avustushakemusstatus,
               viimeisinMuutos: $filter('date')(hakemus.aikaleima, 'dd/MM/yyyy HH:mm'),
               diaarinumero: hakemus.diaarinumero,
-              kasittelija: hakemus.kasittelija
+              kasittelija: hakemus.kasittelija,
+              id: hakemus.id
             });
           });
         })
+    };
+    $scope.getKasHakemus = function (hakemusId){
+      console.log('KasHakemukset,getHakemusId:'+hakemusId);
+      $location.path('/k/hakemus');
     };
     loadData();
   })
