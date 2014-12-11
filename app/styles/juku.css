@@ -16,7 +16,6 @@ textarea{
   width: 100%;
 }
 
-/* CSS used here will be applied after bootstrap.css */
 .badge.badge-notify{
   background:red;
   color:white;
@@ -25,10 +24,11 @@ textarea{
   left: 20px;
 }
 
-.panel-body {
+.panel-body.clickable {
   transition: background 200ms;
 }
 
-.panel-body:hover {
-  background: greenyellow;
+.panel-body.clickable:hover {
+  background: #eeeeee;
+  cursor: pointer;
 }

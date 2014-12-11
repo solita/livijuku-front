@@ -76,8 +76,8 @@ angular.module('services.dataApi', [])
   })
 
   .factory('HakemusFactory', function ($resource) {
-    return $resource('/api/hakemukset/hakija/:id', {}, {
-      get: { url: '/api/hakemus/:id', method: 'GET', params:{id:'@id'}, isArray: false},
+    return $resource('/api/hakemukset/hakija', {}, {
+      get: { url: '/api/hakemus/:id', method: 'GET', params:{}, isArray: false},
       query: {method: 'GET', params:{id:'@id'}, isArray: true}
      });
   })

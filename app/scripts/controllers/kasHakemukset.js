@@ -32,5 +32,9 @@ angular.module('jukufrontApp')
       console.log('KasHakemukset,getHakemusId:'+hakemusId);
       $location.path('/k/hakemus');
     };
+    $scope.getKasSuunnittelu = function (vuosi){
+      console.log('KasHakemukset,getKasSuunnitteluId:'+vuosi);
+      $location.path('/k/suunnittelu/'+vuosi);
+    };
     loadData();
   })

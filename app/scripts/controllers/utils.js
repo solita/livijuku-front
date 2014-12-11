@@ -64,7 +64,7 @@ angular.module('jukufrontApp')
           var htmlText = '<span class="button btn-default">Unknown</span>';
           switch (tilatunnus) {
             case 'K':
-              htmlText = '<span class="button btn-warning">Käynnissä</span>';
+              htmlText = '<span class="button btn-warning">Keskeneräinen</span>';
               break;
             case 'V':
               htmlText = '<span class="button btn-danger">Vireillä</span>';

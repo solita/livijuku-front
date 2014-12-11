@@ -12,7 +12,7 @@ angular.module('jukufrontApp')
   .controller('LahHakemuksetCtrl', function ($scope, $location, HakemusFactory) {
 
     var loadData = function () {
-      HakemusFactory.query({id: 1}, function (data) {
+      HakemusFactory.query(function (data) {
         var hakemuksetTmp = [];
         _(angular.fromJson(data)).forEach(function (hakemusvuosi) {
           hakemuksetTmp.push({
