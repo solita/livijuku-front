@@ -75,11 +75,36 @@ angular.module('services.dataApi', [])
     };
   })
 
+  .factory('AvustuskohteetFactory', function ($resource) {
+    return $resource('/api/hakemus/avustuskohteet/:id', {}, {
+      query: {method: 'GET', isArray: true},
+      update: {
+        url: '/api/avustuskohteet',
+        method: 'PUT',
+        params: {},
+        data: '@avustuskohteet',
+        headers: {'Content-Type': 'application/json'}
+      }
+    });
+  })
+
   .factory('HakemusFactory', function ($resource) {
     return $resource('/api/hakemukset/hakija', {}, {
-      get: { url: '/api/hakemus/:id', method: 'GET', params:{}, isArray: false},
-      query: {method: 'GET', params:{id:'@id'}, isArray: true}
-     });
+      get: {url: '/api/hakemus/:id', method: 'GET', params: {}, isArray: false},
+      query: {method: 'GET', params: {id: '@id'}, isArray: true},
+      update: {
+        url: '/api/hakemus/selite',
+        method: 'PUT',
+        params: {},
+        data: '@selitedata',
+        headers: {'Content-Type': 'application/json'}
+      },
+      laheta: {
+        url: '/api/laheta-hakemus',
+        method: 'POST',
+        data: {hakemusid: '@hakemusid'}
+      }
+    });
   })
 
   .factory('HakemuskausiFactory', function ($resource) {
@@ -89,25 +114,7 @@ angular.module('services.dataApi', [])
         url: '/api/hakemuskausi',
         method: 'POST',
         params: {},
-        data: {vuosi: '@vuosi'},
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        transformRequest: function (obj) {
-          var str = [];
-          for (var key in obj) {
-            if (obj[key] instanceof Array) {
-              for (var idx in obj[key]) {
-                var subObj = obj[key][idx];
-                for (var subKey in subObj) {
-                  str.push(encodeURIComponent(key) + '[' + idx + '][' + encodeURIComponent(subKey) + ']=' + encodeURIComponent(subObj[subKey]));
-                }
-              }
-            }
-            else {
-              str.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
-            }
-          }
-          return str.join('&');
-        }
+        data: {vuosi: '@vuosi'}
       }
     });
   })

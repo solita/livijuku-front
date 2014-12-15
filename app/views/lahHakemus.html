@@ -69,7 +69,7 @@
           </div>
           <div class="col-md-3">
             <div class="pull-right">
-              <h4 class="panel-title">xxx xxx,xx €</h4>
+              <h4 class="panel-title">{{(psa1haettavaavustus + psa2haettavaavustus + psamhaettavaavustus) | currency:"&euro;"}}</h4>
             </div>
           </div>
         </div>
@@ -82,11 +82,11 @@
             </div>
             <div class="col-md-6">
               <label>Haettava valtionavustus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.paikallisliikenneValtionavustus"/>
+              <input type="number" min="0" class="form-control" ng-model="psa1haettavaavustus"/>
             </div>
             <div class="col-md-6">
               <label>Kunnan oma rahoitusosuus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.paikallisliikenneRahoitusosuus"/>
+              <input type="number" min="0" class="form-control" ng-model="psa1omarahoitus"/>
             </div>
           </div>
         </div>
@@ -97,11 +97,11 @@
             </div>
             <div class="col-md-6">
               <label>Haettava valtionavustus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.integroitupalvelulinjaValtionavustus"/>
+              <input type="number" min="0" class="form-control" ng-model="psa2haettavaavustus"/>
             </div>
             <div class="col-md-6">
               <label>Kunnan oma rahoitusosuus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.integroitupalvelulinjaRahoitusosuus"/>
+              <input type="number" min="0" class="form-control" ng-model="psa2omarahoitus"/>
             </div>
           </div>
         </div>
@@ -112,11 +112,11 @@
             </div>
             <div class="col-md-6">
               <label>Haettava valtionavustus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.muupsaValtionavustus"/>
+              <input type="number" min="0" class="form-control" ng-model="psamhaettavaavustus"/>
             </div>
             <div class="col-md-6">
               <label>Kunnan oma rahoitusosuus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.muupsaRahoitusosuus"/>
+              <input type="number" min="0" class="form-control" ng-model="psamomarahoitus"/>
             </div>
           </div>
         </div>
@@ -130,7 +130,8 @@
           </div>
           <div class="col-md-3">
             <div class="pull-right">
-              <h4 class="panel-title">xxx xxx,xx €</h4>
+              <h4 class="panel-title">{{(hkslhaettavaavustus + hkklhaettavaavustus + hkllhaettavaavustus +
+                hktlhaettavaavustus) | currency:"&euro;"}}</h4>
             </div>
           </div>
         </div>
@@ -143,11 +144,11 @@
             </div>
             <div class="col-md-6">
               <label>Haettava valtionavustus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.seutulippuValtionavustus"/>
+              <input type="number" min="0" class="form-control" ng-model="hkslhaettavaavustus"/>
             </div>
             <div class="col-md-6">
               <label>Kunnan oma rahoitusosuus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.seutulippuRahoitusosuus"/>
+              <input type="number" min="0" class="form-control" ng-model="hkslomarahoitus"/>
             </div>
           </div>
         </div>
@@ -158,11 +159,11 @@
             </div>
             <div class="col-md-6">
               <label>Haettava valtionavustus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.kaupunkikuntalippuValtionavustus"/>
+              <input type="number" min="0" class="form-control" ng-model="hkklhaettavaavustus"/>
             </div>
             <div class="col-md-6">
               <label>Kunnan oma rahoitusosuus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.kaupunkikuntalippuRahoitusosuus"/>
+              <input type="number" min="0" class="form-control" ng-model="hkklomarahoitus"/>
             </div>
           </div>
         </div>
@@ -173,11 +174,11 @@
             </div>
             <div class="col-md-6">
               <label>Haettava valtionavustus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.liityntalippuValtionavustus"/>
+              <input type="number" min="0" class="form-control" ng-model="hkllhaettavaavustus"/>
             </div>
             <div class="col-md-6">
               <label>Kunnan oma rahoitusosuus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.liityntalippuRahoitusosuus"/>
+              <input type="number" min="0" class="form-control" ng-model="hkllomarahoitus"/>
             </div>
           </div>
         </div>
@@ -188,11 +189,11 @@
             </div>
             <div class="col-md-6">
               <label>Haettava valtionavustus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.tyomatkalippuValtionavustus"/>
+              <input type="number" min="0" class="form-control" ng-model="hktlhaettavaavustus"/>
             </div>
             <div class="col-md-6">
               <label>Kunnan oma rahoitusosuus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.tyomatkalippuRahoitusosuus"/>
+              <input type="number" min="0" class="form-control" ng-model="hktlomarahoitus"/>
             </div>
           </div>
         </div>
@@ -206,7 +207,8 @@
           </div>
           <div class="col-md-3">
             <div class="pull-right">
-              <h4 class="panel-title">xxx xxx,xx €</h4>
+              <h4 class="panel-title">{{(kimhaettavaavustus + kmpkhaettavaavustus + kmkhaettavaavustus +
+                krthaettavaavustus + kmhaettavaavustus) | currency:"&euro;"}}</h4>
             </div>
           </div>
         </div>
@@ -219,13 +221,11 @@
             </div>
             <div class="col-md-6">
               <label>Haettava valtionavustus (euroa)</label>
-              <input type="text" class="form-control"
-                     ng-model="avustushakemus.informMaksujarjKehittaminenValtionavustus"/>
+              <input type="number" min="0" class="form-control" ng-model="kimhaettavaavustus"/>
             </div>
             <div class="col-md-6">
               <label>Kunnan oma rahoitusosuus (euroa)</label>
-              <input type="text" class="form-control"
-                     ng-model="avustushakemus.informMaksujarjKehittaminenRahoitusosuus"/>
+              <input type="number" min="0" class="form-control" ng-model="kimomarahoitus"/>
             </div>
           </div>
         </div>
@@ -236,11 +236,11 @@
             </div>
             <div class="col-md-6">
               <label>Haettava valtionavustus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.matkapalvelukeskusValtionavustus"/>
+              <input type="number" min="0" class="form-control" ng-model="kmpkhaettavaavustus"/>
             </div>
             <div class="col-md-6">
               <label>Kunnan oma rahoitusosuus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.matkapalvelukeskusRahoitusosuus"/>
+              <input type="number" min="0" class="form-control" ng-model="kmpkomarahoitus"/>
             </div>
           </div>
         </div>
@@ -251,11 +251,11 @@
             </div>
             <div class="col-md-6">
               <label>Haettava valtionavustus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.matkakeskusValtionavustus"/>
+              <input type="number" min="0" class="form-control" ng-model="kmkhaettavaavustus"/>
             </div>
             <div class="col-md-6">
               <label>Kunnan oma rahoitusosuus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.matkakeskusRahoitusosuus"/>
+              <input type="number" min="0" class="form-control" ng-model="kmkomarahoitus"/>
             </div>
           </div>
         </div>
@@ -266,11 +266,11 @@
             </div>
             <div class="col-md-6">
               <label>Haettava valtionavustus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.raitiotieValtionavustus"/>
+              <input type="number" min="0" class="form-control" ng-model="krthaettavaavustus"/>
             </div>
             <div class="col-md-6">
               <label>Kunnan oma rahoitusosuus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.raitiotieRahoitusosuus"/>
+              <input type="number" min="0" class="form-control" ng-model="krtomarahoitus"/>
             </div>
           </div>
         </div>
@@ -281,11 +281,11 @@
             </div>
             <div class="col-md-6">
               <label>Haettava valtionavustus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.muuhankeValtionavustus"/>
+              <input type="number" min="0" class="form-control" ng-model="kmhaettavaavustus"/>
             </div>
             <div class="col-md-6">
               <label>Kunnan oma rahoitusosuus (euroa)</label>
-              <input type="text" class="form-control" ng-model="avustushakemus.muuhankeRahoitusosuus"/>
+              <input type="number" min="0" class="form-control" ng-model="kmomarahoitus"/>
             </div>
           </div>
         </div>
@@ -297,7 +297,10 @@
       </div>
       <div class="col-md-3">
         <div class="pull-right">
-          <h4><b>XXX XXX,XX €</b></h4>
+          <h4><b>{{(psa1haettavaavustus + psa2haettavaavustus + psamhaettavaavustus + hkslhaettavaavustus +
+            hkklhaettavaavustus + hkllhaettavaavustus +
+            hktlhaettavaavustus + kimhaettavaavustus + kmpkhaettavaavustus + kmkhaettavaavustus +
+            krthaettavaavustus + kmhaettavaavustus) | currency:"&euro;"}}</b></h4>
         </div>
       </div>
     </div>
@@ -310,7 +313,7 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <textarea class="animate msd-elastic: \n;" ng-model="avustushakemus.lisatietoja"></textarea>
+          <textarea class="animate msd-elastic: \n;" ng-model="avustushakemus.selite"></textarea>
         </div>
       </div>
     </div>
@@ -370,6 +373,7 @@
     </div>
   </form>
 </div>
+
 
 
 
