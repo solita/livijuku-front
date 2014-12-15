@@ -9,7 +9,7 @@
  * */
 
 angular.module('jukufrontApp')
-  .controller('KasSuunnitteluCtrl', function ($scope, $routeParams) {
+  .controller('KasSuunnitteluCtrl', function ($scope, $location, $routeParams) {
 
     $scope.vuosi = $routeParams.vuosi;
 
@@ -30,7 +30,7 @@ angular.module('jukufrontApp')
       'myonnettavaAvustus': 0
     }];
 
-    $scope.getPaatos = function (hakemusId){
-      $location.path('/l/hakemus/'+hakemusId);
+    $scope.getPaatos = function (hakemusId, avustus){
+      $location.path('/k/paatos/'+hakemusId+'/'+avustus);
     };
   })

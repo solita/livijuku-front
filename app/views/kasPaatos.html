@@ -1,37 +1,11 @@
 <div class="row">
   <div class="col-md-12">
-    <h2><b>Suunnittelunäkymä - avustushakemukset {{vuosi}}</b></h2>
+    <h2><b>Päätös</b></h2>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
-    <h3>KESKISUURET KAUPUNKISEUDUT</h3>
+    <h3>Päätös, hakemusid:{{hakemusid}}, avustus:{{avustus}}</h3>
   </div>
 </div>
-<form name="suunnitteluForm">
-  <table st-table="hakemuksetSuunnittelu" class="table table-hover table-condensed table-striped">
-    <thead>
-    <tr>
-      <th>Hakija</th>
-      <th>Haettu avustus</th>
-      <th>Muutos</th>
-      <th>Myönnetty avustus</th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="hakemus in hakemuksetSuunnittelu" ng-click="getKasHakemus(hakemus.id)">
-      <div class="form-group">
-        <td>{{hakemus.hakija}}</td>
-        <td>{{hakemus.haettuAvustus}}</td>
-        <td>0</td>
-        <td><input type="text" class="form-control"
-                   ng-model="hakemus.myonnettavaAvustus"/></td>
-        <td>
-          <button class="btn btn-primary" ng-click="getPaatos(hakemus.hakemusId)">Päätöksentekoon</button>
-        </td>
-      </div>
-    </tr>
-    </tbody>
-  </table>
-</form>
+

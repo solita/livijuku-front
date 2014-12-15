@@ -20,7 +20,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="hakemus in hakemuksetSuunnittelu" ng-click="getKasHakemus(hakemus.id)">
+    <tr ng-repeat="hakemus in hakemuksetSuunnittelu">
       <div class="form-group">
         <td>{{hakemus.hakija}}</td>
         <td>{{hakemus.haettuAvustus}}</td>
@@ -28,7 +28,7 @@
         <td><input type="text" class="form-control"
                    ng-model="hakemus.myonnettavaAvustus"/></td>
         <td>
-          <button class="btn btn-primary" ng-click="getPaatos(hakemus.hakemusId)">Päätöksentekoon</button>
+          <button class="btn btn-primary" ng-click="getPaatos(hakemus.hakemusId,hakemus.myonnettavaAvustus)">Päätöksentekoon</button>
         </td>
       </div>
     </tr>
