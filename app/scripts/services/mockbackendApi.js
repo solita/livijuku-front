@@ -26,11 +26,12 @@ angular.module('jukufrontApp')
 
     var hakemukset = [{
       vuosi: '2015',
+      id: '101',
       osasto: 'Pori',
       diaarinumero: '123/223',
       kasittelija: 'Ei määritelty',
       aikaleima: '2014-11-25T08:21:45.206Z',
-      avustushakemusstatus: 'Keskeneräinen',
+      avustushakemusstatus: 'K',
       avustushakemushakuaika: '1.9-31.12.2014',
       paikallisliikenne: true,
       paikallisliikenneValtionavustus: '100000',
@@ -48,11 +49,12 @@ angular.module('jukufrontApp')
     },
       {
         vuosi: '2015',
+        id: '102',
         osasto: 'Helsingin seudun liikenne',
         diaarinumero: '121/221',
         kasittelija: 'Jenni Eskola',
         aikaleima: '2014-11-23T11:41:32.206Z',
-        avustushakemusstatus: 'Tarkastettu',
+        avustushakemusstatus: 'T',
         avustushakemushakuaika: '1.9-31.12.2014',
         paikallisliikenne: true,
         paikallisliikenneValtionavustus: '100000',
@@ -70,11 +72,12 @@ angular.module('jukufrontApp')
       },
       {
         vuosi: '2015',
+        id: '103',
         osasto: 'Hämeenlinna',
         diaarinumero: '111/241',
         kasittelija: 'Toni Bärman',
         aikaleima: '2014-11-20T12:01:21.206Z',
-        avustushakemusstatus: 'Käsittelyssä',
+        avustushakemusstatus: 'V',
         avustushakemushakuaika: '1.9-31.12.2014',
         paikallisliikenne: true,
         paikallisliikenneValtionavustus: '100000',
@@ -170,7 +173,17 @@ angular.module('jukufrontApp')
       }
 
     });
-    $httpBackend.whenGET(/app/).passThrough();
+    $httpBackend.whenPUT(/api\/avustuskohteet/).passThrough();
+    $httpBackend.whenGET(/api\/hakemus\/avustuskohteet\/(\d+)/).passThrough();
+    $httpBackend.whenPOST(/api\/hakemuskausi/).passThrough();
+    $httpBackend.whenGET(/api\/hakemukset/).passThrough();
+    $httpBackend.whenGET(/api\/hakemukset\/hakija/).passThrough();
+    $httpBackend.whenGET(/api\/hakemus\/(\d+)/).passThrough();
+    $httpBackend.whenPUT(/api\/hakemus\/selite/).passThrough();
+    $httpBackend.whenGET(/api\/hakemuskaudet/).passThrough();
+    $httpBackend.whenPOST(/api\/laheta-hakemus/).passThrough();
+    $httpBackend.whenPOST(/api\/tarkasta-hakemus/).passThrough();
+    $httpBackend.whenGET(/api\/organisaatiot/).passThrough();
     $httpBackend.whenGET(/\.html$/).passThrough();
     $httpBackend.whenGET(/\.json$/).passThrough();
   });

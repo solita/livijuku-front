@@ -22,6 +22,11 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-route/angular-route.js',
       'bower_components/lodash/dist/lodash.compat.js',
+      'bower_components/angular-bootstrap/ui-bootstrap.js',
+      'bower_components/angular-resource/angular-resource.js',
+      'bower_components/angular-smart-table/dist/smart-table.min.js',
+      'bower_components/angular-elastic/elastic.js',
+      'bower_components/ng-file-upload/angular-file-upload.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'

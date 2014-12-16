@@ -74,9 +74,59 @@ angular.module('services.dataApi', [])
       }
     };
   })
-  .factory('Hakemuskausi', function ($http) {
-    var getHakemuskausi = function (hakemuskausi) {
-      return $http({method: 'GET', url: '/app/hakemukset/hakija?osastoid=1'})
+
+  .factory('AvustuskohteetFactory', function ($resource) {
+    return $resource('/api/hakemus/avustuskohteet/:id', {}, {
+      query: {method: 'GET', isArray: true},
+      update: {
+        url: '/api/avustuskohteet',
+        method: 'PUT',
+        params: {},
+        data: '@avustuskohteet',
+        headers: {'Content-Type': 'application/json'}
+      }
+    });
+  })
+
+  .factory('HakemusFactory', function ($resource) {
+    return $resource('/api/hakemukset/hakija', {}, {
+      get: {url: '/api/hakemus/:id', method: 'GET', params: {}, isArray: false},
+      query: {method: 'GET', params: {id: '@id'}, isArray: true},
+      update: {
+        url: '/api/hakemus/selite',
+        method: 'PUT',
+        params: {},
+        data: '@selitedata',
+        headers: {'Content-Type': 'application/json'}
+      },
+      laheta: {
+        url: '/api/laheta-hakemus',
+        method: 'POST',
+        data: {hakemusid: '@hakemusid'}
+      },
+      tarkasta: {
+        url: '/api/tarkasta-hakemus',
+        method: 'POST',
+        data: {hakemusid: '@hakemusid'}
+      }
+    });
+  })
+
+  .factory('HakemuskausiFactory', function ($resource) {
+    return $resource('/api/hakemuskaudet', {}, {
+      query: {method: 'GET', isArray: true},
+      create: {
+        url: '/api/hakemuskausi',
+        method: 'POST',
+        params: {},
+        data: {vuosi: '@vuosi'}
+      }
+    });
+  })
+
+  .factory('Organisaatiot', function ($http) {
+    var getOrganisaatiot = function (organisaatiot) {
+      return $http({method: 'GET', url: '/api/organisaatiot'})
         .then(function (response) {
           return response.data;
         });
@@ -84,8 +134,8 @@ angular.module('services.dataApi', [])
 
     // Public API here
     return {
-      getHakemuskausi: function (hakemuskausi) {
-        return getHakemuskausi(hakemuskausi);
+      getOrganisaatiot: function (organisaatiot) {
+        return getOrganisaatiot(organisaatiot);
       }
     };
   });

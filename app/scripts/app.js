@@ -11,9 +11,12 @@
 angular
   .module('jukufrontApp', [
     'controllers.MainCtrl',
+    'ngResource',
     'services.dataApi',
-    'ui.grid',
-    'ui.grid.autoResize',
+    'smart-table',
+    'ui.bootstrap',
+    'monospaced.elastic',
+    'angularFileUpload',
     'ngRoute',
     'ngMockE2E'
   ])
@@ -23,7 +26,7 @@ angular
         templateUrl: 'views/lahHakemukset.html',
         controller: 'LahHakemuksetCtrl'
       })
-      .when('/l/hakemus', {
+      .when('/l/hakemus/:id', {
         templateUrl: 'views/lahHakemus.html',
         controller: 'LahHakemusCtrl'
       })
@@ -35,7 +38,7 @@ angular
         templateUrl: 'views/lahTietoajukusta.html',
         controller: 'AboutCtrl'
       })
-      .when('/k/hakemus', {
+      .when('/k/hakemus/:id', {
         templateUrl: 'views/kasHakemus.html',
         controller: 'KasHakemusCtrl'
       })
@@ -46,6 +49,14 @@ angular
       .when('/k/hakemuskaudenhallinta', {
         templateUrl: 'views/kasHakemuskaudenHallinta.html',
         controller: 'KasHakemuskaudenHallintaCtrl'
+      })
+      .when('/k/paatos/:hakemusid/:avustus', {
+        templateUrl: 'views/kasPaatos.html',
+        controller: 'KasPaatosCtrl'
+      })
+      .when('/k/suunnittelu/:vuosi', {
+        templateUrl: 'views/kasSuunnittelu.html',
+        controller: 'KasSuunnitteluCtrl'
       })
       .when('/main', {
         templateUrl: 'views/main.html',

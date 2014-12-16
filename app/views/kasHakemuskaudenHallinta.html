@@ -1,3 +1,108 @@
-<h1>Hakemuskaudenhallinta, datatesti</h1>
-  {{hakemuskausidata | json}}
-
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <a href="#/k/hakemukset" class="btn btn-primary">Avustushakemukset<span class="badge badge-notify">3</span></a>
+    </div>
+    <div class="col-md-3">
+      <a href="#/k/hakemukset" class="btn btn-default disabled">1. maksatushakemukset<span
+        class="badge badge-notify">10</span></a>
+    </div>
+    <div class="col-md-3">
+      <a href="#/k/hakemukset" class="btn btn-default disabled">2. maksatushakemukset<span
+        class="badge badge-notify">10</span></a>
+    </div>
+    <div class="col-md-3">
+      <a href="#/k/hakemuskaudenhallinta" class="btn btn-default">Hakemuskauden hallinta</a>
+    </div>
+  </div>
+  <div ng-repeat="hakemuskausi in hakemuskaudet">
+    <div ng-if="hakemuskausi.uusi" class="uusihakemuskausi">
+      <div class="row">
+        <div class="col-md-3 text-center">
+          <h1>{{hakemuskausi.vuosi}}</h1>
+          <a href="" class="btn btn-primary">Lataa hakuohje</a>
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <button data-ng-click="createHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
+              hakemus oletusarvoilla
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-9">
+          <a href=""><span class="glyphicon glyphicon-envelope"></span> Lähetä viesti hakijoille</a>
+        </div>
+      </div>
+    </div>
+    <div ng-if="!hakemuskausi.uusi" class="well">
+      <div class="row">
+        <div class="col-md-3 text-center">
+          <h1>{{hakemuskausi.vuosi}}</h1>
+          <a href="" class="btn btn-primary">Lataa hakuohje</a>
+          <br>
+          <br>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Avustushakemus</h3>
+            </div>
+            <div class="panel-body">
+              <h3>
+                <hakemus-label tila="{{hakemuskausi.avustushakemusTilatunnus}}"></hakemus-label>
+              </h3>
+              <h4>Hakuaika:</h4>
+              <h4>{{hakemuskausi.avustushakemusAlkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.avustushakemusLoppupvm |
+                date:'dd.MM yyyy'}}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">1. maksatushakemus</h3>
+            </div>
+            <div class="panel-body">
+              <h3>
+                <hakemus-label tila="{{hakemuskausi.maksatushakemus1Tilatunnus}}"></hakemus-label>
+              </h3>
+              <h4>Hakuaika:</h4>
+              <h4>{{hakemuskausi.maksatushakemus1Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus1Loppupvm |
+                date:'dd.MM yyyy'}}</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">2. maksatushakemus</h3>
+            </div>
+            <div class="panel-body">
+              <h3>
+                <hakemus-label tila="{{hakemuskausi.maksatushakemus2Tilatunnus}}"></hakemus-label>
+              </h3>
+              <h4>Hakuaika:</h4>
+              <h4>{{hakemuskausi.maksatushakemus2Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus2Loppupvm |
+                date:'dd.MM yyyy'}}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <a href=""><span class="glyphicon glyphicon-remove"></span> Sulje hakuprosessi</a>
+        </div>
+        <div class="col-md-3">
+          <a href=""><span class="glyphicon glyphicon-envelope"></span> Lähetä viesti hakijoille</a>
+        </div>
+        <div class="col-md-6">
+          <a href=""><span class="glyphicon glyphicon-pencil"></span> Muokkaa hakuaikoja</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
