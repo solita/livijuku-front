@@ -38,8 +38,7 @@ angular.module('jukufrontApp')
     };
 
     $scope.getKasHakemus = function (hakemusId) {
-      console.log('KasHakemukset,getHakemusId:' + hakemusId);
-      $location.path('/k/hakemus');
+      $location.path('/k/hakemus/'+hakemusId);
     };
     $scope.getKasSuunnittelu = function (vuosi) {
       console.log('KasHakemukset,getKasSuunnitteluId:' + vuosi);
@@ -47,32 +46,5 @@ angular.module('jukufrontApp')
     };
     loadData();
   }
-)
-;
+);
 
-/**
- *       HakemuksetOsasto.getAvustushakemuksetVuosi('2015')
- .then(function (data) {
-          $scope.hakemuksetVuosi = [];
-          angular.forEach(data, function (hakemus) {
-            $scope.hakemuksetVuosi.push({
-              hakija: hakemus.osasto,
-              hakemuksenTila: hakemus.avustushakemusstatus,
-              viimeisinMuutos: $filter('date')(hakemus.aikaleima, 'dd/MM/yyyy HH:mm'),
-              diaarinumero: hakemus.diaarinumero,
-              kasittelija: hakemus.kasittelija,
-              id: hakemus.id
-            });
-          });
-        })
- };
-
-
- 'vuosi': hakemuskausi.vuosi,
- 'hakija': _.filter(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).organisaatioid,
- 'hakemuksentila': _.filter(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).hakemustilatunnus,
- 'viimeisinMuutos':'Ei rajapintaa',
- 'diaarinumero': 'Ei rajapintaa',
- 'kasittelija': 'Ei rajapintaa',
- 'id': _.filter(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).id
- */

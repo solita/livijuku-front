@@ -38,7 +38,7 @@ angular
         templateUrl: 'views/lahTietoajukusta.html',
         controller: 'AboutCtrl'
       })
-      .when('/k/hakemus', {
+      .when('/k/hakemus/:id', {
         templateUrl: 'views/kasHakemus.html',
         controller: 'KasHakemusCtrl'
       })

@@ -103,6 +103,11 @@ angular.module('services.dataApi', [])
         url: '/api/laheta-hakemus',
         method: 'POST',
         data: {hakemusid: '@hakemusid'}
+      },
+      tarkasta: {
+        url: '/api/tarkasta-hakemus',
+        method: 'POST',
+        data: {hakemusid: '@hakemusid'}
       }
     });
   })

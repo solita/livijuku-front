@@ -182,6 +182,7 @@ angular.module('jukufrontApp')
     $httpBackend.whenPUT(/api\/hakemus\/selite/).passThrough();
     $httpBackend.whenGET(/api\/hakemuskaudet/).passThrough();
     $httpBackend.whenPOST(/api\/laheta-hakemus/).passThrough();
+    $httpBackend.whenPOST(/api\/tarkasta-hakemus/).passThrough();
     $httpBackend.whenGET(/api\/organisaatiot/).passThrough();
     $httpBackend.whenGET(/\.html$/).passThrough();
     $httpBackend.whenGET(/\.json$/).passThrough();
