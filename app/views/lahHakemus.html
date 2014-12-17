@@ -22,23 +22,23 @@
   <div class="row">
     <div class="col-md-3">
       <h4><b>Kunnan nimi</b></h4>
-      <h5>{{osastoTiedot.kuntaNimi}}</h5>
+      <h5>{{hakija}}</h5>
       <h4>Pankkitilin numero</h4>
-      <h5>{{osastoTiedot.kuntaPankkitili}}</h5>
+      <h5>Puuttuu</h5>
     </div>
     <div class="col-md-3">
       <h4><b>Hakijat</b></h4>
-      <h5>{{osastoTiedot.kuntaYhteysHlo}}</h5>
-      <h5>{{osastoTiedot.kuntaYhteysHloVirkaAsema}}</h5>
-      <h5>{{osastoTiedot.kuntaYhteysHloPuh}}</h5>
-      <h5>{{osastoTiedot.kuntaYhteysHloSahkoposti}}</h5>
+      <h5>Puuttuu</h5>
+      <h5>Puuttuu</h5>
+      <h5>Puuttuu</h5>
+      <h5>Puuttuu</h5>
     </div>
     <div class="col-md-3">
       <br>
-      <h5>{{osastoTiedot.kuntaToinenYhteysHlo}}</h5>
-      <h5>{{osastoTiedot.kuntaToinenYhteysHloVirkaAsema}}</h5>
-      <h5>{{osastoTiedot.kuntaToinenYhteysHloPuh}}</h5>
-      <h5>{{osastoTiedot.kuntaToinenYhteysHloSahkoposti}}</h5>
+      <h5>Puuttuu</h5>
+      <h5>Puuttuu</h5>
+      <h5>Puuttuu</h5>
+      <h5>Puuttuu</h5>
     </div>
   </div>
   <div class="row">
@@ -46,10 +46,10 @@
     <div class="col-md-3">
       <br>
       <h4><b>Päätöksentekijä</b></h4>
-      <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHlo}}</h5>
-      <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHloVirkaAsema}}</h5>
-      <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHloPuh}}</h5>
-      <h5>{{osastoTiedot.kuntaHyvaksyjaYhteysHloSahkoposti}}</h5>
+      <h5>Puuttuu</h5>
+      <h5>Puuttuu</h5>
+      <h5>Puuttuu</h5>
+      <h5>Puuttuu</h5>
     </div>
   </div>
   <div>
@@ -337,10 +337,10 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
           <a href="#"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-2">
           <div ng-show="(avustushakemus.hakemustilatunnus == 'K')">
             <button data-ng-click="saveAvustushakemus()" class="pull-right btn btn-primary">Tallenna tiedot</button>
           </div>
@@ -348,6 +348,8 @@
             <button data-ng-click="saveAvustushakemus()" class="pull-right btn btn-primary" disabled>Tallenna tiedot
             </button>
           </div>
+        </div>
+        <div class="col-md-2">
           <button data-ng-click="showAvustushakemus()" class="pull-right btn btn-primary">Hakemuksen esikatselu</button>
         </div>
       </div>

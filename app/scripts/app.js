@@ -30,6 +30,10 @@ angular
         templateUrl: 'views/lahHakemus.html',
         controller: 'LahHakemusCtrl'
       })
+      .when('/l/hakemus/esikatselu/:id', {
+        templateUrl: 'views/lahHakemusEsikatselu.html',
+        controller: 'KasHakemusCtrl'
+      })
       .when('/l/hakemukset', {
         templateUrl: 'views/lahHakemukset.html',
         controller: 'LahHakemuksetCtrl'
