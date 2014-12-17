@@ -9,7 +9,7 @@
  * */
 
 angular.module('jukufrontApp')
-  .controller('LahHakemusCtrl', function ($scope, $location, Osasto, $routeParams, HakemusFactory, AvustuskohteetFactory) {
+  .controller('LahHakemusCtrl', function ($rootScope, $scope, $location, Osasto, $routeParams, HakemusFactory, AvustuskohteetFactory) {
     function getHaettavaavustus(avustuskohdelaji) {
       if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
         return parseInt((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).haettavaavustus);
@@ -32,6 +32,8 @@ angular.module('jukufrontApp')
     $scope.loadData = function () {
       HakemusFactory.get({'id': $routeParams.id}, (function (data) {
         $scope.avustushakemus = data;
+        $scope.hakija = _.find($rootScope.organisaatiot, {'id': $scope.avustushakemus.organisaatioid}).nimi;
+        $scope.aikaleima = new Date();
       }));
 
       AvustuskohteetFactory.query({'id': $routeParams.id}, (function (data) {
@@ -63,19 +65,23 @@ angular.module('jukufrontApp')
         $scope.kmhaettavaavustus = getHaettavaavustus('K-M');
         $scope.kmomarahoitus = getOmarahoitus('K-M');
       }));
-    }
+    };
 
     $scope.sendAvustushakemus = function () {
       HakemusFactory.laheta({'hakemusid': $scope.avustushakemus.id});
       $location.path('/l/hakemukset');
     };
 
+    $scope.showAvustushakemus = function(){
+      $location.path('/l/hakemus/esikatselu/'+$scope.avustushakemus.id);
+    };
+
     $scope.updateAvustuskohteet = function (avustuskohteet) {
-      AvustuskohteetFactory.update(avustuskohteet)
+      AvustuskohteetFactory.update(avustuskohteet);
     };
 
     $scope.updateSelite = function (selitedata) {
-      HakemusFactory.update(selitedata)
+      HakemusFactory.update(selitedata);
     };
 
     $scope.saveAvustushakemus = function () {
