@@ -7,15 +7,22 @@
  * Controller of the jukufrontApp. Contains misc functions
  * */
 angular.module('jukufrontApp')
-  .controller('UtilCtrl', function ($scope, $rootScope, $location, Organisaatiot) {
+  .controller('UtilCtrl', function ($scope, $rootScope, $location, Organisaatiot, UserFactory) {
     $scope.isActive = function (route) {
       return route === $location.path();
     };
+
+    UserFactory.query(function (data) {
+      $rootScope.user = data;
+    });
+
     Organisaatiot.getOrganisaatiot()
       .then(function (data) {
         $rootScope.organisaatiot = data;
+        $rootScope.userOrganisaatio = _.find($rootScope.organisaatiot, {'id': $rootScope.user.organisaatioid}).nimi;
       });
-  })
+  }
+)
   .directive('hakemusLabel', function () {
     return {
       scope: {

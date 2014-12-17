@@ -39,6 +39,11 @@
           <li class="headertxt" ng-class="{active:isActive('/k/hakemukset')}">
             <a href="#/k/hakemukset" ng-href="#/k/hakemukset" class="navbartxt">Käsittelijän hakemukset</a>
           </li>
+          </ul>
+        <ul class="nav navbar-nav pull-right">
+          <li class="navbaruser">
+            <p class="navbartxt">{{user.etunimi}} {{user.sukunimi}} <br> {{userOrganisaatio}}</p>
+          </li>
           <!--
                 <li>
                   <a ng-href="#/l/tietoajukusta">Tietoa JUKUsta</a>

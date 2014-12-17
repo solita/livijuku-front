@@ -124,6 +124,12 @@ angular.module('services.dataApi', [])
     });
   })
 
+  .factory('UserFactory', function ($resource) {
+    return $resource('/api/user', {}, {
+      query: {method: 'GET', isArray: false}
+    });
+  })
+
   .factory('Organisaatiot', function ($http) {
     var getOrganisaatiot = function (organisaatiot) {
       return $http({method: 'GET', url: '/api/organisaatiot'})
