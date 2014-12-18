@@ -9,11 +9,6 @@ body
   margin-bottom: 90px;
 }
 
-h3
-{
-  margin-bottom: 2px;
-}
-
 #footer {
   position: absolute;
   bottom: 0;
@@ -120,4 +115,18 @@ textarea
 .panel-body.clickable:hover {
   background: #eeeeee;
   cursor: pointer;
+}
+
+.jukutooltip
+{
+    margin-left: 10px;
+}
+
+.headertxtselected
+{
+    background-color: #afa1a1;
+    border-radius: 6px 6px 0px 0px;
+    top: 5px;
+    height: 45px;
+    color: #ffffff;
 }
