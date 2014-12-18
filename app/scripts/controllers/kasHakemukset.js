@@ -11,7 +11,7 @@
 angular.module('jukufrontApp')
   .controller('KasHakemuksetCtrl', function ($rootScope, $scope, $filter, $location, HakemuskausiFactory) {
     $scope.displayed = [];
-    var loadData = function () {
+    $scope.loadData = function () {
       HakemuskausiFactory.query(function (data) {
         $scope.kaikkiHakemukset = data;
         var hakemuskaudetTmp = [];
@@ -40,11 +40,10 @@ angular.module('jukufrontApp')
     $scope.getKasHakemus = function (hakemusId) {
       $location.path('/k/hakemus/'+hakemusId);
     };
-    $scope.getKasSuunnittelu = function (vuosi) {
-      console.log('KasHakemukset,getKasSuunnitteluId:' + vuosi);
-      $location.path('/k/suunnittelu/' + vuosi);
+    $scope.getKasSuunnittelu = function (vuosi, tyyppi) {
+      $location.path('/k/suunnittelu/' + vuosi+ '/'+ tyyppi);
     };
-    loadData();
+    $scope.loadData();
   }
 );
 

@@ -108,6 +108,11 @@ angular.module('services.dataApi', [])
         url: '/api/tarkasta-hakemus',
         method: 'POST',
         data: {hakemusid: '@hakemusid'}
+      },
+      suunniteltuavustus: {
+        url: '/api/hakemus/suunniteltuavustus',
+        method: 'PUT',
+        data: '@avustusdata'
       }
     });
   })
@@ -121,6 +126,12 @@ angular.module('services.dataApi', [])
         params: {},
         data: {vuosi: '@vuosi'}
       }
+    });
+  })
+
+  .factory('HakemusSuunnitelmatFactory', function ($resource) {
+    return $resource('/api/hakemussuunnitelmat/:vuosi/:hakemustyyppitunnus', {}, {
+      get: {method: 'GET', params: {}, isArray: true}
     });
   })
 

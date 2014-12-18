@@ -180,7 +180,9 @@ angular.module('jukufrontApp')
     $httpBackend.whenGET(/api\/hakemukset\/hakija/).passThrough();
     $httpBackend.whenGET(/api\/hakemus\/(\d+)/).passThrough();
     $httpBackend.whenPUT(/api\/hakemus\/selite/).passThrough();
+    $httpBackend.whenPUT(/api\/hakemus\/suunniteltuavustus/).passThrough();
     $httpBackend.whenGET(/api\/hakemuskaudet/).passThrough();
+    $httpBackend.whenGET(/api\/hakemussuunnitelmat\/(\d+)\/(\w+)/).passThrough();
     $httpBackend.whenPOST(/api\/laheta-hakemus/).passThrough();
     $httpBackend.whenPOST(/api\/tarkasta-hakemus/).passThrough();
     $httpBackend.whenGET(/api\/organisaatiot/).passThrough();

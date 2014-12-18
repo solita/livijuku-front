@@ -6,7 +6,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <h3>KESKISUURET KAUPUNKISEUDUT</h3>
+      <h3>KAUPUNKISEUDUT</h3>
     </div>
   </div>
   <form name="suunnitteluForm">
@@ -24,10 +24,17 @@
       <tr ng-repeat="hakemus in hakemuksetSuunnittelu">
         <div class="form-group">
           <td>{{hakemus.hakija}}</td>
-          <td>{{hakemus.haettuAvustus}}</td>
-          <td>0</td>
-          <td><input type="text" class="form-control"
-                     ng-model="hakemus.myonnettavaAvustus"/></td>
+          <td>
+            <div ng-show="hakemus.hakemuksenTila!='T'">
+              <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
+            </div>
+            <div ng-show="hakemus.hakemuksenTila=='T'">
+              {{hakemus.haettuAvustus}}
+            </div>
+          </td>
+          <td>{{hakemus.muutos}}</td>
+          <td><input type="number" min="0" class="form-control"
+                     ng-model="hakemus.myonnettavaAvustus" ng-blur="updateAvustus(hakemus.hakemusId,hakemus.myonnettavaAvustus)"/></td>
           <td>
             <button class="btn btn-primary" ng-click="getPaatos(hakemus.hakemusId,hakemus.myonnettavaAvustus)">
               Päätöksentekoon
@@ -35,7 +42,19 @@
           </td>
         </div>
       </tr>
+      <tr>
+        <td>Yhteensä</td>
+        <td>{{haettuAvustusSum}}</td>
+        <td>{{muutosSum}}</td>
+        <td>{{myonnettavaAvustusSum}}</td>
+      </tr>
       </tbody>
     </table>
   </form>
+  <div class="row">
+    <div class="col-md-12">
+      <a href="#/k/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa avustushakemusten
+        suunnittelunäkymään</a>
+    </div>
+  </div>
 </div>

@@ -58,7 +58,7 @@ angular
         templateUrl: 'views/kasPaatos.html',
         controller: 'KasPaatosCtrl'
       })
-      .when('/k/suunnittelu/:vuosi', {
+      .when('/k/suunnittelu/:vuosi/:tyyppi', {
         templateUrl: 'views/kasSuunnittelu.html',
         controller: 'KasSuunnitteluCtrl'
       })
