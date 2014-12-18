@@ -21,8 +21,8 @@ angular.module('jukufrontApp')
             avustushakemuksetPerVuosi.push({
               'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
               'hakemuksenTila': hakemus.hakemustilatunnus,
-              'viimeisinMuutos': '16.12.2014 11:24',
-              'diaarinumero': '123/456',
+              'viimeisinMuutos': hakemus.muokkausaika,
+              'diaarinumero': hakemus.diaarinumero,
               'kasittelija': 'Ei määritelty',
               'id': hakemus.id
             });
