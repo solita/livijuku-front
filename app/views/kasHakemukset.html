@@ -45,7 +45,7 @@
             <td>
               <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
             </td>
-            <td>{{hakemus.viimeisinMuutos}}</td>
+            <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
             <td>{{hakemus.diaarinumero}}</td>
             <td>{{hakemus.kasittelija}}</td>
           </tr>

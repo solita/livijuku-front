@@ -8,6 +8,7 @@
  * */
 angular.module('jukufrontApp')
   .controller('UtilCtrl', function ($scope, $rootScope, $location, Organisaatiot, UserFactory) {
+    
     $scope.isActive = function (route) {
       return route === $location.path();
     };

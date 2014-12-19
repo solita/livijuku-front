@@ -21,16 +21,22 @@ angular.module('jukufrontApp')
             avustushakemuksetPerVuosi.push({
               'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
               'hakemuksenTila': hakemus.hakemustilatunnus,
-              'viimeisinMuutos': hakemus.muokkausaika,
+              'viimeisinMuutos': Number(new Date(hakemus.muokkausaika)),
               'diaarinumero': hakemus.diaarinumero,
               'kasittelija': 'Ei määritelty',
               'id': hakemus.id
             });
           });
-          hakemuskaudetTmp.push({'vuosi': hakemuskausi.vuosi, 'avustushakemukset': avustushakemuksetPerVuosi, 'accordionOpen': false});
+          hakemuskaudetTmp.push({
+            'vuosi': hakemuskausi.vuosi,
+            'avustushakemukset': avustushakemuksetPerVuosi,
+            'accordionOpen': false
+          });
         });
         $scope.avustushakemukset = _.sortBy(hakemuskaudetTmp, 'vuosi').reverse();
-        $scope.avustushakemukset[0].accordionOpen=true;
+        if ($scope.avustushakemukset.length > 0) {
+          $scope.avustushakemukset[0].accordionOpen = true;
+        }
       }, function
         (error) {
         console.log('kasHakemukset.js' + error.toString());
@@ -38,10 +44,10 @@ angular.module('jukufrontApp')
     };
 
     $scope.getKasHakemus = function (hakemusId) {
-      $location.path('/k/hakemus/'+hakemusId);
+      $location.path('/k/hakemus/' + hakemusId);
     };
     $scope.getKasSuunnittelu = function (vuosi, tyyppi) {
-      $location.path('/k/suunnittelu/' + vuosi+ '/'+ tyyppi);
+      $location.path('/k/suunnittelu/' + vuosi + '/' + tyyppi);
     };
     $scope.loadData();
   }
