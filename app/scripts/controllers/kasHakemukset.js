@@ -1,18 +1,11 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name jukufrontApp.controller:KasHakemuksetCtrl
- * @description
- * # KasHakemuksetCtrl
- * Controller of the jukufrontApp
- * */
-
 angular.module('jukufrontApp')
   .controller('KasHakemuksetCtrl', function ($rootScope, $scope, $filter, $location, HakemuskausiFactory) {
     $scope.displayed = [];
-    $scope.loadData = function () {
-      HakemuskausiFactory.query(function (data) {
+    $scope.haeHakemukset = function () {
+      HakemuskausiFactory.hae()
+        .success(function (data) {
         $scope.kaikkiHakemukset = data;
         var hakemuskaudetTmp = [];
         _(angular.fromJson(data)).forEach(function (hakemuskausi) {
@@ -37,9 +30,9 @@ angular.module('jukufrontApp')
         if ($scope.avustushakemukset.length > 0) {
           $scope.avustushakemukset[0].accordionOpen = true;
         }
-      }, function
-        (error) {
-        console.log('kasHakemukset.js' + error.toString());
+      })
+        .error(function (data) {
+          console.log('Virhe: OrganisaatioFactory.hae(): '+data);
       });
     };
 
@@ -49,7 +42,7 @@ angular.module('jukufrontApp')
     $scope.getKasSuunnittelu = function (vuosi, tyyppi) {
       $location.path('/k/suunnittelu/' + vuosi + '/' + tyyppi);
     };
-    $scope.loadData();
+    $scope.haeHakemukset();
   }
 );
 

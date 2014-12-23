@@ -1,15 +1,7 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name jukufrontApp.controller:LahHakemusCtrl
- * @description
- * # LahHakemusCtrl
- * Controller of the jukufrontApp
- * */
-
 angular.module('jukufrontApp')
-  .controller('LahHakemusCtrl', function ($rootScope, $scope, $location, Osasto, $routeParams, HakemusFactory, AvustuskohteetFactory) {
+  .controller('LahHakemusCtrl', function ($rootScope, $scope, $location, $routeParams, HakemusFactory, AvustuskohdeFactory) {
     function getHaettavaavustus(avustuskohdelaji) {
       if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
         return parseInt((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).haettavaavustus);
@@ -28,63 +20,77 @@ angular.module('jukufrontApp')
       }
     }
 
+    $scope.haeHakemukset = function () {
+      HakemusFactory.hae($routeParams.id)
+        .success(function (data) {
+          $scope.avustushakemus = data;
+          $scope.hakija = _.find($rootScope.organisaatiot, {'id': $scope.avustushakemus.organisaatioid}).nimi;
+          $scope.aikaleima = new Date();
+        })
+        .error(function (data) {
+          console.log('Virhe: HakemusFactory.hae(' + $routeParams.id + '): ' + data);
+        });
+      AvustuskohdeFactory.hae($routeParams.id)
+        .success(function (data) {
+          $scope.aktiivisetavustuskohteet = data;
+          $scope.psa1haettavaavustus = getHaettavaavustus('PSA-1');
+          $scope.psa1omarahoitus = getOmarahoitus('PSA-1');
+          $scope.psa2haettavaavustus = getHaettavaavustus('PSA-2');
+          $scope.psa2omarahoitus = getOmarahoitus('PSA-2');
+          $scope.psamhaettavaavustus = getHaettavaavustus('PSA-M');
+          $scope.psamomarahoitus = getOmarahoitus('PSA-M');
+          $scope.hkslhaettavaavustus = getHaettavaavustus('HK-SL');
+          $scope.hkslomarahoitus = getOmarahoitus('HK-SL');
+          $scope.hkklhaettavaavustus = getHaettavaavustus('HK-KL');
+          $scope.hkklomarahoitus = getOmarahoitus('HK-KL');
+          $scope.hkslhaettavaavustus = getHaettavaavustus('HK-SL');
+          $scope.hkslomarahoitus = getOmarahoitus('HK-SL');
+          $scope.hkllhaettavaavustus = getHaettavaavustus('HK-LL');
+          $scope.hkllomarahoitus = getOmarahoitus('HK-LL');
+          $scope.hktlhaettavaavustus = getHaettavaavustus('HK-TL');
+          $scope.hktlomarahoitus = getOmarahoitus('HK-TL');
+          $scope.kimhaettavaavustus = getHaettavaavustus('K-IM');
+          $scope.kimomarahoitus = getOmarahoitus('K-IM');
+          $scope.kmpkhaettavaavustus = getHaettavaavustus('K-MPK');
+          $scope.kmpkomarahoitus = getOmarahoitus('K-MPK');
+          $scope.kmkhaettavaavustus = getHaettavaavustus('K-MK');
+          $scope.kmkomarahoitus = getOmarahoitus('K-MK');
+          $scope.krthaettavaavustus = getHaettavaavustus('K-RT');
+          $scope.krtomarahoitus = getOmarahoitus('K-RT');
+          $scope.kmhaettavaavustus = getHaettavaavustus('K-M');
+          $scope.kmomarahoitus = getOmarahoitus('K-M');
+        })
+        .error(function (data) {
+          console.log('Virhe: AvustuskohdeFactory.hae(' + $routeParams.id + '): ' + data);
+        });
 
-    $scope.loadData = function () {
-      HakemusFactory.get({'id': $routeParams.id}, (function (data) {
-        $scope.avustushakemus = data;
-        $scope.hakija = _.find($rootScope.organisaatiot, {'id': $scope.avustushakemus.organisaatioid}).nimi;
-        $scope.aikaleima = new Date();
-      }));
-
-      AvustuskohteetFactory.query({'id': $routeParams.id}, (function (data) {
-        $scope.aktiivisetavustuskohteet = data;
-        $scope.psa1haettavaavustus = getHaettavaavustus('PSA-1');
-        $scope.psa1omarahoitus = getOmarahoitus('PSA-1');
-        $scope.psa2haettavaavustus = getHaettavaavustus('PSA-2');
-        $scope.psa2omarahoitus = getOmarahoitus('PSA-2');
-        $scope.psamhaettavaavustus = getHaettavaavustus('PSA-M');
-        $scope.psamomarahoitus = getOmarahoitus('PSA-M');
-        $scope.hkslhaettavaavustus = getHaettavaavustus('HK-SL');
-        $scope.hkslomarahoitus = getOmarahoitus('HK-SL');
-        $scope.hkklhaettavaavustus = getHaettavaavustus('HK-KL');
-        $scope.hkklomarahoitus = getOmarahoitus('HK-KL');
-        $scope.hkslhaettavaavustus = getHaettavaavustus('HK-SL');
-        $scope.hkslomarahoitus = getOmarahoitus('HK-SL');
-        $scope.hkllhaettavaavustus = getHaettavaavustus('HK-LL');
-        $scope.hkllomarahoitus = getOmarahoitus('HK-LL');
-        $scope.hktlhaettavaavustus = getHaettavaavustus('HK-TL');
-        $scope.hktlomarahoitus = getOmarahoitus('HK-TL');
-        $scope.kimhaettavaavustus = getHaettavaavustus('K-IM');
-        $scope.kimomarahoitus = getOmarahoitus('K-IM');
-        $scope.kmpkhaettavaavustus = getHaettavaavustus('K-MPK');
-        $scope.kmpkomarahoitus = getOmarahoitus('K-MPK');
-        $scope.kmkhaettavaavustus = getHaettavaavustus('K-MK');
-        $scope.kmkomarahoitus = getOmarahoitus('K-MK');
-        $scope.krthaettavaavustus = getHaettavaavustus('K-RT');
-        $scope.krtomarahoitus = getOmarahoitus('K-RT');
-        $scope.kmhaettavaavustus = getHaettavaavustus('K-M');
-        $scope.kmomarahoitus = getOmarahoitus('K-M');
-      }));
     };
 
-    $scope.sendAvustushakemus = function () {
-      HakemusFactory.laheta({'hakemusid': $scope.avustushakemus.id});
-      $location.path('/l/hakemukset');
+    $scope.lahetaAvustushakemus = function () {
+      HakemusFactory.laheta($scope.avustushakemus.id)
+        .success(function () {
+          $location.path('/l/hakemukset');
+        })
+        .error(function (data) {
+          console.log('Virhe: HakemusFactory.laheta(' + $scope.avustushakemus.id + '): ' + data);
+        });
     };
 
-    $scope.showAvustushakemus = function(){
-      $location.path('/l/hakemus/esikatselu/'+$scope.avustushakemus.id);
+    $scope.naytaAvustushakemus = function () {
+      $location.path('/l/hakemus/esikatselu/' + $scope.avustushakemus.id);
     };
 
-    $scope.updateAvustuskohteet = function (avustuskohteet) {
-      AvustuskohteetFactory.update(avustuskohteet);
+    $scope.tallennaAvustuskohteet = function (avustuskohteet) {
+      AvustuskohdeFactory.tallenna(avustuskohteet)
+        .success(function () {
+          $scope.haeHakemukset();
+        })
+        .error(function (data) {
+          console.log('Virhe: AvustuskohdeFactory.tallenna():' + data);
+        });
     };
 
-    $scope.updateSelite = function (selitedata) {
-      HakemusFactory.update(selitedata);
-    };
-
-    $scope.saveAvustushakemus = function () {
+    $scope.tallennaAvustushakemus = function () {
       var avustuskohteet = [
         {
           'hakemusid': $scope.avustushakemus.id,
@@ -159,18 +165,20 @@ angular.module('jukufrontApp')
           'omarahoitus': $scope.kmomarahoitus
         }
       ];
-
-      $scope.updateAvustuskohteet(avustuskohteet);
-
+      $scope.tallennaAvustuskohteet(avustuskohteet);
       if ($scope.avustushakemus.selite !== null) {
         var selitedata = {
           'selite': $scope.avustushakemus.selite,
           'hakemusid': $scope.avustushakemus.id
         };
-
-        $scope.updateSelite(selitedata);
+        HakemusFactory.tallennaSelite(selitedata)
+          .success(function () {
+          })
+          .error(function (data) {
+            console.log('Virhe: HakemusFactory.tallennaSelite(' + selitedata + '):' + data);
+          });
       }
     };
 
-    $scope.loadData();
+    $scope.haeHakemukset();
   });
