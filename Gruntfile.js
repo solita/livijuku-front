@@ -399,6 +399,12 @@ module.exports = function (grunt) {
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
+      options: {
+	// Rajoitettu rinnakkaisuus 1:een, koska https://github.com/yeoman/generator-webapp/issues/449
+	// Ongelma ilmeni raiderilla linux-buildissa aina välillä (1/10 buildista tms.)
+        logConcurrentOutput: true,
+        limit: 1
+      },
       server: [
         'sass:server',
         'copy:styles'
