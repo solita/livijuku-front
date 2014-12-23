@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasHakemuskaudenHallintaCtrl', function ($scope, $location, $route, $log, HakemuskausiFactory) {
+  .controller('KasHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiFactory', function ($scope, $location, $route, $log, HakemuskausiFactory) {
     $scope.haeHakemuskaudet = function () {
       HakemuskausiFactory.hae()
         .success(function (data) {
@@ -49,11 +49,11 @@ angular.module('jukufrontApp')
           $scope.haeHakemuskaudet();
         })
         .error(function (data) {
-          console.log('Virhe: HakemuskausiFactory.luoUusi('+vuosi+'): ' + data);
+          console.log('Virhe: HakemuskausiFactory.luoUusi(' + vuosi + '): ' + data);
         });
     };
 
     $scope.haeHakemuskaudet();
 
-  });
+  }]);
 

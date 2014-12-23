@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasHakemusCtrl', function ($rootScope, $scope, $location, $routeParams, AvustuskohdeFactory, HakemusFactory) {
+  .controller('KasHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'AvustuskohdeFactory', 'HakemusFactory', function ($rootScope, $scope, $location, $routeParams, AvustuskohdeFactory, HakemusFactory) {
     function getHaettavaavustus(avustuskohdelaji) {
       if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
         return parseInt((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).haettavaavustus);
@@ -77,5 +77,5 @@ angular.module('jukufrontApp')
     };
 
     $scope.haeAvustusHakemus();
-  }
+  }]
 );

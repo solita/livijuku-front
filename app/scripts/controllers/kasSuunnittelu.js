@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasSuunnitteluCtrl', function ($rootScope, $scope, $location, $routeParams, HakemusFactory, SuunnitteluFactory) {
+  .controller('KasSuunnitteluCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusFactory', 'SuunnitteluFactory', function ($rootScope, $scope, $location, $routeParams, HakemusFactory, SuunnitteluFactory) {
 
     $scope.vuosi = $routeParams.vuosi;
 
@@ -51,4 +51,4 @@ angular.module('jukufrontApp')
           console.log('Virhe:  SuunnitteluFactory.suunniteltuAvustus(' + avustus + ',' + hakemusid + '): ' + data);
         });
     };
-  });
+  }]);
