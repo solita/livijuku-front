@@ -1,18 +1,11 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name jukufrontApp.controller:MainCtrl
- * @description
- * # AvustushakemusCtrl
- * Controller of the jukufrontApp
- * */
-
 angular.module('jukufrontApp')
   .controller('LahHakemuksetCtrl', function ($scope, $location, HakemusFactory) {
 
-    $scope.loadData = function () {
-      HakemusFactory.query(function (data) {
+    $scope.haeHakemukset = function () {
+      HakemusFactory.haeKaikki()
+        .success(function (data) {
         var hakemuksetTmp = [];
         _(angular.fromJson(data)).forEach(function (hakemusvuosi) {
           var nykyhetki = Number(new Date());
@@ -48,15 +41,16 @@ angular.module('jukufrontApp')
           });
         });
         $scope.hakemukset = _.sortBy(hakemuksetTmp, 'vuosi').reverse();
-      }, function (error) {
-        console.log('kasHakemuskaudenHallinta.js' + error.toString());
-      });
+      })
+        .error(function (data) {
+          console.log('Virhe:HakemusFactory.haeKaikki(): ' + data);
+        });
     };
 
-    $scope.getHakemus = function (hakemusId){
+    $scope.valitseHakemus = function (hakemusId){
       $location.path('/l/hakemus/'+hakemusId);
     };
 
-    $scope.loadData();
+    $scope.haeHakemukset();
 
   });

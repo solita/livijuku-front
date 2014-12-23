@@ -10,15 +10,19 @@
  */
 angular
   .module('jukufrontApp', [
+    'services.avustuskohde',
+    'services.hakemus',
+    'services.hakemuskausi',
+    'services.kayttaja',
+    'services.organisaatio',
+    'services.suunnittelu',
     'controllers.MainCtrl',
     'ngResource',
-    'services.dataApi',
     'smart-table',
     'ui.bootstrap',
     'monospaced.elastic',
     'angularFileUpload',
-    'ngRoute',
-    'ngMockE2E'
+    'ngRoute'
   ])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider

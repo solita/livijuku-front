@@ -1,63 +1,54 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name jukufrontApp.controller:KasHakemuksetCtrl
- * @description
- * # KasHakemuksetCtrl
- * Controller of the jukufrontApp
- * */
-
 angular.module('jukufrontApp')
-  .controller('KasSuunnitteluCtrl', function ($rootScope, $scope, $location, $routeParams, HakemusSuunnitelmatFactory, HakemusFactory) {
+  .controller('KasSuunnitteluCtrl', function ($rootScope, $scope, $location, $routeParams, HakemusFactory, SuunnitteluFactory) {
 
     $scope.vuosi = $routeParams.vuosi;
 
-    $scope.loadData = function () {
-      HakemusSuunnitelmatFactory.get({
-        'vuosi': $routeParams.vuosi,
-        'hakemustyyppitunnus': $routeParams.tyyppi
-      }, function (data) {
-        var hakemuksetSuunnitteluTmp = [];
-        $scope.haettuAvustusSum = 0;
-        $scope.myonnettavaAvustusSum = 0;
-        $scope.muutosSum = 0;
-        _(angular.fromJson(data)).forEach(function (hakemus) {
-          var muutos = 0;
-          if (hakemus.hakemustilatunnus==='T'){
-            $scope.haettuAvustusSum =  $scope.haettuAvustusSum + hakemus['haettu-avustus'];
-            $scope.myonnettavaAvustusSum = $scope.myonnettavaAvustusSum + hakemus['myonnettava-avustus'];
-            muutos = hakemus['myonnettava-avustus'] - hakemus['haettu-avustus'];
-            $scope.muutosSum = $scope.muutosSum + muutos;
-          }
-          hakemuksetSuunnitteluTmp.push({
-            'hakemusId': hakemus.id,
-            'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
-            'hakemuksenTila':hakemus.hakemustilatunnus,
-            'haettuAvustus': hakemus['haettu-avustus'],
-            'muutos': muutos,
-            'myonnettavaAvustus': hakemus['myonnettava-avustus']
+    $scope.haeSuunnitteluData = function () {
+      SuunnitteluFactory.hae($routeParams.vuosi, $routeParams.tyyppi)
+        .success(function (data) {
+          var hakemuksetSuunnitteluTmp = [];
+          $scope.haettuAvustusSum = 0;
+          $scope.myonnettavaAvustusSum = 0;
+          $scope.muutosSum = 0;
+          _(angular.fromJson(data)).forEach(function (hakemus) {
+            var muutos = 0;
+            if (hakemus.hakemustilatunnus === 'T') {
+              $scope.haettuAvustusSum = $scope.haettuAvustusSum + hakemus['haettu-avustus'];
+              $scope.myonnettavaAvustusSum = $scope.myonnettavaAvustusSum + hakemus['myonnettava-avustus'];
+              muutos = hakemus['myonnettava-avustus'] - hakemus['haettu-avustus'];
+              $scope.muutosSum = $scope.muutosSum + muutos;
+            }
+            hakemuksetSuunnitteluTmp.push({
+              'hakemusId': hakemus.id,
+              'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
+              'hakemuksenTila': hakemus.hakemustilatunnus,
+              'haettuAvustus': hakemus['haettu-avustus'],
+              'muutos': muutos,
+              'myonnettavaAvustus': hakemus['myonnettava-avustus']
+            });
           });
+          $scope.hakemuksetSuunnittelu = hakemuksetSuunnitteluTmp;
+        })
+        .error(function (data) {
+          console.log('Virhe: SuunnitteluFactory.hae(' + $routeParams.vuosi + ',' + $routeParams.tyyppi + '): ' + data);
         });
-        $scope.hakemuksetSuunnittelu = hakemuksetSuunnitteluTmp;
-      });
-    } , function
-      (error) {
-      console.log('kasSuunnittelu.js' + error.toString());
     };
 
-    $scope.loadData();
+    $scope.haeSuunnitteluData();
 
     $scope.getPaatos = function (hakemusId, avustus) {
       $location.path('/k/paatos/' + hakemusId + '/' + avustus);
     };
 
-    $scope.updateAvustus = function (hakemusId, avustus) {
-      HakemusFactory.suunniteltuavustus({
-        'suunniteltuavustus': avustus,
-        'hakemusid': hakemusId
-      }, function(){
-        $scope.loadData();
-      });
+    $scope.paivitaAvustus = function (avustus, hakemusid) {
+      SuunnitteluFactory.suunniteltuAvustus(avustus, hakemusid)
+        .success(function () {
+          $scope.haeSuunnitteluData();
+        })
+        .error(function (data) {
+          console.log('Virhe:  SuunnitteluFactory.suunniteltuAvustus(' + avustus + ',' + hakemusid + '): ' + data);
+        });
     };
   });

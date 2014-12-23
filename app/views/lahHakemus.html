@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <a href="#"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
+      <a href="#/"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
       <a href="#/l/hakemus" class="btn btn-primary">Avustushakemus {{avustushakemus.vuosi}}</a>
       <a href="#" class="btn btn-primary disabled">1. maksatushakemus</a>
       <a href="#" class="btn btn-primary disabled">2. maksatushakemus</a>
@@ -334,19 +334,19 @@
       </div>
       <div class="row">
         <div class="col-md-8">
-          <a href="#"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
+          <a href="#/"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
         </div>
         <div class="col-md-2">
           <div ng-show="(avustushakemus.hakemustilatunnus == 'K')">
-            <button data-ng-click="saveAvustushakemus()" class="pull-right btn btn-primary">Tallenna tiedot</button>
+            <button data-ng-click="tallennaAvustushakemus()" class="pull-right btn btn-primary">Tallenna tiedot</button>
           </div>
           <div ng-hide="(avustushakemus.hakemustilatunnus == 'K')">
-            <button data-ng-click="saveAvustushakemus()" class="pull-right btn btn-primary" disabled>Tallenna tiedot
+            <button data-ng-click="tallennaAvustushakemus()" class="pull-right btn btn-primary" disabled>Tallenna tiedot
             </button>
           </div>
         </div>
         <div class="col-md-2">
-          <button data-ng-click="showAvustushakemus()" class="pull-right btn btn-primary">Hakemuksen esikatselu</button>
+          <button data-ng-click="naytaAvustushakemus()" class="pull-right btn btn-primary">Hakemuksen esikatselu</button>
         </div>
       </div>
       <div class="row">
@@ -373,10 +373,10 @@
       <div class="row">
         <div class="col-md-12">
           <div ng-show="(avustushakemus.hakemustilatunnus == 'K')">
-            <button data-ng-click="sendAvustushakemus()" class="pull-right btn btn-success">Lähetä hakemus</button>
+            <button data-ng-click="lahetaAvustushakemus()" class="pull-right btn btn-success">Lähetä hakemus</button>
           </div>
           <div ng-hide="(avustushakemus.hakemustilatunnus == 'K')">
-            <button data-ng-click="sendAvustushakemus()" class="pull-right btn btn-success" disabled>Lähetä hakemus
+            <button data-ng-click="lahetaAvustushakemus()" class="pull-right btn btn-success" disabled>Lähetä hakemus
             </button>
           </div>
         </div>
