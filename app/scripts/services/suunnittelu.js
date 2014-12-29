@@ -2,7 +2,7 @@
 
 angular.module('services.suunnittelu', [])
 
-  .factory('SuunnitteluFactory', ['$http', function ($http) {
+  .factory('SuunnitteluService', ['$http', function ($http) {
     return {
       hae: function (vuosi, hakemustyyppitunnus) {
         return $http.get('/api/hakemussuunnitelmat/'+vuosi+'/'+hakemustyyppitunnus, {params: {isArray: true}});

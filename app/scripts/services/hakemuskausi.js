@@ -2,7 +2,7 @@
 
 angular.module('services.hakemuskausi', [])
 
-  .factory('HakemuskausiFactory', ['$http', function ($http) {
+  .factory('HakemuskausiService', ['$http', function ($http) {
     return {
       hae: function () {
         return $http.get('/api/hakemuskaudet', {params: {isArray: true}});
@@ -12,9 +12,3 @@ angular.module('services.hakemuskausi', [])
       }
     };
   }]);
-
-
-/*
-
-
- */

@@ -40,7 +40,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="hakemus in displayed" ng-click="getKasHakemus(hakemus.id)">
+          <tr ng-repeat="hakemus in displayed" ng-click="siirryHakemukseen(hakemus.id)">
             <td>{{hakemus.hakija}}</td>
             <td>
               <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
@@ -56,7 +56,7 @@
           <div class="col-md-8"/>
           <div class="col-md-4">
             <div class="pull-right">
-              <button class="btn btn-primary" ng-click="getKasSuunnittelu(avustushakemuksetPerVuosi.vuosi, 'AH0')">Suunnittelu ja päätöksenteko<span
+              <button class="btn btn-primary" ng-click="siirrySuunnitteluun(avustushakemuksetPerVuosi.vuosi, 'AH0')">Suunnittelu ja päätöksenteko<span
                 class='glyphicon glyphicon-play'/></button>
             </div>
           </div>

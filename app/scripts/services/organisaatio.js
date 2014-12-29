@@ -2,7 +2,7 @@
 
 angular.module('services.organisaatio', [])
 
-  .factory('OrganisaatioFactory', ['$http', function ($http) {
+  .factory('OrganisaatioService', ['$http', function ($http) {
     return {
       hae: function () {
         return $http.get('/api/organisaatiot');

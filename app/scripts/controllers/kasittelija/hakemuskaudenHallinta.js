@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiFactory', function ($scope, $location, $route, $log, HakemuskausiFactory) {
-    $scope.haeHakemuskaudet = function () {
-      HakemuskausiFactory.hae()
+  .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', function ($scope, $location, $route, $log, HakemuskausiService) {
+    function haeHakemuskaudet() {
+      HakemuskausiService.hae()
         .success(function (data) {
           var hakemuskaudetTmp = [];
           _(angular.fromJson(data)).forEach(function (hakemuskausi) {
@@ -39,21 +39,21 @@ angular.module('jukufrontApp')
           $scope.hakemuskaudet = _.sortBy(hakemuskaudetTmp, 'vuosi').reverse();
         })
         .error(function (data) {
-          console.log('Virhe: HakemuskausiFactory.hae(): ' + data);
+          console.log('Virhe: HakemuskausiService.hae(): ' + data);
         });
     };
 
     $scope.luoUusiHakemuskausi = function (vuosi) {
-      HakemuskausiFactory.luoUusi(vuosi)
+      HakemuskausiService.luoUusi(vuosi)
         .success(function () {
-          $scope.haeHakemuskaudet();
+          haeHakemuskaudet();
         })
         .error(function (data) {
-          console.log('Virhe: HakemuskausiFactory.luoUusi(' + vuosi + '): ' + data);
+          console.log('Virhe: HakemuskausiService.luoUusi(' + vuosi + '): ' + data);
         });
     };
 
-    $scope.haeHakemuskaudet();
+    haeHakemuskaudet();
 
   }]);
 

@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasSuunnitteluCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusFactory', 'SuunnitteluFactory', function ($rootScope, $scope, $location, $routeParams, HakemusFactory, SuunnitteluFactory) {
+  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'SuunnitteluService', function ($rootScope, $scope, $location, $routeParams, HakemusService, SuunnitteluService) {
 
     $scope.vuosi = $routeParams.vuosi;
 
-    $scope.haeSuunnitteluData = function () {
-      SuunnitteluFactory.hae($routeParams.vuosi, $routeParams.tyyppi)
+    function haeSuunnitteluData() {
+      SuunnitteluService.hae($routeParams.vuosi, $routeParams.tyyppi)
         .success(function (data) {
           var hakemuksetSuunnitteluTmp = [];
           $scope.haettuAvustusSum = 0;
@@ -32,23 +32,23 @@ angular.module('jukufrontApp')
           $scope.hakemuksetSuunnittelu = hakemuksetSuunnitteluTmp;
         })
         .error(function (data) {
-          console.log('Virhe: SuunnitteluFactory.hae(' + $routeParams.vuosi + ',' + $routeParams.tyyppi + '): ' + data);
+          console.log('Virhe: SuunnitteluService.hae(' + $routeParams.vuosi + ',' + $routeParams.tyyppi + '): ' + data);
         });
-    };
+    }
 
-    $scope.haeSuunnitteluData();
-
-    $scope.getPaatos = function (hakemusId, avustus) {
+    $scope.siirryPaatokseen = function (hakemusId, avustus) {
       $location.path('/k/paatos/' + hakemusId + '/' + avustus);
     };
 
     $scope.paivitaAvustus = function (avustus, hakemusid) {
-      SuunnitteluFactory.suunniteltuAvustus(avustus, hakemusid)
+      SuunnitteluService.suunniteltuAvustus(avustus, hakemusid)
         .success(function () {
-          $scope.haeSuunnitteluData();
+          haeSuunnitteluData();
         })
         .error(function (data) {
-          console.log('Virhe:  SuunnitteluFactory.suunniteltuAvustus(' + avustus + ',' + hakemusid + '): ' + data);
+          console.log('Virhe:  SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + '): ' + data);
         });
     };
+
+    haeSuunnitteluData();
   }]);

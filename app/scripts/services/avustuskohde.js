@@ -2,7 +2,7 @@
 
 angular.module('services.avustuskohde', [])
 
-  .factory('AvustuskohdeFactory', ['$http', function ($http) {
+  .factory('AvustuskohdeService', ['$http', function ($http) {
     return {
       hae: function (hakemusid) {
         return $http.get('/api/hakemus/avustuskohteet/' + hakemusid);

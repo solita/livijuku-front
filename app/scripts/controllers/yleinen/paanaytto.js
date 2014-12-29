@@ -1,34 +1,27 @@
 'use strict';
-/**
- * @ngdoc function
- * @name jukufrontApp.controller:UtilCtrl
- * @description
- * # UtilCtrl
- * Controller of the jukufrontApp. Contains misc functions
- * */
 angular.module('jukufrontApp')
-  .controller('UtilCtrl', function ($scope, $rootScope, $location, KayttajaFactory, OrganisaatioFactory) {
+  .controller('PaanayttoCtrl', ['$scope', '$rootScope', '$location', 'KayttajaService', 'OrganisaatioService', function ($scope, $rootScope, $location, KayttajaService, OrganisaatioService) {
 
     $scope.isActive = function (route) {
       return route === $location.path();
     };
 
-    OrganisaatioFactory.hae()
+    OrganisaatioService.hae()
       .success(function (data) {
         $rootScope.organisaatiot = data;
-        KayttajaFactory.hae()
+        KayttajaService.hae()
           .success(function (data) {
             $rootScope.user = data;
             $rootScope.userOrganisaatio = _.find($rootScope.organisaatiot, {'id': $rootScope.user.organisaatioid}).nimi;
           })
           .error(function (data) {
-            console.log('Virhe: KayttajaFactory.hae(): ' + data);
+            console.log('Virhe: KayttajaService.hae(): ' + data);
           });
       })
       .error(function (data) {
-        console.log('Virhe: OrganisaatioFactory.hae(): ' + data);
+        console.log('Virhe: OrganisaatioService.hae(): ' + data);
       });
-  }
+  }]
 )
   .directive('hakemusLabel', function () {
     return {

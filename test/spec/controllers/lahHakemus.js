@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: LahHakemusCtrl', function () {
+describe('Controller: HakijaHakemusCtrl', function () {
 
   // TBD
 });
