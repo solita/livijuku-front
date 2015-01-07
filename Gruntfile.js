@@ -68,12 +68,12 @@ module.exports = function (grunt) {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+        hostname: 'livijuku.local.solita.fi',
         livereload: 35729
       },
       proxies: [{
         context: '/api', // the context of the data service
-        host: 'localhost', // wherever the data service is running
+        host: 'livijuku.local.solita.fi', // wherever the data service is running
         port: 3000,
         changeOrigin: true,
         rewrite: {
@@ -84,9 +84,30 @@ module.exports = function (grunt) {
       }],
       livereload: {
         options: {
-          open: true,
+          open: false,
           middleware: function (connect) {
             var middlewares = [];
+
+            middlewares.push(function myMiddleware(req, res, next) {
+              var oam_user = '';
+              var cookies = req.headers.cookie;
+              if (typeof cookies !== "undefined") {
+                var cookie_key = "oam-remote-user=";
+                var splitted_cookies = cookies.split(';');
+                for (var i = 0; i < splitted_cookies.length; i++) {
+                  var c = splitted_cookies[i];
+                  while (c.charAt(0) == ' ') c = c.substring(1);
+                  if (c.indexOf(cookie_key) == 0) {
+                    oam_user = c.substring(cookie_key.length, c.length);
+                  }
+                }
+              }
+              if (oam_user !== '') {
+                req.headers['oam-remote-user'] = oam_user;
+                req.headers['oam-groups'] = '1';
+              }
+              next();
+            });
 
             // Setup the proxy
             middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
@@ -109,6 +130,7 @@ module.exports = function (grunt) {
         options: {
           port: 9001,
           middleware: function (connect) {
+
             return [
               connect.static('.tmp'),
               connect.static('test'),
@@ -400,8 +422,8 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       options: {
-	// Rajoitettu rinnakkaisuus 1:een, koska https://github.com/yeoman/generator-webapp/issues/449
-	// Ongelma ilmeni raiderilla linux-buildissa aina välillä (1/10 buildista tms.)
+        // Rajoitettu rinnakkaisuus 1:een, koska https://github.com/yeoman/generator-webapp/issues/449
+        // Ongelma ilmeni raiderilla linux-buildissa aina välillä (1/10 buildista tms.)
         logConcurrentOutput: true,
         limit: 1
       },
@@ -430,10 +452,27 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: false
       }
+    },
+
+    protractor: {
+      options: {
+        keepAlive: true,
+        configFile: "protractor.conf.js"
+      },
+      run: {}
+    },
+
+    protractor_webdriver: {
+      start: {
+        options: {
+          path: 'node_modules/protractor/bin/',
+          command: 'webdriver-manager start'
+        }
+      }
     }
   });
-
-
+  grunt.loadNpmTasks('grunt-protractor-webdriver');
+  grunt.loadNpmTasks('grunt-protractor-runner');
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -461,9 +500,16 @@ module.exports = function (grunt) {
       'clean:server',
       'concurrent:test',
       'autoprefixer',
-      'connect:test',
+      'connect:test'
     ]);
     grunt.task.run('karma:' + mode);
+  });
+
+  grunt.registerTask('testE2E', function () {
+    grunt.task.run([
+      'protractor_webdriver',
+      'protractor:run'
+    ]);
   });
 
   grunt.registerTask('autotest', [
