@@ -1,3 +1,6 @@
+// See the options from:
+// https://github.com/angular/protractor/blob/master/docs/referenceConf.js
+
 exports.config = {
   // The address of a running selenium server.
   seleniumAddress: 'http://livijuku.local.solita.fi:4444/wd/hub',
@@ -19,7 +22,7 @@ exports.config = {
 
   jasmineNodeOpts: {
     onComplete: null,
-    isVerbose: false,
+    isVerbose: true,
     showColors: true,
     includeStackTrace: true,
     defaultTimeoutInterval: 10000
