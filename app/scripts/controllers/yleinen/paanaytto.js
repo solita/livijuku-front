@@ -1,6 +1,6 @@
 'use strict';
 angular.module('jukufrontApp')
-  .controller('PaanayttoCtrl', ['$scope', '$rootScope', '$location', 'KayttajaService', 'OrganisaatioService', function ($scope, $rootScope, $location, KayttajaService, OrganisaatioService) {
+  .controller('PaanayttoCtrl', ['$scope', '$rootScope', '$location', 'KayttajaService', 'OrganisaatioService', 'toastr', function ($scope, $rootScope, $location, KayttajaService, OrganisaatioService, toastr) {
 
     $scope.isActive = function (route) {
       return route === $location.path();
@@ -19,7 +19,7 @@ angular.module('jukufrontApp')
           });
       })
       .error(function (data) {
-        console.log('Virhe: OrganisaatioService.hae(): ' + data);
+        toastr.error(data, 'Virhe');
       });
   }]
 )
@@ -63,4 +63,3 @@ angular.module('jukufrontApp')
       }
     };
   });
-

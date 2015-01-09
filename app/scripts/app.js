@@ -7,12 +7,15 @@ angular
     'services.kayttaja',
     'services.organisaatio',
     'services.suunnittelu',
+//    'handlers.virhetapahtumat',
     'controllers.MainCtrl',
     'ngResource',
     'smart-table',
     'ui.bootstrap',
     'monospaced.elastic',
     'angularFileUpload',
+    'toastr',
+    'ngAnimate',
     'ngRoute'
   ])
   .config(['$routeProvider', function ($routeProvider) {
@@ -61,3 +64,4 @@ angular
         redirectTo: '/'
       });
   }]);
+
