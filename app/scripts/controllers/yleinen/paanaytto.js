@@ -1,6 +1,6 @@
 'use strict';
 angular.module('jukufrontApp')
-  .controller('PaanayttoCtrl', ['$scope', '$rootScope', '$location', 'KayttajaService', 'OrganisaatioService', 'toastr', function ($scope, $rootScope, $location, KayttajaService, OrganisaatioService, toastr) {
+  .controller('PaanayttoCtrl', ['$scope', '$rootScope', '$location', 'KayttajaService', 'OrganisaatioService', 'StatusService', function ($scope, $rootScope, $location, KayttajaService, OrganisaatioService, statusService) {
 
     $scope.isActive = function (route) {
       return route === $location.path();
@@ -13,13 +13,14 @@ angular.module('jukufrontApp')
           .success(function (data) {
             $rootScope.user = data;
             $rootScope.userOrganisaatio = _.find($rootScope.organisaatiot, {'id': $rootScope.user.organisaatioid}).nimi;
+            statusService.ok('KayttajaService.hae()', 'Käyttäjätiedot haettu onnistuneesti.' );
           })
           .error(function (data) {
-            console.log('Virhe: KayttajaService.hae(): ' + data);
+            statusService.virhe('KayttajaService.hae()', data);
           });
       })
       .error(function (data) {
-        toastr.error(data, 'Virhe');
+        statusService.virhe('OrganisaatioService.hae()', data);
       });
   }]
 )

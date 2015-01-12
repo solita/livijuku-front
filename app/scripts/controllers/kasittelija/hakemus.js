@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'AvustuskohdeService', 'HakemusService', function ($rootScope, $scope, $location, $routeParams, AvustuskohdeService, HakemusService) {
+  .controller('KasittelijaHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'AvustuskohdeService', 'HakemusService', 'StatusService', function ($rootScope, $scope, $location, $routeParams, AvustuskohdeService, HakemusService, StatusService) {
 
     function haeHaettavaavustus(avustuskohdelaji) {
       if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
@@ -28,7 +28,7 @@ angular.module('jukufrontApp')
         $scope.aikaleima = new Date();
       })
       .error(function (data) {
-        console.log('Virhe: HakemusService.hae(' + $routeParams.id + ') ' + data);
+        StatusService.virhe('HakemusService.hae(' + $routeParams.id + ')', data);
       });
 
     AvustuskohdeService.hae($routeParams.id)
@@ -62,16 +62,17 @@ angular.module('jukufrontApp')
         $scope.kmomarahoitus = haeOmarahoitus('K-M');
       })
       .error(function (data) {
-        console.log('Virhe: AvustuskohdeService.hae(' + $routeParams.id + ') ' + data);
+        StatusService.virhe('AvustuskohdeService.hae(' + $routeParams.id + ')', data);
       });
 
     $scope.tarkastaAvustushakemus = function () {
       HakemusService.tarkasta($scope.avustushakemus.id)
         .success(function () {
+          StatusService.ok('HakemusService.tarkasta(' + $scope.avustushakemus.id + ')', 'Hakemus päivitettiin tarkastetuksi.');
           $location.path('/k/hakemukset');
         })
         .error(function (data) {
-          console.log('Virhe: HakemusService.tarkasta(' + $scope.avustushakemus.id + '): ' + data);
+          StatusService.virhe('HakemusService.tarkasta(' + $scope.avustushakemus.id + ')', data);
         });
     };
   }]

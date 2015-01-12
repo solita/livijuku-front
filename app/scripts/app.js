@@ -7,7 +7,7 @@ angular
     'services.kayttaja',
     'services.organisaatio',
     'services.suunnittelu',
-//    'handlers.virhetapahtumat',
+    'services.status',
     'controllers.MainCtrl',
     'ngResource',
     'smart-table',

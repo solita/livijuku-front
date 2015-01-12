@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('HakijaHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'AvustuskohdeService', function ($rootScope, $scope, $location, $routeParams, HakemusService, AvustuskohdeService) {
+  .controller('HakijaHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'AvustuskohdeService', 'StatusService', function ($rootScope, $scope, $location, $routeParams, HakemusService, AvustuskohdeService, StatusService) {
     function haeHaettavaavustus(avustuskohdelaji) {
       if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
         return parseInt((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).haettavaavustus);
@@ -28,7 +28,7 @@ angular.module('jukufrontApp')
           $scope.aikaleima = new Date();
         })
         .error(function (data) {
-          console.log('Virhe: HakemusService.hae(' + $routeParams.id + '): ' + data);
+          StatusService.virhe('HakemusService.hae(' + $routeParams.id + ')', data);
         });
       AvustuskohdeService.hae($routeParams.id)
         .success(function (data) {
@@ -61,7 +61,7 @@ angular.module('jukufrontApp')
           $scope.kmomarahoitus = haeOmarahoitus('K-M');
         })
         .error(function (data) {
-          console.log('Virhe: AvustuskohdeService.hae(' + $routeParams.id + '): ' + data);
+          StatusService.virhe('AvustuskohdeService.hae(' + $routeParams.id + ')', data);
         });
 
     };
@@ -69,25 +69,16 @@ angular.module('jukufrontApp')
     $scope.lahetaAvustushakemus = function () {
       HakemusService.laheta($scope.avustushakemus.id)
         .success(function () {
+          StatusService.ok('HakemusService.laheta(' + $scope.avustushakemus.id + ')', 'Lähettäminen onnistui.');
           $location.path('/h/hakemukset');
         })
         .error(function (data) {
-          console.log('Virhe: HakemusService.laheta(' + $scope.avustushakemus.id + '): ' + data);
+          StatusService.virhe('HakemusService.laheta(' + $scope.avustushakemus.id + ')', data);
         });
     };
 
     $scope.naytaAvustushakemus = function () {
       $location.path('/h/hakemus/esikatselu/' + $scope.avustushakemus.id);
-    };
-
-    $scope.tallennaAvustuskohteet = function (avustuskohteet) {
-      AvustuskohdeService.tallenna(avustuskohteet)
-        .success(function () {
-          haeHakemukset();
-        })
-        .error(function (data) {
-          console.log('Virhe: AvustuskohdeService.tallenna():' + data);
-        });
     };
 
     $scope.tallennaAvustushakemus = function () {
@@ -165,19 +156,30 @@ angular.module('jukufrontApp')
           'omarahoitus': $scope.kmomarahoitus
         }
       ];
-      $scope.tallennaAvustuskohteet(avustuskohteet);
-      if ($scope.avustushakemus.selite !== null) {
-        var selitedata = {
-          'selite': $scope.avustushakemus.selite,
-          'hakemusid': $scope.avustushakemus.id
-        };
-        HakemusService.tallennaSelite(selitedata)
-          .success(function () {
-          })
-          .error(function (data) {
-            console.log('Virhe: HakemusService.tallennaSelite(' + selitedata + '):' + data);
-          });
-      }
+      AvustuskohdeService.tallenna(avustuskohteet)
+        .success(function () {
+          var tallennusOk = true;
+          if ($scope.avustushakemus.selite !== null) {
+            var selitedata = {
+              'selite': $scope.avustushakemus.selite,
+              'hakemusid': $scope.avustushakemus.id
+            };
+            HakemusService.tallennaSelite(selitedata)
+              .success(function () {
+              })
+              .error(function (data) {
+                StatusService.virhe('HakemusService.tallennaSelite(' + selitedata + ')', data);
+                tallennusOk = false;
+              });
+          }
+          if (tallennusOk) {
+            StatusService.ok('AvustuskohdeService.tallenna()', 'Tallennus onnistui.');
+            haeHakemukset();
+          }
+        })
+        .error(function (data) {
+          StatusService.virhe('AvustuskohdeService.tallenna()', data);
+        });
     };
 
     haeHakemukset();

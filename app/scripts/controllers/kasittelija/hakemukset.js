@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaHakemuksetCtrl', ['$rootScope', '$scope', '$filter', '$location', 'HakemuskausiService', function ($rootScope, $scope, $filter, $location, HakemuskausiService) {
+  .controller('KasittelijaHakemuksetCtrl', ['$rootScope', '$scope', '$filter', '$location', 'HakemuskausiService', 'StatusService', function ($rootScope, $scope, $filter, $location, HakemuskausiService, StatusService) {
     $scope.displayed = [];
     HakemuskausiService.hae()
       .success(function (data) {
@@ -31,7 +31,7 @@ angular.module('jukufrontApp')
         }
       })
       .error(function (data) {
-        console.log('Virhe: OrganisaatioService.hae(): ' + data);
+        StatusService.virhe('OrganisaatioService.hae(): ' + data);
       });
 
     $scope.siirryHakemukseen = function (hakemusId) {

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('HakijaHakemuksetCtrl', ['$scope', '$location', 'HakemusService', function ($scope, $location, HakemusService) {
+  .controller('HakijaHakemuksetCtrl', ['$scope', '$location', 'HakemusService', 'StatusService', function ($scope, $location, HakemusService, StatusService) {
 
     HakemusService.haeKaikki()
       .success(function (data) {
@@ -42,7 +42,7 @@ angular.module('jukufrontApp')
         $scope.hakemukset = _.sortBy(hakemuksetTmp, 'vuosi').reverse();
       })
       .error(function (data) {
-        console.log('Virhe:HakemusService.haeKaikki(): ' + data);
+        StatusService.virhe('HakemusService.haeKaikki())', data);
       });
 
     $scope.valitseHakemus = function (hakemusId) {

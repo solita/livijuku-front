@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'SuunnitteluService', function ($rootScope, $scope, $location, $routeParams, HakemusService, SuunnitteluService) {
+  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'SuunnitteluService', 'StatusService', function ($rootScope, $scope, $location, $routeParams, HakemusService, SuunnitteluService, StatusService) {
 
     $scope.vuosi = $routeParams.vuosi;
 
@@ -32,7 +32,7 @@ angular.module('jukufrontApp')
           $scope.hakemuksetSuunnittelu = hakemuksetSuunnitteluTmp;
         })
         .error(function (data) {
-          console.log('Virhe: SuunnitteluService.hae(' + $routeParams.vuosi + ',' + $routeParams.tyyppi + '): ' + data);
+          StatusService.virhe('SuunnitteluService.hae(' + $routeParams.vuosi + ',' + $routeParams.tyyppi + ')', data);
         });
     }
 
@@ -43,10 +43,11 @@ angular.module('jukufrontApp')
     $scope.paivitaAvustus = function (avustus, hakemusid) {
       SuunnitteluService.suunniteltuAvustus(avustus, hakemusid)
         .success(function () {
+          StatusService.ok('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', 'Myönnettävä avustus:' + avustus + ' päivitetty.');
           haeSuunnitteluData();
         })
         .error(function (data) {
-          console.log('Virhe:  SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + '): ' + data);
+          StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', data);
         });
     };
 

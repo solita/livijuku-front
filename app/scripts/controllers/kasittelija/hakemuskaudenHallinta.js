@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', function ($scope, $location, $route, $log, HakemuskausiService) {
+  .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', function ($scope, $location, $route, $log, HakemuskausiService, StatusService) {
     function haeHakemuskaudet() {
       HakemuskausiService.hae()
         .success(function (data) {
@@ -39,17 +39,18 @@ angular.module('jukufrontApp')
           $scope.hakemuskaudet = _.sortBy(hakemuskaudetTmp, 'vuosi').reverse();
         })
         .error(function (data) {
-          console.log('Virhe: HakemuskausiService.hae(): ' + data);
+          StatusService.virhe('HakemuskausiService.hae()', data);
         });
     };
 
     $scope.luoUusiHakemuskausi = function (vuosi) {
       HakemuskausiService.luoUusi(vuosi)
         .success(function () {
+          StatusService.ok('HakemuskausiService.luoUusi(' + vuosi + ')', 'Hakemuskausi: ' + vuosi + ' luonti onnistui.');
           haeHakemuskaudet();
         })
         .error(function (data) {
-          console.log('Virhe: HakemuskausiService.luoUusi(' + vuosi + '): ' + data);
+          StatusService.virhe('HakemuskausiService.luoUusi(' + vuosi + ')', data);
         });
     };
 
