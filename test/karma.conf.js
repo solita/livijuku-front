@@ -26,6 +26,8 @@ module.exports = function(config) {
       'bower_components/angular-resource/angular-resource.js',
       'bower_components/angular-smart-table/dist/smart-table.min.js',
       'bower_components/angular-elastic/elastic.js',
+      'bower_components/angular-toastr/dist/angular-toastr.js',
+      'bower_components/angular-animate/angular-animate.js',
       'bower_components/ng-file-upload/angular-file-upload.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
