@@ -25,7 +25,7 @@ angular.module('jukufrontApp')
       .success(function (data) {
         $scope.avustushakemus = data;
         $scope.hakija = _.find($rootScope.organisaatiot, {'id': $scope.avustushakemus.organisaatioid}).nimi;
-        $scope.pankkitilinumero = _.find($rootScope.organisaatiot, {'id': $rootScope.user.organisaatioid}).pankkitilinumero;
+        $scope.pankkitilinumero = _.find($rootScope.organisaatiot, {'id': $scope.avustushakemus.organisaatioid}).pankkitilinumero;
         $scope.aikaleima = new Date();
       })
       .error(function (data) {

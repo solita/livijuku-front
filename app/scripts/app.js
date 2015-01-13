@@ -16,7 +16,8 @@ angular
     'angularFileUpload',
     'toastr',
     'ngAnimate',
-    'ngRoute'
+    'ngRoute',
+    'ui.bootstrap.showErrors'
   ])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
