@@ -17,7 +17,8 @@ angular
     'toastr',
     'ngAnimate',
     'ngRoute',
-    'ui.bootstrap.showErrors'
+    'ui.bootstrap.showErrors',
+    'ui.validate'
   ])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider

@@ -30,6 +30,7 @@ module.exports = function(config) {
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/ng-file-upload/angular-file-upload.js',
       'bower_components/angular-bootstrap-show-errors/src/showErrors.js',
+      'bower_components/angular-ui-utils/validate.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
