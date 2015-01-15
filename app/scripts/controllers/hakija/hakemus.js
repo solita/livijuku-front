@@ -4,7 +4,7 @@ angular.module('jukufrontApp')
   .controller('HakijaHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'AvustuskohdeService', 'StatusService', function ($rootScope, $scope, $location, $routeParams, HakemusService, AvustuskohdeService, StatusService) {
     function haeHaettavaavustus(avustuskohdelaji) {
       if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
-        return parseInt((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).haettavaavustus);
+        return parseFloat((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).haettavaavustus);
       }
       else {
         return 0;
@@ -13,7 +13,7 @@ angular.module('jukufrontApp')
 
     function haeOmarahoitus(avustuskohdelaji) {
       if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
-        return parseInt((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).omarahoitus);
+        return parseFloat((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).omarahoitus);
       }
       else {
         return 0;
@@ -79,6 +79,14 @@ angular.module('jukufrontApp')
             StatusService.virhe('HakemusService.laheta(' + $scope.avustushakemus.id + ')', data);
           });
       }
+    };
+
+    $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
+      return parseFloat(haettavarahoitus) <= parseFloat(omarahoitus);
+    };
+
+    $scope.positiivinenArvo = function (value) {
+      return parseFloat(value) >= 0;
     };
 
     $scope.naytaAvustushakemus = function () {
@@ -186,6 +194,8 @@ angular.module('jukufrontApp')
           .error(function (data) {
             StatusService.virhe('AvustuskohdeService.tallenna()', data);
           });
+      } else{
+        StatusService.virhe('AvustuskohdeService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
       }
     };
 

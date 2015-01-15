@@ -17,6 +17,7 @@ angular
     'toastr',
     'ngAnimate',
     'ngRoute',
+    'ng-currency',
     'ui.bootstrap.showErrors',
     'ui.validate'
   ])
