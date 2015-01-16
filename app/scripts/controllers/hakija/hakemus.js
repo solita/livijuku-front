@@ -67,6 +67,10 @@ angular.module('jukufrontApp')
 
     };
 
+    function euroSyoteNumeroksi(arvo){
+      return parseFloat(arvo.replace(/[^0-9,]/g,'').replace(',', '.'));
+    };
+
     $scope.lahetaAvustushakemus = function () {
       $scope.$broadcast('show-errors-check-validity');
       if ($scope.avustusHakemusForm.$valid) {
@@ -82,8 +86,25 @@ angular.module('jukufrontApp')
     };
 
     $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
-      return parseFloat(haettavarahoitus) <= parseFloat(omarahoitus);
+      var omarahoitus2, haettavarahoitus2;
+      if ((typeof omarahoitus === 'undefined') || (typeof haettavarahoitus === 'undefined')) return true;
+      if (typeof omarahoitus === 'string') {
+        omarahoitus2 = euroSyoteNumeroksi(omarahoitus);
+      }
+      if (typeof haettavarahoitus === 'string') {
+        haettavarahoitus2 = euroSyoteNumeroksi(haettavarahoitus);
+      }
+      if (typeof omarahoitus === 'number') {
+        omarahoitus2 = parseFloat(omarahoitus);
+      }
+      if (typeof haettavarahoitus === 'number') {
+        haettavarahoitus2 = parseFloat(haettavarahoitus);
+      }
+      return haettavarahoitus2 <= omarahoitus2;
     };
+    // console.log('testi:'+$scope.psa1omarahoitus+' haett:' + parseFloat(haettavarahoitus) + ' omar_alkup:' + omarahoitus2 + ' parsed:' + parseFloat(omarahoitus));
+    //    return parseFloat(haettavarahoitus) <= parseFloat(omarahoitus);
+    // };
 
     $scope.positiivinenArvo = function (value) {
       return parseFloat(value) >= 0;
@@ -194,7 +215,7 @@ angular.module('jukufrontApp')
           .error(function (data) {
             StatusService.virhe('AvustuskohdeService.tallenna()', data);
           });
-      } else{
+      } else {
         StatusService.virhe('AvustuskohdeService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
       }
     };
