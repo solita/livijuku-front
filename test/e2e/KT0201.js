@@ -1,7 +1,7 @@
 describe('Selenium Test Case', function() {
 
   beforeEach(function() {
-    browser.driver.get("http://localhost:9000/harri.html");
+    browser.get("http://localhost:9000/harri.html");
   });
 
   it('should execute test case without errors', function() {

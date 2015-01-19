@@ -505,7 +505,7 @@ module.exports = function (grunt) {
     grunt.task.run('karma:' + mode);
   });
 
-  grunt.registerTask('testE2E', function () {
+  grunt.registerTask('teste2e', function () {
     grunt.task.run([
       'protractor_webdriver',
       'protractor:run'
