@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('HakijaHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'AvustuskohdeService', 'StatusService', function ($rootScope, $scope, $location, $routeParams, HakemusService, AvustuskohdeService, StatusService) {
+  .controller('HakijaHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'AvustuskohdeService', 'StatusService', '$upload', 'LiiteService',function ($rootScope, $scope, $location, $routeParams, HakemusService, AvustuskohdeService, StatusService, $upload, LiiteService) {
     function haeHaettavaavustus(avustuskohdelaji) {
       if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
         return parseFloat((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).haettavaavustus);
@@ -65,11 +65,66 @@ angular.module('jukufrontApp')
           StatusService.virhe('AvustuskohdeService.hae(' + $routeParams.id + ')', data);
         });
 
+        haeLiitteet();
+
     };
 
-    function euroSyoteNumeroksi(arvo){
-      return parseFloat(arvo.replace(/[^0-9,]/g,'').replace(',', '.'));
+    function haeLiitteet(){
+      LiiteService.hae($routeParams.id)
+        .success(function (data) {
+          $scope.liitteet = data;
+        })
+        .error(function (data) {
+          StatusService.virhe('LiiteService.hae(' + $routeParams.id + ')', data);
+        });
+    }
+
+    function euroSyoteNumeroksi(arvo) {
+      return parseFloat(arvo.replace(/[^0-9,]/g, '').replace(',', '.'));
     };
+
+    $scope.myFiles = [];
+
+    $scope.$watch('myFiles', function () {
+      for (var i = 0; i < $scope.myFiles.length; i++) {
+        var file = $scope.myFiles[i];
+        console.log('Watched:' + file.name);
+        $scope.upload = $upload.upload({
+          url: 'api/hakemus/'+$routeParams.id+'/liite', // upload.php script, node.js route, or servlet url
+          method: 'POST',
+          //headers: {'Authorization': 'xxx'}, // only for html5
+          //withCredentials: true,
+          data: {myObj: $scope.myModelObj},
+          file: file, // single file or a list of files. list is only for html5
+          //fileName: 'doc.jpg' or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
+          fileFormDataName: 'liite' // file formData name ('Content-Disposition'), server side request form name
+          // could be a list of names for multiple files (html5). Default is 'file'
+          //formDataAppender: function(formData, key, val){}  // customize how data is added to the formData.
+          // See #40#issuecomment-28612000 for sample code
+
+        }).progress(function (evt) {
+          console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.file.name);
+        }).success(function (data, status, headers, config) {
+          // file is uploaded successfully
+          console.log('Liiteen lataus: ' + config.file.name + ' onnistui. Paluuarvo: ' + data);
+          StatusService.ok('Liitteen lataus('+config.file.name+')','Liitteen lataus:' + config.file.name + ' onnistui.');
+          haeLiitteet();
+        }).error(function (data, status, headers, config) {
+          console.log('Liitteen lataus: ' + config.file.name + ' epaonnistui. Paluuarvo: ' + data);
+          //StatusService.virhe('Liitteen lataus('+config.file.name+')','Liitteen lataus:' + config.file.name + ' epaonnistui:'+data);
+        });
+        //.then(success, error, progress); // returns a promise that does NOT have progress/abort/xhr functions
+        //.xhr(function(xhr){xhr.upload.addEventListener(...)}) // access or attach event listeners to
+        //the underlying XMLHttpRequest
+      }
+      /* alternative way of uploading, send the file binary with the file's content-type.
+       Could be used to upload files to CouchDB, imgur, etc... html5 FileReader is needed.
+       It could also be used to monitor the progress of a normal http post/put request.
+       Note that the whole file will be loaded in browser first so large files could crash the browser.
+       You should verify the file size before uploading with $upload.http().
+       */
+      // $scope.upload = $upload.http({...})  // See 88#issuecomment-31366487 for sample code.
+    });
 
     $scope.lahetaAvustushakemus = function () {
       $scope.$broadcast('show-errors-check-validity');
@@ -102,13 +157,21 @@ angular.module('jukufrontApp')
       }
       return haettavarahoitus2 <= omarahoitus2;
     };
-    // console.log('testi:'+$scope.psa1omarahoitus+' haett:' + parseFloat(haettavarahoitus) + ' omar_alkup:' + omarahoitus2 + ' parsed:' + parseFloat(omarahoitus));
-    //    return parseFloat(haettavarahoitus) <= parseFloat(omarahoitus);
-    // };
 
     $scope.positiivinenArvo = function (value) {
       return parseFloat(value) >= 0;
     };
+
+    $scope.poistaLiite = function (liiteid){
+      LiiteService.poista($routeParams.id,liiteid)
+        .success(function (data) {
+          StatusService.ok('LiiteService.poista(' + $routeParams.id + ','+ liiteid + ')', 'Liite poistettiin onnistuneesti');
+          haeLiitteet();
+        })
+        .error(function (data) {
+          StatusService.virhe('LiiteService.poista(' + $routeParams.id + ','+ liiteid + ')', data);
+        });
+    }
 
     $scope.naytaAvustushakemus = function () {
       $location.path('/h/hakemus/esikatselu/' + $scope.avustushakemus.id);
@@ -221,4 +284,6 @@ angular.module('jukufrontApp')
     };
 
     haeHakemukset();
-  }]);
+  }
+  ])
+;

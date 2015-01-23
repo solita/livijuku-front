@@ -36,8 +36,8 @@ angular.module('jukufrontApp')
         });
     }
 
-    $scope.siirryPaatokseen = function (hakemusId, avustus) {
-      $location.path('/k/paatos/' + hakemusId + '/' + avustus);
+    $scope.siirryPaatokseen = function (hakemusId, haettuavustus, avustus) {
+      $location.path('/k/paatos/' + $routeParams.vuosi + '/' + $routeParams.tyyppi + '/' + hakemusId + '/' + haettuavustus+'/' + avustus);
     };
 
     $scope.paivitaAvustus = function (avustus, hakemusid) {

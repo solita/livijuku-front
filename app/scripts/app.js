@@ -5,9 +5,11 @@ angular
     'services.hakemus',
     'services.hakemuskausi',
     'services.kayttaja',
+    'services.liite',
     'services.organisaatio',
     'services.suunnittelu',
     'services.status',
+    'services.paatos',
     'controllers.MainCtrl',
     'ngResource',
     'smart-table',
@@ -51,8 +53,12 @@ angular
         templateUrl: 'views/kasittelija/hakemuskaudenHallinta.html',
         controller: 'KasittelijaHakemuskaudenHallintaCtrl'
       })
-      .when('/k/paatos/:hakemusid/:avustus', {
+      .when('/k/paatos/:vuosi/:tyyppi/:hakemusid/:haettuavustus/:avustus', {
         templateUrl: 'views/kasittelija/paatos.html',
+        controller: 'KasittelijaPaatosCtrl'
+      })
+      .when('/k/paatos/esikatselu/:vuosi/:tyyppi/:hakemusid/:haettuavustus/:avustus', {
+        templateUrl: 'views/kasittelija/paatosEsikatselu.html',
         controller: 'KasittelijaPaatosCtrl'
       })
       .when('/k/suunnittelu/:vuosi/:tyyppi', {

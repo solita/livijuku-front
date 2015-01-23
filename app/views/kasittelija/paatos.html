@@ -1,12 +1,137 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h2>Päätös</h2>
+      <a href="#/k/suunnittelu/{{vuosi}}/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa
+        suunnittelunäkymään</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <img src="logo.png"/>
+    </div>
+    <div class="col-md-3">
+      <h5>Päätös</h5>
+
+      <p>{{aikaleima | date:'dd.MM.yyyy'}}</p>
+    </div>
+    <div class="col-md-3">
+      <br>
+
+      <p>1234/020/2015</p>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <p>Päätös, hakemusid:{{hakemusid}}, avustus:{{avustus}}</p>
+      <p>Hakemus 1234/123/{{hakemusid}}/{{vuosi}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Valtionavustuspäätös</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <p>Hakemus</p>
+    </div>
+    <div class="col-md-10">
+      <p><b>{{hakija}}</b> hakee vuonna <b>{{avustushakemus.vuosi}}</b> suurten kaupunkiseutujen joukkoliikenteen
+        valtionavustusta <b>{{haettuavustus| currency:"&euro;"}}.</b></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <p>Päätös</p>
+    </div>
+    <div class="col-md-10">
+      <p>Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle <b>{{hakija}}</b> valtionavustuksena:</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2"/>
+    <div class="col-md-2">
+
+      <div class="input-group input-group-sm">
+        <input type="text" min="-0.0001" ng-currency="" class="form-control"
+               ng-model="paatos.myonnettyavustus"/>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <p>(Suunniteltu valtionavustus oli: {{avustus| currency:"&euro;"}}).</p>
+    </div>
+    <!-- ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)" -->
+  </div>
+  <div class="row">
+    <div class="col-md-2"/>
+    <div class="col-md-10">
+      <br>
+
+      <p>Päätösteksti:</p>
+      <textarea class="animate msd-elastic: \n;" ng-model="paatos.selite"></textarea>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2"/>
+    <div class="col-md-4">
+      <p>Tiina Tuumala</p>
+
+      <p>ylijohtaja</p>
+    </div>
+    <div class="col-md-6">
+      <p>Jenni Eskola</p>
+
+      <p>yksikön päällikkö</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <a href="#/k/suunnittelu/{{vuosi}}/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa
+        suunnittelunäkymään</a>
+    </div>
+    <div class="col-md-2">
+      <div ng-show="(avustushakemus.hakemustilatunnus == 'T')">
+        <button data-ng-click="tallennaPaatos()" class="pull-right btn btn-primary">Tallenna tiedot
+        </button>
+      </div>
+      <div ng-hide="(avustushakemus.hakemustilatunnus == 'T')">
+        <button data-ng-click="tallennaPaatos()" class="pull-right btn btn-primary" disabled>Tallenna
+          tiedot
+        </button>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button data-ng-click="naytaPaatos()" class="pull-right btn btn-primary">Päätöksen esikatselu
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Oikeudet päätöksen lähettämiseen on käyttäjällä, joka toimii organisaatiossa päätöksen hyväksyjänä
+        ja päätöksentekijänä.</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Päivämäärä</h5>
+
+      <p>{{aikaleima | date:'dd.MM.yyyy'}}</p>
+    </div>
+    <div class="col-md-6">
+      <h5>Päätöksentekijä</h5>
+
+      <p>_kirjautuneen päätöksentekijän nimi_</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div ng-show="(avustushakemus.hakemustilatunnus == 'T')">
+        <button data-ng-click="lahetaPaatos()" class="pull-right btn btn-success">Hyväksy päätös</button>
+      </div>
+      <div ng-hide="(avustushakemus.hakemustilatunnus == 'T')">
+        <button data-ng-click="lahetaPaatos()" class="pull-right btn btn-success" disabled>Hyväksy päätös
+        </button>
+      </div>
     </div>
   </div>
 </div>
