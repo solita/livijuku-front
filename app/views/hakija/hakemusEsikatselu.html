@@ -416,6 +416,27 @@
       </div>
     </div>
     <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">Liitetiedostot</h2>
+        </div>
+        <div class="panel-body">
+          <div class="col-md-12">
+            <div ng-show="liitteet.length > 0" class="response">
+              <div class="sel-file" ng-repeat="l in liitteet">
+                <p><i class="glyphicon glyphicon-file"></i>
+                  <a href="api/hakemus/{{avustushakemus.id}}/liite/{{l.liitenumero}}">{{l.nimi}} ({{l.contenttype}})</a>
+                </p>
+              </div>
+            </div>
+            <div ng-show="(liitteet.length==0)">
+              <p>Ei liitteitä.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-12">
         <h3>HAKEMUKSEN PÄIVÄMÄÄRÄ JA PÄÄTÖKSENTEKIJÄ</h3>
       </div>

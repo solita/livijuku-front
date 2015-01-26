@@ -4,7 +4,7 @@ angular.module('services.liite', [])
 
   .factory('LiiteService', ['$http', function ($http) {
     return {
-      hae: function (hakemusid) {
+      haeKaikki: function (hakemusid) {
         return $http.get('/api/hakemus/' + hakemusid + '/liitteet');
       },
       poista: function (hakemusid, liiteid) {

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('HakijaHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'AvustuskohdeService', 'StatusService', '$upload', 'LiiteService',function ($rootScope, $scope, $location, $routeParams, HakemusService, AvustuskohdeService, StatusService, $upload, LiiteService) {
+  .controller('HakijaHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'AvustuskohdeService', 'StatusService', '$upload', 'LiiteService', function ($rootScope, $scope, $location, $routeParams, HakemusService, AvustuskohdeService, StatusService, $upload, LiiteService) {
     function haeHaettavaavustus(avustuskohdelaji) {
       if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
         return parseFloat((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).haettavaavustus);
@@ -65,12 +65,12 @@ angular.module('jukufrontApp')
           StatusService.virhe('AvustuskohdeService.hae(' + $routeParams.id + ')', data);
         });
 
-        haeLiitteet();
+      haeLiitteet();
 
     };
 
-    function haeLiitteet(){
-      LiiteService.hae($routeParams.id)
+    function haeLiitteet() {
+      LiiteService.haeKaikki($routeParams.id)
         .success(function (data) {
           $scope.liitteet = data;
         })
@@ -90,7 +90,7 @@ angular.module('jukufrontApp')
         var file = $scope.myFiles[i];
         console.log('Watched:' + file.name);
         $scope.upload = $upload.upload({
-          url: 'api/hakemus/'+$routeParams.id+'/liite', // upload.php script, node.js route, or servlet url
+          url: 'api/hakemus/' + $routeParams.id + '/liite', // upload.php script, node.js route, or servlet url
           method: 'POST',
           //headers: {'Authorization': 'xxx'}, // only for html5
           //withCredentials: true,
@@ -107,7 +107,7 @@ angular.module('jukufrontApp')
         }).success(function (data, status, headers, config) {
           // file is uploaded successfully
           console.log('Liiteen lataus: ' + config.file.name + ' onnistui. Paluuarvo: ' + data);
-          StatusService.ok('Liitteen lataus('+config.file.name+')','Liitteen lataus:' + config.file.name + ' onnistui.');
+          StatusService.ok('Liitteen lataus(' + config.file.name + ')', 'Liitteen lataus:' + config.file.name + ' onnistui.');
           haeLiitteet();
         }).error(function (data, status, headers, config) {
           console.log('Liitteen lataus: ' + config.file.name + ' epaonnistui. Paluuarvo: ' + data);
@@ -126,6 +126,7 @@ angular.module('jukufrontApp')
       // $scope.upload = $upload.http({...})  // See 88#issuecomment-31366487 for sample code.
     });
 
+
     $scope.lahetaAvustushakemus = function () {
       $scope.$broadcast('show-errors-check-validity');
       if ($scope.avustusHakemusForm.$valid) {
@@ -138,6 +139,10 @@ angular.module('jukufrontApp')
             StatusService.virhe('HakemusService.laheta(' + $scope.avustushakemus.id + ')', data);
           });
       }
+    };
+
+    $scope.naytaAvustushakemus = function () {
+      $location.path('/h/hakemus/esikatselu/' + $scope.avustushakemus.id);
     };
 
     $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
@@ -162,20 +167,16 @@ angular.module('jukufrontApp')
       return parseFloat(value) >= 0;
     };
 
-    $scope.poistaLiite = function (liiteid){
-      LiiteService.poista($routeParams.id,liiteid)
+    $scope.poistaLiite = function (liiteid) {
+      LiiteService.poista($routeParams.id, liiteid)
         .success(function (data) {
-          StatusService.ok('LiiteService.poista(' + $routeParams.id + ','+ liiteid + ')', 'Liite poistettiin onnistuneesti');
+          StatusService.ok('LiiteService.poista(' + $routeParams.id + ',' + liiteid + ')', 'Liite poistettiin onnistuneesti');
           haeLiitteet();
         })
         .error(function (data) {
-          StatusService.virhe('LiiteService.poista(' + $routeParams.id + ','+ liiteid + ')', data);
+          StatusService.virhe('LiiteService.poista(' + $routeParams.id + ',' + liiteid + ')', data);
         });
     }
-
-    $scope.naytaAvustushakemus = function () {
-      $location.path('/h/hakemus/esikatselu/' + $scope.avustushakemus.id);
-    };
 
     $scope.tallennaAvustushakemus = function () {
       $scope.$broadcast('show-errors-check-validity');

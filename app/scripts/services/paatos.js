@@ -7,6 +7,9 @@ angular.module('services.paatos', [])
       hae: function (hakemusid) {
         return $http.get('/api/hakemus/' + hakemusid + '/paatos');
       },
+      hyvaksy: function (hakemusid) {
+        return $http.post('/api/hakemus/' + hakemusid + '/hyvaksy-paatos');
+      },
       tallenna: function (hakemusid, paatosdata) {
         var req = {
           method: 'PUT',

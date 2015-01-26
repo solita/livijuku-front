@@ -46,14 +46,14 @@ angular.module('jukufrontApp')
         });
     }
 
-    $scope.lahetaPaatos = function () {
-      PaatosService.tarkasta($scope.avustushakemus.id)
+    $scope.hyvaksyPaatos = function () {
+      PaatosService.hyvaksy($scope.avustushakemus.id)
         .success(function () {
-          StatusService.ok('HakemusService.tarkasta(' + $scope.avustushakemus.id + ')', 'Hakemus päivitettiin tarkastetuksi.');
-          $location.path('/k/hakemukset');
+          StatusService.ok('PaatosService.hyvaksy(' + $scope.avustushakemus.id + ')', 'Hakemus päivitettiin päätetyksi.');
+          $location.path('/k/suunnittelu/'+$scope.vuosi+'/'+$scope.tyyppi);
         })
         .error(function (data) {
-          StatusService.virhe('HakemusService.tarkasta(' + $scope.avustushakemus.id + ')', data);
+          StatusService.virhe('PaatosService.hyvaksy(' + $scope.avustushakemus.id + ')', data);
         });
     };
 

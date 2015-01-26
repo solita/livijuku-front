@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'AvustuskohdeService', 'HakemusService', 'StatusService', function ($rootScope, $scope, $location, $routeParams, AvustuskohdeService, HakemusService, StatusService) {
+  .controller('KasittelijaHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'AvustuskohdeService', 'HakemusService', 'StatusService', 'LiiteService', function ($rootScope, $scope, $location, $routeParams, AvustuskohdeService, HakemusService, StatusService, LiiteService) {
 
     function haeHaettavaavustus(avustuskohdelaji) {
       if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
@@ -10,6 +10,16 @@ angular.module('jukufrontApp')
       else {
         return 0;
       }
+    }
+
+    function haeLiitteet() {
+      LiiteService.haeKaikki($routeParams.id)
+        .success(function (data) {
+          $scope.liitteet = data;
+        })
+        .error(function (data) {
+          StatusService.virhe('LiiteService.hae(' + $routeParams.id + ')', data);
+        });
     }
 
     function haeOmarahoitus(avustuskohdelaji) {
@@ -65,6 +75,8 @@ angular.module('jukufrontApp')
       .error(function (data) {
         StatusService.virhe('AvustuskohdeService.hae(' + $routeParams.id + ')', data);
       });
+
+    haeLiitteet();
 
     $scope.tarkastaAvustushakemus = function () {
       HakemusService.tarkasta($scope.avustushakemus.id)

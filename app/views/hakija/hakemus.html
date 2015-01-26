@@ -563,7 +563,7 @@
               <div ng-show="liitteet.length > 0" class="response">
                 <div class="sel-file" ng-repeat="l in liitteet">
                   <p><i class="glyphicon glyphicon-file"></i>
-                    {{l.nimi}} ({{l.contenttype}})
+                    <a href="api/hakemus/{{avustushakemus.id}}/liite/{{l.liitenumero}}">{{l.nimi}} ({{l.contenttype}})</a>
                     <a href="" ng-click="poistaLiite(l.liitenumero)"><span class='glyphicon glyphicon-remove-sign'></span></a></p>
                   <!--
                                         <img ng-show="f.dataUrl" ng-src="{{f.dataUrl}}" class="thumb"/>
@@ -671,5 +671,4 @@
       </div>
     </form>
   </div>
-  {{liitteet | json}}
 </div>
