@@ -1,5 +1,6 @@
 var express = require('express');
 var proxy = require('express-http-proxy');
+var cacheResponseDirective = require('express-cache-response-directive');
 var app = express();
 
 function parseCookies (request) {
@@ -14,9 +15,17 @@ function parseCookies (request) {
   return list;
 }
 
+app.use(cacheResponseDirective());
+app.get('/', function(req, res, next) {
+  res.cacheControl("no-cache");
+  next();
+});
+
 app.use('/api', proxy('localhost:3000', {
   forwardPath: function(req, res) {
-    return require('url').parse(req.url).path;
+    path = require('url').parse(req.url).path;
+    console.log(path);
+    return path;
   },
   decorateRequest: function(req) {
     var cookies = parseCookies(req);
