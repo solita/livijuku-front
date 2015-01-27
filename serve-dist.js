@@ -16,7 +16,6 @@ function parseCookies (request) {
 
 app.use('/api', proxy('localhost:3000', {
   forwardPath: function(req, res) {
-    console.log('proxy');
     return require('url').parse(req.url).path;
   },
   decorateRequest: function(req) {
