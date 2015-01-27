@@ -267,6 +267,7 @@ module.exports = function (grunt) {
         flow: {
           html: {
             steps: {
+//            JEG: Jos haluat ugglify:n pois, korvaa alla oleva rivi: js: ['concat'],
               js: ['concat', 'uglifyjs'],
               css: ['cssmin']
             },
