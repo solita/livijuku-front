@@ -16,7 +16,7 @@ function parseCookies (request) {
 }
 
 app.use(cacheResponseDirective());
-app.get('/', function(req, res, next) {
+app.get('/*', function(req, res, next) {
   res.cacheControl("no-cache");
   next();
 });
