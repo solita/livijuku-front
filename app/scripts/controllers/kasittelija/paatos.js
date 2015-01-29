@@ -23,7 +23,6 @@ angular.module('jukufrontApp')
       PaatosService.hae($scope.hakemusid)
         .success(function (data) {
           if (data == null) {
-            console.log('NULL');
             $scope.paatos = {
               myonnettyavustus: 0,
               selite: ""

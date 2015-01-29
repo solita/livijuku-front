@@ -46,7 +46,6 @@ angular.module('jukufrontApp')
     };
 
     $scope.paivitaAvustus = function (avustus, hakemusid) {
-      console.log('avustustype' + typeof avustus + ' value:' + avustus);
       if (isNaN(avustus)) {
         haeSuunnitteluData();
       } else if (avustus != $scope.vanhaArvo) {
