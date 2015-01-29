@@ -4,6 +4,7 @@ angular.module('jukufrontApp')
   .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'SuunnitteluService', 'StatusService', function ($rootScope, $scope, $location, $routeParams, HakemusService, SuunnitteluService, StatusService) {
 
     $scope.vuosi = $routeParams.vuosi;
+    $scope.vanhaArvo = 0;
 
     function haeSuunnitteluData() {
       SuunnitteluService.hae($routeParams.vuosi, $routeParams.tyyppi)
@@ -36,20 +37,28 @@ angular.module('jukufrontApp')
         });
     }
 
+    $scope.asetaVanhaArvo = function (arvo) {
+      $scope.vanhaArvo = arvo;
+    };
+
     $scope.siirryPaatokseen = function (hakemusId, haettuavustus, avustus) {
-      $location.path('/k/paatos/' + $routeParams.vuosi + '/' + $routeParams.tyyppi + '/' + hakemusId + '/' + haettuavustus+'/' + avustus);
+      $location.path('/k/paatos/' + $routeParams.vuosi + '/' + $routeParams.tyyppi + '/' + hakemusId + '/' + haettuavustus + '/' + avustus);
     };
 
     $scope.paivitaAvustus = function (avustus, hakemusid) {
-      SuunnitteluService.suunniteltuAvustus(avustus, hakemusid)
-        .success(function () {
-          StatusService.ok('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', 'Myönnettävä avustus:' + avustus + ' päivitetty.');
-          haeSuunnitteluData();
-        })
-        .error(function (data) {
-          StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', data);
-        });
+      console.log('avustustype' + typeof avustus + ' value:' + avustus);
+      if (isNaN(avustus)) {
+        haeSuunnitteluData();
+      } else if (avustus != $scope.vanhaArvo) {
+        SuunnitteluService.suunniteltuAvustus(avustus, hakemusid)
+          .success(function () {
+            StatusService.ok('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', 'Myönnettävä avustus:' + avustus + ' päivitetty.');
+            haeSuunnitteluData();
+          })
+          .error(function (data) {
+            StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', data);
+          });
+      }
     };
-
     haeSuunnitteluData();
   }]);

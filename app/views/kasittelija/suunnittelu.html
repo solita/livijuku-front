@@ -29,13 +29,14 @@
               <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
             </div>
             <div ng-show="hakemus.hakemuksenTila=='T'">
-              {{hakemus.haettuAvustus}}
+              {{hakemus.haettuAvustus|currency:"&euro;"}}
             </div>
           </td>
-          <td>{{hakemus.muutos}}</td>
-          <td><input type="number" min="0" class="form-control"
+          <td>{{hakemus.muutos|currency:"&euro;"}}</td>
+          <td><input type="text" min="-0.0001" ng-currency="" class="form-control"
                      ng-model="hakemus.myonnettavaAvustus"
-                     ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)"/></td>
+                     ng-focus="asetaVanhaArvo(hakemus.myonnettavaAvustus)"
+                     ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)"/>
           <td>
             <button class="btn btn-primary"
                     ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
@@ -46,9 +47,9 @@
       </tr>
       <tr>
         <td>Yhteensä</td>
-        <td>{{haettuAvustusSum}}</td>
-        <td>{{muutosSum}}</td>
-        <td>{{myonnettavaAvustusSum}}</td>
+        <td>{{haettuAvustusSum|currency:"&euro;"}}</td>
+        <td>{{muutosSum|currency:"&euro;"}}</td>
+        <td>{{myonnettavaAvustusSum|currency:"&euro;"}}</td>
       </tr>
       </tbody>
     </table>
