@@ -37,7 +37,7 @@ app.use('/api', proxy('localhost:3000', {
 
 app.use(express.static('dist'));
 
-var server = app.listen(3333, function () {
+var server = app.listen(9000, function () {
 
   var host = server.address().address;
   var port = server.address().port;
