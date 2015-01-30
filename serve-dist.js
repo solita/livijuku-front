@@ -35,6 +35,20 @@ app.use('/api', proxy('localhost:3000', {
   }
 }));
 
+app.use('/juku/api', proxy('localhost:3000', {
+  forwardPath: function(req, res) {
+    path = require('url').parse(req.url).path;
+    console.log(path);
+    return path;
+  },
+  decorateRequest: function(req) {
+    var cookies = parseCookies(req);
+    req.headers['oam-remote-user'] = cookies['oam-remote-user'];
+    req.headers['oam-groups'] = '1';
+    return req;
+  }
+}));
+
 app.use(express.static('dist'));
 
 var server = app.listen(9000, function () {
