@@ -21,9 +21,10 @@ app.get('/*', function(req, res, next) {
   next();
 });
 
-app.use('/api', proxy('localhost:3000', {
+app.use('*/api', proxy('localhost:3000', {
   forwardPath: function(req, res) {
     path = require('url').parse(req.url).path;
+    console.log(req.url);
     console.log(path);
     return path;
   },
@@ -31,20 +32,7 @@ app.use('/api', proxy('localhost:3000', {
     var cookies = parseCookies(req);
     req.headers['oam-remote-user'] = cookies['oam-remote-user'];
     req.headers['oam-groups'] = '1';
-    return req;
-  }
-}));
-
-app.use('/juku/api', proxy('localhost:3000', {
-  forwardPath: function(req, res) {
-    path = require('url').parse(req.url).path;
-    console.log(path);
-    return path;
-  },
-  decorateRequest: function(req) {
-    var cookies = parseCookies(req);
-    req.headers['oam-remote-user'] = cookies['oam-remote-user'];
-    req.headers['oam-groups'] = '1';
+    console.log(req);
     return req;
   }
 }));
