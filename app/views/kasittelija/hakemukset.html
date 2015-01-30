@@ -28,36 +28,132 @@
             </div>
           </div>
         </accordion-heading>
-        <table st-table="displayed" class="table table-hover table-condensed table-striped"
-               st-safe-src=avustushakemuksetPerVuosi.avustushakemukset>
-          <thead>
-          <tr>
-            <th st-sort="hakija">Hakija</th>
-            <th st-sort="hakemuksenTila">Hakemuksen tila</th>
-            <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
-            <th st-sort="diaarinumero">Diaarinumero</th>
-            <th st-sort="kasittelija">Käsittelijä</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr ng-repeat="hakemus in displayed" ng-click="siirryHakemukseen(hakemus.id)">
-            <td>{{hakemus.hakija}}</td>
-            <td>
-              <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
-            </td>
-            <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
-            <td>{{hakemus.diaarinumero}}</td>
-            <td>{{hakemus.kasittelija}}</td>
-          </tr>
-          </tbody>
-        </table>
-
         <div class="row">
-          <div class="col-md-8"/>
-          <div class="col-md-4">
-            <div class="pull-right">
-              <button class="btn btn-primary" ng-click="siirrySuunnitteluun(avustushakemuksetPerVuosi.vuosi, 'AH0')">Suunnittelu ja päätöksenteko<span
-                class='glyphicon glyphicon-play'/></button>
+          <div class="col-md-12">
+            <div class="suunnitteluheader">Suuret kaupunkiseudut</div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <table st-table="ks1displayed" class="table table-hover table-condensed table-striped"
+                     st-safe-src=avustushakemuksetPerVuosi.ks1AvustushakemuksetPerVuosi>
+                <thead>
+                <tr>
+                  <th st-sort="hakija">Hakija</th>
+                  <th st-sort="hakemuksenTila">Hakemuksen tila</th>
+                  <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
+                  <th st-sort="diaarinumero">Diaarinumero</th>
+                  <th st-sort="kasittelija">Käsittelijä</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="hakemus in ks1displayed" ng-click="siirryHakemukseen(hakemus.id)">
+                  <td>{{hakemus.hakija}}</td>
+                  <td>
+                    <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
+                  </td>
+                  <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                  <td>{{hakemus.diaarinumero}}</td>
+                  <td>{{hakemus.kasittelija}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8"/>
+            <div class="col-md-4">
+              <div class="pull-right">
+                <button class="btn btn-primary"
+                        ng-click="siirrySuunnitteluun(avustushakemuksetPerVuosi.vuosi, 'AH0', 'KS1')">
+                  Suunnittelu ja päätöksenteko<span
+                  class='glyphicon glyphicon-play'/></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="suunnitteluheader">Keskisuuret kaupunkiseudut</div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <table st-table="ks2displayed" class="table table-hover table-condensed table-striped"
+                     st-safe-src=avustushakemuksetPerVuosi.ks2AvustushakemuksetPerVuosi>
+                <thead>
+                <tr>
+                  <th st-sort="hakija">Hakija</th>
+                  <th st-sort="hakemuksenTila">Hakemuksen tila</th>
+                  <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
+                  <th st-sort="diaarinumero">Diaarinumero</th>
+                  <th st-sort="kasittelija">Käsittelijä</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="hakemus in ks2displayed" ng-click="siirryHakemukseen(hakemus.id)">
+                  <td>{{hakemus.hakija}}</td>
+                  <td>
+                    <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
+                  </td>
+                  <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                  <td>{{hakemus.diaarinumero}}</td>
+                  <td>{{hakemus.kasittelija}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8"/>
+            <div class="col-md-4">
+              <div class="pull-right">
+                <button class="btn btn-primary"
+                        ng-click="siirrySuunnitteluun(avustushakemuksetPerVuosi.vuosi, 'AH0', 'KS2')">
+                  Suunnittelu ja päätöksenteko<span
+                  class='glyphicon glyphicon-play'/></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="suunnitteluheader">Ely keskukset</div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <table st-table="elydisplayed" class="table table-hover table-condensed table-striped"
+                     st-safe-src=avustushakemuksetPerVuosi.elyAvustushakemuksetPerVuosi>
+                <thead>
+                <tr>
+                  <th st-sort="hakija">Hakija</th>
+                  <th st-sort="hakemuksenTila">Hakemuksen tila</th>
+                  <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
+                  <th st-sort="diaarinumero">Diaarinumero</th>
+                  <th st-sort="kasittelija">Käsittelijä</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="hakemus in elydisplayed" ng-click="siirryHakemukseen(hakemus.id)">
+                  <td>{{hakemus.hakija}}</td>
+                  <td>
+                    <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
+                  </td>
+                  <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                  <td>{{hakemus.diaarinumero}}</td>
+                  <td>{{hakemus.kasittelija}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8"/>
+            <div class="col-md-4">
+              <div class="pull-right">
+                <button class="btn btn-primary"
+                        ng-click="siirrySuunnitteluun(avustushakemuksetPerVuosi.vuosi, 'AH0', 'ELY')">
+                  Suunnittelu ja päätöksenteko<span
+                  class='glyphicon glyphicon-play'/></button>
+              </div>
             </div>
           </div>
         </div>

@@ -8,20 +8,46 @@ angular.module('jukufrontApp')
         $scope.kaikkiHakemukset = data;
         var hakemuskaudetTmp = [];
         _(angular.fromJson(data)).forEach(function (hakemuskausi) {
-          var avustushakemuksetPerVuosi = [];
+          var ks1AvustushakemuksetPerVuosi = [];
+          var ks2AvustushakemuksetPerVuosi = [];
+          var elyAvustushakemuksetPerVuosi = [];
+          var organisaatiolajitunnus = "";
           _.filter(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).forEach(function (hakemus) {
-            avustushakemuksetPerVuosi.push({
-              'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
-              'hakemuksenTila': hakemus.hakemustilatunnus,
-              'viimeisinMuutos': Number(new Date(hakemus.muokkausaika)),
-              'diaarinumero': hakemus.diaarinumero,
-              'kasittelija': 'Ei määritelty',
-              'id': hakemus.id
-            });
+            organisaatiolajitunnus = _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).lajitunnus;
+            if (organisaatiolajitunnus == "KS1") {
+              ks1AvustushakemuksetPerVuosi.push({
+                'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
+                'hakemuksenTila': hakemus.hakemustilatunnus,
+                'viimeisinMuutos': Number(new Date(hakemus.muokkausaika)),
+                'diaarinumero': hakemus.diaarinumero,
+                'kasittelija': 'Ei määritelty',
+                'id': hakemus.id
+              });
+            } else if (organisaatiolajitunnus == "KS2") {
+              ks2AvustushakemuksetPerVuosi.push({
+                'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
+                'hakemuksenTila': hakemus.hakemustilatunnus,
+                'viimeisinMuutos': Number(new Date(hakemus.muokkausaika)),
+                'diaarinumero': hakemus.diaarinumero,
+                'kasittelija': 'Ei määritelty',
+                'id': hakemus.id
+              });
+            } else if (organisaatiolajitunnus == "ELY") {
+              elyAvustushakemuksetPerVuosi.push({
+                'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
+                'hakemuksenTila': hakemus.hakemustilatunnus,
+                'viimeisinMuutos': Number(new Date(hakemus.muokkausaika)),
+                'diaarinumero': hakemus.diaarinumero,
+                'kasittelija': 'Ei määritelty',
+                'id': hakemus.id
+              });
+            }
           });
           hakemuskaudetTmp.push({
             'vuosi': hakemuskausi.vuosi,
-            'avustushakemukset': avustushakemuksetPerVuosi,
+            'ks1AvustushakemuksetPerVuosi': ks1AvustushakemuksetPerVuosi,
+            'ks2AvustushakemuksetPerVuosi': ks2AvustushakemuksetPerVuosi,
+            'elyAvustushakemuksetPerVuosi': elyAvustushakemuksetPerVuosi,
             'accordionOpen': false
           });
         });
@@ -37,8 +63,8 @@ angular.module('jukufrontApp')
     $scope.siirryHakemukseen = function (hakemusId) {
       $location.path('/k/hakemus/' + hakemusId);
     };
-    $scope.siirrySuunnitteluun = function (vuosi, tyyppi) {
-      $location.path('/k/suunnittelu/' + vuosi + '/' + tyyppi);
+    $scope.siirrySuunnitteluun = function (vuosi, tyyppi, lajitunnus) {
+      $location.path('/k/suunnittelu/' + vuosi + '/' + tyyppi + '/' + lajitunnus);
     };
   }
   ]);

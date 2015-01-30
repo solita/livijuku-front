@@ -54,6 +54,14 @@ textarea
   color: #ffffff !important;
 }
 
+.suunnitteluheader
+{
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  padding-top: 20px;
+}
+
 .footer
 {
   margin-bottom: 0px;

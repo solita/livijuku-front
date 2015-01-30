@@ -53,15 +53,15 @@ angular
         templateUrl: 'views/kasittelija/hakemuskaudenHallinta.html',
         controller: 'KasittelijaHakemuskaudenHallintaCtrl'
       })
-      .when('/k/paatos/:vuosi/:tyyppi/:hakemusid/:haettuavustus/:avustus', {
+      .when('/k/paatos/:vuosi/:tyyppi/:lajitunnus/:hakemusid/:haettuavustus/:avustus', {
         templateUrl: 'views/kasittelija/paatos.html',
         controller: 'KasittelijaPaatosCtrl'
       })
-      .when('/k/paatos/esikatselu/:vuosi/:tyyppi/:hakemusid/:haettuavustus/:avustus', {
+      .when('/k/paatos/esikatselu/:vuosi/:tyyppi/:lajitunnus/:hakemusid/:haettuavustus/:avustus', {
         templateUrl: 'views/kasittelija/paatosEsikatselu.html',
         controller: 'KasittelijaPaatosCtrl'
       })
-      .when('/k/suunnittelu/:vuosi/:tyyppi', {
+      .when('/k/suunnittelu/:vuosi/:tyyppi/:lajitunnus', {
         templateUrl: 'views/kasittelija/suunnittelu.html',
         controller: 'KasittelijaSuunnitteluCtrl'
       })

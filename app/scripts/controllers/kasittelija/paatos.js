@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaPaatosCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'HakemusService', 'StatusService', 'PaatosService', function ($rootScope, $scope, $routeParams, $location, HakemusService, StatusService, PaatosService) {
+  .controller('KasittelijaPaatosCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'HakemusService', 'StatusService', 'PaatosService', 'SuunnitteluService', function ($rootScope, $scope, $routeParams, $location, HakemusService, StatusService, PaatosService, SuunnitteluService) {
     $scope.hakemusid = $routeParams.hakemusid;
     $scope.haettuavustus = $routeParams.haettuavustus;
     $scope.avustus = $routeParams.avustus;
     $scope.vuosi = $routeParams.vuosi;
     $scope.tyyppi = $routeParams.tyyppi;
+    $scope.lajitunnus = $routeParams.lajitunnus;
     $scope.aikaleima = new Date();
     $scope.vanhaArvo = 0;
 
@@ -41,7 +42,7 @@ angular.module('jukufrontApp')
     };
 
     $scope.naytaPaatos = function () {
-      $location.path('/k/paatos/esikatselu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.hakemusid + '/' + $scope.haettuavustus + '/' + $scope.avustus);
+      $location.path('/k/paatos/esikatselu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus + '/' + $scope.hakemusid + '/' + $scope.haettuavustus + '/' + $scope.avustus);
     };
 
     $scope.tallennaPaatos = function () {
@@ -62,7 +63,7 @@ angular.module('jukufrontApp')
         });
     };
 
-    $scope.tarkistaTyhja = function(arvo){
+    $scope.tarkistaTyhja = function (arvo) {
       if (isNaN(arvo)) {
         $scope.paatos.myonnettyavustus = $scope.vanhaArvo;
       }
@@ -72,7 +73,13 @@ angular.module('jukufrontApp')
       PaatosService.hyvaksy($scope.avustushakemus.id)
         .success(function () {
           StatusService.ok('PaatosService.hyvaksy(' + $scope.avustushakemus.id + ')', 'Hakemus päivitettiin päätetyksi.');
-          $location.path('/k/suunnittelu/' + $scope.vuosi + '/' + $scope.tyyppi);
+          SuunnitteluService.suunniteltuAvustus($scope.paatos.myonnettyavustus, $scope.avustushakemus.id)
+            .success(function () {
+            })
+            .error(function (data) {
+              StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + $scope.paatos.myonnettyavustus + ',' + $scope.avustushakemus.id + ')', data);
+            });
+          $location.path('/k/suunnittelu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus);
         })
         .error(function (data) {
           StatusService.virhe('PaatosService.hyvaksy(' + $scope.avustushakemus.id + ')', data);

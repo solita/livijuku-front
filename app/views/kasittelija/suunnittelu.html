@@ -6,7 +6,15 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <h3>KAUPUNKISEUDUT</h3>
+      <div ng-show="(lajitunnus == 'KS1')">
+        <div class="suunnitteluheader">Suuret kaupunkiseudut</div>
+      </div>
+      <div ng-show="(lajitunnus == 'KS2')">
+        <div class="suunnitteluheader">Keskisuuret kaupunkiseudut</div>
+      </div>
+      <div ng-show="(lajitunnus == 'ELY')">
+        <div class="suunnitteluheader">Ely keskukset</div>
+      </div>
     </div>
   </div>
   <form name="suunnitteluForm">
@@ -25,23 +33,37 @@
         <div class="form-group">
           <td>{{hakemus.hakija}}</td>
           <td>
-            <div ng-show="hakemus.hakemuksenTila!='T'">
+            <div ng-show="(hakemus.hakemuksenTila!='T' && hakemus.hakemuksenTila!='P')">
               <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
             </div>
-            <div ng-show="hakemus.hakemuksenTila=='T'">
+            <div ng-show="(hakemus.hakemuksenTila=='T'||hakemus.hakemuksenTila=='P')">
               {{hakemus.haettuAvustus|currency:"&euro;"}}
             </div>
           </td>
           <td>{{hakemus.muutos|currency:"&euro;"}}</td>
-          <td><input type="text" min="-0.0001" ng-currency="" class="form-control"
+          <td>
+            <div ng-show="hakemus.hakemuksenTila!='P'">
+              <input type="text" min="-0.0001" ng-currency="" class="form-control"
                      ng-model="hakemus.myonnettavaAvustus"
                      ng-focus="asetaVanhaArvo(hakemus.myonnettavaAvustus)"
                      ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)"/>
+            </div>
+            <div ng-show="hakemus.hakemuksenTila=='P'">
+              <p>{{hakemus.myonnettavaAvustus|currency:"&euro;"}}</p>
+            </div>
           <td>
-            <button class="btn btn-primary"
-                    ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
-              Päätöksentekoon
-            </button>
+            <div ng-show="hakemus.hakemuksenTila!='P'">
+              <button class="btn btn-primary"
+                      ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
+                Päätöksentekoon
+              </button>
+            </div>
+            <div ng-show="hakemus.hakemuksenTila=='P'">
+              <button class="btn btn-success"
+                      ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
+                Päätetty
+              </button>
+            </div>
           </td>
         </div>
       </tr>
