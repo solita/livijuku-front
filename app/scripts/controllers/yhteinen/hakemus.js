@@ -1,19 +1,15 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('HakijaHakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'AvustuskohdeService', 'StatusService', '$upload', 'LiiteService', function ($rootScope, $scope, $location, $routeParams, HakemusService, AvustuskohdeService, StatusService, $upload, LiiteService) {
+  .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'AvustuskohdeService', 'StatusService', '$upload', 'LiiteService', function ($rootScope, $scope, $location, $routeParams, HakemusService, AvustuskohdeService, StatusService, $upload, LiiteService) {
+
+    function euroSyoteNumeroksi(arvo) {
+      return parseFloat(arvo.replace(/[^0-9,]/g, '').replace(',', '.'));
+    };
+
     function haeHaettavaavustus(avustuskohdelaji) {
       if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
         return parseFloat((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).haettavaavustus);
-      }
-      else {
-        return 0;
-      }
-    }
-
-    function haeOmarahoitus(avustuskohdelaji) {
-      if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
-        return parseFloat((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).omarahoitus);
       }
       else {
         return 0;
@@ -79,9 +75,14 @@ angular.module('jukufrontApp')
         });
     }
 
-    function euroSyoteNumeroksi(arvo) {
-      return parseFloat(arvo.replace(/[^0-9,]/g, '').replace(',', '.'));
-    };
+    function haeOmarahoitus(avustuskohdelaji) {
+      if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
+        return parseFloat((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).omarahoitus);
+      }
+      else {
+        return 0;
+      }
+    }
 
     $scope.myFiles = [];
 
@@ -90,22 +91,14 @@ angular.module('jukufrontApp')
         var file = $scope.myFiles[i];
         console.log('Watched:' + file.name);
         $scope.upload = $upload.upload({
-          url: 'api/hakemus/' + $routeParams.id + '/liite', // upload.php script, node.js route, or servlet url
+          url: 'api/hakemus/' + $routeParams.id + '/liite',
           method: 'POST',
-          //headers: {'Authorization': 'xxx'}, // only for html5
-          //withCredentials: true,
           data: {myObj: $scope.myModelObj},
-          file: file, // single file or a list of files. list is only for html5
-          //fileName: 'doc.jpg' or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
-          fileFormDataName: 'liite' // file formData name ('Content-Disposition'), server side request form name
-          // could be a list of names for multiple files (html5). Default is 'file'
-          //formDataAppender: function(formData, key, val){}  // customize how data is added to the formData.
-          // See #40#issuecomment-28612000 for sample code
-
+          file: file,
+          fileFormDataName: 'liite'
         }).progress(function (evt) {
           console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.file.name);
         }).success(function (data, status, headers, config) {
-          // file is uploaded successfully
           console.log('Liiteen lataus: ' + config.file.name + ' onnistui. Paluuarvo: ' + data);
           StatusService.ok('Liitteen lataus(' + config.file.name + ')', 'Liitteen lataus:' + config.file.name + ' onnistui.');
           haeLiitteet();
@@ -113,19 +106,8 @@ angular.module('jukufrontApp')
           console.log('Liitteen lataus: ' + config.file.name + ' epaonnistui. Paluuarvo: ' + data);
           //StatusService.virhe('Liitteen lataus('+config.file.name+')','Liitteen lataus:' + config.file.name + ' epaonnistui:'+data);
         });
-        //.then(success, error, progress); // returns a promise that does NOT have progress/abort/xhr functions
-        //.xhr(function(xhr){xhr.upload.addEventListener(...)}) // access or attach event listeners to
-        //the underlying XMLHttpRequest
       }
-      /* alternative way of uploading, send the file binary with the file's content-type.
-       Could be used to upload files to CouchDB, imgur, etc... html5 FileReader is needed.
-       It could also be used to monitor the progress of a normal http post/put request.
-       Note that the whole file will be loaded in browser first so large files could crash the browser.
-       You should verify the file size before uploading with $upload.http().
-       */
-      // $scope.upload = $upload.http({...})  // See 88#issuecomment-31366487 for sample code.
     });
-
 
     $scope.lahetaAvustushakemus = function () {
       $scope.$broadcast('show-errors-check-validity');
@@ -163,10 +145,6 @@ angular.module('jukufrontApp')
       return haettavarahoitus2 <= omarahoitus2;
     };
 
-    $scope.positiivinenArvo = function (value) {
-      return parseFloat(value) >= 0;
-    };
-
     $scope.poistaLiite = function (liiteid) {
       LiiteService.poista($routeParams.id, liiteid)
         .success(function (data) {
@@ -176,7 +154,11 @@ angular.module('jukufrontApp')
         .error(function (data) {
           StatusService.virhe('LiiteService.poista(' + $routeParams.id + ',' + liiteid + ')', data);
         });
-    }
+    };
+
+    $scope.positiivinenArvo = function (value) {
+      return parseFloat(value) >= 0;
+    };
 
     $scope.tallennaAvustushakemus = function () {
       $scope.$broadcast('show-errors-check-validity');
@@ -282,6 +264,17 @@ angular.module('jukufrontApp')
       } else {
         StatusService.virhe('AvustuskohdeService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
       }
+    };
+
+    $scope.tarkastaAvustushakemus = function () {
+      HakemusService.tarkasta($scope.avustushakemus.id)
+        .success(function () {
+          StatusService.ok('HakemusService.tarkasta(' + $scope.avustushakemus.id + ')', 'Hakemus päivitettiin tarkastetuksi.');
+          $location.path('/k/hakemukset');
+        })
+        .error(function (data) {
+          StatusService.virhe('HakemusService.tarkasta(' + $scope.avustushakemus.id + ')', data);
+        });
     };
 
     haeHakemukset();

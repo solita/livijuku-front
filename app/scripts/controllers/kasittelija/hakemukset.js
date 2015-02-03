@@ -2,7 +2,16 @@
 
 angular.module('jukufrontApp')
   .controller('KasittelijaHakemuksetCtrl', ['$rootScope', '$scope', '$filter', '$location', 'HakemuskausiService', 'StatusService', function ($rootScope, $scope, $filter, $location, HakemuskausiService, StatusService) {
+
     $scope.displayed = [];
+
+    $scope.siirryHakemukseen = function (hakemusId) {
+      $location.path('/k/hakemus/' + hakemusId);
+    };
+    $scope.siirrySuunnitteluun = function (vuosi, tyyppi, lajitunnus) {
+      $location.path('/k/suunnittelu/' + vuosi + '/' + tyyppi + '/' + lajitunnus);
+    };
+
     HakemuskausiService.hae()
       .success(function (data) {
         $scope.kaikkiHakemukset = data;
@@ -59,13 +68,6 @@ angular.module('jukufrontApp')
       .error(function (data) {
         StatusService.virhe('OrganisaatioService.hae(): ' + data);
       });
-
-    $scope.siirryHakemukseen = function (hakemusId) {
-      $location.path('/k/hakemus/' + hakemusId);
-    };
-    $scope.siirrySuunnitteluun = function (vuosi, tyyppi, lajitunnus) {
-      $location.path('/k/suunnittelu/' + vuosi + '/' + tyyppi + '/' + lajitunnus);
-    };
   }
   ]);
 

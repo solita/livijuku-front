@@ -31,11 +31,11 @@ angular
       })
       .when('/h/hakemus/:id', {
         templateUrl: 'views/hakija/hakemus.html',
-        controller: 'HakijaHakemusCtrl'
+        controller: 'HakemusCtrl'
       })
       .when('/h/hakemus/esikatselu/:id', {
         templateUrl: 'views/hakija/hakemusEsikatselu.html',
-        controller: 'KasittelijaHakemusCtrl'
+        controller: 'HakemusCtrl'
       })
       .when('/h/hakemukset', {
         templateUrl: 'views/hakija/hakemukset.html',
@@ -43,7 +43,7 @@ angular
       })
       .when('/k/hakemus/:id', {
         templateUrl: 'views/kasittelija/hakemus.html',
-        controller: 'KasittelijaHakemusCtrl'
+        controller: 'HakemusCtrl'
       })
       .when('/k/hakemukset', {
         templateUrl: 'views/kasittelija/hakemukset.html',

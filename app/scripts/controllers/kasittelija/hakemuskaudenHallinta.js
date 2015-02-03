@@ -2,6 +2,7 @@
 
 angular.module('jukufrontApp')
   .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', function ($scope, $location, $route, $log, HakemuskausiService, StatusService) {
+
     function haeHakemuskaudet() {
       HakemuskausiService.hae()
         .success(function (data) {

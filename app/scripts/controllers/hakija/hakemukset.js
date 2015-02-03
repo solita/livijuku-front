@@ -3,6 +3,10 @@
 angular.module('jukufrontApp')
   .controller('HakijaHakemuksetCtrl', ['$scope', '$location', 'HakemusService', 'StatusService', function ($scope, $location, HakemusService, StatusService) {
 
+    $scope.valitseHakemus = function (hakemusId) {
+      $location.path('/h/hakemus/' + hakemusId);
+    };
+
     HakemusService.haeKaikki()
       .success(function (data) {
         var hakemuksetTmp = [];
@@ -44,9 +48,5 @@ angular.module('jukufrontApp')
       .error(function (data) {
         StatusService.virhe('HakemusService.haeKaikki())', data);
       });
-
-    $scope.valitseHakemus = function (hakemusId) {
-      $location.path('/h/hakemus/' + hakemusId);
-    };
 
   }]);
