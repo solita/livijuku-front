@@ -562,9 +562,20 @@
             <div class="col-md-8">
               <div ng-show="liitteet.length > 0" class="response">
                 <div class="sel-file" ng-repeat="l in liitteet">
+                  <div ng-show="(avustushakemus.hakemustilatunnus == 'K')">
                   <p><i class="glyphicon glyphicon-file"></i>
-                    <a href="api/hakemus/{{avustushakemus.id}}/liite/{{l.liitenumero}}">{{l.nimi}} ({{l.contenttype}})</a>
-                    <a href="" ng-click="poistaLiite(l.liitenumero)"><span class='glyphicon glyphicon-remove-sign'></span></a></p>
+                    <a href="api/hakemus/{{avustushakemus.id}}/liite/{{l.liitenumero}}">{{l.nimi}}
+                      ({{l.contenttype}})</a>
+                    <a href="" ng-click="poistaLiite(l.liitenumero)"><span
+                      class='glyphicon glyphicon-remove-sign'></span></a>
+                  </p>
+                  </div>
+                  <div ng-hide="(avustushakemus.hakemustilatunnus == 'K')">
+                    <p><i class="glyphicon glyphicon-file"></i>
+                      <a href="api/hakemus/{{avustushakemus.id}}/liite/{{l.liitenumero}}">{{l.nimi}}
+                        ({{l.contenttype}})</a>
+                    </p>
+                  </div>
                   <!--
                                         <img ng-show="f.dataUrl" ng-src="{{f.dataUrl}}" class="thumb"/>
                                         <span class="progress" ng-show="f.progress >= 0">
@@ -598,17 +609,19 @@
               </div>
             </div>
 
-            <div class="col-md-4 text-center">
-              <div ng-file-drop ng-model="myFiles" class="drop-box"
-                   drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
-                   multiple="true" allow-dir="true">
-                <p>Raahaa liite tähän</p>
+            <div ng-show="(avustushakemus.hakemustilatunnus == 'K')">
+              <div class="col-md-4 text-center">
+                <div ng-file-drop ng-model="myFiles" class="drop-box"
+                     drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+                     multiple="true" allow-dir="true">
+                  <p>Raahaa liite tähän</p>
 
-                <p>tai</p>
+                  <p>tai</p>
 
-                <div ng-no-file-drop>Tiedoston raahaaminen ei ole mahdollista tällä selain-versiolla</div>
-                <button ng-file-select class="btn btn-primary" ng-model="myFiles" multiple="true">Valitse tiedosto
-                </button>
+                  <div ng-no-file-drop>Tiedoston raahaaminen ei ole mahdollista tällä selain-versiolla</div>
+                  <button ng-file-select class="btn btn-primary" ng-model="myFiles" multiple="true">Valitse tiedosto
+                  </button>
+                </div>
               </div>
             </div>
           </div>
