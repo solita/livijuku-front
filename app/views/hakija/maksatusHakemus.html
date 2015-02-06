@@ -1,0 +1,687 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <a href="#/"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
+      <a href="#/l/hakemus" class="btn btn-primary">Avustushakemus {{avustushakemus.vuosi}}</a>
+      <a href="#" class="btn btn-primary disabled">1. maksatushakemus</a>
+      <a href="#" class="btn btn-primary disabled">2. maksatushakemus</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Joukkoliikenten valtionavustushakemus {{avustushakemus.vuosi}}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>HAKIJAN TIEDOT</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <h4>Kunnan nimi</h4>
+
+      <p>{{hakija}}</p>
+      <h4>Pankkitilin numero</h4>
+
+      <p>{{pankkitilinumero}}</p>
+    </div>
+    <div class="col-md-3">
+      <h4>Hakijat</h4>
+
+      <p>Puuttuu</p>
+
+      <p>Puuttuu</p>
+
+      <p>Puuttuu</p>
+
+      <p>Puuttuu</p>
+    </div>
+    <div class="col-md-3">
+      <br>
+
+      <p>Puuttuu</p>
+
+      <p>Puuttuu</p>
+
+      <p>Puuttuu</p>
+
+      <p>Puuttuu</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-3">
+      <br>
+      <h4>Päätöksentekijä</h4>
+
+      <p>Puuttuu</p>
+
+      <p>Puuttuu</p>
+
+      <p>Puuttuu</p>
+
+      <p>Puuttuu</p>
+    </div>
+  </div>
+  <div>
+    <form name="avustusHakemusForm">
+      <div class="row">
+        <div class="col-md-12">
+          <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ<a href=""><span
+            class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-9">
+              <h4 class="panel-title">PSA:n mukaisen liikenteen hankinta</h4>
+            </div>
+            <div class="col-md-3">
+              <div class="pull-right">
+                <h4 class="panel-title">{{(psa1haettavaavustus + psa2haettavaavustus + psamhaettavaavustus) | currency:"&euro;"}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Paikallisliikenne</h5>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Haettava valtionavustus</label>
+                <input name="psa1haettavaavustus" type="text" min="-0.0001" ng-currency=""
+                       class="form-control"
+                       ng-model="psa1haettavaavustus"
+                       ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
+
+                <p
+                  ng-show="avustusHakemusForm.psa1haettavaavustus.$error.positiivinenArvo && !avustusHakemusForm.psa1haettavaavustus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Kunnan oma rahoitusosuus</label>
+                <input name="psa1omarahoitus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="psa1omarahoitus"
+                       ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,psa1haettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
+                       ui-validate-watch=" 'psa1haettavaavustus' "/>
+
+                <p
+                  ng-show="avustusHakemusForm.psa1omarahoitus.$error.positiivinenArvo && !avustusHakemusForm.psa1omarahoitus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+
+                <p
+                  ng-show="avustusHakemusForm.psa1omarahoitus.$error.omarahoitusRiittava && !avustusHakemusForm.psa1omarahoitus.$pristine"
+                  class="help-block">Oma rahoitusosuus tulee olla vähintään haettavan avustusosuuden suuruinen.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Integroitu palvelulinja, kaikille avointa</h5>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Haettava valtionavustus</label>
+                <input name="psa2haettavaavustus" type="text" min="-0.0001" ng-currency=""
+                       class="form-control"
+                       ng-model="psa2haettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
+
+                <p
+                  ng-show="avustusHakemusForm.psa2haettavaavustus.$error.positiivinenArvo && !avustusHakemusForm.psa2haettavaavustus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Kunnan oma rahoitusosuus</label>
+                <input name="psa2omarahoitus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="psa2omarahoitus"
+                       ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,psa2haettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
+                       ui-validate-watch=" 'psa2haettavaavustus' "/>
+
+                <p
+                  ng-show="avustusHakemusForm.psa2omarahoitus.$error.positiivinenArvo && !avustusHakemusForm.psa2omarahoitus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+
+                <p
+                  ng-show="avustusHakemusForm.psa2omarahoitus.$error.omarahoitusRiittava && !avustusHakemusForm.psa2omarahoitus.$pristine"
+                  class="help-block">Oma rahoitusosuus tulee olla vähintään haettavan avustusosuuden suuruinen.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Muu PSA:n mukaisen liikenteen järjestäminen</h5>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Haettava valtionavustus</label>
+                <input name="psamhaettavaavustus" type="text" min="-0.0001" ng-currency=""
+                       class="form-control"
+                       ng-model="psamhaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
+
+                <p
+                  ng-show="avustusHakemusForm.psamhaettavaavustus.$error.positiivinenArvo && !avustusHakemusForm.psamhaettavaavustus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Kunnan oma rahoitusosuus</label>
+                <input name="psamomarahoitus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="psamomarahoitus"
+                       ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,psamhaettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
+                       ui-validate-watch=" 'psamhaettavaavustus' "/>
+
+                <p
+                  ng-show="avustusHakemusForm.psamomarahoitus.$error.positiivinenArvo && !avustusHakemusForm.psamomarahoitus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+
+                <p
+                  ng-show="avustusHakemusForm.psamomarahoitus.$error.omarahoitusRiittava && !avustusHakemusForm.psamomarahoitus.$pristine"
+                  class="help-block">Oma rahoitusosuus tulee olla vähintään haettavan avustusosuuden suuruinen.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-9">
+              <h4 class="panel-title">Hintavelvoitteiden korvaaminen</h4>
+            </div>
+            <div class="col-md-3">
+              <div class="pull-right">
+                <h4 class="panel-title">{{(hkslhaettavaavustus + hkklhaettavaavustus + hkllhaettavaavustus +
+                  hktlhaettavaavustus) | currency:"&euro;"}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Seutulippu</h5>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Haettava valtionavustus</label>
+                <input name="hkslhaettavaavustus" type="text" min="-0.0001" ng-currency=""
+                       class="form-control"
+                       ng-model="hkslhaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
+
+                <p
+                  ng-show="avustusHakemusForm.hkslhaettavaavustus.$error.positiivinenArvo && !avustusHakemusForm.hkslhaettavaavustus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Kunnan oma rahoitusosuus</label>
+                <input name="hkslomarahoitus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="hkslomarahoitus"
+                       ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,hkslhaettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
+                       ui-validate-watch=" 'hkslhaettavaavustus' "/>
+
+                <p
+                  ng-show="avustusHakemusForm.hkslomarahoitus.$error.positiivinenArvo && !avustusHakemusForm.hkslomarahoitus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+
+                <p
+                  ng-show="avustusHakemusForm.hkslomarahoitus.$error.omarahoitusRiittava && !avustusHakemusForm.hkslomarahoitus.$pristine"
+                  class="help-block">Oma rahoitusosuus tulee olla vähintään haettavan avustusosuuden suuruinen.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Kaupunkilippu / kuntalippu</h5>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Haettava valtionavustus</label>
+                <input name="hkklhaettavaavustus" type="text" min="-0.0001" ng-currency=""
+                       class="form-control"
+                       ng-model="hkklhaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
+
+                <p
+                  ng-show="avustusHakemusForm.hkklhaettavaavustus.$error.positiivinenArvo && !avustusHakemusForm.hkklhaettavaavustus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Kunnan oma rahoitusosuus</label>
+                <input name="hkklomarahoitus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="hkklomarahoitus"
+                       ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,hkklhaettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
+                       ui-validate-watch=" 'hkklhaettavaavustus' "/>
+
+                <p
+                  ng-show="avustusHakemusForm.hkklomarahoitus.$error.positiivinenArvo && !avustusHakemusForm.hkklomarahoitus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+
+                <p
+                  ng-show="avustusHakemusForm.hkklomarahoitus.$error.omarahoitusRiittava && !avustusHakemusForm.hkklomarahoitus.$pristine"
+                  class="help-block">Oma rahoitusosuus tulee olla vähintään haettavan avustusosuuden suuruinen.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Liityntälippu (esim. VR, pääkaupunkiseudun)</h5>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Haettava valtionavustus</label>
+                <input name="hkllhaettavaavustus" type="text" min="-0.0001" ng-currency=""
+                       class="form-control"
+                       ng-model="hkllhaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
+
+                <p
+                  ng-show="avustusHakemusForm.hkllhaettavaavustus.$error.positiivinenArvo && !avustusHakemusForm.hkllhaettavaavustus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Kunnan oma rahoitusosuus</label>
+                <input name="hkllomarahoitus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="hkllomarahoitus"
+                       ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,hkllhaettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
+                       ui-validate-watch=" 'hkllhaettavaavustus' "/>
+
+                <p
+                  ng-show="avustusHakemusForm.hkllomarahoitus.$error.positiivinenArvo && !avustusHakemusForm.hkllomarahoitus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+
+                <p
+                  ng-show="avustusHakemusForm.hkllomarahoitus.$error.omarahoitusRiittava && !avustusHakemusForm.hkllomarahoitus.$pristine"
+                  class="help-block">Oma rahoitusosuus tulee olla vähintään haettavan avustusosuuden suuruinen.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Työmatkalippu</h5>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Haettava valtionavustus</label>
+                <input name="hktlhaettavaavustus" type="text" min="-0.0001" ng-currency=""
+                       class="form-control"
+                       ng-model="hktlhaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
+
+                <p
+                  ng-show="avustusHakemusForm.hktlhaettavaavustus.$error.positiivinenArvo && !avustusHakemusForm.hktlhaettavaavustus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Kunnan oma rahoitusosuus</label>
+                <input name="hktlomarahoitus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="hktlomarahoitus"
+                       ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,hktlhaettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
+                       ui-validate-watch=" 'hktlhaettavaavustus' "/>
+
+                <p
+                  ng-show="avustusHakemusForm.hktlomarahoitus.$error.positiivinenArvo && !avustusHakemusForm.hktlomarahoitus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+
+                <p
+                  ng-show="avustusHakemusForm.hktlomarahoitus.$error.omarahoitusRiittava && !avustusHakemusForm.hktlomarahoitus.$pristine"
+                  class="help-block">Oma rahoitusosuus tulee olla vähintään haettavan avustusosuuden suuruinen.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-9">
+              <h4 class="panel-title">Liikenteen suunnittelu- ja kehittämishankkeet</h4>
+            </div>
+            <div class="col-md-3">
+              <div class="pull-right">
+                <h4 class="panel-title">{{(kimhaettavaavustus + kmpkhaettavaavustus + kmkhaettavaavustus +
+                  krthaettavaavustus + kmhaettavaavustus) | currency:"&euro;"}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Informaatio- ja maksujärjestelmien kehittäminen</h5>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Haettava valtionavustus</label>
+                <input name="kimhaettavaavustus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="kimhaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
+
+                <p
+                  ng-show="avustusHakemusForm.kimhaettavaavustus.$error.positiivinenArvo && !avustusHakemusForm.kimhaettavaavustus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Kunnan oma rahoitusosuus</label>
+                <input name="kimomarahoitus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="kimomarahoitus"
+                       ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kimhaettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
+                       ui-validate-watch=" 'kimhaettavaavustus' "/>
+
+                <p
+                  ng-show="avustusHakemusForm.kimomarahoitus.$error.positiivinenArvo && !avustusHakemusForm.kimomarahoitus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+
+                <p
+                  ng-show="avustusHakemusForm.kimomarahoitus.$error.omarahoitusRiittava && !avustusHakemusForm.kimomarahoitus.$pristine"
+                  class="help-block">Oma rahoitusosuus tulee olla vähintään haettavan avustusosuuden suuruinen.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Matkapalvelukeskuksen suunnittelu ja kehittäminen</h5>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Haettava valtionavustus</label>
+                <input name="kmpkhaettavaavustus" type="text" min="-0.0001" ng-currency=""
+                       class="form-control"
+                       ng-model="kmpkhaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
+
+                <p
+                  ng-show="avustusHakemusForm.kmpkhaettavaavustus.$error.positiivinenArvo && !avustusHakemusForm.kmpkhaettavaavustus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Kunnan oma rahoitusosuus</label>
+                <input name="kmpkomarahoitus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="kmpkomarahoitus"
+                       ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kmpkhaettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
+                       ui-validate-watch=" 'kmpkhaettavaavustus' "/>
+
+                <p
+                  ng-show="avustusHakemusForm.kmpkomarahoitus.$error.positiivinenArvo && !avustusHakemusForm.kmpkomarahoitus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+
+                <p
+                  ng-show="avustusHakemusForm.kmpkomarahoitus.$error.omarahoitusRiittava && !avustusHakemusForm.kmpkomarahoitus.$pristine"
+                  class="help-block">Oma rahoitusosuus tulee olla vähintään haettavan avustusosuuden suuruinen.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Matkakeskuksen suunnittelu ja kehittäminen</h5>
+            </div>
+            <div class="form-group" show-errors="{showSuccess: true}">
+              <div class="col-md-6">
+                <label>Haettava valtionavustus</label>
+                <input name="kmkhaettavaavustus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="kmkhaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
+
+                <p
+                  ng-show="avustusHakemusForm.kmkhaettavaavustus.$error.positiivinenArvo && !avustusHakemusForm.kmkhaettavaavustus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Kunnan oma rahoitusosuus</label>
+                <input name="kmkomarahoitus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="kmkomarahoitus"
+                       ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kmkhaettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
+                       ui-validate-watch=" 'kmkhaettavaavustus' "/>
+
+                <p
+                  ng-show="avustusHakemusForm.kmkomarahoitus.$error.positiivinenArvo && !avustusHakemusForm.kmkomarahoitus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+
+                <p
+                  ng-show="avustusHakemusForm.kmkomarahoitus.$error.omarahoitusRiittava && !avustusHakemusForm.kmkomarahoitus.$pristine"
+                  class="help-block">Oma rahoitusosuus tulee olla vähintään haettavan avustusosuuden suuruinen.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Raitiotien suunnittelu</h5>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Haettava valtionavustus</label>
+                <input name="krthaettavaavustus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="krthaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
+
+                <p
+                  ng-show="avustusHakemusForm.krthaettavaavustus.$error.positiivinenArvo && !avustusHakemusForm.krthaettavaavustus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Kunnan oma rahoitusosuus</label>
+                <input name="krtomarahoitus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="krtomarahoitus"
+                       ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,krthaettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
+                       ui-validate-watch=" 'krthaettavaavustus' "/>
+
+                <p
+                  ng-show="avustusHakemusForm.krtomarahoitus.$error.positiivinenArvo && !avustusHakemusForm.krtomarahoitus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+
+                <p
+                  ng-show="avustusHakemusForm.krtomarahoitus.$error.omarahoitusRiittava && !avustusHakemusForm.krtomarahoitus.$pristine"
+                  class="help-block">Oma rahoitusosuus tulee olla vähintään haettavan avustusosuuden suuruinen.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h5>Muu hanke, mikä?</h5>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Haettava valtionavustus</label>
+                <input name="kmhaettavaavustus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="kmhaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
+
+                <p
+                  ng-show="avustusHakemusForm.kmhaettavaavustus.$error.positiivinenArvo && !avustusHakemusForm.kmhaettavaavustus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" show-errors="{showSuccess: true}">
+                <label>Kunnan oma rahoitusosuus</label>
+                <input name="kmomarahoitus" type="text" min="-0.0001" ng-currency="" class="form-control"
+                       ng-model="kmomarahoitus"
+                       ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kmhaettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
+                       ui-validate-watch=" 'kmhaettavaavustus' "/>
+
+                <p
+                  ng-show="avustusHakemusForm.kmomarahoitus.$error.positiivinenArvo && !avustusHakemusForm.kmomarahoitus.$pristine"
+                  class="help-block">Arvon tulee olla positiivinen.</p>
+
+                <p
+                  ng-show="avustusHakemusForm.kmomarahoitus.$error.omarahoitusRiittava && !avustusHakemusForm.kmomarahoitus.$pristine"
+                  class="help-block">Oma rahoitusosuus tulee olla vähintään haettavan avustusosuuden suuruinen.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-9">
+          <h4>JOUKKOLIIKENTEEN VALTIONAVUSTUSHAKEMUS YHTEENSÄ:</h4>
+        </div>
+        <div class="col-md-3">
+          <div class="pull-right">
+            <h4>{{(psa1haettavaavustus + psa2haettavaavustus + psamhaettavaavustus + hkslhaettavaavustus +
+              hkklhaettavaavustus + hkllhaettavaavustus +
+              hktlhaettavaavustus + kimhaettavaavustus + kmpkhaettavaavustus + kmkhaettavaavustus +
+              krthaettavaavustus + kmhaettavaavustus) | currency:"&euro;"}}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12">
+            <label>Lisätietoja avustusten kohteista<a href=""><span
+              class='jukutooltip glyphicon glyphicon-question-sign'></span></a></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <textarea class="animate msd-elastic: \n;" ng-model="avustushakemus.selite"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">Liitetiedostot</h2>
+          </div>
+          <div class="panel-body">
+            <div class="col-md-8">
+              <div ng-show="liitteet.length > 0" class="response">
+                <div class="sel-file" ng-repeat="l in liitteet">
+                  <div ng-show="(avustushakemus.hakemustilatunnus == 'K')">
+                  <p><i class="glyphicon glyphicon-file"></i>
+                    <a href="api/hakemus/{{avustushakemus.id}}/liite/{{l.liitenumero}}">{{l.nimi}}
+                      ({{l.contenttype}})</a>
+                    <a href="" ng-click="poistaLiite(l.liitenumero)"><span
+                      class='glyphicon glyphicon-remove-sign'></span></a>
+                  </p>
+                  </div>
+                  <div ng-hide="(avustushakemus.hakemustilatunnus == 'K')">
+                    <p><i class="glyphicon glyphicon-file"></i>
+                      <a href="api/hakemus/{{avustushakemus.id}}/liite/{{l.liitenumero}}">{{l.nimi}}
+                        ({{l.contenttype}})</a>
+                    </p>
+                  </div>
+                  <!--
+                                        <img ng-show="f.dataUrl" ng-src="{{f.dataUrl}}" class="thumb"/>
+                                        <span class="progress" ng-show="f.progress >= 0">
+                                                    <div style="width:{{f.progress}}%">{{f.progress}}%</div>
+                                                </span>
+                                        <button class="button" ng-click="f.upload.abort();f.upload.aborted=true"
+                                                ng-show="f.upload != null && f.progress < 100 && !f.upload.aborted">Abort
+                                        </button>
+                                        {{f.name}} - size: {{f.size}}B - type: {{f.type}}
+                                        <a ng-show="f.result" href="javascript:void(0)"
+                                           ng-click="f.showDetail = !f.showDetail">details</a>
+
+                                        <div ng-show="f.showDetail">
+                                          <br/>
+
+                                          <div data-ng-show="f.result.result == null">{{f.result}}</div>
+                                          <ul>
+                                            <li ng-repeat="item in f.result.result">
+                                              <div data-ng-show="item.name">file name: {{item.name}}</div>
+                                              <div data-ng-show="item.fieldName">name: {{item.fieldName}}</div>
+                                              <div data-ng-show="item.size">size on the serve: {{item.size}}</div>
+                                              <div data-ng-show="item.value">value: {{item.value}}</div>
+                                            </li>
+                                          </ul>
+                                          <div data-ng-show="f.result.requestHeaders" class="reqh">request headers:
+                                            {{f.result.requestHeaders}}
+                                          </div>
+                                        </div>
+                                        -->
+                </div>
+              </div>
+            </div>
+
+            <div ng-show="(avustushakemus.hakemustilatunnus == 'K')">
+              <div class="col-md-4 text-center">
+                <div ng-file-drop ng-model="myFiles" class="drop-box"
+                     drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+                     multiple="true" allow-dir="true">
+                  <p>Raahaa liite tähän</p>
+
+                  <p>tai</p>
+
+                  <div ng-no-file-drop>Tiedoston raahaaminen ei ole mahdollista tällä selain-versiolla</div>
+                  <button ng-file-select class="btn btn-primary" ng-model="myFiles" multiple="true">Valitse tiedosto
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <a href="#/"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
+        </div>
+        <div class="col-md-2">
+          <div ng-show="(avustushakemus.hakemustilatunnus == 'K')">
+            <button data-ng-click="tallennaAvustushakemus()" class="pull-right btn btn-primary">Tallenna tiedot
+            </button>
+          </div>
+          <div ng-hide="(avustushakemus.hakemustilatunnus == 'K')">
+            <button data-ng-click="tallennaAvustushakemus()" class="pull-right btn btn-primary" disabled>Tallenna
+              tiedot
+            </button>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button data-ng-click="naytaAvustushakemus()" class="pull-right btn btn-primary">Hakemuksen esikatselu
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h3>HAKEMUKSEN PÄIVÄMÄÄRÄ JA PÄÄTÖKSENTEKIJÄ</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h4>Oikeudet hakemuksen lähettämiseen on käyttäjillä, joka toimivat organisaatiossa hakemuksen hyväksyjinä
+            ja
+            päätöksentekijöinä.</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Päivämäärä</h5>
+
+          <p>{{aikaleima | date:'dd.MM.yyyy'}}</p>
+        </div>
+        <div class="col-md-6">
+          <h5>Päätöksentekijä</h5>
+
+          <p>_kirjautuneen päätöksentekijän nimi_</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-show="(avustushakemus.hakemustilatunnus == 'K')">
+            <button data-ng-click="lahetaAvustushakemus()" class="pull-right btn btn-success">Lähetä hakemus</button>
+          </div>
+          <div ng-hide="(avustushakemus.hakemustilatunnus == 'K')">
+            <button data-ng-click="lahetaAvustushakemus()" class="pull-right btn btn-success" disabled>Lähetä hakemus
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

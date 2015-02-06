@@ -41,6 +41,10 @@ angular
         templateUrl: 'views/hakija/hakemukset.html',
         controller: 'HakijaHakemuksetCtrl'
       })
+      .when('/h/maksatushakemus/:tyyppi/:id/:m1id/:m2id', {
+        templateUrl: 'views/hakija/maksatusHakemus.html',
+        controller: 'MaksatusHakemusCtrl'
+      })
       .when('/k/hakemus/:id', {
         templateUrl: 'views/kasittelija/hakemus.html',
         controller: 'HakemusCtrl'

@@ -7,6 +7,10 @@ angular.module('jukufrontApp')
       $location.path('/h/hakemus/' + hakemusId);
     };
 
+    $scope.valitseMaksatusHakemus = function (tyyppi, hakemusId, maksatusHakemus1Id, maksatusHakemus2Id) {
+      $location.path('/h/maksatushakemus/' + tyyppi+'/'+hakemusId+'/'+maksatusHakemus1Id+'/'+maksatusHakemus2Id);
+    };
+
     HakemusService.haeKaikki()
       .success(function (data) {
         var hakemuksetTmp = [];
