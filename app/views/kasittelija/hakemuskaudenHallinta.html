@@ -20,9 +20,16 @@
       <div class="row">
         <div class="col-md-3 text-center">
           <h1>{{hakemuskausi.vuosi}}</h1>
-          <a href="" class="btn btn-primary">Lataa hakuohje</a>
+          <a href="/api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" class="btn btn-primary">Hakuohjeet
+            {{hakemuskausi.vuosi}}</a>
         </div>
         <div class="col-md-9">
+          <div class="row">
+            <button ng-file-select class="btn btn-primary btn-lg" ng-file-change="upload($files, hakemuskausi.vuosi)"
+                    multiple="false">Lataa hakuohje
+            </button>
+          </div>
+          <div class="row"><p></p></div>
           <div class="row">
             <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
               hakemus oletusarvoilla
@@ -42,7 +49,8 @@
       <div class="row">
         <div class="col-md-3 text-center">
           <h1>{{hakemuskausi.vuosi}}</h1>
-          <a href="" class="btn btn-primary">Lataa hakuohje</a>
+          <a href="/api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" class="btn btn-primary">Hakuohjeet
+            {{hakemuskausi.vuosi}}</a>
           <br>
           <br>
         </div>
@@ -53,6 +61,7 @@
             </div>
             <div class="panel-body">
               <h4>Hakuaika:</h4>
+
               <p>{{hakemuskausi.avustushakemusAlkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.avustushakemusLoppupvm |
                 date:'dd.MM yyyy'}}</p>
             </div>
@@ -65,6 +74,7 @@
             </div>
             <div class="panel-body">
               <h4>Hakuaika:</h4>
+
               <p>{{hakemuskausi.maksatushakemus1Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus1Loppupvm |
                 date:'dd.MM yyyy'}}</p>
             </div>
@@ -77,6 +87,7 @@
             </div>
             <div class="panel-body">
               <h4>Hakuaika:</h4>
+
               <p>{{hakemuskausi.maksatushakemus2Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus2Loppupvm |
                 date:'dd.MM yyyy'}}</p>
             </div>

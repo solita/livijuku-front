@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', function ($scope, $location, $route, $log, HakemuskausiService, StatusService) {
+  .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', '$upload', function ($scope, $location, $route, $log, HakemuskausiService, StatusService, $upload) {
 
     function haeHakemuskaudet() {
       HakemuskausiService.hae()
@@ -44,6 +44,7 @@ angular.module('jukufrontApp')
         });
     };
 
+
     $scope.luoUusiHakemuskausi = function (vuosi) {
       HakemuskausiService.luoUusi(vuosi)
         .success(function () {
@@ -53,6 +54,28 @@ angular.module('jukufrontApp')
         .error(function (data) {
           StatusService.virhe('HakemuskausiService.luoUusi(' + vuosi + ')', data);
         });
+    };
+
+    $scope.upload = function (tiedostot,vuosi) {
+      if (tiedostot.length>0) {
+        $upload.upload({
+          url: 'api/hakemuskausi/' + vuosi + '/hakuohje',
+          method: 'PUT',
+          data: {myObj: $scope.myModelObj},
+          file: tiedostot[0],
+          fileFormDataName: 'hakuohje'
+        }).progress(function (evt) {
+          var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+          console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+        }).success(function (data, status, headers, config) {
+          console.log('Hakuohjeen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' onnistui. Paluuarvo: ' + data);
+          StatusService.ok('Hakuohjelautaus: ' + config.file.name + ' vuodelle:' + vuosi ,'Hakuohjeen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' onnistui.');
+          haeHakemuskaudet();
+        }).error(function (data, status, headers, config) {
+          console.log('Hakuohjeen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui. Paluuarvo: ' + data);
+          StatusService.virhe('Hakuohjelataus: ' + config.file.name + ' vuodelle:' + vuosi, 'Hakuohjeen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui:' + data);
+        });
+      }
     };
 
     haeHakemuskaudet();
