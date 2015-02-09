@@ -20,8 +20,16 @@
       <div class="row">
         <div class="col-md-3 text-center">
           <h1>{{hakemuskausi.vuosi}}</h1>
-          <a href="/api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" class="btn btn-primary">Hakuohjeet
-            {{hakemuskausi.vuosi}}</a>
+
+          <div ng-show="ladattuHakuohje(hakemuskausi.vuosi)">
+            <a href="/api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" class="btn btn-primary">Hakuohjeet
+              {{hakemuskausi.vuosi}}</a>
+          </div>
+          <div ng-hide="ladattuHakuohje(hakemuskausi.vuosi)">
+            <button class="btn btn-primary" disabled>Hakuohjeet
+              {{hakemuskausi.vuosi}}
+            </button>
+          </div>
         </div>
         <div class="col-md-9">
           <div class="row">
@@ -31,9 +39,16 @@
           </div>
           <div class="row"><p></p></div>
           <div class="row">
-            <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
-              hakemus oletusarvoilla
-            </button>
+            <div ng-show="ladattuHakuohje(hakemuskausi.vuosi)">
+              <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
+                hakemus oletusarvoilla
+              </button>
+            </div>
+            <div ng-hide="ladattuHakuohje(hakemuskausi.vuosi)">
+              <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg" disabled>Käynnistä
+                hakemus oletusarvoilla
+              </button>
+            </div>
           </div>
         </div>
       </div>
