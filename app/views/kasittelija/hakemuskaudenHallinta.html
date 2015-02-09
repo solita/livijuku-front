@@ -34,19 +34,19 @@
         <div class="col-md-9">
           <div class="row">
             <button ng-file-select class="btn btn-primary btn-lg" ng-file-change="upload($files, hakemuskausi.vuosi)"
-                    multiple="false">Lataa hakuohje
+                    multiple="false" ng-accept="'.pdf'" >Lataa hakuohje
             </button>
           </div>
           <div class="row"><p></p></div>
           <div class="row">
             <div ng-show="ladattuHakuohje(hakemuskausi.vuosi)">
               <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
-                hakemus oletusarvoilla
+                hakemuskausi oletusarvoilla
               </button>
             </div>
             <div ng-hide="ladattuHakuohje(hakemuskausi.vuosi)">
               <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg" disabled>Käynnistä
-                hakemus oletusarvoilla
+                hakemuskausi oletusarvoilla
               </button>
             </div>
           </div>
