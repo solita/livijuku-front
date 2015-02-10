@@ -506,6 +506,11 @@ module.exports = function (grunt) {
     grunt.task.run('karma:' + mode);
   });
 
+  /* CI tarvitsee erilliset taskit webdriverin ja testien ajoille.*/
+  grunt.registerTask('citeste2e', function () {
+    grunt.task.run(['protractor:run']);
+  });
+
   grunt.registerTask('teste2e', function () {
     grunt.task.run([
       'protractor_webdriver',
