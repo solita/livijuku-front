@@ -101,3 +101,6 @@ trapServices
 startBackend $DB_CREATE_ID
 startFront
 runTests
+
+eval $KILL_SERVICES
+
