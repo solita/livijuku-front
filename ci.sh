@@ -1,28 +1,58 @@
 #!/bin/bash -x
 
-# Jos upstream paketit puuttuvat, noudetaan ne
-[ -d target/upstream/upstream/juku-db ] || \
-    ( \
-        mkdir -p target && \
-        cd target && \
-        wget --quiet http://jenkins.livijuku.solita.fi/job/backend/lastSuccessfulBuild/artifact/*zip*/archive.zip && \
-        unzip -qq archive.zip && \
-        rm archive.zip && \
-        mv archive upstream \
+work=$(cd "$(dirname "$0")"; pwd)
+upstream="$work/target/upstream"
+
+
+ensureUpstream() {
+  # Jos upstream paketit puuttuvat, noudetaan ne
+  if [ ! -d "$upstream/upstream/juku-db" ]; then
+    (
+      mkdir -p target
+      cd target
+      wget --quiet http://jenkins.livijuku.solita.fi/job/backend/lastSuccessfulBuild/artifact/*zip*/archive.zip
+      unzip -qq archive.zip
+      rm archive.zip
+      mv archive upstream
     )
+  fi
+}
 
-cd target/upstream/upstream/juku-db
+createDb() {
+  local DB_CREATE_ID=$1
+  (
+    cd "$upstream"/upstream/juku-db
 
-DB_CREATE_ID=${JENKINS_DB_ID}_${JOB_NAME}
-curl -sS http://juku:juku@letto:50000/juku/juku_users.testing.create_users?username=${DB_CREATE_ID}
-DB_URL=letto.solita.fi:1521/ldev.solita.fi \
-DB_USER=juku_${DB_CREATE_ID} \
-DB_PASSWORD=juku \
-lein with-profiles +test-data do clear-db, update-db
+    curl -sS http://juku:juku@letto.solita.fi:50000/juku/juku_users.testing.create_users?username=${DB_CREATE_ID}
+    DB_URL=letto.solita.fi:1521/ldev.solita.fi \
+    DB_USER=juku_${DB_CREATE_ID} \
+    DB_PASSWORD=juku \
+    lein with-profiles +test-data do clear-db, update-db
+  )
+}
 
-cd ../../juku-backend/target
+buildFront() {
+  (
+    cd "$work"
+    npm install
+    bower --allow-root install --config.interactive=false
+    grunt build
+  )
+}
 
-PROPERTIES_FILE=juku.properties
+trapServices() {
+  KILL_SERVICES='[ ! -z $BACKEND_PID ] && echo ****** Killing backend PID:$BACKEND_PID && kill -TERM $BACKEND_PID;\
+                 [ ! -z $FRONTEND_PID ] && echo ****** Killing backend PID:$FRONTEND_PID && kill -TERM $FRONTEND_PID'
+
+  trap "$KILL_SERVICES" HUP INT QUIT ABRT KILL SEGV TERM EXIT
+}
+
+startBackend() {
+  local DB_CREATE_ID=$1
+  (
+    cd "$upstream/juku-backend/target"
+
+    PROPERTIES_FILE=juku.properties
 cat > $PROPERTIES_FILE << EofProperties
 server.port = 8080
 db.url = jdbc:oracle:thin:@letto.solita.fi:1521/ldev.solita.fi
@@ -30,29 +60,44 @@ db.user = juku_${DB_CREATE_ID}_app
 db.password = juku
 EofProperties
 
-(
-  cd ../../../..
-  ls -la .
-  npm install
-  bower --allow-root install
+    java -jar juku.jar&
+    BACKEND_PID=$!
+    sleep 30
+  )
+}
 
-  node ./node_modules/protractor/bin/webdriver-manager status
-  grunt build
-)
+startFront() {
+  cd $work
+  npm run serve-dist&
+  FRONTEND_PID=$!
+}
 
-KILL_BACKGROUNDS='[ ! -z $BACKEND_PID ] && echo ****** Killing backend PID:$BACKEND_PID && kill -TERM $BACKEND_PID;\
-[ ! -z $FRONTEND_PID ] && echo ****** Killing backend PID:$FRONTEND_PID && kill -TERM $FRONTEND_PID'
+runTests() {
 
-trap "$KILL_BACKGROUNDS" HUP INT QUIT ABRT KILL SEGV TERM EXIT
+  # start selenium
+  ./node_modules/protractor/bin/webdriver-manager start > /dev/null 2>&1 &
 
-java -jar juku.jar&
-BACKEND_PID=$!
-sleep 30
+  # wait until selenium is up
+  while ! curl http://localhost:4444/wd/hub/status &>/dev/null; do :; done
 
-cd ../../../..
-ls -la .
-npm run serve-dist&
-FRONTEND_PID=$!
+  # run the build
+  grunt citeste2e --force
 
-node node_modules/protractor/bin/protractor protractor.conf.js --verbose
-ps axufww
+  # stop selenium
+  curl -s -L http://localhost:4444/selenium-server/driver?cmd=shutDownSeleniumServer > /dev/null 2>&1
+
+}
+
+if [ ! -z $JENKINS_DB_ID ]; then
+  DB_CREATE_ID=${JENKINS_DB_ID}_${JOB_NAME}
+else
+  DB_CREATE_ID=${USER}_front
+fi
+
+ensureUpstream
+buildFront
+createDb $DB_CREATE_ID
+trapServices
+startBackend $DB_CREATE_ID
+startFront
+runTests
