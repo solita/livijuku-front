@@ -41,8 +41,10 @@ buildFront() {
 }
 
 trapServices() {
-  KILL_SERVICES='[ ! -z $BACKEND_PID ] && echo ****** Killing backend PID:$BACKEND_PID && kill -TERM $BACKEND_PID;\
-                 [ ! -z $FRONTEND_PID ] && echo ****** Killing backend PID:$FRONTEND_PID && kill -TERM $FRONTEND_PID'
+
+  KILL_SERVICES='[ ! -z $SELENIUM_PID ] && echo === Killing selenium PID:$SELENIUM_PID && kill -TERM $SELENIUM_PID;\
+                 [ ! -z $FRONTEND_PID ] && echo === Killing frontend PID:$FRONTEND_PID && kill -TERM $FRONTEND_PID;\
+                 [ ! -z $BACKEND_PID  ] && echo === Killing backend  PID:$BACKEND_PID  && kill -KILL $BACKEND_PID;'
 
   trap "$KILL_SERVICES" HUP INT QUIT ABRT KILL SEGV TERM EXIT
 }
