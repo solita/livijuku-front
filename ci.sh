@@ -73,20 +73,23 @@ startFront() {
   FRONTEND_PID=$!
 }
 
-runTests() {
-
-  # start selenium
+startSelenium () {
+    # start selenium
   ./node_modules/protractor/bin/webdriver-manager start > /dev/null 2>&1 &
+  SELENIUM_PID=$!
 
   # wait until selenium is up
-  while ! curl http://localhost:4444/wd/hub/status &>/dev/null; do :; done
+  while ! curl http://localhost:4444/wd/hub/status &>/dev/null; do sleep 1; done
+}
 
+runTests() {
   # run the build
   grunt citeste2e --force
 
-  # stop selenium
+  # stop selenium nicely
   curl -s -L http://localhost:4444/selenium-server/driver?cmd=shutDownSeleniumServer > /dev/null 2>&1
 
+  sleep 3
 }
 
 if [ ! -z $JENKINS_DB_ID ]; then
@@ -101,6 +104,7 @@ createDb $DB_CREATE_ID
 trapServices
 startBackend $DB_CREATE_ID
 startFront
+startSelenium
 runTests
 
 eval $KILL_SERVICES
