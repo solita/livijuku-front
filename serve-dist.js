@@ -21,7 +21,7 @@ app.get('/*', function(req, res, next) {
   next();
 });
 
-app.use('*/api', proxy('localhost:3000', {
+app.use('*/api', proxy('localhost:8082', {
   forwardPath: function(req, res) {
     path = require('url').parse(req.url).path;
     console.log(req.url);

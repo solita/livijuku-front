@@ -2,24 +2,24 @@
 
 PROJECT=livijuku-front-build
 read -r -d '' SCRIPT <<- End
-    cd build-job
+    Xvfb :1 -ac &
+    cd $PROJECT
     eval ./ci.sh
 End
 
 IMG=sirkkalap/jenkins-swarm-slave-nlm:java8
 MOUNT="-v $(pwd):/home/jenkins-slave/$PROJECT"
 ENVS="-e "USER=$USER""
+NAME="--name $PROJECT"
+OPTS="-it --sig-proxy=true"
 
-# Käytä build-job-volume:n volumeja, jos sellainen löytyy
-build_vol=$(docker ps -a | grep $PROJECT-volume | cut -d ' ' -f1)
-if [ ! -z $build_vol ]; then
-    build_vol="--volumes-from $build_vol"
+VOLFROM=$(docker ps -a | grep $PROJECT-volume | cut -d ' ' -f1)
+if [ ! -z $VOLFROM ]; then
+    VOLFROM="--volumes-from $VOLFROM"
+else
+    echo "To make persistent volume for build (cache) use:"
+    echo "docker run --name $PROJECT-volume $MOUNT -v /home/jenkins-slave $IMG true"
 fi
 
 docker rm -f $PROJECT 2>/dev/null
-docker run -i --name $PROJECT $build_vol $ENVS $MOUNT $IMG /bin/bash #-c "$SCRIPT"
-
-exit 1
-
-mkdir -p $PROJECT-target
-docker cp $PROJECT:/home/jenkins-slave/$PROJECT/target $PROJECT-target
+docker run $OPTS $NAME $VOLFROM $ENVS $MOUNT $IMG /bin/bash -c "$SCRIPT"
