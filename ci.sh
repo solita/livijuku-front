@@ -62,7 +62,8 @@ EofProperties
 
     java -jar juku.jar&
     BACKEND_PID=$!
-    sleep 30
+    while ! curl http://localhost:8082/ &>/dev/null; do sleep 1; done
+    sleep 3
   )
 }
 
