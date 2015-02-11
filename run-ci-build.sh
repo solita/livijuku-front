@@ -3,6 +3,7 @@
 PROJECT=livijuku-front-build
 read -r -d '' SCRIPT <<- End
     Xvfb :1 -ac &
+    export DISPLAY=:1
     cd $PROJECT
     eval ./ci.sh
 End
@@ -13,7 +14,7 @@ ENVS="-e "USER=$USER""
 NAME="--name $PROJECT"
 OPTS="-it --sig-proxy=true"
 
-VOLFROM=$(docker ps -a | grep $PROJECT-volume | cut -d ' ' -f1)
+VOLFROM=$(docker ps -a | grep -o $PROJECT-volume)
 if [ ! -z $VOLFROM ]; then
     VOLFROM="--volumes-from $VOLFROM"
 else
