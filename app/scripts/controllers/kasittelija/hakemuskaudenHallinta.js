@@ -18,25 +18,42 @@ angular.module('jukufrontApp')
         .success(function (data) {
           var hakemuskaudetTmp = [];
           _(angular.fromJson(data)).forEach(function (hakemuskausi) {
-            hakuohjeLadattu(hakemuskausi.vuosi);
-            hakemuskaudetTmp.push({
-              'vuosi': hakemuskausi.vuosi,
-              'avustushakemusTilatunnus': _.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).hakemustilatunnus,
-              'avustushakemusAlkupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).hakuaika.alkupvm)),
-              'avustushakemusLoppupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).hakuaika.loppupvm)),
-              'maksatushakemus1Tilatunnus': _.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH1'}).hakemustilatunnus,
-              'maksatushakemus1Alkupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH1'}).hakuaika.alkupvm)),
-              'maksatushakemus1Loppupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH1'}).hakuaika.loppupvm)),
-              'maksatushakemus2Tilatunnus': _.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH2'}).hakemustilatunnus,
-              'maksatushakemus2Alkupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH2'}).hakuaika.alkupvm)),
-              'maksatushakemus2Loppupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH2'}).hakuaika.loppupvm))
-            });
+            if (hakemuskausi.tilatunnus == "A") {
+              hakemuskaudetTmp.push({
+                'vuosi': hakemuskausi.vuosi,
+                'uusi': true,
+                'tilatunnus': hakemuskausi.tilatunnus,
+                'avustushakemusTilatunnus': '',
+                'avustushakemusAlkupvm': '',
+                'avustushakemusLoppupvm': '',
+                'maksatushakemus1Tilatunnus': '',
+                'maksatushakemus1Alkupvm': '',
+                'maksatushakemus1Loppupvm': '',
+                'maksatushakemus2Tilatunnus': '',
+                'maksatushakemus2Alkupvm': '',
+                'maksatushakemus2Loppupvm': ''
+              });
+            } else {
+              hakemuskaudetTmp.push({
+                'vuosi': hakemuskausi.vuosi,
+                'tilatunnus': hakemuskausi.tilatunnus,
+                'avustushakemusTilatunnus': _.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).hakemustilatunnus,
+                'avustushakemusAlkupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).hakuaika.alkupvm)),
+                'avustushakemusLoppupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).hakuaika.loppupvm)),
+                'maksatushakemus1Tilatunnus': _.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH1'}).hakemustilatunnus,
+                'maksatushakemus1Alkupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH1'}).hakuaika.alkupvm)),
+                'maksatushakemus1Loppupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH1'}).hakuaika.loppupvm)),
+                'maksatushakemus2Tilatunnus': _.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH2'}).hakemustilatunnus,
+                'maksatushakemus2Alkupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH2'}).hakuaika.alkupvm)),
+                'maksatushakemus2Loppupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH2'}).hakuaika.loppupvm))
+              });
+            }
           });
           var seuraavaVuosi = new Date().getFullYear() + 1;
           if (!(_.some(hakemuskaudetTmp, {'vuosi': seuraavaVuosi}))) {
-            hakuohjeLadattu(seuraavaVuosi);
             hakemuskaudetTmp.push({
               'vuosi': seuraavaVuosi,
+              'tilatunnus':'',
               'uusi': true,
               'avustushakemusTilatunnus': '',
               'avustushakemusAlkupvm': '',
@@ -55,22 +72,6 @@ angular.module('jukufrontApp')
           StatusService.virhe('HakemuskausiService.hae()', data);
         });
     };
-
-    function hakuohjeLadattu(vuosi) {
-      HakemuskausiService.haeHakuohje(vuosi)
-        .success(function (data) {
-          if (!contains($scope.ladatutHakuohjeet, vuosi)) {
-            $scope.ladatutHakuohjeet.push(vuosi);
-          }
-        })
-        .error(function (data) {
-        });
-    };
-
-    $scope.ladattuHakuohje = function (vuosi) {
-      return contains($scope.ladatutHakuohjeet, vuosi);
-    };
-
 
     $scope.luoUusiHakemuskausi = function (vuosi) {
       HakemuskausiService.luoUusi(vuosi)

@@ -21,11 +21,11 @@
         <div class="col-md-3 text-center">
           <h1>{{hakemuskausi.vuosi}}</h1>
 
-          <div ng-show="ladattuHakuohje(hakemuskausi.vuosi)">
+          <div ng-show="hakemuskausi.tilatunnus=='A'">
             <a href="/api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" class="btn btn-primary">Hakuohjeet
               {{hakemuskausi.vuosi}}</a>
           </div>
-          <div ng-hide="ladattuHakuohje(hakemuskausi.vuosi)">
+          <div ng-hide="hakemuskausi.tilatunnus=='A'">
             <button class="btn btn-primary" disabled>Hakuohjeet
               {{hakemuskausi.vuosi}}
             </button>
@@ -39,12 +39,12 @@
           </div>
           <div class="row"><p></p></div>
           <div class="row">
-            <div ng-show="ladattuHakuohje(hakemuskausi.vuosi)">
+            <div ng-show="hakemuskausi.tilatunnus=='A'">
               <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
                 hakemuskausi oletusarvoilla
               </button>
             </div>
-            <div ng-hide="ladattuHakuohje(hakemuskausi.vuosi)">
+            <div ng-hide="hakemuskausi.tilatunnus=='A'">
               <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg" disabled>Käynnistä
                 hakemuskausi oletusarvoilla
               </button>
