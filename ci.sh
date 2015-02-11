@@ -108,6 +108,10 @@ cd $work
 node ./serve-dist.js &
 FRONTEND_PID=$!
 
+# Odota, kunnes front vastaa.
+while ! curl http://localhost:9000/ &>/dev/null; do sleep 1; done
+sleep 3
+
 # Käynnistä selenium
 ./node_modules/protractor/bin/webdriver-manager start > /dev/null 2>&1 &
 
@@ -116,7 +120,7 @@ while ! curl http://localhost:4444/wd/hub/status &>/dev/null; do sleep 1; done
 
 runTests
 
-read -p "Press [Enter] key to stop"
+sleep 3
 
 # Sammuta palvelut
 eval $STOP_SERVICES
