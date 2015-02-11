@@ -41,7 +41,9 @@ angular.module('jukufrontApp')
             avustushakemusArvot['kmhaettavaavustus'] = haeHaettavaavustus('K-M', data);
             avustushakemusArvot['kmomarahoitus'] = haeOmarahoitus('K-M', data);
             _.forIn(avustushakemusArvot, function (value, key) {
-              $scope.tooltipArvot[key] = 'Avustushakemus:' + value.toString().replace('.', ',') + ' €';
+              if (value > 0) {
+                $scope.tooltipArvot[key] = 'Avustushakemus:' + value.toString().replace('.', ',') + ' €';
+              }
             });
             if ($scope.tyyppi == "MH2") {
               AvustuskohdeService.hae($scope.maksatushakemus1id)
@@ -73,7 +75,9 @@ angular.module('jukufrontApp')
                   maksatushakemus1Arvot['kmhaettavaavustus'] = haeHaettavaavustus('K-M', data);
                   maksatushakemus1Arvot['kmomarahoitus'] = haeOmarahoitus('K-M', data);
                   _.forIn(maksatushakemus1Arvot, function (value, key) {
-                    $scope.tooltipArvot[key] = $scope.tooltipArvot[key] + '<br/>' + '1.Maksatushakemus:' + (value).toString().replace('.', ',') + ' €';
+                    if (value > 0) {
+                      $scope.tooltipArvot[key] = $scope.tooltipArvot[key] + '<br/>' + '1.Maksatushakemus:' + (value).toString().replace('.', ',') + ' €';
+                    }
                   });
                 })
                 .error(function (data) {
