@@ -4,12 +4,24 @@
       <p>Esikatselutila</p>
     </div>
     <div class="col-md-10">
-      <a href="#/h/hakemus/{{avustushakemus.id}}" class="btn btn-primary">Palaa hakemukseen</a>
+      <div ng-show="(tyyppi == 'AH0')">
+        <a
+          href="#/h/hakemus/{{hakemus.vuosi}}/{{tyyppi}}/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+          class="btn btn-primary">Palaa hakemukseen</a></div>
+      <div ng-hide="(tyyppi == 'AH0')">
+        <a
+          href="#/h/maksatushakemus/{{hakemus.vuosi}}/{{tyyppi}}/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+          class="btn btn-primary">Palaa hakemukseen</a></div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <h2>Joukkoliikenten valtionavustushakemus {{avustushakemus.vuosi}}</h2>
+      <div ng-show="(tyyppi == 'AH0')">
+        <h2>Joukkoliikenten valtionavustushakemus {{hakemus.vuosi}}</h2>
+      </div>
+      <div ng-hide="(tyyppi == 'AH0')">
+        <h2>Joukkoliikenten valtionavun maksatushakemus ajalta {{ajankohta}}{{hakemus.vuosi}}</h2>
+      </div>
     </div>
   </div>
   <div class="row">

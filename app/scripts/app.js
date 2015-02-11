@@ -29,11 +29,11 @@ angular
         templateUrl: 'views/hakija/hakemukset.html',
         controller: 'HakijaHakemuksetCtrl'
       })
-      .when('/h/hakemus/:id', {
+      .when('/h/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
         templateUrl: 'views/hakija/hakemus.html',
         controller: 'HakemusCtrl'
       })
-      .when('/h/hakemus/esikatselu/:id', {
+      .when('/h/hakemus/esikatselu/:vuosi/:tyyppi/:id/:m1id/:m2id', {
         templateUrl: 'views/hakija/hakemusEsikatselu.html',
         controller: 'HakemusCtrl'
       })
@@ -43,9 +43,9 @@ angular
       })
       .when('/h/maksatushakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
         templateUrl: 'views/hakija/maksatusHakemus.html',
-        controller: 'MaksatusHakemusCtrl'
+        controller: 'HakemusCtrl'
       })
-      .when('/k/hakemus/:id', {
+      .when('/k/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
         templateUrl: 'views/kasittelija/hakemus.html',
         controller: 'HakemusCtrl'
       })

@@ -3,15 +3,6 @@
 angular.module('jukufrontApp')
   .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', '$upload', function ($scope, $location, $route, $log, HakemuskausiService, StatusService, $upload) {
 
-    function contains(a, obj) {
-      for (var i = 0; i < a.length; i++) {
-        if (a[i] === obj) {
-          return true;
-        }
-      }
-      return false;
-    };
-
     function haeHakemuskaudet() {
       $scope.ladatutHakuohjeet = [];
       HakemuskausiService.hae()
@@ -53,7 +44,7 @@ angular.module('jukufrontApp')
           if (!(_.some(hakemuskaudetTmp, {'vuosi': seuraavaVuosi}))) {
             hakemuskaudetTmp.push({
               'vuosi': seuraavaVuosi,
-              'tilatunnus':'',
+              'tilatunnus': '',
               'uusi': true,
               'avustushakemusTilatunnus': '',
               'avustushakemusAlkupvm': '',

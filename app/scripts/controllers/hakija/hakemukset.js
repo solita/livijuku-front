@@ -3,12 +3,12 @@
 angular.module('jukufrontApp')
   .controller('HakijaHakemuksetCtrl', ['$scope', '$location', 'HakemusService', 'StatusService', function ($scope, $location, HakemusService, StatusService) {
 
-    $scope.valitseHakemus = function (hakemusId) {
-      $location.path('/h/hakemus/' + hakemusId);
-    };
-
-    $scope.valitseMaksatusHakemus = function (vuosi, tyyppi, hakemusId, maksatusHakemus1Id, maksatusHakemus2Id) {
-      $location.path('/h/maksatushakemus/' + vuosi + '/' + tyyppi + '/' + hakemusId + '/' + maksatusHakemus1Id + '/' + maksatusHakemus2Id);
+    $scope.valitseHakemus = function (vuosi, tyyppi, hakemusId, maksatusHakemus1Id, maksatusHakemus2Id) {
+      if (tyyppi === 'AH0') {
+        $location.path('/h/hakemus/' + vuosi + '/' + tyyppi + '/' + hakemusId + '/' + maksatusHakemus1Id + '/' + maksatusHakemus2Id);
+      } else {
+        $location.path('/h/maksatushakemus/' + vuosi + '/' + tyyppi + '/' + hakemusId + '/' + maksatusHakemus1Id + '/' + maksatusHakemus2Id);
+      }
     };
 
     HakemusService.haeKaikki()

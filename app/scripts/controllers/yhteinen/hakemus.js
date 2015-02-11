@@ -5,11 +5,91 @@ angular.module('jukufrontApp')
 
     function euroSyoteNumeroksi(arvo) {
       return parseFloat(arvo.replace(/[^0-9,]/g, '').replace(',', '.'));
-    };
+    }
 
-    function haeHaettavaavustus(avustuskohdelaji) {
-      if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
-        return parseFloat((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).haettavaavustus);
+    function generoiTooltipArvot() {
+      var maksatushakemus1Arvot = {};
+      $scope.tooltipArvot = {};
+      if ($scope.tyyppi == "MH1" || $scope.tyyppi == "MH2") {
+        AvustuskohdeService.hae($scope.avustushakemusid)
+          .success(function (data) {
+            var avustushakemusArvot = {};
+            avustushakemusArvot['psa1haettavaavustus'] = haeHaettavaavustus('PSA-1', data);
+            avustushakemusArvot['psa1omarahoitus'] = haeOmarahoitus('PSA-1', data);
+            avustushakemusArvot['psa2haettavaavustus'] = haeHaettavaavustus('PSA-2', data);
+            avustushakemusArvot['psa2omarahoitus'] = haeOmarahoitus('PSA-2', data);
+            avustushakemusArvot['psamhaettavaavustus'] = haeHaettavaavustus('PSA-M', data);
+            avustushakemusArvot['psamomarahoitus'] = haeOmarahoitus('PSA-M', data);
+            avustushakemusArvot['hkslhaettavaavustus'] = haeHaettavaavustus('HK-SL', data);
+            avustushakemusArvot['hkslomarahoitus'] = haeOmarahoitus('HK-SL', data);
+            avustushakemusArvot['hkklhaettavaavustus'] = haeHaettavaavustus('HK-KL', data);
+            avustushakemusArvot['hkklomarahoitus'] = haeOmarahoitus('HK-KL', data);
+            avustushakemusArvot['hkslhaettavaavustus'] = haeHaettavaavustus('HK-SL', data);
+            avustushakemusArvot['hkslomarahoitus'] = haeOmarahoitus('HK-SL', data);
+            avustushakemusArvot['hkllhaettavaavustus'] = haeHaettavaavustus('HK-LL', data);
+            avustushakemusArvot['hkllomarahoitus'] = haeOmarahoitus('HK-LL', data);
+            avustushakemusArvot['hktlhaettavaavustus'] = haeHaettavaavustus('HK-TL', data);
+            avustushakemusArvot['hktlomarahoitus'] = haeOmarahoitus('HK-TL', data);
+            avustushakemusArvot['kimhaettavaavustus'] = haeHaettavaavustus('K-IM', data);
+            avustushakemusArvot['kimomarahoitus'] = haeOmarahoitus('K-IM', data);
+            avustushakemusArvot['kmpkhaettavaavustus'] = haeHaettavaavustus('K-MPK', data);
+            avustushakemusArvot['kmpkomarahoitus'] = haeOmarahoitus('K-MPK', data);
+            avustushakemusArvot['kmkhaettavaavustus'] = haeHaettavaavustus('K-MK', data);
+            avustushakemusArvot['kmkomarahoitus'] = haeOmarahoitus('K-MK', data);
+            avustushakemusArvot['krthaettavaavustus'] = haeHaettavaavustus('K-RT', data);
+            avustushakemusArvot['krtomarahoitus'] = haeOmarahoitus('K-RT', data);
+            avustushakemusArvot['kmhaettavaavustus'] = haeHaettavaavustus('K-M', data);
+            avustushakemusArvot['kmomarahoitus'] = haeOmarahoitus('K-M', data);
+            _.forIn(avustushakemusArvot, function (value, key) {
+              $scope.tooltipArvot[key] = 'Avustushakemus:' + value.toString().replace('.', ',') + ' €';
+            });
+            if ($scope.tyyppi == "MH2") {
+              AvustuskohdeService.hae($scope.maksatushakemus1id)
+                .success(function (data) {
+                  maksatushakemus1Arvot['psa1haettavaavustus'] = haeHaettavaavustus('PSA-1', data);
+                  maksatushakemus1Arvot['psa1omarahoitus'] = haeOmarahoitus('PSA-1', data);
+                  maksatushakemus1Arvot['psa2haettavaavustus'] = haeHaettavaavustus('PSA-2', data);
+                  maksatushakemus1Arvot['psa2omarahoitus'] = haeOmarahoitus('PSA-2', data);
+                  maksatushakemus1Arvot['psamhaettavaavustus'] = haeHaettavaavustus('PSA-M', data);
+                  maksatushakemus1Arvot['psamomarahoitus'] = haeOmarahoitus('PSA-M', data);
+                  maksatushakemus1Arvot['hkslhaettavaavustus'] = haeHaettavaavustus('HK-SL', data);
+                  maksatushakemus1Arvot['hkslomarahoitus'] = haeOmarahoitus('HK-SL', data);
+                  maksatushakemus1Arvot['hkklhaettavaavustus'] = haeHaettavaavustus('HK-KL', data);
+                  maksatushakemus1Arvot['hkklomarahoitus'] = haeOmarahoitus('HK-KL', data);
+                  maksatushakemus1Arvot['hkslhaettavaavustus'] = haeHaettavaavustus('HK-SL', data);
+                  maksatushakemus1Arvot['hkslomarahoitus'] = haeOmarahoitus('HK-SL', data);
+                  maksatushakemus1Arvot['hkllhaettavaavustus'] = haeHaettavaavustus('HK-LL', data);
+                  maksatushakemus1Arvot['hkllomarahoitus'] = haeOmarahoitus('HK-LL', data);
+                  maksatushakemus1Arvot['hktlhaettavaavustus'] = haeHaettavaavustus('HK-TL', data);
+                  maksatushakemus1Arvot['hktlomarahoitus'] = haeOmarahoitus('HK-TL', data);
+                  maksatushakemus1Arvot['kimhaettavaavustus'] = haeHaettavaavustus('K-IM', data);
+                  maksatushakemus1Arvot['kimomarahoitus'] = haeOmarahoitus('K-IM', data);
+                  maksatushakemus1Arvot['kmpkhaettavaavustus'] = haeHaettavaavustus('K-MPK', data);
+                  maksatushakemus1Arvot['kmpkomarahoitus'] = haeOmarahoitus('K-MPK', data);
+                  maksatushakemus1Arvot['kmkhaettavaavustus'] = haeHaettavaavustus('K-MK', data);
+                  maksatushakemus1Arvot['kmkomarahoitus'] = haeOmarahoitus('K-MK', data);
+                  maksatushakemus1Arvot['krthaettavaavustus'] = haeHaettavaavustus('K-RT', data);
+                  maksatushakemus1Arvot['krtomarahoitus'] = haeOmarahoitus('K-RT', data);
+                  maksatushakemus1Arvot['kmhaettavaavustus'] = haeHaettavaavustus('K-M', data);
+                  maksatushakemus1Arvot['kmomarahoitus'] = haeOmarahoitus('K-M', data);
+                  _.forIn(maksatushakemus1Arvot, function (value, key) {
+                    $scope.tooltipArvot[key] = $scope.tooltipArvot[key] + '<br/>' + '1.Maksatushakemus:' + (value).toString().replace('.', ',') + ' €';
+                  });
+                })
+                .error(function (data) {
+                  StatusService.virhe('AvustuskohdeService.hae(' + $scope.tyyppi + ',' + $scope.maksatushakemus1id + ')', data);
+                });
+            }
+          })
+          .error(function (data) {
+            StatusService.virhe('AvustuskohdeService.hae(' + $scope.tyyppi + ',' + $scope.hakemusid + ')', data);
+          });
+      }
+    }
+
+    function haeHaettavaavustus(avustuskohdelaji, data) {
+      if (_.some(data, {'avustuskohdelajitunnus': avustuskohdelaji})) {
+        return parseFloat((_.find(data, {'avustuskohdelajitunnus': avustuskohdelaji})).haettavaavustus);
       }
       else {
         return 0;
@@ -17,81 +97,94 @@ angular.module('jukufrontApp')
     }
 
     function haeHakemukset() {
-      HakemusService.hae($routeParams.id)
+      HakemusService.hae($scope.hakemusid)
         .success(function (data) {
-          $scope.avustushakemus = data;
-          $scope.hakija = _.find($rootScope.organisaatiot, {'id': $scope.avustushakemus.organisaatioid}).nimi;
-          $scope.pankkitilinumero = _.find($rootScope.organisaatiot, {'id': $scope.avustushakemus.organisaatioid}).pankkitilinumero;
+          $scope.hakemus = data;
+          $scope.hakija = _.find($rootScope.organisaatiot, {'id': data.organisaatioid}).nimi;
+          $scope.pankkitilinumero = _.find($rootScope.organisaatiot, {'id': data.organisaatioid}).pankkitilinumero;
           $scope.aikaleima = new Date();
         })
         .error(function (data) {
-          StatusService.virhe('HakemusService.hae(' + $routeParams.id + ')', data);
+          StatusService.virhe('HakemusService.hae(' + $scope.hakemusid + ')', data);
         });
-      AvustuskohdeService.hae($routeParams.id)
+      AvustuskohdeService.hae($scope.hakemusid)
         .success(function (data) {
-          $scope.aktiivisetavustuskohteet = data;
-          $scope.psa1haettavaavustus = haeHaettavaavustus('PSA-1');
-          $scope.psa1omarahoitus = haeOmarahoitus('PSA-1');
-          $scope.psa2haettavaavustus = haeHaettavaavustus('PSA-2');
-          $scope.psa2omarahoitus = haeOmarahoitus('PSA-2');
-          $scope.psamhaettavaavustus = haeHaettavaavustus('PSA-M');
-          $scope.psamomarahoitus = haeOmarahoitus('PSA-M');
-          $scope.hkslhaettavaavustus = haeHaettavaavustus('HK-SL');
-          $scope.hkslomarahoitus = haeOmarahoitus('HK-SL');
-          $scope.hkklhaettavaavustus = haeHaettavaavustus('HK-KL');
-          $scope.hkklomarahoitus = haeOmarahoitus('HK-KL');
-          $scope.hkslhaettavaavustus = haeHaettavaavustus('HK-SL');
-          $scope.hkslomarahoitus = haeOmarahoitus('HK-SL');
-          $scope.hkllhaettavaavustus = haeHaettavaavustus('HK-LL');
-          $scope.hkllomarahoitus = haeOmarahoitus('HK-LL');
-          $scope.hktlhaettavaavustus = haeHaettavaavustus('HK-TL');
-          $scope.hktlomarahoitus = haeOmarahoitus('HK-TL');
-          $scope.kimhaettavaavustus = haeHaettavaavustus('K-IM');
-          $scope.kimomarahoitus = haeOmarahoitus('K-IM');
-          $scope.kmpkhaettavaavustus = haeHaettavaavustus('K-MPK');
-          $scope.kmpkomarahoitus = haeOmarahoitus('K-MPK');
-          $scope.kmkhaettavaavustus = haeHaettavaavustus('K-MK');
-          $scope.kmkomarahoitus = haeOmarahoitus('K-MK');
-          $scope.krthaettavaavustus = haeHaettavaavustus('K-RT');
-          $scope.krtomarahoitus = haeOmarahoitus('K-RT');
-          $scope.kmhaettavaavustus = haeHaettavaavustus('K-M');
-          $scope.kmomarahoitus = haeOmarahoitus('K-M');
+          $scope.psa1haettavaavustus = haeHaettavaavustus('PSA-1', data);
+          $scope.psa1omarahoitus = haeOmarahoitus('PSA-1', data);
+          $scope.psa2haettavaavustus = haeHaettavaavustus('PSA-2', data);
+          $scope.psa2omarahoitus = haeOmarahoitus('PSA-2', data);
+          $scope.psamhaettavaavustus = haeHaettavaavustus('PSA-M', data);
+          $scope.psamomarahoitus = haeOmarahoitus('PSA-M', data);
+          $scope.hkslhaettavaavustus = haeHaettavaavustus('HK-SL', data);
+          $scope.hkslomarahoitus = haeOmarahoitus('HK-SL', data);
+          $scope.hkklhaettavaavustus = haeHaettavaavustus('HK-KL', data);
+          $scope.hkklomarahoitus = haeOmarahoitus('HK-KL', data);
+          $scope.hkslhaettavaavustus = haeHaettavaavustus('HK-SL', data);
+          $scope.hkslomarahoitus = haeOmarahoitus('HK-SL', data);
+          $scope.hkllhaettavaavustus = haeHaettavaavustus('HK-LL', data);
+          $scope.hkllomarahoitus = haeOmarahoitus('HK-LL', data);
+          $scope.hktlhaettavaavustus = haeHaettavaavustus('HK-TL', data);
+          $scope.hktlomarahoitus = haeOmarahoitus('HK-TL', data);
+          $scope.kimhaettavaavustus = haeHaettavaavustus('K-IM', data);
+          $scope.kimomarahoitus = haeOmarahoitus('K-IM', data);
+          $scope.kmpkhaettavaavustus = haeHaettavaavustus('K-MPK', data);
+          $scope.kmpkomarahoitus = haeOmarahoitus('K-MPK', data);
+          $scope.kmkhaettavaavustus = haeHaettavaavustus('K-MK', data);
+          $scope.kmkomarahoitus = haeOmarahoitus('K-MK', data);
+          $scope.krthaettavaavustus = haeHaettavaavustus('K-RT', data);
+          $scope.krtomarahoitus = haeOmarahoitus('K-RT', data);
+          $scope.kmhaettavaavustus = haeHaettavaavustus('K-M', data);
+          $scope.kmomarahoitus = haeOmarahoitus('K-M', data);
         })
         .error(function (data) {
-          StatusService.virhe('AvustuskohdeService.hae(' + $routeParams.id + ')', data);
+          StatusService.virhe('AvustuskohdeService.hae(' + $scope.tyyppi + ',' + $scope.hakemusid + ')', data);
         });
-
       haeLiitteet();
 
     };
 
     function haeLiitteet() {
-      LiiteService.haeKaikki($routeParams.id)
+      LiiteService.haeKaikki($scope.hakemusid)
         .success(function (data) {
           $scope.liitteet = data;
         })
         .error(function (data) {
-          StatusService.virhe('LiiteService.hae(' + $routeParams.id + ')', data);
+          StatusService.virhe('LiiteService.hae(' + $scope.hakemusid + ')', data);
         });
     }
 
-    function haeOmarahoitus(avustuskohdelaji) {
-      if (_.some($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})) {
-        return parseFloat((_.find($scope.aktiivisetavustuskohteet, {'avustuskohdelajitunnus': avustuskohdelaji})).omarahoitus);
+    function haeOmarahoitus(avustuskohdelaji, data) {
+      if (_.some(data, {'avustuskohdelajitunnus': avustuskohdelaji})) {
+        return parseFloat((_.find(data, {'avustuskohdelajitunnus': avustuskohdelaji})).omarahoitus);
       }
       else {
         return 0;
       }
     }
 
+    $scope.avustushakemusid = $routeParams.id;
+    $scope.maksatushakemus1id = $routeParams.m1id;
+    $scope.maksatushakemus2id = $routeParams.m2id;
     $scope.myFiles = [];
+    $scope.tyyppi = $routeParams.tyyppi;
+    if ($scope.tyyppi === "AH0") {
+      $scope.hakemusid = parseInt($routeParams.id);
+    } else if ($scope.tyyppi == "MH1") {
+      $scope.hakemusid = parseInt($routeParams.m1id);
+      $scope.ajankohta = '1.1.-30.6.';
+    } else if ($scope.tyyppi == "MH2") {
+      $scope.hakemusid = parseInt($routeParams.m2id);
+      $scope.ajankohta = '1.7.-31.12.';
+    }
+    $scope.vuosi = $routeParams.vuosi;
+
 
     $scope.$watch('myFiles', function () {
       for (var i = 0; i < $scope.myFiles.length; i++) {
         var file = $scope.myFiles[i];
         console.log('Watched:' + file.name);
         $scope.upload = $upload.upload({
-          url: 'api/hakemus/' + $routeParams.id + '/liite',
+          url: 'api/hakemus/' + $scope.hakemusid + '/liite',
           method: 'POST',
           data: {myObj: $scope.myModelObj},
           file: file,
@@ -109,23 +202,24 @@ angular.module('jukufrontApp')
       }
     });
 
-    $scope.lahetaAvustushakemus = function () {
+    $scope.lahetaHakemus = function () {
       $scope.$broadcast('show-errors-check-validity');
-      if ($scope.avustusHakemusForm.$valid) {
-        HakemusService.laheta($scope.avustushakemus.id)
+      if ($scope.hakemusForm.$valid) {
+        HakemusService.laheta($scope.hakemusid)
           .success(function () {
-            StatusService.ok('HakemusService.laheta(' + $scope.avustushakemus.id + ')', 'Lähettäminen onnistui.');
+            StatusService.ok('HakemusService.laheta(' + $scope.hakemusid + ')', 'Lähettäminen onnistui.');
             $location.path('/h/hakemukset');
           })
           .error(function (data) {
-            StatusService.virhe('HakemusService.laheta(' + $scope.avustushakemus.id + ')', data);
+            StatusService.virhe('HakemusService.laheta(' + $scope.hakemusid + ')', data);
           });
       }
     };
 
-    $scope.naytaAvustushakemus = function () {
-      $location.path('/h/hakemus/esikatselu/' + $scope.avustushakemus.id);
+    $scope.naytaHakemus = function () {
+      $location.path('/h/hakemus/esikatselu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.avustushakemusid + '/' + $scope.maksatushakemus1id + '/' + $scope.maksatushakemus2id);
     };
+
 
     $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
       var omarahoitus2, haettavarahoitus2;
@@ -146,13 +240,13 @@ angular.module('jukufrontApp')
     };
 
     $scope.poistaLiite = function (liiteid) {
-      LiiteService.poista($routeParams.id, liiteid)
+      LiiteService.poista($scope.hakemusid, liiteid)
         .success(function (data) {
-          StatusService.ok('LiiteService.poista(' + $routeParams.id + ',' + liiteid + ')', 'Liite poistettiin onnistuneesti');
+          StatusService.ok('LiiteService.poista(' + $scope.hakemusid + ',' + liiteid + ')', 'Liite poistettiin onnistuneesti');
           haeLiitteet();
         })
         .error(function (data) {
-          StatusService.virhe('LiiteService.poista(' + $routeParams.id + ',' + liiteid + ')', data);
+          StatusService.virhe('LiiteService.poista(' + $scope.hakemusid + ',' + liiteid + ')', data);
         });
     };
 
@@ -160,78 +254,78 @@ angular.module('jukufrontApp')
       return parseFloat(value) >= 0;
     };
 
-    $scope.tallennaAvustushakemus = function () {
+    $scope.tallennaHakemus = function () {
       $scope.$broadcast('show-errors-check-validity');
-      if ($scope.avustusHakemusForm.$valid) {
+      if ($scope.hakemusForm.$valid) {
         var avustuskohteet = [
           {
-            'hakemusid': $scope.avustushakemus.id,
+            'hakemusid': $scope.hakemusid,
             'avustuskohdelajitunnus': 'PSA-1',
             'haettavaavustus': $scope.psa1haettavaavustus,
             'omarahoitus': $scope.psa1omarahoitus
           },
           {
-            'hakemusid': $scope.avustushakemus.id,
+            'hakemusid': $scope.hakemusid,
             'avustuskohdelajitunnus': 'PSA-2',
             'haettavaavustus': $scope.psa2haettavaavustus,
             'omarahoitus': $scope.psa2omarahoitus
           },
           {
-            'hakemusid': $scope.avustushakemus.id,
+            'hakemusid': $scope.hakemusid,
             'avustuskohdelajitunnus': 'PSA-M',
             'haettavaavustus': $scope.psamhaettavaavustus,
             'omarahoitus': $scope.psamomarahoitus
           },
           {
-            'hakemusid': $scope.avustushakemus.id,
+            'hakemusid': $scope.hakemusid,
             'avustuskohdelajitunnus': 'HK-SL',
             'haettavaavustus': $scope.hkslhaettavaavustus,
             'omarahoitus': $scope.hkslomarahoitus
           },
           {
-            'hakemusid': $scope.avustushakemus.id,
+            'hakemusid': $scope.hakemusid,
             'avustuskohdelajitunnus': 'HK-KL',
             'haettavaavustus': $scope.hkklhaettavaavustus,
             'omarahoitus': $scope.hkklomarahoitus
           },
           {
-            'hakemusid': $scope.avustushakemus.id,
+            'hakemusid': $scope.hakemusid,
             'avustuskohdelajitunnus': 'HK-LL',
             'haettavaavustus': $scope.hkllhaettavaavustus,
             'omarahoitus': $scope.hkllomarahoitus
           },
           {
-            'hakemusid': $scope.avustushakemus.id,
+            'hakemusid': $scope.hakemusid,
             'avustuskohdelajitunnus': 'HK-TL',
             'haettavaavustus': $scope.hktlhaettavaavustus,
             'omarahoitus': $scope.hktlomarahoitus
           },
           {
-            'hakemusid': $scope.avustushakemus.id,
+            'hakemusid': $scope.hakemusid,
             'avustuskohdelajitunnus': 'K-IM',
             'haettavaavustus': $scope.kimhaettavaavustus,
             'omarahoitus': $scope.kimomarahoitus
           },
           {
-            'hakemusid': $scope.avustushakemus.id,
+            'hakemusid': $scope.hakemusid,
             'avustuskohdelajitunnus': 'K-MPK',
             'haettavaavustus': $scope.kmpkhaettavaavustus,
             'omarahoitus': $scope.kmpkomarahoitus
           },
           {
-            'hakemusid': $scope.avustushakemus.id,
+            'hakemusid': $scope.hakemusid,
             'avustuskohdelajitunnus': 'K-MK',
             'haettavaavustus': $scope.kmkhaettavaavustus,
             'omarahoitus': $scope.kmkomarahoitus
           },
           {
-            'hakemusid': $scope.avustushakemus.id,
+            'hakemusid': $scope.hakemusid,
             'avustuskohdelajitunnus': 'K-RT',
             'haettavaavustus': $scope.krthaettavaavustus,
             'omarahoitus': $scope.krtomarahoitus
           },
           {
-            'hakemusid': $scope.avustushakemus.id,
+            'hakemusid': $scope.hakemusid,
             'avustuskohdelajitunnus': 'K-M',
             'haettavaavustus': $scope.kmhaettavaavustus,
             'omarahoitus': $scope.kmomarahoitus
@@ -240,10 +334,10 @@ angular.module('jukufrontApp')
         AvustuskohdeService.tallenna(avustuskohteet)
           .success(function () {
             var tallennusOk = true;
-            if ($scope.avustushakemus.selite !== null) {
+            if ($scope.hakemus.selite !== null) {
               var selitedata = {
-                'selite': $scope.avustushakemus.selite,
-                'hakemusid': $scope.avustushakemus.id
+                'selite': $scope.hakemus.selite,
+                'hakemusid': $scope.hakemusid
               };
               HakemusService.tallennaSelite(selitedata)
                 .success(function () {
@@ -266,18 +360,19 @@ angular.module('jukufrontApp')
       }
     };
 
-    $scope.tarkastaAvustushakemus = function () {
-      HakemusService.tarkasta($scope.avustushakemus.id)
+    $scope.tarkastaHakemus = function () {
+      HakemusService.tarkasta($scope.hakemusid)
         .success(function () {
-          StatusService.ok('HakemusService.tarkasta(' + $scope.avustushakemus.id + ')', 'Hakemus päivitettiin tarkastetuksi.');
+          StatusService.ok('HakemusService.tarkasta(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tarkastetuksi.');
           $location.path('/k/hakemukset');
         })
         .error(function (data) {
-          StatusService.virhe('HakemusService.tarkasta(' + $scope.avustushakemus.id + ')', data);
+          StatusService.virhe('HakemusService.tarkasta(' + $scope.hakemusid + ')', data);
         });
     };
 
     haeHakemukset();
+    generoiTooltipArvot();
   }
   ])
 ;
