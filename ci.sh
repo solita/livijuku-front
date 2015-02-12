@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+set -e
+
 work=$(cd "$(dirname "$0")"; pwd)
 target=$work/target
 upstream="$target/upstream"
@@ -83,13 +85,12 @@ else
   DB_CREATE_ID=${USER}_front
 fi
 
-# fetchUpstreamArtifacts
+fetchUpstreamArtifacts
 
 buildFront
 
-exit 0
 
-# createDb $DB_CREATE_ID
+createDb $DB_CREATE_ID
 
 # Rekisteröi palveluiden sammutus keskeytyksien varalle
 trapServices
@@ -120,9 +121,9 @@ sleep 3
 # Odota, kunnes selenium vastaa
 while ! curl http://localhost:4444/wd/hub/status >/dev/null 2>&1; do sleep 1; done
 
-#runTests
+set +e
+runTests
 
-read -p "Press [Enter] key to stop"
 sleep 3
 
 # Sammuta palvelut

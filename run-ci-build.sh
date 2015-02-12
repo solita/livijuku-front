@@ -18,7 +18,7 @@ IMG=${1:-sirkkalap/jenkins-swarm-slave-nlm:java8}
 MOUNT="-v $(pwd):$CONTAINER_HOME/$PROJECT"
 ENVS="-e "USER=$USER" -e "HOME=$CONTAINER_HOME""
 NAME="--name $PROJECT"
-OPTS="-it --sig-proxy=true"
+OPTS="-it -p 4444 -p 8082 -p 9000 --sig-proxy=true"
 
 VOLFROM=$(docker ps -a | grep -o $PROJECT-volume)
 if [ ! -z $VOLFROM ]; then
