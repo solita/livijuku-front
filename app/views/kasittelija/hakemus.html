@@ -1,13 +1,47 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <a href="#/k/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
-        suunnittelunäkymään</a>
+      <div ng-show="tyyppi=='AH0'">
+        <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
+          päänäkymään</a>
+        <a href="#/k/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+           class="btn btn-default">Avustushakemus {{hakemus.vuosi}}</a>
+        <a href="#/k/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+           class="btn btn-primary">1. maksatushakemus {{hakemus.vuosi}}</a>
+        <a href="#/k/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+           class="btn btn-primary">2. maksatushakemus {{hakemus.vuosi}}</a>
+      </div>
+      <div ng-show="tyyppi=='MH1'">
+        <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
+          päänäkymään</a>
+        <a href="#/k/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+           class="btn btn-primary">Avustushakemus {{hakemus.vuosi}}</a>
+        <a href="#/k/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+           class="btn btn-default">1. maksatushakemus {{hakemus.vuosi}}</a>
+        <a href="#/k/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+           class="btn btn-primary">2. maksatushakemus {{hakemus.vuosi}}</a>
+      </div>
+      <div ng-show="tyyppi=='MH2'">
+        <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
+          päänäkymään</a>
+        <a href="#/k/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+           class="btn btn-primary">Avustushakemus {{hakemus.vuosi}}</a>
+        <a href="#/k/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+           class="btn btn-primary">1. maksatushakemus {{hakemus.vuosi}}</a>
+        <a href="#/k/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+           class="btn btn-default">2. maksatushakemus {{hakemus.vuosi}}</a>
+      </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
-      <h2>Joukkoliikenten valtionavustushakemus {{avustushakemus.vuosi}}</h2>
+    <div ng-show="tyyppi=='AH0'" class="col-md-12">
+      <h2>Joukkoliikenten valtionavustushakemus {{hakemus.vuosi}}</h2>
+    </div>
+    <div ng-show="tyyppi=='MH1'" class="col-md-12">
+      <h2>Joukkoliikenten valtionavun maksatushakemus ajalta 1.1.-30.6.{{hakemus.vuosi}}</h2>
+    </div>
+    <div ng-show="tyyppi=='MH2'" class="col-md-12">
+      <h2>Joukkoliikenten valtionavun maksatushakemus ajalta 1.7.-31.12.{{hakemus.vuosi}}</h2>
     </div>
   </div>
   <div class="row">
@@ -405,10 +439,10 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div ng-show="(avustushakemus.selite!=null)">
-          <p>{{avustushakemus.selite}}</p>
+        <div ng-show="(hakemus.selite!=null)">
+          <p>{{hakemus.selite}}</p>
         </div>
-        <div ng-show="(avustushakemus.selite==null)">
+        <div ng-show="(hakemus.selite==null)">
           <p>Ei selitettä.</p>
         </div>
       </div>
@@ -423,7 +457,7 @@
             <div ng-show="liitteet.length > 0" class="response">
               <div class="sel-file" ng-repeat="l in liitteet">
                 <p><i class="glyphicon glyphicon-file"></i>
-                  <a href="api/hakemus/{{avustushakemus.id}}/liite/{{l.liitenumero}}">{{l.nimi}} ({{l.contenttype}})</a>
+                  <a href="api/hakemus/{{hakemus.id}}/liite/{{l.liitenumero}}">{{l.nimi}} ({{l.contenttype}})</a>
                 </p>
               </div>
             </div>
@@ -453,15 +487,15 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <a href="#/k/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
+        <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
           suunnittelunäkymään</a>
       </div>
       <div class="col-md-6">
-        <div ng-show="(avustushakemus.hakemustilatunnus == 'V')">
+        <div ng-show="(hakemus.hakemustilatunnus == 'V')">
           <button data-ng-click="tarkastaAvustushakemus()" class="pull-right btn btn-success">Merkitse tarkastetuksi
           </button>
         </div>
-        <div ng-hide="(avustushakemus.hakemustilatunnus == 'V')">
+        <div ng-hide="(hakemus.hakemustilatunnus == 'V')">
           <button data-ng-click="tarkastaAvustushakemus()" class="pull-right btn btn-success" disabled>Merkitse
             tarkastetuksi
           </button>
