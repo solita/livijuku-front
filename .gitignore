@@ -9,3 +9,4 @@ app/_pgbackup
 app/pinegrow.json
 build-job-target
 target
+*.out
