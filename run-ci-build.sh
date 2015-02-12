@@ -7,7 +7,15 @@ read -r -d '' SCRIPT <<- End
     command -v Xvfb >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get -y install Xvfb)
     sudo Xvfb :1 -ac &
     export DISPLAY=:1
-    rsync -aP --delete --exclude node_modules --exclude bower_components --exclude .git $CONTAINER_HOME/$PROJECT/ $CONTAINER_HOME/$PROJECT.local/
+    rsync -aP --delete \
+        --exclude bower_components \
+        --exclude dist \
+        --exclude node_modules \
+        --exclude target \
+        --exclude .git \
+        --exclude .idea \
+        --exclude .tmp \
+        $CONTAINER_HOME/$PROJECT/ $CONTAINER_HOME/$PROJECT.local/
     cd $CONTAINER_HOME/$PROJECT.local
     command -v bower >/dev/null 2>&1 || sudo npm install -g bower
     command -v grunt >/dev/null 2>&1 || sudo npm install -g grunt-cli
@@ -30,4 +38,3 @@ fi
 
 docker rm -f $PROJECT 2>/dev/null
 docker run $OPTS $NAME $VOLFROM $ENVS $MOUNT $IMG /bin/bash -c "$SCRIPT"
-
