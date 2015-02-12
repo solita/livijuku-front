@@ -49,7 +49,7 @@ angular
         templateUrl: 'views/kasittelija/hakemus.html',
         controller: 'HakemusCtrl'
       })
-      .when('/k/hakemukset', {
+      .when('/k/hakemukset/:tyyppi', {
         templateUrl: 'views/kasittelija/hakemukset.html',
         controller: 'KasittelijaHakemuksetCtrl'
       })

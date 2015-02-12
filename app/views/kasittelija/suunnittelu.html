@@ -1,7 +1,13 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div ng-show="tyyppi=='AH0'" class="col-md-12">
       <h2><b>Suunnittelunäkymä - avustushakemukset {{vuosi}}</b></h2>
+    </div>
+    <div ng-show="tyyppi=='MH1'" class="col-md-12">
+      <h2><b>Suunnittelunäkymä - maksatushakemukset 1.1-30.6.{{vuosi}}</b></h2>
+    </div>
+    <div ng-show="tyyppi=='MH2'" class="col-md-12">
+      <h2><b>Suunnittelunäkymä - maksatushakemukset 1.7-31.12.{{vuosi}}</b></h2>
     </div>
   </div>
   <div class="row">
@@ -78,7 +84,7 @@
   </form>
   <div class="row">
     <div class="col-md-12">
-      <a href="#/k/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa avustushakemusten
+      <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa avustushakemusten
         suunnittelunäkymään</a>
     </div>
   </div>

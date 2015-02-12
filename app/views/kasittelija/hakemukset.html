@@ -1,30 +1,58 @@
 <div class="container">
   <div class="row">
     <div class="col-md-3">
-      <a href="#/k/hakemukset" class="btn btn-primary">Avustushakemukset<span class="badge badge-notify">3</span></a>
+      <div ng-show="tyyppi=='AH0'">
+        <button ng-click="asetaTyyppi('AH0')" class="btn btn-default">Avustushakemukset<span
+          class="badge badge-notify">3</span></button>
+      </div>
+      <div ng-hide="tyyppi=='AH0'">
+        <button ng-click="asetaTyyppi('AH0')" class="btn btn-primary">Avustushakemukset<span
+          class="badge badge-notify">3</span></button>
+      </div>
     </div>
     <div class="col-md-3">
-      <a href="#/k/hakemukset" class="btn btn-default disabled">1. maksatushakemukset<span
-        class="badge badge-notify">10</span></a>
+      <div ng-show="tyyppi=='MH1'">
+        <button ng-click="asetaTyyppi('MH1')" class="btn btn-default">1. maksatushakemukset<span
+          class="badge badge-notify">10</span></button>
+      </div>
+      <div ng-hide="tyyppi=='MH1'">
+        <button ng-click="asetaTyyppi('MH1')" class="btn btn-primary">1. maksatushakemukset<span
+          class="badge badge-notify">10</span></button>
+      </div>
     </div>
     <div class="col-md-3">
-      <a href="#/k/hakemukset" class="btn btn-default disabled">2. maksatushakemukset<span
-        class="badge badge-notify">10</span></a>
+      <div ng-show="tyyppi=='MH2'">
+        <button ng-click="asetaTyyppi('MH2')" class="btn btn-default">2. maksatushakemukset<span
+          class="badge badge-notify">10</span></button>
+      </div>
+      <div ng-hide="tyyppi=='MH2'">
+        <button ng-click="asetaTyyppi('MH2')" class="btn btn-primary">2. maksatushakemukset<span
+          class="badge badge-notify">10</span></button>
+      </div>
     </div>
     <div class="col-md-3">
-      <a href="#/k/hakemuskaudenhallinta" class="btn btn-default">Hakemuskauden hallinta</a>
+      <a href="#/k/hakemuskaudenhallinta" class="btn btn-success">Hakemuskauden hallinta</a>
     </div>
   </div>
   <accordion close-others="false">
-    <div ng-repeat="avustushakemuksetPerVuosi in avustushakemukset">
-      <accordion-group is-open="avustushakemuksetPerVuosi.accordionOpen">
+    <div ng-repeat="hakemuksetPerVuosi in hakemukset">
+      <accordion-group is-open="hakemuksetPerVuosi.accordionOpen">
         <accordion-heading>
           <div class="row">
-            <div class="col-md-12">
+            <div ng-show="tyyppi=='AH0'" class="col-md-12">
               <h4><i class="pull-left glyphicon"
-                     ng-class="{'glyphicon-chevron-down': avustushakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !avustushakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
-                AVUSTUSHAKEMUKSET {{avustushakemuksetPerVuosi.vuosi}}</i></h4>
-
+                     ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
+                AVUSTUSHAKEMUKSET {{hakemuksetPerVuosi.vuosi}}</i></h4>
+            </div>
+            <div ng-show="tyyppi=='MH1'" class="col-md-12">
+              <h4><i class="pull-left glyphicon"
+                     ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
+                MAKSATUSHAKEMUKSET AJALTA 1.1-30.6.{{hakemuksetPerVuosi.vuosi}}</i></h4>
+            </div>
+            <div ng-show="tyyppi=='MH2'" class="col-md-12">
+              <h4><i class="pull-left glyphicon"
+                     ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
+                MAKSATUSHAKEMUKSET AJALTA 1.7-31.12.{{hakemuksetPerVuosi.vuosi}}</i></h4>
             </div>
           </div>
         </accordion-heading>
@@ -35,7 +63,7 @@
           <div class="row">
             <div class="col-md-12">
               <table st-table="ks1displayed" class="table table-hover table-condensed table-striped"
-                     st-safe-src=avustushakemuksetPerVuosi.ks1AvustushakemuksetPerVuosi>
+                     st-safe-src=hakemuksetPerVuosi.ks1HakemuksetPerVuosi>
                 <thead>
                 <tr>
                   <th st-sort="hakija">Hakija</th>
@@ -46,7 +74,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="hakemus in ks1displayed" ng-click="siirryHakemukseen(hakemus.id)">
+                <tr ng-repeat="hakemus in ks1displayed"
+                    ng-click="siirryHakemukseen(hakemuksetPerVuosi.vuosi, tyyppi, hakemus.avustushakemusId, hakemus.maksatushakemus1Id, hakemus.maksatushakemus2Id)">
                   <td>{{hakemus.hakija}}</td>
                   <td>
                     <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
@@ -64,7 +93,7 @@
             <div class="col-md-4">
               <div class="pull-right">
                 <button class="btn btn-primary"
-                        ng-click="siirrySuunnitteluun(avustushakemuksetPerVuosi.vuosi, 'AH0', 'KS1')">
+                        ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'KS1')">
                   Suunnittelu ja päätöksenteko<span
                   class='glyphicon glyphicon-play'/></button>
               </div>
@@ -78,7 +107,7 @@
           <div class="row">
             <div class="col-md-12">
               <table st-table="ks2displayed" class="table table-hover table-condensed table-striped"
-                     st-safe-src=avustushakemuksetPerVuosi.ks2AvustushakemuksetPerVuosi>
+                     st-safe-src=hakemuksetPerVuosi.ks2HakemuksetPerVuosi>
                 <thead>
                 <tr>
                   <th st-sort="hakija">Hakija</th>
@@ -89,7 +118,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="hakemus in ks2displayed" ng-click="siirryHakemukseen(hakemus.id)">
+                <tr ng-repeat="hakemus in ks2displayed"
+                    ng-click="siirryHakemukseen(hakemuksetPerVuosi.vuosi, tyyppi, hakemus.avustushakemusId, hakemus.maksatushakemus1Id, hakemus.maksatushakemus2Id)">
                   <td>{{hakemus.hakija}}</td>
                   <td>
                     <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
@@ -107,7 +137,7 @@
             <div class="col-md-4">
               <div class="pull-right">
                 <button class="btn btn-primary"
-                        ng-click="siirrySuunnitteluun(avustushakemuksetPerVuosi.vuosi, 'AH0', 'KS2')">
+                        ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'KS2')">
                   Suunnittelu ja päätöksenteko<span
                   class='glyphicon glyphicon-play'/></button>
               </div>
@@ -121,7 +151,7 @@
           <div class="row">
             <div class="col-md-12">
               <table st-table="elydisplayed" class="table table-hover table-condensed table-striped"
-                     st-safe-src=avustushakemuksetPerVuosi.elyAvustushakemuksetPerVuosi>
+                     st-safe-src=hakemuksetPerVuosi.elyHakemuksetPerVuosi>
                 <thead>
                 <tr>
                   <th st-sort="hakija">Hakija</th>
@@ -132,7 +162,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="hakemus in elydisplayed" ng-click="siirryHakemukseen(hakemus.id)">
+                <tr ng-repeat="hakemus in elydisplayed"
+                    ng-click="siirryHakemukseen(hakemuksetPerVuosi.vuosi, tyyppi, hakemus.avustushakemusId, hakemus.maksatushakemus1Id, hakemus.maksatushakemus2Id)">
                   <td>{{hakemus.hakija}}</td>
                   <td>
                     <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
@@ -150,7 +181,7 @@
             <div class="col-md-4">
               <div class="pull-right">
                 <button class="btn btn-primary"
-                        ng-click="siirrySuunnitteluun(avustushakemuksetPerVuosi.vuosi, 'AH0', 'ELY')">
+                        ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'ELY')">
                   Suunnittelu ja päätöksenteko<span
                   class='glyphicon glyphicon-play'/></button>
               </div>

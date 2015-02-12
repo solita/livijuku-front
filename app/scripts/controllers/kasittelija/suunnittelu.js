@@ -3,9 +3,10 @@
 angular.module('jukufrontApp')
   .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'SuunnitteluService', 'StatusService', function ($rootScope, $scope, $location, $routeParams, HakemusService, SuunnitteluService, StatusService) {
 
-    $scope.vuosi = $routeParams.vuosi;
     $scope.lajitunnus = $routeParams.lajitunnus;
+    $scope.tyyppi = $routeParams.tyyppi;
     $scope.vanhaArvo = 0;
+    $scope.vuosi = $routeParams.vuosi;
 
     function haeSuunnitteluData() {
       SuunnitteluService.hae($routeParams.vuosi, $routeParams.tyyppi)
