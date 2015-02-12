@@ -1,15 +1,15 @@
-#!/bin/bash
+#!/bin/bash -x
 
 work=$(cd "$(dirname "$0")"; pwd)
-upstream="$work/target/upstream"
-
+target=$work/target
+upstream="$target/upstream"
 
 fetchUpstreamArtifacts () {
   # Jos upstream paketit puuttuvat, noudetaan ne
   if [ ! -d "$upstream/upstream/juku-db" ]; then
     (
-      mkdir -p target
-      cd target
+      mkdir -p "$target"
+      cd "$target"
       wget --quiet http://jenkins.livijuku.solita.fi/job/backend/lastSuccessfulBuild/artifact/*zip*/archive.zip
       unzip -qq archive.zip
       rm archive.zip
@@ -21,7 +21,7 @@ fetchUpstreamArtifacts () {
 createDb() {
   local DB_CREATE_ID=$1
   (
-    cd "$upstream"/upstream/juku-db
+    cd "$upstream/upstream/juku-db"
 
     curl -sS http://juku:juku@letto.solita.fi:50000/juku/juku_users.testing.create_users?username=${DB_CREATE_ID}
     DB_URL=letto.solita.fi:1521/ldev.solita.fi \
@@ -34,16 +34,16 @@ createDb() {
 buildFront() {
   (
     cd "$work"
-    npm install node-sass
     npm install
-    bower --allow-root install --config.interactive=false
+    bower install
     grunt build
   )
 }
 
 trapServices() {
 
-  # Muuttujat evaluioidaan vasta kutsuttaessa. Tässä vaiheessa niillä ei vielä ole järkeviä arvoja
+  # Muuttujat evaluioidaan vasta kutsuttaessa. Tässä vaiheessa niillä ei vielä ole järkeviä arvoja.
+  # Siksi siis yksinkertaiset hipsut literaalin ympärillä.
   STOP_SERVICES='curl -s -L http://localhost:4444/selenium-server/driver?cmd=shutDownSeleniumServer >/dev/null 2>&1;
     if [ ! -z "$FRONTEND_PID" ]; then
        echo "Stopping frontend. ($FRONTEND_PID)";
@@ -73,8 +73,8 @@ EofProperties
 }
 
 runTests() {
-  # run the build
-  grunt citeste2e --force
+  # run the tests
+  grunt citeste2e
 }
 
 if [ ! -z "$JENKINS_DB_ID" ]; then
@@ -83,11 +83,13 @@ else
   DB_CREATE_ID=${USER}_front
 fi
 
-fetchUpstreamArtifacts
+# fetchUpstreamArtifacts
 
 buildFront
 
-createDb $DB_CREATE_ID
+exit 0
+
+# createDb $DB_CREATE_ID
 
 # Rekisteröi palveluiden sammutus keskeytyksien varalle
 trapServices
@@ -96,30 +98,31 @@ cd "$upstream/juku-backend/target"
 createBackendPropertiesFile $DB_CREATE_ID juku.properties
 
 # Käynnistä backend palvelin.
-java -jar juku.jar &
+java -jar juku.jar >backend.out &
 BACKEND_PID=$!
 
 # Odota, kunnes backend vastaa.
-while ! curl http://localhost:8082/ &>/dev/null; do sleep 1; done
+while ! curl http://localhost:8082/ >/dev/null 2>&1; do sleep 1; done
 sleep 3
 
 # Käynnistä front-palvelin.
 cd $work
-node ./serve-dist.js &
+node ./serve-dist.js >front.out &
 FRONTEND_PID=$!
 
 # Odota, kunnes front vastaa.
-while ! curl http://localhost:9000/ &>/dev/null; do sleep 1; done
+while ! curl http://localhost:9000/ >/dev/null 2>&1; do sleep 1; done
 sleep 3
 
 # Käynnistä selenium
-./node_modules/protractor/bin/webdriver-manager start > /dev/null 2>&1 &
+./node_modules/protractor/bin/webdriver-manager start >/dev/null 2>&1 &
 
 # Odota, kunnes selenium vastaa
-while ! curl http://localhost:4444/wd/hub/status &>/dev/null; do sleep 1; done
+while ! curl http://localhost:4444/wd/hub/status >/dev/null 2>&1; do sleep 1; done
 
-runTests
+#runTests
 
+read -p "Press [Enter] key to stop"
 sleep 3
 
 # Sammuta palvelut
