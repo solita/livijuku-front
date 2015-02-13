@@ -368,7 +368,7 @@ angular.module('jukufrontApp')
       HakemusService.tarkasta($scope.hakemusid)
         .success(function () {
           StatusService.ok('HakemusService.tarkasta(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tarkastetuksi.');
-          $location.path('/k/hakemukset');
+          $location.path('/k/hakemukset/'+$scope.tyyppi);
         })
         .error(function (data) {
           StatusService.virhe('HakemusService.tarkasta(' + $scope.hakemusid + ')', data);
