@@ -26,5 +26,14 @@ exports.config = {
     showColors: true,
     includeStackTrace: true,
     defaultTimeoutInterval: 10000
+  },
+
+  onPrepare: function() {
+    var destination="target/xmloutput";
+    console.log("*** JUnit style test results will be written into "+destination+" ***");
+    require('jasmine-reporters');
+    jasmine.getEnv().addReporter(
+      new jasmine.JUnitXmlReporter(destination, true, true)
+    );
   }
 };
