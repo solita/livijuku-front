@@ -3,15 +3,12 @@
 set -e
 
 work=$(cd "$(dirname "$0")"; pwd)
-target=$work/target
-upstream="$target/upstream"
 
 fetchUpstreamArtifacts () {
   # Jos upstream paketit puuttuvat, noudetaan ne
-  if [ ! -d "$upstream/upstream/juku-db" ]; then
+  if [ ! -d "$work/upstream/upstream/juku-db" ]; then
     (
-      mkdir -p "$target"
-      cd "$target"
+      cd "$work"
       wget --quiet http://jenkins.livijuku.solita.fi/job/backend/lastSuccessfulBuild/artifact/*zip*/archive.zip
       unzip -qq archive.zip
       rm archive.zip
@@ -23,7 +20,7 @@ fetchUpstreamArtifacts () {
 createDb() {
   local DB_CREATE_ID=$1
   (
-    cd "$upstream/upstream/juku-db"
+    cd "$work/upstream/upstream/juku-db"
 
     curl -sS http://juku:juku@letto.solita.fi:50000/juku/juku_users.testing.create_users?username=${DB_CREATE_ID}
     DB_URL=letto.solita.fi:1521/ldev.solita.fi \
@@ -89,13 +86,12 @@ fetchUpstreamArtifacts
 
 buildFront
 
-
 createDb $DB_CREATE_ID
 
 # Rekisteröi palveluiden sammutus keskeytyksien varalle
 trapServices
 
-cd "$upstream/juku-backend/target"
+cd "$work/upstream/juku-backend/target"
 createBackendPropertiesFile $DB_CREATE_ID juku.properties
 
 # Käynnistä backend palvelin.
@@ -127,4 +123,4 @@ runTests
 sleep 3
 
 # Sammuta palvelut
-eval $STOP_SERVICES
+#eval $STOP_SERVICES
