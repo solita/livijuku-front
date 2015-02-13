@@ -82,17 +82,34 @@ angular.module('jukufrontApp')
           if ($scope.hakemukset.length > 0) {
             $scope.hakemukset[0].accordionOpen = true;
           }
+          $scope.kasiteltavatAvustushakemukset = laskeLukumaara('AH0', data);
+          $scope.kasiteltavatMaksatus1hakemukset = laskeLukumaara('MH1', data);
+          $scope.kasiteltavatMaksatus2hakemukset = laskeLukumaara('MH2', data);
         })
         .error(function (data) {
           StatusService.virhe('OrganisaatioService.hae(): ' + data);
         });
     }
 
+    function laskeLukumaara(tyyppi, hakemukset) {
+      var lukumaara = 0;
+      _(angular.fromJson(hakemukset)).forEach(function (hakemuskausi) {
+        var hakemuksetPerTyyppiperHakemuskausi = _.filter(hakemuskausi.hakemukset, {
+          'hakemustilatunnus': "V",
+          'hakemustyyppitunnus': tyyppi
+        });
+        if (hakemuksetPerTyyppiperHakemuskausi != 'undefined'){
+          lukumaara = lukumaara + _.size(hakemuksetPerTyyppiperHakemuskausi);
+        }
+      })
+      return lukumaara;
+    }
+
     $scope.displayed = [];
     $scope.tyyppi = $routeParams.tyyppi;
 
     $scope.asetaTyyppi = function (tyyppi) {
-      $location.path('/k/hakemukset/'+tyyppi);
+      $location.path('/k/hakemukset/' + tyyppi);
     };
 
     $scope.siirryHakemukseen = function (vuosi, tyyppi, hakemusId, maksatusHakemus1Id, maksatusHakemus2Id) {
