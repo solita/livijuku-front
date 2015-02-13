@@ -3,6 +3,7 @@
 set -e
 
 work=$(cd "$(dirname "$0")"; pwd)
+RC=1 # Return code on 1, koska jos tapahtuu poikkeus halutaan exit 1
 
 fetchUpstreamArtifacts () {
   # Jos upstream paketit puuttuvat, noudetaan ne
@@ -52,7 +53,7 @@ trapServices() {
        echo "Stopping backend. ($BACKEND_PID)";
        kill -TERM $BACKEND_PID;
     fi;
-    exit 1'
+    exit $RC'
 
   trap "$STOP_SERVICES" HUP INT QUIT ABRT KILL SEGV TERM EXIT
 }
@@ -122,5 +123,4 @@ runTests
 
 sleep 3
 
-# Sammuta palvelut
-#eval $STOP_SERVICES
+RC=0 # Ei poikkeuksia, ok.
