@@ -24,8 +24,6 @@ app.get('/*', function(req, res, next) {
 app.use('*/api', proxy('localhost:8082', {
   forwardPath: function(req, res) {
     path = require('url').parse(req.url).path;
-    console.log(req.url);
-    console.log(path);
     return path;
   },
   decorateRequest: function(req) {
