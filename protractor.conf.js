@@ -31,9 +31,11 @@ exports.config = {
   onPrepare: function() {
     var destination="target/xmloutput";
     console.log("*** JUnit style test results will be written into "+destination+" ***");
-    require('jasmine-reporters');
-    jasmine.getEnv().addReporter(
-      new jasmine.JUnitXmlReporter(destination, true, true)
-    );
+    var jasmineReporters = require('jasmine-reporters');
+    var junitReporter = new jasmineReporters.JUnitXmlReporter({
+      savePath: destination,
+      consolidateAll: false
+    });
+    jasmine.getEnv().addReporter(junitReporter);
   }
 };
