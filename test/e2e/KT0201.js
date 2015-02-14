@@ -23,11 +23,11 @@ describe('Selenium Test Case', function() {
   it('Käsittelijä avaa hakemuskauden. Hakemuskausi avautuu.', function() {
     snapshot();
     browser.get("/katri.html");
-    //var kayttajanNimi = element(by.xpath('//li[@class="navbaruser"]/p[1]'));
-    //expect(kayttajanNimi.getText().toContain('Katri Käsittelijä'));
+    var kayttajanNimi = element(by.xpath('//li[@class="navbaruser"]/p[1]'));
+    expect(kayttajanNimi.getText()).toContain('Katri Käsittelijä');
+    //browser.pause();
     element(by.partialLinkText("Hakemukset")).click();
     element(by.partialLinkText("Hakemuskauden hallinta")).click();
-    //browser.pause();
     element(by.partialLinkText("Käynnistä hakemuskausi")).click();
     expect(element(by.css('p.panel-title')).getText()).toContain('Avustushakemus');
   });
