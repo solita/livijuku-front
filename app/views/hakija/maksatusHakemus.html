@@ -82,6 +82,32 @@
       <p>Puuttuu</p>
     </div>
   </div>
+  <div ng-show="paatos!=null">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>MYÖNNETTY AVUSTUS</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <h4>Päätösnumero:{{paatos.paatosnumero}} ({{paatos.voimaantuloaika | date:'dd.MM.yyyy'}}) :</h4>
+      </div>
+      <div class="col-md-9">
+        <h4><b>{{paatos.myonnettyavustus | currency:"&euro;"}}</b></h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <h4>Haettava avustussumma:</h4>
+      </div>
+      <div class="col-md-9">
+        <h4><b>{{(psa1haettavaavustus + psa2haettavaavustus + psamhaettavaavustus + hkslhaettavaavustus +
+          hkklhaettavaavustus + hkllhaettavaavustus +
+          hktlhaettavaavustus + kimhaettavaavustus + kmpkhaettavaavustus + kmkhaettavaavustus +
+          krthaettavaavustus + kmhaettavaavustus) | currency:"&euro;"}}</b></h4>
+      </div>
+    </div>
+  </div>
   <div>
     <form name="hakemusForm">
       <div class="row">

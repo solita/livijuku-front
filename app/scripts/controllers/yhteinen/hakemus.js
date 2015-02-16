@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemusService', 'AvustuskohdeService', 'StatusService', '$upload', 'LiiteService', function ($rootScope, $scope, $location, $routeParams, HakemusService, AvustuskohdeService, StatusService, $upload, LiiteService) {
+  .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', '$upload', 'LiiteService', function ($rootScope, $scope, $location, $routeParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, $upload, LiiteService) {
 
     function euroSyoteNumeroksi(arvo) {
       return parseFloat(arvo.replace(/[^0-9,]/g, '').replace(',', '.'));
@@ -164,6 +164,16 @@ angular.module('jukufrontApp')
       else {
         return 0;
       }
+    }
+
+    function haePaatos() {
+      PaatosService.hae($scope.avustushakemusid)
+        .success(function (data) {
+          $scope.paatos = data;
+        })
+        .error(function (data) {
+          StatusService.virhe('PaatosService.hae(' + $scope.avustushakemusid + ')', data);
+        });
     }
 
     $scope.avustushakemusid = $routeParams.id;
@@ -368,7 +378,7 @@ angular.module('jukufrontApp')
       HakemusService.tarkasta($scope.hakemusid)
         .success(function () {
           StatusService.ok('HakemusService.tarkasta(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tarkastetuksi.');
-          $location.path('/k/hakemukset/'+$scope.tyyppi);
+          $location.path('/k/hakemukset/' + $scope.tyyppi);
         })
         .error(function (data) {
           StatusService.virhe('HakemusService.tarkasta(' + $scope.hakemusid + ')', data);
@@ -376,6 +386,7 @@ angular.module('jukufrontApp')
     };
 
     haeHakemukset();
+    haePaatos();
     generoiTooltipArvot();
   }
   ])
