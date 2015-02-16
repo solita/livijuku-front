@@ -23,7 +23,6 @@ describe('Selenium Test Case', function() {
   it('Käsittelijä avaa hakemuskauden. Hakemuskausi avautuu.', function() {
     snapshot();
     browser.get("/katri.html");
-    browser.pause();
     var kayttajanNimi = element(by.xpath('//li[@class="navbaruser"]/p[1]'));
     expect(kayttajanNimi.getText()).toContain('Katri Käsittelijä');
     //browser.pause();
