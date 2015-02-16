@@ -16,13 +16,14 @@ describe('Selenium Test Case', function() {
   //  restore();
   //});
 
-  beforeEach(function() {
-    browser.get("http://localhost:9000/harri.html");
-  });
+  //beforeEach(function() {
+  //  browser.get("http://localhost:9000/harri.html");
+  //});
 
   it('Käsittelijä avaa hakemuskauden. Hakemuskausi avautuu.', function() {
     snapshot();
     browser.get("/katri.html");
+    browser.pause();
     var kayttajanNimi = element(by.xpath('//li[@class="navbaruser"]/p[1]'));
     expect(kayttajanNimi.getText()).toContain('Katri Käsittelijä');
     //browser.pause();
@@ -34,7 +35,7 @@ describe('Selenium Test Case', function() {
 
   it('Hakija avaa avustushakemuslomakkeen. Avustusakemuslomakkeella lukee: "PSA:n mukaisen liikenteen hankinta"', function() {
     var text;
-    browser.get("/");
+    browser.get("/harri.html");
     element(by.partialLinkText("Omat hakemukset")).click();
     text = element(by.tagName('html')).getText();
     expect(text).toContain("" + "PSA:n mukaisen liikenteen hankinta");
