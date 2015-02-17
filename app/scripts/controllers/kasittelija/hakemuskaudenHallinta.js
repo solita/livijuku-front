@@ -76,11 +76,12 @@ angular.module('jukufrontApp')
     };
 
     $scope.upload = function (tiedostot, vuosi) {
+      console.log('Upload:tiedostot length:'+tiedostot.length);
       if (tiedostot.length > 0) {
         $upload.upload({
           url: 'api/hakemuskausi/' + vuosi + '/hakuohje',
           method: 'PUT',
-          data: {myObj: $scope.myModelObj},
+          fields : {myObj: $scope.myModelObj},
           file: tiedostot[0],
           fileFormDataName: 'hakuohje'
         }).progress(function (evt) {
