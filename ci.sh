@@ -64,7 +64,7 @@ local DB_CREATE_ID=$1
 local properties_file=$2
 
 cat > $properties_file << EofProperties
-server.port = 8080
+server.port = 8082
 db.url = jdbc:oracle:thin:@letto.solita.fi:1521/ldev.solita.fi
 db.user = juku_${DB_CREATE_ID}_app
 db.password = juku
