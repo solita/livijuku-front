@@ -51,8 +51,12 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test",
     "install": "node ./node_modules/protractor/bin/webdriver-manager update",
+    "build-dev": "grunt build-dev",
+    "build-dist": "grunt build",
+    "test": "grunt test",
+    "teste2e": "grunt teste2e",
+    "serve": "grunt serve",
     "serve-dist": "node ./serve-dist.js"
   }
 }
