@@ -21,7 +21,6 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
-  // Define the configuration for all the tasks
   grunt.initConfig({
 
     // Project settings
@@ -473,27 +472,29 @@ module.exports = function (grunt) {
       }
     }
   });
+
   grunt.loadNpmTasks('grunt-protractor-webdriver');
   grunt.loadNpmTasks('grunt-protractor-runner');
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'connect:dist:keepalive']);
+      grunt.task.run(['build', 'connect:dist:keepalive']);
+    } else {
+      grunt.task.run([
+        'build-dev',
+        'connect:livereload',
+        'watch'
+      ]);
     }
+  });
 
+  grunt.registerTask('build-dev', 'Only build, don\'t start anything', function (target) {
     grunt.task.run([
       'clean:server',
       'wiredep',
       'concurrent:server',
       'configureProxies:server',
-      'autoprefixer',
-      'connect:livereload',
-      'watch'
+      'autoprefixer'
     ]);
-  });
-
-  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
   });
 
   grunt.registerTask('test', '', function (testMode) {
