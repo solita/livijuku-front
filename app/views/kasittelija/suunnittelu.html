@@ -23,6 +23,29 @@
       </div>
     </div>
   </div>
+  <form name="maararahaForm">
+    <div class="row">
+      <div class="col-md-4">
+        <label>Määräraha vuosi {{vuosi}}</label>
+        <input type="text" min="-0.0001" ng-currency="" class="form-control"
+               ng-focus="asetaVanhaArvo(maararaha)"
+               ng-model="maararaha"
+               ng-blur="paivitaKokonaismaararaha('maararaha')"/>
+      </div>
+      <div class="col-md-4">
+        <label>Siirto vuodelta {{vuosi-1}}</label>
+        <input type="text" min="-0.0001" ng-currency="" class="form-control"
+               ng-focus="asetaVanhaArvo(ylijaama)"
+               ng-model="ylijaama"
+               ng-blur="paivitaKokonaismaararaha('ylijaama')"/>
+      </div>
+      <div class="col-md-4">
+        <label>YHTEENSÄ</label>
+        <input type="text" min="-0.0001" ng-currency="" class="form-control"
+               ng-model="jaettavaraha" disabled/>
+      </div>
+    </div>
+  </form>
   <form name="suunnitteluForm">
     <table st-table="hakemuksetSuunnittelu" class="table table-hover table-condensed table-striped">
       <thead>
@@ -84,7 +107,8 @@
   </form>
   <div class="row">
     <div class="col-md-12">
-      <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa avustushakemusten
+      <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa
+        avustushakemusten
         suunnittelunäkymään</a>
     </div>
   </div>
