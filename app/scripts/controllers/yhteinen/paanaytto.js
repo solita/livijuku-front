@@ -13,6 +13,7 @@ angular.module('jukufrontApp')
           .success(function (data) {
             $rootScope.user = data;
             $rootScope.userOrganisaatio = _.find($rootScope.organisaatiot, {'id': $rootScope.user.organisaatioid}).nimi;
+            $rootScope.userOrganisaatioLajitunnus = _.find($rootScope.organisaatiot, {'id': $rootScope.user.organisaatioid}).lajitunnus;
             statusService.ok('KayttajaService.hae()', 'Käyttäjätiedot haettu onnistuneesti.');
           })
           .error(function (data) {
