@@ -19,68 +19,84 @@
       <div ng-show="(tyyppi == 'AH0')">
         <h2>Joukkoliikenten valtionavustushakemus {{hakemus.vuosi}}</h2>
       </div>
-      <div ng-hide="(tyyppi == 'AH0')">
-        <h2>Joukkoliikenten valtionavun maksatushakemus ajalta {{ajankohta}}{{hakemus.vuosi}}</h2>
+      <div ng-show="(tyyppi == 'MH1')">
+        <h2>Joukkoliikenten 1. maksatushakemus {{hakemus.vuosi}}</h2>
+      </div>
+      <div ng-show="(tyyppi == 'MH2')">
+        <h2>Joukkoliikenten 2. maksatushakemus {{hakemus.vuosi}}</h2>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <h3>HAKIJAN TIEDOT</h3>
+      <h3>HAKIJAN TIEDOT ({{hakija}})</h3>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3">
-      <h4>Kunnan nimi</h4>
+    <div class="col-md-6">
+      <div class="hakija">
+        <div class="hakijaotsake">Hakija</div>
 
-      <p>{{hakija}}</p>
-      <h4>Pankkitilin numero</h4>
+        <p>Puuttuu</p>
 
-      <p>{{pankkitilinumero}}</p>
+        <p>Puuttuu</p>
+
+        <p>Puuttuu</p>
+
+        <p>Puuttuu</p>
+      </div>
     </div>
-    <div class="col-md-3">
-      <h4>Hakijat</h4>
+    <div class="col-md-6">
+      <div class="hakija">
+        <div class="hakijaotsake">Hakija</div>
 
-      <p>Puuttuu</p>
+        <p>Puuttuu</p>
 
-      <p>Puuttuu</p>
+        <p>Puuttuu</p>
 
-      <p>Puuttuu</p>
+        <p>Puuttuu</p>
 
-      <p>Puuttuu</p>
-    </div>
-    <div class="col-md-3">
-      <br>
-
-      <p>Puuttuu</p>
-
-      <p>Puuttuu</p>
-
-      <p>Puuttuu</p>
-
-      <p>Puuttuu</p>
+        <p>Puuttuu</p>
+      </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-3">
-      <br>
-      <h4>Päätöksentekijä</h4>
+    <div class="col-md-6">
+      <div class="hakija">
+        <div class="hakijaotsake">Allekirjoittaja</div>
 
-      <p>Puuttuu</p>
+        <p>Puuttuu</p>
 
-      <p>Puuttuu</p>
+        <p>Puuttuu</p>
 
-      <p>Puuttuu</p>
+        <p>Puuttuu</p>
 
-      <p>Puuttuu</p>
+        <p>Puuttuu</p>
+      </div>
     </div>
+    <div class="col-md-6"></div>
   </div>
   <div>
     <div class="row">
       <div class="col-md-12">
-        <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ<a href=""><span
-          class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+        <div ng-show="(tyyppi == 'AH0')">
+          <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ<a href=""><span
+            class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+        </div>
+        <div ng-hide="(tyyppi == 'AH0')">
+          <div ng-show="paatos!=null">
+            <div class="row">
+              <div class="col-md-12">
+                <h3>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}: <b>{{paatos.myonnettyavustus/2 | currency:"&euro;"}}</b><a
+                  href="" class="top" title="" data-toggle="tooltip" data-placement="top"
+                  data-original-title="Avustus vuodelle {{vuosi}}: {{paatos.myonnettyavustus| currency:'&euro;'}}"><span
+                  class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+              </div>
+            </div>
+          </div>
+          <h3>HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{hakemus.vuosi}}<a href=""><span
+            class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+        </div>
       </div>
     </div>
     <div class="panel panel-default">
@@ -399,7 +415,13 @@
     </div>
     <div class="row">
       <div class="col-md-9">
-        <h4>JOUKKOLIIKENTEEN VALTIONAVUSTUSHAKEMUS YHTEENSÄ:</h4>
+        <div ng-show="(tyyppi == 'AH0')">
+          <h4>JOUKKOLIIKENTEEN VALTIONAVUSTUSHAKEMUS YHTEENSÄ:</h4>
+        </div>
+        <div ng-hide="(tyyppi == 'AH0')">
+          <h4>HAETTAVAT MAKSATUKSET YHTEENSÄ:</h4>
+        </div>
+
       </div>
       <div class="col-md-3">
         <div class="pull-right">
@@ -410,30 +432,35 @@
         </div>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        <h5>Lisätietoja avustusten kohteista<a href=""><span
-          class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h5>
+    <div ng-show="(tyyppi == 'AH0')">
+      <div class="row">
+        <div class="col-md-12">
+          <h5>Lisätietoja avustusten kohteista<a href=""><span
+            class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h5>
+        </div>
       </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-show="(hakemus.selite!=null)">
+            <p>{{hakemus.selite}}</p>
+          </div>
+          <div ng-show="(hakemus.selite==null)">
+            <p>Ei selitettä.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-hide="(tyyppi == 'AH0')">
+      <h3>KULUTOSITTEET AJALLE {{ajankohta}}{{hakemus.vuosi}}<a href=""><span
+        class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div ng-show="(hakemus.selite!=null)">
-          <p>{{hakemus.selite}}</p>
-        </div>
-        <div ng-show="(hakemus.selite==null)">
-          <p>Ei selitettä.</p>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title">Liitetiedostot</h2>
-        </div>
-        <div class="panel-body">
-          <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">Liitetiedostot</h2>
+          </div>
+          <div class="panel-body">
             <div ng-show="liitteet.length > 0" class="response">
               <div class="sel-file" ng-repeat="l in liitteet">
                 <p><i class="glyphicon glyphicon-file"></i>
@@ -450,7 +477,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <h3>HAKEMUKSEN PÄIVÄMÄÄRÄ JA PÄÄTÖKSENTEKIJÄ</h3>
+        <h3>HAKEMUKSEN PÄIVÄMÄÄRÄ JA ALLEKIRJOITTAJA</h3>
       </div>
     </div>
     <div class="row">
@@ -460,9 +487,9 @@
         <p>{{aikaleima | date:'dd.MM.yyyy'}}</p>
       </div>
       <div class="col-md-6">
-        <h5>Päätöksentekijä</h5>
+        <h5>Allekirjoittaja</h5>
 
-        <p>_kirjautuneen päätöksentekijän nimi_</p>
+        <p>_kirjautuneen allekirjoittajan nimi_</p>
       </div>
     </div>
   </div>

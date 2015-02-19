@@ -191,7 +191,7 @@ angular.module('jukufrontApp')
       $scope.ajankohta = '1.7.-31.12.';
     }
     $scope.vuosi = $routeParams.vuosi;
-
+    $('a').tooltip();
 
     $scope.$watch('myFiles', function () {
       for (var i = 0; i < $scope.myFiles.length; i++) {
