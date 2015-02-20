@@ -176,7 +176,17 @@ angular.module('jukufrontApp')
         });
     }
 
+    $scope.asetaEditTilaan = function (liitenumero) {
+      haeLiitteet();
+      $scope.editoitavaLiite = liitenumero;
+    };
+
+    $scope.asetaLiitenimi = function (nimi) {
+      $scope.liitenimi = nimi;
+    };
+
     $scope.avustushakemusid = $routeParams.id;
+    $scope.editoitavaLiite = -1;
     $scope.maksatushakemus1id = $routeParams.m1id;
     $scope.maksatushakemus2id = $routeParams.m2id;
     $scope.myFiles = [];
@@ -190,6 +200,7 @@ angular.module('jukufrontApp')
       $scope.hakemusid = parseInt($routeParams.m2id);
       $scope.ajankohta = '1.7.-31.12.';
     }
+    $scope.liitenimi = '';
     $scope.vuosi = $routeParams.vuosi;
     $('a').tooltip();
 
@@ -230,6 +241,15 @@ angular.module('jukufrontApp')
       }
     };
 
+    $scope.liiteNimiTyhja = function (nimi){
+      if (isNaN(nimi)){
+        return true;
+      }else{
+        return false;
+      }
+    };
+
+
     $scope.naytaHakemus = function () {
       $location.path('/h/hakemus/esikatselu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.avustushakemusid + '/' + $scope.maksatushakemus1id + '/' + $scope.maksatushakemus2id);
     };
@@ -251,6 +271,25 @@ angular.module('jukufrontApp')
         haettavarahoitus2 = parseFloat(haettavarahoitus);
       }
       return haettavarahoitus2 <= omarahoitus2;
+    };
+
+    $scope.palaaTallentamatta=function(){
+      $scope.editoitavaLiite = -1;
+      haeLiitteet();
+    }
+
+    $scope.paivitaLiiteNimi = function (liiteid, nimi) {
+      if (nimi != $scope.liiteNimi) {
+        LiiteService.paivitaNimi($scope.hakemusid, liiteid, nimi)
+          .success(function (data) {
+            StatusService.ok('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + nimi + ')', 'Liitenimi päivitettiin onnistuneesti');
+            $scope.editoitavaLiite = -1;
+            haeLiitteet();
+          })
+          .error(function (data) {
+            StatusService.virhe('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + nimi + ')', data);
+          });
+      }
     };
 
     $scope.poistaLiite = function (liiteid) {

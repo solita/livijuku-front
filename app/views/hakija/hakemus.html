@@ -568,12 +568,34 @@
               <div ng-show="liitteet.length > 0" class="response">
                 <div class="sel-file" ng-repeat="l in liitteet">
                   <div ng-show="(hakemus.hakemustilatunnus == 'K')">
-                    <p><i class="glyphicon glyphicon-file"></i>
-                      <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}">{{l.nimi}}
-                        ({{l.contenttype}})</a>
-                      <a href="" ng-click="poistaLiite(l.liitenumero)"><span
-                        class='glyphicon glyphicon-remove-sign'></span></a>
-                    </p>
+                    <div ng-show="l.liitenumero!=editoitavaLiite">
+                      <p><i class="glyphicon glyphicon-file"></i>
+                        <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}">{{l.nimi}}
+                          ({{l.contenttype}})</a>
+                        <a href="" title="Muuta liitenimi" ng-click="asetaEditTilaan(l.liitenumero)"><span
+                          class='glyphicon glyphicon-pencil'></span></a>
+                        <a href="" title="Poista liite" ng-click="poistaLiite(l.liitenumero)"><span
+                          class='glyphicon glyphicon-remove-sign'></span></a>
+                      </p>
+                    </div>
+                    <div ng-show="l.liitenumero==editoitavaLiite">
+                      <p><i class="glyphicon glyphicon-file"></i>
+                        <input name="liitenimi" type="text" class="input-small"
+                               ng-model="l.nimi"
+                               ng-focus="asetaLiitenimi(l.nimi)"
+                               ui-validate="{tyhja: 'liiteNimiTyhja($value)' }"/>
+                        <a href="" title="Palaa katselutilaan tallentamatta" ng-click="palaaTallentamatta()">
+                          <span class='glyphicon glyphicon-eye-open'></span></a>
+                        <a href="" title="Tallenna liitenimi" ng-click="paivitaLiiteNimi(l.liitenumero,l.nimi)">
+                          <span class='glyphicon glyphicon-save'></span></a>
+                        <a href="" title="Poista liite" ng-click="poistaLiite(l.liitenumero)"><span
+                          class='glyphicon glyphicon-remove-sign'></span></a>
+                      </p>
+
+                      <p
+                        ng-show="hakemusForm.liitenimi.$error.tyhja && !hakemusForm.liitenimi.$pristine"
+                        class="help-block">Liitenimi ei saa olla tyhjä.</p>
+                    </div>
                   </div>
                   <div ng-hide="(hakemus.hakemustilatunnus == 'K')">
                     <p><i class="glyphicon glyphicon-file"></i>
@@ -581,39 +603,9 @@
                         ({{l.contenttype}})</a>
                     </p>
                   </div>
-                  <!--
-                                        <img ng-show="f.dataUrl" ng-src="{{f.dataUrl}}" class="thumb"/>
-                                        <span class="progress" ng-show="f.progress >= 0">
-                                                    <div style="width:{{f.progress}}%">{{f.progress}}%</div>
-                                                </span>
-                                        <button class="button" ng-click="f.upload.abort();f.upload.aborted=true"
-                                                ng-show="f.upload != null && f.progress < 100 && !f.upload.aborted">Abort
-                                        </button>
-                                        {{f.name}} - size: {{f.size}}B - type: {{f.type}}
-                                        <a ng-show="f.result" href="javascript:void(0)"
-                                           ng-click="f.showDetail = !f.showDetail">details</a>
-
-                                        <div ng-show="f.showDetail">
-                                          <br/>
-
-                                          <div data-ng-show="f.result.result == null">{{f.result}}</div>
-                                          <ul>
-                                            <li ng-repeat="item in f.result.result">
-                                              <div data-ng-show="item.name">file name: {{item.name}}</div>
-                                              <div data-ng-show="item.fieldName">name: {{item.fieldName}}</div>
-                                              <div data-ng-show="item.size">size on the serve: {{item.size}}</div>
-                                              <div data-ng-show="item.value">value: {{item.value}}</div>
-                                            </li>
-                                          </ul>
-                                          <div data-ng-show="f.result.requestHeaders" class="reqh">request headers:
-                                            {{f.result.requestHeaders}}
-                                          </div>
-                                        </div>
-                                        -->
                 </div>
               </div>
             </div>
-
             <div ng-show="(hakemus.hakemustilatunnus == 'K')">
               <div class="col-md-4 text-center">
                 <div ng-file-drop ng-model="myFiles" class="drop-box"
