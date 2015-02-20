@@ -22,6 +22,7 @@ angular.module('jukufrontApp')
           var avustushakemusTilatunnus = _.find(hakemusvuosi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).hakemustilatunnus;
           var maksatushakemus1Tilatunnus = _.find(hakemusvuosi.hakemukset, {'hakemustyyppitunnus': 'MH1'}).hakemustilatunnus;
           var maksatushakemus2Tilatunnus = _.find(hakemusvuosi.hakemukset, {'hakemustyyppitunnus': 'MH2'}).hakemustilatunnus;
+         /*
           if (avustushakemusAlkupvm > nykyhetki) {
             avustushakemusTilatunnus = 'FEK';
           }
@@ -31,6 +32,7 @@ angular.module('jukufrontApp')
           if (maksatushakemus2Alkupvm > nykyhetki) {
             maksatushakemus2Tilatunnus = 'FEK';
           }
+          */
           hakemuksetTmp.push({
             'vuosi': hakemusvuosi.vuosi,
             'avustushakemusId': _.find(hakemusvuosi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).id,

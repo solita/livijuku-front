@@ -4,13 +4,13 @@
       <a href="#/h/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
         päänäkymään</a>
       <a href="#/h/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-         class="btn btn-default">Avustushakemus {{hakemus.vuosi}}</a>
+         class="btn btn-primary">Avustushakemus {{hakemus.vuosi}}</a>
       <a
         href="#/h/maksatushakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-        class="btn btn-primary">1. maksatushakemus {{hakemus.vuosi}}</a>
+        class="btn btn-default">1. maksatushakemus {{hakemus.vuosi}}</a>
       <a
         href="#/h/maksatushakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-        class="btn btn-primary">2. maksatushakemus {{hakemus.vuosi}}</a>
+        class="btn btn-default">2. maksatushakemus {{hakemus.vuosi}}</a>
     </div>
   </div>
   <div class="row">
@@ -102,7 +102,7 @@
 
               <p
                 ng-show="hakemusForm.psa1haettavaavustus.$error.positiivinenArvo && !hakemusForm.psa1haettavaavustus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -115,7 +115,7 @@
 
               <p
                 ng-show="hakemusForm.psa1omarahoitus.$error.positiivinenArvo && !hakemusForm.psa1omarahoitus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
 
               <p
                 ng-show="hakemusForm.psa1omarahoitus.$error.omarahoitusRiittava && !hakemusForm.psa1omarahoitus.$pristine"
@@ -136,7 +136,7 @@
 
               <p
                 ng-show="hakemusForm.psa2haettavaavustus.$error.positiivinenArvo && !hakemusForm.psa2haettavaavustus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -149,7 +149,7 @@
 
               <p
                 ng-show="hakemusForm.psa2omarahoitus.$error.positiivinenArvo && !hakemusForm.psa2omarahoitus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
 
               <p
                 ng-show="hakemusForm.psa2omarahoitus.$error.omarahoitusRiittava && !hakemusForm.psa2omarahoitus.$pristine"
@@ -170,7 +170,7 @@
 
               <p
                 ng-show="hakemusForm.psamhaettavaavustus.$error.positiivinenArvo && !hakemusForm.psamhaettavaavustus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -183,7 +183,7 @@
 
               <p
                 ng-show="hakemusForm.psamomarahoitus.$error.positiivinenArvo && !hakemusForm.psamomarahoitus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
 
               <p
                 ng-show="hakemusForm.psamomarahoitus.$error.omarahoitusRiittava && !hakemusForm.psamomarahoitus.$pristine"
@@ -221,7 +221,7 @@
 
               <p
                 ng-show="hakemusForm.hkslhaettavaavustus.$error.positiivinenArvo && !hakemusForm.hkslhaettavaavustus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -234,7 +234,7 @@
 
               <p
                 ng-show="hakemusForm.hkslomarahoitus.$error.positiivinenArvo && !hakemusForm.hkslomarahoitus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
 
               <p
                 ng-show="hakemusForm.hkslomarahoitus.$error.omarahoitusRiittava && !hakemusForm.hkslomarahoitus.$pristine"
@@ -255,7 +255,7 @@
 
               <p
                 ng-show="hakemusForm.hkklhaettavaavustus.$error.positiivinenArvo && !hakemusForm.hkklhaettavaavustus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -268,7 +268,7 @@
 
               <p
                 ng-show="hakemusForm.hkklomarahoitus.$error.positiivinenArvo && !hakemusForm.hkklomarahoitus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
 
               <p
                 ng-show="hakemusForm.hkklomarahoitus.$error.omarahoitusRiittava && !hakemusForm.hkklomarahoitus.$pristine"
@@ -289,7 +289,7 @@
 
               <p
                 ng-show="hakemusForm.hkllhaettavaavustus.$error.positiivinenArvo && !hakemusForm.hkllhaettavaavustus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -302,7 +302,7 @@
 
               <p
                 ng-show="hakemusForm.hkllomarahoitus.$error.positiivinenArvo && !hakemusForm.hkllomarahoitus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
 
               <p
                 ng-show="hakemusForm.hkllomarahoitus.$error.omarahoitusRiittava && !hakemusForm.hkllomarahoitus.$pristine"
@@ -323,7 +323,7 @@
 
               <p
                 ng-show="hakemusForm.hktlhaettavaavustus.$error.positiivinenArvo && !hakemusForm.hktlhaettavaavustus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -336,7 +336,7 @@
 
               <p
                 ng-show="hakemusForm.hktlomarahoitus.$error.positiivinenArvo && !hakemusForm.hktlomarahoitus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
 
               <p
                 ng-show="hakemusForm.hktlomarahoitus.$error.omarahoitusRiittava && !hakemusForm.hktlomarahoitus.$pristine"
@@ -373,7 +373,7 @@
 
               <p
                 ng-show="hakemusForm.kimhaettavaavustus.$error.positiivinenArvo && !hakemusForm.kimhaettavaavustus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -386,7 +386,7 @@
 
               <p
                 ng-show="hakemusForm.kimomarahoitus.$error.positiivinenArvo && !hakemusForm.kimomarahoitus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
 
               <p
                 ng-show="hakemusForm.kimomarahoitus.$error.omarahoitusRiittava && !hakemusForm.kimomarahoitus.$pristine"
@@ -407,7 +407,7 @@
 
               <p
                 ng-show="hakemusForm.kmpkhaettavaavustus.$error.positiivinenArvo && !hakemusForm.kmpkhaettavaavustus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -420,7 +420,7 @@
 
               <p
                 ng-show="hakemusForm.kmpkomarahoitus.$error.positiivinenArvo && !hakemusForm.kmpkomarahoitus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
 
               <p
                 ng-show="hakemusForm.kmpkomarahoitus.$error.omarahoitusRiittava && !hakemusForm.kmpkomarahoitus.$pristine"
@@ -440,7 +440,7 @@
 
               <p
                 ng-show="hakemusForm.kmkhaettavaavustus.$error.positiivinenArvo && !hakemusForm.kmkhaettavaavustus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -453,7 +453,7 @@
 
               <p
                 ng-show="hakemusForm.kmkomarahoitus.$error.positiivinenArvo && !hakemusForm.kmkomarahoitus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
 
               <p
                 ng-show="hakemusForm.kmkomarahoitus.$error.omarahoitusRiittava && !hakemusForm.kmkomarahoitus.$pristine"
@@ -474,7 +474,7 @@
 
                 <p
                   ng-show="hakemusForm.krthaettavaavustus.$error.positiivinenArvo && !hakemusForm.krthaettavaavustus.$pristine"
-                  class="help-block">Arvon tulee olla positiivinen.</p>
+                  class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
               </div>
             </div>
             <div class="col-md-6">
@@ -487,7 +487,7 @@
 
                 <p
                   ng-show="hakemusForm.krtomarahoitus.$error.positiivinenArvo && !hakemusForm.krtomarahoitus.$pristine"
-                  class="help-block">Arvon tulee olla positiivinen.</p>
+                  class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
 
                 <p
                   ng-show="hakemusForm.krtomarahoitus.$error.omarahoitusRiittava && !hakemusForm.krtomarahoitus.$pristine"
@@ -508,7 +508,7 @@
 
               <p
                 ng-show="hakemusForm.kmhaettavaavustus.$error.positiivinenArvo && !hakemusForm.kmhaettavaavustus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -521,7 +521,7 @@
 
               <p
                 ng-show="hakemusForm.kmomarahoitus.$error.positiivinenArvo && !hakemusForm.kmomarahoitus.$pristine"
-                class="help-block">Arvon tulee olla positiivinen.</p>
+                class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
 
               <p
                 ng-show="hakemusForm.kmomarahoitus.$error.omarahoitusRiittava && !hakemusForm.kmomarahoitus.$pristine"
@@ -610,13 +610,13 @@
               <div class="col-md-4 text-center">
                 <div ng-file-drop ng-model="myFiles" class="drop-box"
                      drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
-                     multiple="true" allow-dir="true">
+                     ng-multiple="true" allow-dir="false">
                   <p>Raahaa liite tähän</p>
 
                   <p>tai</p>
 
                   <div ng-no-file-drop>Tiedoston raahaaminen ei ole mahdollista tällä selain-versiolla</div>
-                  <button ng-file-select class="btn btn-primary" ng-model="myFiles" multiple="true">Valitse tiedosto
+                  <button ng-file-select class="btn btn-primary" ng-model="myFiles" ng-multiple="true">Valitse tiedosto
                   </button>
                 </div>
               </div>

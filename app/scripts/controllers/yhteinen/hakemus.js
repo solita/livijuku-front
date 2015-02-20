@@ -241,14 +241,13 @@ angular.module('jukufrontApp')
       }
     };
 
-    $scope.liiteNimiTyhja = function (nimi){
-      if (isNaN(nimi)){
+    $scope.liiteNimiTyhja = function (nimi) {
+      if (isNaN(nimi)) {
         return true;
-      }else{
+      } else {
         return false;
       }
     };
-
 
     $scope.naytaHakemus = function () {
       $location.path('/h/hakemus/esikatselu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.avustushakemusid + '/' + $scope.maksatushakemus1id + '/' + $scope.maksatushakemus2id);
@@ -273,7 +272,7 @@ angular.module('jukufrontApp')
       return haettavarahoitus2 <= omarahoitus2;
     };
 
-    $scope.palaaTallentamatta=function(){
+    $scope.palaaTallentamatta = function () {
       $scope.editoitavaLiite = -1;
       haeLiitteet();
     }
@@ -304,129 +303,135 @@ angular.module('jukufrontApp')
     };
 
     $scope.positiivinenArvo = function (value) {
-      return parseFloat(value) >= 0;
+      if (typeof value === 'undefined') return false;
+      var floatarvo;
+      if (typeof value === 'string') {
+        floatarvo = euroSyoteNumeroksi(value);
+        return (floatarvo >= 0 && floatarvo <= 999999999.00);
+      }
+      return true;
     };
 
-    $scope.tallennaHakemus = function () {
-      $scope.$broadcast('show-errors-check-validity');
-      if ($scope.hakemusForm.$valid) {
-        var avustuskohteet = [
-          {
-            'hakemusid': $scope.hakemusid,
-            'avustuskohdelajitunnus': 'PSA-1',
-            'haettavaavustus': $scope.psa1haettavaavustus,
-            'omarahoitus': $scope.psa1omarahoitus
-          },
-          {
-            'hakemusid': $scope.hakemusid,
-            'avustuskohdelajitunnus': 'PSA-2',
-            'haettavaavustus': $scope.psa2haettavaavustus,
-            'omarahoitus': $scope.psa2omarahoitus
-          },
-          {
-            'hakemusid': $scope.hakemusid,
-            'avustuskohdelajitunnus': 'PSA-M',
-            'haettavaavustus': $scope.psamhaettavaavustus,
-            'omarahoitus': $scope.psamomarahoitus
-          },
-          {
-            'hakemusid': $scope.hakemusid,
-            'avustuskohdelajitunnus': 'HK-SL',
-            'haettavaavustus': $scope.hkslhaettavaavustus,
-            'omarahoitus': $scope.hkslomarahoitus
-          },
-          {
-            'hakemusid': $scope.hakemusid,
-            'avustuskohdelajitunnus': 'HK-KL',
-            'haettavaavustus': $scope.hkklhaettavaavustus,
-            'omarahoitus': $scope.hkklomarahoitus
-          },
-          {
-            'hakemusid': $scope.hakemusid,
-            'avustuskohdelajitunnus': 'HK-LL',
-            'haettavaavustus': $scope.hkllhaettavaavustus,
-            'omarahoitus': $scope.hkllomarahoitus
-          },
-          {
-            'hakemusid': $scope.hakemusid,
-            'avustuskohdelajitunnus': 'HK-TL',
-            'haettavaavustus': $scope.hktlhaettavaavustus,
-            'omarahoitus': $scope.hktlomarahoitus
-          },
-          {
-            'hakemusid': $scope.hakemusid,
-            'avustuskohdelajitunnus': 'K-IM',
-            'haettavaavustus': $scope.kimhaettavaavustus,
-            'omarahoitus': $scope.kimomarahoitus
-          },
-          {
-            'hakemusid': $scope.hakemusid,
-            'avustuskohdelajitunnus': 'K-MPK',
-            'haettavaavustus': $scope.kmpkhaettavaavustus,
-            'omarahoitus': $scope.kmpkomarahoitus
-          },
-          {
-            'hakemusid': $scope.hakemusid,
-            'avustuskohdelajitunnus': 'K-MK',
-            'haettavaavustus': $scope.kmkhaettavaavustus,
-            'omarahoitus': $scope.kmkomarahoitus
-          },
-          {
-            'hakemusid': $scope.hakemusid,
-            'avustuskohdelajitunnus': 'K-RT',
-            'haettavaavustus': $scope.krthaettavaavustus,
-            'omarahoitus': $scope.krtomarahoitus
-          },
-          {
-            'hakemusid': $scope.hakemusid,
-            'avustuskohdelajitunnus': 'K-M',
-            'haettavaavustus': $scope.kmhaettavaavustus,
-            'omarahoitus': $scope.kmomarahoitus
-          }
-        ];
-        AvustuskohdeService.tallenna(avustuskohteet)
+      $scope.tallennaHakemus = function () {
+        $scope.$broadcast('show-errors-check-validity');
+        if ($scope.hakemusForm.$valid) {
+          var avustuskohteet = [
+            {
+              'hakemusid': $scope.hakemusid,
+              'avustuskohdelajitunnus': 'PSA-1',
+              'haettavaavustus': $scope.psa1haettavaavustus,
+              'omarahoitus': $scope.psa1omarahoitus
+            },
+            {
+              'hakemusid': $scope.hakemusid,
+              'avustuskohdelajitunnus': 'PSA-2',
+              'haettavaavustus': $scope.psa2haettavaavustus,
+              'omarahoitus': $scope.psa2omarahoitus
+            },
+            {
+              'hakemusid': $scope.hakemusid,
+              'avustuskohdelajitunnus': 'PSA-M',
+              'haettavaavustus': $scope.psamhaettavaavustus,
+              'omarahoitus': $scope.psamomarahoitus
+            },
+            {
+              'hakemusid': $scope.hakemusid,
+              'avustuskohdelajitunnus': 'HK-SL',
+              'haettavaavustus': $scope.hkslhaettavaavustus,
+              'omarahoitus': $scope.hkslomarahoitus
+            },
+            {
+              'hakemusid': $scope.hakemusid,
+              'avustuskohdelajitunnus': 'HK-KL',
+              'haettavaavustus': $scope.hkklhaettavaavustus,
+              'omarahoitus': $scope.hkklomarahoitus
+            },
+            {
+              'hakemusid': $scope.hakemusid,
+              'avustuskohdelajitunnus': 'HK-LL',
+              'haettavaavustus': $scope.hkllhaettavaavustus,
+              'omarahoitus': $scope.hkllomarahoitus
+            },
+            {
+              'hakemusid': $scope.hakemusid,
+              'avustuskohdelajitunnus': 'HK-TL',
+              'haettavaavustus': $scope.hktlhaettavaavustus,
+              'omarahoitus': $scope.hktlomarahoitus
+            },
+            {
+              'hakemusid': $scope.hakemusid,
+              'avustuskohdelajitunnus': 'K-IM',
+              'haettavaavustus': $scope.kimhaettavaavustus,
+              'omarahoitus': $scope.kimomarahoitus
+            },
+            {
+              'hakemusid': $scope.hakemusid,
+              'avustuskohdelajitunnus': 'K-MPK',
+              'haettavaavustus': $scope.kmpkhaettavaavustus,
+              'omarahoitus': $scope.kmpkomarahoitus
+            },
+            {
+              'hakemusid': $scope.hakemusid,
+              'avustuskohdelajitunnus': 'K-MK',
+              'haettavaavustus': $scope.kmkhaettavaavustus,
+              'omarahoitus': $scope.kmkomarahoitus
+            },
+            {
+              'hakemusid': $scope.hakemusid,
+              'avustuskohdelajitunnus': 'K-RT',
+              'haettavaavustus': $scope.krthaettavaavustus,
+              'omarahoitus': $scope.krtomarahoitus
+            },
+            {
+              'hakemusid': $scope.hakemusid,
+              'avustuskohdelajitunnus': 'K-M',
+              'haettavaavustus': $scope.kmhaettavaavustus,
+              'omarahoitus': $scope.kmomarahoitus
+            }
+          ];
+          AvustuskohdeService.tallenna(avustuskohteet)
+            .success(function () {
+              var tallennusOk = true;
+              if ($scope.hakemus.selite !== null) {
+                var selitedata = {
+                  'selite': $scope.hakemus.selite,
+                  'hakemusid': $scope.hakemusid
+                };
+                HakemusService.tallennaSelite(selitedata)
+                  .success(function () {
+                  })
+                  .error(function (data) {
+                    StatusService.virhe('HakemusService.tallennaSelite(' + selitedata + ')', data);
+                    tallennusOk = false;
+                  });
+              }
+              if (tallennusOk) {
+                StatusService.ok('AvustuskohdeService.tallenna()', 'Tallennus onnistui.');
+                haeHakemukset();
+              }
+            })
+            .error(function (data) {
+              StatusService.virhe('AvustuskohdeService.tallenna()', data);
+            });
+        } else {
+          StatusService.virhe('AvustuskohdeService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
+        }
+      };
+
+      $scope.tarkastaHakemus = function () {
+        HakemusService.tarkasta($scope.hakemusid)
           .success(function () {
-            var tallennusOk = true;
-            if ($scope.hakemus.selite !== null) {
-              var selitedata = {
-                'selite': $scope.hakemus.selite,
-                'hakemusid': $scope.hakemusid
-              };
-              HakemusService.tallennaSelite(selitedata)
-                .success(function () {
-                })
-                .error(function (data) {
-                  StatusService.virhe('HakemusService.tallennaSelite(' + selitedata + ')', data);
-                  tallennusOk = false;
-                });
-            }
-            if (tallennusOk) {
-              StatusService.ok('AvustuskohdeService.tallenna()', 'Tallennus onnistui.');
-              haeHakemukset();
-            }
+            StatusService.ok('HakemusService.tarkasta(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tarkastetuksi.');
+            $location.path('/k/hakemukset/' + $scope.tyyppi);
           })
           .error(function (data) {
-            StatusService.virhe('AvustuskohdeService.tallenna()', data);
+            StatusService.virhe('HakemusService.tarkasta(' + $scope.hakemusid + ')', data);
           });
-      } else {
-        StatusService.virhe('AvustuskohdeService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
-      }
-    };
+      };
 
-    $scope.tarkastaHakemus = function () {
-      HakemusService.tarkasta($scope.hakemusid)
-        .success(function () {
-          StatusService.ok('HakemusService.tarkasta(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tarkastetuksi.');
-          $location.path('/k/hakemukset/' + $scope.tyyppi);
-        })
-        .error(function (data) {
-          StatusService.virhe('HakemusService.tarkasta(' + $scope.hakemusid + ')', data);
-        });
-    };
-
-    haeHakemukset();
-    haePaatos();
-    generoiTooltipArvot();
-  }
-  ])
-;
+      haeHakemukset();
+      haePaatos();
+      generoiTooltipArvot();
+    }
+    ])
+    ;

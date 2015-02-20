@@ -44,22 +44,7 @@
       <p>Päätös</p>
     </div>
     <div class="col-md-10">
-      <p>Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle <b>{{hakija}}</b> valtionavustuksena:</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-2">
-
-      <div class="input-group input-group-sm">
-        <input type="text" min="-0.0001" ng-currency="" class="form-control"
-               ng-model="paatos.myonnettyavustus"
-               ng-focus="asetaVanhaArvo(paatos.myonnettyavustus)"
-               ng-blur="tarkistaTyhja(paatos.myonnettyavustus)"/>
-      </div>
-    </div>
-    <div class="col-md-8">
-      <p>(Suunniteltu valtionavustus oli: {{avustus| currency:"&euro;"}}).</p>
+      <p>Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle <b>{{hakija}}</b> valtionavustuksena <b>{{avustus| currency:"&euro;"}}</b>.</p>
     </div>
   </div>
   <div class="row">

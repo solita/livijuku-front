@@ -64,12 +64,9 @@ angular.module('jukufrontApp')
     };
 
     $scope.tallennaPaatos = function () {
-      if (isNaN($scope.paatos.myonnettyavustus)) {
-        return;
-      }
       var paatosdata = {
         "hakemusid": parseInt($scope.hakemusid),
-        "myonnettyavustus": $scope.paatos.myonnettyavustus,
+        "myonnettyavustus": parseFloat($scope.avustus),
         "selite": $scope.paatos.selite
       }
       PaatosService.tallenna($scope.hakemusid, paatosdata)
