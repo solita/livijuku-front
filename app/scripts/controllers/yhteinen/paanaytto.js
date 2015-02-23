@@ -3,7 +3,11 @@ angular.module('jukufrontApp')
   .controller('PaanayttoCtrl', ['$scope', '$rootScope', '$location', 'KayttajaService', 'OrganisaatioService', 'StatusService', function ($scope, $rootScope, $location, KayttajaService, OrganisaatioService, statusService) {
 
     $scope.isActive = function (route) {
-      return route === $location.path();
+      if (route.substr(0, 13) == '/k/hakemukset') {
+        return (route.substr(0, 13) == $location.path().substr(0, 13));
+      } else {
+        return route === $location.path();
+      }
     };
 
     OrganisaatioService.hae()

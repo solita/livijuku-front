@@ -98,11 +98,15 @@ angular.module('jukufrontApp')
           'hakemustilatunnus': "V",
           'hakemustyyppitunnus': tyyppi
         });
-        if (hakemuksetPerTyyppiperHakemuskausi != 'undefined'){
+        if (hakemuksetPerTyyppiperHakemuskausi != 'undefined') {
           lukumaara = lukumaara + _.size(hakemuksetPerTyyppiperHakemuskausi);
         }
       })
-      return lukumaara;
+      if (lukumaara == 0) {
+        return ''
+      } else {
+        return lukumaara;
+      }
     }
 
     $scope.displayed = [];

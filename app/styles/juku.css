@@ -124,6 +124,21 @@ textarea {
   margin-bottom: 10px;
 }
 
+.hakemuskausi-panel {
+  min-height: 330px;
+  max-height: 330px;
+  min-width: 200px;
+  max-width: 2000px;
+}
+
+.hakemuskausi-panel-hakuaika {
+  position: absolute;
+  line-height: 1;
+  bottom: 10px;
+  text-align: center;
+  padding: 25px;
+}
+
 .uusihakemuskausi {
   border-style: dashed;
   border-width: 4px;
