@@ -2,7 +2,8 @@
   <div class="row">
     <div class="col-md-12">
       <div ng-show="(tyyppi == 'MH1')">
-        <a href="#/h/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
+        <a href="#/h/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
+          päänäkymään</a>
         <a href="#/h/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
            class="btn btn-default">Avustushakemus {{hakemus.vuosi}}</a>
         <a
@@ -19,7 +20,8 @@
         </div>
       </div>
       <div ng-show="(tyyppi == 'MH2')">
-        <a href="#/h/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
+        <a href="#/h/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
+          päänäkymään</a>
         <a href="#/h/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
            class="btn btn-default">Avustushakemus {{hakemus.vuosi}}</a>
         <a
@@ -89,7 +91,8 @@
   <div ng-show="paatos!=null">
     <div class="row">
       <div class="col-md-12">
-        <h3>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}: <b>{{paatos.myonnettyavustus/2 | currency:"&euro;"}}</b><a
+        <h3>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}: <b>{{paatos.myonnettyavustus/2 |
+          currency:"&euro;"}}</b><a
           href="" class="top" title="" data-toggle="tooltip" data-placement="top"
           data-original-title="Avustus vuodelle {{vuosi}}: {{paatos.myonnettyavustus| currency:'&euro;'}}"><span
           class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
@@ -477,7 +480,8 @@
               <div class="col-md-6">
                 <div class="form-group" show-errors="{showSuccess: true}">
                   <label>Haettava valtionavustus</label>
-                  <input name="kimhaettavaavustus" type="text" min="-0.0001" ng-currency="" noenter class="form-control"
+                  <input name="kimhaettavaavustus" type="text" min="-0.0001" ng-currency="" noenter
+                         class="form-control"
                          tooltip-html-unsafe="{{tooltipArvot['kimhaettavaavustus']}}" tooltip-trigger="focus"
                          tooltip-placement="top"
                          ng-model="kimhaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
@@ -566,7 +570,8 @@
               <div class="col-md-6">
                 <div class="form-group" show-errors="{showSuccess: true}">
                   <label>Haettava valtionavustus</label>
-                  <input name="kmkhaettavaavustus" type="text" min="-0.0001" ng-currency="" noenter class="form-control"
+                  <input name="kmkhaettavaavustus" type="text" min="-0.0001" ng-currency="" noenter
+                         class="form-control"
                          tooltip-html-unsafe="{{tooltipArvot['kmkhaettavaavustus']}}" tooltip-trigger="focus"
                          tooltip-placement="top"
                          ng-model="kmkhaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
@@ -610,7 +615,8 @@
               <div class="col-md-6">
                 <div class="form-group" show-errors="{showSuccess: true}">
                   <label>Haettava valtionavustus</label>
-                  <input name="krthaettavaavustus" type="text" min="-0.0001" ng-currency="" noenter class="form-control"
+                  <input name="krthaettavaavustus" type="text" min="-0.0001" ng-currency="" noenter
+                         class="form-control"
                          tooltip-html-unsafe="{{tooltipArvot['krthaettavaavustus']}}" tooltip-trigger="focus"
                          tooltip-placement="top"
                          ng-model="krthaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
@@ -654,7 +660,8 @@
               <div class="col-md-6">
                 <div class="form-group" show-errors="{showSuccess: true}">
                   <label>Haettava valtionavustus</label>
-                  <input name="kmhaettavaavustus" type="text" min="-0.0001" ng-currency="" noenter class="form-control"
+                  <input name="kmhaettavaavustus" type="text" min="-0.0001" ng-currency="" noenter
+                         class="form-control"
                          tooltip-html-unsafe="{{tooltipArvot['kmhaettavaavustus']}}" tooltip-trigger="focus"
                          tooltip-placement="top"
                          ng-model="kmhaettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
@@ -724,7 +731,7 @@
                     <div ng-show="(hakemus.hakemustilatunnus == 'K')">
                       <div ng-show="l.liitenumero!=editoitavaLiite">
                         <p><i class="glyphicon glyphicon-file"></i>
-                          <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}">{{l.nimi}}
+                          <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank">{{l.nimi}}
                             ({{l.contenttype}})</a>
                           <a href="" title="Muuta liitenimi" ng-click="asetaEditTilaan(l.liitenumero)"><span
                             class='glyphicon glyphicon-pencil'></span></a>
@@ -770,7 +777,8 @@
                     <p>tai</p>
 
                     <div ng-no-file-drop>Tiedoston raahaaminen ei ole mahdollista tällä selain-versiolla</div>
-                    <button ng-file-select class="btn btn-primary" ng-model="myFiles" ng-multiple="false">Valitse tiedosto
+                    <button ng-file-select class="btn btn-primary" ng-model="myFiles" ng-multiple="false">Valitse
+                      tiedosto
                     </button>
                   </div>
                 </div>
