@@ -89,21 +89,27 @@ module.exports = function (grunt) {
 
             middlewares.push(function myMiddleware(req, res, next) {
               var oam_user = '';
+              var oam_group = '';
               var cookies = req.headers.cookie;
               if (typeof cookies !== "undefined") {
-                var cookie_key = "oam-remote-user=";
+                var user_cookie_key = "oam-remote-user=";
+                var group_cookie_key = "oam-groups=";
                 var splitted_cookies = cookies.split(';');
                 for (var i = 0; i < splitted_cookies.length; i++) {
                   var c = splitted_cookies[i];
                   while (c.charAt(0) == ' ') c = c.substring(1);
-                  if (c.indexOf(cookie_key) == 0) {
-                    oam_user = c.substring(cookie_key.length, c.length);
+                  if (c.indexOf(user_cookie_key) == 0) {
+                    oam_user = c.substring(user_cookie_key.length, c.length);
+                  } else if (c.indexOf(group_cookie_key) == 0) {
+                    oam_group = c.substring(group_cookie_key.length, c.length);
                   }
                 }
               }
               if (oam_user !== '') {
                 req.headers['oam-remote-user'] = oam_user;
-                req.headers['oam-groups'] = '1';
+              }
+              if (oam_group !== '') {
+                req.headers['oam-groups'] = oam_group;
               }
               next();
             });

@@ -10,6 +10,17 @@ angular.module('jukufrontApp')
       }
     };
 
+    $scope.sallittu = function (oikeus) {
+      if (typeof $rootScope.user !== 'undefined') {
+        for (var i = 0; i < $rootScope.user.privileges.length; i++) {
+          if ($rootScope.user.privileges[i] == oikeus) {
+            return true;
+          }
+        }
+        return false;
+      }
+    };
+
     OrganisaatioService.hae()
       .success(function (data) {
         $rootScope.organisaatiot = data;
@@ -27,5 +38,7 @@ angular.module('jukufrontApp')
       .error(function (data) {
         statusService.virhe('OrganisaatioService.hae()', data);
       });
-  }]
-);
+  }
+  ]
+)
+;

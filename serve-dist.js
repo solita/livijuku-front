@@ -29,7 +29,7 @@ app.use('*/api', proxy('localhost:8082', {
   decorateRequest: function(req) {
     var cookies = parseCookies(req);
     req.headers['oam-remote-user'] = cookies['oam-remote-user'];
-    req.headers['oam-groups'] = '1';
+    req.headers['oam-groups'] = cookies['oam-groups'];
     console.log(req);
     return req;
   }
