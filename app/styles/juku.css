@@ -137,6 +137,7 @@ textarea {
   bottom: 10px;
   text-align: center;
   padding: 25px;
+  width: 100%;
 }
 
 .uusihakemuskausi {
@@ -182,4 +183,9 @@ textarea {
   display: inline-block;
   vertical-align: middle;
   float: none;
+}
+
+[ng-cloak]
+{
+  display: none !important;
 }
