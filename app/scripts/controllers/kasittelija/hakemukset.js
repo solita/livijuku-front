@@ -116,6 +116,17 @@ angular.module('jukufrontApp')
       $location.path('/k/hakemukset/' + tyyppi);
     };
 
+    $scope.sallittu = function (oikeus) {
+      if (typeof $rootScope.user !== 'undefined') {
+        for (var i = 0; i < $rootScope.user.privileges.length; i++) {
+          if ($rootScope.user.privileges[i] == oikeus) {
+            return true;
+          }
+        }
+        return false;
+      }
+    };
+
     $scope.siirryHakemukseen = function (vuosi, tyyppi, hakemusId, maksatusHakemus1Id, maksatusHakemus2Id) {
       $location.path('/k/hakemus/' + vuosi + '/' + tyyppi + '/' + hakemusId + '/' + maksatusHakemus1Id + '/' + maksatusHakemus2Id);
     };

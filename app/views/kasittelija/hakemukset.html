@@ -89,7 +89,7 @@
             <div class="col-md-8"></div>
             <div class="col-md-4">
               <div class="pull-right">
-                <button class="btn btn-primary"
+                <button ng-show="sallittu('paatos-suunnittelu')" class="btn btn-primary"
                         ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'KS1')">
                   Suunnittelu ja päätöksenteko<span
                   class='glyphicon glyphicon-play'/></button>
@@ -133,7 +133,7 @@
             <div class="col-md-8"></div>
             <div class="col-md-4">
               <div class="pull-right">
-                <button class="btn btn-primary"
+                <button ng-show="sallittu('paatos-suunnittelu')" class="btn btn-primary"
                         ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'KS2')">
                   Suunnittelu ja päätöksenteko<span
                   class='glyphicon glyphicon-play'/></button>
@@ -177,7 +177,7 @@
             <div class="col-md-8"></div>
             <div class="col-md-4">
               <div class="pull-right">
-                <button class="btn btn-primary"
+                <button ng-show="sallittu('paatos-suunnittelu')" class="btn btn-primary"
                         ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'ELY')">
                   Suunnittelu ja päätöksenteko<span
                   class='glyphicon glyphicon-play'/></button>
