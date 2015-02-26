@@ -39,18 +39,18 @@
       </div>
       <div style="height: auto;" class="navbar-collapse collapse in" collapse="">
         <ul class="nav navbar-nav">
-          <li ng-show="sallittu('view-hakemuskausi')" class="headertxt"
-              ng-class="{active:isActive('/k/hakemuskaudenhallinta')}">
+          <li ng-show="sallittu('view-hakemuskausi')"
+              ng-class="{headertxtselected:isActive('/k/hakemuskaudenhallinta')}">
             <a href="#/k/hakemuskaudenhallinta" ng-href="#/k/hakemuskaudenhallinta"
-               class="navbartxt">Hakemuskaudet</a>
+               ng-class="{navbartxt:!isActive('/k/hakemuskaudenhallinta')}">Hakemuskaudet</a>
           </li>
-          <li ng-show="sallittu('view-omat-hakemukset')" class="headertxt"
-              ng-class="{active:isActive('/h/hakemukset')}">
-            <a href="#/h/hakemukset" ng-href="#/h/hakemukset" class="navbartxt">Omat hakemukset</a>
+          <li ng-show="sallittu('view-omat-hakemukset')"
+              ng-class="{headertxtselected:isActive('/h/hakemukset')}">
+            <a href="#/h/hakemukset" ng-href="#/h/hakemukset" ng-class="{navbartxt:!isActive('/h/hakemukset')}">Omat hakemukset</a>
           </li>
-          <li ng-show="sallittu('view-kaikki-hakemukset')" class="headertxt"
-              ng-class="{active:isActive('/k/hakemukset/AH0')}">
-            <a href="#/k/hakemukset/AH0" ng-href="#/k/hakemukset/AH0" class="navbartxt">Kaikki hakemukset</a>
+          <li ng-show="sallittu('view-kaikki-hakemukset')"
+              ng-class="{headertxtselected:isActive('/k/hakemukset/AH0')}">
+            <a href="#/k/hakemukset/AH0" ng-href="#/k/hakemukset/AH0" ng-class="{navbartxt:!isActive('/k/hakemukset/AH0')}">Kaikki hakemukset</a>
           </li>
         </ul>
         <ul class="nav navbar-nav pull-right">

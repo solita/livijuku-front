@@ -312,17 +312,6 @@ angular.module('jukufrontApp')
       return true;
     };
 
-    $scope.sallittu = function (oikeus) {
-      if (typeof $rootScope.user !== 'undefined') {
-        for (var i = 0; i < $rootScope.user.privileges.length; i++) {
-          if ($rootScope.user.privileges[i] == oikeus) {
-            return true;
-          }
-        }
-        return false;
-      }
-    };
-
     $scope.tallennaHakemus = function () {
       $scope.$broadcast('show-errors-check-validity');
       if ($scope.hakemusForm.$valid) {

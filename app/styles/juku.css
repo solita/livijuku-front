@@ -59,6 +59,7 @@ textarea {
 
 .navbartxt {
   color: #ffffff !important;
+  top: 8px;
 }
 
 .suunnitteluheader {
@@ -172,11 +173,12 @@ textarea {
 }
 
 .headertxtselected {
-  background-color: #afa1a1;
+  background-color: #ffffff;
   border-radius: 6px 6px 0px 0px;
-  top: 5px;
+  top: 8px;
   height: 45px;
   color: #ffffff;
+  font-weight: bold;
 }
 
 .vcenter {
