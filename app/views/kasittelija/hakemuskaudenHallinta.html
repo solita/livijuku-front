@@ -1,5 +1,8 @@
 <div class="container">
-  <div ng-repeat="hakemuskausi in hakemuskaudet">
+  <div ng-hide="sallittu('view-hakemuskausi')">
+    <p>Ei hakemuskauden katseluoikeutta.</p>
+  </div>
+  <div ng-show="sallittu('view-hakemuskausi')" ng-repeat="hakemuskausi in hakemuskaudet">
     <div ng-if="hakemuskausi.uusi" class="uusihakemuskausi">
       <div class="row">
         <div class="col-md-3 text-center">
@@ -17,18 +20,21 @@
         </div>
         <div class="col-md-9">
           <div class="row">
-            <button class="btn btn-primary btn-lg" ng-file-select ng-file-change="upload($files, hakemuskausi.vuosi)"
+            <button ng-show="sallittu('modify-hakemuskausi')" class="btn btn-primary btn-lg" ng-file-select ng-file-change="upload($files, hakemuskausi.vuosi)"
                     multiple="false" ng-accept="'application/pdf'">Lataa hakuohje
+            </button>
+            <button ng-hide="sallittu('modify-hakemuskausi')" class="btn btn-primary btn-lg" ng-file-select ng-file-change="upload($files, hakemuskausi.vuosi)"
+                    multiple="false" ng-accept="'application/pdf'" disabled>Lataa hakuohje
             </button>
           </div>
           <div class="row"><p></p></div>
           <div class="row">
-            <div ng-show="hakemuskausi.tilatunnus=='A'">
+            <div ng-show="hakemuskausi.tilatunnus=='A' && sallittu('modify-hakemuskausi')">
               <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
                 hakemuskausi oletusarvoilla
               </button>
             </div>
-            <div ng-hide="hakemuskausi.tilatunnus=='A'">
+            <div ng-hide="hakemuskausi.tilatunnus=='A' &&  sallittu('modify-hakemuskausi')">
               <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg" disabled>
                 Käynnistä
                 hakemuskausi oletusarvoilla
@@ -41,7 +47,7 @@
         <div class="col-md-3">
         </div>
         <div class="col-md-9">
-          <a href=""><span class="glyphicon glyphicon-envelope"></span> Lähetä viesti hakijoille</a>
+          <a href="" ng-show="sallittu('modify-hakemuskausi')"><span class="glyphicon glyphicon-envelope"></span> Lähetä viesti hakijoille</a>
         </div>
       </div>
     </div>
