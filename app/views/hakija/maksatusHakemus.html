@@ -1,8 +1,8 @@
 <div class="container">
-  <div ng-hide="sallittu('view-omat-hakemukset')">
+  <div ng-hide="sallittu('view-oma-hakemus')">
     <p>Ei omien hakemusten katseluoikeutta.</p>
   </div>
-  <div ng-show="sallittu('view-omat-hakemukset')">
+  <div ng-show="sallittu('view-oma-hakemus')">
     <div class="row">
       <div class="col-md-12">
         <div ng-show="(tyyppi == 'MH1')">
@@ -837,10 +837,10 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div ng-show="(hakemus.hakemustilatunnus == 'K') && sallittu('allekirjoita-hakemus')">
+            <div ng-show="(hakemus.hakemustilatunnus == 'K') && sallittu('allekirjoita-oma-hakemus')">
               <button data-ng-click="lahetaHakemus()" class="pull-right btn btn-success">Lähetä hakemus</button>
             </div>
-            <div ng-hide="(hakemus.hakemustilatunnus == 'K') && sallittu('allekirjoita-hakemus')">
+            <div ng-hide="(hakemus.hakemustilatunnus == 'K') && sallittu('allekirjoita-oma-hakemus')">
               <button data-ng-click="lahetaHakemus()" class="pull-right btn btn-success" disabled>Lähetä hakemus
               </button>
             </div>
