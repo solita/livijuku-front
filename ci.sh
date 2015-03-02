@@ -21,13 +21,14 @@ fetchUpstreamArtifacts () {
 createDb() {
   local DB_CREATE_ID=$1
   (
-    cd "$work/upstream/upstream/juku-db"
-
     curl -sS http://juku:juku@letto.solita.fi:50000/juku/juku_users.testing.create_users?username=${DB_CREATE_ID}
-    DB_URL=letto.solita.fi:1521/ldev.solita.fi \
-    DB_USER=juku_${DB_CREATE_ID} \
-    DB_PASSWORD=juku \
-    lein with-profiles +test-data do clear-db, update-db
+
+    export DB_URL=letto.solita.fi:1521/ldev.solita.fi
+    export DB_USER=juku_${DB_CREATE_ID}
+    export DB_PASSWORD=juku
+    cd $work/upstream/upstream/juku-db/target
+    java -jar juku-db.jar clear-db
+    java -jar juku-db.jar update-db
   )
 }
 
