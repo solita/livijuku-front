@@ -4,6 +4,7 @@
 .sass-cache
 .tmp
 app/_pgbackup
+app/buildversion.html
 app/pinegrow.json
 bower_components
 build-job-target

@@ -26,8 +26,7 @@ angular
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/hakija/hakemukset.html',
-        controller: 'HakijaHakemuksetCtrl'
+        templateUrl: 'views/yhteinen/aloitus.html'
       })
       .when('/h/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
         templateUrl: 'views/hakija/hakemus.html',

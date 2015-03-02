@@ -532,6 +532,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'versionFile',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
@@ -552,4 +553,9 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.registerTask('versionFile', 'Creates a version file', function() {
+    var today = new Date();
+    grunt.file.write(appConfig.app+'/buildversion.html', '<h5 class="navbartxt">'+today.toISOString()+'</h5>');
+  });
 };

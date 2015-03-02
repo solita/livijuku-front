@@ -1,191 +1,196 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-3">
-      <div ng-show="tyyppi=='AH0'">
-        <button ng-click="asetaTyyppi('AH0')" class="btn btn-primary">Avustushakemukset<span
-          class="badge badge-notify">{{kasiteltavatAvustushakemukset}}</span></button>
-      </div>
-      <div ng-hide="tyyppi=='AH0'">
-        <button ng-click="asetaTyyppi('AH0')" class="btn btn-default">Avustushakemukset<span
-          class="badge badge-notify">{{kasiteltavatAvustushakemukset}}</span></button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div ng-show="tyyppi=='MH1'">
-        <button ng-click="asetaTyyppi('MH1')" class="btn btn-primary">1. maksatushakemukset<span
-          class="badge badge-notify">{{kasiteltavatMaksatus1hakemukset}}</span></button>
-      </div>
-      <div ng-hide="tyyppi=='MH1'">
-        <button ng-click="asetaTyyppi('MH1')" class="btn btn-default">1. maksatushakemukset<span
-          class="badge badge-notify">{{kasiteltavatMaksatus1hakemukset}}</span></button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div ng-show="tyyppi=='MH2'">
-        <button ng-click="asetaTyyppi('MH2')" class="btn btn-primary">2. maksatushakemukset<span
-          class="badge badge-notify">{{kasiteltavatMaksatus2hakemukset}}</span></button>
-      </div>
-      <div ng-hide="tyyppi=='MH2'">
-        <button ng-click="asetaTyyppi('MH2')" class="btn btn-default">2. maksatushakemukset<span
-          class="badge badge-notify">{{kasiteltavatMaksatus2hakemukset}}</span></button>
-      </div>
-    </div>
+  <div ng-hide="sallittu('view-kaikki-hakemukset')">
+    <p>Ei kaikkien hakemusten katseluoikeutta.</p>
   </div>
-  <accordion close-others="false">
-    <div ng-repeat="hakemuksetPerVuosi in hakemukset">
-      <accordion-group is-open="hakemuksetPerVuosi.accordionOpen">
-        <accordion-heading>
-          <div class="row">
-            <div ng-show="tyyppi=='AH0'" class="col-md-12">
-              <h4><i class="pull-left glyphicon"
-                     ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
-                AVUSTUSHAKEMUKSET {{hakemuksetPerVuosi.vuosi}}</i></h4>
-            </div>
-            <div ng-show="tyyppi=='MH1'" class="col-md-12">
-              <h4><i class="pull-left glyphicon"
-                     ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
-                MAKSATUSHAKEMUKSET AJALTA 1.1-30.6.{{hakemuksetPerVuosi.vuosi}}</i></h4>
-            </div>
-            <div ng-show="tyyppi=='MH2'" class="col-md-12">
-              <h4><i class="pull-left glyphicon"
-                     ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
-                MAKSATUSHAKEMUKSET AJALTA 1.7-31.12.{{hakemuksetPerVuosi.vuosi}}</i></h4>
-            </div>
-          </div>
-        </accordion-heading>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="suunnitteluheader">Suuret kaupunkiseudut</div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <table st-table="ks1displayed" class="table table-hover table-condensed table-striped"
-                     st-safe-src=hakemuksetPerVuosi.ks1HakemuksetPerVuosi>
-                <thead>
-                <tr>
-                  <th st-sort="hakija">Hakija</th>
-                  <th st-sort="hakemuksenTila">Hakemuksen tila</th>
-                  <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
-                  <th st-sort="diaarinumero">Diaarinumero</th>
-                  <th st-sort="kasittelija">Käsittelijä</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="hakemus in ks1displayed"
-                    ng-click="siirryHakemukseen(hakemuksetPerVuosi.vuosi, tyyppi, hakemus.avustushakemusId, hakemus.maksatushakemus1Id, hakemus.maksatushakemus2Id)">
-                  <td>{{hakemus.hakija}}</td>
-                  <td>
-                    <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
-                  </td>
-                  <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
-                  <td>{{hakemus.diaarinumero}}</td>
-                  <td>{{hakemus.kasittelija}}</td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-8"></div>
-            <div class="col-md-4">
-              <div class="pull-right">
-                <button ng-show="sallittu('paatos-suunnittelu')" class="btn btn-primary"
-                        ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'KS1')">
-                  Suunnittelu ja päätöksenteko<span
-                  class='glyphicon glyphicon-play'/></button>
-              </div>
-            </div>
-          </div>
+  <div ng-show="sallittu('view-kaikki-hakemukset')">
+    <div class="row">
+      <div class="col-md-3">
+        <div ng-show="tyyppi=='AH0'">
+          <button ng-click="asetaTyyppi('AH0')" class="btn btn-primary">Avustushakemukset<span
+            class="badge badge-notify">{{kasiteltavatAvustushakemukset}}</span></button>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="suunnitteluheader">Keskisuuret kaupunkiseudut</div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <table st-table="ks2displayed" class="table table-hover table-condensed table-striped"
-                     st-safe-src=hakemuksetPerVuosi.ks2HakemuksetPerVuosi>
-                <thead>
-                <tr>
-                  <th st-sort="hakija">Hakija</th>
-                  <th st-sort="hakemuksenTila">Hakemuksen tila</th>
-                  <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
-                  <th st-sort="diaarinumero">Diaarinumero</th>
-                  <th st-sort="kasittelija">Käsittelijä</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="hakemus in ks2displayed"
-                    ng-click="siirryHakemukseen(hakemuksetPerVuosi.vuosi, tyyppi, hakemus.avustushakemusId, hakemus.maksatushakemus1Id, hakemus.maksatushakemus2Id)">
-                  <td>{{hakemus.hakija}}</td>
-                  <td>
-                    <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
-                  </td>
-                  <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
-                  <td>{{hakemus.diaarinumero}}</td>
-                  <td>{{hakemus.kasittelija}}</td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-8"></div>
-            <div class="col-md-4">
-              <div class="pull-right">
-                <button ng-show="sallittu('paatos-suunnittelu')" class="btn btn-primary"
-                        ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'KS2')">
-                  Suunnittelu ja päätöksenteko<span
-                  class='glyphicon glyphicon-play'/></button>
-              </div>
-            </div>
-          </div>
+        <div ng-hide="tyyppi=='AH0'">
+          <button ng-click="asetaTyyppi('AH0')" class="btn btn-default">Avustushakemukset<span
+            class="badge badge-notify">{{kasiteltavatAvustushakemukset}}</span></button>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="suunnitteluheader">Ely keskukset</div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <table st-table="elydisplayed" class="table table-hover table-condensed table-striped"
-                     st-safe-src=hakemuksetPerVuosi.elyHakemuksetPerVuosi>
-                <thead>
-                <tr>
-                  <th st-sort="hakija">Hakija</th>
-                  <th st-sort="hakemuksenTila">Hakemuksen tila</th>
-                  <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
-                  <th st-sort="diaarinumero">Diaarinumero</th>
-                  <th st-sort="kasittelija">Käsittelijä</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="hakemus in elydisplayed"
-                    ng-click="siirryHakemukseen(hakemuksetPerVuosi.vuosi, tyyppi, hakemus.avustushakemusId, hakemus.maksatushakemus1Id, hakemus.maksatushakemus2Id)">
-                  <td>{{hakemus.hakija}}</td>
-                  <td>
-                    <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
-                  </td>
-                  <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
-                  <td>{{hakemus.diaarinumero}}</td>
-                  <td>{{hakemus.kasittelija}}</td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-8"></div>
-            <div class="col-md-4">
-              <div class="pull-right">
-                <button ng-show="sallittu('paatos-suunnittelu')" class="btn btn-primary"
-                        ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'ELY')">
-                  Suunnittelu ja päätöksenteko<span
-                  class='glyphicon glyphicon-play'/></button>
-              </div>
-            </div>
-          </div>
+      </div>
+      <div class="col-md-3">
+        <div ng-show="tyyppi=='MH1'">
+          <button ng-click="asetaTyyppi('MH1')" class="btn btn-primary">1. maksatushakemukset<span
+            class="badge badge-notify">{{kasiteltavatMaksatus1hakemukset}}</span></button>
         </div>
-      </accordion-group>
+        <div ng-hide="tyyppi=='MH1'">
+          <button ng-click="asetaTyyppi('MH1')" class="btn btn-default">1. maksatushakemukset<span
+            class="badge badge-notify">{{kasiteltavatMaksatus1hakemukset}}</span></button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div ng-show="tyyppi=='MH2'">
+          <button ng-click="asetaTyyppi('MH2')" class="btn btn-primary">2. maksatushakemukset<span
+            class="badge badge-notify">{{kasiteltavatMaksatus2hakemukset}}</span></button>
+        </div>
+        <div ng-hide="tyyppi=='MH2'">
+          <button ng-click="asetaTyyppi('MH2')" class="btn btn-default">2. maksatushakemukset<span
+            class="badge badge-notify">{{kasiteltavatMaksatus2hakemukset}}</span></button>
+        </div>
+      </div>
     </div>
-  </accordion>
+    <accordion close-others="false">
+      <div ng-repeat="hakemuksetPerVuosi in hakemukset">
+        <accordion-group is-open="hakemuksetPerVuosi.accordionOpen">
+          <accordion-heading>
+            <div class="row">
+              <div ng-show="tyyppi=='AH0'" class="col-md-12">
+                <h4><i class="pull-left glyphicon"
+                       ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
+                  AVUSTUSHAKEMUKSET {{hakemuksetPerVuosi.vuosi}}</i></h4>
+              </div>
+              <div ng-show="tyyppi=='MH1'" class="col-md-12">
+                <h4><i class="pull-left glyphicon"
+                       ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
+                  MAKSATUSHAKEMUKSET AJALTA 1.1-30.6.{{hakemuksetPerVuosi.vuosi}}</i></h4>
+              </div>
+              <div ng-show="tyyppi=='MH2'" class="col-md-12">
+                <h4><i class="pull-left glyphicon"
+                       ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
+                  MAKSATUSHAKEMUKSET AJALTA 1.7-31.12.{{hakemuksetPerVuosi.vuosi}}</i></h4>
+              </div>
+            </div>
+          </accordion-heading>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="suunnitteluheader">Suuret kaupunkiseudut</div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <table st-table="ks1displayed" class="table table-hover table-condensed table-striped"
+                       st-safe-src=hakemuksetPerVuosi.ks1HakemuksetPerVuosi>
+                  <thead>
+                  <tr>
+                    <th st-sort="hakija">Hakija</th>
+                    <th st-sort="hakemuksenTila">Hakemuksen tila</th>
+                    <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
+                    <th st-sort="diaarinumero">Diaarinumero</th>
+                    <th st-sort="kasittelija">Käsittelijä</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="hakemus in ks1displayed"
+                      ng-click="siirryHakemukseen(hakemuksetPerVuosi.vuosi, tyyppi, hakemus.avustushakemusId, hakemus.maksatushakemus1Id, hakemus.maksatushakemus2Id)">
+                    <td>{{hakemus.hakija}}</td>
+                    <td>
+                      <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
+                    </td>
+                    <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                    <td>{{hakemus.diaarinumero}}</td>
+                    <td>{{hakemus.kasittelija}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8"></div>
+              <div class="col-md-4">
+                <div class="pull-right">
+                  <button ng-show="sallittu('kasittely-hakemus')" class="btn btn-primary"
+                          ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'KS1')">
+                    Suunnittelu ja päätöksenteko<span
+                    class='glyphicon glyphicon-play'/></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="suunnitteluheader">Keskisuuret kaupunkiseudut</div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <table st-table="ks2displayed" class="table table-hover table-condensed table-striped"
+                       st-safe-src=hakemuksetPerVuosi.ks2HakemuksetPerVuosi>
+                  <thead>
+                  <tr>
+                    <th st-sort="hakija">Hakija</th>
+                    <th st-sort="hakemuksenTila">Hakemuksen tila</th>
+                    <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
+                    <th st-sort="diaarinumero">Diaarinumero</th>
+                    <th st-sort="kasittelija">Käsittelijä</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="hakemus in ks2displayed"
+                      ng-click="siirryHakemukseen(hakemuksetPerVuosi.vuosi, tyyppi, hakemus.avustushakemusId, hakemus.maksatushakemus1Id, hakemus.maksatushakemus2Id)">
+                    <td>{{hakemus.hakija}}</td>
+                    <td>
+                      <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
+                    </td>
+                    <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                    <td>{{hakemus.diaarinumero}}</td>
+                    <td>{{hakemus.kasittelija}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8"></div>
+              <div class="col-md-4">
+                <div class="pull-right">
+                  <button ng-show="sallittu('kasittely-hakemus')" class="btn btn-primary"
+                          ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'KS2')">
+                    Suunnittelu ja päätöksenteko<span
+                    class='glyphicon glyphicon-play'/></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="suunnitteluheader">Ely keskukset</div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <table st-table="elydisplayed" class="table table-hover table-condensed table-striped"
+                       st-safe-src=hakemuksetPerVuosi.elyHakemuksetPerVuosi>
+                  <thead>
+                  <tr>
+                    <th st-sort="hakija">Hakija</th>
+                    <th st-sort="hakemuksenTila">Hakemuksen tila</th>
+                    <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
+                    <th st-sort="diaarinumero">Diaarinumero</th>
+                    <th st-sort="kasittelija">Käsittelijä</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="hakemus in elydisplayed"
+                      ng-click="siirryHakemukseen(hakemuksetPerVuosi.vuosi, tyyppi, hakemus.avustushakemusId, hakemus.maksatushakemus1Id, hakemus.maksatushakemus2Id)">
+                    <td>{{hakemus.hakija}}</td>
+                    <td>
+                      <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
+                    </td>
+                    <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                    <td>{{hakemus.diaarinumero}}</td>
+                    <td>{{hakemus.kasittelija}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8"></div>
+              <div class="col-md-4">
+                <div class="pull-right">
+                  <button ng-show="sallittu('kasittely-hakemus')" class="btn btn-primary"
+                          ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'ELY')">
+                    Suunnittelu ja päätöksenteko<span
+                    class='glyphicon glyphicon-play'/></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </accordion-group>
+      </div>
+    </accordion>
+  </div>
 </div>

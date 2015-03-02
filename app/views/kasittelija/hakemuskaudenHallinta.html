@@ -1,47 +1,297 @@
 <div class="container">
-  <div ng-repeat="hakemuskausi in hakemuskaudet">
+  <div ng-hide="sallittu('view-hakemuskausi')">
+    <p>Ei hakemuskauden katseluoikeutta.</p>
+  </div>
+  <div ng-show="sallittu('view-hakemuskausi')" ng-repeat="hakemuskausi in hakemuskaudet">
     <div ng-if="hakemuskausi.uusi" class="uusihakemuskausi">
       <div class="row">
         <div class="col-md-3 text-center">
           <h1>{{hakemuskausi.vuosi}}</h1>
 
+          <p>
+
           <div ng-show="hakemuskausi.tilatunnus=='A'">
-            <a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" class="btn btn-primary" target="_blank">Hakuohjeet
+            <a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" target="_blank">Hakuohje
               {{hakemuskausi.vuosi}}</a>
           </div>
-          <div ng-hide="hakemuskausi.tilatunnus=='A'">
-            <button class="btn btn-primary" disabled>Hakuohjeet
-              {{hakemuskausi.vuosi}}
-            </button>
-          </div>
-        </div>
-        <div class="col-md-9">
-          <div class="row">
-            <button class="btn btn-primary btn-lg" ng-file-select ng-file-change="upload($files, hakemuskausi.vuosi)"
+          </p>
+          <p>
+            <button ng-show="sallittu('modify-hakemuskausi')" class="btn btn-primary btn-lg" ng-file-select
+                    ng-file-change="upload($files, hakemuskausi.vuosi)"
                     multiple="false" ng-accept="'application/pdf'">Lataa hakuohje
             </button>
+          </p>
+          <p>
+            <button ng-hide="sallittu('modify-hakemuskausi')" class="btn btn-primary btn-lg" ng-file-select
+                    ng-file-change="upload($files, hakemuskausi.vuosi)"
+                    multiple="false" ng-accept="'application/pdf'" disabled>Lataa hakuohje
+            </button>
+          </p>
+          <p>
+
+          <div ng-show="hakemuskausi.tilatunnus=='A' && sallittu('modify-hakemuskausi')">
+            <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
+              hakemuskausi
+            </button>
           </div>
-          <div class="row"><p></p></div>
-          <div class="row">
-            <div ng-show="hakemuskausi.tilatunnus=='A'">
-              <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
-                hakemuskausi oletusarvoilla
-              </button>
+          </p>
+          <p>
+
+          <div ng-hide="hakemuskausi.tilatunnus=='A' &&  sallittu('modify-hakemuskausi')">
+            <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg" disabled>
+              Käynnistä
+              hakemuskausi
+            </button>
+          </div>
+          </p>
+          <p><a href="" ng-show="sallittu('modify-hakemuskausi')"><span class="glyphicon glyphicon-envelope"></span>
+            Lähetä viesti hakijoille</a></p>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="panel panel-primary hakemuskausi-panel">
+            <div class="panel-heading">
+              <p class="panel-title">Avustushakemus</p>
             </div>
-            <div ng-hide="hakemuskausi.tilatunnus=='A'">
-              <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg" disabled>
-                Käynnistä
-                hakemuskausi oletusarvoilla
-              </button>
+            <div class="row">
+              <p>
+
+              <div class="col-md-3 text-center"></div>
+              <div class="col-md-9 text-left"></div>
+              </p>
+            </div>
+            <div class="row">
+              <p>
+
+              <div class="col-md-3 text-center"></div>
+              <div class="col-md-9 text-left"></div>
+              </p>
+            </div>
+            <div class="row">
+              <p>
+
+              <div class="col-md-3 text-center"></div>
+              <div class="col-md-9 text-left"></div>
+              </p>
+            </div>
+            <div class="row">
+              <p>
+
+              <div class="col-md-3 text-center"></div>
+              <div class="col-md-9 text-left"></div>
+              </p>
+            </div>
+            <div class="row">
+              <p>
+
+              <div class="col-md-12 text-center">Ei Käynnissä</div>
+              </p>
+            </div>
+            <div class="row">
+              <p>
+
+              <div class="col-md-3 text-center"></div>
+              <div class="col-md-9 text-left"></div>
+              </p>
+            </div>
+
+            <div class="row">
+              <div class="row hakemuskausi-panel-hakuaika">
+                <p>Hakuaika:</p>
+
+                <p class="input-group hakuaika-input juku-datepicker">
+                  <input type="text" class="form-control" datepicker-popup="dd.MM.yyyy"
+                         ng-model="hakemuskausi.avustushakemusAlkupvm" datepicker-options="{{dateOptions}}"
+                         is-open="hakemuskausi.avustushakemusAlkupvmKalenteri" ng-required="true" current-text="Tänään"
+                         clear-text="Tyhjennä" close-text="Sulje"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="hakemuskausi.avustushakemusAlkupvmKalenteri = !hakemuskausi.avustushakemusAlkupvmKalenteri;avaaKalenteri($event)">
+                  <i
+                    class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                </p>
+                <div class="hakemuskausi-panel-hakuaika-viiva"></div>
+                <p class="input-group hakuaika-input juku-datepicker">
+                  <input type="text" class="form-control" datepicker-popup="dd.MM.yyyy"
+                         ng-model="hakemuskausi.avustushakemusLoppupvm" datepicker-options="{{dateOptions}}"
+                         is-open="hakemuskausi.avustushakemusLoppupvmKalenteri" ng-required="true" current-text="Tänään"
+                         clear-text="Tyhjennä" close-text="Sulje"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="hakemuskausi.avustushakemusLoppupvmKalenteri = !hakemuskausi.avustushakemusLoppupvmKalenteri;avaaKalenteri($event)">
+                  <i
+                    class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 text-center">
+          <div class="panel panel-info hakemuskausi-panel">
+            <div class="panel-heading">
+              <p class="panel-title">1. maksatushakemus</p>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <p>
+
+                <div class="col-md-3 text-center"></div>
+                <div class="col-md-9 text-left"></div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+
+                <div class="col-md-3 text-center"></div>
+                <div class="col-md-9 text-left"></div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+
+                <div class="col-md-3 text-center"></div>
+                <div class="col-md-9 text-left"></div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+
+                <div class="col-md-3 text-center"></div>
+                <div class="col-md-9 text-left"></div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+
+                <div class="col-md-12 text-center">Ei Käynnissä</div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+
+                <div class="col-md-3 text-center"></div>
+                <div class="col-md-9 text-left"></div>
+                </p>
+              </div>
+              <div class="row">
+                <div class="row hakemuskausi-panel-hakuaika">
+                  <p>Hakuaika:</p>
+
+                  <p class="input-group hakuaika-input juku-datepicker">
+                    <input type="text" class="form-control" datepicker-popup="dd.MM.yyyy"
+                           ng-model="hakemuskausi.maksatushakemus1Alkupvm" datepicker-options="{{dateOptions}}"
+                           is-open="hakemuskausi.maksatushakemus1AlkupvmKalenteri" ng-required="true"
+                           current-text="Tänään"
+                           clear-text="Tyhjennä" close-text="Sulje"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="hakemuskausi.maksatushakemus1AlkupvmKalenteri = !hakemuskausi.maksatushakemus1AlkupvmKalenteri;avaaKalenteri($event)">
+                  <i
+                    class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                  </p>
+                  <div class="hakemuskausi-panel-hakuaika-viiva"></div>
+                  <p class="input-group hakuaika-input juku-datepicker">
+                    <input type="text" class="form-control" datepicker-popup="dd.MM.yyyy"
+                           ng-model="hakemuskausi.maksatushakemus1Loppupvm" datepicker-options="{{dateOptions}}"
+                           is-open="hakemuskausi.maksatushakemus1LoppupvmKalenteri" ng-required="true"
+                           current-text="Tänään"
+                           clear-text="Tyhjennä" close-text="Sulje"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="hakemuskausi.maksatushakemus1LoppupvmKalenteri = !hakemuskausi.maksatushakemus1LoppupvmKalenteri;avaaKalenteri($event)">
+                  <i
+                    class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-9">
-          <a href=""><span class="glyphicon glyphicon-envelope"></span> Lähetä viesti hakijoille</a>
+        <div class="col-md-3 text-center">
+          <div class="panel panel-info hakemuskausi-panel">
+            <div class="panel-heading">
+              <p class="panel-title">2. maksatushakemus</p>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <p>
+
+                <div class="col-md-3 text-center"></div>
+                <div class="col-md-9 text-left"></div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+
+                <div class="col-md-3 text-center"></div>
+                <div class="col-md-9 text-left"></div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+
+                <div class="col-md-3 text-center"></div>
+                <div class="col-md-9 text-left"></div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+
+                <div class="col-md-3 text-center"></div>
+                <div class="col-md-9 text-left"></div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+
+                <div class="col-md-12 text-center">Ei Käynnissä</div>
+                </p>
+              </div>
+              <div class="row">
+                <p>
+
+                <div class="col-md-3 text-center"></div>
+                <div class="col-md-9 text-left"></div>
+                </p>
+              </div>
+              <div class="row">
+                <div class="row hakemuskausi-panel-hakuaika">
+                  <p>Hakuaika:</p>
+
+                  <p class="input-group hakuaika-input juku-datepicker">
+                    <input type="text" class="form-control" datepicker-popup="dd.MM.yyyy"
+                           ng-model="hakemuskausi.maksatushakemus2Alkupvm" datepicker-options="{{dateOptions}}"
+                           is-open="hakemuskausi.maksatushakemus2AlkupvmKalenteri" ng-required="true"
+                           current-text="Tänään"
+                           clear-text="Tyhjennä" close-text="Sulje"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="hakemuskausi.maksatushakemus2AlkupvmKalenteri = !hakemuskausi.maksatushakemus2AlkupvmKalenteri;avaaKalenteri($event)">
+                  <i
+                    class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                  </p>
+                  <div class="hakemuskausi-panel-hakuaika-viiva"></div>
+                  <p class="input-group hakuaika-input juku-datepicker">
+                    <input type="text" class="form-control" datepicker-popup="dd.MM.yyyy"
+                           ng-model="hakemuskausi.maksatushakemus2Loppupvm" datepicker-options="{{dateOptions}}"
+                           is-open="hakemuskausi.maksatushakemus2LoppupvmKalenteri" ng-required="true"
+                           current-text="Tänään"
+                           clear-text="Tyhjennä" close-text="Sulje"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="hakemuskausi.maksatushakemus2LoppupvmKalenteri = !hakemuskausi.maksatushakemus2LoppupvmKalenteri;avaaKalenteri($event)">
+                  <i
+                    class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -49,10 +299,11 @@
       <div class="row">
         <div class="col-md-3 text-center">
           <h1>{{hakemuskausi.vuosi}}</h1>
-          <a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" class="btn btn-primary" target="_blank">Hakuohjeet
-            {{hakemuskausi.vuosi}}</a>
-          <br>
-          <br>
+
+          <p><a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" target="_blank">Hakuohje
+            {{hakemuskausi.vuosi}}</a></p>
+
+          <p><a href=""><span class="glyphicon glyphicon-envelope"></span> Lähetä viesti hakijoille</a></p>
         </div>
         <div class="col-md-3 text-center">
           <div class="panel panel-primary hakemuskausi-panel">
@@ -106,9 +357,33 @@
                 <div class="row hakemuskausi-panel-hakuaika">
                   <p>Hakuaika:</p>
 
-                  <p>{{hakemuskausi.avustushakemusAlkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.avustushakemusLoppupvm |
-                    date:'dd.MM yyyy'}}</p>
+                  <p class="input-group hakuaika-input juku-datepicker">
+                    <input type="text" class="form-control" datepicker-popup="dd.MM.yyyy"
+                           ng-model="hakemuskausi.avustushakemusAlkupvm" datepicker-options="{{dateOptions}}"
+                           is-open="hakemuskausi.avustushakemusAlkupvmKalenteri" ng-required="true" current-text="Tänään"
+                           clear-text="Tyhjennä" close-text="Sulje"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="hakemuskausi.avustushakemusAlkupvmKalenteri = !hakemuskausi.avustushakemusAlkupvmKalenteri;avaaKalenteri($event)">
+                  <i
+                    class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                  </p>
+                  <div class="hakemuskausi-panel-hakuaika-viiva"></div>
+                  <p class="input-group hakuaika-input juku-datepicker">
+                    <input type="text" class="form-control" datepicker-popup="dd.MM.yyyy"
+                           ng-model="hakemuskausi.avustushakemusLoppupvm" datepicker-options="{{dateOptions}}"
+                           is-open="hakemuskausi.avustushakemusLoppupvmKalenteri" ng-required="true" current-text="Tänään"
+                           clear-text="Tyhjennä" close-text="Sulje"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="hakemuskausi.avustushakemusLoppupvmKalenteri = !hakemuskausi.avustushakemusLoppupvmKalenteri;avaaKalenteri($event)">
+                  <i
+                    class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+                  </p>
                 </div>
+
               </div>
             </div>
           </div>
@@ -165,7 +440,8 @@
 
                   <p>Hakuaika:</p>
 
-                  <p>{{hakemuskausi.maksatushakemus1Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus1Loppupvm
+                  <p>{{hakemuskausi.maksatushakemus1Alkupvm | date:'dd.MM
+                    yyyy'}}-{{hakemuskausi.maksatushakemus1Loppupvm
                     |
                     date:'dd.MM yyyy'}}</p>
                 </div>
@@ -225,7 +501,8 @@
 
                   <p>Hakuaika:</p>
 
-                  <p>{{hakemuskausi.maksatushakemus2Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus2Loppupvm
+                  <p>{{hakemuskausi.maksatushakemus2Alkupvm | date:'dd.MM
+                    yyyy'}}-{{hakemuskausi.maksatushakemus2Loppupvm
                     |
                     date:'dd.MM yyyy'}}</p>
                 </div>
@@ -234,17 +511,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-3">
-          <a href=""><span class="glyphicon glyphicon-remove"></span> Sulje hakuprosessi</a>
-        </div>
-        <div class="col-md-3">
-          <a href=""><span class="glyphicon glyphicon-envelope"></span> Lähetä viesti hakijoille</a>
-        </div>
-        <div class="col-md-6">
-          <a href=""><span class="glyphicon glyphicon-pencil"></span> Muokkaa hakuaikoja</a>
-        </div>
-      </div>
     </div>
   </div>
+  {{hakemuskaudet | json}}
 </div>
