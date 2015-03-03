@@ -126,10 +126,10 @@ textarea {
 }
 
 .hakemuskausi-panel {
-  min-height: 330px;
-  max-height: 330px;
+  min-height: 400px;
+  max-height: 400px;
   min-width: 200px;
-  max-width: 2000px;
+  max-width: 200px;
 }
 
 .hakemuskausi-panel-hakuaika {
@@ -139,6 +139,35 @@ textarea {
   text-align: center;
   padding: 25px;
   width: 100%;
+}
+.hakemuskausi-panel-hakuaika-viiva{
+  border: 0;
+  height: 1px;
+  background: #333;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  vertical-align: middle;
+  margin-left: 90px;
+  margin-right: 90px;
+}
+
+.hakuaika-input {
+  height: 22px;
+  padding: 0px 0px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+  margin-left: 25px;
+  margin-right: 45px;
+}
+
+.juku-datepicker .form-control {
+  height: 12px;
+  padding: 11px;
+}
+
+.juku-datepicker .btn {
+  padding: 1px 2px;
 }
 
 .uusihakemuskausi {

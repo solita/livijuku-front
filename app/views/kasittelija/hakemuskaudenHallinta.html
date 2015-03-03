@@ -22,9 +22,7 @@
             </button>
           </p>
           <p>
-            <button ng-hide="sallittu('modify-hakemuskausi')" class="btn btn-primary btn-lg" ng-file-select
-                    ng-file-change="upload($files, hakemuskausi.vuosi)"
-                    multiple="false" ng-accept="'application/pdf'" disabled>Lataa hakuohje
+            <button ng-hide="sallittu('modify-hakemuskausi')" class="btn btn-primary btn-lg" disabled>Lataa hakuohje
             </button>
           </p>
           <p>
@@ -360,7 +358,8 @@
                   <p class="input-group hakuaika-input juku-datepicker">
                     <input type="text" class="form-control" datepicker-popup="dd.MM.yyyy"
                            ng-model="hakemuskausi.avustushakemusAlkupvm" datepicker-options="{{dateOptions}}"
-                           is-open="hakemuskausi.avustushakemusAlkupvmKalenteri" ng-required="true" current-text="Tänään"
+                           is-open="hakemuskausi.avustushakemusAlkupvmKalenteri" ng-required="true"
+                           current-text="Tänään"
                            clear-text="Tyhjennä" close-text="Sulje"/>
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
@@ -373,7 +372,8 @@
                   <p class="input-group hakuaika-input juku-datepicker">
                     <input type="text" class="form-control" datepicker-popup="dd.MM.yyyy"
                            ng-model="hakemuskausi.avustushakemusLoppupvm" datepicker-options="{{dateOptions}}"
-                           is-open="hakemuskausi.avustushakemusLoppupvmKalenteri" ng-required="true" current-text="Tänään"
+                           is-open="hakemuskausi.avustushakemusLoppupvmKalenteri" ng-required="true"
+                           current-text="Tänään"
                            clear-text="Tyhjennä" close-text="Sulje"/>
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default"
@@ -513,5 +513,5 @@
       </div>
     </div>
   </div>
-  {{hakemuskaudet | json}}
+  {{user | json}}
 </div>
