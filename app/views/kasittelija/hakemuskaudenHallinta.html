@@ -16,10 +16,12 @@
           </div>
           </p>
           <p ng-show="hakemuskausi.uusi">
-            <input type="file" ng-show="sallittu('modify-hakemuskausi')" ng-file-select
-                   ng-file-change="upload($files, hakemuskausi.vuosi)"
-                   multiple="false" ng-accept="'application/pdf'">
-            </input>
+            <label class="hakemuskausi-file-upload">
+              <input type="file" class="hidden-file-input" ng-show=" sallittu('modify-hakemuskausi')" ng-file-select
+                     ng-file-change="upload($files, hakemuskausi.vuosi)"
+                     multiple="false" ng-accept="'application/pdf'"/>
+              Lataa hakuohje
+            </label>
           </p>
 
           <p>
