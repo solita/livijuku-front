@@ -21,11 +21,20 @@ angular.module('services.hakemus', [])
         };
         return $http(req);
       },
-      laheta: function (hakemusid) {
+      lahetaHakemus: function (hakemusid) {
         return $http.post('api/laheta-hakemus', {'hakemusid': hakemusid});
       },
-      tarkasta: function (hakemusid) {
+      lahetaTaydennys: function (hakemusid) {
+        return $http.post('api/laheta-taydennys', {'hakemusid': hakemusid});
+      },
+      tarkastaHakemus: function (hakemusid) {
         return $http.post('api/tarkasta-hakemus', {'hakemusid': hakemusid});
+      },
+      tarkastaTaydennys: function (hakemusid) {
+        return $http.post('api/tarkasta-taydennys', {'hakemusid': hakemusid});
+      },
+      taydennyspyynto: function (hakemusid) {
+        return $http.post('api/taydennyspyynto', {'hakemusid': hakemusid});
       }
     };
   }]);

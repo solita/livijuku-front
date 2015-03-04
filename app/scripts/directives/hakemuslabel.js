@@ -20,7 +20,7 @@ angular.module('jukufrontApp')
               htmlText = '<span class="label label-success">Tarkastettu</span>';
               break;
             case 'T0':
-              htmlText = '<span class="label label-info">Täydennettävää</span>';
+              htmlText = '<span class="label label-info">Täydennettävänä</span>';
               break;
             case 'TV':
               htmlText = '<span class="label label-danger">Täydennetty</span>';

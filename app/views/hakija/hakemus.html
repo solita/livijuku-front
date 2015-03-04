@@ -571,7 +571,7 @@
               <div class="col-md-8">
                 <div ng-show="liitteet.length > 0" class="response">
                   <div class="sel-file" ng-repeat="l in liitteet">
-                    <div ng-show="(hakemus.hakemustilatunnus == 'K')">
+                    <div ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">
                       <div ng-show="l.liitenumero!=editoitavaLiite">
                         <p><i class="glyphicon glyphicon-file"></i>
                           <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank">{{l.nimi}}
@@ -605,7 +605,7 @@
                           class="help-block">Liitenimi ei saa olla tyhjä.</p>
                       </div>
                     </div>
-                    <div ng-hide="(hakemus.hakemustilatunnus == 'K') && sallittu('modify-oma-hakemus')">
+                    <div ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
                       <p><i class="glyphicon glyphicon-file"></i>
                         <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}">{{l.nimi}}
                           ({{l.contenttype}})</a>
@@ -614,7 +614,7 @@
                   </div>
                 </div>
               </div>
-              <div ng-show="(hakemus.hakemustilatunnus == 'K') && sallittu('modify-oma-hakemus')">
+              <div ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
                 <div class="col-md-4 text-center">
                   <div ng-file-drop ng-model="myFiles" class="drop-box"
                        drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
@@ -636,14 +636,15 @@
       </div>
       <div class="row">
         <div class="col-md-8">
-          <a href="#/"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten päänäkymään</a>
+          <a href="#/h/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
+            päänäkymään</a>
         </div>
         <div class="col-md-2">
-          <div ng-show="(hakemus.hakemustilatunnus == 'K') && sallittu('modify-oma-hakemus')">
+          <div ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
             <button data-ng-click="tallennaHakemus()" class="pull-right btn btn-primary">Tallenna tiedot
             </button>
           </div>
-          <div ng-hide="(hakemus.hakemustilatunnus == 'K') && sallittu('modify-oma-hakemus')">
+          <div ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
             <button data-ng-click="tallennaHakemus()" class="pull-right btn btn-primary" disabled>Tallenna
               tiedot
             </button>
@@ -680,11 +681,24 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <div ng-show="(hakemus.hakemustilatunnus == 'K') && sallittu('allekirjoita-oma-hakemus')">
-            <button data-ng-click="lahetaHakemus()" class="pull-right btn btn-success">Lähetä hakemus</button>
+          <div ng-show="sallittu('allekirjoita-oma-hakemus')">
+            <button ng-show="hakemus.hakemustilatunnus == 'K'" data-ng-click="lahetaHakemus()"
+                    class="pull-right btn btn-success">Lähetä hakemus
+            </button>
+            <button ng-show="hakemus.hakemustilatunnus == 'T0'" data-ng-click="lahetaTaydennys()"
+                    class="pull-right btn btn-success">Lähetä täydennys
+            </button>
+            <button ng-show="hakemus.hakemustilatunnus != 'K' && hakemus.hakemustilatunnus != 'T0'"
+                    data-ng-click="lahetaHakemus()"
+                    class="pull-right btn btn-success" disabled>Lähetä hakemus
+            </button>
           </div>
-          <div ng-hide="(hakemus.hakemustilatunnus == 'K') && sallittu('allekirjoita-oma-hakemus')">
-            <button data-ng-click="lahetaHakemus()" class="pull-right btn btn-success" disabled>Lähetä hakemus
+          <div ng-hide="sallittu('allekirjoita-oma-hakemus')">
+            <button ng-show="hakemus.hakemustilatunnus != 'T0'" data-ng-click="lahetaHakemus()"
+                    class="pull-right btn btn-success" disabled>Lähetä hakemus
+            </button>
+            <button ng-show="hakemus.hakemustilatunnus == 'T0'" data-ng-click="lahetaTaydennys()"
+                    class="pull-right btn btn-success">Lähetä täydennys
             </button>
           </div>
         </div>

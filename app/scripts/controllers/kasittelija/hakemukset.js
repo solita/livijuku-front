@@ -8,75 +8,77 @@ angular.module('jukufrontApp')
         .success(function (data) {
           var hakemuskaudetTmp = [];
           _(angular.fromJson(data)).forEach(function (hakemuskausi) {
-            var ks1HakemuksetPerVuosi = [];
-            var ks2HakemuksetPerVuosi = [];
-            var elyHakemuksetPerVuosi = [];
-            var organisaatiolajitunnus = "";
-            _.filter(hakemuskausi.hakemukset, {'hakemustyyppitunnus': $scope.tyyppi}).forEach(function (hakemus) {
-              organisaatiolajitunnus = _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).lajitunnus;
-              if (organisaatiolajitunnus == "KS1") {
-                ks1HakemuksetPerVuosi.push({
-                  'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
-                  'hakemuksenTila': hakemus.hakemustilatunnus,
-                  'viimeisinMuutos': Number(new Date(hakemus.muokkausaika)),
-                  'diaarinumero': hakemus.diaarinumero,
-                  'kasittelija': 'Ei määritelty',
-                  'id': hakemus.id,
-                  'avustushakemusId': _.result(_.find(hakemuskausi.hakemukset, function (h) {
-                    return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'AH0')
-                  }), 'id'),
-                  'maksatushakemus1Id': _.result(_.find(hakemuskausi.hakemukset, function (h) {
-                    return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'MH1')
-                  }), 'id'),
-                  'maksatushakemus2Id': _.result(_.find(hakemuskausi.hakemukset, function (h) {
-                    return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'MH2')
-                  }), 'id')
-                });
-              } else if (organisaatiolajitunnus == "KS2") {
-                ks2HakemuksetPerVuosi.push({
-                  'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
-                  'hakemuksenTila': hakemus.hakemustilatunnus,
-                  'viimeisinMuutos': Number(new Date(hakemus.muokkausaika)),
-                  'diaarinumero': hakemus.diaarinumero,
-                  'kasittelija': 'Ei määritelty',
-                  'id': hakemus.id,
-                  'avustushakemusId': _.result(_.find(hakemuskausi.hakemukset, function (h) {
-                    return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'AH0')
-                  }), 'id'),
-                  'maksatushakemus1Id': _.result(_.find(hakemuskausi.hakemukset, function (h) {
-                    return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'MH1')
-                  }), 'id'),
-                  'maksatushakemus2Id': _.result(_.find(hakemuskausi.hakemukset, function (h) {
-                    return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'MH2')
-                  }), 'id')
-                });
-              } else if (organisaatiolajitunnus == "ELY") {
-                elyHakemuksetPerVuosi.push({
-                  'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
-                  'hakemuksenTila': hakemus.hakemustilatunnus,
-                  'viimeisinMuutos': Number(new Date(hakemus.muokkausaika)),
-                  'diaarinumero': hakemus.diaarinumero,
-                  'kasittelija': 'Ei määritelty',
-                  'id': hakemus.id,
-                  'avustushakemusId': _.result(_.find(hakemuskausi.hakemukset, function (h) {
-                    return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'AH0')
-                  }), 'id'),
-                  'maksatushakemus1Id': _.result(_.find(hakemuskausi.hakemukset, function (h) {
-                    return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'MH1')
-                  }), 'id'),
-                  'maksatushakemus2Id': _.result(_.find(hakemuskausi.hakemukset, function (h) {
-                    return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'MH2')
-                  }), 'id')
-                });
-              }
-            });
-            hakemuskaudetTmp.push({
-              'vuosi': hakemuskausi.vuosi,
-              'ks1HakemuksetPerVuosi': _.sortBy(ks1HakemuksetPerVuosi, 'hakija'),
-              'ks2HakemuksetPerVuosi': _.sortBy(ks2HakemuksetPerVuosi, 'hakija'),
-              'elyHakemuksetPerVuosi': _.sortBy(elyHakemuksetPerVuosi, 'hakija'),
-              'accordionOpen': false
-            });
+            if (hakemuskausi.hakemukset.length > 0) {
+              var ks1HakemuksetPerVuosi = [];
+              var ks2HakemuksetPerVuosi = [];
+              var elyHakemuksetPerVuosi = [];
+              var organisaatiolajitunnus = "";
+              _.filter(hakemuskausi.hakemukset, {'hakemustyyppitunnus': $scope.tyyppi}).forEach(function (hakemus) {
+                organisaatiolajitunnus = _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).lajitunnus;
+                if (organisaatiolajitunnus == "KS1") {
+                  ks1HakemuksetPerVuosi.push({
+                    'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
+                    'hakemuksenTila': hakemus.hakemustilatunnus,
+                    'viimeisinMuutos': Number(new Date(hakemus.muokkausaika)),
+                    'diaarinumero': hakemus.diaarinumero,
+                    'kasittelija': 'Ei määritelty',
+                    'id': hakemus.id,
+                    'avustushakemusId': _.result(_.find(hakemuskausi.hakemukset, function (h) {
+                      return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'AH0')
+                    }), 'id'),
+                    'maksatushakemus1Id': _.result(_.find(hakemuskausi.hakemukset, function (h) {
+                      return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'MH1')
+                    }), 'id'),
+                    'maksatushakemus2Id': _.result(_.find(hakemuskausi.hakemukset, function (h) {
+                      return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'MH2')
+                    }), 'id')
+                  });
+                } else if (organisaatiolajitunnus == "KS2") {
+                  ks2HakemuksetPerVuosi.push({
+                    'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
+                    'hakemuksenTila': hakemus.hakemustilatunnus,
+                    'viimeisinMuutos': Number(new Date(hakemus.muokkausaika)),
+                    'diaarinumero': hakemus.diaarinumero,
+                    'kasittelija': 'Ei määritelty',
+                    'id': hakemus.id,
+                    'avustushakemusId': _.result(_.find(hakemuskausi.hakemukset, function (h) {
+                      return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'AH0')
+                    }), 'id'),
+                    'maksatushakemus1Id': _.result(_.find(hakemuskausi.hakemukset, function (h) {
+                      return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'MH1')
+                    }), 'id'),
+                    'maksatushakemus2Id': _.result(_.find(hakemuskausi.hakemukset, function (h) {
+                      return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'MH2')
+                    }), 'id')
+                  });
+                } else if (organisaatiolajitunnus == "ELY") {
+                  elyHakemuksetPerVuosi.push({
+                    'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
+                    'hakemuksenTila': hakemus.hakemustilatunnus,
+                    'viimeisinMuutos': Number(new Date(hakemus.muokkausaika)),
+                    'diaarinumero': hakemus.diaarinumero,
+                    'kasittelija': 'Ei määritelty',
+                    'id': hakemus.id,
+                    'avustushakemusId': _.result(_.find(hakemuskausi.hakemukset, function (h) {
+                      return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'AH0')
+                    }), 'id'),
+                    'maksatushakemus1Id': _.result(_.find(hakemuskausi.hakemukset, function (h) {
+                      return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'MH1')
+                    }), 'id'),
+                    'maksatushakemus2Id': _.result(_.find(hakemuskausi.hakemukset, function (h) {
+                      return (h.organisaatioid == hakemus.organisaatioid && h.hakemustyyppitunnus == 'MH2')
+                    }), 'id')
+                  });
+                }
+              });
+              hakemuskaudetTmp.push({
+                'vuosi': hakemuskausi.vuosi,
+                'ks1HakemuksetPerVuosi': _.sortBy(ks1HakemuksetPerVuosi, 'hakija'),
+                'ks2HakemuksetPerVuosi': _.sortBy(ks2HakemuksetPerVuosi, 'hakija'),
+                'elyHakemuksetPerVuosi': _.sortBy(elyHakemuksetPerVuosi, 'hakija'),
+                'accordionOpen': false
+              });
+            }
           });
           $scope.hakemukset = _.sortBy(hakemuskaudetTmp, 'vuosi').reverse();
           if ($scope.hakemukset.length > 0) {
@@ -94,12 +96,20 @@ angular.module('jukufrontApp')
     function laskeLukumaara(tyyppi, hakemukset) {
       var lukumaara = 0;
       _(angular.fromJson(hakemukset)).forEach(function (hakemuskausi) {
-        var hakemuksetPerTyyppiperHakemuskausi = _.filter(hakemuskausi.hakemukset, {
+        var hakemuksetPerTyyppiperHakemuskausiVireilla = _.filter(hakemuskausi.hakemukset, {
           'hakemustilatunnus': "V",
           'hakemustyyppitunnus': tyyppi
         });
-        if (hakemuksetPerTyyppiperHakemuskausi != 'undefined') {
-          lukumaara = lukumaara + _.size(hakemuksetPerTyyppiperHakemuskausi);
+        var hakemuksetPerTyyppiperHakemuskausiTaydennetty = _.filter(hakemuskausi.hakemukset, {
+          'hakemustilatunnus': "TV",
+          'hakemustyyppitunnus': tyyppi
+        });
+        if (hakemuksetPerTyyppiperHakemuskausiVireilla != 'undefined') {
+          lukumaara = lukumaara + _.size(hakemuksetPerTyyppiperHakemuskausiVireilla);
+        }
+
+        if (hakemuksetPerTyyppiperHakemuskausiTaydennetty != 'undefined') {
+          lukumaara = lukumaara + _.size(hakemuksetPerTyyppiperHakemuskausiTaydennetty);
         }
       })
       if (lukumaara == 0) {

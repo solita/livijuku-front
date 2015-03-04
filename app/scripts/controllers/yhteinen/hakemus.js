@@ -230,13 +230,27 @@ angular.module('jukufrontApp')
     $scope.lahetaHakemus = function () {
       $scope.$broadcast('show-errors-check-validity');
       if ($scope.hakemusForm.$valid) {
-        HakemusService.laheta($scope.hakemusid)
+        HakemusService.lahetaHakemus($scope.hakemusid)
           .success(function () {
-            StatusService.ok('HakemusService.laheta(' + $scope.hakemusid + ')', 'Lähettäminen onnistui.');
+            StatusService.ok('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', 'Lähettäminen onnistui.');
             $location.path('/h/hakemukset');
           })
           .error(function (data) {
-            StatusService.virhe('HakemusService.laheta(' + $scope.hakemusid + ')', data);
+            StatusService.virhe('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', data);
+          });
+      }
+    };
+
+    $scope.lahetaTaydennys = function () {
+      $scope.$broadcast('show-errors-check-validity');
+      if ($scope.hakemusForm.$valid) {
+        HakemusService.lahetaTaydennys($scope.hakemusid)
+          .success(function () {
+            StatusService.ok('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', 'Täydennyksen lähettäminen onnistui.');
+            $location.path('/h/hakemukset');
+          })
+          .error(function (data) {
+            StatusService.virhe('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', data);
           });
       }
     };
@@ -419,13 +433,35 @@ angular.module('jukufrontApp')
     };
 
     $scope.tarkastaHakemus = function () {
-      HakemusService.tarkasta($scope.hakemusid)
+      HakemusService.tarkastaHakemus($scope.hakemusid)
         .success(function () {
-          StatusService.ok('HakemusService.tarkasta(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tarkastetuksi.');
+          StatusService.ok('HakemusService.tarkastaHakemus(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tarkastetuksi.');
           $location.path('/k/hakemukset/' + $scope.tyyppi);
         })
         .error(function (data) {
-          StatusService.virhe('HakemusService.tarkasta(' + $scope.hakemusid + ')', data);
+          StatusService.virhe('HakemusService.tarkastaHakemus(' + $scope.hakemusid + ')', data);
+        });
+    };
+
+    $scope.tarkastaTaydennys = function () {
+      HakemusService.tarkastaTaydennys($scope.hakemusid)
+        .success(function () {
+          StatusService.ok('HakemusService.tarkastaTaydennys(' + $scope.hakemusid + ')', 'Täydennetty hakemus päivitettiin tarkastetuksi.');
+          $location.path('/k/hakemukset/' + $scope.tyyppi);
+        })
+        .error(function (data) {
+          StatusService.virhe('HakemusService.tarkastaTaydennys(' + $scope.hakemusid + ')', data);
+        });
+    };
+
+    $scope.taydennyspyynto = function () {
+      HakemusService.taydennyspyynto($scope.hakemusid)
+        .success(function () {
+          StatusService.ok('HakemusService.taydennyspyynto(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tädennettäväksi.');
+          $location.path('/k/hakemukset/' + $scope.tyyppi);
+        })
+        .error(function (data) {
+          StatusService.virhe('HakemusService.taydennyspyynto(' + $scope.hakemusid + ')', data);
         });
     };
 
