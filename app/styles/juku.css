@@ -128,8 +128,7 @@ textarea {
 .hakemuskausi-panel {
   min-height: 400px;
   max-height: 400px;
-  min-width: 200px;
-  max-width: 200px;
+  width: 100%;
 }
 
 .hakemuskausi-panel-hakuaika {

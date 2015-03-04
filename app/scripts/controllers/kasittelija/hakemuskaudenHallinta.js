@@ -1,17 +1,6 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  // this is the important bit:
-  .directive('datepickerPopup', function (){
-    return {
-      restrict: 'EAC',
-      require: 'ngModel',
-      link: function(scope, element, attr, controller) {
-        //remove the default formatter from the input directive to prevent conflict
-        controller.$formatters.shift();
-      }
-    }
-  })
   .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', '$upload', function ($scope, $location, $route, $log, HakemuskausiService, StatusService, $upload) {
 
     function haeHakemuskaudet() {
@@ -20,25 +9,25 @@ angular.module('jukufrontApp')
         .success(function (data) {
           var hakemuskaudetTmp = [];
           _(angular.fromJson(data)).forEach(function (hakemuskausi) {
-            if (hakemuskausi.tilatunnus == "A") {
+            if (hakemuskausi.tilatunnus == "A" || hakemuskausi.tilatunnus == "0") {
               hakemuskaudetTmp.push({
                 'vuosi': hakemuskausi.vuosi,
                 'uusi': true,
                 'tilatunnus': hakemuskausi.tilatunnus,
                 'avustushakemusTilatunnus': '',
-                'avustushakemusAlkupvm': '',
+                'avustushakemusAlkupvm': '2014-09-01T00:00:00.000Z',
                 'avustushakemusAlkupvmKalenteri': false,
-                'avustushakemusLoppupvm': '',
+                'avustushakemusLoppupvm': '2014-10-01T00:00:00.000Z',
                 'avustushakemusLoppupvmKalenteri': false,
                 'maksatushakemus1Tilatunnus': '',
-                'maksatushakemus1Alkupvm': '',
+                'maksatushakemus1Alkupvm': '2014-09-01T00:00:00.000Z',
                 'maksatushakemus1AlkupvmKalenteri': false,
-                'maksatushakemus1Loppupvm': '',
+                'maksatushakemus1Loppupvm': '2014-09-01T00:00:00.000Z',
                 'maksatushakemus1LoppupvmKalenteri': false,
                 'maksatushakemus2Tilatunnus': '',
-                'maksatushakemus2Alkupvm': '',
+                'maksatushakemus2Alkupvm': '2014-09-01T00:00:00.000Z',
                 'maksatushakemus2AlkupvmKalenteri': false,
-                'maksatushakemus2Loppupvm': '',
+                'maksatushakemus2Loppupvm': '2014-09-01T00:00:00.000Z',
                 'maksatushakemus2LoppupvmKalenteri': false
               });
             } else {
@@ -47,6 +36,7 @@ angular.module('jukufrontApp')
                 'tilatunnus': hakemuskausi.tilatunnus,
                 'avustushakemusTilatunnus': _.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).hakemustilatunnus,
                 'avustushakemusAlkupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).hakuaika.alkupvm)),
+                'avustushakemusAlkupvmAlkup': new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).hakuaika.alkupvm),
                 'avustushakemusAlkupvmKalenteri': false,
                 'avustushakemusLoppupvm': Number(new Date(_.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'}).hakuaika.loppupvm)),
                 'avustushakemusLoppupvmKalenteri': false,
@@ -63,29 +53,6 @@ angular.module('jukufrontApp')
               });
             }
           });
-          var seuraavaVuosi = new Date().getFullYear() + 1;
-          if (!(_.some(hakemuskaudetTmp, {'vuosi': seuraavaVuosi}))) {
-            hakemuskaudetTmp.push({
-              'vuosi': seuraavaVuosi,
-              'tilatunnus': '',
-              'uusi': true,
-              'avustushakemusTilatunnus': '',
-              'avustushakemusAlkupvm': '',
-              'avustushakemusAlkupvmKalenteri': false,
-              'avustushakemusLoppupvm': '',
-              'avustushakemusLoppupvmKalenteri': false,
-              'maksatushakemus1Tilatunnus': '',
-              'maksatushakemus1Alkupvm': '',
-              'maksatushakemus1AlkupvmKalenteri': false,
-              'maksatushakemus1Loppupvm': '',
-              'maksatushakemus1LoppupvmKalenteri': false,
-              'maksatushakemus2Tilatunnus': '',
-              'maksatushakemus2Alkupvm': '',
-              'maksatushakemus2AlkupvmKalenteri': false,
-              'maksatushakemus2Loppupvm': '',
-              'maksatushakemus2LoppupvmKalenteri': false
-            });
-          }
           $scope.hakemuskaudet = _.sortBy(hakemuskaudetTmp, 'vuosi').reverse();
         })
         .error(function (data) {
@@ -109,18 +76,38 @@ angular.module('jukufrontApp')
         });
     };
 
-    $scope.avaaKalenteri = function($event) {
+    $scope.avaaKalenteri = function ($event) {
       $event.preventDefault();
       $event.stopPropagation();
     };
 
+    $scope.muokkaaHakuaikojaVuosi = '';
+
+    $scope.asetaMuokkaaHakuaikojaVuosi = function (vuosi, ah0alkupvm, ah0loppupvm, mh1alkupvm, mh1loppupvm, mh2alkupvm, mh2loppupvm) {
+      $scope.avustushakemusAlkupvm = ah0alkupvm;
+      $scope.avustushakemusLoppupvm = ah0loppupvm;
+      $scope.maksatushakemus1Alkupvm = mh1alkupvm;
+      $scope.maksatushakemus1Loppupvm = mh1loppupvm;
+      $scope.maksatushakemus2Alkupvm = mh2alkupvm;
+      $scope.maksatushakemus2Loppupvm = mh2loppupvm;
+      $scope.muokkaaHakuaikojaVuosi = vuosi;
+    };
+
+    $scope.tallennaHakuajat = function (vuosi) {
+      console.log("Tallenna hakuajat vuosi:" + vuosi);
+      console.log("Alkupvm:" + $scope.avustushakemusAlkupvm + ' nd:' + new Date($scope.avustushakemusAlkupvm).toISOString());
+      console.log("Loppupvm:" + $scope.avustushakemusLoppupvm);
+      $scope.muokkaaHakuaikojaVuosi = '';
+    };
+
+
     $scope.upload = function (tiedostot, vuosi) {
-      console.log('Upload:tiedostot length:'+tiedostot.length);
+      console.log('Upload:tiedostot length:' + tiedostot.length);
       if (tiedostot.length > 0) {
         $upload.upload({
           url: 'api/hakemuskausi/' + vuosi + '/hakuohje',
           method: 'PUT',
-          fields : {myObj: $scope.myModelObj},
+          fields: {myObj: $scope.myModelObj},
           file: tiedostot[0],
           fileFormDataName: 'hakuohje'
         }).progress(function (evt) {
