@@ -12,3 +12,5 @@ dist
 node_modules
 target
 upstream
+
+*.log
