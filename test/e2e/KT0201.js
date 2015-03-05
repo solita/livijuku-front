@@ -1,5 +1,7 @@
 describe('Selenium Test Case', function() {
 
+  var path = require('path');
+
   var snapshot = function() {
     console.log('TODO: Kannan snapshot');
   };
@@ -8,16 +10,22 @@ describe('Selenium Test Case', function() {
     console.log('TODO: Kannan restore');
   };
 
-  //beforeAll(function() {
-  //  snapshot();
-  //});
-  //
+  var unhideFileInputs = function () {
+    browser.executeScript(function () {
+      $('input[type="file"]').removeClass('hidden-file-input');
+    });
+  };
+
+  beforeEach(function() {
+    // snapshot();
+    // Lokitetaan selaimen konsolotuloste
+    browser.manage().logs().get('browser').then(function(browserLog) {
+      console.log('log: ' + require('util').inspect(browserLog));
+    });
+  });
+
   //afterAll( function() {
   //  restore();
-  //});
-
-  //beforeEach(function() {
-  //  browser.get("http://localhost:9000/harri.html");
   //});
 
   //var setup_data = function (d) {
@@ -27,63 +35,39 @@ describe('Selenium Test Case', function() {
   //  return "OKOKOKOKOKOK";//$http.get(data);
   //};
 
-  it('Käsittelijä avaa uuden hakemuskauden. Hakemuskausi avautuu.', function() {
-    snapshot();
-
+  it('Käsittelijä lisää hakuohjeen hakukaudelle. Hakuohjeen lisääminen onnistuu.', function() {
     browser.get("/katri.html");
     var kayttajanNimi = element(by.xpath('//li[@class="navbaruser"]/p[1]'));
     expect(kayttajanNimi.getText()).toContain('Katri Käsittelijä');
 
-    //browser.pause();
-
-    //flow = protractor.promise.controlFlow();
-    //
-    //flow.await(setup_data({data: 'http://localhost:9000/harri.html'})).then( function(result) {
-    //  console.log(result);
-    //  console.log('There');
-    //});
-
     element(by.partialLinkText("Hakemuskaudet")).click();
 
-    // browser.executeAsyncScript(function(callback) {
-    //   var $http;
-    //   $http = angular.injector(["ng"]).get("$http");
-    //   return $http({
-    //     url: "http://localhost:9000/api/hakemuskausi/2015/hakuohje",
-    //     method: "put",
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarycN6VhuUsTjUrg9BV',
-    //       'oam-remote-user': 'katri',
-    //       'oam-groups': '1',
-    //
-    //     },
-    //     dataType: "json"
-    //   }).success(function() {
-    //     return callback([true]);
-    //   }).error(function(data, status) {
-    //     return callback([false, data, status]);
-    //   });
-    // }).then(function(data) {
-    //   var response, success;
-    //   success = data[0];
-    //   response = data[1];
-    //   if (success) {
-    //     return console.log("Browser async finished without errors");
-    //   } else {
-    //     return console.log("Browser async finished with errors", response);
-    //   }
-    // });
+    var fileToUpload = 'test.pdf';
+    var absolutePath = path.resolve(__dirname, fileToUpload);
+    console.log(absolutePath); // lokitetaan toistaiseksi, kunnes nähdään onko ok Jenkinsissä
+    //unhideFileInputs();
+    browser.$('input[type="file"]').sendKeys(absolutePath);
 
-    element(by.partialLinkText("Käynnistä hakemuskausi")).click();
+    var infoBox=element(by.xpath('//div[@class="toast-message"]'));
+
+    browser.wait(function() {
+      return browser.isElementPresent(infoBox);
+    }, 30000);
+
+    expect(infoBox.getText()).toContain("onnistui.");
+
+    element(by.xpath("//*[normalize-space(text())='Käynnistä hakemuskausi']")).click();
+
     expect(element(by.css('p.panel-title')).getText()).toContain('Avustushakemus');
   });
 
-  it('Hakija avaa avustushakemuslomakkeen. Avustusakemuslomakkeella lukee: "PSA:n mukaisen liikenteen hankinta"', function() {
-    var text;
-    browser.get("/harri.html");
-    element(by.partialLinkText("Omat hakemukset")).click();
-    text = element(by.tagName('html')).getText();
-    expect(text).toContain("" + "PSA:n mukaisen liikenteen hankinta");
-    restore();
-  });
+  //it('Hakija avaa avustushakemuslomakkeen. Avustusakemuslomakkeella lukee: "PSA:n mukaisen liikenteen hankinta"', function() {
+  //  var text;
+  //  browser.get("/harri.html");
+  //  //browser.pause();
+  //  element(by.partialLinkText("Omat hakemukset")).click();
+  //  text = element(by.tagName('html')).getText();
+  //  expect(text).toContain("" + "PSA:n mukaisen liikenteen hankinta");
+  //  restore();
+  //});
 });
