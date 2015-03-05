@@ -555,7 +555,8 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('versionFile', 'Creates a version file', function() {
+    var os = require("os");
     var today = new Date();
-    grunt.file.write(appConfig.app+'/buildversion.html', '<h5 class="navbartxt">'+today.toISOString()+'</h5>');
+    grunt.file.write(appConfig.app+'/buildversion.html', '<h5 class="navbartxt">'+today.toISOString()+' ('+os.hostname()+')</h5>');
   });
 };
