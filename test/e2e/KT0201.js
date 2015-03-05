@@ -45,7 +45,7 @@ describe('Selenium Test Case', function() {
     var fileToUpload = 'test.pdf';
     var absolutePath = path.resolve(__dirname, fileToUpload);
     console.log(absolutePath); // lokitetaan toistaiseksi, kunnes nähdään onko ok Jenkinsissä
-    //unhideFileInputs();
+    unhideFileInputs();
     browser.$('input[type="file"]').sendKeys(absolutePath);
 
     var infoBox=element(by.xpath('//div[@class="toast-message"]'));
@@ -55,10 +55,6 @@ describe('Selenium Test Case', function() {
     }, 30000);
 
     expect(infoBox.getText()).toContain("onnistui.");
-
-    element(by.xpath("//*[normalize-space(text())='Käynnistä hakemuskausi']")).click();
-
-    expect(element(by.css('p.panel-title')).getText()).toContain('Avustushakemus');
   });
 
   //it('Hakija avaa avustushakemuslomakkeen. Avustusakemuslomakkeella lukee: "PSA:n mukaisen liikenteen hankinta"', function() {
