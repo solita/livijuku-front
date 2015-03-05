@@ -2,7 +2,10 @@
   <div ng-hide="sallittu('view-kaikki-hakemukset')">
     <p>Ei kaikkien hakemusten katseluoikeutta.</p>
   </div>
-  <div ng-show="sallittu('view-kaikki-hakemukset')">
+  <div ng-show="hakemukset.length==0">
+    <p>Ei hakemuksia, koska hakemuskautta ei ole vielä avattu.</p>
+  </div>
+  <div ng-show="hakemukset.length>0 && sallittu('view-kaikki-hakemukset')">
     <div class="row">
       <div class="col-md-3">
         <div ng-show="tyyppi=='AH0'">
