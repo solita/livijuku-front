@@ -56,6 +56,7 @@
     "build-dist": "grunt build",
     "test": "grunt test",
     "teste2e": "grunt teste2e",
+    "citeste2e": "grunt citeste2e",
     "serve": "grunt serve",
     "serve-dist": "node ./serve-dist.js"
   }

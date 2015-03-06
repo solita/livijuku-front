@@ -75,7 +75,7 @@ EofProperties
 
 runTests() {
   # run the tests
-  grunt citeste2e
+  npm run citeste2e
 }
 
 if [ ! -z "$JENKINS_DB_ID" ]; then
