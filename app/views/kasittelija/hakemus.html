@@ -520,15 +520,12 @@
           suunnittelunäkymään</a>
       </div>
       <div ng-show="sallittu('kasittely-hakemus')" class=" col-md-6">
-        <button ng-show="(hakemus.hakemustilatunnus == 'V')" data-ng-click="tarkastaHakemus()"
+        <button ng-show="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')" data-ng-click="tarkastaHakemus()"
                 class="pull-right btn btn-success">Merkitse tarkastetuksi
-        </button>
-        <button ng-show="(hakemus.hakemustilatunnus == 'TV')" data-ng-click="tarkastaHakemus()"
-                class="pull-right btn btn-success">Merkitse tarkastetuksi (täydennys)
         </button>
         <button ng-show="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')"
                 data-ng-click="taydennyspyynto()"
-                class="pull-right btn btn-danger">Täydennyspyyntö
+                class="pull-right btn btn-danger">Palauta täydennettäväksi
         </button>
         <button ng-hide="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')"
                 data-ng-click="tarkastaHakemus()"
@@ -537,7 +534,7 @@
         </button>
         <button ng-hide="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')"
                 data-ng-click="taydennyspyynto()"
-                class="pull-right btn btn-danger" disabled>Täydennyspyyntö
+                class="pull-right btn btn-danger" disabled>Palauta täydennettäväksi
         </button>
       </div>
     </div>
