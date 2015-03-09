@@ -21,13 +21,22 @@ describe('Selenium Test Case', function() {
     });
   });
 
-
-  it('Käsittelijä lisää hakuohjeen hakukaudelle. Hakuohjeen lisääminen onnistuu.', function() {
-    //createRestorePoint("beforeAll");
+  it('Tehdään restorepoint "beforeAll", johon palautetaan kanta testien jälkeen', function() {
     browser.wait( function() {
       return makeGet(db_http_service + '/juku/testing.create_restorepoint?restorepoint=beforeAll');
     }, 30000);
+  });
 
+  function waitForInfoBox() {
+    var infoBox = element(by.xpath('//div[@class="toast-message"]'));
+
+    browser.wait(function () {
+      return browser.isElementPresent(infoBox);
+    }, 30000);
+    return infoBox;
+  }
+
+  it('Käsittelijä lisää hakuohjeen hakukaudelle. Hakuohjeen lisääminen onnistuu.', function() {
     browser.get("/katri.html");
     var kayttajanNimi = element(by.xpath('//li[@class="navbaruser"]/p[1]'));
     expect(kayttajanNimi.getText()).toContain('Katri Käsittelijä');
@@ -40,17 +49,25 @@ describe('Selenium Test Case', function() {
     unhideFileInputs();
     browser.$('input[type="file"]').sendKeys(absolutePath);
 
-    var infoBox=element(by.xpath('//div[@class="toast-message"]'));
-
-    browser.wait(function() {
-      return browser.isElementPresent(infoBox);
-    }, 30000);
+    var infoBox = waitForInfoBox();
 
     expect(infoBox.getText()).toContain("onnistui.");
+  });
 
-    browser.wait( function() {
-      return makeGet(db_http_service + '/juku/testing.revert_to?restorepoint=beforeAll');
-    }, 30000);
+  it('Käsittelijä avaa hakukauden. Hakukausi avautuu.', function() {
+
+    browser.get("/katri.html");
+    var kayttajanNimi = element(by.xpath('//li[@class="navbaruser"]/p[1]'));
+    expect(kayttajanNimi.getText()).toContain('Katri Käsittelijä');
+
+    element(by.partialLinkText("Hakemuskaudet")).click();
+
+    element(by.xpath('//button[normalize-space(text())="Käynnistä hakemuskausi"]')).click();
+
+    var infoBox = waitForInfoBox();
+
+    expect(infoBox.getText()).toContain('Hakemuskausi: 2016 luonti onnistui.');
+
   });
 
   //it('Hakija avaa avustushakemuslomakkeen. Avustusakemuslomakkeella lukee: "PSA:n mukaisen liikenteen hankinta"', function() {
@@ -62,4 +79,10 @@ describe('Selenium Test Case', function() {
   //  expect(text).toContain("" + "PSA:n mukaisen liikenteen hankinta");
   //  restore();
   //});
+
+  it('Palautetaan kanta takaisin restorepointiin "beforeAll"', function() {
+    browser.wait( function() {
+      return makeGet(db_http_service + '/juku/testing.revert_to?restorepoint=beforeAll');
+    }, 30000);
+  });
 });
