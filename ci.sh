@@ -117,7 +117,7 @@ sleep 3
 ./node_modules/protractor/bin/webdriver-manager start >/dev/null 2>&1 &
 
 # Odota, kunnes selenium vastaa
-while ! curl http://localhost:4444/wd/hub/status >/dev/null 2>&1; do sleep 1; done
+while ! curl -sSLvi http://localhost:4444/wd/hub/status >/dev/null 2>&1; do sleep 1; done
 
 set +e
 runTests
