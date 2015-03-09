@@ -1,3 +1,4 @@
+'use strict';
 describe('Selenium Test Case', function() {
 
   var path = require('path');
@@ -27,8 +28,8 @@ describe('Selenium Test Case', function() {
     }, 30000);
   });
 
-  function waitForInfoBox() {
-    var infoBox = element(by.xpath('//div[@class="toast-message"]'));
+  function waitForInfoBox(partialText) {
+    var infoBox = element(by.xpath('//div[@class="toast-message" and contains(normalize-space(text()), "' + partialText + '")]'));
 
     browser.wait(function () {
       return browser.isElementPresent(infoBox);
@@ -49,9 +50,9 @@ describe('Selenium Test Case', function() {
     unhideFileInputs();
     browser.$('input[type="file"]').sendKeys(absolutePath);
 
-    var infoBox = waitForInfoBox();
+    var infoBox = waitForInfoBox('Hakuohjeen: test.pdf lataus vuodelle:2016 onnistui.');
 
-    expect(infoBox.getText()).toContain("onnistui.");
+    expect(infoBox.getText()).toContain("Hakuohjeen: test.pdf lataus vuodelle:2016 onnistui.");
   });
 
   it('Käsittelijä avaa hakukauden. Hakukausi avautuu.', function() {
@@ -64,7 +65,7 @@ describe('Selenium Test Case', function() {
 
     element(by.xpath('//button[normalize-space(text())="Käynnistä hakemuskausi"]')).click();
 
-    var infoBox = waitForInfoBox();
+    var infoBox = waitForInfoBox('Hakemuskausi: 2016 luonti onnistui.');
 
     expect(infoBox.getText()).toContain('Hakemuskausi: 2016 luonti onnistui.');
 
