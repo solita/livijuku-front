@@ -36,7 +36,7 @@ describe('Selenium Test Case', function() {
     var absolutePath = path.resolve(__dirname, fileToUpload);
     console.log(absolutePath); // lokitetaan toistaiseksi, kunnes nähdään onko ok Jenkinsissä
     unhideFileInputs();
-    browser.$('input[type="file"]').sendKeys(absolutePath);
+    //browser.$('input[type="file"]').sendKeys(absolutePath);
 
     var infoBox=element(by.xpath('//div[@class="toast-message"]'));
 
