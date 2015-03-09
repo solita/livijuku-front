@@ -2,6 +2,8 @@ describe('Selenium Test Case', function() {
 
   var path = require('path');
 
+  var db_http_service = process.env.DB_HTTP_SERVICE || "http://juku:juku@localhost:50000";
+
   var makeGet = function (d) {
     return require('http').get(d);
   };
@@ -23,7 +25,7 @@ describe('Selenium Test Case', function() {
   it('Käsittelijä lisää hakuohjeen hakukaudelle. Hakuohjeen lisääminen onnistuu.', function() {
     //createRestorePoint("beforeAll");
     browser.wait( function() {
-      return makeGet('http://juku:juku@127.0.0.1:50000/juku/testing.create_restorepoint?restorepoint=beforeAll');
+      return makeGet(db_http_service + '/juku/testing.create_restorepoint?restorepoint=beforeAll');
     }, 30000);
 
     browser.get("/katri.html");
@@ -36,7 +38,7 @@ describe('Selenium Test Case', function() {
     var absolutePath = path.resolve(__dirname, fileToUpload);
     console.log(absolutePath); // lokitetaan toistaiseksi, kunnes nähdään onko ok Jenkinsissä
     unhideFileInputs();
-    //browser.$('input[type="file"]').sendKeys(absolutePath);
+    browser.$('input[type="file"]').sendKeys(absolutePath);
 
     var infoBox=element(by.xpath('//div[@class="toast-message"]'));
 
@@ -47,7 +49,7 @@ describe('Selenium Test Case', function() {
     expect(infoBox.getText()).toContain("onnistui.");
 
     browser.wait( function() {
-      return makeGet('http://juku:juku@127.0.0.1:50000/juku/testing.revert_to?restorepoint=beforeAll');
+      return makeGet(db_http_service + '/juku/testing.revert_to?restorepoint=beforeAll');
     }, 30000);
   });
 
