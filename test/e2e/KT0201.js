@@ -4,6 +4,7 @@ describe('Selenium Test Case', function () {
   var path = require('path');
 
   var db_http_service = process.env.DB_HTTP_SERVICE || "http://juku:juku@localhost:50000";
+  var debug = process.env.DEBUG || 0;
 
   function makeGet(url) {
     return require('http').get(url);
@@ -34,7 +35,7 @@ describe('Selenium Test Case', function () {
   afterAll(function () {
     revertTo("beforeAll");
     // Jos DEBUG on päällä, Lokitetaan selaimen konsolituloste.
-    if (process.env.DEBUG) {
+    if (debug) {
       browser.manage().logs().get('browser').then(function (browserLog) {
         console.log('browser console log: ' + require('util').inspect(browserLog));
       });
