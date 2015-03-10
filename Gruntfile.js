@@ -21,6 +21,18 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
+  function parseCookies (request) {
+    var list = {},
+      rc = request.headers.cookie;
+
+    rc && rc.split(';').forEach(function( cookie ) {
+      var parts = cookie.split('=');
+      list[parts.shift().trim()] = decodeURI(parts.join('='));
+    });
+
+    return list;
+  }
+
   grunt.initConfig({
 
     // Project settings
@@ -88,29 +100,11 @@ module.exports = function (grunt) {
             var middlewares = [];
 
             middlewares.push(function myMiddleware(req, res, next) {
-              var oam_user = '';
-              var oam_group = '';
-              var cookies = req.headers.cookie;
-              if (typeof cookies !== "undefined") {
-                var user_cookie_key = "oam-remote-user=";
-                var group_cookie_key = "oam-groups=";
-                var splitted_cookies = cookies.split(';');
-                for (var i = 0; i < splitted_cookies.length; i++) {
-                  var c = splitted_cookies[i];
-                  while (c.charAt(0) == ' ') c = c.substring(1);
-                  if (c.indexOf(user_cookie_key) == 0) {
-                    oam_user = c.substring(user_cookie_key.length, c.length);
-                  } else if (c.indexOf(group_cookie_key) == 0) {
-                    oam_group = c.substring(group_cookie_key.length, c.length);
-                  }
-                }
-              }
-              if (oam_user !== '') {
-                req.headers['oam-remote-user'] = oam_user;
-              }
-              if (oam_group !== '') {
-                req.headers['oam-groups'] = oam_group;
-              }
+
+              var cookies = parseCookies(req);
+              req.headers['oam-remote-user'] = cookies['oam-remote-user'];
+              req.headers['oam-groups'] = cookies['oam-groups'];
+
               next();
             });
 
