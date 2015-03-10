@@ -20,6 +20,8 @@ exports.config = {
   // with relative paths will be prepended with this.
   baseUrl: 'http://localhost:9000',
 
+  framework: 'jasmine2',
+
   jasmineNodeOpts: {
     onComplete: null,
     isVerbose: false,
