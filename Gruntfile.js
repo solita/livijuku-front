@@ -102,8 +102,13 @@ module.exports = function (grunt) {
             middlewares.push(function myMiddleware(req, res, next) {
 
               var cookies = parseCookies(req);
-              req.headers['oam-remote-user'] = cookies['oam-remote-user'];
-              req.headers['oam-groups'] = cookies['oam-groups'];
+
+              if (cookies['oam-remote-user']) {
+                req.headers['oam-remote-user'] = cookies['oam-remote-user'];
+              }
+              if (cookies['oam-groups']) {
+                req.headers['oam-groups'] = cookies['oam-groups'];
+              }
 
               next();
             });
