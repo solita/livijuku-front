@@ -84,7 +84,7 @@ module.exports = function (grunt) {
       },
       proxies: [{
         context: '/api', // the context of the data service
-        host: 'livijuku.local.solita.fi', // wherever the data service is running
+        host: 'localhost', // wherever the data service is running
         port: 8082,
         changeOrigin: true,
         rewrite: {

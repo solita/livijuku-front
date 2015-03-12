@@ -7,6 +7,9 @@ angular.module('services.hakemuskausi', [])
       hae: function () {
         return $http.get('api/hakemuskaudet', {params: {isArray: true}});
       },
+      haeSummary: function () {
+        return $http.get('api/hakemuskaudet/yhteenveto', {params: {isArray: true}});
+      },
       haeHakuohje: function (vuosi) {
         return $http.get('api/hakemuskausi/'+vuosi+'/hakuohje');
       },
@@ -15,6 +18,9 @@ angular.module('services.hakemuskausi', [])
       },
       luoUusi: function(vuosi) {
         return $http.post('api/hakemuskausi', {vuosi: vuosi});
+      },
+      saveHakuajat: function(vuosi, hakuajat) {
+        return $http.put('api/hakemuskausi/' + vuosi + '/hakuajat', hakuajat);
       },
       paivitaMaararaha: function (vuosi, organisaatiolajitunnus, maararahadata) {
         var req = {
