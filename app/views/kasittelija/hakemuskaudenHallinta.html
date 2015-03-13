@@ -47,41 +47,9 @@
               <p class="panel-title">Avustushakemus</p>
             </div>
             <div class="panel-body">
-              <div ng-show="!hakemuskausi.avustushakemusKaynnissa"
-                   class="hakemuskausi-panel-ei-kaynnissa">Ei Käynnissä
-              </div>
-              <div ng-show="hakemuskausi.avustushakemusKaynnissa">
-                <p>
 
-                <div class="col-md-3 text-center">24/24</div>
-                <div class="col-md-9 text-left"><span class="label label-default">Keskeneräinen</span></div>
-                </p>
-                <p>
+              <hakemus-summary hakemus="hakemuskausi.ah0"></hakemus-summary>
 
-                <div class="col-md-3 text-center"> 0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-danger">Vireillä</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center">0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-default">Täydennettävänä</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center">0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-danger">Täydennetty</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center">0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-success">Tarkastettu</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center">0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-primary">Päätetty</span></div>
-                </p>
-              </div>
               <div class="row hakemuskausi-panel-hakuaika">
 
                 <p>Hakuaika:</p>
@@ -126,41 +94,7 @@
               <p class="panel-title">1. maksatushakemus</p>
             </div>
             <div class="panel-body">
-              <div ng-show="!hakemuskausi.maksatushakemus1Kaynnissa"
-                   class="col-md-12 text-center hakemuskausi-panel-ei-kaynnissa">Ei Käynnissä
-              </div>
-              <div ng-show="hakemuskausi.maksatushakemus1Kaynnissa">
-                <p>
-
-                <div class="col-md-3 text-center">24/24</div>
-                <div class="col-md-9 text-left"><span class="label label-default">Keskeneräinen</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center"> 0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-danger">Vireillä</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center">0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-default">Täydennettävänä</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center">0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-danger">Täydennetty</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center">0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-success">Tarkastettu</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center">0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-primary">Päätetty</span></div>
-                </p>
-              </div>
+              <hakemus-summary hakemus="hakemuskausi.mh1"></hakemus-summary>
               <div class="row hakemuskausi-panel-hakuaika">
 
                 <p>Hakuaika:</p>
@@ -207,42 +141,7 @@
               <p class="panel-title">2. maksatushakemus</p>
             </div>
             <div class="panel-body">
-              <div ng-show="!hakemuskausi.maksatushakemus2Kaynnissa"
-                   class="col-md-12 text-center hakemuskausi-panel-ei-kaynnissa">Ei Käynnissä
-              </div>
-              <div ng-show="hakemuskausi.maksatushakemus2Kaynnissa">
-                <p>
-
-                <div class="col-md-3 text-center">24/24</div>
-                <div class="col-md-9 text-left"><span class="label label-default">Keskeneräinen</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center"> 0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-danger">Vireillä</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center">0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-default">Täydennettävänä</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center">0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-danger">Täydennetty</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center">0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-success">Tarkastettu</span></div>
-                </p>
-                <p>
-
-                <div class="col-md-3 text-center">0/24</div>
-                <div class="col-md-9 text-left"><span class="label label-primary">Päätetty</span></div>
-                </p>
-              </div>
-            </div>
+              <hakemus-summary hakemus="hakemuskausi.mh2"></hakemus-summary>
             <div class="row hakemuskausi-panel-hakuaika">
               <p>Hakuaika:</p>
 

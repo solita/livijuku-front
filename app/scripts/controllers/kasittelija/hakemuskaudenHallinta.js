@@ -3,6 +3,22 @@
 angular.module('jukufrontApp')
   .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', '$upload', function ($scope, $location, $route, $log, HakemuskausiService, StatusService, $upload) {
 
+    function processHakemus(hakemus) {
+      var oletukset = {
+        K: 0, V: 0, T: 0, T0: 0, TV: 0, P: 0, M: 0
+      }
+
+      var existing_tilat = _.mapValues(
+        _.indexBy(hakemus.hakemustilat, 'hakemustilatunnus'), function(o) {return o.count;});
+      var all_tilat = _.merge(oletukset, existing_tilat);
+
+      return {
+        tilat: all_tilat,
+        total: (_.reduce(_.values(all_tilat), function(sum, n) {return sum + n;})),
+        kaynnissa: (Date.now() > (new Date(hakemus.hakuaika.alkupvm)).valueOf())
+      }
+    }
+
     function haeHakemuskaudet() {
       $scope.ladatutHakuohjeet = [];
       HakemuskausiService.haeSummary()
@@ -16,27 +32,34 @@ angular.module('jukufrontApp')
             var hakemus_mh2 = _.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH2'});
 
             var processedHakemuskausi = {
-                'vuosi': hakemuskausi.vuosi,
-                'tilatunnus': hakemuskausi.tilatunnus,
-                'avustushakemusKaynnissa': nykyhetki > Number(new Date(hakemus_ah0.hakuaika.alkupvm)),
-                'avustushakemusAlkupvm': Number(new Date(hakemus_ah0.hakuaika.alkupvm)),
-                'avustushakemusAlkupvmKalenteri': false,
-                'avustushakemusLoppupvm': Number(new Date(hakemus_ah0.hakuaika.loppupvm)),
-                'avustushakemusLoppupvmKalenteri': false,
-                'maksatushakemus1Kaynnissa': nykyhetki>Number(new Date(hakemus_mh1.hakuaika.alkupvm)),
-                'maksatushakemus1Alkupvm': Number(new Date(hakemus_mh1.hakuaika.alkupvm)),
-                'maksatushakemus1AlkupvmKalenteri': false,
-                'maksatushakemus1Loppupvm': Number(new Date(hakemus_mh1.hakuaika.loppupvm)),
-                'maksatushakemus1LoppupvmKalenteri': false,
-                'maksatushakemus2Kaynnissa': nykyhetki > Number(new Date(hakemus_mh2.hakuaika.alkupvm)),
-                'maksatushakemus2Alkupvm': Number(new Date(hakemus_mh2.hakuaika.alkupvm)),
-                'maksatushakemus2AlkupvmKalenteri': false,
-                'maksatushakemus2Loppupvm': Number(new Date(hakemus_mh2.hakuaika.loppupvm)),
-                'maksatushakemus2LoppupvmKalenteri': false
+                vuosi: hakemuskausi.vuosi,
+                tilatunnus: hakemuskausi.tilatunnus,
+                avustushakemusKaynnissa: nykyhetki > Number(new Date(hakemus_ah0.hakuaika.alkupvm)),
+                avustushakemusAlkupvm: Number(new Date(hakemus_ah0.hakuaika.alkupvm)),
+                avustushakemusAlkupvmKalenteri: false,
+                avustushakemusLoppupvm: Number(new Date(hakemus_ah0.hakuaika.loppupvm)),
+                avustushakemusLoppupvmKalenteri: false,
+                maksatushakemus1Kaynnissa: nykyhetki>Number(new Date(hakemus_mh1.hakuaika.alkupvm)),
+                maksatushakemus1Alkupvm: Number(new Date(hakemus_mh1.hakuaika.alkupvm)),
+                maksatushakemus1AlkupvmKalenteri: false,
+                maksatushakemus1Loppupvm: Number(new Date(hakemus_mh1.hakuaika.loppupvm)),
+                maksatushakemus1LoppupvmKalenteri: false,
+                maksatushakemus2Kaynnissa: nykyhetki > Number(new Date(hakemus_mh2.hakuaika.alkupvm)),
+                maksatushakemus2Alkupvm: Number(new Date(hakemus_mh2.hakuaika.alkupvm)),
+                maksatushakemus2AlkupvmKalenteri: false,
+                maksatushakemus2Loppupvm: Number(new Date(hakemus_mh2.hakuaika.loppupvm)),
+                maksatushakemus2LoppupvmKalenteri: false,
+
+                ah0: processHakemus(hakemus_ah0),
+                mh1: processHakemus(hakemus_mh1),
+                mh2: processHakemus(hakemus_mh2)
               }
               if (hakemuskausi.tilatunnus == "A" || hakemuskausi.tilatunnus == "0") {
                 processedHakemuskausi.uusi = true;
               }
+
+
+
               hakemuskaudetTmp.push(processedHakemuskausi);
           });
           $scope.hakemuskaudet = _.sortBy(hakemuskaudetTmp, 'vuosi').reverse();

@@ -1,0 +1,32 @@
+<div ng-show="!hakemus.kaynnissa" class="hakemuskausi-panel-ei-kaynnissa">Ei Käynnissä</div>
+<div ng-show="hakemus.kaynnissa">
+  <p>
+  <div class="col-md-3 text-center">{{hakemus.tilat.K}}/{{hakemus.total}}</div>
+  <div class="col-md-9 text-left"><span class="label label-default">Keskeneräinen</span></div>
+  </p>
+
+  <p>
+  <div class="col-md-3 text-center">{{hakemus.tilat.V}}/{{hakemus.total}}</div>
+  <div class="col-md-9 text-left"><span class="label label-danger">Vireillä</span></div>
+  </p>
+
+  <p>
+  <div class="col-md-3 text-center">{{hakemus.tilat.T0}}/{{hakemus.total}}</div>
+  <div class="col-md-9 text-left"><span class="label label-default">Täydennettävänä</span></div>
+  </p>
+
+  <p>
+  <div class="col-md-3 text-center">{{hakemus.tilat.TV}}/{{hakemus.total}}</div>
+  <div class="col-md-9 text-left"><span class="label label-danger">Täydennetty</span></div>
+  </p>
+
+  <p>
+  <div class="col-md-3 text-center">{{hakemus.tilat.T}}/{{hakemus.total}}</div>
+  <div class="col-md-9 text-left"><span class="label label-success">Tarkastettu</span></div>
+  </p>
+
+  <p>
+  <div class="col-md-3 text-center">{{hakemus.tilat.P}}/{{hakemus.total}}</div>
+  <div class="col-md-9 text-left"><span class="label label-primary">Päätetty</span></div>
+  </p>
+</div>
