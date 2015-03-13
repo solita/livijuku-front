@@ -6,7 +6,7 @@ angular.module('jukufrontApp')
         hakemus: '=hakemus'
       },
       restrict: 'E',
-      templateUrl: 'scripts/directives/hakemussummary.html'
+      templateUrl: 'views/kasittelija/hakemussummary.html'
     };
   }
 );
