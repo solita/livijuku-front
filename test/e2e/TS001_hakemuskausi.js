@@ -1,10 +1,26 @@
 'use strict';
 describe('Selenium Test Case', function () {
 
+  //************************************************************************************
+  // HUOM! Selkeyden vuoksi, pidetään niin, että xpath-merkkijonot kirjoitetaan
+  // yksinkertaisiin hipsuihin ja niiden sisällä olevat merkkijonot ovat tuplahipsuissa
+  //************************************************************************************
+
   var path = require('path');
 
   var db_http_service = process.env.DB_HTTP_SERVICE || "http://juku:juku@localhost:50000";
   var debug = process.env.DEBUG || 0;
+
+  // Protractor oletus timeout on 10000, joten tämän kannattaa olla pienempi
+  var DEFAULT_TIMEOUT=9000;
+
+  function hasClass(classname) {
+    // http://stackoverflow.com/questions/8808921/selecting-a-css-class-with-xpath
+    return 'contains(concat(" ", normalize-space(@class), " "), " ' + classname + ' ")';
+  }
+  function containsText(text) {
+    return 'contains(normalize-space(text()),"' + text + '")';
+  }
 
   function makeGet(url) {
     return require('http').get(url);
@@ -19,13 +35,13 @@ describe('Selenium Test Case', function () {
   function createRestorePoint(restorePointName) {
     browser.wait(function () {
       return makeGet(db_http_service + '/juku/testing.create_restorepoint?restorepoint=' + restorePointName);
-    }, 30000);
+    }, DEFAULT_TIMEOUT);
   }
 
   function revertTo(restorePointName) {
     browser.wait(function () {
       return makeGet(db_http_service + '/juku/testing.revert_to?restorepoint=' + restorePointName);
-    }, 30000);
+    }, DEFAULT_TIMEOUT);
   }
 
   beforeAll(function() {
@@ -43,18 +59,19 @@ describe('Selenium Test Case', function () {
   });
 
   function waitForInfoBox(partialText) {
-    var infoBox = element(by.xpath('//div[@class="toast-message" and contains(normalize-space(text()), "' + partialText + '")]'));
+    var infoBox = element(by.xpath('//div[@class="toast-message" and ' + containsText(partialText) + ']'));
 
     browser.wait(function () {
       return browser.isElementPresent(infoBox);
-    }, 30000);
+    }, DEFAULT_TIMEOUT);
 
     return infoBox;
   }
 
-  it('Käsittelijä lisää hakuohjeen hakukaudelle. Hakuohjeen lisääminen onnistuu.', function () {
+  it('Käsittelijä lisää hakuohjeen hakukaudelle.' +
+  ' -> Hakuohjeen lisääminen onnistuu.', function () {
     browser.get("/katri.html");
-    var kayttajanNimi = element(by.xpath('//li[@class="navbaruser"]/p[1]'));
+    var kayttajanNimi = element(by.xpath('//li[' + hasClass("navbaruser") + ']/p[1]'));
     expect(kayttajanNimi.getText()).toContain('Katri Käsittelijä');
 
     element(by.partialLinkText("Hakemuskaudet")).click();
@@ -70,15 +87,16 @@ describe('Selenium Test Case', function () {
 
   });
 
-  it('Käsittelijä avaa hakukauden. Hakukausi avautuu.', function () {
+  it('Käsittelijä avaa hakukauden.' +
+  ' -> Hakukausi avautuu.', function () {
 
     browser.get("/katri.html");
-    var kayttajanNimi = element(by.xpath('//li[@class="navbaruser"]/p[1]'));
+    var kayttajanNimi = element(by.xpath('//li[' + hasClass("navbaruser") + ']/p[1]'));
     expect(kayttajanNimi.getText()).toContain('Katri Käsittelijä');
 
     element(by.partialLinkText("Hakemuskaudet")).click();
 
-    element(by.xpath('//button[normalize-space(text())="Käynnistä hakemuskausi"]')).click();
+    element(by.xpath('//button[' + containsText("Käynnistä hakemuskausi") + ']')).click();
 
     var infoBox = waitForInfoBox('Hakemuskausi: 2016 luonti onnistui.');
 
@@ -86,10 +104,19 @@ describe('Selenium Test Case', function () {
 
   });
 
-  it('Hakija avaa avustushakemuslomakkeen. Avustusakemuslomakkeella lukee: "PSA:n mukaisen liikenteen hankinta"', function () {
+  it('LIVIJUKU-125 Test: Hakija täydentää tiedot avustushakemuslomakkeelle.' +
+  ' -> Avustusakemuksen tallennus onnistuu.', function () {
     browser.get("/harri.html");
     element(by.partialLinkText("Omat hakemukset")).click();
-    //expect(element(by.xpath("//*[@class='panel-title' and normalize-space(text())='PSA:n mukaisen liikenteen hankinta']"))).toBeDefined();
+
+    //var avustushakemusAlaosa = '//*[' + containsText("Avustushakemus") + ']/../../div[' + hasClass("clickable") + ']';
+    var avustushakemusAlaosa = '//div[' + hasClass("clickable") + '][1]//h4['+containsText("Hakuaika:")+'][1]';
+
+    element(by.xpath(avustushakemusAlaosa)).click();
+    var psaTitle = "//*["+hasClass('panel-title')+" and "
+      + containsText('PSA:n mukaisen liikenteen hankinta')+"]";
+    expect(element(by.xpath(psaTitle))).toBeDefined();
+
   });
 
 });
