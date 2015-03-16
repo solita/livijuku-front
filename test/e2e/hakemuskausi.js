@@ -70,6 +70,7 @@ describe('Selenium Test Case', function () {
 
   it('Käsittelijä lisää hakuohjeen hakukaudelle.' +
   ' -> Hakuohjeen lisääminen onnistuu.', function () {
+
     browser.get("/katri.html");
     var kayttajanNimi = element(by.xpath('//li[' + hasClass("navbaruser") + ']/p[1]'));
     expect(kayttajanNimi.getText()).toContain('Katri Käsittelijä');
@@ -101,21 +102,6 @@ describe('Selenium Test Case', function () {
     var infoBox = waitForInfoBox('Hakemuskausi: 2016 luonti onnistui.');
 
     expect(infoBox.getText()).toContain('Hakemuskausi: 2016 luonti onnistui.');
-
-  });
-
-  it('LIVIJUKU-125 Test: Hakija täydentää tiedot avustushakemuslomakkeelle.' +
-  ' -> Avustusakemuksen tallennus onnistuu.', function () {
-    browser.get("/harri.html");
-    element(by.partialLinkText("Omat hakemukset")).click();
-
-    //var avustushakemusAlaosa = '//*[' + containsText("Avustushakemus") + ']/../../div[' + hasClass("clickable") + ']';
-    var avustushakemusAlaosa = '//div[' + hasClass("clickable") + '][1]//h4['+containsText("Hakuaika:")+'][1]';
-
-    element(by.xpath(avustushakemusAlaosa)).click();
-    var psaTitle = "//*["+hasClass('panel-title')+" and "
-      + containsText('PSA:n mukaisen liikenteen hankinta')+"]";
-    expect(element(by.xpath(psaTitle))).toBeDefined();
 
   });
 
