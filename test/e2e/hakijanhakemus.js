@@ -44,12 +44,8 @@ describe('Hakija tekee hakemuksen ja allekirjoittaja laittaa sen vireille', func
     }, DEFAULT_TIMEOUT);
   }
 
-  beforeAll(function() {
-    createRestorePoint("beforeAll_hakijanhakemus");
-  });
-
   afterAll(function () {
-    revertTo("beforeAll_hakijanhakemus");
+    revertTo("beforeAll");
     // Jos DEBUG on päällä, Lokitetaan selaimen konsolituloste.
     if (debug) {
       browser.manage().logs().get('browser').then(function (browserLog) {

@@ -48,16 +48,6 @@ describe('Selenium Test Case', function () {
     createRestorePoint("beforeAll");
   });
 
-  afterAll(function () {
-    revertTo("beforeAll");
-    // Jos DEBUG on päällä, Lokitetaan selaimen konsolituloste.
-    if (debug) {
-      browser.manage().logs().get('browser').then(function (browserLog) {
-        console.log('browser console log: ' + require('util').inspect(browserLog));
-      });
-    }
-  });
-
   function waitForInfoBox(partialText) {
     var infoBox = element(by.xpath('//div[@class="toast-message" and ' + containsText(partialText) + ']'));
 
