@@ -37,5 +37,7 @@ exports.config = {
       consolidateAll: false
     });
     jasmine.getEnv().addReporter(junitReporter);
-  }
+  },
+
+  onComplete: function() { console.log('all done')}
 };
