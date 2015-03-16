@@ -105,4 +105,25 @@ describe('Selenium Test Case', function () {
 
   });
 
+  it('Käsittelijä muokkaa hakuaikoja (LIVIJUKU-167). ' +
+     ' -> hakuaikojen tallennus onnistui', function () {
+
+    browser.get("/katri.html");
+
+    element(by.partialLinkText('Hakemuskaudet')).click();
+    element(by.partialLinkText("Muokkaa hakuaikoja")).click();
+
+    var input = element(by.xpath('//input[@ng-model="$parent.avustushakemusAlkupvm"]'));
+
+    input.clear();
+    input.sendKeys("01.09.2015");
+
+    element(by.partialLinkText("Tallenna hakuajat")).click();
+
+    var infoBox = waitForInfoBox("Hakuaikojen: tallennus vuodelle 2016 onnistui.");
+
+    expect(infoBox.getText()).toContain('Hakuaikojen: tallennus vuodelle 2016 onnistui.');
+
+  });
+
 });
