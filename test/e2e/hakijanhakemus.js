@@ -82,7 +82,15 @@ describe('Hakija tekee hakemuksen ja allekirjoittaja laittaa sen vireille', func
     expect(element(by.xpath(psaTitle))).toBeDefined();
 
     // Syötetään avustuksia
-    //element(by.xpath('//form/div[.=]/div[2]/div[1]/div[2]/div/input'))
+    var psa1h = element(by.xpath('//input[@name="psa1haettavaavustus"]'));
+    psa1h.clear();
+    psa1h.sendKeys("100000");
+    var psa1o = element(by.xpath('//input[@name="psa1omarahoitus"]'));
+    psa1o.clear();
+    psa1o.sendKeys("100000");
+
+    // TODO Muut kentätä testiin
+
   });
 });
 
