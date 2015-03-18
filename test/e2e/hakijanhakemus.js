@@ -13,6 +13,7 @@ describe('Hakija tekee hakemuksen ja allekirjoittaja laittaa sen vireille', func
 
   // Protractor oletus timeout on 10000, joten tämän kannattaa olla pienempi
   var DEFAULT_TIMEOUT=9000;
+  var LONGER_TIMEOUT=60000;
 
   function hasClass(classname) {
     // http://stackoverflow.com/questions/8808921/selecting-a-css-class-with-xpath
@@ -82,14 +83,25 @@ describe('Hakija tekee hakemuksen ja allekirjoittaja laittaa sen vireille', func
     expect(element(by.xpath(psaTitle))).toBeDefined();
 
     // Syötetään avustuksia
-    var psa1h = element(by.xpath('//input[@name="psa1haettavaavustus"]'));
-    psa1h.clear();
-    psa1h.sendKeys("100000");
-    var psa1o = element(by.xpath('//input[@name="psa1omarahoitus"]'));
-    psa1o.clear();
-    psa1o.sendKeys("100000");
-
-    // TODO Muut kentätä testiin
+    //[
+    //  "psa1haettavaavustus",
+    //  "psa1omarahoitus",
+    //  "psa2haettavaavustus",
+    //  "psa2omarahoitus",
+    //  "psamhaettavaavustus",
+    //  "psamomarahoitus",
+    //  "hkslhaettavaavustus",
+    //  "hkslomarahoitus"
+    //].forEach( function(fname,index,a) {
+    //    var el = element(by.xpath('//input[@name="'+fname+'"]'));
+    //    el.clear();
+    //    el.sendKeys(100*index);
+    //  });
+    //element(by.xpath('//button[@data-ng-click="tallennaHakemus()"]')).click();
+    //browser.pause();
+    //
+    //var infoBox=waitForInfoBox('Tallennus onnistui');
+    //expect(infoBox).toContain('Tallennus onnistui');
 
   });
 });

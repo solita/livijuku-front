@@ -30,6 +30,9 @@ exports.config = {
     defaultTimeoutInterval: 600000
   },
 
+  allScriptsTimeout: 30000,
+  getPageTimeout: 30000,
+
   onPrepare: function() {
     var reporters = require('jasmine-reporters');
     var junitReporter = new reporters.JUnitXmlReporter({
