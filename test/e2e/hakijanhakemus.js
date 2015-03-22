@@ -12,8 +12,8 @@ describe('Hakija tekee hakemuksen ja allekirjoittaja laittaa sen vireille', func
   var debug = process.env.DEBUG || 0;
 
   // Protractor oletus timeout on 10000, joten tämän kannattaa olla pienempi
-  var DEFAULT_TIMEOUT=9000;
-  var LONGER_TIMEOUT=60000;
+  var DEFAULT_TIMEOUT=90000;
+  var LONGER_TIMEOUT=90000;
 
   function hasClass(classname) {
     // http://stackoverflow.com/questions/8808921/selecting-a-css-class-with-xpath
@@ -25,18 +25,6 @@ describe('Hakija tekee hakemuksen ja allekirjoittaja laittaa sen vireille', func
 
   function makeGet(url) {
     return require('http').get(url);
-  }
-
-  function unhideFileInputs() {
-    browser.executeScript(function () {
-      $('input[type="file"]').removeClass('hidden-file-input');
-    });
-  }
-
-  function createRestorePoint(restorePointName) {
-    browser.wait(function () {
-      return makeGet(db_http_service + '/juku/testing.create_restorepoint?restorepoint=' + restorePointName);
-    }, DEFAULT_TIMEOUT);
   }
 
   function revertTo(restorePointName) {
@@ -60,7 +48,7 @@ describe('Hakija tekee hakemuksen ja allekirjoittaja laittaa sen vireille', func
 
     browser.wait(function () {
       return browser.isElementPresent(infoBox);
-    }, DEFAULT_TIMEOUT);
+    }, LONGER_TIMEOUT);
 
     return infoBox;
   }
@@ -83,24 +71,39 @@ describe('Hakija tekee hakemuksen ja allekirjoittaja laittaa sen vireille', func
     expect(element(by.xpath(psaTitle))).toBeDefined();
 
     // Syötetään avustuksia
-    //[
-    //  "psa1haettavaavustus",
-    //  "psa1omarahoitus",
-    //  "psa2haettavaavustus",
-    //  "psa2omarahoitus",
-    //  "psamhaettavaavustus",
-    //  "psamomarahoitus",
-    //  "hkslhaettavaavustus",
-    //  "hkslomarahoitus"
-    //].forEach( function(fname,index,a) {
-    //    var el = element(by.xpath('//input[@name="'+fname+'"]'));
-    //    el.clear();
-    //    el.sendKeys(100*index);
-    //  });
-    //element(by.xpath('//button[@data-ng-click="tallennaHakemus()"]')).click();
-    //browser.pause();
-    //
-    //var infoBox=waitForInfoBox('Tallennus onnistui');
+    [
+      "psa1haettavaavustus",
+      "psa1omarahoitus",
+      "psa2haettavaavustus",
+      "psa2omarahoitus",
+      "psamhaettavaavustus",
+      "psamomarahoitus",
+      "hkslhaettavaavustus",
+      "hkslomarahoitus",
+      "hkklhaettavaavustus",
+      "hkklomarahoitus",
+      "hkllhaettavaavustus",
+      "hkllomarahoitus",
+      "hktlhaettavaavustus",
+      "hktlomarahoitus",
+      "kimhaettavaavustus",
+      "kimomarahoitus",
+      "kmpkhaettavaavustus",
+      "kmpkomarahoitus",
+      "kmkhaettavaavustus",
+      "kmkomarahoitus",
+      "krthaettavaavustus",
+      "krtomarahoitus",
+      "kmhaettavaavustus",
+      "kmomarahoitus"
+    ].forEach( function(fname,index,a) {
+        var el = element(by.xpath('//input[@name="'+fname+'"]'));
+        el.clear();
+        el.sendKeys(100*index);
+      });
+    element(by.xpath('//button[@data-ng-click="tallennaHakemus()"]')).click();
+
+    var infoBox=waitForInfoBox('Tallennus onnistui');
     //expect(infoBox).toContain('Tallennus onnistui');
 
   });

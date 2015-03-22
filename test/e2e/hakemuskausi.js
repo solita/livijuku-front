@@ -12,7 +12,7 @@ describe('Selenium Test Case', function () {
   var debug = process.env.DEBUG || 0;
 
   // Protractor oletus timeout on 10000, joten tämän kannattaa olla pienempi
-  var DEFAULT_TIMEOUT=9000;
+  var DEFAULT_TIMEOUT=90000;
 
   function hasClass(classname) {
     // http://stackoverflow.com/questions/8808921/selecting-a-css-class-with-xpath
