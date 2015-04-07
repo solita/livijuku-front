@@ -113,6 +113,7 @@ angular.module('jukufrontApp')
       return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     }
 
+    // TODO: Kutsu suoraan tätä lomakkeen Tallenna hakuajat linkistä. Päästään eroon scope-globaaleista.
     $scope.tallennaHakuajat = function (vuosi) {
       console.log("Tallenna hakuajat vuosi:" + vuosi);
       console.log("AH0_Alkupvm:" + $scope.avustushakemusAlkupvm + ' date:' + new Date($scope.avustushakemusAlkupvm).toISOString());
@@ -141,6 +142,7 @@ angular.module('jukufrontApp')
           StatusService.virhe('HakemuskausiService.saveHakuajat(' + vuosi + ')', data);
         });
 
+      // TODO: Ruma monimuuttujainen globaali tila. Ugh.
       $scope.muokkaaHakuaikojaVuosi = null;
       $scope.avustushakemusAlkupvm = null;
       $scope.avustushakemusLoppupvm = null;
@@ -148,9 +150,30 @@ angular.module('jukufrontApp')
       $scope.maksatushakemus1Loppupvm = null;
       $scope.maksatushakemus2Alkupvm = null;
       $scope.maksatushakemus2Loppupvm = null;
-      $scope.muokkaaHakuaikojaVuosi = null;
     };
 
+    $scope.valitseHakemustyyppi = function (tyyppi) {
+
+      // TODO: Ruma monimuuttujainen globaali tila. Ugh.
+      if (
+        $scope.muokkaaHakuaikojaVuosi ||
+        $scope.avustushakemusAlkupvm ||
+        $scope.avustushakemusLoppupvm ||
+        $scope.maksatushakemus1Alkupvm ||
+        $scope.maksatushakemus1Loppupvm ||
+        $scope.maksatushakemus2Alkupvm ||
+        $scope.maksatushakemus2Loppupvm
+      ) {
+        // Päivämäärien muokkaus menossa, ei navigoida "Kaikki hakemukset" -välilehdelle.
+        return;
+      }
+
+      if (tyyppi) {
+        $location.path('/k/hakemukset/' + tyyppi);
+      } else {
+        $location.path('/k/hakemukset');
+      }
+    };
 
     $scope.upload = function (tiedostot, vuosi) {
       console.log('Upload:tiedostot length:' + tiedostot.length);
