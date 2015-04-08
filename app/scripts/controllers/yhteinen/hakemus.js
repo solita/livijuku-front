@@ -465,6 +465,12 @@ angular.module('jukufrontApp')
         });
     };
 
+   $scope.hasPaatos = function (tyyppi, hakemustilatunnus) {
+     return tyyppi == 'AH0' &&
+       hakemustilatunnus == 'P' ||
+       hakemustilatunnus == 'M';
+   };
+
     haeHakemukset();
     haePaatos();
     generoiTooltipArvot();

@@ -46,6 +46,13 @@
       </div>
     </div>
   </div>
+  <div class="row" ng-show="hasPaatos(tyyppi, hakemus.hakemustilatunnus)">
+    <div class="col-md-12">
+      <p>
+        <a href="api/hakemus/{{hakemusid}}/paatos/1/pdf" target="_blank"><span class="glyphicon glyphicon-file"></span> Avaa päätös (PDF)</a>
+      </p>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-12">
       <h3>HAKIJAN TIEDOT ({{hakija}})</h3>
