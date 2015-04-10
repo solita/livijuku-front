@@ -53,13 +53,14 @@ textarea {
   border-left: 1px solid #ffffff;
   line-height: 1;
   padding-top: 5px;
-  padding-bottom: 0px;
+  padding-bottom: 0;
   padding-left: 3px;
 }
 
 .navbartxt {
   color: #ffffff !important;
   top: 8px;
+  margin: 0;
 }
 
 .suunnitteluheader {
