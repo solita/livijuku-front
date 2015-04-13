@@ -76,7 +76,7 @@ angular.module('jukufrontApp')
                   maksatushakemus1Arvot['kmomarahoitus'] = haeOmarahoitus('K-M', data);
                   _.forIn(maksatushakemus1Arvot, function (value, key) {
                     if (value > 0) {
-                      $scope.tooltipArvot[key] = $scope.tooltipArvot[key] + '<br/>' + '1.Maksatushakemus:' + (value).toString().replace('.', ',') + ' €';
+                      $scope.tooltipArvot[key] = $scope.tooltipArvot[key] + '<br/>' + '1. Maksatushakemus:' + (value).toString().replace('.', ',') + ' €';
                     }
                   });
                 })
