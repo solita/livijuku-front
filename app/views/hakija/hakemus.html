@@ -25,7 +25,8 @@
     <div class="row" ng-show="hasPaatos(tyyppi, hakemus.hakemustilatunnus)">
       <div class="col-md-12">
         <p>
-          <a href="api/hakemus/{{hakemusid}}/paatos/1/pdf" target="_blank"><span class="glyphicon glyphicon-file"></span> Avaa päätös (PDF)</a>
+          <a href="api/hakemus/{{hakemusid}}/paatos/1/pdf" target="_blank"><span
+            class="glyphicon glyphicon-file"></span> Avaa päätös (PDF)</a>
         </p>
       </div>
     </div>
@@ -510,7 +511,7 @@
       <div class="form-group">
         <div class="row">
           <div class="col-md-12">
-            <label>Lisätietoja avustusten kohteista<a href=""><span
+            <label>Lisätietoja avustusten kohteista<a href="" noenter><span
               class='jukutooltip glyphicon glyphicon-question-sign'></span></a></label>
           </div>
         </div>
@@ -545,15 +546,15 @@
                       </div>
                       <div ng-show="(l.liitenumero==editoitavaLiite)">
                         <p><i class="glyphicon glyphicon-file"></i>
-                          <input name="liitenimi" type="text" class="input-small"
+                          <input name="liitenimi" type="text" class="input-small" noenter
                                  ng-model="l.nimi"
                                  ng-focus="asetaLiitenimi(l.nimi)"
                                  ui-validate="{tyhja: 'liiteNimiTyhja($value)' }"/>
-                          <a href="" title="Palaa katselutilaan tallentamatta" ng-click="palaaTallentamatta()">
-                            <span class='glyphicon glyphicon-eye-open'></span></a>
                           <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Tallenna liitenimi"
                              ng-click="paivitaLiiteNimi(l.liitenumero,l.nimi)">
                             <span class='glyphicon glyphicon-save'></span></a>
+                          <a href="" title="Palaa katselutilaan tallentamatta" ng-click="palaaTallentamatta()">
+                            <span class='glyphicon glyphicon-eye-open'></span></a>
                           <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Poista liite"
                              ng-click="poistaLiite(l.liitenumero)"><span
                             class='glyphicon glyphicon-remove-sign'></span></a>
@@ -564,7 +565,8 @@
                           class="help-block">Liitenimi ei saa olla tyhjä.</p>
                       </div>
                     </div>
-                    <div ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+                    <div
+                      ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
                       <p><i class="glyphicon glyphicon-file"></i>
                         <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}">{{l.nimi}}
                           ({{l.contenttype}})</a>
@@ -573,7 +575,8 @@
                   </div>
                 </div>
               </div>
-              <div ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+              <div
+                ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
                 <div class="col-md-4 text-center">
                   <div ng-file-drop ng-model="myFiles" class="drop-box"
                        drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
@@ -599,18 +602,20 @@
             päänäkymään</a>
         </div>
         <div class="col-md-2">
-          <div ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+          <div
+            ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
             <button data-ng-click="tallennaHakemus()" class="pull-right btn btn-primary">Tallenna tiedot
             </button>
           </div>
-          <div ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+          <div
+            ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
             <button data-ng-click="tallennaHakemus()" class="pull-right btn btn-primary" disabled>Tallenna
               tiedot
             </button>
           </div>
         </div>
         <div class="col-md-2">
-          <button data-ng-click="naytaHakemus()" class="pull-right btn btn-primary">Hakemuksen esikatselu
+          <button data-ng-click="naytaHakemus()" class="pull-right btn btn-primary" noenter>Hakemuksen esikatselu
           </button>
         </div>
       </div>
