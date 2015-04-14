@@ -286,22 +286,27 @@ angular.module('jukufrontApp')
       return haettavarahoitus2 <= omarahoitus2;
     };
 
-    $scope.palaaTallentamatta = function () {
+    $scope.palaaTallentamattaLiite = function () {
       $scope.editoitavaLiite = -1;
       haeLiitteet();
     };
 
     $scope.paivitaLiiteNimi = function (liiteid, nimi) {
-      if (nimi != $scope.liiteNimi) {
-        LiiteService.paivitaNimi($scope.hakemusid, liiteid, nimi)
-          .success(function (data) {
-            StatusService.ok('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + nimi + ')', 'Liitenimi päivitettiin onnistuneesti');
-            $scope.editoitavaLiite = -1;
-            haeLiitteet();
-          })
-          .error(function (data) {
-            StatusService.virhe('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + nimi + ')', data);
-          });
+      $scope.$broadcast('show-errors-check-validity');
+      if ($scope.hakemusForm.$valid) {
+        if (nimi != $scope.liiteNimi) {
+          LiiteService.paivitaNimi($scope.hakemusid, liiteid, nimi)
+            .success(function (data) {
+              StatusService.ok('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + nimi + ')', 'Liitenimi päivitettiin onnistuneesti');
+              $scope.editoitavaLiite = -1;
+              haeLiitteet();
+            })
+            .error(function (data) {
+              StatusService.virhe('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + nimi + ')', data);
+            });
+        }
+      } else {
+        StatusService.virhe('LiiteService.paivitaNimi()', 'Anna liitteelle nimi ennen tallentamista.');
       }
     };
 

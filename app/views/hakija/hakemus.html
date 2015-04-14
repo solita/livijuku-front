@@ -533,7 +533,7 @@
                   <div class="sel-file" ng-repeat="l in liitteet">
                     <div ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">
                       <div ng-show="l.liitenumero!=editoitavaLiite">
-                        <p><i class="glyphicon glyphicon-file"></i>
+                        <p><span class="glyphicon glyphicon-file"></span>
                           <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank">{{l.nimi}}
                             ({{l.contenttype}})</a>
                           <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Muuta liitenimi"
@@ -545,7 +545,7 @@
                         </p>
                       </div>
                       <div ng-show="(l.liitenumero==editoitavaLiite)">
-                        <p><i class="glyphicon glyphicon-file"></i>
+                        <p><span class="glyphicon glyphicon-file"></span>
                           <input name="liitenimi" type="text" class="input-small" noenter
                                  ng-model="l.nimi"
                                  ng-focus="asetaLiitenimi(l.nimi)"
@@ -553,7 +553,7 @@
                           <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Tallenna liitenimi"
                              ng-click="paivitaLiiteNimi(l.liitenumero,l.nimi)">
                             <span class='glyphicon glyphicon-save'></span></a>
-                          <a href="" title="Palaa katselutilaan tallentamatta" ng-click="palaaTallentamatta()">
+                          <a href="" title="Palaa katselutilaan tallentamatta" ng-click="palaaTallentamattaLiite()">
                             <span class='glyphicon glyphicon-eye-open'></span></a>
                           <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Poista liite"
                              ng-click="poistaLiite(l.liitenumero)"><span
@@ -567,7 +567,7 @@
                     </div>
                     <div
                       ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
-                      <p><i class="glyphicon glyphicon-file"></i>
+                      <p><span class="glyphicon glyphicon-file"></span>
                         <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}">{{l.nimi}}
                           ({{l.contenttype}})</a>
                       </p>
