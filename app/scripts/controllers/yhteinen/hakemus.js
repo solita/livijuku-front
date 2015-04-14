@@ -145,7 +145,7 @@ angular.module('jukufrontApp')
         });
       haeLiitteet();
 
-    };
+    }
 
     function haeLiitteet() {
       LiiteService.haeKaikki($scope.hakemusid)
@@ -289,7 +289,7 @@ angular.module('jukufrontApp')
     $scope.palaaTallentamatta = function () {
       $scope.editoitavaLiite = -1;
       haeLiitteet();
-    }
+    };
 
     $scope.paivitaLiiteNimi = function (liiteid, nimi) {
       if (nimi != $scope.liiteNimi) {
@@ -465,16 +465,15 @@ angular.module('jukufrontApp')
         });
     };
 
-   $scope.hasPaatos = function (tyyppi, hakemustilatunnus) {
-     return tyyppi == 'AH0' &&
-       hakemustilatunnus == 'P' ||
-       hakemustilatunnus == 'M';
-   };
+    $scope.hasPaatos = function (tyyppi, hakemustilatunnus) {
+      return tyyppi == 'AH0' &&
+        hakemustilatunnus == 'P' ||
+        hakemustilatunnus == 'M';
+    };
 
     haeHakemukset();
     haePaatos();
     generoiTooltipArvot();
-    $window.scrollTo(0,0);
+    $window.scrollTo(0, 0);
   }
-  ])
-;
+  ]);
