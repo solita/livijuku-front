@@ -533,8 +533,8 @@
                   <div class="sel-file" ng-repeat="l in liitteet">
                     <div ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">
                       <div ng-show="l.liitenumero!=editoitavaLiite">
-                        <p><span class="glyphicon glyphicon-file"></span>
-                          <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank">{{l.nimi}}
+                        <p>
+                          <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank"><span class="glyphicon glyphicon-file"></span>{{l.nimi}}
                             ({{l.contenttype}})</a>
                           <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Muuta liitenimi"
                              ng-click="asetaEditTilaan(l.liitenumero)"><span
@@ -567,8 +567,8 @@
                     </div>
                     <div
                       ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
-                      <p><span class="glyphicon glyphicon-file"></span>
-                        <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}">{{l.nimi}}
+                      <p>
+                        <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}"><span class="glyphicon glyphicon-file"></span>{{l.nimi}}
                           ({{l.contenttype}})</a>
                       </p>
                     </div>
