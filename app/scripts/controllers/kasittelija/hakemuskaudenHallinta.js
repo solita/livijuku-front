@@ -88,6 +88,15 @@ angular.module('jukufrontApp')
       formatMonth: 'MM'
     };
 
+    $scope.ennenLoppuPvm = function (alkupvm,loppupvm) {
+      // Kikkailua, kun datepicker ja kasin-input antavat eri timezonet
+      var alku_tmp_ts = Number(new Date(alkupvm));
+      var loppu_tmp_ts = Number(new Date(loppupvm));
+      var alku_str = epochToISOString(alku_tmp_ts);
+      var loppu_str = epochToISOString(loppu_tmp_ts);
+      return (Number(new Date(alku_str))<Number(new Date(loppu_str)));
+    };
+
     $scope.luoUusiHakemuskausi = function (vuosi) {
       HakemuskausiService.luoUusi(vuosi)
         .success(function () {
@@ -184,8 +193,8 @@ angular.module('jukufrontApp')
     $scope.validiPaivamaara = function (pvm) {
       var validiPvm = false;
       if ($scope.muokkaaHakuaikojaVuosi != null) {
-        if (isNaN(pvm) || pvm == null) {
-          return false;
+        if (pvm == null) {
+          validiPvm = false;
         } else {
           var min_ts = Number(new Date('2010-1-1'));
           var max_ts = Number(new Date('2100-1-1'));

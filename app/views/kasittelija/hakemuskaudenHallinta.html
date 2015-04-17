@@ -3,7 +3,7 @@
     <p>Ei hakemuskauden katseluoikeutta.</p>
   </div>
   <div ng-show="sallittu('view-hakemuskausi')" ng-repeat="hakemuskausi in hakemuskaudet">
-    <form name="form.hakuaikaForm">
+    <form name="form.hakuaikaForm" novalidate>
       <div ng-class="{uusihakemuskausi:hakemuskausi.uusi,well:!hakemuskausi.uusi}">
         <div class="row">
           <div class="col-md-3 text-center">
@@ -59,7 +59,8 @@
                            ng-model="hakemuskausi.avustushakemusAlkupvm" datepicker-options="{{dateOptions}}"
                            is-open="avustushakemusAlkupvmKalenteri"
                            ng-required="true"
-                           ui-validate="{validiPvm: 'validiPaivamaara($value)'}"
+                           ui-validate="{validiPvm: 'validiPaivamaara($value)', ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.avustushakemusLoppupvm)'}"
+                           ui-validate-watch=" 'hakemuskausi.avustushakemusLoppupvm' "
                            show-button-bar="false" noenter my-date/>
                     <span class="input-group-btn">
                       <button type="button" class="btn btn-default"
@@ -69,11 +70,12 @@
                     </span>
                   </p>
                   <span class="help-block text-danger"
-                        ng-show="form.hakuaikaForm.avustushakemusalkupvm.$invalid && form.hakuaikaForm.avustushakemusalkupvm.$dirty">
-                    <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.avustushakemusalkupvm.$error.validiPvm && !form.hakuaikaForm.avustushakemusalkupvm.$pristine">
-                      Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
-                    </span>
+                        ng-show="form.hakuaikaForm.avustushakemusalkupvm.$error.validiPvm">
+                    Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
+                  </span>
+                  <span class="help-block text-danger"
+                        ng-show="form.hakuaikaForm.avustushakemusalkupvm.$error.ennenLoppuPvm">
+                    Päivämäärän tulee olla ennen loppumispäivämäärää.
                   </span>
 
                   <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.avustushakemusAlkupvm |
@@ -94,13 +96,9 @@
                     </span>
                   </p>
                   <span class="help-block text-danger"
-                        ng-show="form.hakuaikaForm.avustushakemusloppupvm.$invalid && form.hakuaikaForm.avustushakemusloppupvm.$dirty">
-                    <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.avustushakemusloppupvm.$error.validiPvm && !form.hakuaikaForm.avustushakemusloppupvm.$pristine">
-                      Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
-                    </span>
+                        ng-show="form.hakuaikaForm.avustushakemusloppupvm.$error.validiPvm">
+                    Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
                   </span>
-
                   <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.avustushakemusLoppupvm |
                     date:'d.M.yyyy'}}</p>
                 </div>
@@ -122,7 +120,8 @@
                     <input name="maksatushakemus1alkupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
                            ng-model="hakemuskausi.maksatushakemus1Alkupvm" datepicker-options="{{dateOptions}}"
                            is-open="maksatushakemus1AlkupvmKalenteri" ng-required="true"
-                           ui-validate="{validiPvm: 'validiPaivamaara($value)'}"
+                           ui-validate="{validiPvm: 'validiPaivamaara($value)', ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.maksatushakemus1Loppupvm)'}"
+                           ui-validate-watch=" 'hakemuskausi.maksatushakemus1Loppupvm' "
                            show-button-bar="false" noenter my-date/>
                     <span class="input-group-btn">
                       <button type="button" class="btn btn-default"
@@ -131,13 +130,13 @@
                     </span>
                   </p>
                   <span class="help-block text-danger"
-                        ng-show="form.hakuaikaForm.maksatushakemus1alkupvm.$invalid && form.hakuaikaForm.maksatushakemus1alkupvm.$dirty">
-                    <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.maksatushakemus1alkupvm.$error.validiPvm && !form.hakuaikaForm.maksatushakemus1alkupvm.$pristine">
-                      Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
-                    </span>
+                        ng-show="form.hakuaikaForm.maksatushakemus1alkupvm.$error.validiPvm">
+                    Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
                   </span>
-
+                  <span class="help-block text-danger"
+                        ng-show="form.hakuaikaForm.maksatushakemus1alkupvm.$error.ennenLoppuPvm">
+                    Päivämäärän tulee olla ennen loppumispäivämäärää.
+                  </span>
                   <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus1Alkupvm |
                     date:'d.M.yyyy'}}</p>
 
@@ -157,13 +156,9 @@
                     </span>
                   </p>
                   <span class="help-block text-danger"
-                        ng-show="form.hakuaikaForm.maksatushakemus1loppupvm.$invalid && form.hakuaikaForm.maksatushakemus1loppupvm.$dirty">
-                    <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.maksatushakemus1loppupvm.$error.validiPvm && !form.hakuaikaForm.maksatushakemus1loppupvm.$pristine">
-                      Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
-                    </span>
+                        ng-show="form.hakuaikaForm.maksatushakemus1loppupvm.$error.validiPvm">
+                    Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
                   </span>
-
                   <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus1Loppupvm |
                     date:'d.M.yyyy'}}</p>
                 </div>
@@ -185,7 +180,8 @@
                     <input name="maksatushakemus2alkupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
                            ng-model="hakemuskausi.maksatushakemus2Alkupvm" datepicker-options="{{dateOptions}}"
                            is-open="maksatushakemus2AlkupvmKalenteri" ng-required="true"
-                           ui-validate="{validiPvm: 'validiPaivamaara($value)'}"
+                           ui-validate="{validiPvm: 'validiPaivamaara($value)', ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.maksatushakemus2Loppupvm)'}"
+                           ui-validate-watch=" 'hakemuskausi.maksatushakemus2Loppupvm' "
                            show-button-bar="false" noenter my-date/>
                     <span class="input-group-btn">
                       <button type="button" class="btn btn-default"
@@ -194,13 +190,13 @@
                     </span>
                   </p>
                   <span class="help-block text-danger"
-                        ng-show="form.hakuaikaForm.maksatushakemus2alkupvm.$invalid && form.hakuaikaForm.maksatushakemus2alkupvm.$dirty">
-                    <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.maksatushakemus2alkupvm.$error.validiPvm && !form.hakuaikaForm.maksatushakemus2alkupvm.$pristine">
-                      Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
-                    </span>
+                        ng-show="form.hakuaikaForm.maksatushakemus2alkupvm.$error.validiPvm">
+                    Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
                   </span>
-
+                  <span class="help-block text-danger"
+                        ng-show="form.hakuaikaForm.maksatushakemus2alkupvm.$error.ennenLoppuPvm">
+                    Päivämäärän tulee olla ennen loppumispäivämäärää.
+                  </span>
                   <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus2Alkupvm |
                     date:'d.M.yyyy'}}</p>
 
@@ -220,13 +216,9 @@
                     </span>
                   </p>
                   <span class="help-block text-danger"
-                        ng-show="form.hakuaikaForm.maksatushakemus2loppupvm.$invalid && form.hakuaikaForm.maksatushakemus2loppupvm.$dirty">
-                    <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.maksatushakemus2loppupvm.$error.validiPvm && !form.hakuaikaForm.maksatushakemus2loppupvm.$pristine">
-                      Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
-                    </span>
+                        ng-show="form.hakuaikaForm.maksatushakemus2loppupvm.$error.validiPvm">
+                    Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
                   </span>
-
                   <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus2Loppupvm |
                     date:'d.M.yyyy'}}</p>
                 </div>
