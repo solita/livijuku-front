@@ -3,20 +3,8 @@
 angular.module('jukufrontApp')
   .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', '$upload', function ($scope, $location, $route, $log, HakemuskausiService, StatusService, $upload) {
 
-    function processHakemus(hakemus) {
-      var oletukset = {
-        K: 0, V: 0, T: 0, T0: 0, TV: 0, P: 0, M: 0
-      }
-
-      var existing_tilat = _.mapValues(
-        _.indexBy(hakemus.hakemustilat, 'hakemustilatunnus'), function(o) {return o.count;});
-      var all_tilat = _.merge(oletukset, existing_tilat);
-
-      return {
-        tilat: all_tilat,
-        total: (_.reduce(_.values(all_tilat), function(sum, n) {return sum + n;})),
-        kaynnissa: (Date.now() > (new Date(hakemus.hakuaika.alkupvm)).valueOf())
-      }
+    function epochToISOString(epoch) {
+      return toISODateString(new Date(epoch));
     }
 
     function haeHakemuskaudet() {
@@ -32,46 +20,72 @@ angular.module('jukufrontApp')
             var hakemus_mh2 = _.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH2'});
 
             var processedHakemuskausi = {
-                vuosi: hakemuskausi.vuosi,
-                tilatunnus: hakemuskausi.tilatunnus,
-                avustushakemusKaynnissa: nykyhetki > Number(new Date(hakemus_ah0.hakuaika.alkupvm)),
-                avustushakemusAlkupvm: Number(new Date(hakemus_ah0.hakuaika.alkupvm)),
-                avustushakemusAlkupvmKalenteri: false,
-                avustushakemusLoppupvm: Number(new Date(hakemus_ah0.hakuaika.loppupvm)),
-                avustushakemusLoppupvmKalenteri: false,
-                maksatushakemus1Kaynnissa: nykyhetki>Number(new Date(hakemus_mh1.hakuaika.alkupvm)),
-                maksatushakemus1Alkupvm: Number(new Date(hakemus_mh1.hakuaika.alkupvm)),
-                maksatushakemus1AlkupvmKalenteri: false,
-                maksatushakemus1Loppupvm: Number(new Date(hakemus_mh1.hakuaika.loppupvm)),
-                maksatushakemus1LoppupvmKalenteri: false,
-                maksatushakemus2Kaynnissa: nykyhetki > Number(new Date(hakemus_mh2.hakuaika.alkupvm)),
-                maksatushakemus2Alkupvm: Number(new Date(hakemus_mh2.hakuaika.alkupvm)),
-                maksatushakemus2AlkupvmKalenteri: false,
-                maksatushakemus2Loppupvm: Number(new Date(hakemus_mh2.hakuaika.loppupvm)),
-                maksatushakemus2LoppupvmKalenteri: false,
+              vuosi: hakemuskausi.vuosi,
+              tilatunnus: hakemuskausi.tilatunnus,
+              avustushakemusKaynnissa: nykyhetki > Number(new Date(hakemus_ah0.hakuaika.alkupvm)),
+              avustushakemusAlkupvm: hakemus_ah0.hakuaika.alkupvm,
+              avustushakemusAlkupvmKalenteri: false,
+              avustushakemusLoppupvm: hakemus_ah0.hakuaika.loppupvm,
+              avustushakemusLoppupvmKalenteri: false,
+              maksatushakemus1Kaynnissa: nykyhetki > Number(new Date(hakemus_mh1.hakuaika.alkupvm)),
+              maksatushakemus1Alkupvm: hakemus_mh1.hakuaika.alkupvm,
+              maksatushakemus1AlkupvmKalenteri: false,
+              maksatushakemus1Loppupvm: hakemus_mh1.hakuaika.loppupvm,
+              maksatushakemus1LoppupvmKalenteri: false,
+              maksatushakemus2Kaynnissa: nykyhetki > Number(new Date(hakemus_mh2.hakuaika.alkupvm)),
+              maksatushakemus2Alkupvm: hakemus_mh2.hakuaika.alkupvm,
+              maksatushakemus2AlkupvmKalenteri: false,
+              maksatushakemus2Loppupvm: hakemus_mh2.hakuaika.loppupvm,
+              maksatushakemus2LoppupvmKalenteri: false,
 
-                ah0: processHakemus(hakemus_ah0),
-                mh1: processHakemus(hakemus_mh1),
-                mh2: processHakemus(hakemus_mh2)
-              }
-              if (hakemuskausi.tilatunnus == "A" || hakemuskausi.tilatunnus == "0") {
-                processedHakemuskausi.uusi = true;
-              }
+              ah0: processHakemus(hakemus_ah0),
+              mh1: processHakemus(hakemus_mh1),
+              mh2: processHakemus(hakemus_mh2)
+            };
+            if (hakemuskausi.tilatunnus == "A" || hakemuskausi.tilatunnus == "0") {
+              processedHakemuskausi.uusi = true;
+            }
 
 
-
-              hakemuskaudetTmp.push(processedHakemuskausi);
+            hakemuskaudetTmp.push(processedHakemuskausi);
           });
           $scope.hakemuskaudet = _.sortBy(hakemuskaudetTmp, 'vuosi').reverse();
+          $scope.muokkaaHakuaikojaVuosi = null;
         })
         .error(function (data) {
           StatusService.virhe('HakemuskausiService.haeSummary()', data);
         });
-    };
+    }
+
+    function processHakemus(hakemus) {
+      var oletukset = {
+        K: 0, V: 0, T: 0, T0: 0, TV: 0, P: 0, M: 0
+      };
+
+      var existing_tilat = _.mapValues(
+        _.indexBy(hakemus.hakemustilat, 'hakemustilatunnus'), function (o) {
+          return o.count;
+        });
+      var all_tilat = _.merge(oletukset, existing_tilat);
+
+      return {
+        tilat: all_tilat,
+        total: (_.reduce(_.values(all_tilat), function (sum, n) {
+          return sum + n;
+        })),
+        kaynnissa: (Date.now() > (new Date(hakemus.hakuaika.alkupvm)).valueOf())
+      }
+    }
+
+    function toISODateString(date) {
+      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    }
+
 
     $scope.dateOptions = {
-      formatYear: 'yy',
-      startingDay: 1
+      formatYear: 'yyyy',
+      startingDay: 1,
+      formatMonth: 'MM'
     };
 
     $scope.luoUusiHakemuskausi = function (vuosi) {
@@ -90,80 +104,48 @@ angular.module('jukufrontApp')
       $event.stopPropagation();
     };
 
-    $scope.muokkaaHakuaikojaVuosi = null;
-    $scope.avustushakemusAlkupvm = null;
-    $scope.avustushakemusLoppupvm = null;
-    $scope.maksatushakemus1Alkupvm = null;
-    $scope.maksatushakemus1Loppupvm = null;
-    $scope.maksatushakemus2Alkupvm = null;
-    $scope.maksatushakemus2Loppupvm = null;
-
-
-    $scope.asetaMuokkaaHakuaikojaVuosi = function (vuosi, ah0alkupvm, ah0loppupvm, mh1alkupvm, mh1loppupvm, mh2alkupvm, mh2loppupvm) {
-      $scope.avustushakemusAlkupvm = ah0alkupvm;
-      $scope.avustushakemusLoppupvm = ah0loppupvm;
-      $scope.maksatushakemus1Alkupvm = mh1alkupvm;
-      $scope.maksatushakemus1Loppupvm = mh1loppupvm;
-      $scope.maksatushakemus2Alkupvm = mh2alkupvm;
-      $scope.maksatushakemus2Loppupvm = mh2loppupvm;
+    $scope.asetaMuokkaaHakuaikojaVuosi = function (vuosi) {
       $scope.muokkaaHakuaikojaVuosi = vuosi;
     };
 
-    function toISODateString(date) {
-      return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    }
+    $scope.tallennaHakuajat = function (vuosi, ah0alkupvm, ah0loppupvm, mh1alkupvm, mh1loppupvm, mh2alkupvm, mh2loppupvm) {
+      $scope.$broadcast('show-errors-check-validity');
+      if ($scope.form.hakuaikaForm.$valid) {
+        var hakuajat = [
+          {
+            hakemustyyppitunnus: "AH0",
+            alkupvm: epochToISOString(ah0alkupvm),
+            loppupvm: epochToISOString(ah0loppupvm)
+          },
+          {
+            hakemustyyppitunnus: "MH1",
+            alkupvm: epochToISOString(mh1alkupvm),
+            loppupvm: epochToISOString(mh1loppupvm)
+          },
+          {
+            hakemustyyppitunnus: "MH2",
+            alkupvm: epochToISOString(mh2alkupvm),
+            loppupvm: epochToISOString(mh2loppupvm)
+          }
+        ];
 
-    // TODO: Kutsu suoraan tätä lomakkeen Tallenna hakuajat linkistä. Päästään eroon scope-globaaleista.
-    $scope.tallennaHakuajat = function (vuosi) {
-      console.log("Tallenna hakuajat vuosi:" + vuosi);
-      console.log("AH0_Alkupvm:" + $scope.avustushakemusAlkupvm + ' date:' + new Date($scope.avustushakemusAlkupvm).toISOString());
-      console.log("AH0_Loppupvm:" + $scope.avustushakemusLoppupvm + ' date:' + new Date($scope.avustushakemusLoppupvm).toISOString());
-      console.log("MH1_Alkupvm:" + $scope.maksatushakemus1Alkupvm + ' date:' + new Date($scope.maksatushakemus1Alkupvm).toISOString());
-      console.log("MH1_Loppupvm:" + $scope.maksatushakemus1Loppupvm + ' date:' + new Date($scope.maksatushakemus1Loppupvm).toISOString());
-      console.log("MH2_Alkupvm:" + $scope.maksatushakemus2Alkupvm + ' date:' + new Date($scope.maksatushakemus2Alkupvm).toISOString());
-      console.log("MH2_Loppupvm:" + $scope.maksatushakemus2Loppupvm + ' date:' + new Date($scope.maksatushakemus2Loppupvm).toISOString());
-
-      function epochToISOString(epoch) {
-        return toISODateString(new Date(epoch));
+        HakemuskausiService.saveHakuajat(vuosi, hakuajat)
+          .success(function () {
+            StatusService.ok('HakemuskausiService.saveHakuajat(' + vuosi + ')', 'Hakuaikojen: tallennus vuodelle ' + vuosi + ' onnistui.');
+            $scope.muokkaaHakuaikojaVuosi = null;
+            // haeHakemuskaudet();
+          })
+          .error(function (data) {
+            StatusService.virhe('HakemuskausiService.saveHakuajat(' + vuosi + ')', data);
+          });
+      } else {
+        StatusService.virhe('HakemuskausiService.saveHakuajat()', 'Korjaa lomakkeen virheet ennen tallentamista.');
       }
-
-      var hakuajat = [
-        {hakemustyyppitunnus: "AH0", alkupvm: epochToISOString($scope.avustushakemusAlkupvm), loppupvm: epochToISOString($scope.avustushakemusLoppupvm)},
-        {hakemustyyppitunnus: "MH1", alkupvm: epochToISOString($scope.maksatushakemus1Alkupvm), loppupvm: epochToISOString($scope.maksatushakemus1Loppupvm)},
-        {hakemustyyppitunnus: "MH2", alkupvm: epochToISOString($scope.maksatushakemus2Alkupvm), loppupvm: epochToISOString($scope.maksatushakemus2Loppupvm)},
-      ];
-
-      HakemuskausiService.saveHakuajat(vuosi, hakuajat)
-        .success(function () {
-          StatusService.ok('HakemuskausiService.saveHakuajat(' + vuosi + ')', 'Hakuaikojen: tallennus vuodelle ' + vuosi + ' onnistui.');
-          haeHakemuskaudet();
-        })
-        .error(function (data) {
-          StatusService.virhe('HakemuskausiService.saveHakuajat(' + vuosi + ')', data);
-        });
-
-      // TODO: Ruma monimuuttujainen globaali tila. Ugh.
-      $scope.muokkaaHakuaikojaVuosi = null;
-      $scope.avustushakemusAlkupvm = null;
-      $scope.avustushakemusLoppupvm = null;
-      $scope.maksatushakemus1Alkupvm = null;
-      $scope.maksatushakemus1Loppupvm = null;
-      $scope.maksatushakemus2Alkupvm = null;
-      $scope.maksatushakemus2Loppupvm = null;
     };
 
     $scope.valitseHakemustyyppi = function (tyyppi) {
 
-      // TODO: Ruma monimuuttujainen globaali tila. Ugh.
-      if (
-        $scope.muokkaaHakuaikojaVuosi ||
-        $scope.avustushakemusAlkupvm ||
-        $scope.avustushakemusLoppupvm ||
-        $scope.maksatushakemus1Alkupvm ||
-        $scope.maksatushakemus1Loppupvm ||
-        $scope.maksatushakemus2Alkupvm ||
-        $scope.maksatushakemus2Loppupvm
-      ) {
+      if ($scope.muokkaaHakuaikojaVuosi != null) {
         // Päivämäärien muokkaus menossa, ei navigoida "Kaikki hakemukset" -välilehdelle.
         return;
       }
@@ -199,10 +181,24 @@ angular.module('jukufrontApp')
       haeHakemuskaudet();
     };
 
+    $scope.validiPaivamaara = function (pvm) {
+      var validiPvm = false;
+      if ($scope.muokkaaHakuaikojaVuosi != null) {
+        if (isNaN(pvm) || pvm == null) {
+          return false;
+        } else {
+          var min_ts = Number(new Date('2010-1-1'));
+          var max_ts = Number(new Date('2100-1-1'));
+          var pvm_ts = Number(new Date(pvm));
+          validiPvm = ((pvm_ts > min_ts) && (pvm_ts < max_ts) );
+        }
+      } else {
+        validiPvm = true;
+      }
+      return validiPvm;
+    };
+    $scope.form = {};
     haeHakemuskaudet();
-
   }
-
-  ])
-;
+  ]);
 

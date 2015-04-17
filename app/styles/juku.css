@@ -221,18 +221,16 @@ textarea {
 }
 
 .hakuaika-input {
-  height: 22px;
-  padding: 0px 0px;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 1.5;
   border-radius: 3px;
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 .juku-datepicker .form-control {
-  height: 12px;
-  padding: 11px;
+  height: 24px;
+  padding: 0px;
 }
 
 .juku-datepicker .btn {
