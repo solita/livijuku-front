@@ -215,8 +215,6 @@ angular.module('jukufrontApp')
             })
           }
 
-          $scope.data = data;
-
           var temp = _.groupBy(data, 'avustuskohdeluokka');
 
           $scope.akl = _.mapValues(temp, function (v) {
