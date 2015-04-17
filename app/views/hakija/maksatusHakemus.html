@@ -735,7 +735,8 @@
                       <div ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">
                         <div ng-show="l.liitenumero!=editoitavaLiite">
                           <p>
-                            <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank"><span class="glyphicon glyphicon-file"></span>{{l.nimi}}
+                            <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank"><span
+                              class="glyphicon glyphicon-file"></span>{{l.nimi}}
                               ({{l.contenttype}})</a>
                             <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Muuta liitenimi"
                                ng-click="asetaEditTilaan(l.liitenumero)"><span
@@ -769,7 +770,8 @@
                       <div
                         ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
                         <p>
-                          <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}"><span class="glyphicon glyphicon-file"></span>{{l.nimi}}
+                          <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}"><span
+                            class="glyphicon glyphicon-file"></span>{{l.nimi}}
                             ({{l.contenttype}})</a>
                         </p>
                       </div>
@@ -798,13 +800,13 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-6">
             <a href="#/h/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
               päänäkymään</a>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div
-              ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+              ng-show="(hakemus.hakemustilatunnus=='K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
               <button data-ng-click="tallennaHakemus()" class="pull-right btn btn-primary">Tallenna tiedot
               </button>
             </div>
@@ -815,8 +817,10 @@
               </button>
             </div>
           </div>
-          <div class="col-md-2">
-            <button data-ng-click="naytaHakemus()" class="pull-right btn btn-primary">Hakemuksen esikatselu
+          <div class="col-md-3">
+            <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary">Tallenna
+              ja
+              esikatsele hakemus
             </button>
           </div>
         </div>
@@ -848,25 +852,26 @@
           <div class="col-md-12">
             <div ng-show="sallittu('allekirjoita-oma-hakemus')">
               <button ng-show="hakemus.hakemustilatunnus == 'K'" data-ng-click="lahetaHakemus()"
-                      class="pull-right btn btn-success">Lähetä hakemus
+                      class="pull-right btn btn-success">Tallenna ja lähetä hakemus
               </button>
               <button ng-show="hakemus.hakemustilatunnus == 'T0'" data-ng-click="lahetaTaydennys()"
-                      class="pull-right btn btn-success">Lähetä täydennetty hakemus
+                      class="pull-right btn btn-success">Tallenna ja lähetä täydennetty hakemus
               </button>
               <button ng-show="hakemus.hakemustilatunnus != 'K' && hakemus.hakemustilatunnus != 'T0'"
                       data-ng-click="lahetaHakemus()"
-                      class="pull-right btn btn-success" disabled>Lähetä hakemus
+                      class="pull-right btn btn-success" disabled>Tallenna ja lähetä hakemus
               </button>
             </div>
             <div ng-hide="sallittu('allekirjoita-oma-hakemus')">
               <button ng-show="hakemus.hakemustilatunnus != 'T0'" data-ng-click="lahetaHakemus()"
-                      class="pull-right btn btn-success" disabled>Lähetä hakemus
+                      class="pull-right btn btn-success" disabled>Tallenna ja lähetä hakemus
               </button>
               <button ng-show="hakemus.hakemustilatunnus == 'T0'" data-ng-click="lahetaTaydennys()"
-                      class="pull-right btn btn-success">Lähetä täydennetty hakemus
+                      class="pull-right btn btn-success">Tallenna ja lähetä täydennetty hakemus
               </button>
             </div>
           </div>
+        </div>
       </form>
     </div>
   </div>
