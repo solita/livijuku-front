@@ -12,6 +12,7 @@ angular
     'services.paatos',
     'controllers.MainCtrl',
     'ngResource',
+    'angular-loading-bar',
     'smart-table',
     'ui.bootstrap',
     'monospaced.elastic',
