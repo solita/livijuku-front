@@ -88,13 +88,21 @@ angular.module('jukufrontApp')
       formatMonth: 'MM'
     };
 
-    $scope.ennenLoppuPvm = function (alkupvm,loppupvm) {
-      // Kikkailua, kun datepicker ja kasin-input antavat eri timezonet
-      var alku_tmp_ts = Number(new Date(alkupvm));
-      var loppu_tmp_ts = Number(new Date(loppupvm));
-      var alku_str = epochToISOString(alku_tmp_ts);
-      var loppu_str = epochToISOString(loppu_tmp_ts);
-      return (Number(new Date(alku_str))<Number(new Date(loppu_str)));
+    $scope.ennenLoppuPvm = function (alkupvm, loppupvm) {
+      var alku_ts= 0;
+      var loppu_ts=0;
+      if (typeof alkupvm === 'undefined' || typeof loppupvm === 'undefined' ) return false;
+      if (typeof alkupvm === 'string') {
+        alku_ts = Date.parse(alkupvm);
+      } else {
+        alku_ts = Number(alkupvm);
+      }
+      if (typeof loppupvm === 'string') {
+        loppu_ts = Date.parse(loppupvm);
+      } else {
+        loppu_ts = Number(loppupvm);
+      }
+      return (alku_ts < loppu_ts);
     };
 
     $scope.luoUusiHakemuskausi = function (vuosi) {
@@ -192,20 +200,18 @@ angular.module('jukufrontApp')
 
     $scope.validiPaivamaara = function (pvm) {
       var validiPvm = false;
-      if ($scope.muokkaaHakuaikojaVuosi != null) {
-        if (pvm == null) {
-          validiPvm = false;
-        } else {
-          var min_ts = Number(new Date('2010-1-1'));
-          var max_ts = Number(new Date('2100-1-1'));
-          var pvm_ts = Number(new Date(pvm));
-          validiPvm = ((pvm_ts > min_ts) && (pvm_ts < max_ts) );
-        }
+      var min_ts = Date.parse('2010-01-01');
+      var max_ts = Date.parse('2100-01-01');
+      var pvm_ts = null;
+      if (typeof pvm === 'undefined') return false;
+      if (typeof pvm === 'string') {
+        pvm_ts = Date.parse(pvm);
       } else {
-        validiPvm = true;
+        pvm_ts = Number(pvm);
       }
-      return validiPvm;
+      return ((pvm_ts > min_ts) && (pvm_ts < max_ts) );
     };
+
     $scope.form = {};
     haeHakemuskaudet();
   }
