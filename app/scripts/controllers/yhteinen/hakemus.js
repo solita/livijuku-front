@@ -3,10 +3,6 @@
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', '$upload', 'LiiteService', '$window', function ($rootScope, $scope, $location, $routeParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, $upload, LiiteService, $window) {
 
-    function euroSyoteNumeroksi(arvo) {
-      return parseFloat(arvo.replace(/[^0-9,]/g, '').replace(',', '.'));
-    }
-
     function generoiTooltipArvot() {
       var maksatushakemus1Arvot = {};
       $scope.tooltipArvot = {};
@@ -121,14 +117,14 @@ angular.module('jukufrontApp')
                 "avustuskohdeluokka": "PSA",
                 "omarahoitus": 0,
                 "haettavaavustus": 0,
-                "avustuskohdelajitunnus": "1",
+                "avustuskohdelajitunnus": "P",
                 "hakemusid": $scope.hakemusid
               },
               {
                 "avustuskohdeluokka": "PSA",
                 "omarahoitus": 0,
                 "haettavaavustus": 0,
-                "avustuskohdelajitunnus": "2",
+                "avustuskohdelajitunnus": "I",
                 "hakemusid": $scope.hakemusid
               },
               {
@@ -197,7 +193,7 @@ angular.module('jukufrontApp')
               {
                 "avustuskohdeluokka": "K",
                 "omarahoitus": 0,
-                "haettavaavustus": 2,
+                "haettavaavustus": 0,
                 "avustuskohdelajitunnus": "M",
                 "hakemusid": $scope.hakemusid
               }
@@ -217,10 +213,21 @@ angular.module('jukufrontApp')
 
           var temp = _.groupBy(data, 'avustuskohdeluokka');
 
-          $scope.akl = _.mapValues(temp, function (v) {
+          var akl = _.mapValues(temp, function (v) {
             return _.mapValues(_.groupBy(v, 'avustuskohdelajitunnus'), function (v) {
               return v[0];
             });
+          });
+
+          // TODO: Ruma häkki, kun en osaa direktiivejä ja hierarkisia $scope propsuja.
+          // Laitetaan kaikki akl-luokat scopeen omina propertyinä.
+          // Näin toistaiseksi, kunnes tehdään yksi yhteinen jku-avustuskohdeluokka -direktiivi.
+          // Nykytoteutuksessa ei vielä ole ng-repeat rakennetta, joka tekisi scopet hiearkisesti,
+          // enkä keksinyt, miten direktiivi voisi viitata $scope.akl.* -propertyihin, vain
+          // $scope.* -viittaukset osasin tehdä dokumentaation mukaisesti:
+          // - http://plnkr.co/edit/mvuBkvB2n4ipwNT52bdV?p=preview
+          _.forEach(akl, function (v,k) {
+            $scope['jkuAvustuskohdeluokka'+k]=v;
           });
 
         })
@@ -414,23 +421,17 @@ angular.module('jukufrontApp')
         });
     };
 
-    $scope.positiivinenArvo = function (value) {
-      if (typeof value === 'undefined') return false;
-      var floatarvo;
-      if (typeof value === 'string') {
-        floatarvo = euroSyoteNumeroksi(value);
-        return (floatarvo >= 0 && floatarvo <= 999999999.00);
-      }
-      return true;
-    };
-
     $scope.tallennaHakemus = function () {
       $scope.$broadcast('show-errors-check-validity');
       if ($scope.hakemusForm.$valid) {
 
         var avustuskohteet = [];
-        _.each($scope.akl, function (i) {
-          _.each(i, function (j) {
+
+        // TODO: Ruma häkki, kun en osaa. kts. haeHakemukset()
+        var keys = ['jkuAvustuskohdeluokkaPSA', 'jkuAvustuskohdeluokkaHK', 'jkuAvustuskohdeluokkaK'];
+
+        _.each(keys, function (i) {
+          _.each($scope[i], function (j) {
             var item = {
               "omarahoitus": j.omarahoitus,
               "haettavaavustus": j.haettavaavustus,
@@ -514,4 +515,52 @@ angular.module('jukufrontApp')
     generoiTooltipArvot();
     $window.scrollTo(0, 0);
   }
-  ]);
+  ])
+  .directive('jkuAvustuskohdeluokka', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        akl: '=luokka'
+      },
+      controller: function ($scope) {
+
+        $scope.euroSyoteNumeroksi = function (arvo) {
+          return parseFloat(arvo.replace(/[^0-9,]/g, '').replace(',', '.'));
+        };
+
+        $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
+          var omarahoitus2, haettavarahoitus2;
+          if ((typeof omarahoitus === 'undefined') || (typeof haettavarahoitus === 'undefined')) return true;
+          if (typeof omarahoitus === 'string') {
+            omarahoitus2 = $scope.euroSyoteNumeroksi(omarahoitus);
+          }
+          if (typeof haettavarahoitus === 'string') {
+            haettavarahoitus2 = $scope.euroSyoteNumeroksi(haettavarahoitus);
+          }
+          if (typeof omarahoitus === 'number') {
+            omarahoitus2 = parseFloat(omarahoitus);
+          }
+          if (typeof haettavarahoitus === 'number') {
+            haettavarahoitus2 = parseFloat(haettavarahoitus);
+          }
+          console.log("omarahoitusRiittava: return "+ haettavarahoitus2 + " <= " + omarahoitus2 +
+            " ("+ (haettavarahoitus2 <= omarahoitus2) + ")");
+          return haettavarahoitus2 <= omarahoitus2;
+        };
+
+        $scope.positiivinenArvo = function (value) {
+          if (typeof value === 'undefined') return false;
+          var floatarvo;
+          if (typeof value === 'string') {
+            floatarvo = $scope.euroSyoteNumeroksi(value);
+            return (floatarvo >= 0 && floatarvo <= 999999999.00);
+          }
+          return true;
+        };
+
+      },
+      templateUrl: function(elem, attr){
+        return 'views/hakija/'+attr.luokka+'.html';
+      }
+    };
+  });
