@@ -150,7 +150,7 @@ angular.module('jukufrontApp')
           .success(function () {
             StatusService.ok('HakemuskausiService.saveHakuajat(' + vuosi + ')', 'Hakuaikojen: tallennus vuodelle ' + vuosi + ' onnistui.');
             $scope.muokkaaHakuaikojaVuosi = null;
-            // haeHakemuskaudet();
+            haeHakemuskaudet();
           })
           .error(function (data) {
             StatusService.virhe('HakemuskausiService.saveHakuajat(' + vuosi + ')', data);
