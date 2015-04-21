@@ -117,14 +117,14 @@ angular.module('jukufrontApp')
                 "avustuskohdeluokka": "PSA",
                 "omarahoitus": 0,
                 "haettavaavustus": 0,
-                "avustuskohdelajitunnus": "P",
+                "avustuskohdelajitunnus": "1",
                 "hakemusid": $scope.hakemusid
               },
               {
                 "avustuskohdeluokka": "PSA",
                 "omarahoitus": 0,
                 "haettavaavustus": 0,
-                "avustuskohdelajitunnus": "I",
+                "avustuskohdelajitunnus": "2",
                 "hakemusid": $scope.hakemusid
               },
               {
