@@ -522,7 +522,7 @@ angular.module('jukufrontApp')
       scope: {
         akl: '=luokka'
       },
-      controller: function ($scope) {
+      controller: ["$scope", "$rootScope", function ($scope, $rootScope) {
 
         $scope.euroSyoteNumeroksi = function (arvo) {
           return parseFloat(arvo.replace(/[^0-9,]/g, '').replace(',', '.'));
@@ -558,7 +558,12 @@ angular.module('jukufrontApp')
           return true;
         };
 
-      },
+        $scope.isReadonly = function() {
+          // TODO: LIVIJUKU-229 Toisten hakijoiden hakemusten syötekentät pitää muuttaa vain luku -tilaan
+          return !$rootScope.sallittu('modify-oma-hakemus');
+        }
+
+      }],
       templateUrl: function(elem, attr){
         return 'views/hakija/'+attr.luokka+'.html';
       }

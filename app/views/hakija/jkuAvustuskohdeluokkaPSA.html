@@ -20,7 +20,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Haettava valtionavustus</label>
           <input name="psa1haettavaavustus" type="text" min="-0.0001" ng-currency="" noenter
-                 class="form-control"
+                 ng-readonly="isReadonly()" class="form-control"
                  ng-model="akl['1'].haettavaavustus"
                  ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
 
@@ -33,7 +33,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Kunnan oma rahoitusosuus</label>
           <input name="psa1omarahoitus" type="text" min="-0.0001" ng-currency="" noenter class="form-control"
-                 ng-model="akl['1'].omarahoitus"
+                 ng-readonly="isReadonly()" ng-model="akl['1'].omarahoitus"
                  ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,akl[&quot;1&quot;].haettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
                  ui-validate-watch=" 'akl[&quot;1&quot;].haettavaavustus' "/>
 
@@ -55,7 +55,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Haettava valtionavustus</label>
           <input name="psa2haettavaavustus" type="text" min="-0.0001" ng-currency=""
-                 noenter class="form-control"
+                 ng-readonly="isReadonly()" noenter class="form-control"
                  ng-model="akl['2'].haettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
 
           <p
@@ -67,7 +67,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Kunnan oma rahoitusosuus</label>
           <input name="psa2omarahoitus" type="text" min="-0.0001" ng-currency="" noenter class="form-control"
-                 ng-model="akl['2'].omarahoitus"
+                 ng-readonly="isReadonly()" ng-model="akl['2'].omarahoitus"
                  ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,akl[&quot;2&quot;].haettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
                  ui-validate-watch=" 'akl[&quot;2&quot;].haettavaavustus' "/>
 
@@ -89,7 +89,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Haettava valtionavustus</label>
           <input name="psamhaettavaavustus" type="text" min="-0.0001" ng-currency=""
-                 noenter class="form-control"
+                 ng-readonly="isReadonly()" noenter class="form-control"
                  ng-model="akl['M'].haettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
 
           <p
@@ -101,7 +101,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Kunnan oma rahoitusosuus</label>
           <input name="psamomarahoitus" type="text" min="-0.0001" ng-currency="" noenter class="form-control"
-                 ng-model="akl['M'].omarahoitus"
+                 ng-readonly="isReadonly()" ng-model="akl['M'].omarahoitus"
                  ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,akl[&quot;M&quot;].haettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
                  ui-validate-watch=" 'akl[&quot;M&quot;].haettavaavustus' "/>
 

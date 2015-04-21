@@ -3439,8 +3439,9 @@ output
 fieldset[disabled] .form-control
 {
     cursor: not-allowed;
-    background-color: #eee;
+    background-color: #fff;
     opacity: 1;
+    border-color: #fff;
 }
 
 textarea.form-control

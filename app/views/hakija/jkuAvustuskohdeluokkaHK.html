@@ -21,7 +21,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Haettava valtionavustus</label>
           <input name="hkslhaettavaavustus" type="text" min="-0.0001" ng-currency=""
-                 noenter class="form-control"
+                 ng-readonly="isReadonly()" noenter class="form-control"
                  ng-model="akl['SL'].haettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
 
           <p
@@ -33,7 +33,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Kunnan oma rahoitusosuus</label>
           <input name="hkslomarahoitus" type="text" min="-0.0001" ng-currency="" noenter class="form-control"
-                 ng-model="akl['SL'].omarahoitus"
+                 ng-readonly="isReadonly()" ng-model="akl['SL'].omarahoitus"
                  ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,akl[&quot;SL&quot;].haettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
                  ui-validate-watch=" 'akl[&quot;SL&quot;].haettavaavustus' "/>
 
@@ -55,7 +55,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Haettava valtionavustus</label>
           <input name="hkklhaettavaavustus" type="text" min="-0.0001" ng-currency=""
-                 noenter class="form-control"
+                 ng-readonly="isReadonly()" noenter class="form-control"
                  ng-model="akl['KL'].haettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
 
           <p
@@ -67,7 +67,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Kunnan oma rahoitusosuus</label>
           <input name="hkklomarahoitus" type="text" min="-0.0001" ng-currency="" noenter class="form-control"
-                 ng-model="akl['KL'].omarahoitus"
+                 ng-readonly="isReadonly()" ng-model="akl['KL'].omarahoitus"
                  ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,akl[&quot;KL&quot;].haettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
                  ui-validate-watch=" 'akl[&quot;KL&quot;].haettavaavustus' "/>
 
@@ -89,7 +89,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Haettava valtionavustus</label>
           <input name="hkllhaettavaavustus" type="text" min="-0.0001" ng-currency=""
-                 noenter class="form-control"
+                 ng-readonly="isReadonly()" noenter class="form-control"
                  ng-model="akl['LL'].haettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
 
           <p
@@ -101,7 +101,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Kunnan oma rahoitusosuus</label>
           <input name="hkllomarahoitus" type="text" min="-0.0001" ng-currency="" noenter class="form-control"
-                 ng-model="akl['LL'].omarahoitus"
+                 ng-readonly="isReadonly()" ng-model="akl['LL'].omarahoitus"
                  ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,akl[&quot;LL&quot;].haettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
                  ui-validate-watch=" 'akl[&quot;LL&quot;].haettavaavustus' "/>
 
@@ -123,7 +123,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Haettava valtionavustus</label>
           <input name="hktlhaettavaavustus" type="text" min="-0.0001" ng-currency=""
-                 noenter class="form-control"
+                 ng-readonly="isReadonly()" noenter class="form-control"
                  ng-model="akl['TL'].haettavaavustus" ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
 
           <p
@@ -135,7 +135,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Kunnan oma rahoitusosuus</label>
           <input name="hktlomarahoitus" type="text" min="-0.0001" ng-currency="" noenter class="form-control"
-                 ng-model="akl['TL'].omarahoitus"
+                 ng-readonly="isReadonly()" ng-model="akl['TL'].omarahoitus"
                  ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,akl[&quot;TL&quot;].haettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
                  ui-validate-watch=" 'akl[&quot;TL&quot;].haettavaavustus' "/>
 
