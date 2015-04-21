@@ -43,6 +43,7 @@ angular.module('jukufrontApp')
     };
 
     $scope.hyvaksyPaatos = function () {
+      $scope.tallennaPaatos();
       PaatosService.hyvaksy($scope.avustushakemus.id)
         .success(function () {
           StatusService.ok('PaatosService.hyvaksy(' + $scope.avustushakemus.id + ')', 'Hakemus päivitettiin päätetyksi.');
@@ -59,7 +60,10 @@ angular.module('jukufrontApp')
         });
     };
 
-    $scope.naytaPaatos = function () {
+    $scope.naytaPaatos = function (tila) {
+      if (tila == 'T') {
+        $scope.tallennaPaatos();
+      }
       $location.path('/k/paatos/esikatselu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus + '/' + $scope.hakemusid + '/' + $scope.haettuavustus + '/' + $scope.avustus);
     };
 

@@ -77,12 +77,12 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-6">
         <a href="#/k/suunnittelu/{{vuosi}}/{{tyyppi}}/{{lajitunnus}}"><span
           class='glyphicon glyphicon-circle-arrow-left'></span>Palaa
           suunnittelunäkymään</a>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-3">
         <div ng-show="(avustushakemus.hakemustilatunnus == 'T')">
           <button data-ng-click="tallennaPaatos()" class="pull-right btn btn-primary">Tallenna tiedot
           </button>
@@ -93,9 +93,17 @@
           </button>
         </div>
       </div>
-      <div class="col-md-2">
-        <button data-ng-click="naytaPaatos()" class="pull-right btn btn-primary">Päätöksen esikatselu
-        </button>
+      <div class="col-md-3">
+        <div ng-show="(avustushakemus.hakemustilatunnus == 'T')">
+          <button data-ng-click="naytaPaatos(avustushakemus.hakemustilatunnus)" class="pull-right btn btn-primary">
+            Tallenna ja esikatsele päätös
+          </button>
+        </div>
+        <div ng-hide="(avustushakemus.hakemustilatunnus == 'T')">
+          <button data-ng-click="naytaPaatos(avustushakemus.hakemustilatunnus)" class="pull-right btn btn-primary">
+            Esikatsele päätös
+          </button>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -119,10 +127,10 @@
     <div class="row">
       <div class="col-md-12">
         <div ng-show="(avustushakemus.hakemustilatunnus == 'T' && sallittu('hyvaksy-paatos'))">
-          <button data-ng-click="hyvaksyPaatos()" class="pull-right btn btn-success">Hyväksy päätös</button>
+          <button data-ng-click="hyvaksyPaatos()" class="pull-right btn btn-success">Tallenna ja hyväksy päätös</button>
         </div>
         <div ng-hide="(avustushakemus.hakemustilatunnus == 'T') && sallittu('hyvaksy-paatos')">
-          <button data-ng-click="hyvaksyPaatos()" class="pull-right btn btn-success" disabled>Hyväksy päätös
+          <button data-ng-click="hyvaksyPaatos()" class="pull-right btn btn-success" disabled>Tallenna ja hyväksy päätös
           </button>
         </div>
       </div>

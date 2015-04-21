@@ -80,7 +80,8 @@
                     <div ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">
                       <div ng-show="l.liitenumero!=editoitavaLiite">
                         <p>
-                          <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank"><span class="glyphicon glyphicon-file"></span>{{l.nimi}}
+                          <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank"><span
+                            class="glyphicon glyphicon-file"></span>{{l.nimi}}
                             ({{l.contenttype}})</a>
                           <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Muuta liitenimi"
                              ng-click="asetaEditTilaan(l.liitenumero)"><span
@@ -114,7 +115,8 @@
                     <div
                       ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
                       <p>
-                        <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}"><span class="glyphicon glyphicon-file"></span>{{l.nimi}}
+                        <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}"><span
+                          class="glyphicon glyphicon-file"></span>{{l.nimi}}
                           ({{l.contenttype}})</a>
                       </p>
                     </div>
@@ -161,8 +163,18 @@
           </div>
         </div>
         <div class="col-md-3">
-          <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary" noenter>Tallenna ja esikatsele hakemus
-          </button>
+          <div
+            ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+            <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary" noenter>
+              Tallenna ja esikatsele hakemus
+            </button>
+          </div>
+          <div
+            ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+            <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary" noenter>
+              Esikatsele hakemus
+            </button>
+          </div>
         </div>
       </div>
       <div class="row">
