@@ -560,6 +560,7 @@ angular.module('jukufrontApp')
 
         $scope.isReadonly = function() {
           // TODO: LIVIJUKU-229 Toisten hakijoiden hakemusten syötekentät pitää muuttaa vain luku -tilaan
+          // TODO: Poista muokkaus vireillä olevalta, jne. hakemuslomakkeelta.
           return !$rootScope.sallittu('modify-oma-hakemus');
         }
 
