@@ -3,7 +3,7 @@
     <p>Ei hakemuskauden katseluoikeutta.</p>
   </div>
   <div ng-show="sallittu('view-hakemuskausi')" ng-repeat="hakemuskausi in hakemuskaudet">
-    <form name="form.hakuaikaForm" novalidate>
+    <form name="hakuaikaForm" novalidate>
       <div ng-class="{uusihakemuskausi:hakemuskausi.uusi,well:!hakemuskausi.uusi}">
         <div class="row">
           <div class="col-md-3 text-center">
@@ -38,7 +38,7 @@
                 Muokkaa hakuaikoja</a></p>
 
               <p><a href="" ng-show="sallittu('modify-hakemuskausi')&&(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
-                    data-ng-click="tallennaHakuajat(hakemuskausi.vuosi, hakemuskausi.avustushakemusAlkupvm, hakemuskausi.avustushakemusLoppupvm, hakemuskausi.maksatushakemus1Alkupvm, hakemuskausi.maksatushakemus1Loppupvm, hakemuskausi.maksatushakemus2Alkupvm, hakemuskausi.maksatushakemus2Loppupvm)"><span
+                    data-ng-click="tallennaHakuajat(hakuaikaForm,hakemuskausi.vuosi, hakemuskausi.avustushakemusAlkupvm, hakemuskausi.avustushakemusLoppupvm, hakemuskausi.maksatushakemus1Alkupvm, hakemuskausi.maksatushakemus1Loppupvm, hakemuskausi.maksatushakemus2Alkupvm, hakemuskausi.maksatushakemus2Loppupvm)"><span
                 class="glyphicon glyphicon-pencil"></span>
                 Tallenna hakuajat</a></p>
             </div>
@@ -72,11 +72,11 @@
                       </span>
                     </p>
                     <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.avustushakemusalkupvm.$error.validiPvm && !form.hakuaikaForm.avustushakemusalkupvm.$pristine">
+                          ng-show="hakuaikaForm.avustushakemusalkupvm.$error.validiPvm && !hakuaikaForm.avustushakemusalkupvm.$pristine">
                       Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
                     </span>
                     <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.avustushakemusalkupvm.$error.ennenLoppuPvm && !form.hakuaikaForm.avustushakemusalkupvm.$pristine">
+                          ng-show="hakuaikaForm.avustushakemusalkupvm.$error.ennenLoppuPvm && !hakuaikaForm.avustushakemusalkupvm.$pristine">
                       Päivämäärän tulee olla ennen loppumispäivämäärää.
                     </span>
 
@@ -99,7 +99,7 @@
                       </span>
                     </p>
                     <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.avustushakemusloppupvm.$error.validiPvm && !form.hakuaikaForm.avustushakemusloppupvm.$pristine">
+                          ng-show="hakuaikaForm.avustushakemusloppupvm.$error.validiPvm && !hakuaikaForm.avustushakemusloppupvm.$pristine">
                       Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
                     </span>
 
@@ -136,11 +136,11 @@
                       </span>
                     </p>
                     <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.maksatushakemus1alkupvm.$error.validiPvm && !form.hakuaikaForm.maksatushakemus1alkupvm.$pristine">
+                          ng-show="hakuaikaForm.maksatushakemus1alkupvm.$error.validiPvm && !hakuaikaForm.maksatushakemus1alkupvm.$pristine">
                       Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
                     </span>
                     <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.maksatushakemus1alkupvm.$error.ennenLoppuPvm && !form.hakuaikaForm.maksatushakemus1alkupvm.$pristine">
+                          ng-show="hakuaikaForm.maksatushakemus1alkupvm.$error.ennenLoppuPvm && !hakuaikaForm.maksatushakemus1alkupvm.$pristine">
                       Päivämäärän tulee olla ennen loppumispäivämäärää.
                     </span>
 
@@ -164,7 +164,7 @@
                       </span>
                     </p>
                     <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.maksatushakemus1loppupvm.$error.validiPvm && !form.hakuaikaForm.maksatushakemus1loppupvm.$pristine">
+                          ng-show="hakuaikaForm.maksatushakemus1loppupvm.$error.validiPvm && !hakuaikaForm.maksatushakemus1loppupvm.$pristine">
                       Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
                     </span>
 
@@ -201,11 +201,11 @@
                       </span>
                     </p>
                     <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.maksatushakemus2alkupvm.$error.validiPvm && !form.hakuaikaForm.maksatushakemus2alkupvm.$pristine">
+                          ng-show="hakuaikaForm.maksatushakemus2alkupvm.$error.validiPvm && !hakuaikaForm.maksatushakemus2alkupvm.$pristine">
                       Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
                     </span>
                     <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.maksatushakemus2alkupvm.$error.ennenLoppuPvm && !form.hakuaikaForm.maksatushakemus2alkupvm.$pristine">
+                          ng-show="hakuaikaForm.maksatushakemus2alkupvm.$error.ennenLoppuPvm && !hakuaikaForm.maksatushakemus2alkupvm.$pristine">
                       Päivämäärän tulee olla ennen loppumispäivämäärää.
                     </span>
 
@@ -229,7 +229,7 @@
                       </span>
                     </p>
                     <span class="help-block text-danger"
-                          ng-show="form.hakuaikaForm.maksatushakemus2loppupvm.$error.validiPvm && !form.hakuaikaForm.maksatushakemus2loppupvm.$pristine">
+                          ng-show="hakuaikaForm.maksatushakemus2loppupvm.$error.validiPvm && !hakuaikaForm.maksatushakemus2loppupvm.$pristine">
                       Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
                     </span>
 

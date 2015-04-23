@@ -125,9 +125,9 @@ angular.module('jukufrontApp')
       $scope.muokkaaHakuaikojaVuosi = vuosi;
     };
 
-    $scope.tallennaHakuajat = function (vuosi, ah0alkupvm, ah0loppupvm, mh1alkupvm, mh1loppupvm, mh2alkupvm, mh2loppupvm) {
+    $scope.tallennaHakuajat = function (formi, vuosi, ah0alkupvm, ah0loppupvm, mh1alkupvm, mh1loppupvm, mh2alkupvm, mh2loppupvm) {
       $scope.$broadcast('show-errors-check-validity');
-      if ($scope.form.hakuaikaForm.$valid) {
+      if (formi.$valid) {
         var hakuajat = [
           {
             hakemustyyppitunnus: "AH0",
@@ -212,7 +212,6 @@ angular.module('jukufrontApp')
       return ((pvm_ts > min_ts) && (pvm_ts < max_ts) );
     };
 
-    $scope.form = {};
     haeHakemuskaudet();
   }
   ]);
