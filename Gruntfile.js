@@ -109,6 +109,9 @@ module.exports = function (grunt) {
               if (cookies['oam-groups']) {
                 req.headers['oam-groups'] = cookies['oam-groups'];
               }
+              if (cookies['oam-user-organization']) {
+                req.headers['oam-user-organization'] = cookies['oam-user-organization'];
+              }
 
               next();
             });
