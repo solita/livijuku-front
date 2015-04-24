@@ -28,8 +28,16 @@ app.use('*/api', proxy('localhost:8082', {
   },
   decorateRequest: function(req) {
     var cookies = parseCookies(req);
-    req.headers['oam-remote-user'] = cookies['oam-remote-user'];
-    req.headers['oam-groups'] = cookies['oam-groups'];
+    if (cookies['oam-remote-user']) {
+      req.headers['oam-remote-user'] = cookies['oam-remote-user'];
+    }
+    if (cookies['oam-groups']) {
+      req.headers['oam-groups'] = cookies['oam-groups'];
+    }
+    if (cookies['oam-user-organization']) {
+      req.headers['oam-user-organization'] = cookies['oam-user-organization'];
+    }
+
     console.log(req);
     return req;
   }
