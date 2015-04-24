@@ -200,12 +200,11 @@ angular.module('jukufrontApp')
             ];
           } else {
             data = _.map(data, function (v) {
-              var luokkaLajiTuple = v.avustuskohdelajitunnus.split('-');
               return {
-                "avustuskohdeluokka": luokkaLajiTuple[0],
+                "avustuskohdeluokka": v.avustuskohdeluokkatunnus,
                 "omarahoitus": v.omarahoitus,
                 "haettavaavustus": v.haettavaavustus,
-                "avustuskohdelajitunnus": luokkaLajiTuple[1],
+                "avustuskohdelajitunnus": v.avustuskohdelajitunnus,
                 "hakemusid": v.hakemusid
               };
             })
@@ -435,7 +434,8 @@ angular.module('jukufrontApp')
             var item = {
               "omarahoitus": j.omarahoitus,
               "haettavaavustus": j.haettavaavustus,
-              "avustuskohdelajitunnus": j.avustuskohdeluokka + "-" + j.avustuskohdelajitunnus,
+              "avustuskohdeluokkatunnus": j.avustuskohdeluokka,
+              "avustuskohdelajitunnus": j.avustuskohdelajitunnus,
               "hakemusid": $scope.hakemusid
             };
             avustuskohteet.push(item);
