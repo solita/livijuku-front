@@ -27,88 +27,84 @@
         </div>
       </div>
     </div>
-    <form name="maararahaForm">
-      <div class="row">
-        <div class="col-md-4">
-          <label>Määräraha vuosi {{vuosi}}</label>
-          <input type="text" min="-0.0001" ng-currency="" class="form-control"
-                 ng-focus="asetaVanhaArvo(maararaha)"
-                 ng-model="maararaha"
-                 ng-blur="paivitaKokonaismaararaha('maararaha')"/>
-        </div>
-        <div class="col-md-4">
-          <label>Siirto vuodelta {{vuosi-1}}</label>
-          <input type="text" min="-0.0001" ng-currency="" class="form-control"
-                 ng-focus="asetaVanhaArvo(ylijaama)"
-                 ng-model="ylijaama"
-                 ng-blur="paivitaKokonaismaararaha('ylijaama')"/>
-        </div>
-        <div class="col-md-4">
-          <label>YHTEENSÄ</label>
-          <input type="text" min="-0.0001" ng-currency="" class="form-control"
-                 ng-model="jaettavaraha" disabled/>
-        </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label>Määräraha vuosi {{vuosi}}</label>
+        <input type="text" min="-0.0001" ng-currency="" class="form-control"
+               ng-focus="asetaVanhaArvo(maararaha)"
+               ng-model="maararaha"
+               ng-blur="paivitaKokonaismaararaha('maararaha')"/>
       </div>
-    </form>
-    <form name="suunnitteluForm">
-      <table st-table="hakemuksetSuunnittelu" class="table table-hover table-condensed table-striped">
-        <thead>
-        <tr>
-          <th>Hakija</th>
-          <th>Haettu avustus</th>
-          <th>Muutos</th>
-          <th>Myönnettävä avustus</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="hakemus in hakemuksetSuunnittelu">
-          <div class="form-group">
-            <td>{{hakemus.hakija}}</td>
-            <td>
-              <div ng-show="(hakemus.hakemuksenTila!='T' && hakemus.hakemuksenTila!='P')">
-                <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
-              </div>
-              <div ng-show="(hakemus.hakemuksenTila=='T'||hakemus.hakemuksenTila=='P')">
-                {{hakemus.haettuAvustus|currency:"&euro;"}}
-              </div>
-            </td>
-            <td>{{hakemus.muutos|currency:"&euro;"}}</td>
-            <td>
-              <div ng-show="hakemus.hakemuksenTila!='P'">
-                <input type="text" min="-0.0001" ng-currency="" class="form-control"
-                       ng-model="hakemus.myonnettavaAvustus"
-                       ng-focus="asetaVanhaArvo(hakemus.myonnettavaAvustus)"
-                       ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)"/>
-              </div>
-              <div ng-show="hakemus.hakemuksenTila=='P'">
-                <p>{{hakemus.myonnettavaAvustus|currency:"&euro;"}}</p>
-              </div>
-            <td>
-              <div ng-show="hakemus.hakemuksenTila!='P'">
-                <button class="btn btn-primary"
-                        ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
-                  Päätöksentekoon
-                </button>
-              </div>
-              <div ng-show="hakemus.hakemuksenTila=='P'">
-                <button class="btn btn-success"
-                        ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
-                  Päätetty
-                </button>
-              </div>
-            </td>
+      <div class="col-md-4">
+        <label>Siirto vuodelta {{vuosi-1}}</label>
+        <input type="text" min="-0.0001" ng-currency="" class="form-control"
+               ng-focus="asetaVanhaArvo(ylijaama)"
+               ng-model="ylijaama"
+               ng-blur="paivitaKokonaismaararaha('ylijaama')"/>
+      </div>
+      <div class="col-md-4">
+        <label>YHTEENSÄ</label>
+        <input type="text" min="-0.0001" ng-currency="" class="form-control"
+               ng-model="jaettavaraha" disabled/>
+      </div>
+    </div>
+    <table st-table="hakemuksetSuunnittelu" class="table table-hover table-condensed table-striped">
+      <thead>
+      <tr>
+        <th>Hakija</th>
+        <th>Haettu avustus</th>
+        <th>Muutos</th>
+        <th>Myönnettävä avustus</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="hakemus in hakemuksetSuunnittelu">
+        <td>{{hakemus.hakija}}</td>
+        <td>
+          <div ng-show="(hakemus.hakemuksenTila!='T' && hakemus.hakemuksenTila!='P')">
+            <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
           </div>
-        </tr>
-        <tr>
-          <td>Yhteensä</td>
-          <td>{{haettuAvustusSum|currency:"&euro;"}}</td>
-          <td>{{muutosSum|currency:"&euro;"}}</td>
-          <td>{{myonnettavaAvustusSum|currency:"&euro;"}}</td>
-        </tr>
-        </tbody>
-      </table>
-    </form>
+          <div ng-show="(hakemus.hakemuksenTila=='T'||hakemus.hakemuksenTila=='P')">
+            {{hakemus.haettuAvustus|currency:"&euro;"}}
+          </div>
+        </td>
+        <td>{{hakemus.muutos|currency:"&euro;"}}</td>
+        <td>
+          <div ng-show="hakemus.hakemuksenTila!='P'">
+            <input type="text" min="-0.0001" ng-currency="" class="form-control"
+                   ng-model="hakemus.myonnettavaAvustus"
+                   ng-focus="asetaVanhaArvo(hakemus.myonnettavaAvustus)"
+                   ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)"/>
+          </div>
+          <div ng-show="hakemus.hakemuksenTila=='P'">
+            <p>{{hakemus.myonnettavaAvustus|currency:"&euro;"}}</p>
+          </div>
+        </td>
+        <td>
+          <div ng-show="hakemus.hakemuksenTila!='P'">
+            <button class="btn btn-primary"
+                    ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
+              Päätöksentekoon
+            </button>
+          </div>
+          <div ng-show="hakemus.hakemuksenTila=='P'">
+            <button class="btn btn-success"
+                    ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
+              Päätetty
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Yhteensä</td>
+        <td>{{haettuAvustusSum|currency:"&euro;"}}</td>
+        <td>{{muutosSum|currency:"&euro;"}}</td>
+        <td>{{myonnettavaAvustusSum|currency:"&euro;"}}</td>
+        <td></td>
+      </tr>
+      </tbody>
+    </table>
     <div class="row">
       <div class="col-md-12">
         <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa
