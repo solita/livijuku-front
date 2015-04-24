@@ -61,7 +61,7 @@ angular
         templateUrl: 'views/kasittelija/paatos.html',
         controller: 'KasittelijaPaatosCtrl'
       })
-      .when('/k/paatos/esikatselu/:vuosi/:tyyppi/:lajitunnus/:hakemusid/:haettuavustus/:avustus', {
+      .when('/k/paatos_esikatselu/:vuosi/:tyyppi/:lajitunnus/:hakemusid/:haettuavustus', {
         templateUrl: 'views/kasittelija/paatosEsikatselu.html',
         controller: 'KasittelijaPaatosCtrl'
       })

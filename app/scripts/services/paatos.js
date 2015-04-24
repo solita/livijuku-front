@@ -10,6 +10,9 @@ angular.module('services.paatos', [])
       hyvaksy: function (hakemusid) {
         return $http.post('api/hakemus/' + hakemusid + '/hyvaksy-paatos');
       },
+      peru: function (hakemusid) {
+        return $http.post('api/hakemus/' + hakemusid + '/peruuta-paatos');
+      },
       tallenna: function (hakemusid, paatosdata) {
         var req = {
           method: 'PUT',

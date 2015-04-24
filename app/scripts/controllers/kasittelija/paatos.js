@@ -29,7 +29,7 @@ angular.module('jukufrontApp')
         });
     }
 
-    $scope.hakemusid = $routeParams.hakemusid;
+    $scope.hakemusid = parseInt($routeParams.hakemusid);
     $scope.haettuavustus = $routeParams.haettuavustus;
     $scope.avustus = $routeParams.avustus;
     $scope.vuosi = $routeParams.vuosi;
@@ -42,44 +42,85 @@ angular.module('jukufrontApp')
       $scope.vanhaArvo = arvo;
     };
 
-    $scope.hyvaksyPaatos = function () {
-      $scope.tallennaPaatos();
-      PaatosService.hyvaksy($scope.avustushakemus.id)
+    $scope.hyvaksyPaatos = function (paatosForm) {
+      if (paatosForm.$valid) {
+        var paatosdata = {
+          "hakemusid": parseInt($scope.hakemusid),
+          "myonnettyavustus": parseFloat($scope.avustus),
+          "selite": $scope.paatos.selite
+        }
+        PaatosService.tallenna($scope.hakemusid, paatosdata)
+          .success(function () {
+            StatusService.ok('PaatosService.tallenna()', 'Tallennus onnistui.');
+            PaatosService.hyvaksy($scope.hakemusid)
+              .success(function () {
+                StatusService.ok('PaatosService.hyvaksy(' + $scope.hakemusid + ')', 'Hakemus päivitettiin päätetyksi.');
+                SuunnitteluService.suunniteltuAvustus(parseFloat($scope.avustus), $scope.hakemusid)
+                  .success(function () {
+                  })
+                  .error(function (data) {
+                    StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + $scope.avustus + ',' + $scope.hakemusid + ')', data);
+                  });
+                $location.path('/k/suunnittelu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus);
+              })
+              .error(function (data) {
+                StatusService.virhe('PaatosService.hyvaksy(' + $scope.hakemusid + ')', data);
+              });
+            haePaatosTiedot();
+          })
+          .error(function (data) {
+            StatusService.virhe('PaatosService.tallenna(' + paatosdata + ')', data);
+          });
+      }
+      else {
+        StatusService.virhe('PaatosService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
+      }
+    };
+
+    $scope.naytaPaatos = function (tila, paatosForm) {
+      if (tila == 'T') {
+        if (paatosForm.$valid) {
+          $scope.tallennaPaatos(paatosForm);
+          $location.path('/k/paatos_esikatselu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus + '/' + $scope.hakemusid + '/' + $scope.haettuavustus);
+
+        } else {
+          StatusService.virhe('PaatosService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
+        }
+      } else {
+        $location.path('/k/paatos_esikatselu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus + '/' + $scope.hakemusid + '/' + $scope.haettuavustus);
+      }
+    };
+
+    $scope.peruPaatos = function () {
+      PaatosService.peru($scope.hakemusid)
         .success(function () {
-          StatusService.ok('PaatosService.hyvaksy(' + $scope.avustushakemus.id + ')', 'Hakemus päivitettiin päätetyksi.');
-          SuunnitteluService.suunniteltuAvustus($scope.paatos.myonnettyavustus, $scope.avustushakemus.id)
-            .success(function () {
-            })
-            .error(function (data) {
-              StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + $scope.paatos.myonnettyavustus + ',' + $scope.avustushakemus.id + ')', data);
-            });
+          StatusService.ok('PaatosService.peru(' + $scope.hakemusid + ')', 'Hakemuksen päätös peruttiin.');
           $location.path('/k/suunnittelu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus);
         })
         .error(function (data) {
-          StatusService.virhe('PaatosService.hyvaksy(' + $scope.avustushakemus.id + ')', data);
+          StatusService.virhe('PaatosService.peru(' + $scope.hakemusid + ')', data);
         });
     };
 
-    $scope.naytaPaatos = function (tila) {
-      if (tila == 'T') {
-        $scope.tallennaPaatos();
+    $scope.tallennaPaatos = function (paatosForm) {
+      if (paatosForm.$valid) {
+        var paatosdata = {
+          "hakemusid": parseInt($scope.hakemusid),
+          "myonnettyavustus": parseFloat($scope.avustus),
+          "selite": $scope.paatos.selite
+        }
+        PaatosService.tallenna($scope.hakemusid, paatosdata)
+          .success(function () {
+            StatusService.ok('PaatosService.tallenna()', 'Tallennus onnistui.');
+            haePaatosTiedot();
+          })
+          .error(function (data) {
+            StatusService.virhe('PaatosService.tallenna(' + paatosdata + ')', data);
+          });
       }
-      $location.path('/k/paatos/esikatselu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus + '/' + $scope.hakemusid + '/' + $scope.haettuavustus + '/' + $scope.avustus);
-    };
-
-    $scope.tallennaPaatos = function () {
-      var paatosdata = {
-        "hakemusid": parseInt($scope.hakemusid),
-        "myonnettyavustus": parseFloat($scope.avustus),
-        "selite": $scope.paatos.selite
+      else {
+        StatusService.virhe('PaatosService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
       }
-      PaatosService.tallenna($scope.hakemusid, paatosdata)
-        .success(function () {
-          StatusService.ok('PaatosService.tallenna()', 'Tallennus onnistui.');
-        })
-        .error(function (data) {
-          StatusService.virhe('PaatosService.tallenna(' + paatosdata + ')', data);
-        });
     };
 
     $scope.tarkistaTyhja = function (arvo) {

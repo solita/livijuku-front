@@ -8,7 +8,7 @@
         <p>Esikatselutila</p>
       </div>
       <div class="col-md-10">
-        <a href="#/k/paatos/{{vuosi}}/{{tyyppi}}/{{lajitunnus}}/{{hakemusid}}/{{haettuavustus}}/{{avustus}}"
+        <a href="#/k/paatos/{{vuosi}}/{{tyyppi}}/{{lajitunnus}}/{{hakemusid}}/{{haettuavustus}}/{{paatos.myonnettyavustus}}"
            class="btn btn-primary">Palaa
           päätökseen</a>
       </div>
@@ -53,7 +53,7 @@
       </div>
       <div class="col-md-10">
         <p>Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle <b>{{hakija}}</b> valtionavustuksena
-          <b>{{avustus| currency:"&euro;"}}</b>.</p>
+          <b>{{paatos.myonnettyavustus| currency:"&euro;"}}</b>.</p>
       </div>
     </div>
     <div class="row">

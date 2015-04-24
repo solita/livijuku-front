@@ -59,7 +59,14 @@
         <br>
 
         <p>Päätösteksti:</p>
-        <textarea class="animate msd-elastic: \n;" ng-model="paatos.selite"></textarea>
+
+        <form name="paatosForm">
+          <textarea name="paatosteksti" class="animate msd-elastic: \n;" ng-model="paatos.selite" ng-required="true"></textarea>
+          <span class="help-block text-danger"
+                ng-show="paatosForm.paatosteksti.$error.required">
+            Päätösteksti on pakollinen tieto.
+          </span>
+        </form>
       </div>
     </div>
 
@@ -84,23 +91,23 @@
       </div>
       <div class="col-md-3">
         <div ng-show="(avustushakemus.hakemustilatunnus == 'T')">
-          <button data-ng-click="tallennaPaatos()" class="pull-right btn btn-primary">Tallenna tiedot
+          <button data-ng-click="tallennaPaatos(paatosForm)" class="pull-right btn btn-primary">Tallenna tiedot
           </button>
         </div>
         <div ng-hide="(avustushakemus.hakemustilatunnus == 'T')">
-          <button data-ng-click="tallennaPaatos()" class="pull-right btn btn-primary" disabled>Tallenna
+          <button data-ng-click="tallennaPaatos(paatosForm)" class="pull-right btn btn-primary" disabled>Tallenna
             tiedot
           </button>
         </div>
       </div>
       <div class="col-md-3">
         <div ng-show="(avustushakemus.hakemustilatunnus == 'T')">
-          <button data-ng-click="naytaPaatos(avustushakemus.hakemustilatunnus)" class="pull-right btn btn-primary">
+          <button data-ng-click="naytaPaatos(avustushakemus.hakemustilatunnus,paatosForm)" class="pull-right btn btn-primary">
             Tallenna ja esikatsele päätös
           </button>
         </div>
         <div ng-hide="(avustushakemus.hakemustilatunnus == 'T')">
-          <button data-ng-click="naytaPaatos(avustushakemus.hakemustilatunnus)" class="pull-right btn btn-primary">
+          <button data-ng-click="naytaPaatos(avustushakemus.hakemustilatunnus,paatosForm)" class="pull-right btn btn-primary">
             Esikatsele päätös
           </button>
         </div>
@@ -125,12 +132,21 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6"></div>
+      <div class="col-md-3">
+        <div ng-show="(avustushakemus.hakemustilatunnus == 'P' && sallittu('hyvaksy-paatos'))">
+          <button data-ng-click="peruPaatos()" class="pull-right btn btn-success">Peru päätös</button>
+        </div>
+        <div ng-hide="(avustushakemus.hakemustilatunnus == 'P') && sallittu('hyvaksy-paatos')">
+          <button data-ng-click="peruPaatos()" class="pull-right btn btn-success" disabled>Peru päätös</button>
+        </div>
+      </div>
+      <div class="col-md-3">
         <div ng-show="(avustushakemus.hakemustilatunnus == 'T' && sallittu('hyvaksy-paatos'))">
-          <button data-ng-click="hyvaksyPaatos()" class="pull-right btn btn-success">Tallenna ja hyväksy päätös</button>
+          <button data-ng-click="hyvaksyPaatos(paatosForm)" class="pull-right btn btn-success">Tallenna ja hyväksy päätös</button>
         </div>
         <div ng-hide="(avustushakemus.hakemustilatunnus == 'T') && sallittu('hyvaksy-paatos')">
-          <button data-ng-click="hyvaksyPaatos()" class="pull-right btn btn-success" disabled>Tallenna ja hyväksy päätös
+          <button data-ng-click="hyvaksyPaatos(paatosForm)" class="pull-right btn btn-success" disabled>Tallenna ja hyväksy päätös
           </button>
         </div>
       </div>
