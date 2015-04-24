@@ -85,9 +85,26 @@
 
     <form name="hakemusForm">
 
-      <jku-avustuskohdeluokka luokka="jkuAvustuskohdeluokkaPSA"></jku-avustuskohdeluokka>
-      <jku-avustuskohdeluokka luokka="jkuAvustuskohdeluokkaHK"></jku-avustuskohdeluokka>
-      <jku-avustuskohdeluokka luokka="jkuAvustuskohdeluokkaK"></jku-avustuskohdeluokka>
+      <jku-avustusluokka-panel name="PSA:n mukaisen liikenteen hankinta">
+        <jku-avustuskohde kohde="akl.PSA[1]" name="Paikallisliikenne"></jku-avustuskohde>
+        <jku-avustuskohde kohde="akl.PSA[2]" name="Integroitu palvelulinja, kaikille avointa"></jku-avustuskohde>
+        <jku-avustuskohde kohde="akl.PSA.M" name="Muu PSA:n mukaisen liikenteen järjestäminen"></jku-avustuskohde>
+      </jku-avustusluokka-panel>
+
+      <jku-avustusluokka-panel name="Hintavelvoitteiden korvaaminen">
+        <jku-avustuskohde kohde="akl.HK.SL" name="Seutulippu"></jku-avustuskohde>
+        <jku-avustuskohde kohde="akl.HK.KL" name="Kaupunkilippu / kuntalippu"></jku-avustuskohde>
+        <jku-avustuskohde kohde="akl.HK.LL" name="Liityntälippu (esim. VR, pääkaupunkiseudun)"></jku-avustuskohde>
+        <jku-avustuskohde kohde="akl.HK.TL" name="Työmatkalippu"></jku-avustuskohde>
+      </jku-avustusluokka-panel>
+
+      <jku-avustusluokka-panel name="Liikenteen suunnittelu- ja kehittämishankkeet">
+        <jku-avustuskohde kohde="akl.K.IM" name="Informaatio- ja maksujärjestelmien kehittäminen"></jku-avustuskohde>
+        <jku-avustuskohde kohde="akl.K.MPK" name="Matkapalvelukeskuksen suunnittelu ja kehittäminen"></jku-avustuskohde>
+        <jku-avustuskohde kohde="akl.K.MK" name="Matkakeskuksen suunnittelu ja kehittäminen"></jku-avustuskohde>
+        <jku-avustuskohde kohde="akl.K.RT" name="Raitiotien suunnittelu" ng-show="userOrganisaatioLajitunnus=='KS1'"></jku-avustuskohde>
+        <jku-avustuskohde kohde="akl.K.M" name="Muu hanke, mikä?"></jku-avustuskohde>
+      </jku-avustusluokka-panel>
 
     </form>
     <div class="row">

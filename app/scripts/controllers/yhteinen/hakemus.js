@@ -212,21 +212,10 @@ angular.module('jukufrontApp')
 
           var temp = _.groupBy(data, 'avustuskohdeluokka');
 
-          var akl = _.mapValues(temp, function (v) {
+          $scope.akl = _.mapValues(temp, function (v) {
             return _.mapValues(_.groupBy(v, 'avustuskohdelajitunnus'), function (v) {
               return v[0];
             });
-          });
-
-          // TODO: Ruma häkki, kun en osaa direktiivejä ja hierarkisia $scope propsuja.
-          // Laitetaan kaikki akl-luokat scopeen omina propertyinä.
-          // Näin toistaiseksi, kunnes tehdään yksi yhteinen jku-avustuskohdeluokka -direktiivi.
-          // Nykytoteutuksessa ei vielä ole ng-repeat rakennetta, joka tekisi scopet hiearkisesti,
-          // enkä keksinyt, miten direktiivi voisi viitata $scope.akl.* -propertyihin, vain
-          // $scope.* -viittaukset osasin tehdä dokumentaation mukaisesti:
-          // - http://plnkr.co/edit/mvuBkvB2n4ipwNT52bdV?p=preview
-          _.forEach(akl, function (v,k) {
-            $scope['jkuAvustuskohdeluokka'+k]=v;
           });
 
         })
@@ -426,11 +415,8 @@ angular.module('jukufrontApp')
 
         var avustuskohteet = [];
 
-        // TODO: Ruma häkki, kun en osaa. kts. haeHakemukset()
-        var keys = ['jkuAvustuskohdeluokkaPSA', 'jkuAvustuskohdeluokkaHK', 'jkuAvustuskohdeluokkaK'];
-
-        _.each(keys, function (i) {
-          _.each($scope[i], function (j) {
+        _.each($scope.akl, function (i) {
+          _.each(i, function (j) {
             var item = {
               "omarahoitus": j.omarahoitus,
               "haettavaavustus": j.haettavaavustus,
@@ -515,12 +501,22 @@ angular.module('jukufrontApp')
     generoiTooltipArvot();
     $window.scrollTo(0, 0);
   }
-  ])
-  .directive('jkuAvustuskohdeluokka', function() {
+  ]).directive('jkuAvustusluokkaPanel', function() {
     return {
       restrict: 'E',
       scope: {
-        akl: '=luokka'
+        name: "@"
+      },
+      transclude: true,
+      templateUrl: 'views/yhteinen/jkuAvustusluokkaPanel.html'
+    }
+  })
+  .directive('jkuAvustuskohde', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        name: "@",
+        kohde: "="
       },
       controller: ["$scope", "$rootScope", function ($scope, $rootScope) {
 
@@ -565,8 +561,6 @@ angular.module('jukufrontApp')
         }
 
       }],
-      templateUrl: function(elem, attr){
-        return 'views/hakija/'+attr.luokka+'.html';
-      }
+      templateUrl: 'views/yhteinen/jkuAvustuskohde.html'
     };
   });
