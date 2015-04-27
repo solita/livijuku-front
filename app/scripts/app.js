@@ -10,6 +10,7 @@ angular
     'services.suunnittelu',
     'services.status',
     'services.paatos',
+    'services.common',
     'controllers.MainCtrl',
     'ngResource',
     'angular-loading-bar',

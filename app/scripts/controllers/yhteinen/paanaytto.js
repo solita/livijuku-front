@@ -13,7 +13,8 @@ angular.module('jukufrontApp')
     };
   })
 
-  .controller('PaanayttoCtrl', ['$scope', '$rootScope', '$location', 'KayttajaService', 'OrganisaatioService', 'StatusService', function ($scope, $rootScope, $location, KayttajaService, OrganisaatioService, statusService) {
+  .controller('PaanayttoCtrl', ['$scope', '$rootScope', '$location', 'KayttajaService', 'OrganisaatioService', 'StatusService', 'AvustuskohdeService', 'CommonService',
+    function ($scope, $rootScope, $location, KayttajaService, OrganisaatioService, statusService, avustusKohdeService, common) {
 
     $scope.isActive = function (route) {
       // 'Kaikki hakemukset' aktiiviseksi
@@ -51,6 +52,15 @@ angular.module('jukufrontApp')
       .error(function (data) {
         statusService.virhe('OrganisaatioService.hae()', data);
       });
+
+      common.bindPromiseToScope(avustusKohdeService.luokittelu(), $rootScope, 'avustuskohdeLuokat',
+        function(data) {
+          return _.mapValues(_.indexBy(data, 'tunnus'),
+            function(l) {
+              l.avustuskohdelajit = _.indexBy(l.avustuskohdelajit, 'tunnus');
+              return l;
+            })},
+        'avustusKohdeService.luokittelu()');
   }
   ]
 )
