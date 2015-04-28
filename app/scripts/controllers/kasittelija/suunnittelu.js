@@ -53,7 +53,7 @@ angular.module('jukufrontApp')
                 });
               }
             }
-          );
+          ).value();
           $scope.hakemuksetSuunnittelu = hakemuksetSuunnitteluTmp;
         })
         .error(function (data) {

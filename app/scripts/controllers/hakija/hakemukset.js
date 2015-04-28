@@ -48,7 +48,7 @@ angular.module('jukufrontApp')
             'maksatushakemus2Alkupvm': maksatushakemus2Alkupvm,
             'maksatushakemus2Loppupvm': Number(new Date(_.find(hakemusvuosi.hakemukset, {'hakemustyyppitunnus': 'MH2'}).hakuaika.loppupvm))
           });
-        });
+        }).value();
         $scope.hakemukset = _.sortBy(hakemuksetTmp, 'vuosi').reverse();
       })
       .error(function (data) {

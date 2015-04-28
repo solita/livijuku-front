@@ -13,8 +13,8 @@ angular.module('jukufrontApp')
         .success(function (data) {
           var hakemuskaudetTmp = [];
           var nykyhetki = Number(new Date());
-          _(angular.fromJson(data)).forEach(function (hakemuskausi) {
 
+          _(angular.fromJson(data)).forEach(function (hakemuskausi) {
             var hakemus_ah0 = _.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'AH0'});
             var hakemus_mh1 = _.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH1'});
             var hakemus_mh2 = _.find(hakemuskausi.hakemukset, {'hakemustyyppitunnus': 'MH2'});
@@ -46,9 +46,9 @@ angular.module('jukufrontApp')
               processedHakemuskausi.uusi = true;
             }
 
-
             hakemuskaudetTmp.push(processedHakemuskausi);
-          });
+          }).value();
+
           $scope.hakemuskaudet = _.sortBy(hakemuskaudetTmp, 'vuosi').reverse();
           $scope.muokkaaHakuaikojaVuosi = null;
         })

@@ -79,7 +79,7 @@ angular.module('jukufrontApp')
                 'accordionOpen': false
               });
             }
-          });
+          }).value();
           $scope.hakemukset = _.sortBy(hakemuskaudetTmp, 'vuosi').reverse();
           if ($scope.hakemukset.length > 0) {
             $scope.hakemukset[0].accordionOpen = true;
@@ -111,7 +111,7 @@ angular.module('jukufrontApp')
         if (hakemuksetPerTyyppiperHakemuskausiTaydennetty != 'undefined') {
           lukumaara = lukumaara + _.size(hakemuksetPerTyyppiperHakemuskausiTaydennetty);
         }
-      })
+      }).value();
       if (lukumaara == 0) {
         return ''
       } else {
