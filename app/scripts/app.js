@@ -11,7 +11,6 @@ angular
     'services.status',
     'services.paatos',
     'services.common',
-    'controllers.MainCtrl',
     'ngResource',
     'angular-loading-bar',
     'smart-table',
@@ -69,9 +68,9 @@ angular
       .when('/k/suunnittelu/:vuosi/:tyyppi/:lajitunnus', {
         templateUrl: 'views/kasittelija/suunnittelu.html',
         controller: 'KasittelijaSuunnitteluCtrl'
-      })      .when('/main', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+      })
+      .when('/main', {
+        templateUrl: 'views/main.html'
       })
       .otherwise({
         redirectTo: '/'
