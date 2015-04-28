@@ -129,15 +129,17 @@
               <div
                 ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
                 <div class="col-md-4 text-center">
-                  <div ng-file-drop ng-model="myFiles" class="drop-box"
-                       drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
-                       ng-multiple="true" allow-dir="false">
-                    <p>Raahaa liite tähän</p>
+                  <div ngf-drop ng-model="myFiles" class="drop-box"
+                       ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+                       ngf-multiple="true" ngf-allow-dir="false" ngf-drop-available="dropAvailable">
+                    <p ng-show="dropAvailable">Raahaa liite tähän</p>
 
-                    <p>tai</p>
+                    <p ng-show="dropAvailable">tai</p>
 
-                    <div ng-no-file-drop>Tiedoston raahaaminen ei ole mahdollista tällä selain-versiolla</div>
-                    <button ng-file-select class="btn btn-primary" ng-model="myFiles" ng-multiple="true">Valitse
+                    <p ng-hide="dropAvailable">Tiedoston raahaaminen ei ole</p>
+
+                    <p ng-hide="dropAvailable">mahdollista tällä selain-versiolla</p>
+                    <button ngf-select class="btn btn-primary" ng-model="myFiles" ngf-multiple="true">Valitse
                       tiedosto
                     </button>
                   </div>

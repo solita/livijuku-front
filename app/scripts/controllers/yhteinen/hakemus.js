@@ -2,8 +2,8 @@
 
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams',
-    'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', '$upload', 'LiiteService', 'CommonService', '$window',
-    function ($rootScope, $scope, $location, $routeParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, $upload, LiiteService, common, $window) {
+    'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', 'Upload', 'LiiteService', 'CommonService', '$window',
+    function ($rootScope, $scope, $location, $routeParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, Upload, LiiteService, common, $window) {
 
     function generoiTooltipArvot() {
       var maksatushakemus1Arvot = {};
@@ -188,25 +188,27 @@ angular.module('jukufrontApp')
     $('a').tooltip();
 
     $scope.$watch('myFiles', function () {
-      for (var i = 0; i < $scope.myFiles.length; i++) {
-        var file = $scope.myFiles[i];
-        console.log('Watched:' + file.name);
-        $scope.upload = $upload.upload({
-          url: 'api/hakemus/' + $scope.hakemusid + '/liite',
-          method: 'POST',
-          data: {myObj: $scope.myModelObj},
-          file: file,
-          fileFormDataName: 'liite'
-        }).progress(function (evt) {
-          console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.file.name);
-        }).success(function (data, status, headers, config) {
-          console.log('Liiteen lataus: ' + config.file.name + ' onnistui. Paluuarvo: ' + data);
-          StatusService.ok('Liitteen lataus(' + config.file.name + ')', 'Liitteen lataus:' + config.file.name + ' onnistui.');
-          haeLiitteet();
-        }).error(function (data, status, headers, config) {
-          console.log('Liitteen lataus: ' + config.file.name + ' epaonnistui. Paluuarvo: ' + data);
-          //StatusService.virhe('Liitteen lataus('+config.file.name+')','Liitteen lataus:' + config.file.name + ' epaonnistui:'+data);
-        });
+      if ($scope.myFiles != null) {
+        for (var i = 0; i < $scope.myFiles.length; i++) {
+          var file = $scope.myFiles[i];
+          console.log('Watched:' + file.name);
+          $scope.upload = Upload.upload({
+            url: 'api/hakemus/' + $scope.hakemusid + '/liite',
+            method: 'POST',
+            data: {myObj: $scope.myModelObj},
+            file: file,
+            fileFormDataName: 'liite'
+          }).progress(function (evt) {
+            console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.file.name);
+          }).success(function (data, status, headers, config) {
+            console.log('Liiteen lataus: ' + config.file.name + ' onnistui. Paluuarvo: ' + data);
+            StatusService.ok('Liitteen lataus(' + config.file.name + ')', 'Liitteen lataus:' + config.file.name + ' onnistui.');
+            haeLiitteet();
+          }).error(function (data, status, headers, config) {
+            console.log('Liitteen lataus: ' + config.file.name + ' epaonnistui. Paluuarvo: ' + data);
+            //StatusService.virhe('Liitteen lataus('+config.file.name+')','Liitteen lataus:' + config.file.name + ' epaonnistui:'+data);
+          });
+        }
       }
     });
 

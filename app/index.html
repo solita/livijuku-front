@@ -48,18 +48,22 @@
           </li>
           <li ng-show="sallittu('view-oma-hakemus')"
               ng-class="{headertxtselected:isActive('/h/hakemukset')}">
-            <a href="#/h/hakemukset" ng-href="#/h/hakemukset" ng-class="{navbartxt:!isActive('/h/hakemukset')}">Omat hakemukset</a>
+            <a href="#/h/hakemukset" ng-href="#/h/hakemukset" ng-class="{navbartxt:!isActive('/h/hakemukset')}">Omat
+              hakemukset</a>
           </li>
           <li ng-show="sallittu('view-kaikki-hakemukset')"
               ng-class="{headertxtselected:isActive('/k/hakemukset/AH0')}">
-            <a href="#/k/hakemukset/AH0" ng-href="#/k/hakemukset/AH0" ng-class="{navbartxt:!isActive('/k/hakemukset/AH0')}">Kaikki hakemukset</a>
+            <a href="#/k/hakemukset/AH0" ng-href="#/k/hakemukset/AH0"
+               ng-class="{navbartxt:!isActive('/k/hakemukset/AH0')}">Kaikki hakemukset</a>
           </li>
         </ul>
         <ul class="nav navbar-nav pull-right">
           <li class="navbaruser">
             <p class="navbartxt">{{user.etunimi}} {{user.sukunimi}}</p>
+
             <p class="navbartxt">{{userOrganisaatio}}<br>
-              <a class="navbartxt" href="https://testiextranet.liikennevirasto.fi/extranet/c/portal/logout">Kirjaudu ulos</a>
+              <a class="navbartxt" href="https://testiextranet.liikennevirasto.fi/extranet/c/portal/logout">Kirjaudu
+                ulos</a>
             </p>
           </li>
         </ul>
@@ -92,7 +96,13 @@
     </div>
   </div>
 </div>
-
+<script>
+  FileAPI = {
+    jsPath: '/scripts/ie9/',
+    staticPath: '/scripts/ie9/'
+    //forceLoad: true, html5: false //to debug flash in HTML5 browsers
+  }
+</script>
 <!-- build:js(.) scripts/oldieshim.js -->
 <!--[if lt IE 9]>
 <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -128,9 +138,9 @@
 <script src="bower_components/angular-bootstrap-show-errors/src/showErrors.js"></script>
 <script src="bower_components/angular-ui-utils/validate.js"></script>
 <script src="bower_components/ng-currency/dist/ng-currency.min.js"></script>
-<script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
-<script src="bower_components/ng-file-upload-shim/angular-file-upload-shim.js"></script>
 <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+<script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+<script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
 <!-- endbower -->
 <script src="bower_components/angular-i18n/angular-locale_fi-fi.js"></script>
 <!-- endbuild -->

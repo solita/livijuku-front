@@ -257,7 +257,9 @@ module.exports = function (grunt) {
     filerev: {
       dist: {
         src: [
-          '<%= yeoman.dist %>/scripts/{,*/}*.js',
+          // Ainoastaan scripts hakemiston js-tiedostot uudelleennimetaan. Sen alla olevaa ie9:a ei voi uudelleennimeta koska latauskomponentti
+          // kayttaa suoraan FileAPI.min.js tiedostoa (JEG)
+          '<%= yeoman.dist %>/scripts/*.js',
           '<%= yeoman.dist %>/styles/{,*/}*.css',
           '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
           '<%= yeoman.dist %>/styles/fonts/*'
@@ -411,6 +413,18 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.app %>/styles',
           src: '*.css',
           dest: '<%= yeoman.dist %>/styles'
+        }, {
+          // IE9 fix (JEG)
+          expand: true,
+          cwd: 'bower_components/ng-file-upload-shim',
+          src: 'FileAPI.min.js',
+          dest: '<%= yeoman.dist %>/scripts/ie9'
+        }, {
+          // IE9 fix (JEG)
+          expand: true,
+          cwd: 'bower_components/ng-file-upload-shim',
+          src: 'FileAPI.flash.swf',
+          dest: '<%= yeoman.dist %>/scripts/ie9'
         }]
       },
       styles: {

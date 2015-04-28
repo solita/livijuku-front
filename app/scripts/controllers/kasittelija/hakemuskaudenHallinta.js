@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', '$upload', function ($scope, $location, $route, $log, HakemuskausiService, StatusService, $upload) {
+  .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', 'Upload', function ($scope, $location, $route, $log, HakemuskausiService, StatusService, Upload) {
 
     function epochToISOString(epoch) {
       return toISODateString(new Date(epoch));
@@ -175,9 +175,9 @@ angular.module('jukufrontApp')
     };
 
     $scope.upload = function (tiedostot, vuosi) {
-      console.log('Upload:tiedostot length:' + tiedostot.length);
-      if (tiedostot.length > 0) {
-        $upload.upload({
+      console.log('Upload:tiedostot length:' + tiedostot.length + 't[0]:'+ tiedostot[0].length);
+      if (tiedostot!=null && tiedostot.length > 0) {
+        Upload.upload({
           url: 'api/hakemuskausi/' + vuosi + '/hakuohje',
           method: 'PUT',
           fields: {myObj: $scope.myModelObj},

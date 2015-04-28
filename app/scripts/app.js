@@ -17,7 +17,7 @@ angular
     'smart-table',
     'ui.bootstrap',
     'monospaced.elastic',
-    'angularFileUpload',
+    'ngFileUpload',
     'toastr',
     'ngAnimate',
     'ngRoute',
