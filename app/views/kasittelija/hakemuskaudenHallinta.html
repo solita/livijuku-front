@@ -13,13 +13,11 @@
               <a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" target="_blank">Hakuohje
                 {{hakemuskausi.vuosi}}</a>
             </p>
+
             <p ng-show="hakemuskausi.uusi">
-              <!--<label class="hakemuskausi-file-upload">-->
-                <button class="hakemuskausi-file-upload" ng-show="sallittu('modify-hakemuskausi')" ngf-select
-                       ng-model="files" ngf-change="upload(files, hakemuskausi.vuosi)"
-                       ngf-multiple="false" ngf-accept="'application/pdf'">
-                Lataa hakuohje</button>
-             <!-- </label>-->
+              <button class="btn btn-primary" ng-show=" sallittu('modify-hakemuskausi')" ngf-select
+                      ngf-change="upload($files, hakemuskausi.vuosi)">Lataa hakuohje
+              </button>
             </p>
 
             <p ng-show="hakemuskausi.tilatunnus=='A' && sallittu('modify-hakemuskausi')">

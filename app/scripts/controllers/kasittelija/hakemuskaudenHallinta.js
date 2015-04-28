@@ -174,14 +174,16 @@ angular.module('jukufrontApp')
       }
     };
 
-    $scope.upload = function (tiedostot, vuosi) {
-      console.log('Upload:tiedostot length:', tiedostot);
-      if (tiedostot!=null && tiedostot.length > 0) {
+    $scope.upload = function (tiedostot,vuosi) {
+      console.log('Upload:vuosi:'+vuosi+' length:' + tiedostot.length);
+      if (tiedostot != null && tiedostot.length > 0) {
+        console.log('Ladataan tiedosto:',tiedostot);
+        console.log(JSON.stringify(tiedostot[0]));
         Upload.upload({
           url: 'api/hakemuskausi/' + vuosi + '/hakuohje',
+          file: tiedostot[0],
           method: 'PUT',
           fields: {myObj: $scope.myModelObj},
-          file: tiedostot[0],
           fileFormDataName: 'hakuohje'
         }).progress(function (evt) {
           var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
