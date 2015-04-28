@@ -175,7 +175,7 @@ angular.module('jukufrontApp')
     };
 
     $scope.upload = function (tiedostot, vuosi) {
-      console.log('Upload:tiedostot length:' + tiedostot.length + 't[0]:'+ tiedostot[0].length);
+      console.log('Upload:tiedostot length:', tiedostot);
       if (tiedostot!=null && tiedostot.length > 0) {
         Upload.upload({
           url: 'api/hakemuskausi/' + vuosi + '/hakuohje',
