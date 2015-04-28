@@ -395,10 +395,16 @@ angular.module('jukufrontApp')
     return {
       restrict: 'E',
       scope: {
-        name: "@"
+        name: "@",
+        luokka: "="
       },
       transclude: true,
-      templateUrl: 'views/yhteinen/jkuAvustusluokkaPanel.html'
+      templateUrl: 'views/yhteinen/jkuAvustusluokkaPanel.html',
+      controller: ["$scope", function($scope) {
+        $scope.sumHaettavaAvustusOverLuokka = function(luokka) {
+          return _.sum(luokka.avustuskohteet, 'haettavaavustus');
+        }
+      }]
     }
   })
   .directive('jkuAvustuskohde', function() {
