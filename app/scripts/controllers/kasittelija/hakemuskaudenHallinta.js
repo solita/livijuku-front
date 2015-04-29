@@ -89,9 +89,9 @@ angular.module('jukufrontApp')
     };
 
     $scope.ennenLoppuPvm = function (alkupvm, loppupvm) {
-      var alku_ts= 0;
-      var loppu_ts=0;
-      if (typeof alkupvm === 'undefined' || typeof loppupvm === 'undefined' ) return false;
+      var alku_ts = 0;
+      var loppu_ts = 0;
+      if (typeof alkupvm === 'undefined' || typeof loppupvm === 'undefined') return false;
       if (typeof alkupvm === 'string') {
         alku_ts = Date.parse(alkupvm);
       } else {
@@ -174,10 +174,10 @@ angular.module('jukufrontApp')
       }
     };
 
-    $scope.upload = function (tiedostot,vuosi) {
-      console.log('Upload:vuosi:'+vuosi+' length:' + tiedostot.length);
+    $scope.upload = function (tiedostot, vuosi) {
+      console.log('Upload:vuosi:' + vuosi + ' length:' + tiedostot.length);
       if (tiedostot != null && tiedostot.length > 0) {
-        console.log('Ladataan tiedosto:',tiedostot);
+        console.log('Ladataan tiedosto:', tiedostot);
         console.log(JSON.stringify(tiedostot[0]));
         Upload.upload({
           url: 'api/hakemuskausi/' + vuosi + '/hakuohje',
@@ -189,12 +189,12 @@ angular.module('jukufrontApp')
           var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
           console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
         }).success(function (data, status, headers, config) {
-          console.log('Hakuohjeen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' onnistui. Paluuarvo: ' + data);
-          StatusService.ok('Hakuohjelautaus: ' + config.file.name + ' vuodelle:' + vuosi, 'Hakuohjeen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' onnistui.');
+          console.log('Asetuksen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' onnistui. Paluuarvo: ' + data);
+          StatusService.ok('Asetuksen lataus: ' + config.file.name + ' vuodelle:' + vuosi, 'Asetuksen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' onnistui.');
           haeHakemuskaudet();
         }).error(function (data, status, headers, config) {
-          console.log('Hakuohjeen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui. Paluuarvo: ' + data);
-          StatusService.virhe('Hakuohjelataus: ' + config.file.name + ' vuodelle:' + vuosi, 'Hakuohjeen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui:' + data);
+          console.log('Asetuksen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui. Paluuarvo: ' + data);
+          StatusService.virhe('Asetuksen lataus: ' + config.file.name + ' vuodelle:' + vuosi, 'Asetuksen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui:' + data);
         });
       }
       haeHakemuskaudet();
@@ -213,7 +213,6 @@ angular.module('jukufrontApp')
       }
       return ((pvm_ts > min_ts) && (pvm_ts < max_ts) );
     };
-
     haeHakemuskaudet();
   }
   ]);
