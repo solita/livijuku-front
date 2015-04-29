@@ -1,5 +1,8 @@
 'use strict';
 
+/*global _ */
+/*global angular */
+
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams',
     'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', 'Upload', 'LiiteService', 'CommonService', '$window',
@@ -8,70 +11,70 @@ angular.module('jukufrontApp')
     function generoiTooltipArvot() {
       var maksatushakemus1Arvot = {};
       $scope.tooltipArvot = {};
-      if ($scope.tyyppi == "MH1" || $scope.tyyppi == "MH2") {
+      if ($scope.tyyppi === "MH1" || $scope.tyyppi === "MH2") {
         AvustuskohdeService.hae($scope.avustushakemusid)
           .success(function (data) {
             var avustushakemusArvot = {};
-            avustushakemusArvot['psa1haettavaavustus'] = haeHaettavaavustus('PSA-1', data);
-            avustushakemusArvot['psa1omarahoitus'] = haeOmarahoitus('PSA-1', data);
-            avustushakemusArvot['psa2haettavaavustus'] = haeHaettavaavustus('PSA-2', data);
-            avustushakemusArvot['psa2omarahoitus'] = haeOmarahoitus('PSA-2', data);
-            avustushakemusArvot['psamhaettavaavustus'] = haeHaettavaavustus('PSA-M', data);
-            avustushakemusArvot['psamomarahoitus'] = haeOmarahoitus('PSA-M', data);
-            avustushakemusArvot['hkslhaettavaavustus'] = haeHaettavaavustus('HK-SL', data);
-            avustushakemusArvot['hkslomarahoitus'] = haeOmarahoitus('HK-SL', data);
-            avustushakemusArvot['hkklhaettavaavustus'] = haeHaettavaavustus('HK-KL', data);
-            avustushakemusArvot['hkklomarahoitus'] = haeOmarahoitus('HK-KL', data);
-            avustushakemusArvot['hkslhaettavaavustus'] = haeHaettavaavustus('HK-SL', data);
-            avustushakemusArvot['hkslomarahoitus'] = haeOmarahoitus('HK-SL', data);
-            avustushakemusArvot['hkllhaettavaavustus'] = haeHaettavaavustus('HK-LL', data);
-            avustushakemusArvot['hkllomarahoitus'] = haeOmarahoitus('HK-LL', data);
-            avustushakemusArvot['hktlhaettavaavustus'] = haeHaettavaavustus('HK-TL', data);
-            avustushakemusArvot['hktlomarahoitus'] = haeOmarahoitus('HK-TL', data);
-            avustushakemusArvot['kimhaettavaavustus'] = haeHaettavaavustus('K-IM', data);
-            avustushakemusArvot['kimomarahoitus'] = haeOmarahoitus('K-IM', data);
-            avustushakemusArvot['kmpkhaettavaavustus'] = haeHaettavaavustus('K-MPK', data);
-            avustushakemusArvot['kmpkomarahoitus'] = haeOmarahoitus('K-MPK', data);
-            avustushakemusArvot['kmkhaettavaavustus'] = haeHaettavaavustus('K-MK', data);
-            avustushakemusArvot['kmkomarahoitus'] = haeOmarahoitus('K-MK', data);
-            avustushakemusArvot['krthaettavaavustus'] = haeHaettavaavustus('K-RT', data);
-            avustushakemusArvot['krtomarahoitus'] = haeOmarahoitus('K-RT', data);
-            avustushakemusArvot['kmhaettavaavustus'] = haeHaettavaavustus('K-M', data);
-            avustushakemusArvot['kmomarahoitus'] = haeOmarahoitus('K-M', data);
+            avustushakemusArvot.psa1haettavaavustus = haeHaettavaavustus('PSA-1', data);
+            avustushakemusArvot.psa1omarahoitus     = haeOmarahoitus('PSA-1', data);
+            avustushakemusArvot.psa2haettavaavustus = haeHaettavaavustus('PSA-2', data);
+            avustushakemusArvot.psa2omarahoitus     = haeOmarahoitus('PSA-2', data);
+            avustushakemusArvot.psamhaettavaavustus = haeHaettavaavustus('PSA-M', data);
+            avustushakemusArvot.psamomarahoitus     = haeOmarahoitus('PSA-M', data);
+            avustushakemusArvot.hkslhaettavaavustus = haeHaettavaavustus('HK-SL', data);
+            avustushakemusArvot.hkslomarahoitus     = haeOmarahoitus('HK-SL', data);
+            avustushakemusArvot.hkklhaettavaavustus = haeHaettavaavustus('HK-KL', data);
+            avustushakemusArvot.hkklomarahoitus     = haeOmarahoitus('HK-KL', data);
+            avustushakemusArvot.hkslhaettavaavustus = haeHaettavaavustus('HK-SL', data);
+            avustushakemusArvot.hkslomarahoitus     = haeOmarahoitus('HK-SL', data);
+            avustushakemusArvot.hkllhaettavaavustus = haeHaettavaavustus('HK-LL', data);
+            avustushakemusArvot.hkllomarahoitus     = haeOmarahoitus('HK-LL', data);
+            avustushakemusArvot.hktlhaettavaavustus = haeHaettavaavustus('HK-TL', data);
+            avustushakemusArvot.hktlomarahoitus     = haeOmarahoitus('HK-TL', data);
+            avustushakemusArvot.kimhaettavaavustus  = haeHaettavaavustus('K-IM', data);
+            avustushakemusArvot.kimomarahoitus      = haeOmarahoitus('K-IM', data);
+            avustushakemusArvot.kmpkhaettavaavustus = haeHaettavaavustus('K-MPK', data);
+            avustushakemusArvot.kmpkomarahoitus     = haeOmarahoitus('K-MPK', data);
+            avustushakemusArvot.kmkhaettavaavustus  = haeHaettavaavustus('K-MK', data);
+            avustushakemusArvot.kmkomarahoitus      = haeOmarahoitus('K-MK', data);
+            avustushakemusArvot.krthaettavaavustus  = haeHaettavaavustus('K-RT', data);
+            avustushakemusArvot.krtomarahoitus      = haeOmarahoitus('K-RT', data);
+            avustushakemusArvot.kmhaettavaavustus   = haeHaettavaavustus('K-M', data);
+            avustushakemusArvot.kmomarahoitus       = haeOmarahoitus('K-M', data);
             _.forIn(avustushakemusArvot, function (value, key) {
               if (value > 0) {
                 $scope.tooltipArvot[key] = 'Avustushakemus:' + value.toString().replace('.', ',') + ' €';
               }
             });
-            if ($scope.tyyppi == "MH2") {
+            if ($scope.tyyppi === "MH2") {
               AvustuskohdeService.hae($scope.maksatushakemus1id)
                 .success(function (data) {
-                  maksatushakemus1Arvot['psa1haettavaavustus'] = haeHaettavaavustus('PSA-1', data);
-                  maksatushakemus1Arvot['psa1omarahoitus'] = haeOmarahoitus('PSA-1', data);
-                  maksatushakemus1Arvot['psa2haettavaavustus'] = haeHaettavaavustus('PSA-2', data);
-                  maksatushakemus1Arvot['psa2omarahoitus'] = haeOmarahoitus('PSA-2', data);
-                  maksatushakemus1Arvot['psamhaettavaavustus'] = haeHaettavaavustus('PSA-M', data);
-                  maksatushakemus1Arvot['psamomarahoitus'] = haeOmarahoitus('PSA-M', data);
-                  maksatushakemus1Arvot['hkslhaettavaavustus'] = haeHaettavaavustus('HK-SL', data);
-                  maksatushakemus1Arvot['hkslomarahoitus'] = haeOmarahoitus('HK-SL', data);
-                  maksatushakemus1Arvot['hkklhaettavaavustus'] = haeHaettavaavustus('HK-KL', data);
-                  maksatushakemus1Arvot['hkklomarahoitus'] = haeOmarahoitus('HK-KL', data);
-                  maksatushakemus1Arvot['hkslhaettavaavustus'] = haeHaettavaavustus('HK-SL', data);
-                  maksatushakemus1Arvot['hkslomarahoitus'] = haeOmarahoitus('HK-SL', data);
-                  maksatushakemus1Arvot['hkllhaettavaavustus'] = haeHaettavaavustus('HK-LL', data);
-                  maksatushakemus1Arvot['hkllomarahoitus'] = haeOmarahoitus('HK-LL', data);
-                  maksatushakemus1Arvot['hktlhaettavaavustus'] = haeHaettavaavustus('HK-TL', data);
-                  maksatushakemus1Arvot['hktlomarahoitus'] = haeOmarahoitus('HK-TL', data);
-                  maksatushakemus1Arvot['kimhaettavaavustus'] = haeHaettavaavustus('K-IM', data);
-                  maksatushakemus1Arvot['kimomarahoitus'] = haeOmarahoitus('K-IM', data);
-                  maksatushakemus1Arvot['kmpkhaettavaavustus'] = haeHaettavaavustus('K-MPK', data);
-                  maksatushakemus1Arvot['kmpkomarahoitus'] = haeOmarahoitus('K-MPK', data);
-                  maksatushakemus1Arvot['kmkhaettavaavustus'] = haeHaettavaavustus('K-MK', data);
-                  maksatushakemus1Arvot['kmkomarahoitus'] = haeOmarahoitus('K-MK', data);
-                  maksatushakemus1Arvot['krthaettavaavustus'] = haeHaettavaavustus('K-RT', data);
-                  maksatushakemus1Arvot['krtomarahoitus'] = haeOmarahoitus('K-RT', data);
-                  maksatushakemus1Arvot['kmhaettavaavustus'] = haeHaettavaavustus('K-M', data);
-                  maksatushakemus1Arvot['kmomarahoitus'] = haeOmarahoitus('K-M', data);
+                  maksatushakemus1Arvot.psa1haettavaavustus = haeHaettavaavustus('PSA-1', data);
+                  maksatushakemus1Arvot.psa1omarahoitus     = haeOmarahoitus('PSA-1', data);
+                  maksatushakemus1Arvot.psa2haettavaavustus = haeHaettavaavustus('PSA-2', data);
+                  maksatushakemus1Arvot.psa2omarahoitus     = haeOmarahoitus('PSA-2', data);
+                  maksatushakemus1Arvot.psamhaettavaavustus = haeHaettavaavustus('PSA-M', data);
+                  maksatushakemus1Arvot.psamomarahoitus     = haeOmarahoitus('PSA-M', data);
+                  maksatushakemus1Arvot.hkslhaettavaavustus = haeHaettavaavustus('HK-SL', data);
+                  maksatushakemus1Arvot.hkslomarahoitus     = haeOmarahoitus('HK-SL', data);
+                  maksatushakemus1Arvot.hkklhaettavaavustus = haeHaettavaavustus('HK-KL', data);
+                  maksatushakemus1Arvot.hkklomarahoitus     = haeOmarahoitus('HK-KL', data);
+                  maksatushakemus1Arvot.hkslhaettavaavustus = haeHaettavaavustus('HK-SL', data);
+                  maksatushakemus1Arvot.hkslomarahoitus     = haeOmarahoitus('HK-SL', data);
+                  maksatushakemus1Arvot.hkllhaettavaavustus = haeHaettavaavustus('HK-LL', data);
+                  maksatushakemus1Arvot.hkllomarahoitus     = haeOmarahoitus('HK-LL', data);
+                  maksatushakemus1Arvot.hktlhaettavaavustus = haeHaettavaavustus('HK-TL', data);
+                  maksatushakemus1Arvot.hktlomarahoitus     = haeOmarahoitus('HK-TL', data);
+                  maksatushakemus1Arvot.kimhaettavaavustus  = haeHaettavaavustus('K-IM', data);
+                  maksatushakemus1Arvot.kimomarahoitus      = haeOmarahoitus('K-IM', data);
+                  maksatushakemus1Arvot.kmpkhaettavaavustus = haeHaettavaavustus('K-MPK', data);
+                  maksatushakemus1Arvot.kmpkomarahoitus     = haeOmarahoitus('K-MPK', data);
+                  maksatushakemus1Arvot.kmkhaettavaavustus  = haeHaettavaavustus('K-MK', data);
+                  maksatushakemus1Arvot.kmkomarahoitus      = haeOmarahoitus('K-MK', data);
+                  maksatushakemus1Arvot.krthaettavaavustus  = haeHaettavaavustus('K-RT', data);
+                  maksatushakemus1Arvot.krtomarahoitus      = haeOmarahoitus('K-RT', data);
+                  maksatushakemus1Arvot.kmhaettavaavustus   = haeHaettavaavustus('K-M', data);
+                  maksatushakemus1Arvot.kmomarahoitus       = haeOmarahoitus('K-M', data);
                   _.forIn(maksatushakemus1Arvot, function (value, key) {
                     if (value > 0) {
                       $scope.tooltipArvot[key] = $scope.tooltipArvot[key] + '<br/>' + '1. Maksatushakemus:' + (value).toString().replace('.', ',') + ' €';
@@ -403,9 +406,9 @@ angular.module('jukufrontApp')
       controller: ["$scope", function($scope) {
         $scope.sumHaettavaAvustusOverLuokka = function(luokka) {
           return _.sum(luokka.avustuskohteet, 'haettavaavustus');
-        }
+        };
       }]
-    }
+    };
   })
   .directive('jkuAvustuskohde', function() {
     return {
@@ -454,7 +457,11 @@ angular.module('jukufrontApp')
           // TODO: LIVIJUKU-229 Toisten hakijoiden hakemusten syötekentät pitää muuttaa vain luku -tilaan
           // TODO: Poista muokkaus vireillä olevalta, jne. hakemuslomakkeelta.
           return !$rootScope.sallittu('modify-oma-hakemus');
-        }
+        };
+
+        $scope.getName = function(key) {
+          return $scope.kohde.avustuskohdeluokkatunnus + "-" + $scope.kohde.avustuskohdelajitunnus + "-" + key;
+        };
 
       }],
       templateUrl: 'views/yhteinen/jkuAvustuskohde.html'
