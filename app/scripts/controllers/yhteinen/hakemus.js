@@ -420,7 +420,7 @@ angular.module('jukufrontApp')
       controller: ["$scope", "$rootScope", function ($scope, $rootScope) {
 
         $scope.euroSyoteNumeroksi = function (arvo) {
-          return parseFloat(arvo.replace(/[^0-9,]/g, '').replace(',', '.'));
+          return parseFloat(arvo.replace(/[^0-9,-]/g, '').replace(',', '.'));
         };
 
         $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
@@ -438,12 +438,10 @@ angular.module('jukufrontApp')
           if (typeof haettavarahoitus === 'number') {
             haettavarahoitus2 = parseFloat(haettavarahoitus);
           }
-          console.log("omarahoitusRiittava: return "+ haettavarahoitus2 + " <= " + omarahoitus2 +
-            " ("+ (haettavarahoitus2 <= omarahoitus2) + ")");
           return haettavarahoitus2 <= omarahoitus2;
         };
 
-        $scope.positiivinenArvo = function (value) {
+        $scope.sallittuArvo = function (value) {
           if (typeof value === 'undefined') return false;
           var floatarvo;
           if (typeof value === 'string') {

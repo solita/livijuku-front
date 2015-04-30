@@ -1,35 +1,35 @@
-<div class="row">
-  <div class="col-md-12">
-    <h5>{{name}}</h5>
-  </div>
-  <div class="col-md-6">
-    <div class="form-group" show-errors="{showSuccess: true}">
-      <label>Haettava valtionavustus
-        <input name="{{getName('haettavaavustus')}}" type="text" min="-0.0001" ng-currency="" noenter
-               ng-readonly="isReadonly()" class="form-control"
-               ng-model="kohde.haettavaavustus"
-               ui-validate="{positiivinenArvo: 'positiivinenArvo($value)'}"/>
-      </label>
-
-      <!--<p ng-show="kohdeForm.$error.positiivinenArvo && !getPristine('haettavaavustus')"
-         class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>-->
+<div class="row avustuskohde">
+  <ng-form name="{{getName()}}">
+    <div class="col-md-12">
+      <h5>{{name}}</h5>
     </div>
-  </div>
-  <div class="col-md-6">
-    <div class="form-group" show-errors="{showSuccess: true}">
-      <label>Kunnan oma rahoitusosuus
-        <input name="{{getName('omarahoitus')}}" type="text" min="-0.0001" ng-currency="" noenter class="form-control"
-               ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
-               ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kohde.haettavaavustus)',positiivinenArvo: 'positiivinenArvo($value)'}"
-               ui-validate-watch=" 'kohde.haettavaavustus' "/>
-      </label>
+    <div class="col-md-6">
+      <div class="form-group" show-errors="{showSuccess: true}">
+        <label>Haettava valtionavustus
+          <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" noenter
+                 ng-readonly="isReadonly()" class="form-control"
+                 ng-model="kohde.haettavaavustus"
+                 ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo($value)'}"/>
+        </label>
 
-      <!--<p ng-show="omarahoitus.$error.positiivinenArvo && !omarahoitus.$pristine"
-         class="help-block">Arvon tulee olla positiivinen (0 - 999 999 999).</p>
+        <p class="help-block ng-invalid-sallittu-arvo-haettavaavustus">Arvon tulee olla välillä 0 - 999 999 999 €.</p>
 
-      <p ng-show="omarahoitus.$error.omarahoitusRiittava && !omarahoitus.$pristine"
-         class="help-block">Oma rahoitusosuus tulee olla vähintään TODO suuruinen.</p>
-      -->
+      </div>
     </div>
-  </div>
+    <div class="col-md-6">
+      <div class="form-group" show-errors="{showSuccess: true}">
+        <label>Kunnan oma rahoitusosuus
+          <input name="{{getName('omarahoitus')}}" type="text" ng-currency="" noenter class="form-control"
+                 ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
+                 ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kohde.haettavaavustus)',sallittuArvoOmarahoitus: 'sallittuArvo($value)'}"
+                 ui-validate-watch=" 'kohde.haettavaavustus' "/>
+        </label>
+
+        <p class="help-block ng-invalid-sallittu-arvo-omarahoitus">Arvon tulee olla välillä 0 - 999 999 999 €.</p>
+
+        <p class="help-block ng-invalid-omarahoitus-riittava">Oma rahoitusosuus tulee olla vähintään TODO suuruinen.</p>
+
+      </div>
+    </div>
+  </ng-form>
 </div>
