@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaPaatosCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'HakemusService', 'StatusService', 'PaatosService', 'SuunnitteluService', function ($rootScope, $scope, $routeParams, $location, HakemusService, StatusService, PaatosService, SuunnitteluService) {
+  .controller('KasittelijaPaatosCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'HakemusService', 'StatusService', 'PaatosService', 'SuunnitteluService','$window', function ($rootScope, $scope, $routeParams, $location, HakemusService, StatusService, PaatosService, SuunnitteluService, $window) {
 
     function haePaatosTiedot() {
       HakemusService.hae($scope.hakemusid)
@@ -81,13 +81,12 @@ angular.module('jukufrontApp')
       if (tila == 'T') {
         if (paatosForm.$valid) {
           $scope.tallennaPaatos(paatosForm);
-          $location.path('/k/paatos_esikatselu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus + '/' + $scope.hakemusid + '/' + $scope.haettuavustus);
-
+          $window.open('api/hakemus/'+$scope.hakemusid+'/paatos/1/pdf','target', '_blank');
         } else {
           StatusService.virhe('PaatosService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
         }
       } else {
-        $location.path('/k/paatos_esikatselu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus + '/' + $scope.hakemusid + '/' + $scope.haettuavustus);
+        $window.open('api/hakemus/'+$scope.hakemusid+'/paatos/1/pdf','target', '_blank');
       }
     };
 

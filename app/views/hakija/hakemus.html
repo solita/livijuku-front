@@ -157,12 +157,12 @@
         <div class="col-md-3">
           <div
             ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
-            <button data-ng-click="tallennaHakemus()" class="pull-right btn btn-primary">Tallenna tiedot
+            <button data-ng-click="tallennaHakemus(false)" class="pull-right btn btn-primary">Tallenna tiedot
             </button>
           </div>
           <div
             ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
-            <button data-ng-click="tallennaHakemus()" class="pull-right btn btn-primary" disabled>Tallenna
+            <button data-ng-click="tallennaHakemus(false)" class="pull-right btn btn-primary" disabled>Tallenna
               tiedot
             </button>
           </div>
