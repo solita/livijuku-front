@@ -1,10 +1,11 @@
 var browserify = require('browserify');
 var browserSync = require('browser-sync');
+var es = require('event-stream');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
+var httpProxy = require('http-proxy');
 var stylus = require('gulp-stylus');
 var uglify = require('gulp-uglify');
-var httpProxy = require('http-proxy');
 var watchify = require('watchify');
 
 // Stream transformer for browserify
@@ -28,10 +29,26 @@ var paths = {
     destination: './dist/'
   },
   assets: {
-    source: './app/assets/**/*.*',
+    source: [
+      './app/assets/**/*.*',
+      './bower_components/bootstrap/dist/fonts*/*.*',
+      './bower_components/ng-file-upload-shim/*.swf'
+    ],
     watch: './app/assets/**/*.*',
     destination: './dist/'
-  }
+  },
+  copy: [{
+    source: './bower_components/ng-file-upload-shim/*.swf',
+    destination: './dist/scripts/ie9/'
+  },
+  {
+    source: './bower_components/es5-shim/es5-shim.min.js',
+    destination: './dist/scripts/ie9/'
+  },
+  {
+    source: './bower_components/json3/lib/json3.min.js',
+    destination: './dist/scripts/ie9/'
+  }]
 };
 
 var production = process.env.NODE_ENV === 'production';
@@ -55,6 +72,13 @@ gulp.task('templates', function() {
 gulp.task('assets', function() {
   return gulp.src(paths.assets.source)
     .pipe(gulp.dest(paths.assets.destination));
+});
+
+gulp.task('copy', function() {
+  return es.merge(paths.copy.map(function(file) {
+    return gulp.src(file.source)
+      .pipe(gulp.dest(file.destination));
+  }));
 });
 
 gulp.task('scripts', function() {
@@ -148,7 +172,7 @@ gulp.task('styles', function() {
   return pipeline;
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['scripts'], function() {
   gulp.watch(paths.styles.watch, ['styles']);
   gulp.watch(paths.templates.watch, ['templates']);
 
@@ -169,9 +193,9 @@ gulp.task('watch', function() {
       .pipe(gulp.dest(paths.scripts.destination))
       .pipe(browserSync.reload({stream: true}));
 
-  }).emit('update');
+  });
 });
 
 
 
-gulp.task('default', ['styles', 'scripts', 'templates', 'assets', 'server', 'watch']);
+gulp.task('default', ['styles', 'scripts', 'templates', 'assets', 'copy', 'server', 'watch']);
