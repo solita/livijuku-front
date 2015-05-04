@@ -14,30 +14,19 @@ module.exports = function(config) {
     basePath: '../',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['jasmine'],
+    frameworks: ['browserify', 'jasmine'],
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/angular/angular.js',
-      'bower_components/angular-loading-bar/build/loading-bar.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/angular-route/angular-route.js',
-      'bower_components/lodash/dist/lodash.compat.js',
-      'bower_components/angular-bootstrap/ui-bootstrap.js',
-      'bower_components/angular-resource/angular-resource.js',
-      'bower_components/angular-smart-table/dist/smart-table.min.js',
-      'bower_components/angular-elastic/elastic.js',
-      'bower_components/angular-toastr/dist/angular-toastr.js',
-      'bower_components/angular-animate/angular-animate.js',
-      'bower_components/ng-file-upload/angular-file-upload.js',
-      'bower_components/angular-bootstrap-show-errors/src/showErrors.js',
-      'bower_components/angular-ui-utils/validate.js',
-      'bower_components/ng-currency/dist/ng-currency.min.js',
-      'bower_components/angular-i18n/angular-locale_fi-fi.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],
+
+    preprocessors: {
+      'test/**/*.js': ['browserify'],
+      'app/scripts/**/*.js': ['browserify']
+    },
 
     // list of files / patterns to exclude
     exclude: [],
@@ -59,6 +48,7 @@ module.exports = function(config) {
 
     // Which plugins to enable
     plugins: [
+      'karma-browserify',
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-jasmine'

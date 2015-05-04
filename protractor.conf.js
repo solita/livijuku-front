@@ -3,18 +3,17 @@
 
 exports.config = {
   // The address of a running selenium server.
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+
+  seleniumServerJar: './node_modules/protractor/selenium/selenium-server-standalone-2.45.0.jar',
 
   // Spec patterns are relative to the location of this config.
   specs: [
     'test/e2e/*.js'
   ],
 
-
   multiCapabilities: [{
     'browserName': 'firefox'
   }],
-
 
   // A base URL for your application under test. Calls to protractor.get()
   // with relative paths will be prepended with this.

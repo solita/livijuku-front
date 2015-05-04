@@ -7,6 +7,7 @@ var gutil = require('gulp-util');
 var httpProxy = require('http-proxy');
 var os = require('os');
 var path = require('path');
+var protractor = require('gulp-protractor');
 var replace = require('gulp-replace');
 var rev = require('gulp-rev');
 var rimraf = require('rimraf');
@@ -230,6 +231,15 @@ gulp.task('watch', ['scripts'], function() {
   });
 });
 
+
+gulp.task('e2e', ['webdriver_update'], function() {
+  gulp.src('./src/tests/e2e/*.js').pipe(protractor.protractor({
+    configFile: 'protractor.conf.js'
+  })).on('error', handleError);
+});
+
+gulp.task('webdriver_standalone', protractor.webdriver_standalone);
+gulp.task('webdriver_update', protractor.webdriver_update);
 
 var buildTasks = ['styles', 'scripts', 'templates', 'assets', 'copy'];
 
