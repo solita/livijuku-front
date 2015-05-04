@@ -12,5 +12,5 @@ dist
 node_modules
 target
 upstream
-
+rev-manifest.json
 *.log

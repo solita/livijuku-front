@@ -4,6 +4,10 @@ var es = require('event-stream');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var httpProxy = require('http-proxy');
+var path = require('path');
+var replace = require('gulp-replace');
+var rev = require('gulp-rev');
+var rimraf = require('rimraf');
 var stylus = require('gulp-stylus');
 var uglify = require('gulp-uglify');
 var watchify = require('watchify');
@@ -16,7 +20,7 @@ var paths = {
   styles: {
     source: 'app/styles/styles.styl',
     destination: 'dist/styles/',
-    watch: 'app/**/*.styl'
+    watch: 'app/**/*.styl',
   },
   scripts: {
     source: './app/scripts/app.js',
@@ -26,11 +30,13 @@ var paths = {
   templates: {
     source: './app/**/*.html',
     watch: './app/**/*.html',
-    destination: './dist/'
+    destination: './dist/',
+    revision: './dist/**/*.html'
   },
   assets: {
     source: [
       './app/assets/**/*.*',
+      './app/assets/.*',
       './bower_components/bootstrap/dist/fonts*/*.*',
       './bower_components/ng-file-upload-shim/*.swf'
     ],
@@ -48,7 +54,12 @@ var paths = {
   {
     source: './bower_components/json3/lib/json3.min.js',
     destination: './dist/scripts/ie9/'
-  }]
+  }],
+  revision: {
+    source: ['./dist/**/*.css', './dist/**/*.js'],
+    base: path.join(__dirname, 'dist'),
+    destination: './dist/'
+  }
 };
 
 var production = process.env.NODE_ENV === 'production';
@@ -67,6 +78,17 @@ function handleError(err) {
 gulp.task('templates', function() {
   return gulp.src(paths.templates.source)
     .pipe(gulp.dest(paths.templates.destination));
+});
+
+gulp.task('revision-templates', ['revision', 'templates'], function() {
+  var revisions = require('./rev-manifest.json');
+
+  var source = gulp.src(paths.templates.revision);
+
+  for(var key in revisions) {
+    source = source.pipe(replace(key, revisions[key]));
+  }
+  return source.pipe(gulp.dest(paths.templates.destination));
 });
 
 gulp.task('assets', function() {
@@ -197,5 +219,19 @@ gulp.task('watch', ['scripts'], function() {
 });
 
 
+var buildTasks = ['styles', 'scripts', 'templates', 'assets', 'copy'];
 
-gulp.task('default', ['styles', 'scripts', 'templates', 'assets', 'copy', 'server', 'watch']);
+gulp.task('revision', buildTasks, function() {
+  return gulp.src(paths.revision.source, {base: paths.revision.base})
+      .pipe(rev())
+      .pipe(gulp.dest(paths.revision.destination))
+      .pipe(rev.manifest())
+      .pipe(gulp.dest('./'));
+});
+
+gulp.task('build', function() {
+  rimraf.sync('./dist');
+  gulp.start(buildTasks.concat(['revision', 'revision-templates']));
+});
+
+gulp.task('default', buildTasks.concat(['server', 'watch']));
