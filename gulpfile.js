@@ -5,6 +5,7 @@ var fs = require('fs');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var httpProxy = require('http-proxy');
+var ngAnnotate = require('gulp-ng-annotate');
 var os = require('os');
 var path = require('path');
 var protractor = require('gulp-protractor');
@@ -119,7 +120,9 @@ gulp.task('scripts', function() {
   .pipe(source(paths.scripts.filename));
 
   if (production) {
-    bundle.pipe(streamify(uglify()));
+    bundle
+      .pipe(ngAnnotate())
+      .pipe(streamify(uglify()));
   }
 
   return bundle
