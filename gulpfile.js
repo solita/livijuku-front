@@ -51,6 +51,10 @@ var paths = {
     destination: './dist/scripts/ie9/'
   },
   {
+    source: './bower_components/ng-file-upload-shim/FileAPI.min.js',
+    destination: './dist/scripts/ie9/'
+  },
+  {
     source: './bower_components/es5-shim/es5-shim.min.js',
     destination: './dist/scripts/ie9/'
   },
@@ -58,8 +62,11 @@ var paths = {
     source: './bower_components/json3/lib/json3.min.js',
     destination: './dist/scripts/ie9/'
   }],
+
+  // TODO: Ainoastaan scripts hakemiston js-tiedostot uudelleennimetaan. Sen alla olevaa ie9:a ei voi uudelleennimeta koska latauskomponentti
+  // kayttaa suoraan FileAPI.min.js tiedostoa (JEG)
   revision: {
-    source: ['./dist/**/*.css', './dist/**/*.js'],
+    source: ['./dist/**/*.css', './dist/**/*.js', '!./dist/scripts/ie9/FileAPI.min.js'],
     base: path.join(__dirname, 'dist'),
     destination: './dist/'
   },
@@ -234,7 +241,6 @@ gulp.task('watch', ['scripts'], function() {
   });
 });
 
-
 gulp.task('e2e', ['webdriver_update'], function() {
   gulp.src('./src/tests/e2e/*.js').pipe(protractor.protractor({
     configFile: 'protractor.conf.js'
@@ -246,8 +252,6 @@ gulp.task('webdriver_update', protractor.webdriver_update);
 
 var buildTasks = ['styles', 'scripts', 'templates', 'assets', 'copy'];
 
-// TODO: Ainoastaan scripts hakemiston js-tiedostot uudelleennimetaan. Sen alla olevaa ie9:a ei voi uudelleennimeta koska latauskomponentti
-// kayttaa suoraan FileAPI.min.js tiedostoa (JEG)
 gulp.task('revision', buildTasks, function() {
   return gulp.src(paths.revision.source, {base: paths.revision.base})
       .pipe(rev())
