@@ -1,9 +1,11 @@
 var browserify = require('browserify');
 var browserSync = require('browser-sync');
 var es = require('event-stream');
+var fs = require('fs');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var httpProxy = require('http-proxy');
+var os = require('os');
 var path = require('path');
 var replace = require('gulp-replace');
 var rev = require('gulp-rev');
@@ -37,8 +39,7 @@ var paths = {
     source: [
       './app/assets/**/*.*',
       './app/assets/.*',
-      './bower_components/bootstrap/dist/fonts*/*.*',
-      './bower_components/ng-file-upload-shim/*.swf'
+      './bower_components/bootstrap/dist/fonts*/*.*'
     ],
     watch: './app/assets/**/*.*',
     destination: './dist/'
@@ -59,6 +60,9 @@ var paths = {
     source: ['./dist/**/*.css', './dist/**/*.js'],
     base: path.join(__dirname, 'dist'),
     destination: './dist/'
+  },
+  version: {
+    destination: './dist/buildversion.html'
   }
 };
 
@@ -194,6 +198,14 @@ gulp.task('styles', function() {
   return pipeline;
 });
 
+gulp.task('version', ['revision'], function() {
+  var today = new Date();
+
+  fs.writeFileSync(
+    paths.version.destination,
+    '<h5 class="navbartxt">' + today.toISOString() + ' (' + os.hostname() + ')</h5>');
+});
+
 gulp.task('watch', ['scripts'], function() {
   gulp.watch(paths.styles.watch, ['styles']);
   gulp.watch(paths.templates.watch, ['templates']);
@@ -221,6 +233,8 @@ gulp.task('watch', ['scripts'], function() {
 
 var buildTasks = ['styles', 'scripts', 'templates', 'assets', 'copy'];
 
+// TODO: Ainoastaan scripts hakemiston js-tiedostot uudelleennimetaan. Sen alla olevaa ie9:a ei voi uudelleennimeta koska latauskomponentti
+// kayttaa suoraan FileAPI.min.js tiedostoa (JEG)
 gulp.task('revision', buildTasks, function() {
   return gulp.src(paths.revision.source, {base: paths.revision.base})
       .pipe(rev())
@@ -231,7 +245,7 @@ gulp.task('revision', buildTasks, function() {
 
 gulp.task('build', function() {
   rimraf.sync('./dist');
-  gulp.start(buildTasks.concat(['revision', 'revision-templates']));
+  gulp.start(buildTasks.concat(['revision', 'revision-templates', 'version']));
 });
 
 gulp.task('default', buildTasks.concat(['server', 'watch']));
