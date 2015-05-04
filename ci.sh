@@ -48,7 +48,7 @@ buildFront() {
   (
     cd "$WORK"
     npm install
-    bower install
+    npm run build
     grunt build
   )
 }

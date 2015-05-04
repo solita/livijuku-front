@@ -1,4 +1,20 @@
 'use strict';
+
+require('angular');
+require('angular-toastr');
+require('angular-resource');
+require('angular-loading-bar');
+require('angular-smart-table');
+require('angular-bootstrap');
+require('angular-elastic');
+require('ng-file-upload');
+require('angular-animate');
+require('angular-route');
+require('ng-currency');
+require('angular-bootstrap-show-errors');
+require('angular-ui-utils');
+
+
 angular
   .module('jukufrontApp', [
     'services.avustuskohde',
@@ -93,3 +109,23 @@ angular
     $httpProvider.defaults.headers.Pragma = 'no-cache';
   }]);
 
+require('./controllers/yhteinen/hakemus');
+require('./controllers/yhteinen/paanaytto');
+require('./controllers/hakija/hakemukset');
+require('./controllers/kasittelija/hakemukset');
+require('./controllers/kasittelija/hakemuskaudenHallinta');
+require('./controllers/kasittelija/paatos');
+require('./controllers/kasittelija/suunnittelu');
+require('./directives/hakemuslabel');
+require('./directives/noenter');
+require('./directives/hakemussummary');
+require('./services/avustuskohde');
+require('./services/hakemus');
+require('./services/hakemuskausi');
+require('./services/kayttaja');
+require('./services/liite');
+require('./services/organisaatio');
+require('./services/paatos');
+require('./services/suunnittelu');
+require('./services/status');
+require('./services/common');

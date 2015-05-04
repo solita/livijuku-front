@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams',
     'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', 'Upload', 'LiiteService', 'CommonService', '$window',

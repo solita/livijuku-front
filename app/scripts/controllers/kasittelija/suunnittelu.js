@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 angular.module('jukufrontApp')
   .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemuskausiService', 'HakemusService', 'SuunnitteluService', 'StatusService', function ($rootScope, $scope, $location, $routeParams, HakemuskausiService, HakemusService, SuunnitteluService, StatusService) {
 

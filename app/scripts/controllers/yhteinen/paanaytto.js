@@ -1,4 +1,6 @@
 'use strict';
+var _ = require('lodash');
+
 angular.module('jukufrontApp')
   .run(function ($rootScope) {
     $rootScope.sallittu = function (oikeus) {

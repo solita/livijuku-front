@@ -4,6 +4,9 @@
   "dependencies": {},
   "devDependencies": {
     "bower": "^1.4.1",
+    "browser-sync": "^1.9.2",
+    "browserify": "^9.0.8",
+    "debowerify": "^1.2.1",
     "express": "^4.11.1",
     "express-cache-response-directive": "^0.2.0",
     "express-http-proxy": "^0.3.0",
@@ -33,6 +36,12 @@
     "grunt-svgmin": "^0.4.0",
     "grunt-usemin": "^2.6.2",
     "grunt-wiredep": "^1.9.0",
+    "gulp": "^3.8.11",
+    "gulp-streamify": "0.0.5",
+    "gulp-stylus": "^2.0.1",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.4",
+    "http-proxy": "^1.11.1",
     "imagemin-gifsicle": "^4.0.0",
     "imagemin-jpegtran": "^4.0.0",
     "imagemin-optipng": "^4.0.0",
@@ -46,13 +55,16 @@
     "karma-jasmine": "^0.3.5",
     "load-grunt-tasks": "^0.4.0",
     "protractor": "^1.6.1",
-    "time-grunt": "^0.3.2"
+    "time-grunt": "^0.3.2",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.2.0"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
     "install": "node ./node_modules/protractor/bin/webdriver-manager update",
+    "build": "NODE_ENV=production gulp build",
     "build-dev": "grunt build-dev",
     "build-dist": "grunt build",
     "test": "grunt test",
@@ -62,5 +74,10 @@
     "serve-dist": "node ./serve-dist.js",
     "prepublish": "bower install",
     "start": "grunt serve"
+  },
+  "browserify": {
+    "transform": [
+      "debowerify"
+    ]
   }
 }
