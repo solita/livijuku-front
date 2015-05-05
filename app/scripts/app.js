@@ -49,10 +49,6 @@ angular
         templateUrl: 'views/hakija/hakemus.html',
         controller: 'HakemusCtrl'
       })
-      .when('/h/hakemus/esikatselu/:vuosi/:tyyppi/:id/:m1id/:m2id', {
-        templateUrl: 'views/hakija/hakemusEsikatselu.html',
-        controller: 'HakemusCtrl'
-      })
       .when('/h/hakemukset', {
         templateUrl: 'views/hakija/hakemukset.html',
         controller: 'HakijaHakemuksetCtrl'
@@ -75,10 +71,6 @@ angular
       })
       .when('/k/paatos/:vuosi/:tyyppi/:lajitunnus/:hakemusid/:haettuavustus/:avustus', {
         templateUrl: 'views/kasittelija/paatos.html',
-        controller: 'KasittelijaPaatosCtrl'
-      })
-      .when('/k/paatos_esikatselu/:vuosi/:tyyppi/:lajitunnus/:hakemusid/:haettuavustus', {
-        templateUrl: 'views/kasittelija/paatosEsikatselu.html',
         controller: 'KasittelijaPaatosCtrl'
       })
       .when('/k/suunnittelu/:vuosi/:tyyppi/:lajitunnus', {

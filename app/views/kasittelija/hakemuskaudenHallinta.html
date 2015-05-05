@@ -10,16 +10,14 @@
             <p class="hakemuskausi-vuosi">{{hakemuskausi.vuosi}}</p>
 
             <p ng-show="hakemuskausi.tilatunnus=='A' || !hakemuskausi.uusi">
-              <a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" target="_blank">Hakuohje
-                {{hakemuskausi.vuosi}}</a>
+              <a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" target="_blank">Valtioneuvoston asetus</a>
             </p>
 
             <p ng-show="hakemuskausi.uusi">
               <button class="btn btn-primary" ng-show=" sallittu('modify-hakemuskausi')" ngf-select
-                      ngf-change="upload($files, hakemuskausi.vuosi)">Lataa hakuohje
+                      ngf-change="upload($files, hakemuskausi.vuosi)" data-toggle="tooltip" data-placement="bottom"
+                      title data-original-title="Voimassaoleva valtioneuvoston asetus joukkoliikenteen valtionavustuksista" onmouseenter="$(this).tooltip('show')">Lataa asetus
               </button>
-            </p>
-
             <p ng-show="hakemuskausi.tilatunnus=='A' && sallittu('modify-hakemuskausi')">
               <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
                 hakemuskausi
