@@ -1,4 +1,7 @@
 'use strict';
+
+var $ = require('jquery');
+
 angular.module('jukufrontApp')
   .directive('noenter', function () {
     return function (scope, element, attrs) {

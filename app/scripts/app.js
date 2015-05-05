@@ -31,6 +31,7 @@ angular
     'angular-loading-bar',
     'smart-table',
     'ui.bootstrap',
+    'ui.bootstrap.tooltip',
     'monospaced.elastic',
     'ngFileUpload',
     'toastr',

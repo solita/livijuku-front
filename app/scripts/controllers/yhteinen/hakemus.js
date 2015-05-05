@@ -192,7 +192,6 @@ angular.module('jukufrontApp')
       }
       $scope.liitenimi = '';
       $scope.vuosi = $routeParams.vuosi;
-      $('a').tooltip();
 
       $scope.$watch('myFiles', function () {
         if ($scope.myFiles != null) {

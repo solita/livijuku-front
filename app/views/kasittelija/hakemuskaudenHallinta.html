@@ -14,9 +14,14 @@
             </p>
 
             <p ng-show="hakemuskausi.uusi">
-              <button class="btn btn-primary" ng-show=" sallittu('modify-hakemuskausi')" ngf-select
-                      ngf-change="upload($files, hakemuskausi.vuosi)" data-toggle="tooltip" data-placement="bottom"
-                      title data-original-title="Voimassaoleva valtioneuvoston asetus joukkoliikenteen valtionavustuksista" onmouseenter="$(this).tooltip('show')">Lataa asetus
+              <button class="btn btn-primary"
+                      ng-show="sallittu('modify-hakemuskausi')" ngf-select
+                      ngf-change="upload($files, hakemuskausi.vuosi)"
+                      data-toggle="tooltip"
+                      data-tooltip-trigger="mouseenter"
+                      data-tooltip-placement="bottom"
+                      data-tooltip="Voimassaoleva valtioneuvoston asetus joukkoliikenteen valtionavustuksista">
+                      Lataa asetus
               </button>
             <p ng-show="hakemuskausi.tilatunnus=='A' && sallittu('modify-hakemuskausi')">
               <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
