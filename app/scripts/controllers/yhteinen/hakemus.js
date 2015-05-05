@@ -398,6 +398,14 @@ angular.module('jukufrontApp')
           hakemustilatunnus == 'M';
       };
 
+      $scope.sumHaettavaAvustus = function () {
+        var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
+          return l.avustuskohteet
+        }));
+        return _.sum(avustuskohteet, 'haettavaavustus');
+      };
+
+
       haeHakemukset();
       haeAvustuskohteet();
       haePaatos();
