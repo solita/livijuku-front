@@ -17,8 +17,6 @@ read -r -d '' SCRIPT <<- End
         --exclude .tmp \
         $CONTAINER_HOME/$PROJECT/ $CONTAINER_HOME/$PROJECT.local/
     cd $CONTAINER_HOME/$PROJECT.local
-    command -v bower >/dev/null 2>&1 || sudo npm install -g bower
-    command -v grunt >/dev/null 2>&1 || sudo npm install -g grunt-cli
     eval ./ci.sh
 End
 
