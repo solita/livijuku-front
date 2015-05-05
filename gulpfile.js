@@ -90,7 +90,8 @@ function handleError(err) {
 
 gulp.task('templates', function() {
   return gulp.src(paths.templates.source)
-    .pipe(gulp.dest(paths.templates.destination));
+    .pipe(gulp.dest(paths.templates.destination))
+    .pipe(browserSync.reload({stream: true}));
 });
 
 gulp.task('revision-templates', ['revision', 'templates'], function() {
@@ -237,8 +238,7 @@ gulp.task('watch', ['scripts'], function() {
       .on('error', handleError).pipe(source(paths.scripts.filename))
       .pipe(gulp.dest(paths.scripts.destination))
       .pipe(browserSync.reload({stream: true}));
-
-  });
+  }).emit('update');
 });
 
 gulp.task('e2e', ['webdriver_update'], function() {
@@ -250,7 +250,7 @@ gulp.task('e2e', ['webdriver_update'], function() {
 gulp.task('webdriver_standalone', protractor.webdriver_standalone);
 gulp.task('webdriver_update', protractor.webdriver_update);
 
-var buildTasks = ['styles', 'scripts', 'templates', 'assets', 'copy'];
+var buildTasks = ['styles', 'templates', 'assets', 'copy'];
 
 gulp.task('revision', buildTasks, function() {
   return gulp.src(paths.revision.source, {base: paths.revision.base})
@@ -262,7 +262,7 @@ gulp.task('revision', buildTasks, function() {
 
 gulp.task('build', function() {
   rimraf.sync('./dist');
-  gulp.start(buildTasks.concat(['revision', 'revision-templates', 'version']));
+  gulp.start(buildTasks.concat(['scripts', 'revision', 'revision-templates', 'version']));
 });
 
 gulp.task('default', buildTasks.concat(['server', 'watch']));
