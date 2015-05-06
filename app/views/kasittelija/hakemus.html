@@ -96,6 +96,11 @@
         <div ng-show="(tyyppi == 'AH0')">
           <h4>JOUKKOLIIKENTEEN VALTIONAVUSTUSHAKEMUS YHTEENSÄ:</h4>
         </div>
+        <div class="col-md-3">
+          <div class="pull-right">
+            <h4>{{sumHaettavaAvustus() | currency:"&euro;"}}</h4>
+          </div>
+        </div>
         <div ng-hide="(tyyppi == 'AH0')">
           <h4>HAETTAVAT MAKSATUKSET YHTEENSÄ:</h4>
         </div>
