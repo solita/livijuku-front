@@ -247,11 +247,19 @@ gulp.task('e2e', ['webdriver_update'], function() {
   })).on('error', handleError);
 });
 
+// TODO
+gulp.task('e2e-no-selenium-server', ['webdriver_update'], function() {
+  gulp.src('./src/tests/e2e/*.js').pipe(protractor.protractor({
+    configFile: 'protractor.conf.js'
+  })).on('error', handleError);
+});
+
 gulp.task('webdriver_standalone', protractor.webdriver_standalone);
 gulp.task('webdriver_update', protractor.webdriver_update);
 
 var buildTasks = ['styles', 'templates', 'assets', 'copy'];
 
+// TODO poista revisioimattomat
 gulp.task('revision', buildTasks, function() {
   return gulp.src(paths.revision.source, {base: paths.revision.base})
       .pipe(rev())

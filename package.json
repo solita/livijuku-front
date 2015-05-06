@@ -49,6 +49,7 @@
     "build-dist": "npm run build",
     "test": "karma start test/karma.conf.js",
     "teste2e": "gulp e2e",
+    "citeste2e": "gulp e2e-no-selenium-server",
     "serve": "gulp server",
     "serve-dist": "node ./serve-dist.js",
     "prepublish": "bower install",

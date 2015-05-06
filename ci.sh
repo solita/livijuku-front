@@ -47,8 +47,7 @@ createDb() {
 buildFront() {
   (
     cd "$WORK"
-    npm install
-    npm run build
+    ./build-dist.sh
   )
 }
 

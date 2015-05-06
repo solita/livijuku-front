@@ -1,2 +1,3 @@
 #!/bin/bash
-npm run serve-dist
+./build-dist.sh
+npm run serve
