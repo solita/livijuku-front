@@ -3,7 +3,7 @@
 angular.module('services.status', ['toastr'])
   .config(function (toastrConfig) {
     angular.extend(toastrConfig, {
-      allowHtml: false,
+      allowHtml: true,
       closeButton: false,
       closeHtml: '<button>&times;</button>',
       containerId: 'toast-container',
@@ -35,5 +35,5 @@ angular.module('services.status', ['toastr'])
         console.log('Virhe: ' + toiminto + ': ' + paluudata);
         toastr.error(paluudata, 'Virhe', {closeButton: true, timeOut: 0, extendedTimeOut: 0});
       }
-    }
+    };
   }]);

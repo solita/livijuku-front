@@ -102,14 +102,14 @@ textarea {
 }
 
 .drop-box {
-  background: none repeat scroll 0% 0% #eef;
-  border: 5px dashed #0067ce;
+  background: none repeat scroll 0% 0% #EEF;
+  border: 5px dashed #0067CE;
   width: 100%;
   height: 150px;
   text-align: center;
-  padding-top: 25px;
+  padding-top: 40px;
   float: left;
-  margin-left: 20px;
+  margin-bottom: 25px;
 }
 
 .hakija {
@@ -118,6 +118,18 @@ textarea {
   font-size: 14px;
   margin-bottom: 15px;
   padding: 15px;
+}
+.hakemus-lisatietoa-teksti {
+  margin-top: 0px;
+  line-height: 1;
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+.hakemus-lisatietoa-otsake {
+  margin-top: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 0px;
 }
 .hakijaotsake {
   font-weight: bold;

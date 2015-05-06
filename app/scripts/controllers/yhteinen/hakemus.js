@@ -175,6 +175,7 @@ angular.module('jukufrontApp')
         $scope.liitenimi = nimi;
       };
 
+      $scope.allekirjoitusliitetty = false;
       $scope.avustushakemusid = $routeParams.id;
       $scope.editoitavaLiite = -1;
       $scope.maksatushakemus1id = $routeParams.m1id;
@@ -234,20 +235,6 @@ angular.module('jukufrontApp')
         }
       };
 
-      $scope.lahetaTaydennys = function () {
-        $scope.tallennaHakemus();
-        $scope.$broadcast('show-errors-check-validity');
-        if ($scope.hakemusForm.$valid) {
-          HakemusService.lahetaTaydennys($scope.hakemusid)
-            .success(function () {
-              StatusService.ok('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', 'Täydennyksen lähettäminen onnistui.');
-              $location.path('/h/hakemukset');
-            })
-            .error(function (data) {
-              StatusService.virhe('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', data);
-            });
-        }
-      };
 
       $scope.liiteNimiTyhja = function (nimi) {
         if (isNaN(nimi)) {
@@ -412,7 +399,8 @@ angular.module('jukufrontApp')
       generoiTooltipArvot();
       $window.scrollTo(0, 0);
     }
-  ]).directive('jkuAvustusluokkaPanel', function () {
+  ]).
+  directive('jkuAvustusluokkaPanel', function () {
     return {
       restrict: 'E',
       scope: {
