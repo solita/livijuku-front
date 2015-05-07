@@ -224,6 +224,14 @@ angular.module('jukufrontApp')
         }
       });
 
+      $scope.lahetaHakemusTaiTaydennys = function(tila){
+        if (tila=='K'){
+          $scope.lahetaHakemus();
+        } else if (tila=='T0'){
+          $scope.lahetaTaydennys();
+        }
+      };
+
       $scope.lahetaHakemus = function () {
         $scope.tallennaHakemus();
         $scope.$broadcast('show-errors-check-validity');
@@ -235,6 +243,21 @@ angular.module('jukufrontApp')
             })
             .error(function (data) {
               StatusService.virhe('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', data);
+            });
+        }
+      };
+
+      $scope.lahetaTaydennys = function () {
+        $scope.tallennaHakemus();
+        $scope.$broadcast('show-errors-check-validity');
+        if ($scope.hakemusForm.$valid) {
+          HakemusService.lahetaTaydennys($scope.hakemusid)
+            .success(function () {
+              StatusService.ok('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', 'Täydennyksen lähettäminen onnistui.');
+              $location.path('/h/hakemukset');
+            })
+            .error(function (data) {
+              StatusService.virhe('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', data);
             });
         }
       };

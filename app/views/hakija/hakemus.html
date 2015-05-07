@@ -274,7 +274,7 @@
       <div class="row">
         <div class="col-md-12">
           <div ng-show="sallittu('allekirjoita-oma-hakemus')">
-            <button ng-show="(hakemus.hakemustilatunnus == 'K' && allekirjoitusliitetty) || (hakemus.hakemustilatunnus == 'T0' && allekirjoitusliitetty)" data-ng-click="lahetaHakemus()"
+            <button ng-show="(hakemus.hakemustilatunnus == 'K' && allekirjoitusliitetty) || (hakemus.hakemustilatunnus == 'T0' && allekirjoitusliitetty)" data-ng-click="lahetaHakemusTaiTaydennys(hakemus.hakemustilatunnus)"
                     class="pull-right btn btn-success">Tallenna ja lähetä hakemus
             </button>
             <button ng-hide="(hakemus.hakemustilatunnus == 'K' && allekirjoitusliitetty) || (hakemus.hakemustilatunnus == 'T0' && allekirjoitusliitetty)"
