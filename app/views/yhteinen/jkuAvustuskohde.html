@@ -21,13 +21,13 @@
         <label>Kunnan oma rahoitusosuus
           <input name="{{getName('omarahoitus')}}" type="text" ng-currency="" noenter class="form-control"
                  ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
-                 ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kohde.haettavaavustus)',sallittuArvoOmarahoitus: 'sallittuArvo($value)'}"
+                 ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kohde.haettavaavustus,kohde.avustusprosentti)',sallittuArvoOmarahoitus: 'sallittuArvo($value)'}"
                  ui-validate-watch=" 'kohde.haettavaavustus' "/>
         </label>
 
         <p class="help-block ng-invalid-sallittu-arvo-omarahoitus">Arvon tulee olla välillä 0 - 999 999 999 €.</p>
 
-        <p class="help-block ng-invalid-omarahoitus-riittava">Oma rahoitusosuus tulee olla vähintään TODO suuruinen.</p>
+        <p class="help-block ng-invalid-omarahoitus-riittava">Oma rahoitusosuus tulee olla vähintään {{100-kohde.avustusprosentti}}% kokonaiskuluista.</p>
 
       </div>
     </div>

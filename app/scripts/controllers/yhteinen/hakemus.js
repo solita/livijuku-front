@@ -125,8 +125,12 @@ angular.module('jukufrontApp')
                 return v.avustuskohdeluokkatunnus
               }, data),
               function (kohteet) {
+                var kohteetAvustusProsentilla = _.map(kohteet, function (element) {
+                  var avustusprosentti = $scope.haeAvustusProsentti(element.avustuskohdeluokkatunnus, element.avustuskohdelajitunnus);
+                  return _.extend({}, element, {avustusprosentti: avustusprosentti})
+                });
                 return {
-                  avustuskohteet: kohteet,
+                  avustuskohteet: kohteetAvustusProsentilla,
                   tunnus: (_.first(kohteet).avustuskohdeluokkatunnus)
                 }
               });
@@ -235,6 +239,9 @@ angular.module('jukufrontApp')
         }
       };
 
+      $scope.haeAvustusProsentti = function (luokka, laji) {
+        return AvustuskohdeService.avustusprosentti($scope.vuosi, luokka, laji);
+      };
 
       $scope.liiteNimiTyhja = function (nimi) {
         if (isNaN(nimi)) {
@@ -429,7 +436,7 @@ angular.module('jukufrontApp')
           return parseFloat(arvo.replace(/[^0-9,-]/g, '').replace(',', '.'));
         };
 
-        $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
+        $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus, avustusprosentti) {
           var omarahoitus2, haettavarahoitus2;
           if ((typeof omarahoitus === 'undefined') || (typeof haettavarahoitus === 'undefined')) return true;
           if (typeof omarahoitus === 'string') {
@@ -444,7 +451,7 @@ angular.module('jukufrontApp')
           if (typeof haettavarahoitus === 'number') {
             haettavarahoitus2 = parseFloat(haettavarahoitus);
           }
-          return haettavarahoitus2 <= omarahoitus2;
+          return (((100-avustusprosentti)/100)*(haettavarahoitus2+omarahoitus2)) <= omarahoitus2;
         };
 
         $scope.sallittuArvo = function (value) {
