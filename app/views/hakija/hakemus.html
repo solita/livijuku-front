@@ -41,7 +41,7 @@
 
       <jku-avustusluokka-panel luokka="avustuskohdeluokka" name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
                                ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
-        <jku-avustuskohde kohde="avustuskohde"
+        <jku-avustuskohde vuosi="vuosi" kohde="avustuskohde"
                           name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
                           ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet">
       </jku-avustusluokka-panel>

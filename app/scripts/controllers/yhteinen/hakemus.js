@@ -125,12 +125,8 @@ angular.module('jukufrontApp')
                 return v.avustuskohdeluokkatunnus
               }, data),
               function (kohteet) {
-                var kohteetAvustusProsentilla = _.map(kohteet, function (element) {
-                  var avustusprosentti = $scope.haeAvustusProsentti(element.avustuskohdeluokkatunnus, element.avustuskohdelajitunnus);
-                  return _.extend({}, element, {avustusprosentti: avustusprosentti})
-                });
                 return {
-                  avustuskohteet: kohteetAvustusProsentilla,
+                  avustuskohteet: kohteet,
                   tunnus: (_.first(kohteet).avustuskohdeluokkatunnus)
                 }
               });
@@ -344,6 +340,7 @@ angular.module('jukufrontApp')
             return l.avustuskohteet
           }));
 
+
           AvustuskohdeService.tallenna(avustuskohteet)
             .success(function () {
               var tallennusOk = true;
@@ -451,15 +448,18 @@ angular.module('jukufrontApp')
       restrict: 'E',
       scope: {
         name: "@",
-        kohde: "="
+        kohde: "=",
+        vuosi: "="
       },
-      controller: ["$scope", "$rootScope", function ($scope, $rootScope) {
+      controller: ["$scope", "$rootScope","AvustuskohdeService", function ($scope, $rootScope, AvustuskohdeService) {
 
         $scope.euroSyoteNumeroksi = function (arvo) {
           return parseFloat(arvo.replace(/[^0-9,-]/g, '').replace(',', '.'));
         };
 
-        $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus, avustusprosentti) {
+        $scope.avustusprosentti = AvustuskohdeService.avustusprosentti($scope.vuosi,$scope.kohde.avustuskohdeluokkatunnus,$scope.kohde.avustuskohdelajitunnus);
+
+        $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
           var omarahoitus2, haettavarahoitus2;
           if ((typeof omarahoitus === 'undefined') || (typeof haettavarahoitus === 'undefined')) return true;
           if (typeof omarahoitus === 'string') {
@@ -474,7 +474,7 @@ angular.module('jukufrontApp')
           if (typeof haettavarahoitus === 'number') {
             haettavarahoitus2 = parseFloat(haettavarahoitus);
           }
-          return (((100-avustusprosentti)/100)*(haettavarahoitus2+omarahoitus2)) <= omarahoitus2;
+          return (((100-$scope.avustusprosentti)/100)*(haettavarahoitus2+omarahoitus2)) <= omarahoitus2;
         };
 
         $scope.sallittuArvo = function (value) {
