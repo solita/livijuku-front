@@ -217,7 +217,7 @@ gulp.task('styles', function() {
   return pipeline;
 });
 
-gulp.task('version', ['revision'], function() {
+gulp.task('version', function() {
   var today = new Date();
 
   fs.writeFileSync(
@@ -264,7 +264,7 @@ gulp.task('e2e-no-selenium-server', ['webdriver_update'], function() {
 gulp.task('webdriver_standalone', protractor.webdriver_standalone);
 gulp.task('webdriver_update', protractor.webdriver_update);
 
-var buildTasks = ['styles', 'templates', 'assets', 'copy'];
+var buildTasks = ['styles', 'templates', 'assets', 'version', 'copy'];
 
 // TODO poista revisioimattomat
 gulp.task('revision', buildTasks, function() {
@@ -277,7 +277,7 @@ gulp.task('revision', buildTasks, function() {
 
 gulp.task('build', function() {
   rimraf.sync('./dist');
-  gulp.start(buildTasks.concat(['scripts', 'revision', 'revision-templates', 'version']));
+  gulp.start(buildTasks.concat(['scripts', 'revision', 'revision-templates']));
 });
 
 gulp.task('default', buildTasks.concat(['server', 'watch']));
