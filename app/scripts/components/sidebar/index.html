@@ -1,0 +1,34 @@
+<div class="sidebar">
+  <ul>
+    <li ng-show="sallittu(user, 'view-hakemuskausi')" ng-class="{'is-active': isActive('/k/hakemuskaudenhallinta')}">
+      <a href="#/k/hakemuskaudenhallinta" ng-href="#/k/hakemuskaudenhallinta">
+        Hakemuskaudet
+      </a>
+    </li>
+    <li ng-show="sallittu(user, 'view-oma-hakemus')" ng-class="{'is-active': isActive('/h/hakemukset')}">
+      <a href="#/h/hakemukset" ng-href="#/h/hakemukset">
+        Omat hakemukset
+      </a>
+    </li>
+    <li ng-show="sallittu(user, 'view-kaikki-hakemukset')" ng-class="{'is-active': isActive('/k/hakemukset/AH0')}">
+      <a href="#/k/hakemukset/AH0" ng-href="#/k/hakemukset/AH0">
+        Kaikki hakemukset
+      </a>
+    </li>
+  </ul>
+  <ul>
+    <li>
+      <div class="navbar__user__name">
+        {{user.etunimi}} {{user.sukunimi}}
+      </div>
+      <div class="navbar__user__org">
+        {{$root.userOrganisaatio}}
+      </div>
+    </li>
+    <li>
+      <a class="navbartxt" href="https://testiextranet.liikennevirasto.fi/extranet/c/portal/logout">
+        Kirjaudu ulos
+      </a>
+    </li>
+  </ul>
+</div>

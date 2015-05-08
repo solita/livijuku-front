@@ -4,6 +4,7 @@ var _ = require('lodash');
 angular.module('jukufrontApp')
   .run(function ($rootScope) {
     $rootScope.sallittu = function (oikeus) {
+      // console.warn('Deprekoitunut $rootScope.sallittu metodi käytössä. Käytä utils/hasPermission funktiota');
       if (typeof $rootScope.user !== 'undefined') {
         for (var i = 0; i < $rootScope.user.privileges.length; i++) {
           if ($rootScope.user.privileges[i] == oikeus) {
@@ -18,18 +19,6 @@ angular.module('jukufrontApp')
   .controller('PaanayttoCtrl', ['$scope', '$rootScope', '$location', 'KayttajaService', 'OrganisaatioService', 'StatusService', 'AvustuskohdeService', 'CommonService',
     function ($scope, $rootScope, $location, KayttajaService, OrganisaatioService, statusService, avustusKohdeService, common) {
 
-    $scope.isActive = function (route) {
-      // 'Kaikki hakemukset' aktiiviseksi
-      if (route.substr(0, 13) == '/k/hakemukset') {
-        return ((route.substr(0, 13) == $location.path().substr(0, 13)) || ('/k/hakemus/' == $location.path().substr(0, 11)) || ('/k/suunnittelu/' == $location.path().substr(0, 15))|| ('/k/paatos/' == $location.path().substr(0, 10)));
-      // 'Omat hakemukset' aktiiviseksi
-      } else if (route.substr(0, 13) == '/h/hakemukset') {
-        return (('/h/hakemus/' == $location.path().substr(0, 11)) ||('/h/maksatushakemus/' == $location.path().substr(0, 19))||('/h/hakemukset' == $location.path().substr(0, 13)));
-      } else {
-        return route === $location.path();
-      }
-    };
-
     OrganisaatioService.hae()
       .success(function (data) {
         $rootScope.organisaatiot = data;
@@ -38,6 +27,7 @@ angular.module('jukufrontApp')
             $rootScope.user = data;
             $rootScope.userOrganisaatio = _.find($rootScope.organisaatiot, {'id': $rootScope.user.organisaatioid}).nimi;
             $rootScope.userOrganisaatioLajitunnus = _.find($rootScope.organisaatiot, {'id': $rootScope.user.organisaatioid}).lajitunnus;
+
             statusService.ok('KayttajaService.hae()', 'Käyttäjätiedot haettu onnistuneesti.');
             if ($scope.sallittu('view-hakemuskausi')) {
               $location.path("k/hakemuskaudenhallinta");

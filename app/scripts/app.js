@@ -33,6 +33,7 @@ angular
     'smart-table',
     'ui.bootstrap',
     'ui.bootstrap.tooltip',
+    'ui.bootstrap.dropdown',
     'monospaced.elastic',
     'ngFileUpload',
     'toastr',
@@ -101,7 +102,9 @@ angular
     // extra
     $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
     $httpProvider.defaults.headers.Pragma = 'no-cache';
-  }]);
+  }])
+  .directive('jukuHeader', require('components/header'))
+  .directive('jukuSidebar', require('components/sidebar'));
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemukset');

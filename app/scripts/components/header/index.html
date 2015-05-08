@@ -1,0 +1,53 @@
+<div class="header navbar navbar-fixed-top" role="navigation">
+  <div class="container">
+
+    <!-- Mobiilinavigaatio -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" ng-click="toggleCollapse()">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <div class="header__content" ng-class="{'is-visible': !$root.isCollapsed}">
+      <ul class="nav navbar-nav">
+        <li ng-show="sallittu(user, 'view-hakemuskausi')" ng-class="{'is-active': isActive('/k/hakemuskaudenhallinta')}">
+          <a href="#/k/hakemuskaudenhallinta" ng-href="#/k/hakemuskaudenhallinta">
+            Hakemuskaudet
+          </a>
+        </li>
+        <li ng-show="sallittu(user, 'view-oma-hakemus')" ng-class="{'is-active': isActive('/h/hakemukset')}">
+          <a href="#/h/hakemukset" ng-href="#/h/hakemukset">
+            Omat hakemukset
+          </a>
+        </li>
+        <li ng-show="sallittu(user, 'view-kaikki-hakemukset')" ng-class="{'is-active': isActive('/k/hakemukset/AH0')}">
+          <a href="#/k/hakemukset/AH0" ng-href="#/k/hakemukset/AH0">
+            Kaikki hakemukset
+          </a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav pull-right">
+        <li class="dropd  own" dropdown>
+          <a href class="dropdown-toggle navbar__user" dropdown-toggle>
+            <div class="navbar__user__name">
+              {{user.etunimi}} {{user.sukunimi}}
+            </div>
+            <div class="navbar__user__org">
+              {{$root.userOrganisaatio}}
+            </div>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="navbartxt" href="https://testiextranet.liikennevirasto.fi/extranet/c/portal/logout">
+                Kirjaudu ulos
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
