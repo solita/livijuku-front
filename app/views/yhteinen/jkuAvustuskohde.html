@@ -6,7 +6,7 @@
     <div class="col-md-6">
       <div class="form-group" show-errors="{showSuccess: true}">
         <label>Haettava valtionavustus
-          <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" noenter
+          <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" noenter select-on-click
                  ng-readonly="isReadonly()" class="form-control"
                  ng-model="kohde.haettavaavustus"
                  ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo($value)'}"/>
@@ -19,7 +19,7 @@
     <div class="col-md-6">
       <div class="form-group" show-errors="{showSuccess: true}">
         <label>Kunnan oma rahoitusosuus
-          <input name="{{getName('omarahoitus')}}" type="text" ng-currency="" noenter class="form-control"
+          <input name="{{getName('omarahoitus')}}" type="text" ng-currency="" noenter select-on-click class="form-control"
                  ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
                  ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kohde.haettavaavustus)',sallittuArvoOmarahoitus: 'sallittuArvo($value)'}"
                  ui-validate-watch=" 'kohde.haettavaavustus' "/>
