@@ -116,6 +116,7 @@ require('./controllers/yhteinen/paanaytto');
 require('./directives/hakemuslabel');
 require('./directives/hakemussummary');
 require('./directives/noenter');
+require('./directives/selectonclick');
 require('./services/auth');
 require('./services/avustuskohde');
 require('./services/common');
