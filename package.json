@@ -36,6 +36,7 @@
     "karma-jasmine": "^0.3.5",
     "protractor": "^1.6.1",
     "rimraf": "^2.3.3",
+    "stringify": "^3.1.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.2.0"
   },
@@ -44,20 +45,20 @@
   },
   "scripts": {
     "install": "node ./node_modules/protractor/bin/webdriver-manager update",
-    "build": "NODE_ENV=production gulp build",
+    "build": "gulp build",
     "build-dev": "gulp build",
     "build-dist": "npm run build",
     "test": "karma start test/karma.conf.js",
     "teste2e": "gulp e2e",
     "citeste2e": "gulp e2e-no-selenium-server",
     "serve": "gulp server",
-    "serve-dist": "node ./serve-dist.js",
     "prepublish": "bower install",
     "start": "gulp"
   },
   "browserify": {
     "transform": [
-      "debowerify"
+      "debowerify",
+      "stringify"
     ]
   }
 }

@@ -110,7 +110,7 @@ sleep 3
 
 # Käynnistä front-palvelin.
 cd $WORK
-node ./serve-dist.js >"$WORK/frontend.out" &
+./start-dist.sh >"$WORK/frontend.out" &
 FRONTEND_PID=$!
 
 # Odota, kunnes front vastaa.
