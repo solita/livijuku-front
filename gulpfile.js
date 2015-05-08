@@ -89,9 +89,13 @@ function handleError(err) {
 };
 
 gulp.task('templates', function() {
-  return gulp.src(paths.templates.source)
+  var pipeline = gulp.src(paths.templates.source)
     .pipe(gulp.dest(paths.templates.destination))
-    .pipe(browserSync.reload({stream: true}));
+
+  if(!production) {
+    pipeline.pipe(browserSync.reload({stream: true}));
+  }
+  return pipeline;
 });
 
 gulp.task('revision-templates', ['revision', 'templates'], function() {
