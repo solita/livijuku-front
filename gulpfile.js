@@ -1,4 +1,4 @@
-'use strict';
+  'use strict';
 
 var browserify = require('browserify');
 var browserSync = require('browser-sync');
@@ -217,7 +217,8 @@ gulp.task('styles', function() {
   return pipeline;
 });
 
-gulp.task('version', function() {
+// Templates task riippuvuutena, jotta voidaan olla varmoja dist/ hakemiston olemassaolosta
+gulp.task('version', ['templates'], function() {
   var today = new Date();
 
   fs.writeFileSync(
