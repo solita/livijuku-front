@@ -175,6 +175,7 @@ angular.module('jukufrontApp')
         $scope.liitenimi = nimi;
       };
 
+      $scope.allekirjoitusliitetty = false;
       $scope.avustushakemusid = $routeParams.id;
       $scope.editoitavaLiite = -1;
       $scope.maksatushakemus1id = $routeParams.m1id;
@@ -218,6 +219,14 @@ angular.module('jukufrontApp')
         }
       });
 
+      $scope.lahetaHakemusTaiTaydennys = function(tila){
+        if (tila=='K'){
+          $scope.lahetaHakemus();
+        } else if (tila=='T0'){
+          $scope.lahetaTaydennys();
+        }
+      };
+
       $scope.lahetaHakemus = function () {
         $scope.tallennaHakemus();
         $scope.$broadcast('show-errors-check-validity');
@@ -246,6 +255,10 @@ angular.module('jukufrontApp')
               StatusService.virhe('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', data);
             });
         }
+      };
+
+      $scope.haeAvustusProsentti = function (luokka, laji) {
+        return AvustuskohdeService.avustusprosentti($scope.vuosi, luokka, laji);
       };
 
       $scope.liiteNimiTyhja = function (nimi) {
@@ -325,6 +338,7 @@ angular.module('jukufrontApp')
           var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
             return l.avustuskohteet
           }));
+
 
           AvustuskohdeService.tallenna(avustuskohteet)
             .success(function () {
@@ -411,7 +425,8 @@ angular.module('jukufrontApp')
       generoiTooltipArvot();
       $window.scrollTo(0, 0);
     }
-  ]).directive('jkuAvustusluokkaPanel', function () {
+  ]).
+  directive('jkuAvustusluokkaPanel', function () {
     return {
       restrict: 'E',
       scope: {
@@ -432,13 +447,16 @@ angular.module('jukufrontApp')
       restrict: 'E',
       scope: {
         name: "@",
-        kohde: "="
+        kohde: "=",
+        vuosi: "="
       },
-      controller: ["$scope", "$rootScope", function ($scope, $rootScope) {
+      controller: ["$scope", "$rootScope","AvustuskohdeService", function ($scope, $rootScope, AvustuskohdeService) {
 
         $scope.euroSyoteNumeroksi = function (arvo) {
           return parseFloat(arvo.replace(/[^0-9,-]/g, '').replace(',', '.'));
         };
+
+        $scope.avustusprosentti = AvustuskohdeService.avustusprosentti($scope.vuosi,$scope.kohde.avustuskohdeluokkatunnus,$scope.kohde.avustuskohdelajitunnus);
 
         $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
           var omarahoitus2, haettavarahoitus2;
@@ -455,7 +473,7 @@ angular.module('jukufrontApp')
           if (typeof haettavarahoitus === 'number') {
             haettavarahoitus2 = parseFloat(haettavarahoitus);
           }
-          return haettavarahoitus2 <= omarahoitus2;
+          return (((100-$scope.avustusprosentti)/100)*(haettavarahoitus2+omarahoitus2)) <= omarahoitus2;
         };
 
         $scope.sallittuArvo = function (value) {
