@@ -110,7 +110,7 @@ sleep 3
 
 # Käynnistä front-palvelin.
 cd $WORK
-./start-dist.sh >"$WORK/frontend.out" &
+./node_modules/.bin/gulp server >"$WORK/frontend.out" &
 FRONTEND_PID=$!
 
 # Odota, kunnes front vastaa.
