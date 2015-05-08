@@ -26,7 +26,7 @@ var paths = {
   styles: {
     source: 'app/styles/styles.styl',
     destination: 'dist/styles/',
-    watch: 'app/**/*.styl',
+    watch: 'app/**/*.styl'
   },
   scripts: {
     source: './app/scripts/app.js',
@@ -147,7 +147,7 @@ gulp.task('server', function() {
 
   var proxy = httpProxy.createProxyServer({
     changeOrigin: true,
-    target: 'http://localhost:8082',
+    target: 'http://localhost:8082'
   });
 
   proxy.on('error', handleError);
@@ -179,6 +179,8 @@ gulp.task('server', function() {
     var cookieKeys = [
       'oam-remote-user',
       'oam-groups',
+      'oam-user-first-name',
+      'oam-user-last-name',
       'oam-user-organization'
     ];
 
