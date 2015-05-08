@@ -17,6 +17,7 @@ require('angular-i18n/angular-locale_fi-fi');
 
 angular
   .module('jukufrontApp', [
+    'services.auth',
     'services.avustuskohde',
     'services.hakemus',
     'services.hakemuskausi',
@@ -102,23 +103,24 @@ angular
     $httpProvider.defaults.headers.Pragma = 'no-cache';
   }]);
 
-require('./controllers/yhteinen/hakemus');
-require('./controllers/yhteinen/paanaytto');
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
 require('./controllers/kasittelija/paatos');
 require('./controllers/kasittelija/suunnittelu');
+require('./controllers/yhteinen/hakemus');
+require('./controllers/yhteinen/paanaytto');
 require('./directives/hakemuslabel');
-require('./directives/noenter');
 require('./directives/hakemussummary');
+require('./directives/noenter');
+require('./services/auth');
 require('./services/avustuskohde');
+require('./services/common');
 require('./services/hakemus');
 require('./services/hakemuskausi');
 require('./services/kayttaja');
 require('./services/liite');
 require('./services/organisaatio');
 require('./services/paatos');
-require('./services/suunnittelu');
 require('./services/status');
-require('./services/common');
+require('./services/suunnittelu');

@@ -85,8 +85,12 @@
 
     <form name="hakemusForm">
 
-      <jku-avustusluokka-panel luokka="avustuskohdeluokka" name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}" ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
-        <jku-avustuskohde kohde="avustuskohde" name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
+      <jku-avustusluokka-panel luokka="avustuskohdeluokka" name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
+                               hakemus="hakemus"
+                               ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
+        <jku-avustuskohde vuosi="vuosi" kohde="avustuskohde"
+                          hakemus="hakemus"
+                          name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
                           ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet">
       </jku-avustusluokka-panel>
 
@@ -96,22 +100,13 @@
         <div ng-show="(tyyppi == 'AH0')">
           <h4>JOUKKOLIIKENTEEN VALTIONAVUSTUSHAKEMUS YHTEENSÄ:</h4>
         </div>
-        <div class="col-md-3">
-          <div class="pull-right">
-            <h4>{{sumHaettavaAvustus() | currency:"&euro;"}}</h4>
-          </div>
-        </div>
         <div ng-hide="(tyyppi == 'AH0')">
           <h4>HAETTAVAT MAKSATUKSET YHTEENSÄ:</h4>
         </div>
-
       </div>
       <div class="col-md-3">
         <div class="pull-right">
-          <h4>{{(psa1haettavaavustus + psa2haettavaavustus + psamhaettavaavustus + hkslhaettavaavustus +
-            hkklhaettavaavustus + hkllhaettavaavustus +
-            hktlhaettavaavustus + kimhaettavaavustus + kmpkhaettavaavustus + kmkhaettavaavustus +
-            krthaettavaavustus + kmhaettavaavustus) | currency:"&euro;"}}</h4>
+          <h4>{{sumHaettavaAvustus() | currency:"&euro;"}}</h4>
         </div>
       </div>
     </div>
@@ -181,7 +176,7 @@
     <div class="row">
       <div class="col-md-6">
         <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
-          suunnittelunäkymään</a>
+          päänäkymään</a>
       </div>
       <div ng-show="sallittu('kasittely-hakemus')" class=" col-md-6">
         <button ng-show="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')" data-ng-click="tarkastaHakemus()"

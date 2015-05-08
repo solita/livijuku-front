@@ -431,7 +431,8 @@ angular.module('jukufrontApp')
       restrict: 'E',
       scope: {
         name: "@",
-        luokka: "="
+        luokka: "=",
+        hakemus: "="
       },
       transclude: true,
       templateUrl: 'views/yhteinen/jkuAvustusluokkaPanel.html',
@@ -447,10 +448,11 @@ angular.module('jukufrontApp')
       restrict: 'E',
       scope: {
         name: "@",
+        hakemus: "=",
         kohde: "=",
         vuosi: "="
       },
-      controller: ["$scope", "$rootScope","AvustuskohdeService", function ($scope, $rootScope, AvustuskohdeService) {
+      controller: ["$scope", "$rootScope","AvustuskohdeService", "AuthService", function ($scope, $rootScope, AvustuskohdeService, AuthService) {
 
         $scope.euroSyoteNumeroksi = function (arvo) {
           return parseFloat(arvo.replace(/[^0-9,-]/g, '').replace(',', '.'));
@@ -489,7 +491,7 @@ angular.module('jukufrontApp')
         $scope.isReadonly = function () {
           // TODO: LIVIJUKU-229 Toisten hakijoiden hakemusten syötekentät pitää muuttaa vain luku -tilaan
           // TODO: Poista muokkaus vireillä olevalta, jne. hakemuslomakkeelta.
-          return !$rootScope.sallittu('modify-oma-hakemus');
+          return !AuthService.hakijaSaaMuokataHakemusta($scope.hakemus);
         };
 
         $scope.getName = function (key) {

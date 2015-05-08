@@ -3,7 +3,6 @@
 var _ = require('lodash');
 
 angular.module('services.common', [])
-
   .factory('CommonService', ['StatusService', function (StatusService) {
 
     function handlePromise(promise, success, toiminto) {

@@ -34,14 +34,16 @@
     <form name="hakemusForm">
       <div class="row">
         <div class="col-md-12">
-          <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ<a href=""><span
+          <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ <a href=""><span
             class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
         </div>
       </div>
 
       <jku-avustusluokka-panel luokka="avustuskohdeluokka" name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
+                               hakemus="hakemus"
                                ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
         <jku-avustuskohde vuosi="vuosi" kohde="avustuskohde"
+                          hakemus="hakemus"
                           name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
                           ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet">
       </jku-avustusluokka-panel>
