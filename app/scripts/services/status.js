@@ -32,7 +32,7 @@ angular.module('services.status', ['toastr'])
         toastr.success(teksti,'', {timeOut: 1000});
       },
       virhe: function (toiminto, paluudata) {
-        console.log('Virhe: ' + toiminto + ': ' + paluudata);
+        console.log('Virhe: ', toiminto, paluudata);
         toastr.error(paluudata, 'Virhe', {closeButton: true, timeOut: 0, extendedTimeOut: 0});
       }
     };
