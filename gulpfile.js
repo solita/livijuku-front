@@ -1,3 +1,5 @@
+'use strict';
+
 var browserify = require('browserify');
 var browserSync = require('browser-sync');
 var es = require('event-stream');
@@ -174,16 +176,17 @@ gulp.task('server', function() {
   function addAuthenticationHeaders(req, res, next) {
     var cookies = parseCookies(req);
 
+    var cookieKeys = [
+      'oam-remote-user',
+      'oam-groups',
+      'oam-user-organization'
+    ];
 
-    if (cookies['oam-remote-user']) {
-      req.headers['oam-remote-user'] = cookies['oam-remote-user'];
-    }
-    if (cookies['oam-groups']) {
-      req.headers['oam-groups'] = cookies['oam-groups'];
-    }
-    if (cookies['oam-user-organization']) {
-      req.headers['oam-user-organization'] = cookies['oam-user-organization'];
-    }
+    cookieKeys.forEach(function(key) {
+      if(cookies[key]) {
+        req.headers[key] = cookies[key];
+      }
+    });
 
     next();
   }
