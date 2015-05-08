@@ -92,11 +92,8 @@ function handleError(err) {
 
 gulp.task('templates', function() {
   var pipeline = gulp.src(paths.templates.source)
-    .pipe(gulp.dest(paths.templates.destination))
+    .pipe(gulp.dest(paths.templates.destination));
 
-  if(!production) {
-    pipeline.pipe(browserSync.reload({stream: true}));
-  }
   return pipeline;
 });
 
