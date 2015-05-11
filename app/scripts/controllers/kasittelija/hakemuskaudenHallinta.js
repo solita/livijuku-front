@@ -10,7 +10,6 @@ angular.module('jukufrontApp')
     }
 
     function haeHakemuskaudet() {
-      $scope.ladatutHakuohjeet = [];
       HakemuskausiService.haeSummary()
         .success(function (data) {
           var hakemuskaudetTmp = [];
@@ -44,8 +43,17 @@ angular.module('jukufrontApp')
               mh1: processHakemus(hakemus_mh1),
               mh2: processHakemus(hakemus_mh2)
             };
+
             if (hakemuskausi.tilatunnus == "A" || hakemuskausi.tilatunnus == "0") {
               processedHakemuskausi.uusi = true;
+            } else {
+              processedHakemuskausi.uusi = false;
+            }
+
+            if (hakemuskausi.hakuohje_contenttype != null) {
+              processedHakemuskausi.asetusLadattu = true;
+            } else {
+              processedHakemuskausi.asetusLadattu = false;
             }
 
             hakemuskaudetTmp.push(processedHakemuskausi);

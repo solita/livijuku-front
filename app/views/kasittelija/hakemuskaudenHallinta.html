@@ -9,7 +9,7 @@
           <div class="col-md-3 text-center">
             <p class="hakemuskausi-vuosi">{{hakemuskausi.vuosi}}</p>
 
-            <p ng-show="hakemuskausi.tilatunnus=='A' || !hakemuskausi.uusi">
+            <p ng-show="hakemuskausi.asetusLadattu || !hakemuskausi.uusi">
               <a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" target="_blank">Valtioneuvoston asetus</a>
             </p>
 
@@ -21,10 +21,15 @@
                       data-tooltip-trigger="mouseenter"
                       data-tooltip-placement="bottom"
                       data-tooltip="Voimassaoleva valtioneuvoston asetus joukkoliikenteen valtionavustuksista">
-                      Lataa asetus
+                <span>{{hakemuskausi.asetusLadattu ? 'Korvaa ladattu asetus':'Lataa asetus'}}</span>
               </button>
-            <p ng-show="hakemuskausi.tilatunnus=='A' && sallittu('modify-hakemuskausi')">
+            <p ng-show="hakemuskausi.tilatunnus=='A' && hakemuskausi.asetusLadattu && sallittu('modify-hakemuskausi')">
               <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
+                hakemuskausi
+              </button>
+            </p>
+            <p ng-hide="hakemuskausi.tilatunnus=='A' && hakemuskausi.asetusLadattu && sallittu('modify-hakemuskausi')">
+              <button class="btn btn-success btn-lg" disabled>Käynnistä
                 hakemuskausi
               </button>
             </p>
