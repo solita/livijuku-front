@@ -2,6 +2,7 @@
 
 /*global angular */
 var _ = require('lodash');
+var $ = require('jquery');
 
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams',
@@ -368,6 +369,7 @@ angular.module('jukufrontApp')
               StatusService.virhe('AvustuskohdeService.tallenna()', data);
             });
         } else {
+          $('input.ng-invalid').focus();
           StatusService.virhe('AvustuskohdeService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
         }
       };
