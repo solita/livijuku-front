@@ -170,8 +170,7 @@
                       <div ng-show="l.liitenumero!=editoitavaLiite">
                         <p>
                           <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank"><span
-                            class="glyphicon glyphicon-file"></span>{{l.nimi}}
-                            ({{l.contenttype}})</a>
+                            class="glyphicon glyphicon-file"></span>{{l.nimiteksti}}.{{l.nimipaate}}</a>
                           <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Muuta liitenimi"
                              ng-click="asetaEditTilaan(l.liitenumero)"><span
                             class='glyphicon glyphicon-pencil'></span>Nimeä uudelleen</a>
@@ -183,11 +182,11 @@
                       <div ng-show="(l.liitenumero==editoitavaLiite)">
                         <p><span class="glyphicon glyphicon-file"></span>
                           <input name="liitenimi" type="text" class="input-small" noenter
-                                 ng-model="l.nimi"
-                                 ng-focus="asetaLiitenimi(l.nimi)"
-                                 ui-validate="{tyhja: 'liiteNimiTyhja($value)' }"/>
+                                 ng-model="l.nimiteksti"
+                                 ng-focus="asetaLiitenimi(l.nimiteksti)"
+                                 ui-validate="{tyhja: 'liiteNimiTyhja($value)' }"/><span>.{{l.nimipaate}}</span>
                           <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Tallenna liitenimi"
-                             ng-click="paivitaLiiteNimi(l.liitenumero,l.nimi)">
+                             ng-click="paivitaLiiteNimi(l.liitenumero,l.nimiteksti, l.nimipaate)">
                             <span class='glyphicon glyphicon-ok-circle'></span>Tallenna</a>
                           <a href="" title="Palaa katselutilaan tallentamatta" ng-click="palaaTallentamattaLiite()">
                             <span class='glyphicon glyphicon-ban-circle'></span>Peruuta</a>
@@ -276,11 +275,14 @@
       <div class="row">
         <div class="col-md-12">
           <div ng-show="sallittu('allekirjoita-oma-hakemus')">
-            <button ng-show="(hakemus.hakemustilatunnus == 'K' && allekirjoitusliitetty) || (hakemus.hakemustilatunnus == 'T0' && allekirjoitusliitetty)" data-ng-click="lahetaHakemusTaiTaydennys(hakemus.hakemustilatunnus)"
-                    class="pull-right btn btn-success">Tallenna ja lähetä hakemus
+            <button
+              ng-show="(hakemus.hakemustilatunnus == 'K' && allekirjoitusliitetty) || (hakemus.hakemustilatunnus == 'T0' && allekirjoitusliitetty)"
+              data-ng-click="lahetaHakemusTaiTaydennys(hakemus.hakemustilatunnus)"
+              class="pull-right btn btn-success">Tallenna ja lähetä hakemus
             </button>
-            <button ng-hide="(hakemus.hakemustilatunnus == 'K' && allekirjoitusliitetty) || (hakemus.hakemustilatunnus == 'T0' && allekirjoitusliitetty)"
-                    class="pull-right btn btn-success" disabled>Tallenna ja lähetä hakemus
+            <button
+              ng-hide="(hakemus.hakemustilatunnus == 'K' && allekirjoitusliitetty) || (hakemus.hakemustilatunnus == 'T0' && allekirjoitusliitetty)"
+              class="pull-right btn btn-success" disabled>Tallenna ja lähetä hakemus
             </button>
           </div>
         </div>

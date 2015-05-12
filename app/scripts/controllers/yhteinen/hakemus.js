@@ -137,7 +137,11 @@ angular.module('jukufrontApp')
       function haeLiitteet() {
         LiiteService.haeKaikki($scope.hakemusid)
           .success(function (data) {
-            $scope.liitteet = data;
+            $scope.liitteet = _.map(data, function(element) {
+              var paate = element.nimi.split('.').pop();
+              var nimiosa = element.nimi.substring(0,(element.nimi.length-paate.length-1));
+              return _.extend({}, element, {nimiteksti: nimiosa},{nimipaate: paate});
+            });
           })
           .error(function (data) {
             StatusService.virhe('LiiteService.hae(' + $scope.hakemusid + ')', data);
@@ -302,18 +306,19 @@ angular.module('jukufrontApp')
         haeLiitteet();
       };
 
-      $scope.paivitaLiiteNimi = function (liiteid, nimi) {
+      $scope.paivitaLiiteNimi = function (liiteid, nimi, paate) {
         $scope.$broadcast('show-errors-check-validity');
         if ($scope.hakemusForm.$valid) {
           if (nimi != $scope.liiteNimi) {
-            LiiteService.paivitaNimi($scope.hakemusid, liiteid, nimi)
+            var tiedostonimi = nimi + '.' + paate;
+            LiiteService.paivitaNimi($scope.hakemusid, liiteid, tiedostonimi)
               .success(function (data) {
-                StatusService.ok('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + nimi + ')', 'Liitenimi päivitettiin onnistuneesti');
+                StatusService.ok('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + tiedostonimi + ')', 'Liitenimi päivitettiin onnistuneesti');
                 $scope.editoitavaLiite = -1;
                 haeLiitteet();
               })
               .error(function (data) {
-                StatusService.virhe('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + nimi + ')', data);
+                StatusService.virhe('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + tiedostonimi + ')', data);
               });
           }
         } else {
