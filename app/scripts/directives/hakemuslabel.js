@@ -31,6 +31,9 @@ angular.module('jukufrontApp')
             case 'M':
               htmlText = '<span class="label label-default">Maksettu</span>';
               break;
+            case '0':
+              htmlText = '<span class="label label-default">Ei käynnissä</span>';
+              break;
             case 'FEK':
               htmlText = '<span class="label label-default">Ei käynnissä</span>';
               break;
