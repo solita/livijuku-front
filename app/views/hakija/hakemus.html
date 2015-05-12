@@ -8,18 +8,24 @@
         <a href="#/h/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
           päänäkymään</a>
         <a href="#/h/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-           class="btn btn-primary">Avustushakemus {{hakemus.vuosi}}</a>
+           ng-class="(tyyppi == 'AH0')? 'btn btn-primary' : 'btn btn-default'">Avustushakemus {{hakemus.vuosi}}</a>
         <a
-          href="#/h/maksatushakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-          class="btn btn-default">1. maksatushakemus {{hakemus.vuosi}}</a>
+          href="#/h/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+          ng-class="(tyyppi == 'MH1')? 'btn btn-primary' : 'btn btn-default'">1. maksatushakemus {{hakemus.vuosi}}</a>
         <a
-          href="#/h/maksatushakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-          class="btn btn-default">2. maksatushakemus {{hakemus.vuosi}}</a>
+          href="#/h/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+          ng-class="(tyyppi == 'MH2')? 'btn btn-primary' : 'btn btn-default'">2. maksatushakemus {{hakemus.vuosi}}</a>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <h2>Joukkoliikenteen valtionavustushakemus {{hakemus.vuosi}}</h2>
+        <h2>
+          <div ng-switch on="tyyppi">
+            <span ng-switch-when='MH1'>Joukkoliikenteen 1. maksatushakemus {{hakemus.vuosi}}</span>
+            <span ng-switch-when='MH2'>Joukkoliikenteen 2. maksatushakemus {{hakemus.vuosi}}</span>
+            <span ng-switch-default>Joukkoliikenteen valtionavustushakemus {{hakemus.vuosi}}</span>
+          </div>
+        </h2>
       </div>
     </div>
     <div class="row" ng-show="hasPaatos(tyyppi, hakemus.hakemustilatunnus)">
@@ -30,16 +36,31 @@
         </p>
       </div>
     </div>
+    <div ng-show="(paatos!=null) && (tyyppi=='MH1' || tyyppi=='MH2')">
+      <div class="row">
+        <div class="col-md-12">
+          <h3>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}: <b>{{paatos.myonnettyavustus/2 |
+            currency:"&euro;"}}</b><a
+            href="" class="top" title="" data-toggle="tooltip" data-placement="top"
+            data-original-title="Avustus vuodelle {{vuosi}}: {{paatos.myonnettyavustus| currency:'&euro;'}}"><span
+            class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+        </div>
+      </div>
+    </div>
 
     <form name="hakemusForm">
       <div class="row">
         <div class="col-md-12">
-          <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ <a href=""><span
-            class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+          <h3 ng-switch on="tyyppi">
+              <span ng-switch-when='AH0'>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ</span>
+              <span ng-switch-default>HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{vuosi}}</span>
+            <a href=""><span
+              class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
         </div>
       </div>
 
-      <jku-avustusluokka-panel luokka="avustuskohdeluokka" name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
+      <jku-avustusluokka-panel luokka="avustuskohdeluokka"
+                               name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
                                hakemus="hakemus"
                                ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
         <jku-avustuskohde vuosi="vuosi" kohde="avustuskohde"
@@ -65,7 +86,8 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <p class="hakemus-lisatietoa-teksti">Liitä hakemukseesi lisätiedot kaikista hakemistasi avustuskohteista.</p>
+          <p class="hakemus-lisatietoa-teksti">Liitä hakemukseesi lisätiedot kaikista hakemistasi
+            avustuskohteista.</p>
         </div>
       </div>
       <div class="row">
@@ -250,13 +272,15 @@
         <div class="col-md-3">
           <div
             ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
-            <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary" noenter>
+            <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary"
+                    noenter>
               Tallenna ja esikatsele hakemus
             </button>
           </div>
           <div
             ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
-            <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary" noenter>
+            <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary"
+                    noenter>
               Esikatsele hakemus
             </button>
           </div>

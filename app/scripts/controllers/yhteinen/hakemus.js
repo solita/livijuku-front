@@ -118,8 +118,8 @@ angular.module('jukufrontApp')
 
       }
 
-      function haeAvustuskohteet() {
-        common.bindPromiseToScope(AvustuskohdeService.hae($scope.hakemusid), $scope, "avustuskohdeluokat",
+      function haeAvustuskohteet(hakemusid, scopemuuttuja) {
+        common.bindPromiseToScope(AvustuskohdeService.hae(hakemusid), $scope, scopemuuttuja,
           function (data) {
             return _.map(
               common.partitionBy(function (v) {
@@ -131,7 +131,7 @@ angular.module('jukufrontApp')
                   tunnus: (_.first(kohteet).avustuskohdeluokkatunnus)
                 }
               });
-          }, 'AvustuskohdeService.hae(' + $scope.hakemusid + ')');
+          }, 'AvustuskohdeService.hae(' + hakemusid + ')');
       }
 
       function haeLiitteet() {
@@ -179,25 +179,6 @@ angular.module('jukufrontApp')
       $scope.asetaLiitenimi = function (nimi) {
         $scope.liitenimi = nimi;
       };
-
-      $scope.allekirjoitusliitetty = false;
-      $scope.avustushakemusid = $routeParams.id;
-      $scope.editoitavaLiite = -1;
-      $scope.maksatushakemus1id = $routeParams.m1id;
-      $scope.maksatushakemus2id = $routeParams.m2id;
-      $scope.myFiles = [];
-      $scope.tyyppi = $routeParams.tyyppi;
-      if ($scope.tyyppi === "AH0") {
-        $scope.hakemusid = parseInt($routeParams.id);
-      } else if ($scope.tyyppi == "MH1") {
-        $scope.hakemusid = parseInt($routeParams.m1id);
-        $scope.ajankohta = '1.1.-30.6.';
-      } else if ($scope.tyyppi == "MH2") {
-        $scope.hakemusid = parseInt($routeParams.m2id);
-        $scope.ajankohta = '1.7.-31.12.';
-      }
-      $scope.liitenimi = '';
-      $scope.vuosi = $routeParams.vuosi;
 
       $scope.$watch('myFiles', function () {
         if ($scope.myFiles != null) {
@@ -282,7 +263,7 @@ angular.module('jukufrontApp')
         }
       };
 
-
+/*
       $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
         var omarahoitus2, haettavarahoitus2;
         if ((typeof omarahoitus === 'undefined') || (typeof haettavarahoitus === 'undefined')) return true;
@@ -300,6 +281,7 @@ angular.module('jukufrontApp')
         }
         return haettavarahoitus2 <= omarahoitus2;
       };
+      */
 
       $scope.palaaTallentamattaLiite = function () {
         $scope.editoitavaLiite = -1;
@@ -425,9 +407,30 @@ angular.module('jukufrontApp')
         return _.sum(avustuskohteet, 'haettavaavustus');
       };
 
+      $scope.allekirjoitusliitetty = false;
+      $scope.avustushakemusid = $routeParams.id;
+      $scope.editoitavaLiite = -1;
+      $scope.maksatushakemus1id = $routeParams.m1id;
+      $scope.maksatushakemus2id = $routeParams.m2id;
+      $scope.myFiles = [];
+      $scope.tyyppi = $routeParams.tyyppi;
 
+      if ($scope.tyyppi === "AH0") {
+        $scope.hakemusid = parseInt($scope.avustushakemusid);
+      } else if ($scope.tyyppi == "MH1") {
+        $scope.hakemusid = parseInt($scope.maksatushakemus1id);
+        $scope.ajankohta = '1.1.-30.6.';
+        haeAvustuskohteet($scope.avustushakemusid , "avustushakemusArvot");
+      } else if ($scope.tyyppi == "MH2") {
+        $scope.hakemusid = parseInt($scope.maksatushakemus2id);
+        $scope.ajankohta = '1.7.-31.12.';
+        haeAvustuskohteet($scope.avustushakemusid , "avustushakemusArvot");
+        haeAvustuskohteet($scope.maksatushakemus1id , "maksatushakemus1Arvot");
+      }
+      $scope.liitenimi = '';
+      $scope.vuosi = $routeParams.vuosi;
       haeHakemukset();
-      haeAvustuskohteet();
+      haeAvustuskohteet($scope.hakemusid, "avustuskohdeluokat");
       haePaatos();
       generoiTooltipArvot();
       $window.scrollTo(0, 0);
