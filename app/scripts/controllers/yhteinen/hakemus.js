@@ -9,97 +9,20 @@ angular.module('jukufrontApp')
     'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', 'Upload', 'LiiteService', 'CommonService', '$window',
     function ($rootScope, $scope, $location, $routeParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, Upload, LiiteService, common, $window) {
 
-      function generoiTooltipArvot() {
-        var maksatushakemus1Arvot = {};
-        $scope.tooltipArvot = {};
-        if ($scope.tyyppi === "MH1" || $scope.tyyppi === "MH2") {
-          AvustuskohdeService.hae($scope.avustushakemusid)
-            .success(function (data) {
-              var avustushakemusArvot = {};
-              avustushakemusArvot.psa1haettavaavustus = haeHaettavaavustus('PSA-1', data);
-              avustushakemusArvot.psa1omarahoitus = haeOmarahoitus('PSA-1', data);
-              avustushakemusArvot.psa2haettavaavustus = haeHaettavaavustus('PSA-2', data);
-              avustushakemusArvot.psa2omarahoitus = haeOmarahoitus('PSA-2', data);
-              avustushakemusArvot.psamhaettavaavustus = haeHaettavaavustus('PSA-M', data);
-              avustushakemusArvot.psamomarahoitus = haeOmarahoitus('PSA-M', data);
-              avustushakemusArvot.hkslhaettavaavustus = haeHaettavaavustus('HK-SL', data);
-              avustushakemusArvot.hkslomarahoitus = haeOmarahoitus('HK-SL', data);
-              avustushakemusArvot.hkklhaettavaavustus = haeHaettavaavustus('HK-KL', data);
-              avustushakemusArvot.hkklomarahoitus = haeOmarahoitus('HK-KL', data);
-              avustushakemusArvot.hkslhaettavaavustus = haeHaettavaavustus('HK-SL', data);
-              avustushakemusArvot.hkslomarahoitus = haeOmarahoitus('HK-SL', data);
-              avustushakemusArvot.hkllhaettavaavustus = haeHaettavaavustus('HK-LL', data);
-              avustushakemusArvot.hkllomarahoitus = haeOmarahoitus('HK-LL', data);
-              avustushakemusArvot.hktlhaettavaavustus = haeHaettavaavustus('HK-TL', data);
-              avustushakemusArvot.hktlomarahoitus = haeOmarahoitus('HK-TL', data);
-              avustushakemusArvot.kimhaettavaavustus = haeHaettavaavustus('K-IM', data);
-              avustushakemusArvot.kimomarahoitus = haeOmarahoitus('K-IM', data);
-              avustushakemusArvot.kmpkhaettavaavustus = haeHaettavaavustus('K-MPK', data);
-              avustushakemusArvot.kmpkomarahoitus = haeOmarahoitus('K-MPK', data);
-              avustushakemusArvot.kmkhaettavaavustus = haeHaettavaavustus('K-MK', data);
-              avustushakemusArvot.kmkomarahoitus = haeOmarahoitus('K-MK', data);
-              avustushakemusArvot.krthaettavaavustus = haeHaettavaavustus('K-RT', data);
-              avustushakemusArvot.krtomarahoitus = haeOmarahoitus('K-RT', data);
-              avustushakemusArvot.kmhaettavaavustus = haeHaettavaavustus('K-M', data);
-              avustushakemusArvot.kmomarahoitus = haeOmarahoitus('K-M', data);
-              _.forIn(avustushakemusArvot, function (value, key) {
-                if (value > 0) {
-                  $scope.tooltipArvot[key] = 'Avustushakemus:' + value.toString().replace('.', ',') + ' €';
+      function haeAvustuskohteet(hakemusid, scopemuuttuja) {
+        common.bindPromiseToScope(AvustuskohdeService.hae(hakemusid), $scope, scopemuuttuja,
+          function (data) {
+            return _.map(
+              common.partitionBy(function (v) {
+                return v.avustuskohdeluokkatunnus
+              }, data),
+              function (kohteet) {
+                return {
+                  avustuskohteet: kohteet,
+                  tunnus: (_.first(kohteet).avustuskohdeluokkatunnus)
                 }
               });
-              if ($scope.tyyppi === "MH2") {
-                AvustuskohdeService.hae($scope.maksatushakemus1id)
-                  .success(function (data) {
-                    maksatushakemus1Arvot.psa1haettavaavustus = haeHaettavaavustus('PSA-1', data);
-                    maksatushakemus1Arvot.psa1omarahoitus = haeOmarahoitus('PSA-1', data);
-                    maksatushakemus1Arvot.psa2haettavaavustus = haeHaettavaavustus('PSA-2', data);
-                    maksatushakemus1Arvot.psa2omarahoitus = haeOmarahoitus('PSA-2', data);
-                    maksatushakemus1Arvot.psamhaettavaavustus = haeHaettavaavustus('PSA-M', data);
-                    maksatushakemus1Arvot.psamomarahoitus = haeOmarahoitus('PSA-M', data);
-                    maksatushakemus1Arvot.hkslhaettavaavustus = haeHaettavaavustus('HK-SL', data);
-                    maksatushakemus1Arvot.hkslomarahoitus = haeOmarahoitus('HK-SL', data);
-                    maksatushakemus1Arvot.hkklhaettavaavustus = haeHaettavaavustus('HK-KL', data);
-                    maksatushakemus1Arvot.hkklomarahoitus = haeOmarahoitus('HK-KL', data);
-                    maksatushakemus1Arvot.hkslhaettavaavustus = haeHaettavaavustus('HK-SL', data);
-                    maksatushakemus1Arvot.hkslomarahoitus = haeOmarahoitus('HK-SL', data);
-                    maksatushakemus1Arvot.hkllhaettavaavustus = haeHaettavaavustus('HK-LL', data);
-                    maksatushakemus1Arvot.hkllomarahoitus = haeOmarahoitus('HK-LL', data);
-                    maksatushakemus1Arvot.hktlhaettavaavustus = haeHaettavaavustus('HK-TL', data);
-                    maksatushakemus1Arvot.hktlomarahoitus = haeOmarahoitus('HK-TL', data);
-                    maksatushakemus1Arvot.kimhaettavaavustus = haeHaettavaavustus('K-IM', data);
-                    maksatushakemus1Arvot.kimomarahoitus = haeOmarahoitus('K-IM', data);
-                    maksatushakemus1Arvot.kmpkhaettavaavustus = haeHaettavaavustus('K-MPK', data);
-                    maksatushakemus1Arvot.kmpkomarahoitus = haeOmarahoitus('K-MPK', data);
-                    maksatushakemus1Arvot.kmkhaettavaavustus = haeHaettavaavustus('K-MK', data);
-                    maksatushakemus1Arvot.kmkomarahoitus = haeOmarahoitus('K-MK', data);
-                    maksatushakemus1Arvot.krthaettavaavustus = haeHaettavaavustus('K-RT', data);
-                    maksatushakemus1Arvot.krtomarahoitus = haeOmarahoitus('K-RT', data);
-                    maksatushakemus1Arvot.kmhaettavaavustus = haeHaettavaavustus('K-M', data);
-                    maksatushakemus1Arvot.kmomarahoitus = haeOmarahoitus('K-M', data);
-                    _.forIn(maksatushakemus1Arvot, function (value, key) {
-                      if (value > 0) {
-                        $scope.tooltipArvot[key] = $scope.tooltipArvot[key] + '<br/>' + '1. Maksatushakemus:' + (value).toString().replace('.', ',') + ' €';
-                      }
-                    });
-                  })
-                  .error(function (data) {
-                    StatusService.virhe('AvustuskohdeService.hae(' + $scope.tyyppi + ',' + $scope.maksatushakemus1id + ')', data);
-                  });
-              }
-            })
-            .error(function (data) {
-              StatusService.virhe('AvustuskohdeService.hae(' + $scope.tyyppi + ',' + $scope.hakemusid + ')', data);
-            });
-        }
-      }
-
-      function haeHaettavaavustus(avustuskohdelaji, data) {
-        if (_.some(data, {'avustuskohdelajitunnus': avustuskohdelaji})) {
-          return parseFloat((_.find(data, {'avustuskohdelajitunnus': avustuskohdelaji})).haettavaavustus);
-        }
-        else {
-          return 0;
-        }
+          }, 'AvustuskohdeService.hae(' + hakemusid + ')');
       }
 
       function haeHakemukset() {
@@ -118,43 +41,18 @@ angular.module('jukufrontApp')
 
       }
 
-      function haeAvustuskohteet(hakemusid, scopemuuttuja) {
-        common.bindPromiseToScope(AvustuskohdeService.hae(hakemusid), $scope, scopemuuttuja,
-          function (data) {
-            return _.map(
-              common.partitionBy(function (v) {
-                return v.avustuskohdeluokkatunnus
-              }, data),
-              function (kohteet) {
-                return {
-                  avustuskohteet: kohteet,
-                  tunnus: (_.first(kohteet).avustuskohdeluokkatunnus)
-                }
-              });
-          }, 'AvustuskohdeService.hae(' + hakemusid + ')');
-      }
-
       function haeLiitteet() {
         LiiteService.haeKaikki($scope.hakemusid)
           .success(function (data) {
-            $scope.liitteet = _.map(data, function(element) {
+            $scope.liitteet = _.map(data, function (element) {
               var paate = element.nimi.split('.').pop();
-              var nimiosa = element.nimi.substring(0,(element.nimi.length-paate.length-1));
-              return _.extend({}, element, {nimiteksti: nimiosa},{nimipaate: paate});
+              var nimiosa = element.nimi.substring(0, (element.nimi.length - paate.length - 1));
+              return _.extend({}, element, {nimiteksti: nimiosa}, {nimipaate: paate});
             });
           })
           .error(function (data) {
             StatusService.virhe('LiiteService.hae(' + $scope.hakemusid + ')', data);
           });
-      }
-
-      function haeOmarahoitus(avustuskohdelaji, data) {
-        if (_.some(data, {'avustuskohdelajitunnus': avustuskohdelaji})) {
-          return parseFloat((_.find(data, {'avustuskohdelajitunnus': avustuskohdelaji})).omarahoitus);
-        }
-        else {
-          return 0;
-        }
       }
 
       function haePaatos() {
@@ -167,18 +65,12 @@ angular.module('jukufrontApp')
           });
       }
 
-      /**
-       * Asettaa liitteen muokkaustilaan
-       * @param liitenumero
-       */
-      $scope.asetaEditTilaan = function (liitenumero) {
-        haeLiitteet();
-        $scope.editoitavaLiite = liitenumero;
-      };
-
-      $scope.asetaLiitenimi = function (nimi) {
-        $scope.liitenimi = nimi;
-      };
+      function haeVertailuArvo(data, avustuskohdeluokka, avustuskohdelaji, arvo) {
+        return parseFloat((_.find(_.find(data, {'tunnus': avustuskohdeluokka}).avustuskohteet, {
+          'avustuskohdeluokkatunnus': avustuskohdeluokka,
+          'avustuskohdelajitunnus': avustuskohdelaji
+        }))[arvo]);
+      }
 
       $scope.$watch('myFiles', function () {
         if ($scope.myFiles != null) {
@@ -205,10 +97,54 @@ angular.module('jukufrontApp')
         }
       });
 
-      $scope.lahetaHakemusTaiTaydennys = function(tila){
-        if (tila=='K'){
+      /**
+       * Asettaa liitteen muokkaustilaan
+       * @param liitenumero
+       */
+      $scope.asetaEditTilaan = function (liitenumero) {
+        haeLiitteet();
+        $scope.editoitavaLiite = liitenumero;
+      };
+
+      $scope.asetaLiitenimi = function (nimi) {
+        $scope.liitenimi = nimi;
+      };
+
+      $scope.haeAvustusProsentti = function (luokka, laji) {
+        return AvustuskohdeService.avustusprosentti($scope.vuosi, luokka, laji);
+      };
+
+      $scope.haeVertailuarvot = function (avustuskohdeluokka, avustuskohdelaji) {
+        var avustushakemusHaettavaAvustus = 0;
+        var avustushakemusOmaRahoitus = 0;
+        var maksatushakemusHaettavaAvustus = 0;
+        var maksatushakemusOmaRahoitus = 0;
+        if ($scope.tyyppi !== "AH0" && (typeof $scope.avustushakemusArvot) !== 'undefined') {
+          avustushakemusHaettavaAvustus = haeVertailuArvo($scope.avustushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'haettavaavustus');
+          avustushakemusOmaRahoitus = haeVertailuArvo($scope.avustushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'omarahoitus');
+        }
+        if ($scope.tyyppi === "MH2" && (typeof $scope.maksatushakemusArvot) !== 'undefined') {
+          maksatushakemusHaettavaAvustus = haeVertailuArvo($scope.maksatushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'haettavaavustus');
+          maksatushakemusOmaRahoitus = haeVertailuArvo($scope.maksatushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'omarahoitus');
+        }
+        return {
+          'avustushakemusHaettavaAvustus': avustushakemusHaettavaAvustus,
+          'avustushakemusOmaRahoitus': avustushakemusOmaRahoitus,
+          'maksatushakemusHaettavaAvustus': maksatushakemusHaettavaAvustus,
+          'maksatushakemusOmaRahoitus': maksatushakemusOmaRahoitus
+        };
+      };
+
+      $scope.hasPaatos = function (tyyppi, hakemustilatunnus) {
+        return tyyppi == 'AH0' &&
+          hakemustilatunnus == 'P' ||
+          hakemustilatunnus == 'M';
+      };
+
+      $scope.lahetaHakemusTaiTaydennys = function (tila) {
+        if (tila == 'K') {
           $scope.lahetaHakemus();
-        } else if (tila=='T0'){
+        } else if (tila == 'T0') {
           $scope.lahetaTaydennys();
         }
       };
@@ -243,10 +179,6 @@ angular.module('jukufrontApp')
         }
       };
 
-      $scope.haeAvustusProsentti = function (luokka, laji) {
-        return AvustuskohdeService.avustusprosentti($scope.vuosi, luokka, laji);
-      };
-
       $scope.liiteNimiTyhja = function (nimi) {
         if (isNaN(nimi)) {
           return true;
@@ -262,26 +194,6 @@ angular.module('jukufrontApp')
           $window.open('api/hakemus/' + $scope.hakemusid + '/pdf', 'target', '_blank');
         }
       };
-
-/*
-      $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
-        var omarahoitus2, haettavarahoitus2;
-        if ((typeof omarahoitus === 'undefined') || (typeof haettavarahoitus === 'undefined')) return true;
-        if (typeof omarahoitus === 'string') {
-          omarahoitus2 = euroSyoteNumeroksi(omarahoitus);
-        }
-        if (typeof haettavarahoitus === 'string') {
-          haettavarahoitus2 = euroSyoteNumeroksi(haettavarahoitus);
-        }
-        if (typeof omarahoitus === 'number') {
-          omarahoitus2 = parseFloat(omarahoitus);
-        }
-        if (typeof haettavarahoitus === 'number') {
-          haettavarahoitus2 = parseFloat(haettavarahoitus);
-        }
-        return haettavarahoitus2 <= omarahoitus2;
-      };
-      */
 
       $scope.palaaTallentamattaLiite = function () {
         $scope.editoitavaLiite = -1;
@@ -319,6 +231,13 @@ angular.module('jukufrontApp')
           });
       };
 
+      $scope.sumHaettavaAvustus = function () {
+        var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
+          return l.avustuskohteet
+        }));
+        return _.sum(avustuskohteet, 'haettavaavustus');
+      };
+
       $scope.tallennaHakemus = function (avaaEsikatselu) {
         $scope.$broadcast('show-errors-check-validity');
         if ($scope.hakemusForm.$valid) {
@@ -326,7 +245,6 @@ angular.module('jukufrontApp')
           var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
             return l.avustuskohteet
           }));
-
 
           AvustuskohdeService.tallenna(avustuskohteet)
             .success(function () {
@@ -394,121 +312,32 @@ angular.module('jukufrontApp')
           });
       };
 
-      $scope.hasPaatos = function (tyyppi, hakemustilatunnus) {
-        return tyyppi == 'AH0' &&
-          hakemustilatunnus == 'P' ||
-          hakemustilatunnus == 'M';
-      };
-
-      $scope.sumHaettavaAvustus = function () {
-        var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
-          return l.avustuskohteet
-        }));
-        return _.sum(avustuskohteet, 'haettavaavustus');
-      };
-
       $scope.allekirjoitusliitetty = false;
       $scope.avustushakemusid = $routeParams.id;
       $scope.editoitavaLiite = -1;
+      $scope.liitenimi = '';
       $scope.maksatushakemus1id = $routeParams.m1id;
       $scope.maksatushakemus2id = $routeParams.m2id;
       $scope.myFiles = [];
       $scope.tyyppi = $routeParams.tyyppi;
+      $scope.vuosi = $routeParams.vuosi;
 
       if ($scope.tyyppi === "AH0") {
         $scope.hakemusid = parseInt($scope.avustushakemusid);
       } else if ($scope.tyyppi == "MH1") {
         $scope.hakemusid = parseInt($scope.maksatushakemus1id);
         $scope.ajankohta = '1.1.-30.6.';
-        haeAvustuskohteet($scope.avustushakemusid , "avustushakemusArvot");
+        haeAvustuskohteet($scope.avustushakemusid, "avustushakemusArvot");
       } else if ($scope.tyyppi == "MH2") {
         $scope.hakemusid = parseInt($scope.maksatushakemus2id);
         $scope.ajankohta = '1.7.-31.12.';
-        haeAvustuskohteet($scope.avustushakemusid , "avustushakemusArvot");
-        haeAvustuskohteet($scope.maksatushakemus1id , "maksatushakemus1Arvot");
+        haeAvustuskohteet($scope.avustushakemusid, "avustushakemusArvot");
+        haeAvustuskohteet($scope.maksatushakemus1id, "maksatushakemusArvot");
       }
-      $scope.liitenimi = '';
-      $scope.vuosi = $routeParams.vuosi;
+
       haeHakemukset();
       haeAvustuskohteet($scope.hakemusid, "avustuskohdeluokat");
       haePaatos();
-      generoiTooltipArvot();
       $window.scrollTo(0, 0);
     }
-  ]).
-  directive('jkuAvustusluokkaPanel', function () {
-    return {
-      restrict: 'E',
-      scope: {
-        name: "@",
-        luokka: "=",
-        hakemus: "="
-      },
-      transclude: true,
-      templateUrl: 'views/yhteinen/jkuAvustusluokkaPanel.html',
-      controller: ["$scope", function ($scope) {
-        $scope.sumHaettavaAvustusOverLuokka = function (luokka) {
-          return _.sum(luokka.avustuskohteet, 'haettavaavustus');
-        };
-      }]
-    };
-  })
-  .directive('jkuAvustuskohde', function () {
-    return {
-      restrict: 'E',
-      scope: {
-        name: "@",
-        hakemus: "=",
-        kohde: "=",
-        vuosi: "="
-      },
-      controller: ["$scope", "$rootScope","AvustuskohdeService", "AuthService", function ($scope, $rootScope, AvustuskohdeService, AuthService) {
-
-        $scope.euroSyoteNumeroksi = function (arvo) {
-          return parseFloat(arvo.replace(/[^0-9,-]/g, '').replace(',', '.'));
-        };
-
-        $scope.avustusprosentti = AvustuskohdeService.avustusprosentti($scope.vuosi,$scope.kohde.avustuskohdeluokkatunnus,$scope.kohde.avustuskohdelajitunnus);
-
-        $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
-          var omarahoitus2, haettavarahoitus2;
-          if ((typeof omarahoitus === 'undefined') || (typeof haettavarahoitus === 'undefined')) return true;
-          if (typeof omarahoitus === 'string') {
-            omarahoitus2 = $scope.euroSyoteNumeroksi(omarahoitus);
-          }
-          if (typeof haettavarahoitus === 'string') {
-            haettavarahoitus2 = $scope.euroSyoteNumeroksi(haettavarahoitus);
-          }
-          if (typeof omarahoitus === 'number') {
-            omarahoitus2 = parseFloat(omarahoitus);
-          }
-          if (typeof haettavarahoitus === 'number') {
-            haettavarahoitus2 = parseFloat(haettavarahoitus);
-          }
-          return (((100-$scope.avustusprosentti)/100)*(haettavarahoitus2+omarahoitus2)) <= omarahoitus2;
-        };
-
-        $scope.sallittuArvo = function (value) {
-          if (typeof value === 'undefined') return false;
-          var floatarvo;
-          if (typeof value === 'string') {
-            floatarvo = $scope.euroSyoteNumeroksi(value);
-            return (floatarvo >= 0 && floatarvo <= 999999999.00);
-          }
-          return true;
-        };
-
-        $scope.isReadonly = function () {
-          // TODO: LIVIJUKU-229 Toisten hakijoiden hakemusten syötekentät pitää muuttaa vain luku -tilaan
-          // TODO: Poista muokkaus vireillä olevalta, jne. hakemuslomakkeelta.
-          return !AuthService.hakijaSaaMuokataHakemusta($scope.hakemus);
-        };
-
-        $scope.getName = function (key) {
-          return $scope.kohde.avustuskohdeluokkatunnus + "-" + $scope.kohde.avustuskohdelajitunnus + "-" + key;
-        };
-
-      }],
-      templateUrl: 'views/yhteinen/jkuAvustuskohde.html'
-    };
-  });
+  ]);

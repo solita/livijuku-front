@@ -63,7 +63,7 @@
                                name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
                                hakemus="hakemus"
                                ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
-        <jku-avustuskohde vuosi="vuosi" kohde="avustuskohde"
+        <jku-avustuskohde vuosi="vuosi" vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)" hakemustyyppi="tyyppi" kohde="avustuskohde"
                           hakemus="hakemus"
                           name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
                           ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet">

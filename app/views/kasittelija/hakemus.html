@@ -1,55 +1,34 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <div ng-show="tyyppi=='AH0'">
-        <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
-          päänäkymään</a>
-        <a href="#/k/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-           class="btn btn-primary">Avustushakemus {{hakemus.vuosi}}</a>
-        <a href="#/k/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-           class="btn btn-default">1. maksatushakemus {{hakemus.vuosi}}</a>
-        <a href="#/k/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-           class="btn btn-default">2. maksatushakemus {{hakemus.vuosi}}</a>
-      </div>
-      <div ng-show="tyyppi=='MH1'">
-        <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
-          päänäkymään</a>
-        <a href="#/k/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-           class="btn btn-default">Avustushakemus {{hakemus.vuosi}}</a>
-        <a href="#/k/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-           class="btn btn-primary">1. maksatushakemus {{hakemus.vuosi}}</a>
-        <a href="#/k/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-           class="btn btn-default">2. maksatushakemus {{hakemus.vuosi}}</a>
-      </div>
-      <div ng-show="tyyppi=='MH2'">
-        <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
-          päänäkymään</a>
-        <a href="#/k/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-           class="btn btn-default">Avustushakemus {{hakemus.vuosi}}</a>
-        <a href="#/k/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-           class="btn btn-default">1. maksatushakemus {{hakemus.vuosi}}</a>
-        <a href="#/k/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-           class="btn btn-primary">2. maksatushakemus {{hakemus.vuosi}}</a>
-      </div>
+      <a href="#/k/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
+        päänäkymään</a>
+      <a href="#/k/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+         ng-class="(tyyppi == 'AH0')? 'btn btn-primary' : 'btn btn-default'">Avustushakemus {{hakemus.vuosi}}</a>
+      <a
+        href="#/k/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+        ng-class="(tyyppi == 'MH1')? 'btn btn-primary' : 'btn btn-default'">1. maksatushakemus {{hakemus.vuosi}}</a>
+      <a
+        href="#/k/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+        ng-class="(tyyppi == 'MH2')? 'btn btn-primary' : 'btn btn-default'">2. maksatushakemus {{hakemus.vuosi}}</a>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <div ng-show="(tyyppi == 'AH0')">
-        <h2>Joukkoliikenten valtionavustushakemus {{hakemus.vuosi}}</h2>
-      </div>
-      <div ng-show="(tyyppi == 'MH1')">
-        <h2>Joukkoliikenten 1. maksatushakemus {{hakemus.vuosi}}</h2>
-      </div>
-      <div ng-show="(tyyppi == 'MH2')">
-        <h2>Joukkoliikenten 2. maksatushakemus {{hakemus.vuosi}}</h2>
-      </div>
+      <h2>
+        <div ng-switch on="tyyppi">
+          <span ng-switch-when='MH1'>Joukkoliikenteen 1. maksatushakemus {{hakemus.vuosi}}</span>
+          <span ng-switch-when='MH2'>Joukkoliikenteen 2. maksatushakemus {{hakemus.vuosi}}</span>
+          <span ng-switch-default>Joukkoliikenteen valtionavustushakemus {{hakemus.vuosi}}</span>
+        </div>
+      </h2>
     </div>
   </div>
   <div class="row" ng-show="hasPaatos(tyyppi, hakemus.hakemustilatunnus)">
     <div class="col-md-12">
       <p>
-        <a href="api/hakemus/{{hakemusid}}/paatos/1/pdf" target="_blank"><span class="glyphicon glyphicon-file"></span> Avaa päätös (PDF)</a>
+        <a href="api/hakemus/{{hakemusid}}/paatos/1/pdf" target="_blank"><span class="glyphicon glyphicon-file"></span>
+          Avaa päätös (PDF)</a>
       </p>
     </div>
   </div>
@@ -58,144 +37,146 @@
       <h3>{{hakija}}</h3>
     </div>
   </div>
-
-  <div>
-    <div class="row">
-      <div class="col-md-12">
-        <div ng-show="(tyyppi == 'AH0')">
-          <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ<a href=""><span
-            class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
-        </div>
-        <div ng-hide="(tyyppi == 'AH0')">
-          <div ng-show="paatos!=null">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}: <b>{{paatos.myonnettyavustus/2 | currency:"&euro;"}}</b><a
-                  href="" class="top" title="" data-toggle="tooltip" data-placement="top"
-                  data-original-title="Avustus vuodelle {{vuosi}}: {{paatos.myonnettyavustus| currency:'&euro;'}}"><span
-                  class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
-              </div>
-            </div>
-          </div>
-          <h3>HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{hakemus.vuosi}}<a href=""><span
-            class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div ng-show="(tyyppi == 'AH0')">
+        <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ<a href=""><span
+          class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
       </div>
-    </div>
-
-    <form name="hakemusForm">
-
-      <jku-avustusluokka-panel luokka="avustuskohdeluokka" name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
-                               hakemus="hakemus"
-                               ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
-        <jku-avustuskohde vuosi="vuosi" kohde="avustuskohde"
-                          hakemus="hakemus"
-                          name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
-                          ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet">
-      </jku-avustusluokka-panel>
-
-    </form>
-    <div class="row">
-      <div class="col-md-9">
-        <div ng-show="(tyyppi == 'AH0')">
-          <h4>JOUKKOLIIKENTEEN VALTIONAVUSTUSHAKEMUS YHTEENSÄ:</h4>
-        </div>
-        <div ng-hide="(tyyppi == 'AH0')">
-          <h4>HAETTAVAT MAKSATUKSET YHTEENSÄ:</h4>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="pull-right">
-          <h4>{{sumHaettavaAvustus() | currency:"&euro;"}}</h4>
-        </div>
-      </div>
-    </div>
-    <div ng-show="(tyyppi == 'AH0')">
-      <div class="row">
-        <div class="col-md-12">
-          <h5>Lisätietoja avustusten kohteista<a href=""><span
-            class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h5>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div ng-show="(hakemus.selite!=null)">
-            <p>{{hakemus.selite}}</p>
-          </div>
-          <div ng-show="(hakemus.selite==null)">
-            <p>Ei selitettä.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div ng-hide="(tyyppi == 'AH0')">
-      <h3>KULUTOSITTEET AJALLE {{ajankohta}}{{hakemus.vuosi}}<a href=""><span
-        class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2 class="panel-title">Liitetiedostot</h2>
-          </div>
-          <div class="panel-body">
+      <div ng-hide="(tyyppi == 'AH0')">
+        <div ng-show="paatos!=null">
+          <div class="row">
             <div class="col-md-12">
-              <div ng-show="liitteet.length > 0" class="response">
-                <div class="sel-file" ng-repeat="l in liitteet">
-                  <p>
-                    <a href="api/hakemus/{{hakemus.id}}/liite/{{l.liitenumero}}" target="_blank"><span class="glyphicon glyphicon-file"></span>{{l.nimi}}
-                      ({{l.contenttype}})</a>
-                  </p>
-                </div>
+              <h3>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}: <b>{{paatos.myonnettyavustus/2 |
+                currency:"&euro;"}}</b><a
+                href="" class="top" title="" data-toggle="tooltip" data-placement="top"
+                data-original-title="Avustus vuodelle {{vuosi}}: {{paatos.myonnettyavustus| currency:'&euro;'}}"><span
+                class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+            </div>
+          </div>
+        </div>
+        <h3>HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{hakemus.vuosi}}<a href=""><span
+          class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+      </div>
+    </div>
+  </div>
+
+  <form name="hakemusForm">
+
+    <jku-avustusluokka-panel luokka="avustuskohdeluokka" name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
+                             hakemus="hakemus"
+                             ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
+      <jku-avustuskohde vuosi="vuosi"
+                        vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)"
+                        hakemustyyppi="tyyppi" kohde="avustuskohde"
+                        hakemus="hakemus"
+                        name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
+                        ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet">
+    </jku-avustusluokka-panel>
+
+  </form>
+  <div class="row">
+    <div class="col-md-9">
+      <div ng-show="(tyyppi == 'AH0')">
+        <h4>JOUKKOLIIKENTEEN VALTIONAVUSTUSHAKEMUS YHTEENSÄ:</h4>
+      </div>
+      <div ng-hide="(tyyppi == 'AH0')">
+        <h4>HAETTAVAT MAKSATUKSET YHTEENSÄ:</h4>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="pull-right">
+        <h4>{{sumHaettavaAvustus() | currency:"&euro;"}}</h4>
+      </div>
+    </div>
+  </div>
+  <div ng-show="(tyyppi == 'AH0')">
+    <div class="row">
+      <div class="col-md-12">
+        <h5>Lisätietoja avustusten kohteista<a href=""><span
+          class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div ng-show="(hakemus.selite!=null)">
+          <p>{{hakemus.selite}}</p>
+        </div>
+        <div ng-show="(hakemus.selite==null)">
+          <p>Ei selitettä.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-hide="(tyyppi == 'AH0')">
+    <h3>KULUTOSITTEET AJALLE {{ajankohta}}{{hakemus.vuosi}}<a href=""><span
+      class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="panel-title">Liitetiedostot</h2>
+        </div>
+        <div class="panel-body">
+          <div class="col-md-12">
+            <div ng-show="liitteet.length > 0" class="response">
+              <div class="sel-file" ng-repeat="l in liitteet">
+                <p>
+                  <a href="api/hakemus/{{hakemus.id}}/liite/{{l.liitenumero}}" target="_blank"><span
+                    class="glyphicon glyphicon-file"></span>{{l.nimi}}
+                    ({{l.contenttype}})</a>
+                </p>
               </div>
-              <div ng-show="(liitteet.length==0)">
-                <p>Ei liitteitä.</p>
-              </div>
+            </div>
+            <div ng-show="(liitteet.length==0)">
+              <p>Ei liitteitä.</p>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <h3>HAKEMUKSEN PÄIVÄMÄÄRÄ JA ALLEKIRJOITTAJA</h3>
-      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>HAKEMUKSEN PÄIVÄMÄÄRÄ JA ALLEKIRJOITTAJA</h3>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <h5>Päivämäärä</h5>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h5>Päivämäärä</h5>
 
-        <p>{{aikaleima | date:'dd.MM.yyyy'}}</p>
-      </div>
-      <div class="col-md-6">
-        <h5>Allekirjoittaja</h5>
-
-        <p>_kirjautuneen allekirjoittajan nimi_</p>
-      </div>
+      <p>{{aikaleima | date:'dd.MM.yyyy'}}</p>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
-          päänäkymään</a>
-      </div>
-      <div ng-show="sallittu('kasittely-hakemus')" class=" col-md-6">
-        <button ng-show="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')" data-ng-click="tarkastaHakemus()"
-                class="pull-right btn btn-success">Merkitse tarkastetuksi
-        </button>
-        <button ng-show="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')"
-                data-ng-click="taydennyspyynto()"
-                class="pull-right btn btn-danger">Palauta täydennettäväksi
-        </button>
-        <button ng-hide="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')"
-                data-ng-click="tarkastaHakemus()"
-                class="pull-right btn btn-success" disabled>Merkitse
-          tarkastetuksi
-        </button>
-        <button ng-hide="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')"
-                data-ng-click="taydennyspyynto()"
-                class="pull-right btn btn-danger" disabled>Palauta täydennettäväksi
-        </button>
-      </div>
+    <div class="col-md-6">
+      <h5>Allekirjoittaja</h5>
+
+      <p>_kirjautuneen allekirjoittajan nimi_</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
+        päänäkymään</a>
+    </div>
+    <div ng-show="sallittu('kasittely-hakemus')" class=" col-md-6">
+      <button ng-show="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')"
+              data-ng-click="tarkastaHakemus()"
+              class="pull-right btn btn-success">Merkitse tarkastetuksi
+      </button>
+      <button ng-show="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')"
+              data-ng-click="taydennyspyynto()"
+              class="pull-right btn btn-danger">Palauta täydennettäväksi
+      </button>
+      <button ng-hide="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')"
+              data-ng-click="tarkastaHakemus()"
+              class="pull-right btn btn-success" disabled>Merkitse
+        tarkastetuksi
+      </button>
+      <button ng-hide="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')"
+              data-ng-click="taydennyspyynto()"
+              class="pull-right btn btn-danger" disabled>Palauta täydennettäväksi
+      </button>
     </div>
   </div>
 </div>

@@ -56,10 +56,6 @@ angular
         templateUrl: 'views/hakija/hakemukset.html',
         controller: 'HakijaHakemuksetCtrl'
       })
-      .when('/h/maksatushakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
-        templateUrl: 'views/hakija/maksatusHakemus.html',
-        controller: 'HakemusCtrl'
-      })
       .when('/k/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
         templateUrl: 'views/kasittelija/hakemus.html',
         controller: 'HakemusCtrl'
@@ -115,6 +111,8 @@ require('./controllers/yhteinen/hakemus');
 require('./controllers/yhteinen/paanaytto');
 require('./directives/hakemuslabel');
 require('./directives/hakemussummary');
+require('./directives/jkuAvustusluokkaPanel');
+require('./directives/jkuAvustuskohde');
 require('./directives/noenter');
 require('./directives/selectonclick');
 require('./services/auth');

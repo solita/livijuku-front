@@ -3,12 +3,14 @@
     <div class="col-md-12">
       <h5>{{name}}</h5>
     </div>
-    <div ng-show="true">
+    <div ng-show="hakemustyyppi=='AH0' || (tyyppi!='AH0' && vertailuarvot().avustushakemusHaettavaAvustus>0)">
       <div class="col-md-6">
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Haettava valtionavustus
             <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" noenter select-on-click
-                   ng-readonly="isReadonly()" class="form-control"
+                   ng-readonly="isReadonly()" class="form-control" tooltip-html-unsafe="{{haeTooltip('haettavaavustus')}}"
+                   tooltip-trigger="focus"
+                   tooltip-placement="top"
                    ng-model="kohde.haettavaavustus"
                    ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo($value)'}"/>
           </label>
@@ -21,7 +23,9 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Kunnan oma rahoitusosuus
             <input name="{{getName('omarahoitus')}}" type="text" ng-currency="" noenter select-on-click
-                   class="form-control"
+                   class="form-control" tooltip-html-unsafe="{{haeTooltip('omarahoitus')}}"
+                   tooltip-trigger="focus"
+                   tooltip-placement="top"
                    ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
                    ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kohde.haettavaavustus)',sallittuArvoOmarahoitus: 'sallittuArvo($value)'}"
                    ui-validate-watch=" 'kohde.haettavaavustus' "/>
@@ -35,7 +39,7 @@
         </div>
       </div>
     </div>
-    <div ng-hide="true">
+    <div ng-show="hakemustyyppi!='AH0' && vertailuarvot().avustushakemusHaettavaAvustus==0">
       <div class="col-md-12">
         <p>Ei haettu avustusta.</p>
       </div>
