@@ -65,7 +65,8 @@ var paths = {
     destination: './dist/scripts/ie9/'
   }],
 
-  // TODO: Ainoastaan scripts hakemiston js-tiedostot uudelleennimetaan. Sen alla olevaa ie9:a ei voi uudelleennimeta koska latauskomponentti
+  // TODO: Ainoastaan scripts hakemiston js-tiedostot uudelleennimetaan.
+  // Sen alla olevaa ie9:a ei voi uudelleennimeta koska latauskomponentti
   // kayttaa suoraan FileAPI.min.js tiedostoa (JEG)
   revision: {
     source: ['./dist/**/*.css', './dist/**/*.js', '!./dist/scripts/ie9/FileAPI.min.js'],
