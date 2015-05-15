@@ -133,15 +133,7 @@
     </div>
     <div class="row">
       <div class="col-md-6"></div>
-      <div class="col-md-3">
-        <div ng-show="(avustushakemus.hakemustilatunnus == 'P' && sallittu('hyvaksy-paatos'))">
-          <button data-ng-click="peruPaatos()" class="pull-right btn btn-success">Peru päätös</button>
-        </div>
-        <div ng-hide="(avustushakemus.hakemustilatunnus == 'P') && sallittu('hyvaksy-paatos')">
-          <button data-ng-click="peruPaatos()" class="pull-right btn btn-success" disabled>Peru päätös</button>
-        </div>
-      </div>
-      <div class="col-md-3">
+      <div class="col-md-6">
         <div ng-show="(avustushakemus.hakemustilatunnus == 'T' && sallittu('hyvaksy-paatos'))">
           <button data-ng-click="hyvaksyPaatos(paatosForm)" class="pull-right btn btn-success">Tallenna ja hyväksy päätös</button>
         </div>
