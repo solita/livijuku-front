@@ -1,4 +1,11 @@
 'use strict';
+
+function sidebarController($scope) {
+  $scope.sallittu = require('utils/hasPermission');
+}
+
+sidebarController.$inject = ['$scope'];
+
 module.exports = function() {
   return {
     restrict: 'E',
@@ -6,8 +13,6 @@ module.exports = function() {
     scope: {
       user: '='
     },
-    controller: function($scope, $rootScope, $route) {
-      $scope.sallittu = require('utils/hasPermission');
-    }
+    controller: sidebarController
   };
 };
