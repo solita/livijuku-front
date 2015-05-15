@@ -19,32 +19,22 @@ fieldset[disabled] .form-control
 
 html
   position: relative
-  min-height: 100%
+  height: 100%
 
 body
-  margin-bottom: 90px
+  height: 100%
   padding-top: 70px
   z-index: 2
 
+.app
+  left: 0
+  transition: left 0.3s
+  position: relative
+  min-height: 100%
+  padding-bottom: 90px
+
 body.is-collapsed .app
   left: -250px
-  position: relative
-
-#footer
-  position: absolute
-  bottom: 0
-  width: 100%
-  height: 60px
-  background-color: #0088cc
-  background: #0088cc /* Old browsers */
-  background: -moz-linear-gradient(top, #0088cc 0%, #005196 100%) /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #0088cc), color-stop(100%, #005196)) /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #0088cc 0%, #005196 100%) /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #0088cc 0%, #005196 100%) /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #0088cc 0%, #005196 100%) /* IE10+ */
-  background: linear-gradient(to bottom, #0088cc 0%, #005196 100%) /* W3C */
-  filter: unquote('progid:DXImageTransform.Microsoft.gradient(startColorstr="#0088cc", endColorstr="#005196", GradientType=0)') /* IE6-9 */
-  border-radius: 0px
 
 /* Fixed navbar styles */
 
@@ -62,28 +52,8 @@ textarea
   text-transform: uppercase
   padding-top: 20px
 
-.footer
-  margin-bottom: 0px
-  padding-top: 10px
-  padding-bottom: 20px
-
-.logoalign
-  position: relative
-  top: -8px
-  left: -10px
-
 .r-align
   text-align: right
-
-.footerlogo
-  position: relative
-  left: -30px
-
-
-.footerwspace
-  position: relative
-  height: 20px
-  background-color: #ffffff
 
 .drop-box
   background: none repeat scroll 0% 0% #EEF

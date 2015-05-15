@@ -223,7 +223,7 @@ gulp.task('version', ['templates'], function() {
 
   fs.writeFileSync(
     paths.version.destination,
-    '<h5 class="navbartxt">' + today.toISOString() + ' (' + os.hostname() + ')</h5>');
+    today.toISOString() + ' (' + os.hostname() + ')');
 });
 
 gulp.task('watch', ['scripts'], function() {

@@ -19,25 +19,7 @@
     <!-- Add your site or application content here -->
     <div class="app">
       <div ng-view=""></div>
-      <div id="footer">
-        <div class="container">
-          <div class="footer">
-            <div class="col-md-2">
-              <img src="images/JUKU-logo.png" class="footerlogo">
-            </div>
-            <div class="col-md-2">
-              <h5 class="navbartxt">Yhteystiedot</h5>
-            </div>
-            <div class="col-md-4">
-              <div data-ng-include data-src="'buildversion.html'"></div>
-              <h5 class="navbartxt" ng-include="buildversion.html"></h5>
-            </div>
-            <div class="col-md-4">
-              <h5 class="navbartxt r-align">Liikennevirasto.fi</h5>
-            </div>
-          </div>
-        </div>
-      </div>
+      <juku-footer />
     </div>
 
     <script>

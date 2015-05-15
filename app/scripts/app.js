@@ -100,7 +100,8 @@ angular
     $httpProvider.defaults.headers.Pragma = 'no-cache';
   }])
   .directive('jukuHeader', require('components/header'))
-  .directive('jukuSidebar', require('components/sidebar'));
+  .directive('jukuSidebar', require('components/sidebar'))
+  .directive('jukuFooter', require('components/footer'));
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemukset');

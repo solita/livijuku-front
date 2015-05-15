@@ -22,6 +22,7 @@ module.exports = function() {
   return {
     restrict: 'E',
     template: require('./index.html'),
+    replace: true,
     scope: {
       user: '='
     },
