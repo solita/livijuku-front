@@ -93,6 +93,7 @@ angular.module('jukufrontApp')
       }
     };
 
+    /* Toiminnallisuus poistettu toistaiseksi, koska ASHA ei tue peruuttamista, JEG/15.5.2015
     $scope.peruPaatos = function () {
       PaatosService.peru($scope.hakemusid)
         .success(function () {
@@ -103,6 +104,7 @@ angular.module('jukufrontApp')
           StatusService.virhe('PaatosService.peru(' + $scope.hakemusid + ')', data);
         });
     };
+    */
 
     $scope.tallennaPaatos = function (paatosForm) {
       if (paatosForm.$valid) {
@@ -110,7 +112,7 @@ angular.module('jukufrontApp')
           "hakemusid": parseInt($scope.hakemusid),
           "myonnettyavustus": parseFloat($scope.avustus),
           "selite": $scope.paatos.selite
-        }
+        };
         PaatosService.tallenna($scope.hakemusid, paatosdata)
           .success(function () {
             StatusService.ok('PaatosService.tallenna()', 'Tallennus onnistui.');
