@@ -1,6 +1,7 @@
 'use strict';
 
-require('angular');
+var angular = require('angular');
+
 require('angular-toastr');
 require('angular-resource');
 require('angular-loading-bar');

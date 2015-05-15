@@ -1,8 +1,8 @@
 'use strict';
 
-/*global angular */
 var _ = require('lodash');
 var $ = require('jquery');
+var angular = require('angular');
 
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams',

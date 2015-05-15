@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var angular = require('angular');
 
 angular.module('jukufrontApp')
   .controller('KasittelijaPaatosCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'HakemusService', 'StatusService', 'PaatosService', 'SuunnitteluService','$window', function ($rootScope, $scope, $routeParams, $location, HakemusService, StatusService, PaatosService, SuunnitteluService, $window) {

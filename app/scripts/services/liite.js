@@ -1,5 +1,6 @@
 'use strict';
 
+var angular = require('angular');
 angular.module('services.liite', [])
 
   .factory('LiiteService', ['$http', function ($http) {

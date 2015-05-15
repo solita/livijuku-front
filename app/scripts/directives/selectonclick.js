@@ -1,5 +1,7 @@
 /* http://stackoverflow.com/questions/14995884/select-text-on-input-focus */
 'use strict';
+
+var angular = require('angular');
 angular.module('jukufrontApp')
   .directive('selectOnClick', function () {
     return {

@@ -1,5 +1,6 @@
 'use strict';
 
+var angular = require('angular');
 angular.module('services.kayttaja', [])
 
   .factory('KayttajaService', ['$http', function ($http) {

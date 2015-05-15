@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 
+var angular = require('angular');
 angular.module('services.auth', [])
   .factory('AuthService', ['$rootScope', function ($rootScope) {
     return {

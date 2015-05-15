@@ -1,4 +1,6 @@
 'use strict';
+var angular = require('angular');
+
 angular.module('jukufrontApp')
   .directive('hakemusLabel', function () {
     return {

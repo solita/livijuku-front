@@ -1,4 +1,5 @@
 'use strict';
+var angular = require('angular');
 angular.module('jukufrontApp')
   .directive('jkuAvustuskohde', function () {
     return {

@@ -1,5 +1,7 @@
 'use strict';
+
 var _ = require('lodash');
+var angular = require('angular');
 
 angular.module('jukufrontApp')
   .controller('HakijaHakemuksetCtrl', ['$scope', '$location', 'HakemusService', 'StatusService', function ($scope, $location, HakemusService, StatusService) {

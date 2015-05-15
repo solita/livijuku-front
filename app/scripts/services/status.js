@@ -1,5 +1,6 @@
 'use strict';
 
+var angular = require('angular');
 angular.module('services.status', ['toastr'])
   .config(function (toastrConfig) {
     angular.extend(toastrConfig, {

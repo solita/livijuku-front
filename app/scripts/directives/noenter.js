@@ -1,5 +1,6 @@
 'use strict';
 
+var angular = require('angular');
 var $ = require('jquery');
 
 angular.module('jukufrontApp')

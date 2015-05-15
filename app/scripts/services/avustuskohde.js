@@ -1,5 +1,6 @@
 'use strict';
 
+var angular = require('angular');
 angular.module('services.avustuskohde', [])
 
   .factory('AvustuskohdeService', ['$http', function ($http) {

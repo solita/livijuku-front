@@ -6,6 +6,7 @@
     "bower": "^1.4.1",
     "browser-sync": "^2.7.1",
     "browserify": "^9.0.8",
+    "browserify-shim": "^3.8.6",
     "debowerify": "^1.2.1",
     "event-stream": "^3.3.0",
     "express": "^4.11.1",
@@ -55,10 +56,17 @@
     "prepublish": "bower install",
     "start": "gulp"
   },
+  "browser": {
+    "angular": "./bower_components/angular/angular.js"
+  },
+  "browserify-shim": {
+    "angular": "angular"
+  },
   "browserify": {
     "transform": [
       "debowerify",
-      "stringify"
+      "stringify",
+      "browserify-shim"
     ]
   }
 }

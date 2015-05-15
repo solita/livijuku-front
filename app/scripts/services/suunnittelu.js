@@ -1,5 +1,6 @@
 'use strict';
 
+var angular = require('angular');
 angular.module('services.suunnittelu', [])
 
   .factory('SuunnitteluService', ['$http', function ($http) {
