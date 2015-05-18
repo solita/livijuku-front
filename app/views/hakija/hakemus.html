@@ -33,6 +33,8 @@
         <p>
           <a href="api/hakemus/{{hakemusid}}/paatos/1/pdf" target="_blank"><span
             class="glyphicon glyphicon-file"></span> Avaa päätös (PDF)</a>
+          <a href="resources/OIKAISUVAATIMUSOSOITUS.docx" target="_blank"><span
+            class="glyphicon glyphicon-file"></span> Avaa oikaisuvaatimusosoitus (DOCX)</a>
         </p>
       </div>
     </div>
@@ -52,8 +54,8 @@
       <div class="row">
         <div class="col-md-12">
           <h3 ng-switch on="tyyppi">
-              <span ng-switch-when='AH0'>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ</span>
-              <span ng-switch-default>HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{vuosi}}</span>
+            <span ng-switch-when='AH0'>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ</span>
+            <span ng-switch-default>HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{vuosi}}</span>
             <a href=""><span
               class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
         </div>
@@ -63,7 +65,9 @@
                                name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
                                hakemus="hakemus"
                                ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
-        <jku-avustuskohde vuosi="vuosi" vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)" hakemustyyppi="tyyppi" kohde="avustuskohde"
+        <jku-avustuskohde vuosi="vuosi"
+                          vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)"
+                          hakemustyyppi="tyyppi" kohde="avustuskohde"
                           hakemus="hakemus"
                           name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
                           ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet">
@@ -251,6 +255,7 @@
         <div class="col-md-6">
           <h5 ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">Viimeisin muokkaaja</h5>
           <h5 ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">Hakija</h5>
+
           <p>{{hakemus.hakija}}</p>
         </div>
       </div>

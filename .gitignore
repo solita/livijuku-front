@@ -7,6 +7,7 @@ app/_pgbackup
 app/buildversion.html
 app/pinegrow.json
 app/resources/JUKU_allekirjoitusoikeus.doc
+app/resources/OIKAISUVAATIMUSOSOITUS.docx
 bower_components
 build-job-target
 dist
