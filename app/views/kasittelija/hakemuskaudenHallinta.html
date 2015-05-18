@@ -66,9 +66,9 @@
                              ng-model="hakemuskausi.avustushakemusAlkupvm" datepicker-options="{{dateOptions}}"
                              is-open="avustushakemusAlkupvmKalenteri"
                              ng-required="true"
-                             ui-validate="{validiPvm: 'validiPaivamaara($value)', ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.avustushakemusLoppupvm)'}"
+                             ui-validate="{ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.avustushakemusLoppupvm)'}"
                              ui-validate-watch=" 'hakemuskausi.avustushakemusLoppupvm' "
-                             show-button-bar="false" noenter/>
+                             show-button-bar="false" noenter readonly/>
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-default"
                                 ng-click="avustushakemusAlkupvmKalenteri = !avustushakemusAlkupvmKalenteri;avaaKalenteri($event)">
@@ -76,10 +76,6 @@
                         </button>
                       </span>
                     </p>
-                    <span class="help-block text-danger"
-                          ng-show="hakuaikaForm.avustushakemusalkupvm.$error.validiPvm && !hakuaikaForm.avustushakemusalkupvm.$pristine">
-                      Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
-                    </span>
                     <span class="help-block text-danger"
                           ng-show="hakuaikaForm.avustushakemusalkupvm.$error.ennenLoppuPvm && !hakuaikaForm.avustushakemusalkupvm.$pristine">
                       Päivämäärän tulee olla ennen loppumispäivämäärää.
@@ -95,19 +91,13 @@
                       <input name="avustushakemusloppupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
                              ng-model="hakemuskausi.avustushakemusLoppupvm" datepicker-options="{{dateOptions}}"
                              is-open="avustushakemusLoppupvmKalenteri" ng-required="true"
-                             ui-validate="{validiPvm: 'validiPaivamaara($value)'}"
-                             show-button-bar="false" noenter/>
+                             show-button-bar="false" noenter readonly/>
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-default"
                                 ng-click="avustushakemusLoppupvmKalenteri = !avustushakemusLoppupvmKalenteri;avaaKalenteri($event)">
                           <i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
                     </p>
-                    <span class="help-block text-danger"
-                          ng-show="hakuaikaForm.avustushakemusloppupvm.$error.validiPvm && !hakuaikaForm.avustushakemusloppupvm.$pristine">
-                      Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
-                    </span>
-
                     <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.avustushakemusLoppupvm |
                       date:'d.M.yyyy'}}</p>
                   </div>
@@ -131,19 +121,15 @@
                       <input name="maksatushakemus1alkupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
                              ng-model="hakemuskausi.maksatushakemus1Alkupvm" datepicker-options="{{dateOptions}}"
                              is-open="maksatushakemus1AlkupvmKalenteri" ng-required="true"
-                             ui-validate="{validiPvm: 'validiPaivamaara($value)', ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.maksatushakemus1Loppupvm)'}"
+                             ui-validate="{ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.maksatushakemus1Loppupvm)'}"
                              ui-validate-watch=" 'hakemuskausi.maksatushakemus1Loppupvm' "
-                             show-button-bar="false" noenter/>
+                             show-button-bar="false" noenter readonly/>
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-default"
                                 ng-click="maksatushakemus1AlkupvmKalenteri = !maksatushakemus1AlkupvmKalenteri;avaaKalenteri($event)">
                           <i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
                     </p>
-                    <span class="help-block text-danger"
-                          ng-show="hakuaikaForm.maksatushakemus1alkupvm.$error.validiPvm && !hakuaikaForm.maksatushakemus1alkupvm.$pristine">
-                      Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
-                    </span>
                     <span class="help-block text-danger"
                           ng-show="hakuaikaForm.maksatushakemus1alkupvm.$error.ennenLoppuPvm && !hakuaikaForm.maksatushakemus1alkupvm.$pristine">
                       Päivämäärän tulee olla ennen loppumispäivämäärää.
@@ -160,19 +146,13 @@
                              datepicker-popup="d.M.yyyy"
                              ng-model="hakemuskausi.maksatushakemus1Loppupvm" datepicker-options="{{dateOptions}}"
                              is-open="maksatushakemus1LoppupvmKalenteri" ng-required="true"
-                             ui-validate="{validiPvm: 'validiPaivamaara($value)'}"
-                             show-button-bar="false" noenter/>
+                             show-button-bar="false" noenter readonly/>
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-default"
                                 ng-click="maksatushakemus1LoppupvmKalenteri = !maksatushakemus1LoppupvmKalenteri;avaaKalenteri($event)">
                           <i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
                     </p>
-                    <span class="help-block text-danger"
-                          ng-show="hakuaikaForm.maksatushakemus1loppupvm.$error.validiPvm && !hakuaikaForm.maksatushakemus1loppupvm.$pristine">
-                      Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
-                    </span>
-
                     <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus1Loppupvm |
                       date:'d.M.yyyy'}}</p>
                   </div>
@@ -196,19 +176,15 @@
                       <input name="maksatushakemus2alkupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
                              ng-model="hakemuskausi.maksatushakemus2Alkupvm" datepicker-options="{{dateOptions}}"
                              is-open="maksatushakemus2AlkupvmKalenteri" ng-required="true"
-                             ui-validate="{validiPvm: 'validiPaivamaara($value)', ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.maksatushakemus2Loppupvm)'}"
+                             ui-validate="{ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.maksatushakemus2Loppupvm)'}"
                              ui-validate-watch=" 'hakemuskausi.maksatushakemus2Loppupvm' "
-                             show-button-bar="false" noenter/>
+                             show-button-bar="false" noenter readonly/>
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-default"
                                 ng-click="maksatushakemus2AlkupvmKalenteri = !maksatushakemus2AlkupvmKalenteri;avaaKalenteri($event)">
                           <i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
                     </p>
-                    <span class="help-block text-danger"
-                          ng-show="hakuaikaForm.maksatushakemus2alkupvm.$error.validiPvm && !hakuaikaForm.maksatushakemus2alkupvm.$pristine">
-                      Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
-                    </span>
                     <span class="help-block text-danger"
                           ng-show="hakuaikaForm.maksatushakemus2alkupvm.$error.ennenLoppuPvm && !hakuaikaForm.maksatushakemus2alkupvm.$pristine">
                       Päivämäärän tulee olla ennen loppumispäivämäärää.
@@ -225,19 +201,13 @@
                              datepicker-popup="d.M.yyyy"
                              ng-model="hakemuskausi.maksatushakemus2Loppupvm" datepicker-options="{{dateOptions}}"
                              is-open="maksatushakemus2LoppupvmKalenteri" ng-required="true"
-                             ui-validate="{validiPvm: 'validiPaivamaara($value)'}"
-                             show-button-bar="false" noenter/>
+                             show-button-bar="false" noenter readonly/>
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-default"
                                 ng-click="maksatushakemus2LoppupvmKalenteri = !maksatushakemus2LoppupvmKalenteri;avaaKalenteri($event)">
                           <i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
                     </p>
-                    <span class="help-block text-danger"
-                          ng-show="hakuaikaForm.maksatushakemus2loppupvm.$error.validiPvm && !hakuaikaForm.maksatushakemus2loppupvm.$pristine">
-                      Anna päivämäärä oikeassa formaatissa (pp.kk.vvvv).
-                    </span>
-
                     <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus2Loppupvm |
                       date:'d.M.yyyy'}}</p>
                   </div>

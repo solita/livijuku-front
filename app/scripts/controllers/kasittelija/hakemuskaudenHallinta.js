@@ -25,19 +25,19 @@ angular.module('jukufrontApp')
               vuosi: hakemuskausi.vuosi,
               tilatunnus: hakemuskausi.tilatunnus,
               avustushakemusKaynnissa: nykyhetki > Number(new Date(hakemus_ah0.hakuaika.alkupvm)),
-              avustushakemusAlkupvm: hakemus_ah0.hakuaika.alkupvm,
+              avustushakemusAlkupvm: new Date(hakemus_ah0.hakuaika.alkupvm),
               avustushakemusAlkupvmKalenteri: false,
-              avustushakemusLoppupvm: hakemus_ah0.hakuaika.loppupvm,
+              avustushakemusLoppupvm: new Date(hakemus_ah0.hakuaika.loppupvm),
               avustushakemusLoppupvmKalenteri: false,
               maksatushakemus1Kaynnissa: nykyhetki > Number(new Date(hakemus_mh1.hakuaika.alkupvm)),
-              maksatushakemus1Alkupvm: hakemus_mh1.hakuaika.alkupvm,
+              maksatushakemus1Alkupvm: new Date(hakemus_mh1.hakuaika.alkupvm),
               maksatushakemus1AlkupvmKalenteri: false,
-              maksatushakemus1Loppupvm: hakemus_mh1.hakuaika.loppupvm,
+              maksatushakemus1Loppupvm: new Date(hakemus_mh1.hakuaika.loppupvm),
               maksatushakemus1LoppupvmKalenteri: false,
               maksatushakemus2Kaynnissa: nykyhetki > Number(new Date(hakemus_mh2.hakuaika.alkupvm)),
-              maksatushakemus2Alkupvm: hakemus_mh2.hakuaika.alkupvm,
+              maksatushakemus2Alkupvm: new Date(hakemus_mh2.hakuaika.alkupvm),
               maksatushakemus2AlkupvmKalenteri: false,
-              maksatushakemus2Loppupvm: hakemus_mh2.hakuaika.loppupvm,
+              maksatushakemus2Loppupvm: new Date(hakemus_mh2.hakuaika.loppupvm),
               maksatushakemus2LoppupvmKalenteri: false,
 
               ah0: processHakemus(hakemus_ah0),
@@ -211,19 +211,6 @@ angular.module('jukufrontApp')
       haeHakemuskaudet();
     };
 
-    $scope.validiPaivamaara = function (pvm) {
-      var validiPvm = false;
-      var min_ts = Date.parse('2010-01-01');
-      var max_ts = Date.parse('2100-01-01');
-      var pvm_ts = null;
-      if (typeof pvm === 'undefined') return false;
-      if (typeof pvm === 'string') {
-        pvm_ts = Date.parse(pvm);
-      } else {
-        pvm_ts = Number(pvm);
-      }
-      return ((pvm_ts > min_ts) && (pvm_ts < max_ts) );
-    };
     haeHakemuskaudet();
   }
   ]);
