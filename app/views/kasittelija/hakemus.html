@@ -172,7 +172,9 @@
     </div>
     <div ng-show="sallittu('kasittely-hakemus')" class=" col-md-6">
       <button ng-show="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')"
-              data-ng-click="tarkastaHakemus()"
+              varmistusdialogi varmistusotsake="Hakemuksen tarkastaminen"
+              varmistusteksti="Oletko varma, että hakuat merkitä hakemuksen tarkastetuksi? Hakemuksen tarkastettu-merkintää ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa tarkastamisen jälkeen."
+              operaatio="tarkastaHakemus()"
               class="pull-right btn btn-success">Merkitse tarkastetuksi
       </button>
       <button ng-show="(hakemus.hakemustilatunnus == 'V' || hakemus.hakemustilatunnus == 'TV')"

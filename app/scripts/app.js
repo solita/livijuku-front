@@ -117,6 +117,7 @@ require('./directives/jkuAvustusluokkaPanel');
 require('./directives/jkuAvustuskohde');
 require('./directives/noenter');
 require('./directives/selectonclick');
+require('./directives/varmistusdialogi');
 require('./services/auth');
 require('./services/avustuskohde');
 require('./services/common');

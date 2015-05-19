@@ -312,7 +312,7 @@
           <div ng-show="sallittu('allekirjoita-oma-hakemus')">
             <button
               ng-show="(hakemus.hakemustilatunnus == 'K' && allekirjoitusliitetty) || (hakemus.hakemustilatunnus == 'T0' && allekirjoitusliitetty)"
-              data-ng-click="lahetaHakemusTaiTaydennys(hakemus.hakemustilatunnus)"
+              varmistusdialogi varmistusotsake="Hakemuksen lähettäminen" varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen." operaatio="lahetaHakemusTaiTaydennys(hakemus.hakemustilatunnus)"
               class="pull-right btn btn-success">Tallenna ja lähetä hakemus
             </button>
             <button
