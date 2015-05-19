@@ -148,13 +148,21 @@
     <div class="col-md-6">
       <h5>Päivämäärä</h5>
 
-      <p>{{aikaleima | date:'dd.MM.yyyy'}}</p>
+      <p
+        ng-show="((hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && (hakemus.muokkaaja!=null))">
+        {{hakemus.muokkausaika |
+        date:'dd.MM.yyyy'}}</p>
+
+      <p ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">{{hakemus.lahetysaika |
+        date:'dd.MM.yyyy'}}</p>
     </div>
     <div class="col-md-6">
       <h5 ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">Viimeisin muokkaaja</h5>
       <h5 ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">Hakija</h5>
 
-      <p>{{hakemus.hakija}}</p>
+      <p ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">{{hakemus.muokkaaja}}</p>
+
+      <p ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">{{hakemus.lahettaja}}</p>
     </div>
   </div>
   <div class="row">

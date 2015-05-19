@@ -31,7 +31,6 @@ angular.module('jukufrontApp')
             $scope.hakemus = data;
             $scope.hakija = _.find($rootScope.organisaatiot, {'id': data.organisaatioid}).nimi;
             $scope.pankkitilinumero = _.find($rootScope.organisaatiot, {'id': data.organisaatioid}).pankkitilinumero;
-            $scope.aikaleima = new Date();
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.hae(' + $scope.hakemusid + ')', data);
