@@ -3,6 +3,7 @@
 .idea
 .sass-cache
 .tmp
+.gitattributes
 app/_pgbackup
 app/buildversion.html
 app/pinegrow.json
