@@ -102,7 +102,8 @@ angular
   }])
   .directive('jukuHeader', require('components/header'))
   .directive('jukuSidebar', require('components/sidebar'))
-  .directive('jukuFooter', require('components/footer'));
+  .directive('jukuFooter', require('components/footer'))
+  .directive('jukuVarmistusdialogi', require('components/varmistusdialogi'));
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemukset');
