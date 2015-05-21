@@ -28,7 +28,7 @@
                 hakemuskausi
               </button>
             </p>
-            <p ng-hide="hakemuskausi.tilatunnus=='A' && hakemuskausi.asetusLadattu && sallittu('modify-hakemuskausi')">
+            <p ng-hide="(hakemuskausi.tilatunnus=='K' || (hakemuskausi.tilatunnus=='A' && hakemuskausi.asetusLadattu && sallittu('modify-hakemuskausi')))">
               <button class="btn btn-success btn-lg" disabled>Käynnistä
                 hakemuskausi
               </button>
