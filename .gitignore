@@ -16,3 +16,5 @@ target
 upstream
 rev-manifest.json
 *.log
+
+livijuku-front-e2e-tests/target
