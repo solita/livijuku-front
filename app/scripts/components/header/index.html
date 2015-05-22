@@ -11,7 +11,7 @@
       </button>
     </div>
 
-    <div class="header__content" ng-class="{'is-visible': !$root.isCollapsed}">
+    <div class="header__content clearfix" ng-class="{'is-visible': !$root.isCollapsed}">
       <ul class="nav navbar-nav">
 
 
@@ -33,10 +33,10 @@
       </ul>
 
       <ul class="nav navbar-nav pull-right">
-        <li class="dropd  own" dropdown>
+        <li class="dropdown" dropdown>
           <a href class="dropdown-toggle navbar__user" dropdown-toggle>
-            <div class="navbar__user__name">
-              {{user.etunimi}} {{user.sukunimi}}
+            <div class="navbar__user__name" ng-if="fullName(user)">
+              {{fullName(user)}}
             </div>
             <div class="navbar__user__org">
               {{$root.userOrganisaatio}}

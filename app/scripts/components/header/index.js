@@ -13,6 +13,15 @@ function headerController($scope, $rootScope, $route) {
       return $route.current.regexp.test(path);
     }
     return false;
+
+  $scope.fullName = function(user) {
+    if(!user) {
+      return null;
+    }
+    if(!(user.etunimi && user.sukunimi)) {
+      return null;
+    }
+    return user.etunimi + ' ' + user.sukunimi;
   };
 }
 

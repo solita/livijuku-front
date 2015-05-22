@@ -13,19 +13,42 @@
     color: #777
 
 .header li .dropdown-menu
-  margin-top 0.25em
-  border-radius 3px
+  margin-top: 0.25em
+  border-radius: 3px
 
 // Bootstrap overwrites
 .nav>li>a:focus, .nav>li>a:hover
   background: transparent
 
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover
-  background transparent
+  background: transparent
 
 .navbar-toggle .icon-bar
-  background #fff
+  background: #fff
+
+.header
+  .container
+    line-height: height.navbar
+  .dropdown-toggle
+    padding: 0
+  .nav
+    height: 100%
+  .header__content
+    height: height.navbar
+  .dropdown
+    height: height.navbar
+  .dropdown-toggle
+    line-height: normal
+    vertical-align: middle
+    display: inline-block
+
 
 @media (max-width: 768px)
   .header__content
-    display none
+    display: none
+
+.header
+  .navbar__user
+    .navbar__user__name + .navbar__user__org
+      font-size 0.8em
+      color #eee
