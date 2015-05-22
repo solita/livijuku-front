@@ -27,8 +27,10 @@ describe('Selenium Test Case', function () {
   }
 
   function unhideFileInputs() {
-    browser.executeScript(function () {
-      $('input[type="file"]').removeClass('hidden-file-input');
+    browser.executeScript(function (vuosi) {
+      angular.element(document.querySelector('body')).append(
+        angular.element("<form action='api/hakemuskausi/" + vuosi + "/hakuohje' method=PUT>" +
+        "<input type=file /><input type=submit></form>"));
     });
   }
 
@@ -62,15 +64,16 @@ describe('Selenium Test Case', function () {
   ' -> Hakuohjeen lisääminen onnistuu.', function () {
 
     browser.get("/katri.html");
-    var kayttajanNimi = element(by.xpath('//li[' + hasClass("navbaruser") + ']/p[1]'));
+    var kayttajanNimi = element(by.xpath('//div[' + hasClass("navbar__user__name") + ']'));
     expect(kayttajanNimi.getText()).toContain('Katri Käsittelijä');
 
     element(by.partialLinkText("Hakemuskaudet")).click();
 
     var fileToUpload = 'test.pdf';
     var absolutePath = path.resolve(__dirname, fileToUpload);
-    unhideFileInputs();
+    unhideFileInputs(2016);
     browser.$('input[type="file"]').sendKeys(absolutePath);
+    browser.$('input[type="submit"]').click();
 
     var infoBox = waitForInfoBox('Hakuohjeen: test.pdf lataus vuodelle:2016 onnistui.');
 
