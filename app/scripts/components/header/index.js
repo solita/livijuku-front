@@ -1,6 +1,6 @@
 'use strict';
 
-function headerController($scope, $rootScope, $route) {
+function headerController($scope, $rootScope, $location) {
   $scope.sallittu = require('utils/hasPermission');
   $rootScope.isCollapsed = false;
 
@@ -8,11 +8,16 @@ function headerController($scope, $rootScope, $route) {
     $rootScope.isCollapsed = !$rootScope.isCollapsed;
   };
 
-  $scope.isActive = function (path) {
-    if ($route.current && $route.current.regexp) {
-      return $route.current.regexp.test(path);
+  $scope.isActive = function(route) {
+    if (route.substr(0, 13) == '/k/hakemukset') {
+      return ((route.substr(0, 13) == $location.path().substr(0, 13)) || ('/k/hakemus/' == $location.path().substr(0, 11)) || ('/k/suunnittelu/' == $location.path().substr(0, 15))|| ('/k/paatos/' == $location.path().substr(0, 10)));
+    // 'Omat hakemukset' aktiiviseksi
+    } else if (route.substr(0, 13) == '/h/hakemukset') {
+      return (('/h/hakemus/' == $location.path().substr(0, 11)) ||('/h/maksatushakemus/' == $location.path().substr(0, 19))||('/h/hakemukset' == $location.path().substr(0, 13)));
+    } else {
+      return route === $location.path();
     }
-    return false;
+  };
 
   $scope.fullName = function(user) {
     if(!user) {
@@ -25,7 +30,7 @@ function headerController($scope, $rootScope, $route) {
   };
 }
 
-headerController.$inject = ['$scope', '$rootScope', '$route'];
+headerController.$inject = ['$scope', '$rootScope', '$location'];
 
 module.exports = function() {
   return {
