@@ -152,6 +152,7 @@ angular.module('jukufrontApp')
         $scope.tallennaHakemus();
         $scope.$broadcast('show-errors-check-validity');
         if ($scope.hakemusForm.$valid) {
+          $scope.hakemusForm.$setPristine();
           HakemusService.lahetaHakemus($scope.hakemusid)
             .success(function () {
               StatusService.ok('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', 'Lähettäminen onnistui.');
@@ -167,6 +168,7 @@ angular.module('jukufrontApp')
         $scope.tallennaHakemus();
         $scope.$broadcast('show-errors-check-validity');
         if ($scope.hakemusForm.$valid) {
+          $scope.hakemusForm.$setPristine();
           HakemusService.lahetaTaydennys($scope.hakemusid)
             .success(function () {
               StatusService.ok('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', 'Täydennyksen lähettäminen onnistui.');

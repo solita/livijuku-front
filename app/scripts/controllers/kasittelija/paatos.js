@@ -54,6 +54,7 @@ angular.module('jukufrontApp')
         }
         PaatosService.tallenna($scope.hakemusid, paatosdata)
           .success(function () {
+            paatosForm.$setPristine();
             StatusService.ok('PaatosService.tallenna()', 'Tallennus onnistui.');
             PaatosService.hyvaksy($scope.hakemusid)
               .success(function () {

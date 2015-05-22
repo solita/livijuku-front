@@ -60,7 +60,7 @@
 
         <p>Päätösteksti:</p>
 
-        <form name="paatosForm">
+        <form name="paatosForm" juku-poistumisvaroitus="">
           <textarea name="paatosteksti" class="animate msd-elastic: \n;" ng-model="paatos.selite" ng-required="true"></textarea>
           <span class="help-block text-danger"
                 ng-show="paatosForm.paatosteksti.$error.required">
