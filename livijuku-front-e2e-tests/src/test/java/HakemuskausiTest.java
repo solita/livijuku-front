@@ -141,7 +141,7 @@ public class HakemuskausiTest {
 
   private void revertTo() {
     try {
-      httpGet("http://juku:juku@127.0.0.1:50000/juku/testing.revert_to?restorepoint="+ BEFORE_TEST_HAKEMUSKAUSI);
+      httpGet(oracleServiceUrl()+"/juku/testing.revert_to?restorepoint="+ BEFORE_TEST_HAKEMUSKAUSI);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
