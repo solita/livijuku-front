@@ -103,6 +103,7 @@ angular
   .directive('jukuHeader', require('components/header'))
   .directive('jukuSidebar', require('components/sidebar'))
   .directive('jukuFooter', require('components/footer'))
+ // .directive('jukuPoistumisvaroitus', require('components/poistumisvaroitus'))
   .directive('jukuVarmistusdialogi', require('components/varmistusdialogi'));
 
 require('./controllers/hakija/hakemukset');
@@ -118,7 +119,6 @@ require('./directives/jkuAvustusluokkaPanel');
 require('./directives/jkuAvustuskohde');
 require('./directives/noenter');
 require('./directives/selectonclick');
-require('./directives/varmistusdialogi');
 require('./services/auth');
 require('./services/avustuskohde');
 require('./services/common');
