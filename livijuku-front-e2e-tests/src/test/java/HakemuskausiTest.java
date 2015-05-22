@@ -18,7 +18,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -28,7 +30,7 @@ import com.paulhammant.ngwebdriver.ByAngular;
 public class HakemuskausiTest {
 
   public static final String BEFORE_TEST_HAKEMUSKAUSI = "bftest";
-  private FirefoxDriver driver;
+  private RemoteWebDriver driver;
   private ByAngular ng;
 
   enum User {
@@ -60,7 +62,11 @@ public class HakemuskausiTest {
   @BeforeTest
   public void setup() {
     createRestorePoint();
-    driver = new FirefoxDriver();
+    if (System.getProperty("webdriver.chrome.driver")!=null) {
+      driver = new ChromeDriver();
+    } else {
+      driver = new FirefoxDriver();
+    }
     driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
     login(User.KATRI);
     ng = new ByAngular(driver);
@@ -91,7 +97,9 @@ public class HakemuskausiTest {
   }
 
   private String oracleServiceUrl() {
-    return "http://juku:juku@127.0.0.1:50000/juku/testing.create_restorepoint?restorepoint="+BEFORE_TEST_HAKEMUSKAUSI;
+    String oracleWSURL = System.getProperty("oraclews.url", "http://juku:juku@127.0.0.1:50000");
+    return oracleWSURL + "/juku/testing.create_restorepoint?restorepoint="
+      + BEFORE_TEST_HAKEMUSKAUSI;
   }
 
   private void login(User user) {
