@@ -85,7 +85,7 @@ EofProperties
 
 runTests() {
   # run the tests
-  DB_HTTP_SERVICE=$1 npm run citeste2e
+  ./teste2e.sh '-Doraclews.url=http://juku:juku@letto:50000'
 }
 
 fetchUpstreamArtifacts
