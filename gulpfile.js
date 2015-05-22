@@ -268,7 +268,7 @@ gulp.task('webdriver_update', protractor.webdriver_update);
 var buildTasks = ['styles', 'templates', 'assets', 'version', 'copy'];
 
 // TODO poista revisioimattomat
-gulp.task('revision', buildTasks, function() {
+gulp.task('revision', buildTasks.concat(['scripts']), function() {
   return gulp.src(paths.revision.source, {base: paths.revision.base})
       .pipe(rev())
       .pipe(gulp.dest(paths.revision.destination))
