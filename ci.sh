@@ -85,7 +85,7 @@ EofProperties
 
 runTests() {
   # run the tests
-  ./teste2e.sh '-Doraclews.url=http://juku:juku@letto:50000'
+  ./teste2e.sh "-Doraclews.url=$DB_HTTP_RESTORE_SERVICE"
 }
 
 fetchUpstreamArtifacts
