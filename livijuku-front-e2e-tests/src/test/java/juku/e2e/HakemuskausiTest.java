@@ -1,7 +1,8 @@
 package juku.e2e;
 
+import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
+import static java.lang.Thread.sleep;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.testng.AssertJUnit.assertTrue;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
@@ -29,28 +31,44 @@ public class HakemuskausiTest extends TestBase {
 
     postHakuohje(2016);
 
-    login(driver, User.KATRI);
+    login(User.KATRI);
 
-    boolean kaynnistaNapinTilaEnnen = driver.findElement(By.xpath(
-      String.format("//button[%s]", containsText("Käynnistä hakemuskausi")))).isEnabled();
+    By kaynnistaHakemuskausiBy = By.xpath(
+      String.format("//button[%s]", containsText("Käynnistä hakemuskausi")));
+    boolean kaynnistaNapinTilaEnnen = findElement(kaynnistaHakemuskausiBy).isEnabled();
     assertTrue("Käynnistä hakemuskausi == enabled", kaynnistaNapinTilaEnnen);
 
     // Aseta avustuskauden alkupäivä 1.1.
-    driver.findElementByLinkText("Muokkaa hakuaikoja").click();
-    WebElement avustushakemuskaudenAlkupv = driver.findElementByCssSelector(
+    findElementByLinkText("Muokkaa hakuaikoja").click();
+    WebElement avustushakemuskaudenAlkupv = findElementByCssSelector(
       ".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1) > span:nth-child(3) > button:nth-child(1)");
     avustushakemuskaudenAlkupv.click();
-    WebElement vuosikuukausiValitsin = driver.findElementByCssSelector(".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(2) > button");
+    WebElement vuosikuukausiValitsin = findElementByCssSelector(
+      ".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(2) > button");
     vuosikuukausiValitsin.click();
-    WebElement kuukausi01 = driver.findElementByCssSelector(".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > button");
+    WebElement kuukausi01 = findElementByCssSelector(
+      ".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > button");
     kuukausi01.click();
-    WebElement paiva01 = driver.findElementByCssSelector(
+    WebElement paiva01 = findElementByCssSelector(
       ".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(5) > button");
     paiva01.click();
-    driver.findElementByLinkText("Tallenna hakuajat").click();
+    findElementByLinkText("Tallenna hakuajat").click();
+    waitForAngularRequestsToFinish(driver());
 
-    driver.findElement(By.xpath(
-      String.format("//button[%s]", containsText("Käynnistä hakemuskausi")))).click();
+    findElement(kaynnistaHakemuskausiBy).click();
+    waitForAngularRequestsToFinish(driver());
+
+    boolean kaynnistaNappiNakyy=true;
+    for(int i = 0; i<5;i++) {
+      sleep(500);
+      try {
+        findElement(kaynnistaHakemuskausiBy);
+      } catch (NoSuchElementException e) {
+        kaynnistaNappiNakyy=false;
+        break;
+      }
+    }
+    assertThat("Käynnistä hakemuskausi jäi näkyviin vaikka kausi avattiin.", kaynnistaNappiNakyy);
 
     // TODO assertoi, ettei käynnistä hakemuskausi nappulaa enää ole näytöllä
 
@@ -60,12 +78,11 @@ public class HakemuskausiTest extends TestBase {
 
   @Test
   public void hakijaaInformoidaanHakemuksenTilasta() {
-    login(driver, User.HARRI);
-    WebElement we = driver.findElementByXPath(String.format("//*[%s]", containsText("Avustuskausi")));
-    assertThat(we.getText(), containsString("Avustuskausi"));
+    login(User.HARRI);
+    // Assertoi tila keskeneräinen
+    WebElement we = findElementByXPath(String.format("//span[%s and %s]", containsText("Keskeneräinen"), hasClass("label-warning")));
     // Avaa hakemus
     we.click();
-    // Assertoi tila keskeneräinen
 
     // Lähetä hakemus
     // Assertoi tila vireillä
