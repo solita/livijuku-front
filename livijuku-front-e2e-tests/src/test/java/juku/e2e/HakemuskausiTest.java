@@ -18,7 +18,6 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
@@ -33,61 +32,93 @@ public class HakemuskausiTest extends TestBase {
 
     login(User.KATRI);
 
-    By kaynnistaHakemuskausiBy = By.xpath(
-      String.format("//button[%s]", containsText("Käynnistä hakemuskausi")));
-    boolean kaynnistaNapinTilaEnnen = findElement(kaynnistaHakemuskausiBy).isEnabled();
+    boolean kaynnistaNapinTilaEnnen =
+      findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi")).isEnabled();
     assertTrue("Käynnistä hakemuskausi == enabled", kaynnistaNapinTilaEnnen);
 
     // Aseta avustuskauden alkupäivä 1.1.
-    findElementByLinkText("Muokkaa hakuaikoja").click();
-    WebElement avustushakemuskaudenAlkupv = findElementByCssSelector(
-      ".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1) > span:nth-child(3) > button:nth-child(1)");
-    avustushakemuskaudenAlkupv.click();
-    WebElement vuosikuukausiValitsin = findElementByCssSelector(
-      ".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(2) > button");
-    vuosikuukausiValitsin.click();
-    WebElement kuukausi01 = findElementByCssSelector(
-      ".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > button");
-    kuukausi01.click();
-    WebElement paiva01 = findElementByCssSelector(
-      ".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1) > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(5) > button");
-    paiva01.click();
-    findElementByLinkText("Tallenna hakuajat").click();
+    asetaAvustuskaudenAlkupaiva0101();
+
+    findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi")).click();
     waitForAngularRequestsToFinish(driver());
 
-    findElement(kaynnistaHakemuskausiBy).click();
-    waitForAngularRequestsToFinish(driver());
-
-    boolean kaynnistaNappiNakyy=true;
-    for(int i = 0; i<5;i++) {
-      sleep(500);
+    boolean kaynnistaNappiNakyy = true;
+    for (int i = 0; i < 25; i++) {
+      sleep(100);
       try {
-        findElement(kaynnistaHakemuskausiBy);
+        findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi"));
       } catch (NoSuchElementException e) {
-        kaynnistaNappiNakyy=false;
+        kaynnistaNappiNakyy = false;
         break;
       }
     }
     assertThat("Käynnistä hakemuskausi jäi näkyviin vaikka kausi avattiin.", kaynnistaNappiNakyy);
 
-    // TODO assertoi, ettei käynnistä hakemuskausi nappulaa enää ole näytöllä
-
     // Päivitetään testien restorepoint tähän, jotta kautta ei tarvitse avata muissa testeissä.
     createRestorePoint(TEST_RESTORE_POINT);
+  }
+
+  private void asetaAvustuskaudenAlkupaiva0101() {
+    findElementByLinkText("Muokkaa hakuaikoja").click();
+    String datepicker = ".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)";
+
+    WebElement avustushakemuskaudenAlkupv = findElementByCssSelector(
+      datepicker + " > span:nth-child(3) > button:nth-child(1)");
+    avustushakemuskaudenAlkupv.click();
+    WebElement vuosikuukausiValitsin = findElementByCssSelector(
+      datepicker
+        + " > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(2) > button");
+    vuosikuukausiValitsin.click();
+    WebElement kuukausi01 = findElementByCssSelector(
+      datepicker
+        + " > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > button");
+    kuukausi01.click();
+    WebElement paiva01 = findElementByCssSelector(
+      datepicker
+        + " > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(5) > button");
+    paiva01.click();
+
+    findElementByLinkText("Tallenna hakuajat").click();
+    waitForAngularRequestsToFinish(driver());
   }
 
   @Test
   public void hakijaaInformoidaanHakemuksenTilasta() {
     login(User.HARRI);
     // Assertoi tila keskeneräinen
-    WebElement we = findElementByXPath(String.format("//span[%s and %s]", containsText("Keskeneräinen"), hasClass("label-warning")));
+    WebElement we = findElementByXPath("//span[%s and %s]", containsText("Keskeneräinen"), hasClass("label-warning"));
     // Avaa hakemus
     we.click();
 
     // Lähetä hakemus
-    // Assertoi tila vireillä
+    WebElement olenLiittanyt = findElementByXPath("//input[@type='checkbox']");
+    olenLiittanyt.click();
+    findElementByXPath("//button[%s]", containsText("Tallenna ja lähetä hakemus")).click();
+
+    WebElement oletkoVarmaKylla = findElementByXPath("//button[%s]", containsText("Kyllä"));
+    oletkoVarmaKylla.click();
+
+    // Assertoi tila vireillä (find failaa, jos ei löydä)
+    findElementByXPath("//span[%s and %s]", containsText("Vireillä"), hasClass("label-danger"));
+
     // Kirjaa sisään käsittelijä
+    login(User.KATRI);
+
     // Ota hakemus käsittelyyn
+//    WebElement vireillaLaatikko =
+//      findElementByXPath("//div[div[%s]]/following-sibling::div/span[%s and %s]",
+//                           containsText("1/"),
+//                           containsText("Vireillä"),
+//                           hasClass("label-danger"));
+//    vireillaLaatikko.click();
+//
+//    WebElement helsinginSeudunVireilla =
+//      findElementByXPath("//tr[td[%s]]/following-sibling::td/span[%s and %s]",
+//                         containsText("Helsingin seudun liikenne"),
+//                         containsText("Vireillä"),
+//                         hasClass("label-danger"));
+//    helsinginSeudunVireilla.click();
+
     // Kirjaa sisään hakija
     // Assertoi tila käsittelyssö
     // Kirjaa sisään käsittelijä

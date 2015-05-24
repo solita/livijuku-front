@@ -146,7 +146,7 @@ public class TestBase {
 
   String hasClass(String classname) {
     // http://stackoverflow.com/questions/8808921/selecting-a-css-class-with-xpath
-    return "contains(concat(\" \", normalize-space(@class), \" \"), \" " + classname + " \")";
+    return "contains(concat(' ', normalize-space(@class), ' '), ' " + classname + " ')";
   }
 
   String containsText(String text) {
@@ -188,5 +188,9 @@ public class TestBase {
 
   public WebElement findElementByXPath(String xpath) {
     return driver().findElementByXPath(xpath);
+  }
+
+  public WebElement findElementByXPath(String xpath, Object... n) {
+    return driver().findElementByXPath(String.format(xpath,n));
   }
 }
