@@ -10,7 +10,7 @@ function ModalInstanceCtrl($scope, $modalInstance) {
   };
 }
 
-ModalInstanceCtrl.inject =  ['$scope', '$modalInstance'];
+ModalInstanceCtrl.$inject =  ['$scope', '$modalInstance'];
 
 module.exports = function ($modal) {
   return {
