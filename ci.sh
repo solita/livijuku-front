@@ -15,7 +15,7 @@ else
   DB_CREATE_ID=${USER}_front
 fi
 
-DB_HTTP_RESTORE_SERVICE=${DB_HTTP_RESTORE_SERVICE:-"http://juku_${DB_CREATE_ID}:juku@letto.solita.fi:50000/juku_${DB_CREATE_ID}"}
+DB_HTTP_RESTORE_SERVICE=${DB_HTTP_RESTORE_SERVICE:-"http://juku_${DB_CREATE_ID}:juku@letto.solita.fi:50000/juku/"}
 
 fetchUpstreamArtifacts () {
   # Jos upstream paketit puuttuvat, noudetaan ne
