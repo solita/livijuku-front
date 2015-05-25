@@ -223,7 +223,7 @@ gulp.task('version', ['templates'], function() {
 
   fs.writeFileSync(
     paths.version.destination,
-    today.toISOString() + ' (' + os.hostname() + ')');
+    ' Versio: 1.0.0 ');
 });
 
 gulp.task('watch', ['scripts'], function() {
