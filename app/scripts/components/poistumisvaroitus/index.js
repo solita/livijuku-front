@@ -19,8 +19,6 @@ module.exports = function ($modal, $location) {
 
       window.onbeforeunload = function () {
         if (form.$dirty) {
-          console.log('DIRTY1');
-          // return $scope.confirmMessageWindow || $scope.confirmMessage;
         }
       };
 
@@ -29,7 +27,6 @@ module.exports = function ($modal, $location) {
         if (!form.$dirty) {
           return
         }
-        console.log('DIRTY2');
         event.preventDefault();
         var modalInstance = $modal.open({
           animation: false,
