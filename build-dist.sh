@@ -4,5 +4,6 @@
   export NODE_PATH=app/scripts
   npm install
   export NODE_ENV=production
+  rm -rf dist
   npm run build
 )

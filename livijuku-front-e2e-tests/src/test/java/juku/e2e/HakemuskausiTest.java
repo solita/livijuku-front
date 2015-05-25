@@ -93,7 +93,9 @@ public class HakemuskausiTest extends TestBase {
     // Lähetä hakemus
     WebElement olenLiittanyt = findElementByXPath("//input[@type='checkbox']");
     olenLiittanyt.click();
+    waitForAngularRequestsToFinish(driver());
     findElementByXPath("//button[%s]", containsText("Tallenna ja lähetä hakemus")).click();
+    waitForAngularRequestsToFinish(driver());
 
     WebElement oletkoVarmaKylla = findElementByXPath("//button[%s]", containsText("Kyllä"));
     oletkoVarmaKylla.click();
@@ -105,22 +107,23 @@ public class HakemuskausiTest extends TestBase {
     login(User.KATRI);
 
     // Ota hakemus käsittelyyn
-//    WebElement vireillaLaatikko =
-//      findElementByXPath("//div[div[%s]]/following-sibling::div/span[%s and %s]",
-//                           containsText("1/"),
-//                           containsText("Vireillä"),
-//                           hasClass("label-danger"));
-//    vireillaLaatikko.click();
-//
-//    WebElement helsinginSeudunVireilla =
-//      findElementByXPath("//tr[td[%s]]/following-sibling::td/span[%s and %s]",
-//                         containsText("Helsingin seudun liikenne"),
-//                         containsText("Vireillä"),
-//                         hasClass("label-danger"));
-//    helsinginSeudunVireilla.click();
+    WebElement vireillaLaatikko =
+      findElementByXPath("//span[%s and %s]",
+                           containsText("Vireillä"),
+                           hasClass("label-danger"));
+    vireillaLaatikko.click();
+
+    WebElement helsinginSeudunVireilla =
+      findElementByXPath("//span[%s and %s]",
+                         containsText("Vireillä"),
+                         hasClass("label-danger"));
+    helsinginSeudunVireilla.click();
 
     // Kirjaa sisään hakija
-    // Assertoi tila käsittelyssö
+    login(User.HARRI);
+    // Assertoi tila käsittelyssä
+    findElementByXPath("//span[%s and %s]", containsText("Vireillä"), hasClass("label-danger"));
+
     // Kirjaa sisään käsittelijä
     // Palauta hakemus täydennettäväksi
     // Kirjaa sisään hakija
@@ -139,7 +142,7 @@ public class HakemuskausiTest extends TestBase {
   private void postHakuohje(int vuosi) throws IOException {
     CloseableHttpClient httpclient = HttpClients.createDefault();
 
-    HttpPost httpPost = new HttpPost(baseUrl() + "api/hakemuskausi/" + vuosi + "/hakuohje");
+    HttpPost httpPost = new HttpPost(baseUrl() + "/api/hakemuskausi/" + vuosi + "/hakuohje");
     httpPost.addHeader("oam-remote-user", User.KATRI.getLogin());
     httpPost.addHeader("oam-user-organization", User.KATRI.getOrganization());
     httpPost.addHeader("oam-groups", User.KATRI.getGroup());

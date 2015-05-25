@@ -36,7 +36,6 @@ public class TestBase {
     if(driver == null) {
       driver = createDriver();
     }
-
     return driver;
   }
 
@@ -46,7 +45,8 @@ public class TestBase {
       drv = new ChromeDriver();
     } else {
       FirefoxProfile fp = new FirefoxProfile();
-      fp.setPreference("webdriver.load.strategy", "unstable"); // As of 2.19. from 2.9 - 2.18 use 'fast'
+      // Poistettu käytöstä, kun aiheutti välillä kahden selaimen aukeamisen yhden sijaan
+      //fp.setPreference("webdriver.load.strategy", "unstable"); // As of 2.19. from 2.9 - 2.18 use 'fast'
       drv = new FirefoxDriver(fp);
     }
     drv.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
@@ -106,7 +106,7 @@ public class TestBase {
 
   void createRestorePoint(String restorepoint) {
     try {
-      httpGet(oracleServiceUrl() + "/juku/testing.create_restorepoint?restorepoint="
+      httpGet(oracleServiceUrl() + "testing.create_restorepoint?restorepoint="
                 + restorepoint);
       sleep(500);
     } catch (IOException | InterruptedException e) {
@@ -133,7 +133,7 @@ public class TestBase {
   }
 
   private String oracleServiceUrl() {
-    return System.getProperty("oraclews.url", "http://juku:juku@127.0.0.1:50000");
+    return System.getProperty("oraclews.url", "http://juku:juku@127.0.0.1:50000/juku/");
   }
 
   void login(User user) {
@@ -154,7 +154,7 @@ public class TestBase {
   }
 
   String baseUrl() {
-    return System.getProperty("baseurl", "http://localhost:9000/");
+    return System.getProperty("baseurl", "http://localhost:9000");
   }
 
   private void setUser(User user) {
@@ -166,7 +166,7 @@ public class TestBase {
 
   private void revertTo(String restorePoint) {
     try {
-      httpGet(oracleServiceUrl() + "/juku/testing.revert_to?restorepoint=" + restorePoint);
+      httpGet(oracleServiceUrl() + "testing.revert_to?restorepoint=" + restorePoint);
       sleep(500);
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
