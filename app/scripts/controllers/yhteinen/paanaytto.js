@@ -39,11 +39,11 @@ angular.module('jukufrontApp')
         )
           .
           error(function (data) {
-            statusService.virhe('KayttajaService.hae()', data);
+            statusService.virhe('KayttajaService.hae()', data.message);
           });
       })
       .error(function (data) {
-        statusService.virhe('OrganisaatioService.hae()', data);
+        statusService.virhe('OrganisaatioService.hae()', data.message);
       });
 
       common.bindPromiseToScope(avustusKohdeService.luokittelu(), $rootScope, 'avustuskohdeLuokat',

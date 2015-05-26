@@ -92,7 +92,7 @@ angular.module('jukufrontApp')
           $scope.kasiteltavatMaksatus2hakemukset = laskeLukumaara('MH2', data);
         })
         .error(function (data) {
-          StatusService.virhe('OrganisaatioService.hae(): ' + data);
+          StatusService.virhe('OrganisaatioService.hae(): ' + data.message);
         });
     }
 

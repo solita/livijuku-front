@@ -64,7 +64,7 @@ angular.module('jukufrontApp')
           $scope.muokkaaHakuaikojaVuosi = null;
         })
         .error(function (data) {
-          StatusService.virhe('HakemuskausiService.haeSummary()', data);
+          StatusService.virhe('HakemuskausiService.haeSummary()', data.message);
         });
     }
 
@@ -123,7 +123,7 @@ angular.module('jukufrontApp')
           haeHakemuskaudet();
         })
         .error(function (data) {
-          StatusService.virhe('HakemuskausiService.luoUusi(' + vuosi + ')', data);
+          StatusService.virhe('HakemuskausiService.luoUusi(' + vuosi + ')', data.type+':'+data.message);
         });
     };
 
@@ -165,7 +165,7 @@ angular.module('jukufrontApp')
             haeHakemuskaudet();
           })
           .error(function (data) {
-            StatusService.virhe('HakemuskausiService.saveHakuajat(' + vuosi + ')', data);
+            StatusService.virhe('HakemuskausiService.saveHakuajat(' + vuosi + ')', data.message);
           });
       } else {
         StatusService.virhe('HakemuskausiService.saveHakuajat()', 'Korjaa lomakkeen virheet ennen tallentamista.');
@@ -206,7 +206,7 @@ angular.module('jukufrontApp')
           haeHakemuskaudet();
         }).error(function (data, status, headers, config) {
           console.log('Asetuksen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui. Paluuarvo: ' + data);
-          StatusService.virhe('Asetuksen lataus: ' + config.file.name + ' vuodelle:' + vuosi, 'Asetuksen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui:' + data);
+          StatusService.virhe('Asetuksen lataus: ' + config.file.name + ' vuodelle:' + vuosi, 'Asetuksen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui:' + data.message);
         });
       }
       haeHakemuskaudet();

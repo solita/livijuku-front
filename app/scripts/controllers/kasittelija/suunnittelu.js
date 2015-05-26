@@ -24,7 +24,7 @@ angular.module('jukufrontApp')
           $scope.jaettavaraha = $scope.maararaha + $scope.ylijaama;
         })
         .error(function (data) {
-          StatusService.virhe('HakemuskausiService.haeMaararaha(' + $scope.vuosi + ',' + $scope.lajitunnus + ')', data);
+          StatusService.virhe('HakemuskausiService.haeMaararaha(' + $scope.vuosi + ',' + $scope.lajitunnus + ')', data.message);
         });
     }
 
@@ -60,7 +60,7 @@ angular.module('jukufrontApp')
           $scope.hakemuksetSuunnittelu = hakemuksetSuunnitteluTmp;
         })
         .error(function (data) {
-          StatusService.virhe('SuunnitteluService.hae(' + $routeParams.vuosi + ',' + $routeParams.tyyppi + ')', data);
+          StatusService.virhe('SuunnitteluService.hae(' + $routeParams.vuosi + ',' + $routeParams.tyyppi + ')', data.message);
         });
     }
 
@@ -82,7 +82,7 @@ angular.module('jukufrontApp')
             haeSuunnitteluData();
           })
           .error(function (data) {
-            StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', data);
+            StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', data.message);
           });
       }
     };
@@ -113,7 +113,7 @@ angular.module('jukufrontApp')
             haeMaararahat();
           })
           .error(function (data) {
-            StatusService.virhe('HakemuskausiService.paivitaMaararaha(' + $scope.vuosi + ',' + $scope.lajitunnus + ',' + maararahadata + ')', data);
+            StatusService.virhe('HakemuskausiService.paivitaMaararaha(' + $scope.vuosi + ',' + $scope.lajitunnus + ',' + maararahadata + ')', data.message.message);
           });
       }
     };

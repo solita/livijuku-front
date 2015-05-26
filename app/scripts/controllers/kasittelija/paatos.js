@@ -13,7 +13,7 @@ angular.module('jukufrontApp')
           $scope.hakija = _.find($rootScope.organisaatiot, {'id': $scope.avustushakemus.organisaatioid}).nimi;
         })
         .error(function (data) {
-          StatusService.virhe('HakemusService.hae(' + $routeParams.id + ')', data);
+          StatusService.virhe('HakemusService.hae(' + $routeParams.id + ')', data.message);
         });
 
       PaatosService.hae($scope.hakemusid)
@@ -28,7 +28,7 @@ angular.module('jukufrontApp')
           }
         })
         .error(function (data) {
-          StatusService.virhe('PaatosService.hae(' + $scope.hakemusid + ')', data);
+          StatusService.virhe('PaatosService.hae(' + $scope.hakemusid + ')', data.message);
         });
     }
 
@@ -69,12 +69,12 @@ angular.module('jukufrontApp')
                 $location.path('/k/suunnittelu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus);
               })
               .error(function (data) {
-                StatusService.virhe('PaatosService.hyvaksy(' + $scope.hakemusid + ')', data);
+                StatusService.virhe('PaatosService.hyvaksy(' + $scope.hakemusid + ')', data.message);
               });
             haePaatosTiedot();
           })
           .error(function (data) {
-            StatusService.virhe('PaatosService.tallenna(' + paatosdata + ')', data);
+            StatusService.virhe('PaatosService.tallenna(' + paatosdata + ')', data.message);
           });
       }
       else {
@@ -122,7 +122,7 @@ angular.module('jukufrontApp')
             haePaatosTiedot();
           })
           .error(function (data) {
-            StatusService.virhe('PaatosService.tallenna(' + paatosdata + ')', data);
+            StatusService.virhe('PaatosService.tallenna(' + paatosdata + ')', data.message);
           });
       }
       else {

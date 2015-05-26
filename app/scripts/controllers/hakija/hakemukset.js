@@ -51,7 +51,7 @@ angular.module('jukufrontApp')
         $scope.hakemukset = _.sortBy(hakemuksetTmp, 'vuosi').reverse();
       })
       .error(function (data) {
-        StatusService.virhe('HakemusService.haeKaikki())', data);
+        StatusService.virhe('HakemusService.haeKaikki())', data.message);
       });
 
   }]);
