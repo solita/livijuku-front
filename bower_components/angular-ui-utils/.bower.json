@@ -1,0 +1,17 @@
+{
+  "name": "angular-ui-validate",
+  "main": "./validate.js",
+  "dependencies": {
+    "angular": ">= 1.0.2"
+  },
+  "homepage": "https://github.com/angular-ui/ui-utils",
+  "_release": "a960fdbd97",
+  "_resolution": {
+    "type": "branch",
+    "branch": "bower-validate",
+    "commit": "a960fdbd979e31b21897335e1232b52e5b66f404"
+  },
+  "_source": "git://github.com/angular-ui/ui-utils.git",
+  "_target": "bower-validate",
+  "_originalSource": "angular-ui-utils"
+}
