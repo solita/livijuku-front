@@ -33,7 +33,7 @@ angular.module('jukufrontApp')
             $scope.pankkitilinumero = _.find($rootScope.organisaatiot, {'id': data.organisaatioid}).pankkitilinumero;
           })
           .error(function (data) {
-            StatusService.virhe('HakemusService.hae(' + $scope.hakemusid + ')', data);
+            StatusService.virhe('HakemusService.hae(' + $scope.hakemusid + ')', data.message);
           });
 
         haeLiitteet();
@@ -50,7 +50,7 @@ angular.module('jukufrontApp')
             });
           })
           .error(function (data) {
-            StatusService.virhe('LiiteService.hae(' + $scope.hakemusid + ')', data);
+            StatusService.virhe('LiiteService.hae(' + $scope.hakemusid + ')', data.message);
           });
       }
 
@@ -60,7 +60,7 @@ angular.module('jukufrontApp')
             $scope.paatos = data;
           })
           .error(function (data) {
-            StatusService.virhe('PaatosService.hae(' + $scope.avustushakemusid + ')', data);
+            StatusService.virhe('PaatosService.hae(' + $scope.avustushakemusid + ')', data.message);
           });
       }
 
@@ -159,7 +159,7 @@ angular.module('jukufrontApp')
               $location.path('/h/hakemukset');
             })
             .error(function (data) {
-              StatusService.virhe('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', data);
+              StatusService.virhe('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', data.message);
             });
         }
       };
@@ -175,7 +175,7 @@ angular.module('jukufrontApp')
               $location.path('/h/hakemukset');
             })
             .error(function (data) {
-              StatusService.virhe('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', data);
+              StatusService.virhe('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', data.message);
             });
         }
       };
@@ -213,7 +213,7 @@ angular.module('jukufrontApp')
                 haeLiitteet();
               })
               .error(function (data) {
-                StatusService.virhe('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + tiedostonimi + ')', data);
+                StatusService.virhe('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + tiedostonimi + ')', data.message);
               });
           }
         } else {
@@ -228,7 +228,7 @@ angular.module('jukufrontApp')
             haeLiitteet();
           })
           .error(function (data) {
-            StatusService.virhe('LiiteService.poista(' + $scope.hakemusid + ',' + liiteid + ')', data);
+            StatusService.virhe('LiiteService.poista(' + $scope.hakemusid + ',' + liiteid + ')', data.message);
           });
       };
 
@@ -240,6 +240,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.tallennaHakemus = function (avaaEsikatselu) {
+        StatusService.tyhjenna();
         $scope.$broadcast('show-errors-check-validity');
         if ($scope.hakemusForm.$valid) {
 
@@ -259,7 +260,7 @@ angular.module('jukufrontApp')
                   .success(function () {
                   })
                   .error(function (data) {
-                    StatusService.virhe('HakemusService.tallennaSelite(' + selitedata + ')', data);
+                    StatusService.virhe('HakemusService.tallennaSelite(' + selitedata + ')', data.message);
                     tallennusOk = false;
                   });
               }
@@ -272,7 +273,7 @@ angular.module('jukufrontApp')
               }
             })
             .error(function (data) {
-              StatusService.virhe('AvustuskohdeService.tallenna()', data);
+              StatusService.virhe('AvustuskohdeService.tallenna()', data.message);
             });
         } else {
           $('input.ng-invalid').focus();
@@ -287,7 +288,7 @@ angular.module('jukufrontApp')
             $location.path('/k/hakemukset/' + $scope.tyyppi);
           })
           .error(function (data) {
-            StatusService.virhe('HakemusService.tarkastaHakemus(' + $scope.hakemusid + ')', data);
+            StatusService.virhe('HakemusService.tarkastaHakemus(' + $scope.hakemusid + ')', data.message);
           });
       };
 
@@ -298,7 +299,7 @@ angular.module('jukufrontApp')
             $location.path('/k/hakemukset/' + $scope.tyyppi);
           })
           .error(function (data) {
-            StatusService.virhe('HakemusService.tarkastaTaydennys(' + $scope.hakemusid + ')', data);
+            StatusService.virhe('HakemusService.tarkastaTaydennys(' + $scope.hakemusid + ')', data.message);
           });
       };
 
@@ -309,7 +310,7 @@ angular.module('jukufrontApp')
             $location.path('/k/hakemukset/' + $scope.tyyppi);
           })
           .error(function (data) {
-            StatusService.virhe('HakemusService.taydennyspyynto(' + $scope.hakemusid + ')', data);
+            StatusService.virhe('HakemusService.taydennyspyynto(' + $scope.hakemusid + ')', data.message);
           });
       };
 

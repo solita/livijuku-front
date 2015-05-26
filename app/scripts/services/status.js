@@ -35,6 +35,9 @@ angular.module('services.status', ['toastr'])
       virhe: function (toiminto, paluudata) {
         console.log('Virhe: ', toiminto, paluudata);
         toastr.error(paluudata, 'Virhe', {closeButton: true, timeOut: 0, extendedTimeOut: 0});
+      },
+      tyhjenna: function(){
+        toastr.clear();
       }
     };
   }]);

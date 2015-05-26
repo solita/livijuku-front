@@ -46,12 +46,13 @@ angular.module('jukufrontApp')
     };
 
     $scope.hyvaksyPaatos = function (paatosForm) {
+      StatusService.tyhjenna();
       if (paatosForm.$valid) {
         var paatosdata = {
           "hakemusid": parseInt($scope.hakemusid),
           "myonnettyavustus": parseFloat($scope.avustus),
           "selite": $scope.paatos.selite
-        }
+        };
         PaatosService.tallenna($scope.hakemusid, paatosdata)
           .success(function () {
             paatosForm.$setPristine();
@@ -108,6 +109,7 @@ angular.module('jukufrontApp')
     */
 
     $scope.tallennaPaatos = function (paatosForm) {
+      StatusService.tyhjenna();
       if (paatosForm.$valid) {
         var paatosdata = {
           "hakemusid": parseInt($scope.hakemusid),

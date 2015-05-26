@@ -137,6 +137,7 @@ angular.module('jukufrontApp')
     };
 
     $scope.tallennaHakuajat = function (formi, vuosi, ah0alkupvm, ah0loppupvm, mh1alkupvm, mh1loppupvm, mh2alkupvm, mh2loppupvm) {
+      StatusService.tyhjenna();
       $scope.$broadcast('show-errors-check-validity');
       if (formi.$valid) {
         var hakuajat = [
