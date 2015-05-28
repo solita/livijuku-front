@@ -39,7 +39,8 @@ createDb() {
     export DB_USER=juku_${DB_CREATE_ID}
     export DB_PASSWORD=juku
     cd $WORK/upstream/upstream/juku-db/target
-    java -jar juku-db.jar clear-db
+    # Clear pois käytöstä, kunnes letto buutataan tai se SYS_TEMP_XYZ taulu siivotaan jotenkin muuten
+    # java -jar juku-db.jar clear-db
     java -jar juku-db.jar update-db
   )
 }
