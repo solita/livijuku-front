@@ -125,7 +125,17 @@ public class HakemuskausiTest extends TestBase {
     findElementByXPath("//span[%s and %s]", containsText("Vireillä"), hasClass("label-danger"));
 
     // Kirjaa sisään käsittelijä
+    login(User.KATRI);
     // Palauta hakemus täydennettäväksi
+    WebElement kaikkiHakemukset =
+      findElementByLinkText("Kaikki hakemukset");
+    kaikkiHakemukset.click();
+    WebElement helsinginSeudunVireilla1 =
+      findElementByXPath("//span[%s and %s]",
+                         containsText("Vireillä"),
+                         hasClass("label-danger"));
+    helsinginSeudunVireilla1.click();
+
     // Kirjaa sisään hakija
     // Assertoi tila täydennettävänä
     // Täydennä hakemus

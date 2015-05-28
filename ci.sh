@@ -41,7 +41,7 @@ createDb() {
     cd $WORK/upstream/upstream/juku-db/target
     echo "Clear-db saattaa kaatua virheeseen:"
     echo " ORA-14452: jo käytössä olevan väliaikaisen taulun indeksiä yritettiin luoda, muuttaa tai poistaa"
-    echo ", mutta updaten pitäisi silti onnistua nyt.
+    echo ", mutta updaten pitäisi silti onnistua nyt."
     java -jar juku-db.jar clear-db
     java -jar juku-db.jar update-db
   )
