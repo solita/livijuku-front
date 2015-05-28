@@ -52,7 +52,7 @@
     "teste2e": "gulp e2e",
     "citeste2e": "gulp e2e-no-selenium-server",
     "serve": "gulp server",
-    "prepublish": "webdriver-manager update", // Bower poistettu, koska depsut on freezattu git:iin.
+    "prepublish": "webdriver-manager update",
     "start": "gulp"
   },
   "browser": {
