@@ -4,18 +4,24 @@
   </div>
   <div ng-show="sallittu('view-oma-hakemus')">
     <div class="row">
-      <div class="col-md-12">
-        <a href="#/h/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
-          päänäkymään</a>
-        <a href="#/h/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-           ng-class="(tyyppi == 'AH0')? 'btn btn-primary' : 'btn btn-default'">Avustushakemus {{hakemus.vuosi}}</a>
-        <a
-          href="#/h/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-          ng-class="(tyyppi == 'MH1')? 'btn btn-primary' : 'btn btn-default'">1. maksatushakemus {{hakemus.vuosi}}</a>
-        <a
-          href="#/h/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-          ng-class="(tyyppi == 'MH2')? 'btn btn-primary' : 'btn btn-default'">2. maksatushakemus {{hakemus.vuosi}}</a>
+      <div class="navigation">
+        <a href="#/h/hakemukset">
+          <span class='glyphicon glyphicon-circle-arrow-left'></span>
+          Palaa hakemusten päänäkymään
+        </a>
+        <div class="tabs">
+          <a href="#/h/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+             ng-class="(tyyppi === 'AH0')? 'tab is-selected' : 'tab'">Avustushakemus {{hakemus.vuosi}}</a>
+          <a
+            href="#/h/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+            ng-class="(tyyppi === 'MH1')? 'tab is-selected' : 'tab'">1. maksatushakemus {{hakemus.vuosi}}</a>
+
+          <a
+            href="#/h/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
+            ng-class="(tyyppi === 'MH2')? 'tab is-selected' : 'tab'">2. maksatushakemus {{hakemus.vuosi}}</a>
+        </div>
       </div>
+
     </div>
     <div class="row">
       <div class="col-md-12">

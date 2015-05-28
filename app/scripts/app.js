@@ -50,7 +50,7 @@ angular
         templateUrl: 'views/yhteinen/aloitus.html'
       })
       .when('/h/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
-        templateUrl: 'views/hakija/hakemus.html',
+        template: require('views/hakija/hakemus.html'),
         controller: 'HakemusCtrl'
       })
       .when('/h/hakemukset', {
