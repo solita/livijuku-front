@@ -1,0 +1,8 @@
+<div class="tilat">
+  <span
+    class="label {{hakemuksenTila.className}}"
+    ng-repeat="hakemuksenTila in tilat"
+    ng-class="{'is-selected': tila === hakemuksenTila.id, 'is-upcoming': isUpcoming(hakemuksenTila) }">
+    {{ hakemuksenTila.label }}
+  </span>
+</div>
