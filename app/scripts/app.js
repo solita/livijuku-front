@@ -115,6 +115,7 @@ require('./controllers/kasittelija/paatos');
 require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/hakemus');
 require('./controllers/yhteinen/paanaytto');
+require('./directives/alvmuunnos');
 require('./directives/hakemussummary');
 require('./directives/jkuAvustusluokkaPanel');
 require('./directives/jkuAvustuskohde');

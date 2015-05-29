@@ -9,6 +9,7 @@
           <span class='glyphicon glyphicon-circle-arrow-left'></span>
           Palaa hakemusten päänäkymään
         </a>
+
         <div class="tabs">
           <a href="#/h/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
              ng-class="(tyyppi === 'AH0')? 'tab is-selected' : 'tab'">Avustushakemus {{hakemus.vuosi}}</a>
@@ -66,6 +67,16 @@
               class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label ng-show="hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0'">
+              <input type="checkbox" ng-model="alv">
+              Haluan syöttää summat arvonlisäverollisina.
+            </label>
+          </div>
+        </div>
+      </div>
 
       <jku-avustusluokka-panel luokka="avustuskohdeluokka"
                                name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
@@ -73,7 +84,7 @@
                                ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
         <jku-avustuskohde vuosi="vuosi"
                           vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)"
-                          hakemustyyppi="tyyppi" kohde="avustuskohde"
+                          hakemustyyppi="tyyppi" kohde="avustuskohde" alv="alv"
                           hakemus="hakemus"
                           name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
                           ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet">
@@ -256,7 +267,9 @@
         <div class="col-md-6">
           <h5>Päivämäärä</h5>
 
-          <p ng-show="((hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && (hakemus.muokkaaja!=null))">{{hakemus.muokkausaika |
+          <p
+            ng-show="((hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && (hakemus.muokkaaja!=null))">
+            {{hakemus.muokkausaika |
             date:'dd.MM.yyyy'}}</p>
 
           <p ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">{{hakemus.lahetysaika |
@@ -318,7 +331,9 @@
           <div ng-show="sallittu('allekirjoita-oma-hakemus')">
             <button
               ng-show="(hakemus.hakemustilatunnus == 'K' && allekirjoitusliitetty) || (hakemus.hakemustilatunnus == 'T0' && allekirjoitusliitetty)"
-              juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen" varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen." operaatio="lahetaHakemusTaiTaydennys(hakemus.hakemustilatunnus)"
+              juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen"
+              varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen."
+              operaatio="lahetaHakemusTaiTaydennys(hakemus.hakemustilatunnus)"
               class="pull-right btn btn-success">Tallenna ja lähetä hakemus
             </button>
             <button

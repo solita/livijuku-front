@@ -10,7 +10,8 @@ angular.module('jukufrontApp')
         kohde: "=",
         vuosi: "=",
         vertailuarvot: "&",
-        hakemustyyppi: "="
+        hakemustyyppi: "=",
+        alv: "="
       },
       controller: ["$scope", "$rootScope", "AvustuskohdeService", "AuthService", function ($scope, $rootScope, AvustuskohdeService, AuthService) {
 
@@ -28,18 +29,18 @@ angular.module('jukufrontApp')
           var tooltip = '';
           if ($scope.hakemustyyppi != 'AH0') {
             if (syotekentta == 'haettavaavustus') {
-              tooltip = 'Avustushakemus:' + $scope.vertailuarvot().avustushakemusHaettavaAvustus.toString().replace('.', ',') + ' €';
+              tooltip = 'Avustushakemus:' + $scope.vertailuarvot().avustushakemusHaettavaAvustus.toString().replace('.', ',') + ' € (sis. alv)';
             }
             else if (syotekentta == 'omarahoitus') {
-              tooltip = 'Avustushakemus:' + $scope.vertailuarvot().avustushakemusOmaRahoitus.toString().replace('.', ',') + ' €';
+              tooltip = 'Avustushakemus:' + $scope.vertailuarvot().avustushakemusOmaRahoitus.toString().replace('.', ',') + ' € (sis. alv)';
             }
           }
           if ($scope.hakemustyyppi == 'MH2') {
             if (syotekentta == 'haettavaavustus') {
-              tooltip = tooltip + '<br/>' + '1. Maksatushakemus:' + $scope.vertailuarvot().maksatushakemusHaettavaAvustus.toString().replace('.', ',') + ' €';
+              tooltip = tooltip + '<br/>' + '1. Maksatushakemus:' + $scope.vertailuarvot().maksatushakemusHaettavaAvustus.toString().replace('.', ',') + ' € (sis. alv)';
             }
             else if (syotekentta == 'omarahoitus') {
-              tooltip = tooltip + '<br/>' + '1. Maksatushakemus:' + $scope.vertailuarvot().maksatushakemusOmaRahoitus.toString().replace('.', ',') + ' €';
+              tooltip = tooltip + '<br/>' + '1. Maksatushakemus:' + $scope.vertailuarvot().maksatushakemusOmaRahoitus.toString().replace('.', ',') + ' € (sis. alv)';
             }
           }
           return tooltip;

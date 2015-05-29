@@ -248,6 +248,10 @@ angular.module('jukufrontApp')
             return l.avustuskohteet
           }));
 
+          avustuskohteet = _.map(avustuskohteet, function (kohde){
+            return _.omit(kohde,'alv');
+          });
+
           AvustuskohdeService.tallenna(avustuskohteet)
             .success(function () {
               var tallennusOk = true;
@@ -323,6 +327,7 @@ angular.module('jukufrontApp')
       $scope.myFiles = [];
       $scope.tyyppi = $routeParams.tyyppi;
       $scope.vuosi = $routeParams.vuosi;
+      $scope.alv = false;
 
       if ($scope.tyyppi === "AH0") {
         $scope.hakemusid = parseInt($scope.avustushakemusid);
