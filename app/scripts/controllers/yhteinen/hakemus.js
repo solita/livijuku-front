@@ -71,6 +71,28 @@ angular.module('jukufrontApp')
         }))[arvo]);
       }
 
+      function lahetaHakemus() {
+        HakemusService.lahetaHakemus($scope.hakemusid)
+          .success(function () {
+            StatusService.ok('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', 'Lähettäminen onnistui.');
+            $location.path('/h/hakemukset');
+          })
+          .error(function (data) {
+            StatusService.virhe('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', data.message);
+          });
+      }
+
+      function lahetaTaydennys(){
+        HakemusService.lahetaTaydennys($scope.hakemusid)
+          .success(function () {
+            StatusService.ok('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', 'Täydennyksen lähettäminen onnistui.');
+            $location.path('/h/hakemukset');
+          })
+          .error(function (data) {
+            StatusService.virhe('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', data.message);
+          });
+      }
+
       $scope.$watch('myFiles', function () {
         if ($scope.myFiles != null) {
           for (var i = 0; i < $scope.myFiles.length; i++) {
@@ -140,46 +162,6 @@ angular.module('jukufrontApp')
           hakemustilatunnus == 'M';
       };
 
-      $scope.lahetaHakemusTaiTaydennys = function (tila) {
-        if (tila == 'K') {
-          $scope.lahetaHakemus();
-        } else if (tila == 'T0') {
-          $scope.lahetaTaydennys();
-        }
-      };
-
-      $scope.lahetaHakemus = function () {
-        $scope.tallennaHakemus();
-        $scope.$broadcast('show-errors-check-validity');
-        if ($scope.hakemusForm.$valid) {
-          $scope.hakemusForm.$setPristine();
-          HakemusService.lahetaHakemus($scope.hakemusid)
-            .success(function () {
-              StatusService.ok('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', 'Lähettäminen onnistui.');
-              $location.path('/h/hakemukset');
-            })
-            .error(function (data) {
-              StatusService.virhe('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', data.message);
-            });
-        }
-      };
-
-      $scope.lahetaTaydennys = function () {
-        $scope.tallennaHakemus();
-        $scope.$broadcast('show-errors-check-validity');
-        if ($scope.hakemusForm.$valid) {
-          $scope.hakemusForm.$setPristine();
-          HakemusService.lahetaTaydennys($scope.hakemusid)
-            .success(function () {
-              StatusService.ok('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', 'Täydennyksen lähettäminen onnistui.');
-              $location.path('/h/hakemukset');
-            })
-            .error(function (data) {
-              StatusService.virhe('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', data.message);
-            });
-        }
-      };
-
       $scope.liiteNimiTyhja = function (nimi) {
         if (isNaN(nimi)) {
           return true;
@@ -190,7 +172,7 @@ angular.module('jukufrontApp')
 
       $scope.naytaHakemus = function (tila) {
         if (tila == 'K' || tila == 'T0') {
-          $scope.tallennaHakemus(true);
+          $scope.tallennaHakemus(1);
         } else {
           $window.open('api/hakemus/' + $scope.hakemusid + '/pdf', 'target', '_blank');
         }
@@ -239,7 +221,7 @@ angular.module('jukufrontApp')
         return _.sum(avustuskohteet, 'haettavaavustus');
       };
 
-      $scope.tallennaHakemus = function (avaaEsikatselu) {
+      $scope.tallennaHakemus = function (lisatoiminto) {
         StatusService.tyhjenna();
         $scope.$broadcast('show-errors-check-validity');
         if ($scope.hakemusForm.$valid) {
@@ -270,9 +252,24 @@ angular.module('jukufrontApp')
               }
               if (tallennusOk) {
                 StatusService.ok('AvustuskohdeService.tallenna()', 'Tallennus onnistui.');
+                $scope.hakemusForm.$setPristine();
                 haeHakemukset();
-                if (avaaEsikatselu) {
-                  $window.open('api/hakemus/' + $scope.hakemusid + '/pdf', 'target', '_blank');
+                switch(lisatoiminto) {
+                  case 0:
+                    // Pelkka tallennus
+                    break;
+                  case 1:
+                    // Esikatselu
+                    $window.open('api/hakemus/' + $scope.hakemusid + '/pdf', 'target', '_blank');
+                    break;
+                  case 2:
+                    // Laheta
+                    if ($scope.hakemus.hakemustilatunnus == 'K') {
+                      lahetaHakemus();
+                    } else if ($scope.hakemus.hakemustilatunnus == 'T0') {
+                      lahetaTaydennys();
+                    }
+                    break;
                 }
               }
             })

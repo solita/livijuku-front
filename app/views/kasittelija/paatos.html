@@ -91,23 +91,23 @@
       </div>
       <div class="col-md-3">
         <div ng-show="(avustushakemus.hakemustilatunnus == 'T')">
-          <button data-ng-click="tallennaPaatos(paatosForm)" class="pull-right btn btn-primary">Tallenna tiedot
+          <button data-ng-click="tallennaPaatos(0)" class="pull-right btn btn-primary">Tallenna tiedot
           </button>
         </div>
         <div ng-hide="(avustushakemus.hakemustilatunnus == 'T')">
-          <button data-ng-click="tallennaPaatos(paatosForm)" class="pull-right btn btn-primary" disabled>Tallenna
+          <button data-ng-click="tallennaPaatos(0)" class="pull-right btn btn-primary" disabled>Tallenna
             tiedot
           </button>
         </div>
       </div>
       <div class="col-md-3">
         <div ng-show="(avustushakemus.hakemustilatunnus == 'T')">
-          <button data-ng-click="naytaPaatos(avustushakemus.hakemustilatunnus,paatosForm)" class="pull-right btn btn-primary">
+          <button data-ng-click="naytaPaatos()" class="pull-right btn btn-primary">
             Tallenna ja esikatsele päätös
           </button>
         </div>
         <div ng-hide="(avustushakemus.hakemustilatunnus == 'T')">
-          <button data-ng-click="naytaPaatos(avustushakemus.hakemustilatunnus,paatosForm)" class="pull-right btn btn-primary">
+          <button data-ng-click="naytaPaatos()" class="pull-right btn btn-primary">
             Esikatsele päätös
           </button>
         </div>
@@ -137,10 +137,10 @@
         <div ng-show="(avustushakemus.hakemustilatunnus == 'T' && sallittu('hyvaksy-paatos'))">
           <button juku-varmistusdialogi varmistusotsake="Päätöksen hyväksyminen"
                   varmistusteksti="Oletko varma, että haluat hyväksyä päätöksen? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
-                  operaatio="hyvaksyPaatos(paatosForm)" class="pull-right btn btn-success">Tallenna ja hyväksy päätös</button>
+                  operaatio="tallennaPaatos(2)" class="pull-right btn btn-success">Tallenna ja hyväksy päätös</button>
         </div>
         <div ng-hide="(avustushakemus.hakemustilatunnus == 'T') && sallittu('hyvaksy-paatos')">
-          <button data-ng-click="hyvaksyPaatos(paatosForm)" class="pull-right btn btn-success" disabled>Tallenna ja hyväksy päätös
+          <button data-ng-click="tallennaPaatos(2)" class="pull-right btn btn-success" disabled>Tallenna ja hyväksy päätös
           </button>
         </div>
       </div>

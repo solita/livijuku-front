@@ -39,7 +39,7 @@
     <div class="row" ng-show="hasPaatos(tyyppi, hakemus.hakemustilatunnus)">
       <div class="col-md-12">
         <p>
-          <a href="api/hakemus/{{hakemusid}}/paatos/1/pdf" target="_blank"><span
+          <a href="api/hakemus/{{hakemusid}}/paatos/pdf" target="_blank"><span
             class="glyphicon glyphicon-file"></span> Avaa päätös (PDF)</a>
           <a href="resources/OIKAISUVAATIMUSOSOITUS.docx" target="_blank"><span
             class="glyphicon glyphicon-file"></span> Avaa oikaisuvaatimusosoitus (DOCX)</a>
@@ -317,12 +317,12 @@
         <div class="col-md-3">
           <div
             ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
-            <button data-ng-click="tallennaHakemus(false)" class="pull-right btn btn-primary">Tallenna tiedot
+            <button data-ng-click="tallennaHakemus(0)" class="pull-right btn btn-primary">Tallenna tiedot
             </button>
           </div>
           <div
             ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
-            <button data-ng-click="tallennaHakemus(false)" class="pull-right btn btn-primary" disabled>Tallenna
+            <button data-ng-click="tallennaHakemus(0)" class="pull-right btn btn-primary" disabled>Tallenna
               tiedot
             </button>
           </div>
@@ -359,7 +359,7 @@
           <div ng-show="sallittu('allekirjoita-oma-hakemus')">
             <button
               ng-show="(hakemus.hakemustilatunnus == 'K' && allekirjoitusliitetty) || (hakemus.hakemustilatunnus == 'T0' && allekirjoitusliitetty)"
-              juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen" varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen." operaatio="lahetaHakemusTaiTaydennys(hakemus.hakemustilatunnus)"
+              juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen" varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen." operaatio="tallennaHakemus(2)"
               class="pull-right btn btn-success">Tallenna ja lähetä hakemus
             </button>
             <button
