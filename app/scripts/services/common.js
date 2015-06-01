@@ -9,7 +9,7 @@ angular.module('services.common', [])
     function handlePromise(promise, success, toiminto) {
       promise.success(success)
         .error(function (data) {
-          StatusService.virhe(toiminto, data);
+          StatusService.virhe(toiminto, data.message);
         })
     }
 
