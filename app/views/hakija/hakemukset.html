@@ -1,0 +1,119 @@
+<div class="container">
+  <div ng-hide="sallittu('view-oma-hakemus')">
+    <p>Ei omien hakemusten katseluoikeutta.</p>
+  </div>
+  <div ng-show="hakemukset.length==0">
+    <p>Ei hakemuksia, koska hakemuskautta ei ole vielä avattu.</p>
+  </div>
+  <div ng-show="hakemukset.length>0 && sallittu('view-oma-hakemus')">
+    <h3>AKTIIVISET JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET</h3>
+
+    <div ng-repeat="hakemuskausi in hakemukset">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-3 text-center">
+            <h1>{{hakemuskausi.vuosi}}</h1>
+            <a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" target="_blank">Valtioneuvoston asetus</a>
+            <br>
+            <br>
+          </div>
+          <div class="col-md-3 text-center">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <p class="panel-title">Avustushakemus</p>
+              </div>
+              <div ng-show="(hakemuskausi.hakemustilatunnus != 'FEK')">
+                <div class="panel-body clickable"
+                     data-ng-click="valitseHakemus(hakemuskausi.vuosi,'AH0',hakemuskausi.avustushakemusId,hakemuskausi.maksatushakemus1Id,hakemuskausi.maksatushakemus2Id)">
+                  <p>
+                    <hakemus-label tila="{{hakemuskausi.avustushakemusTilatunnus}}"></hakemus-label>
+                  </p>
+                  <h4>Hakuaika:</h4>
+
+                  <p>{{hakemuskausi.avustushakemusAlkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.avustushakemusLoppupvm |
+                    date:'dd.MM yyyy'}}</p>
+                </div>
+              </div>
+              <div ng-show="(hakemuskausi.hakemustilatunnus == 'FEK')">
+                <div class="panel-body">
+                  <p>
+                    <hakemus-label tila="{{hakemuskausi.avustushakemusTilatunnus}}"></hakemus-label>
+                  </p>
+                  <h4>Hakuaika:</h4>
+
+                  <p>{{hakemuskausi.avustushakemusAlkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.avustushakemusLoppupvm |
+                    date:'dd.MM yyyy'}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 text-center">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <p class="panel-title">1. maksatushakemus</p>
+              </div>
+              <div ng-show="(hakemuskausi.maksatushakemus1Tilatunnus != 'FEK')">
+                <div class="panel-body clickable"
+                     data-ng-click="valitseHakemus(hakemuskausi.vuosi,'MH1',hakemuskausi.avustushakemusId,hakemuskausi.maksatushakemus1Id,hakemuskausi.maksatushakemus2Id)">
+                  <p>
+                    <hakemus-label tila="{{hakemuskausi.maksatushakemus1Tilatunnus}}"></hakemus-label>
+                  </p>
+                  <h4>Hakuaika:</h4>
+
+                  <p>{{hakemuskausi.maksatushakemus1Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus1Loppupvm
+                    |
+                    date:'dd.MM yyyy'}}</p>
+                </div>
+              </div>
+              <div ng-show="(hakemuskausi.maksatushakemus1Tilatunnus == 'FEK')">
+                <div class="panel-body">
+                  <p>
+                    <hakemus-label tila="{{hakemuskausi.maksatushakemus1Tilatunnus}}"></hakemus-label>
+                  </p>
+                  <h4>Hakuaika:</h4>
+
+                  <p>{{hakemuskausi.maksatushakemus1Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus1Loppupvm
+                    |
+                    date:'dd.MM yyyy'}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 text-center">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+                <p class="panel-title">2. maksatushakemus</p>
+              </div>
+              <div ng-show="(hakemuskausi.maksatushakemus2Tilatunnus != 'FEK')">
+                <div class="panel-body clickable"
+                     data-ng-click="valitseHakemus(hakemuskausi.vuosi,'MH2',hakemuskausi.avustushakemusId,hakemuskausi.maksatushakemus1Id,hakemuskausi.maksatushakemus2Id)">
+                  <p>
+                    <hakemus-label tila="{{hakemuskausi.maksatushakemus2Tilatunnus}}"></hakemus-label>
+                  </p>
+                  <h4>Hakuaika:</h4>
+
+                  <p>{{hakemuskausi.maksatushakemus2Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus2Loppupvm
+                    |
+                    date:'dd.MM yyyy'}}</p>
+                </div>
+              </div>
+              <div ng-show="(hakemuskausi.maksatushakemus2Tilatunnus == 'FEK')">
+                <div class="panel-body">
+                  <p>
+                    <hakemus-label tila="{{hakemuskausi.maksatushakemus2Tilatunnus}}"></hakemus-label>
+                  </p>
+                  <h4>Hakuaika:</h4>
+
+                  <p>{{hakemuskausi.maksatushakemus2Alkupvm | date:'dd.MM yyyy'}}-{{hakemuskausi.maksatushakemus2Loppupvm
+                    |
+                    date:'dd.MM yyyy'}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
