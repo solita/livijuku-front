@@ -11,78 +11,91 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
-        <img src="logo.png"/>
-      </div>
-      <div class="col-md-3">
-        <h5>Päätös</h5>
-
-        <p>{{aikaleima | date:'dd.MM.yyyy'}}</p>
-      </div>
-      <div class="col-md-3">
-        <br>
-
-        <p>1234/020/2015</p>
+      <div class="col-md-12">
+        <h2>Valtionavustuspäätös vuodelle {{avustushakemus.vuosi}}</h2>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <p>Hakemus 1234/123/{{hakemusid}}/{{vuosi}}</p>
+        <h3>Hakemustiedot</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label>Hakija</label>
+
+        <p>{{hakija}}</p>
+
+        <p>{{avustushakemus.lahettaja}}</p>
+      </div>
+      <div class="col-md-4">
+        <label>Päivämäärä</label>
+
+        <p>{{avustushakemus.lahetysaika | date:'dd.MM.yyyy'}}</p>
+      </div>
+      <div class="col-md-4">
+        <label>Diaarinumero</label>
+
+        <p><a href="api/hakemus/{{avustushakemus.id}}/pdf" target="_blank"><span
+          class="glyphicon glyphicon-file"></span>{{avustushakemus.diaarinumero}}</a></p>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <h2>Valtionavustuspäätös</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-2">
-        <p>Hakemus</p>
-      </div>
-      <div class="col-md-10">
-        <p><b>{{hakija}}</b> hakee vuonna <b>{{avustushakemus.vuosi}}</b> suurten kaupunkiseutujen joukkoliikenteen
-          valtionavustusta <b>{{haettuavustus| currency:"&euro;"}}.</b></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-2">
-        <p>Päätös</p>
-      </div>
-      <div class="col-md-10">
-        <p>Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle <b>{{hakija}}</b> valtionavustuksena
-          <b>{{avustus| currency:"&euro;"}}</b>.</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-md-10">
-        <br>
+        <label>Haettu avustus</label>
 
-        <p>Päätösteksti:</p>
-
-        <form name="paatosForm" juku-poistumisvaroitus="">
-          <textarea name="paatosteksti" class="animate msd-elastic: \n;" ng-model="paatos.selite" ng-required="true"></textarea>
+        <p>{{haettuavustus| currency:"&euro;"}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Päätös</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <label>Myönnetty avustus</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p>{{avustus| currency:"&euro;"}}</p>
+      </div>
+    </div>
+    <form name="paatosForm" juku-poistumisvaroitus="">
+      <div class="row">
+        <div class="col-md-12">
+          <label>Päätösteksti</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <textarea name="paatosteksti" class="animate msd-elastic: \n;" ng-model="paatos.selite"
+                    ng-required="true"></textarea>
           <span class="help-block text-danger"
                 ng-show="paatosForm.paatosteksti.$error.required">
             Päätösteksti on pakollinen tieto.
           </span>
-        </form>
+        </div>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-md-4">
-        <p>Tiina Tuumala</p>
-
-        <p>ylijohtaja</p>
+      <div class="row">
+        <div class="col-md-12">
+          <label>Päättäjän nimi</label>
+        </div>
       </div>
-      <div class="col-md-6">
-        <p>Jenni Eskola</p>
-
-        <p>yksikön päällikkö</p>
+      <div class="row">
+        <div class="col-md-12">
+          <input name="paattajanimi" class="form-control" type="text" ng-model="paatos.paattajanimi"
+                 ng-required="true"/>
+          <span class="help-block text-danger"
+                ng-show="paatosForm.paattajanimi.$error.required">
+            Päättäjän nimi on pakollinen tieto.
+          </span>
+        </div>
       </div>
-    </div>
+    </form>
+    <br>
+
     <div class="row">
       <div class="col-md-6">
         <a href="#/k/suunnittelu/{{vuosi}}/{{tyyppi}}/{{lajitunnus}}"><span
@@ -114,21 +127,20 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
-        <h4>Oikeudet päätöksen lähettämiseen on käyttäjällä, joka toimii organisaatiossa päätöksen hyväksyjänä
-          ja päätöksentekijänä.</h4>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <h5>Päivämäärä</h5>
 
         <p>{{aikaleima | date:'dd.MM.yyyy'}}</p>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
+        <h5>Esittelijä</h5>
+
+        <p>{{user.etunimi}} {{user.sukunimi}}</p>
+      </div>
+      <div class="col-md-4">
         <h5>Päätöksentekijä</h5>
 
-        <p>_kirjautuneen päätöksentekijän nimi_</p>
+        <p>{{paatos.paattajanimi}}</p>
       </div>
     </div>
     <div class="row">
@@ -137,10 +149,12 @@
         <div ng-show="(avustushakemus.hakemustilatunnus == 'T' && sallittu('hyvaksy-paatos'))">
           <button juku-varmistusdialogi varmistusotsake="Päätöksen hyväksyminen"
                   varmistusteksti="Oletko varma, että haluat hyväksyä päätöksen? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
-                  operaatio="tallennaPaatos(2)" class="pull-right btn btn-success">Tallenna ja hyväksy päätös</button>
+                  operaatio="tallennaPaatos(2)" class="pull-right btn btn-success">Tallenna ja hyväksy päätös
+          </button>
         </div>
         <div ng-hide="(avustushakemus.hakemustilatunnus == 'T') && sallittu('hyvaksy-paatos')">
-          <button data-ng-click="tallennaPaatos(2)" class="pull-right btn btn-success" disabled>Tallenna ja hyväksy päätös
+          <button data-ng-click="tallennaPaatos(2)" class="pull-right btn btn-success" disabled>Tallenna ja hyväksy
+            päätös
           </button>
         </div>
       </div>

@@ -21,6 +21,7 @@ angular.module('jukufrontApp')
           if (data == null) {
             $scope.paatos = {
               myonnettyavustus: 0,
+              paattajanimi:"",
               selite: ""
             };
           } else {
@@ -72,6 +73,7 @@ angular.module('jukufrontApp')
         var paatosdata = {
           "hakemusid": parseInt($scope.hakemusid),
           "myonnettyavustus": parseFloat($scope.avustus),
+          "paattajanimi": $scope.paatos.paattajanimi,
           "selite": $scope.paatos.selite
         };
         PaatosService.tallenna($scope.hakemusid, paatosdata)

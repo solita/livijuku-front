@@ -85,13 +85,15 @@
           <div ng-show="hakemus.hakemuksenTila!='P'">
             <button class="btn btn-primary"
                     ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
-              Päätöksentekoon
+              Päätöksentekoon<span
+              class='glyphicon glyphicon-play'/>
             </button>
           </div>
           <div ng-show="hakemus.hakemuksenTila=='P'">
             <button class="btn btn-success"
                     ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
-              Päätetty
+              Päätetty<span
+              class='glyphicon glyphicon-play'/>
             </button>
           </div>
         </td>
