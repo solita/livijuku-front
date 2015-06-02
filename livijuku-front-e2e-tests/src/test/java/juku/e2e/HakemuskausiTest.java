@@ -46,13 +46,13 @@ public class HakemuskausiTest extends TestBase {
     for (int i = 0; i < 25; i++) {
       sleep(100);
       try {
-        findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi"));
+        findElementByXPath("//button[%s and %s]", containsText("Käynnistä hakemuskausi"), isVisible());
       } catch (NoSuchElementException e) {
         kaynnistaNappiNakyy = false;
         break;
       }
     }
-    assertThat("Käynnistä hakemuskausi jäi näkyviin vaikka kausi avattiin.", kaynnistaNappiNakyy);
+    assertThat("Käynnistä hakemuskausi jäi näkyviin vaikka kausi avattiin.", !kaynnistaNappiNakyy);
 
     // Päivitetään testien restorepoint tähän, jotta kautta ei tarvitse avata muissa testeissä.
     createRestorePoint(TEST_RESTORE_POINT);
@@ -85,16 +85,21 @@ public class HakemuskausiTest extends TestBase {
   @Test
   public void hakijaaInformoidaanHakemuksenTilasta() {
     login(User.HARRI);
+
+    // Varmista, että kausi on avoinna TODO: Korjaa tämä.
+//    WebElement eiHakemuksia = findElementByXPath("//p[%s]", containsText("Ei hakemuksia, koska hakemuskautta ei ole vielä avattu."));
+//    assertThat(eiHakemuksia, is(notNullValue()));
+
     // Assertoi tila keskeneräinen
     WebElement we = findElementByXPath("//span[%s and %s]", containsText("Keskeneräinen"), hasClass("label-warning"));
     // Avaa hakemus
     we.click();
 
     // Lähetä hakemus
-    WebElement olenLiittanyt = findElementByXPath("//input[@type='checkbox']");
+    WebElement olenLiittanyt = findElementByXPath("//span[%s and %s]", containsText("Olen liittänyt hakemukseen tarvittavat"), isVisible());
     olenLiittanyt.click();
     waitForAngularRequestsToFinish(driver());
-    findElementByXPath("//button[%s]", containsText("Tallenna ja lähetä hakemus")).click();
+    findElementByXPath("//button[%s and %s]", containsText("Tallenna ja lähetä hakemus"), isVisible()).click();
     waitForAngularRequestsToFinish(driver());
 
     WebElement oletkoVarmaKylla = findElementByXPath("//button[%s]", containsText("Kyllä"));

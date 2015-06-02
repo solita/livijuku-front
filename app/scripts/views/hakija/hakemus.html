@@ -98,11 +98,11 @@
           <div class="form-group">
             <label ng-show="hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0'">
               <input type="checkbox" ng-model="alv">
-              Haluan syöttää summat arvonlisäverollisina.
+              <span>Haluan syöttää summat arvonlisäverollisina.</span>
             </label>
             <label ng-hide="hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0'">
               <input type="checkbox" ng-model="alv">
-              Haluan katsoa arvoja arvonlisäverollisina.
+              <span>Haluan katsoa arvoja arvonlisäverollisina.</span>
             </label>
           </div>
         </div>
@@ -349,7 +349,7 @@
           <div class="form-group">
             <label ng-show="hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0'">
               <input type="checkbox" ng-model="allekirjoitusliitetty">
-              Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen allekirjoitusoikeudesta.
+              <span>Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen allekirjoitusoikeudesta.</span>
             </label>
           </div>
         </div>

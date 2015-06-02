@@ -4,13 +4,25 @@ import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitFor
 import static java.lang.Thread.sleep;
 
 import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.SSLException;
+
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpEntityEnclosingRequest;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
+import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -31,6 +43,7 @@ public class TestBase {
   private static final String SUITE_RESTORE_POINT = "bf_suite";
   private RemoteWebDriver driver;
   ByAngular ng;
+  private PoolingHttpClientConnectionManager connectionManager;
 
   public RemoteWebDriver driver() {
     if(driver == null) {
@@ -52,6 +65,10 @@ public class TestBase {
     drv.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
     drv.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
     return drv;
+  }
+
+  String isVisible() {
+    return "not(self::*[@disabled] or ancestor::*[@disabled]) and not(ancestor::*[contains(concat( ' ', @class, ' '), ' ng-hide ')])";
   }
 
   enum User {
@@ -80,12 +97,49 @@ public class TestBase {
     }
   }
 
+  HttpRequestRetryHandler myRetryHandler = new HttpRequestRetryHandler() {
+
+    public boolean retryRequest(
+      IOException exception,
+      int executionCount,
+      HttpContext context) {
+      if (executionCount >= 5) {
+        // Do not retry if over max retry count
+        return false;
+      }
+      if (exception instanceof InterruptedIOException) {
+        // Timeout
+        return false;
+      }
+      if (exception instanceof UnknownHostException) {
+        // Unknown host
+        return false;
+      }
+      if (exception instanceof SSLException) {
+        // SSL handshake exception
+        return false;
+      }
+      HttpClientContext clientContext = HttpClientContext.adapt(context);
+      HttpRequest request = clientContext.getRequest();
+      return !(request instanceof HttpEntityEnclosingRequest); // return isIdempotent
+    }
+  };
+
   @BeforeSuite
   public void setupSuite() {
     createRestorePoint(SUITE_RESTORE_POINT);
     login(User.KATRI);
     ng = new ByAngular(driver());
     waitForAngularRequestsToFinish(driver());
+
+    connectionManager = new PoolingHttpClientConnectionManager();
+    // Increase max total connection to 200
+    connectionManager.setMaxTotal(200);
+    // Increase default max connection per route to 20
+    connectionManager.setDefaultMaxPerRoute(20);
+    // Increase max connections for localhost:80 to 50
+    HttpHost localhost = new HttpHost("locahost", 80);
+    connectionManager.setMaxPerRoute(new HttpRoute(localhost), 50);
   }
 
   @AfterSuite
@@ -115,7 +169,13 @@ public class TestBase {
   }
 
   void httpGet(String url) throws IOException {
-    CloseableHttpClient httpclient = HttpClients.createDefault();
+    // http://stackoverflow.com/a/26149627
+
+    CloseableHttpClient httpclient = HttpClients.custom()
+      .setConnectionManager(connectionManager)
+      .setRetryHandler(myRetryHandler)
+      .build();
+
     HttpGet httpGet = new HttpGet(url);
     System.out.println("************************************");
     try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
@@ -129,7 +189,6 @@ public class TestBase {
     } finally {
       System.out.println("************************************");
     }
-
   }
 
   private String oracleServiceUrl() {
