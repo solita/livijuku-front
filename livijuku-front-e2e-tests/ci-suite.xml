@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="CI-suite" verbose="1" >
+  <test name="Regression1">
+    <classes>
+      <class name="juku.e2e.HakemuskausiTest">
+        <methods>
+          <include name="hakuohje_kauden_avaus_ja_restorepoint_update"/>
+          <include name="hakijaaInformoidaanHakemuksenTilasta"/>
+        </methods>
+        </class>
+    </classes>
+  </test>
+</suite>
