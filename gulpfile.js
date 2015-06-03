@@ -249,19 +249,6 @@ gulp.task('watch', ['scripts'], function() {
   }).emit('update');
 });
 
-gulp.task('e2e', ['webdriver_update'], function() {
-  gulp.src('./src/tests/e2e/*.js').pipe(protractor.protractor({
-    configFile: 'protractor.conf.js'
-  })).on('error', handleError);
-});
-
-// TODO
-gulp.task('e2e-no-selenium-server', ['webdriver_update'], function() {
-  gulp.src('./src/tests/e2e/*.js').pipe(protractor.protractor({
-    configFile: 'protractor.conf.js'
-  })).on('error', handleError);
-});
-
 gulp.task('webdriver_standalone', protractor.webdriver_standalone);
 gulp.task('webdriver_update', protractor.webdriver_update);
 
