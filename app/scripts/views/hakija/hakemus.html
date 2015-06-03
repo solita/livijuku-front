@@ -10,16 +10,17 @@
         <span class='glyphicon glyphicon-circle-arrow-left'></span>
         Palaa hakemusten päänäkymään
       </a>
+
       <div class="tabs">
         <a href="#/h/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-           ng-class="(tyyppi === 'AH0')? 'tab is-selected' : 'tab'">Avustushakemus {{hakemus.vuosi}}</a>
+           ng-class="onAvustushakemus()? 'tab is-selected' : 'tab'">Avustushakemus {{hakemus.vuosi}}</a>
         <a
           href="#/h/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-          ng-class="(tyyppi === 'MH1')? 'tab is-selected' : 'tab'">1. maksatushakemus {{hakemus.vuosi}}</a>
+          ng-class="onMaksatushakemus1()? 'tab is-selected' : 'tab'">1. maksatushakemus {{hakemus.vuosi}}</a>
 
         <a
           href="#/h/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-          ng-class="(tyyppi === 'MH2')? 'tab is-selected' : 'tab'">2. maksatushakemus {{hakemus.vuosi}}</a>
+          ng-class="onMaksatushakemus2()? 'tab is-selected' : 'tab'">2. maksatushakemus {{hakemus.vuosi}}</a>
       </div>
     </div>
 
@@ -47,17 +48,17 @@
       </div>
     </div>
 
-    <div ng-show="(paatos!=null) && (tyyppi=='MH1' || tyyppi=='MH2')">
+    <div ng-show="paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
       <div class="row">
         <div class="col-md-12">
           <h3>
             MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}: <b>{{paatos.myonnettyavustus/2 | currency:"&euro;"}}</b>
             <a href=""
-              class="top"
-              title=""
-              data-toggle="tooltip"
-              data-placement="top"
-              data-original-title="Avustus vuodelle {{vuosi}}: {{paatos.myonnettyavustus| currency:'&euro;'}}">
+               class="top"
+               title=""
+               data-toggle="tooltip"
+               data-placement="top"
+               data-original-title="Avustus vuodelle {{vuosi}}: {{paatos.myonnettyavustus| currency:'&euro;'}}">
               <span class='jukutooltip glyphicon glyphicon-question-sign'></span>
             </a>
           </h3>
@@ -75,9 +76,9 @@
       <div class="hakemuksen-tila col-md-12">
         <h3>
           HAKEMUKSEN TILA:
-          <hakemus-label tila="{{hakemus.hakemustilatunnus}}" />
+          <hakemus-label tila="{{hakemus.hakemustilatunnus}}"/>
         </h3>
-        <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" />
+        <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}"/>
       </div>
     </div>
 
@@ -96,11 +97,11 @@
       <div class="row">
         <div class="col-md-12">
           <div class="form-group">
-            <label ng-show="hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0'">
+            <label ng-show="hakemusKeskenerainen()">
               <input type="checkbox" ng-model="alv">
               <span>Haluan syöttää summat arvonlisäverollisina.</span>
             </label>
-            <label ng-hide="hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0'">
+            <label ng-hide="hakemusKeskenerainen()">
               <input type="checkbox" ng-model="alv">
               <span>Haluan katsoa arvoja arvonlisäverollisina.</span>
             </label>
@@ -221,7 +222,7 @@
             </div>
             <div class="panel-body">
               <div
-                ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+                ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
                 <div class="col-md-12">
                   <div ngf-drop ng-model="myFiles" class="drop-box"
                        ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
@@ -239,7 +240,7 @@
               <div class="col-md-12">
                 <div ng-show="liitteet.length > 0" class="response">
                   <div class="sel-file" ng-repeat="l in liitteet">
-                    <div ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">
+                    <div ng-show="hakemusKeskenerainen()">
                       <div ng-show="l.liitenumero!=editoitavaLiite">
                         <p>
                           <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank"><span
@@ -274,7 +275,7 @@
                       </div>
                     </div>
                     <div
-                      ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+                      ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
                       <p>
                         <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}"><span
                           class="glyphicon glyphicon-file"></span>{{l.nimi}}
@@ -297,31 +298,31 @@
         <div class="col-md-6">
           <h5>Päivämäärä</h5>
 
-          <p ng-show="((hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && (hakemus.muokkaaja!=null))">{{hakemus.muokkausaika |
+          <p ng-show="((hakemusKeskenerainen()) && (hakemus.muokkaaja!=null))">{{hakemus.muokkausaika |
             date:'dd.MM.yyyy'}}</p>
 
-          <p ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">{{hakemus.lahetysaika |
+          <p ng-hide="(hakemusKeskenerainen())">{{hakemus.lahetysaika |
             date:'dd.MM.yyyy'}}</p>
         </div>
         <div class="col-md-6">
-          <h5 ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">Viimeisin muokkaaja</h5>
-          <h5 ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">Hakija</h5>
+          <h5 ng-show="hakemusKeskenerainen()">Viimeisin muokkaaja</h5>
+          <h5 ng-hide="hakemusKeskenerainen()">Hakija</h5>
 
-          <p ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">{{hakemus.muokkaaja}}</p>
+          <p ng-show="hakemusKeskenerainen()">{{hakemus.muokkaaja}}</p>
 
-          <p ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0')">{{hakemus.lahettaja}}</p>
+          <p ng-hide="hakemusKeskenerainen()">{{hakemus.lahettaja}}</p>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6"></div>
         <div class="col-md-3">
           <div
-            ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+            ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
             <button data-ng-click="tallennaHakemus(0)" class="pull-right btn btn-primary">Tallenna tiedot
             </button>
           </div>
           <div
-            ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+            ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
             <button data-ng-click="tallennaHakemus(0)" class="pull-right btn btn-primary" disabled>Tallenna
               tiedot
             </button>
@@ -329,14 +330,14 @@
         </div>
         <div class="col-md-3">
           <div
-            ng-show="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+            ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
             <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary"
                     noenter>
               Tallenna ja esikatsele hakemus
             </button>
           </div>
           <div
-            ng-hide="(hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0') && sallittu('modify-oma-hakemus')">
+            ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
             <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary"
                     noenter>
               Esikatsele hakemus
@@ -347,9 +348,10 @@
       <div class="row">
         <div class="col-md-12">
           <div class="form-group">
-            <label ng-show="hakemus.hakemustilatunnus == 'K' || hakemus.hakemustilatunnus == 'T0'">
+            <label ng-show="hakemusKeskenerainen()">
               <input type="checkbox" ng-model="allekirjoitusliitetty">
-              <span>Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen allekirjoitusoikeudesta.</span>
+              <span>Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen
+                allekirjoitusoikeudesta.</span>
             </label>
           </div>
         </div>
@@ -358,12 +360,14 @@
         <div class="col-md-12">
           <div ng-show="sallittu('allekirjoita-oma-hakemus')">
             <button
-              ng-show="(hakemus.hakemustilatunnus == 'K' && allekirjoitusliitetty) || (hakemus.hakemustilatunnus == 'T0' && allekirjoitusliitetty)"
-              juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen" varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen." operaatio="tallennaHakemus(2)"
+              ng-show="(hakemusKeskenerainen() && allekirjoitusliitetty)"
+              juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen"
+              varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen."
+              operaatio="tallennaHakemus(2)"
               class="pull-right btn btn-success">Tallenna ja lähetä hakemus
             </button>
             <button
-              ng-hide="(hakemus.hakemustilatunnus == 'K' && allekirjoitusliitetty) || (hakemus.hakemustilatunnus == 'T0' && allekirjoitusliitetty)"
+              ng-hide="(hakemusKeskenerainen() && allekirjoitusliitetty)"
               class="pull-right btn btn-success" disabled>Tallenna ja lähetä hakemus
             </button>
           </div>

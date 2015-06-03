@@ -68,6 +68,40 @@ angular.module('jukufrontApp')
       $scope.vanhaArvo = arvo;
     };
 
+    $scope.hakijaSuuriKaupunkiseutu = function () {
+      return $scope.lajitunnus == 'KS1';
+    };
+
+    $scope.hakijaKeskisuuriKaupunkiseutu = function () {
+      return $scope.lajitunnus == 'KS2';
+    };
+
+    $scope.hakemusPaatetty = function (hakemus) {
+      if (typeof $scope.hakemus === 'undefined') return false;
+      return hakemus.hakemuksenTila == 'P';
+    };
+
+    $scope.hakemusTarkastettu = function (hakemus) {
+      if (typeof $scope.hakemus === 'undefined') return false;
+      return hakemus.hakemuksenTila == 'T';
+    };
+
+    $scope.hakijaElyKeskus = function () {
+      return $scope.lajitunnus == 'ELY';
+    };
+
+    $scope.onAvustushakemus = function () {
+      return $scope.tyyppi == 'AH0';
+    };
+
+    $scope.onMaksatushakemus1 = function () {
+      return $scope.tyyppi == 'MH1';
+    };
+
+    $scope.onMaksatushakemus2 = function () {
+      return $scope.tyyppi == 'MH2';
+    };
+
     $scope.siirryPaatokseen = function (hakemusId, haettuavustus, avustus) {
       $location.path('/k/paatos/' + $routeParams.vuosi + '/' + $routeParams.tyyppi + '/' + $scope.lajitunnus + '/' + hakemusId + '/' + haettuavustus + '/' + avustus);
     };

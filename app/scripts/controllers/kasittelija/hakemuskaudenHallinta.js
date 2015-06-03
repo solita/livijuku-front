@@ -136,6 +136,16 @@ angular.module('jukufrontApp')
       $scope.muokkaaHakuaikojaVuosi = vuosi;
     };
 
+    $scope.hakemuskausiAvoin = function(hakemuskausi){
+      if (typeof hakemuskausi === 'undefined') return false;
+      return hakemuskausi.tilatunnus=='A';
+    };
+
+    $scope.hakemuskausiKaynnistetty = function(hakemuskausi){
+      if (typeof hakemuskausi === 'undefined') return false;
+      return hakemuskausi.tilatunnus=='K';
+    };
+
     $scope.tallennaHakuajat = function (formi, vuosi, ah0alkupvm, ah0loppupvm, mh1alkupvm, mh1loppupvm, mh2alkupvm, mh2loppupvm) {
       StatusService.tyhjenna();
       $scope.$broadcast('show-errors-check-validity');

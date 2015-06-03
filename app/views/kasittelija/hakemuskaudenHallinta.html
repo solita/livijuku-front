@@ -23,12 +23,14 @@
                       data-tooltip="Voimassaoleva valtioneuvoston asetus joukkoliikenteen valtionavustuksista">
                 <span>{{hakemuskausi.asetusLadattu ? 'Korvaa ladattu asetus':'Lataa asetus'}}</span>
               </button>
-            <p ng-show="hakemuskausi.tilatunnus=='A' && hakemuskausi.asetusLadattu && sallittu('modify-hakemuskausi')">
+            <p
+              ng-show="hakemuskausiAvoin(hakemuskausi) && hakemuskausi.asetusLadattu && sallittu('modify-hakemuskausi')">
               <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
                 hakemuskausi
               </button>
             </p>
-            <p ng-hide="(hakemuskausi.tilatunnus=='K' || (hakemuskausi.tilatunnus=='A' && hakemuskausi.asetusLadattu && sallittu('modify-hakemuskausi')))">
+            <p
+              ng-hide="hakemuskausiKaynnistetty(hakemuskausi) || (hakemuskausiAvoin(hakemuskausi) && hakemuskausi.asetusLadattu && sallittu('modify-hakemuskausi'))">
               <button class="btn btn-success btn-lg" disabled>Käynnistä
                 hakemuskausi
               </button>
