@@ -46,7 +46,7 @@ public class HakemuskausiTest extends TestBase {
     for (int i = 0; i < 25; i++) {
       sleep(100);
       try {
-        findElementByXPath("//button[%s and %s]", containsText("Käynnistä hakemuskausi"), isVisible());
+        button("Käynnistä hakemuskausi");
       } catch (NoSuchElementException e) {
         kaynnistaNappiNakyy = false;
         break;
@@ -87,71 +87,98 @@ public class HakemuskausiTest extends TestBase {
     login(User.HARRI);
 
     // Varmista, että kausi on avoinna TODO: Korjaa tämä.
-//    WebElement eiHakemuksia = findElementByXPath("//p[%s]", containsText("Ei hakemuksia, koska hakemuskautta ei ole vielä avattu."));
-//    assertThat(eiHakemuksia, is(notNullValue()));
+    //    WebElement eiHakemuksia = findElementByXPath("//p[%s]", containsText("Ei hakemuksia, koska hakemuskautta ei ole vielä avattu."));
+    //    assertThat(eiHakemuksia, is(notNullValue()));
 
-    // Assertoi tila keskeneräinen
-    WebElement we = findElementByXPath("//span[%s and %s]", containsText("Keskeneräinen"), hasClass("label-warning"));
-    // Avaa hakemus
-    we.click();
+    // Assertoi tila keskeneräinen ja avaa hakemus
+    // TODO Assertoi hakijana myös hakemuksen tila ja bread crumbs.
+    spanWithTextAndClass("Keskeneräinen", "label-warning").click();
 
     // Lähetä hakemus
-    WebElement olenLiittanyt = findElementByXPath("//span[%s and %s]", containsText("Olen liittänyt hakemukseen tarvittavat"), isVisible());
-    olenLiittanyt.click();
-    waitForAngularRequestsToFinish(driver());
-    findElementByXPath("//button[%s and %s]", containsText("Tallenna ja lähetä hakemus"), isVisible()).click();
-    waitForAngularRequestsToFinish(driver());
+    lahetaHakemus();
 
-    WebElement oletkoVarmaKylla = findElementByXPath("//button[%s]", containsText("Kyllä"));
-    oletkoVarmaKylla.click();
-
-    // Assertoi tila vireillä (find failaa, jos ei löydä)
-    findElementByXPath("//span[%s and %s]", containsText("Vireillä"), hasClass("label-danger"));
+    // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
+    spanWithTextAndClass("Vireillä", "label-danger");
 
     // Kirjaa sisään käsittelijä
     login(User.KATRI);
-
     // Ota hakemus käsittelyyn
-    WebElement vireillaLaatikko =
-      findElementByXPath("//span[%s and %s]",
-                           containsText("Vireillä"),
-                           hasClass("label-danger"));
-    vireillaLaatikko.click();
+    avaaHakemus("Vireillä", "label-danger");
 
-    WebElement helsinginSeudunVireilla =
-      findElementByXPath("//span[%s and %s]",
-                         containsText("Vireillä"),
-                         hasClass("label-danger"));
-    helsinginSeudunVireilla.click();
+    // Palauta hakemus täydennettäväksi
+    button("Palauta täydennettäväksi").click();
+
+    //TODO Assertoi käsittelijänä tila Täydennettävänä
+    spanWithTextAndClass("Täydennettävänä", "label-info");
+    // Kirjaa sisään hakija
+    login(User.HARRI);
+    // Assertoi tila täydennettävänä
+    // Avaa hakemus
+    spanWithTextAndClass("Täydennettävänä", "label-info").click();
+    // Täydennä hakemus
+    lahetaHakemus();
+
+    // Assetoi hakijana tila Täydennetty.
+    spanWithTextAndClass("Täydennetty", "label-danger");
+
+    // Kirjaa sisään käsittelijä
+    login(User.KATRI);
+    // Tarkasta hakemus
+    avaaHakemus("Täydennetty", "label-danger");
+    button("Merkitse tarkastetuksi").click();
+    okOlenVarma().click();
+    // Assertoi käsittelijänä tila Tarkastettu
+    spanWithTextAndClass("Tarkastettu", "label-success");
 
     // Kirjaa sisään hakija
     login(User.HARRI);
-    // Assertoi tila käsittelyssä
-    findElementByXPath("//span[%s and %s]", containsText("Vireillä"), hasClass("label-danger"));
+    // Assertoi hakijana tila tarkastettu
+    spanWithTextAndClass("Tarkastettu", "label-success");
 
     // Kirjaa sisään käsittelijä
     login(User.KATRI);
-    // Palauta hakemus täydennettäväksi
-    WebElement kaikkiHakemukset =
-      findElementByLinkText("Kaikki hakemukset");
-    kaikkiHakemukset.click();
-    WebElement helsinginSeudunVireilla1 =
-      findElementByXPath("//span[%s and %s]",
-                         containsText("Vireillä"),
-                         hasClass("label-danger"));
-    helsinginSeudunVireilla1.click();
+    // Päätä hakemus
+    spanWithTextAndClass("Tarkastettu", "label-success").click();
+    buttonInPosition("Suunnittelu ja päätöksenteko", 1).click();
+    buttonInPosition("Päätöksentekoon", 1).click();
+    findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
+    findElementByXPath("//input[@type='text']").sendKeys("Paavo Päättäjä");
+    button("Tallenna ja hyväksy päätös").click();
+    okOlenVarma().click();
+    waitForAngularRequestsToFinish(driver());
 
     // Kirjaa sisään hakija
-    // Assertoi tila täydennettävänä
-    // Täydennä hakemus
-    // Kirjaa sisään käsittelijä
-    // Tarkasta hakemus
-    // Kirjaa sisään hakija
-    // Assertoi tila tarkastettu
-    // Kirjaa sisään käsittelijä
-    // Päätä hakemus
-    // Kijraa sisään hakija
+    login(User.HARRI);
     // Assertoi tila päätetty
+
+  }
+
+  private WebElement buttonInPosition(String text, int position) {
+    return findElementByXPath("//button[%s and %s][%s]",
+                       containsText(text),
+                       isVisible(),
+                       position);
+  }
+
+  private void avaaHakemus(String tila, String statusClass) {
+    WebElement vireillaLaatikko =
+      spanWithTextAndClass(tila, statusClass);
+    vireillaLaatikko.click();
+
+    WebElement helsinginSeudunVireilla =
+      spanWithTextAndClass(tila, statusClass);
+    helsinginSeudunVireilla.click();
+  }
+
+  private void lahetaHakemus() {
+    WebElement olenLiittanyt = findElementByXPath("//span[%s and %s]", containsText("Olen liittänyt hakemukseen tarvittavat"), isVisible());
+    olenLiittanyt.click();
+    waitForAngularRequestsToFinish(driver());
+    button("Tallenna ja lähetä hakemus").click();
+    waitForAngularRequestsToFinish(driver());
+
+    okOlenVarma().click();
+    waitForAngularRequestsToFinish(driver());
   }
 
   private void postHakuohje(int vuosi) throws IOException {

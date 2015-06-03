@@ -45,6 +45,12 @@ public class TestBase {
   ByAngular ng;
   private PoolingHttpClientConnectionManager connectionManager;
 
+  protected WebElement button(String text) {
+    return findElementByXPath("//button[%s and %s]",
+                       containsText(text),
+                       isVisible());
+  }
+
   public RemoteWebDriver driver() {
     if(driver == null) {
       driver = createDriver();
@@ -69,6 +75,17 @@ public class TestBase {
 
   String isVisible() {
     return "not(self::*[@disabled] or ancestor::*[@disabled]) and not(ancestor::*[contains(concat( ' ', @class, ' '), ' ng-hide ')])";
+  }
+
+  protected WebElement okOlenVarma() {
+    return findElementByXPath("//button[%s]", containsText("Kyllä"));
+  }
+
+  protected WebElement spanWithTextAndClass(String tila, String statusClass) {
+    return findElementByXPath("//span[%s and %s and %s]",
+                         containsText(tila),
+                         hasClass(statusClass),
+                         isVisible());
   }
 
   enum User {
@@ -209,7 +226,7 @@ public class TestBase {
   }
 
   String containsText(String text) {
-    return "contains(normalize-space(text()),'" + text + "')";
+    return "contains(normalize-space(string()),'" + text + "')";
   }
 
   String baseUrl() {
