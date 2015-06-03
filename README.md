@@ -23,7 +23,7 @@ Install the dependencies
 
 Cd to the project directory and run
 
-    npm install
+    build-dist.sh
 
 to install Node.js and JavaScript dependencies.
 
@@ -31,13 +31,13 @@ to install Node.js and JavaScript dependencies.
 Running the tests
 -------------
 
-Run the unit tests
+Run the end to end tests (requires backend and front running locally)
 
-    npm test
+    teste2e.sh
 
 Running the app
 ---------------
 
 Run the app locally on [http://localhost:9000](http://localhost:9000)
 
-    npm start
+    start-dev.sh
