@@ -46,8 +46,13 @@ angular.module('jukufrontApp')
       $scope.vanhaArvo = arvo;
     };
 
+    $scope.hakemusTarkastettu = function(){
+      if (typeof $scope.avustushakemus === 'undefined') return false;
+      return $scope.avustushakemus.hakemustilatunnus == 'T';
+    };
+
     $scope.naytaPaatos = function () {
-      if ($scope.avustushakemus.hakemustilatunnus == 'T') {
+      if ($scope.hakemusTarkastettu()) {
         $scope.tallennaPaatos(1);
       } else {
         $window.open('api/hakemus/' + $scope.hakemusid + '/paatos/pdf', 'target', '_blank');
