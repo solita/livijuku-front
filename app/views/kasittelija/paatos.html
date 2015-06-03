@@ -65,12 +65,12 @@
     <form name="paatosForm" juku-poistumisvaroitus="">
       <div class="row">
         <div class="col-md-12">
-          <label>Päätösteksti</label>
+          <label for="paatosteksti">Päätösteksti</label>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <textarea name="paatosteksti" class="animate msd-elastic: \n;" ng-model="paatos.selite"
+          <textarea id="paatosteksti" name="paatosteksti" class="animate msd-elastic: \n;" ng-model="paatos.selite"
                     ng-required="true"></textarea>
           <span class="help-block text-danger"
                 ng-show="paatosForm.paatosteksti.$error.required">
@@ -80,12 +80,12 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <label>Päättäjän nimi</label>
+          <label for="paattajanimi">Päättäjän nimi</label>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <input name="paattajanimi" class="form-control" type="text" ng-model="paatos.paattajanimi"
+          <input id="paattajanimi" name="paattajanimi" class="form-control" type="text" ng-model="paatos.paattajanimi"
                  ng-required="true"/>
           <span class="help-block text-danger"
                 ng-show="paatosForm.paattajanimi.$error.required">
