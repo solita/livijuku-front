@@ -1,6 +1,6 @@
 {
   "name": "livijukufrontApp",
-  "version": "0.0.0",
+  "version": "1.0.0_SNAPSHOT",
   "dependencies": {},
   "devDependencies": {
     "bower": "^1.4.1",
