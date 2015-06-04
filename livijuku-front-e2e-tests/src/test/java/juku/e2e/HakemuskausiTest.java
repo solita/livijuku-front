@@ -1,15 +1,5 @@
 package juku.e2e;
 
-import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
-import static java.lang.Thread.sleep;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.AssertJUnit.assertTrue;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -21,6 +11,19 @@ import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
+import static java.lang.Thread.sleep;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.testng.AssertJUnit.assertTrue;
 
 public class HakemuskausiTest extends TestBase {
 
@@ -39,7 +42,7 @@ public class HakemuskausiTest extends TestBase {
     // Aseta avustuskauden alkupäivä 1.1.
     asetaAvustuskaudenAlkupaiva0101();
 
-    findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi")).click();
+    button("Käynnistä hakemuskausi").click();
     waitForAngularRequestsToFinish(driver());
 
     boolean kaynnistaNappiNakyy = true;
@@ -94,6 +97,8 @@ public class HakemuskausiTest extends TestBase {
     // TODO Assertoi hakijana myös hakemuksen tila ja bread crumbs.
     spanWithTextAndClass("Keskeneräinen", "label-warning").click();
 
+    tarkistaHakijanHakemuksenTila("Keskeneräinen", "label-warning");
+
     // Lähetä hakemus
     lahetaHakemus();
 
@@ -108,13 +113,17 @@ public class HakemuskausiTest extends TestBase {
     // Palauta hakemus täydennettäväksi
     button("Palauta täydennettäväksi").click();
 
-    //TODO Assertoi käsittelijänä tila Täydennettävänä
+    //Assertoi käsittelijänä tila Täydennettävänä
     spanWithTextAndClass("Täydennettävänä", "label-info");
     // Kirjaa sisään hakija
     login(User.HARRI);
     // Assertoi tila täydennettävänä
     // Avaa hakemus
     spanWithTextAndClass("Täydennettävänä", "label-info").click();
+
+    // TODO Korjaa ja ota käyttöön
+    // tarkistaHakijanHakemuksenTila("Täydennettävänä","label-info");
+
     // Täydennä hakemus
     lahetaHakemus();
 
@@ -153,11 +162,17 @@ public class HakemuskausiTest extends TestBase {
 
   }
 
+  private void tarkistaHakijanHakemuksenTila(String teksti, String luokka) {
+    List<WebElement> hakemuksenTilaIndikaattorit = findElementsByXPath(String.format("//span[contains(@class,'%s') and contains(string(),'%s')]", luokka, teksti));
+
+    assertThat(String.format("Hakijan hakemussivulla hakemuksen tila (%s) pitäisi näkyä kaksi kertaa.", teksti), hakemuksenTilaIndikaattorit, hasSize(equalTo(2)));
+  }
+
   private WebElement buttonInPosition(String text, int position) {
     return findElementByXPath("//button[%s and %s][%s]",
-                       containsText(text),
-                       isVisible(),
-                       position);
+      containsText(text),
+      isVisible(),
+      position);
   }
 
   private void avaaHakemus(String tila, String statusClass) {

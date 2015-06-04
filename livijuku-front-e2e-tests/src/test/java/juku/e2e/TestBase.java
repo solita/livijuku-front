@@ -1,15 +1,6 @@
 package juku.e2e;
 
-import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
-import static java.lang.Thread.sleep;
-
-import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.net.UnknownHostException;
-import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.SSLException;
-
+import com.paulhammant.ngwebdriver.ByAngular;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpHost;
@@ -24,7 +15,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -35,7 +25,15 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
-import com.paulhammant.ngwebdriver.ByAngular;
+import javax.net.ssl.SSLException;
+import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.net.UnknownHostException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
+import static java.lang.Thread.sleep;
 
 public class TestBase {
 
@@ -250,10 +248,6 @@ public class TestBase {
   }
 
 
-  public WebElement findElement(By by) {
-    return driver().findElement(by);
-  }
-
   public WebElement findElementByCssSelector(String css) {
     return driver().findElementByCssSelector(css);
   }
@@ -264,6 +258,10 @@ public class TestBase {
 
   public WebElement findElementByXPath(String xpath) {
     return driver().findElementByXPath(xpath);
+  }
+
+  public List<WebElement> findElementsByXPath(String xpath) {
+    return driver().findElementsByXPath(xpath);
   }
 
   public WebElement findElementByXPath(String xpath, Object... n) {
