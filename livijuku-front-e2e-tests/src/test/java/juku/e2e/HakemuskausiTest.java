@@ -95,59 +95,58 @@ public class HakemuskausiTest extends TestBase {
 
     // Assertoi tila keskeneräinen ja avaa hakemus
     // TODO Assertoi hakijana myös hakemuksen tila ja bread crumbs.
-    spanWithTextAndClass("Keskeneräinen", "label-warning").click();
+    spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
-    tarkistaHakijanHakemuksenTila("Keskeneräinen", "label-warning");
+    tarkistaHakijanHakemuksenTila("Keskeneräinen", "hakemus-tila-keskenerainen");
 
     // Lähetä hakemus
     lahetaHakemus();
 
     // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
-    spanWithTextAndClass("Vireillä", "label-danger");
+    spanWithTextAndClass("Vireillä", "hakemus-tila-vireilla");
 
     // Kirjaa sisään käsittelijä
     login(User.KATRI);
     // Ota hakemus käsittelyyn
-    avaaHakemus("Vireillä", "label-danger");
+    avaaHakemus("Vireillä", "hakemus-tila-vireilla");
 
     // Palauta hakemus täydennettäväksi
     button("Palauta täydennettäväksi").click();
 
     //Assertoi käsittelijänä tila Täydennettävänä
-    spanWithTextAndClass("Täydennettävänä", "label-info");
+    spanWithTextAndClass("Täydennettävänä", "hakemus-tila-taydennettavana");
     // Kirjaa sisään hakija
     login(User.HARRI);
     // Assertoi tila täydennettävänä
     // Avaa hakemus
-    spanWithTextAndClass("Täydennettävänä", "label-info").click();
+    spanWithTextAndClass("Täydennettävänä", "hakemus-tila-taydennettavana").click();
 
-    // TODO Korjaa ja ota käyttöön
-    // tarkistaHakijanHakemuksenTila("Täydennettävänä","label-info");
+    tarkistaHakijanHakemuksenTila("Täydennettävänä","hakemus-tila-taydennettavana");
 
     // Täydennä hakemus
     lahetaHakemus();
 
     // Assetoi hakijana tila Täydennetty.
-    spanWithTextAndClass("Täydennetty", "label-danger");
+    spanWithTextAndClass("Täydennetty", "hakemus-tila-taydennetty");
 
     // Kirjaa sisään käsittelijä
     login(User.KATRI);
     // Tarkasta hakemus
-    avaaHakemus("Täydennetty", "label-danger");
+    avaaHakemus("Täydennetty", "hakemus-tila-taydennetty");
     button("Merkitse tarkastetuksi").click();
     okOlenVarma().click();
     // Assertoi käsittelijänä tila Tarkastettu
-    spanWithTextAndClass("Tarkastettu", "label-success");
+    spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
 
     // Kirjaa sisään hakija
     login(User.HARRI);
     // Assertoi hakijana tila tarkastettu
-    spanWithTextAndClass("Tarkastettu", "label-success");
+    spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
 
     // Kirjaa sisään käsittelijä
     login(User.KATRI);
     // Päätä hakemus
-    spanWithTextAndClass("Tarkastettu", "label-success").click();
+    spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu").click();
     buttonInPosition("Suunnittelu ja päätöksenteko", 1).click();
     buttonInPosition("Päätöksentekoon", 1).click();
     findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
