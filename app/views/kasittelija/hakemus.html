@@ -36,7 +36,29 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <h3>{{hakija}}</h3>
+      <h3>PERUSTIEDOT</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <label>Hakija</label>
+
+      <p>{{hakija}}</p>
+    </div>
+    <div class="col-md-6">
+      <label>Hakemuksen tila</label>
+
+      <p>
+        <hakemus-label tila="{{hakemus.hakemustilatunnus}}"/>
+      </p>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="hakemuksen-tila col-md-12">
+      <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}"/>
     </div>
   </div>
   <div class="row">

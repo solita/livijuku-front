@@ -68,16 +68,27 @@
 
     <div class="row">
       <div class="col-md-12">
-        <h3>HAKIJA: {{hakija}}</h3>
+        <h3>PERUSTIEDOT <span class="label tilaeikaynnissa">jjjjj</span></h3>
       </div>
     </div>
 
     <div class="row">
-      <div class="hakemuksen-tila col-md-12">
-        <h3>
-          HAKEMUKSEN TILA:
+      <div class="col-md-6">
+        <label>Hakija</label>
+
+        <p>{{hakija}}</p>
+      </div>
+      <div class="col-md-6">
+        <label>Hakemuksen tila</label>
+
+        <p>
           <hakemus-label tila="{{hakemus.hakemustilatunnus}}"/>
-        </h3>
+        </p>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="hakemuksen-tila col-md-12">
         <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}"/>
       </div>
     </div>

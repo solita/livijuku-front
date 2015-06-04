@@ -6,42 +6,42 @@ var tilat = [
   {
     id: '0',
     label: 'Ei käynnissä',
-    className: 'label-default'
+    className: 'hakemus-tila-eikaynnissa'
   },
   {
     id: 'K',
     label: 'Keskeneräinen',
-    className: 'label-warning'
+    className: 'hakemus-tila-keskenerainen'
   },
   {
     id: 'V',
     label: 'Vireillä',
-    className: 'label-primary'
+    className: 'hakemus-tila-vireilla'
   },
   {
     id: 'T0',
     label: 'Täydennettävänä',
-    className: 'label-warning'
+    className: 'hakemus-tila-taydennettavana'
   },
   {
     id: 'TV',
     label: 'Täydennetty',
-    className: 'label-primary'
+    className: 'hakemus-tila-taydennetty'
   },
   {
     id: 'T',
     label: 'Tarkastettu',
-    className: 'label-primary'
+    className: 'hakemus-tila-tarkastettu'
   },
   {
     id: 'P',
     label: 'Päätetty',
-    className: 'label-success'
+    className: 'hakemus-tila-paatetty'
   },
   {
     id: 'M',
     label: 'Maksettu',
-    className: 'label-success'
+    className: 'hakemus-tila-maksettu'
   }
 ];
 
