@@ -47,38 +47,35 @@ angular
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/yhteinen/aloitus.html'
+        template: require('views/yhteinen/aloitus.html')
       })
       .when('/h/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
         template: require('views/hakija/hakemus.html'),
         controller: 'HakemusCtrl'
       })
       .when('/h/hakemukset', {
-        templateUrl: 'views/hakija/hakemukset.html',
+        template: require('views/hakija/hakemukset.html'),
         controller: 'HakijaHakemuksetCtrl'
       })
       .when('/k/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
-        templateUrl: 'views/kasittelija/hakemus.html',
+        template: require('views/kasittelija/hakemus.html'),
         controller: 'HakemusCtrl'
       })
       .when('/k/hakemukset/:tyyppi', {
-        templateUrl: 'views/kasittelija/hakemukset.html',
+        template: require('views/kasittelija/hakemukset.html'),
         controller: 'KasittelijaHakemuksetCtrl'
       })
       .when('/k/hakemuskaudenhallinta', {
-        templateUrl: 'views/kasittelija/hakemuskaudenHallinta.html',
+        template: require('views/kasittelija/hakemuskaudenHallinta.html'),
         controller: 'KasittelijaHakemuskaudenHallintaCtrl'
       })
       .when('/k/paatos/:vuosi/:tyyppi/:lajitunnus/:hakemusid/:haettuavustus/:avustus', {
-        templateUrl: 'views/kasittelija/paatos.html',
+        template: require('views/kasittelija/paatos.html'),
         controller: 'KasittelijaPaatosCtrl'
       })
       .when('/k/suunnittelu/:vuosi/:tyyppi/:lajitunnus', {
-        templateUrl: 'views/kasittelija/suunnittelu.html',
+        template: require('views/kasittelija/suunnittelu.html'),
         controller: 'KasittelijaSuunnitteluCtrl'
-      })
-      .when('/main', {
-        templateUrl: 'views/main.html'
       })
       .otherwise({
         redirectTo: '/'

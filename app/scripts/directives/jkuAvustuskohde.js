@@ -84,6 +84,6 @@ angular.module('jukufrontApp')
         };
 
       }],
-      templateUrl: 'views/yhteinen/jkuAvustuskohde.html'
+      template: require('views/yhteinen/jkuAvustuskohde.html')
     };
   });

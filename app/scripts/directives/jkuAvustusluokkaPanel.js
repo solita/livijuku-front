@@ -13,7 +13,7 @@ angular.module('jukufrontApp')
         hakemus: "="
       },
       transclude: true,
-      templateUrl: 'views/yhteinen/jkuAvustusluokkaPanel.html',
+      template: require('views/yhteinen/jkuAvustusluokkaPanel.html'),
       controller: ["$scope", function ($scope) {
         $scope.sumHaettavaAvustusOverLuokka = function (luokka) {
           return _.sum(luokka.avustuskohteet, 'haettavaavustus');
