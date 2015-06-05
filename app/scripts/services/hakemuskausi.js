@@ -6,7 +6,8 @@ angular.module('services.hakemuskausi', [])
   .factory('HakemuskausiService', ['$http', function ($http) {
     return {
       hae: function () {
-        return $http.get('api/hakemuskaudet', {params: {isArray: true}});
+        return $http.get('api/hakemuskaudet', {params: {isArray: true}})
+          .then(res => res.data);
       },
       haeSummary: function () {
         return $http.get('api/hakemuskaudet/yhteenveto', {params: {isArray: true}});
