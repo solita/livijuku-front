@@ -5,7 +5,7 @@
 
   <!-- Navigaatio -->
   <div ng-show="sallittu('view-oma-hakemus')">
-    <div class="navigation">
+    <juku-navigation>
       <a href="#/h/hakemukset">
         <span class='glyphicon glyphicon-circle-arrow-left'></span>
         Palaa hakemusten päänäkymään
@@ -22,7 +22,7 @@
           href="#/h/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
           ng-class="onMaksatushakemus2()? 'tab is-selected' : 'tab'">2. maksatushakemus {{hakemus.vuosi}}</a>
       </div>
-    </div>
+    </juku-navigation>
 
 
     <div class="row">
