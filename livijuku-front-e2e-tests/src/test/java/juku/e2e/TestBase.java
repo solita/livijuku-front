@@ -59,7 +59,7 @@ public class TestBase {
 
   private RemoteWebDriver createDriver() {
     RemoteWebDriver drv;
-    if (System.getProperty("webdriver.chrome.driver()") != null) {
+    if (System.getProperty("chrome") != null) {
       drv = new ChromeDriver();
     } else {
       FirefoxProfile fp = new FirefoxProfile();
