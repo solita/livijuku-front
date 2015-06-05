@@ -44,6 +44,7 @@ public class TestBase {
   private PoolingHttpClientConnectionManager connectionManager;
 
   protected WebElement button(String text) {
+    waitForAngularRequestsToFinish(driver());
     return findElementByXPath("//button[%s and %s]",
                        containsText(text),
                        isVisible());
@@ -72,14 +73,17 @@ public class TestBase {
   }
 
   String isVisible() {
+    waitForAngularRequestsToFinish(driver());
     return "not(self::*[@disabled] or ancestor::*[@disabled]) and not(ancestor::*[contains(concat( ' ', @class, ' '), ' ng-hide ')])";
   }
 
   protected WebElement okOlenVarma() {
+    waitForAngularRequestsToFinish(driver());
     return findElementByXPath("//button[%s]", containsText("Kyllä"));
   }
 
   protected WebElement spanWithTextAndClass(String tila, String statusClass) {
+    waitForAngularRequestsToFinish(driver());
     return findElementByXPath("//span[%s and %s and %s]",
                          containsText(tila),
                          hasClass(statusClass),
