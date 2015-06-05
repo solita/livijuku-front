@@ -162,7 +162,6 @@ public class HakemuskausiTest extends TestBase {
   }
 
   private void tarkistaHakijanHakemuksenTila(String teksti, String luokka) {
-    waitForAngularRequestsToFinish(driver());
     List<WebElement> hakemuksenTilaIndikaattorit = findElementsByXPath(String.format("//span[contains(@class,'%s') and contains(string(),'%s')]", luokka, teksti));
 
     assertThat(String.format("Hakijan hakemussivulla hakemuksen tila (%s) pitäisi näkyä kaksi kertaa.", teksti), hakemuksenTilaIndikaattorit, hasSize(equalTo(2)));

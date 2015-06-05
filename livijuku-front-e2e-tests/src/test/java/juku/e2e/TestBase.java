@@ -249,22 +249,27 @@ public class TestBase {
 
 
   public WebElement findElementByCssSelector(String css) {
+    waitForAngularRequestsToFinish(driver());
     return driver().findElementByCssSelector(css);
   }
 
   public WebElement findElementByLinkText(String text) {
+    waitForAngularRequestsToFinish(driver());
     return driver().findElementByLinkText(text);
   }
 
   public WebElement findElementByXPath(String xpath) {
+    waitForAngularRequestsToFinish(driver());
     return driver().findElementByXPath(xpath);
   }
 
   public List<WebElement> findElementsByXPath(String xpath) {
+    waitForAngularRequestsToFinish(driver());
     return driver().findElementsByXPath(xpath);
   }
 
   public WebElement findElementByXPath(String xpath, Object... n) {
+    waitForAngularRequestsToFinish(driver());
     return driver().findElementByXPath(String.format(xpath,n));
   }
 }
