@@ -110,6 +110,8 @@ public class HakemuskausiTest extends TestBase {
     // Ota hakemus käsittelyyn
     avaaHakemus("Vireillä", "hakemus-tila-vireilla");
 
+    tarkistaHakijanHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
+
     // Palauta hakemus täydennettäväksi
     button("Palauta täydennettäväksi").click();
 
@@ -131,10 +133,15 @@ public class HakemuskausiTest extends TestBase {
 
     // Kirjaa sisään käsittelijä
     login(User.KATRI);
+
     // Tarkasta hakemus
     avaaHakemus("Täydennetty", "hakemus-tila-taydennetty");
+
+    tarkistaHakijanHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
+
     button("Merkitse tarkastetuksi").click();
     okOlenVarma().click();
+
     // Assertoi käsittelijänä tila Tarkastettu
     spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
 
@@ -149,6 +156,7 @@ public class HakemuskausiTest extends TestBase {
     spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu").click();
     buttonInPosition("Suunnittelu ja päätöksenteko", 1).click();
     buttonInPosition("Päätöksentekoon", 1).click();
+    spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
     findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
     findElementByXPath("//input[@type='text']").sendKeys("Paavo Päättäjä");
     button("Tallenna ja hyväksy päätös").click();

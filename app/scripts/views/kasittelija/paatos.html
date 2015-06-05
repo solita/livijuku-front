@@ -17,7 +17,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <h3>Hakemustiedot</h3>
+        <h3>HAKEMUSTIEDOT</h3>
       </div>
     </div>
     <div class="row">
@@ -41,15 +41,22 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-4">
         <label>Haettu avustus</label>
 
         <p>{{haettuavustus| currency:"&euro;"}}</p>
       </div>
+      <div class="col-md-4">
+        <label>Hakemuksen tila</label>
+
+        <p>
+          <hakemus-label tila="{{avustushakemus.hakemustilatunnus}}"/>
+        </p>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <h3>Päätös</h3>
+        <h3>PÄÄTÖS</h3>
       </div>
     </div>
     <div class="row">

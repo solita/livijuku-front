@@ -75,7 +75,7 @@
             <p>{{hakemus.myonnettavaAvustus|currency:"&euro;"}}</p>
           </div>
           <div ng-hide="hakemusPaatetty(hakemus)">
-            <input type="text" min="-0.0001" ng-currency="" class="form-control"
+            <input id="avustus_{{hakemus.hakemusId}}" type="text" min="-0.0001" ng-currency="" class="form-control"
                    ng-model="hakemus.myonnettavaAvustus"
                    ng-focus="asetaVanhaArvo(hakemus.myonnettavaAvustus)"
                    ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)"/>
