@@ -5,79 +5,50 @@
   <div ng-show="hakemukset.length==0">
     <p>Ei hakemuksia, koska hakemuskautta ei ole vielä avattu.</p>
   </div>
-  <div ng-show="hakemukset.length>0 && sallittu('view-kaikki-hakemukset')">
-    <div class="row">
-      <div class="col-md-3">
-        <div ng-show="tyyppi=='AH0'">
-          <button ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" ng-click="asetaTyyppi('AH0')"
-                  class="btn btn-primary">Avustushakemukset<span
-            class="badge badge-notify">{{kasiteltavatAvustushakemukset}}</span></button>
-          <button ng-hide="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" ng-click="asetaTyyppi('AH0')"
-                  class="btn btn-primary">Avustushakemukset
-          </button>
-        </div>
-        <div ng-hide="tyyppi=='AH0'">
-          <button ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" ng-click="asetaTyyppi('AH0')"
-                  class="btn btn-default">Avustushakemukset<span
-            class="badge badge-notify">{{kasiteltavatAvustushakemukset}}</span></button>
-          <button ng-hide="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" ng-click="asetaTyyppi('AH0')"
-                  class="btn btn-default">Avustushakemukset
-          </button>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div ng-show="tyyppi=='MH1'">
-          <button ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" ng-click="asetaTyyppi('MH1')"
-                  class="btn btn-primary">1. maksatushakemukset<span
-            class="badge badge-notify">{{kasiteltavatMaksatus1hakemukset}}</span></button>
-          <button ng-hide="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" ng-click="asetaTyyppi('MH1')"
-                  class="btn btn-primary">1. maksatushakemukset
-          </button>
-        </div>
-        <div ng-hide="tyyppi=='MH1'">
-          <button ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" ng-click="asetaTyyppi('MH1')"
-                  class="btn btn-default">1. maksatushakemukset<span
-            class="badge badge-notify">{{kasiteltavatMaksatus1hakemukset}}</span></button>
-          <button ng-hide="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" ng-click="asetaTyyppi('MH1')"
-                  class="btn btn-default">1. maksatushakemukset
-          </button>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div ng-show="tyyppi=='MH2'">
-          <button ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" ng-click="asetaTyyppi('MH2')"
-                  class="btn btn-primary">2. maksatushakemukset<span
-            class="badge badge-notify">{{kasiteltavatMaksatus2hakemukset}}</span></button>
-          <button ng-hide="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" ng-click="asetaTyyppi('MH2')"
-                  class="btn btn-primary">2. maksatushakemukset
-          </button>
-        </div>
-        <div ng-hide="tyyppi=='MH2'">
-          <button ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" ng-click="asetaTyyppi('MH2')"
-                  class="btn btn-default">2. maksatushakemukset<span
-            class="badge badge-notify">{{kasiteltavatMaksatus2hakemukset}}</span></button>
-          <button ng-hide="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" ng-click="asetaTyyppi('MH2')"
-                  class="btn btn-default">2. maksatushakemukset
-          </button>
-        </div>
-      </div>
-    </div>
+
+  <div ng-show="hakemukset.length> 0 && sallittu('view-kaikki-hakemukset')">
+    <juku-navigation>
+      <juku-tabs>
+        <juku-tab ng-click="asetaTyyppi('AH0')" selected="tyyppi === 'AH0'">
+          Avustushakemukset
+          <juku-badge
+            number="kasiteltavatAvustushakemukset"
+            ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" />
+        </juku-tab>
+
+        <juku-tab ng-click="asetaTyyppi('MH1')" selected="tyyppi === 'MH1'">
+          1. maksatushakemukset
+          <juku-badge
+            number="kasiteltavatMaksatus1hakemukset"
+            ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" />
+        </juku-tab>
+        <juku-tab ng-click="asetaTyyppi('MH2')" selected="tyyppi === 'MH2'">
+          2. maksatushakemukset
+          <juku-badge
+            number="kasiteltavatMaksatus2hakemukset"
+            ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" />
+        </juku-tab>
+      </juku-tab>
+    </juku-navigation>
+
     <accordion close-others="false">
       <div ng-repeat="hakemuksetPerVuosi in hakemukset">
         <accordion-group is-open="hakemuksetPerVuosi.accordionOpen">
           <accordion-heading>
             <div class="row">
-              <div ng-show="tyyppi=='AH0'" class="col-md-12">
-                <h4><i class="pull-left glyphicon"
-                       ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
-                  AVUSTUSHAKEMUKSET {{hakemuksetPerVuosi.vuosi}}</i></h4>
+              <div ng-show="tyyppi=='AH0'">
+                <h4>
+                  <i class="pull-left glyphicon"
+                       ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}"></i>
+                  JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET {{hakemuksetPerVuosi.vuosi}}
+                </h4>
               </div>
-              <div ng-show="tyyppi=='MH1'" class="col-md-12">
+              <div ng-show="tyyppi=='MH1'">
                 <h4><i class="pull-left glyphicon"
                        ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
                   MAKSATUSHAKEMUKSET AJALTA 1.1-30.6.{{hakemuksetPerVuosi.vuosi}}</i></h4>
               </div>
-              <div ng-show="tyyppi=='MH2'" class="col-md-12">
+              <div ng-show="tyyppi=='MH2'">
                 <h4><i class="pull-left glyphicon"
                        ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
                   MAKSATUSHAKEMUKSET AJALTA 1.7-31.12.{{hakemuksetPerVuosi.vuosi}}</i></h4>
@@ -85,12 +56,12 @@
             </div>
           </accordion-heading>
           <div class="row">
-            <div class="col-md-12">
-              <div class="suunnitteluheader">Suuret kaupunkiseudut</div>
-            </div>
+
+            <h4>Suuret kaupunkiseudut</h4>
+
             <div class="row">
               <div class="col-md-12">
-                <table st-table="ks1displayed" class="table table-hover table-condensed table-striped"
+                <table st-table="ks1displayed" class="table table-hover table--hakemukset"
                        st-safe-src=hakemuksetPerVuosi.ks1HakemuksetPerVuosi>
                   <thead>
                   <tr>
@@ -129,12 +100,11 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12">
-              <div class="suunnitteluheader">Keskisuuret kaupunkiseudut</div>
-            </div>
+            <h4>Keskisuuret kaupunkiseudut</h4>
+
             <div class="row">
               <div class="col-md-12">
-                <table st-table="ks2displayed" class="table table-hover table-condensed table-striped"
+                <table st-table="ks2displayed" class="table table-hover table-condensed table--hakemukset"
                        st-safe-src=hakemuksetPerVuosi.ks2HakemuksetPerVuosi>
                   <thead>
                   <tr>
@@ -173,12 +143,12 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12">
-              <div class="suunnitteluheader">Ely keskukset</div>
-            </div>
+
+            <h4>Ely keskukset</h4>
+
             <div class="row">
               <div class="col-md-12">
-                <table st-table="elydisplayed" class="table table-hover table-condensed table-striped"
+                <table st-table="elydisplayed" class="table table-hover table-condensed table--hakemukset"
                        st-safe-src=hakemuksetPerVuosi.elyHakemuksetPerVuosi>
                   <thead>
                   <tr>
