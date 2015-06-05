@@ -43,25 +43,25 @@ var paths = {
     source: [
       './app/assets/**/*.*',
       './app/assets/.*',
-      './bower_components/bootstrap/dist/fonts*/*.*'
+      './node_modules/bootstrap/dist/fonts*/*.*'
     ],
     watch: './app/assets/**/*.*',
     destination: './dist/'
   },
   copy: [{
-    source: './bower_components/ng-file-upload-shim/*.swf',
+    source: './node_modules/ng-file-upload-shim/*.swf',
     destination: './dist/scripts/ie9/'
   },
   {
-    source: './bower_components/ng-file-upload-shim/FileAPI.min.js',
+    source: './node_modules/ng-file-upload-shim/FileAPI.min.js',
     destination: './dist/scripts/ie9/'
   },
   {
-    source: './bower_components/es5-shim/es5-shim.min.js',
+    source: './node_modules/es5-shim/es5-shim.min.js',
     destination: './dist/scripts/ie9/'
   },
   {
-    source: './bower_components/json3/lib/json3.min.js',
+    source: './node_modules/json3/lib/json3.min.js',
     destination: './dist/scripts/ie9/'
   }],
 
