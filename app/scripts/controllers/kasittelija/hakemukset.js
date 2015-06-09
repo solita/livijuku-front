@@ -49,9 +49,9 @@ function luoLajitunnusLajittelija(kaikkiOrganisaatiot, hakemusTyyppitunnusFilter
         viimeisinMuutos: Number(new Date(hakemus.muokkausaika)),
         diaarinumero: hakemus.diaarinumero,
         kasittelija: 'Ei määritelty',
-        avustushakemusId: haeHakemustyyppi(organisaationHakemukset, 'AH0'),
-        maksatushakemus1Id: haeHakemustyyppi(organisaationHakemukset, 'MH1'),
-        maksatushakemus2Id: haeHakemustyyppi(organisaationHakemukset, 'MH2')
+        avustushakemusId: haeHakemustyyppi(organisaationHakemukset, 'AH0').id,
+        maksatushakemus1Id: haeHakemustyyppi(organisaationHakemukset, 'MH1').id,
+        maksatushakemus2Id: haeHakemustyyppi(organisaationHakemukset, 'MH2').id
       });
 
       return memo;
