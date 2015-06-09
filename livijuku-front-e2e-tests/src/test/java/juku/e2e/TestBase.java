@@ -1,19 +1,20 @@
 package juku.e2e;
 
-import com.paulhammant.ngwebdriver.ByAngular;
+import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
+import static java.lang.Thread.sleep;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpHost;
-import org.apache.http.HttpRequest;
-import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,15 +26,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
-import javax.net.ssl.SSLException;
-import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.net.UnknownHostException;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
-import static java.lang.Thread.sleep;
+import com.paulhammant.ngwebdriver.ByAngular;
 
 public class TestBase {
 
@@ -116,34 +109,6 @@ public class TestBase {
     }
   }
 
-  HttpRequestRetryHandler myRetryHandler = new HttpRequestRetryHandler() {
-
-    public boolean retryRequest(
-      IOException exception,
-      int executionCount,
-      HttpContext context) {
-      if (executionCount >= 5) {
-        // Do not retry if over max retry count
-        return false;
-      }
-      if (exception instanceof InterruptedIOException) {
-        // Timeout
-        return false;
-      }
-      if (exception instanceof UnknownHostException) {
-        // Unknown host
-        return false;
-      }
-      if (exception instanceof SSLException) {
-        // SSL handshake exception
-        return false;
-      }
-      HttpClientContext clientContext = HttpClientContext.adapt(context);
-      HttpRequest request = clientContext.getRequest();
-      return !(request instanceof HttpEntityEnclosingRequest); // return isIdempotent
-    }
-  };
-
   @BeforeSuite
   public void setupSuite() {
     createRestorePoint(SUITE_RESTORE_POINT);
@@ -192,7 +157,6 @@ public class TestBase {
 
     CloseableHttpClient httpclient = HttpClients.custom()
       .setConnectionManager(connectionManager)
-      .setRetryHandler(myRetryHandler)
       .build();
 
     HttpGet httpGet = new HttpGet(url);
