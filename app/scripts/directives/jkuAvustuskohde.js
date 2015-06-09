@@ -37,10 +37,10 @@ angular.module('jukufrontApp')
           }
           if ($scope.hakemustyyppi == 'MH2') {
             if (syotekentta == 'haettavaavustus') {
-              tooltip = tooltip + '<br/>' + '1. Maksatushakemus:' + $scope.vertailuarvot().maksatushakemusHaettavaAvustus.toString().replace('.', ',') + ' € (sis. alv)';
+              tooltip = tooltip + ' ' + '1. Maksatushakemus:' + $scope.vertailuarvot().maksatushakemusHaettavaAvustus.toString().replace('.', ',') + ' € (sis. alv)';
             }
             else if (syotekentta == 'omarahoitus') {
-              tooltip = tooltip + '<br/>' + '1. Maksatushakemus:' + $scope.vertailuarvot().maksatushakemusOmaRahoitus.toString().replace('.', ',') + ' € (sis. alv)';
+              tooltip = tooltip + ' ' + '1. Maksatushakemus:' + $scope.vertailuarvot().maksatushakemusOmaRahoitus.toString().replace('.', ',') + ' € (sis. alv)';
             }
           }
           return tooltip;
