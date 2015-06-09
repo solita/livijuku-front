@@ -61,7 +61,7 @@ public class TestBase {
       drv = new FirefoxDriver(fp);
     }
     drv.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-    drv.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+    drv.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     return drv;
   }
 
