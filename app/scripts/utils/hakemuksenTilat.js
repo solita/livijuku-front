@@ -46,8 +46,10 @@ var tilat = [
 ];
 
 module.exports = {
-  getAll: function() {
-    return tilat;
+  getAll: function(tyyppi) {
+    if (tyyppi==='AH0')
+      return _.dropRight(tilat);
+    else return tilat;
   },
   find: function(id) {
     return _.findWhere(tilat, {id: id});
