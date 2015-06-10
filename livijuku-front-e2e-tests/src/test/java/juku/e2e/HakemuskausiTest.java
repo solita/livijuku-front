@@ -1,5 +1,18 @@
 package juku.e2e;
 
+import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
+import static java.lang.Thread.sleep;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.testng.AssertJUnit.assertTrue;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -11,19 +24,6 @@ import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-
-import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
-import static java.lang.Thread.sleep;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.testng.AssertJUnit.assertTrue;
 
 public class HakemuskausiTest extends TestBase {
 
@@ -170,9 +170,14 @@ public class HakemuskausiTest extends TestBase {
   }
 
   private void tarkistaHakijanHakemuksenTila(String teksti, String luokka) {
-    List<WebElement> hakemuksenTilaIndikaattorit = findElementsByXPath(String.format("//span[contains(@class,'%s') and contains(string(),'%s')]", luokka, teksti));
+    List<WebElement> hakemuksenTilaIndikaattorit = findElementsByXPath(String.format("//span[%s and %s and %s]",
+                                                                                     hasClass(luokka),
+                                                                                     containsText(teksti),
+                                                                                     isVisible()));
 
-    assertThat(String.format("Hakijan hakemussivulla hakemuksen tila (%s) pitäisi näkyä kaksi kertaa.", teksti), hakemuksenTilaIndikaattorit, hasSize(equalTo(2)));
+    assertThat(String.format("Hakijan hakemussivulla hakemuksen tila (%s) pitäisi näkyä kaksi kertaa.", teksti),
+               hakemuksenTilaIndikaattorit,
+               hasSize(equalTo(2)));
   }
 
   private WebElement buttonInPosition(String text, int position) {
