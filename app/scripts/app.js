@@ -108,6 +108,9 @@ angular
   .directive('jukuVarmistusdialogi', require('components/varmistusdialogi'))
   .directive('hakemuksenTila', require('components/hakemuksenTila'))
   .directive('hakemusSummary', require('components/hakemusSummary'))
+  .directive('hakemusPanel', require('components/hakemusPanel'))
+  .directive('hakemuskausiPanel', require('components/hakemuskausiPanel'))
+  .directive('hakemusLaatikko', require('components/hakemusLaatikko'))
   .directive('hakemusLabel', require('components/hakemusLabel'));
 
 require('./controllers/hakija/hakemukset');

@@ -91,10 +91,14 @@
               <div class="col-md-8"></div>
               <div class="col-md-4">
                 <div class="pull-right">
-                  <button ng-show="sallittu('kasittely-hakemus')" class="btn btn-primary"
-                          ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'KS1')">
-                    Suunnittelu ja päätöksenteko<span
-                    class='glyphicon glyphicon-play'/></button>
+
+                  <a class="transition-link"
+                     ng-show="sallittu('kasittely-hakemus')"
+                     ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'KS1')">
+                    Suunnittelu ja päätöksenteko
+                    <span class='glyphicon glyphicon-circle-arrow-right'></span>
+                  </a>
+
                 </div>
               </div>
             </div>

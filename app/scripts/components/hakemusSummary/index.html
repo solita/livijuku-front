@@ -1,5 +1,5 @@
 <div class="hakemus-summary">
-  <div ng-show="!hakemus.kaynnissa" class="hakemuskausi-panel-ei-kaynnissa">Ei Käynnissä</div>
+  <div ng-show="!hakemus.kaynnissa" class="hakemus-summary__not-active">Ei Käynnissä</div>
   <ul class="hakemus-summary__list" ng-show="hakemus.kaynnissa">
     <li>
       <span class="hakemus-summary__count">{{hakemus.tilat.K}}/{{hakemus.total}}</span>

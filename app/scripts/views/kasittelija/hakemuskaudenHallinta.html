@@ -51,171 +51,160 @@
             </div>
           </div>
           <div class="col-md-3 text-center">
-            <div class="panel panel-primary hakemuskausi-panel clickable" data-ng-click="valitseHakemustyyppi('AH0')">
-              <div class="panel-heading">
-                <p class="panel-title">Avustushakemus</p>
-              </div>
-              <div class="panel-body">
-                <hakemus-summary hakemus="hakemuskausi.ah0"></hakemus-summary>
-                <div class="row hakemuskausi-panel-hakuaika">
-                  <p>Hakuaika:</p>
+            <hakemuskausi-panel title="Avustushakemus" data-ng-click="valitseHakemustyyppi('AH0')">
+              <hakemus-summary hakemus="hakemuskausi.ah0"></hakemus-summary>
+              <div class="row hakemuskausi-panel-hakuaika">
+                <p>Hakuaika:</p>
 
-                  <div class="form-group" show-errors="{showSuccess: true}">
-                    <p ng-show="(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
-                       class="input-group hakuaika-input juku-datepicker">
+                <div class="form-group" show-errors="{showSuccess: true}">
+                  <p ng-show="(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
+                     class="input-group hakuaika-input juku-datepicker">
 
-                      <input name="avustushakemusalkupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
-                             ng-model="hakemuskausi.avustushakemusAlkupvm" datepicker-options="{{dateOptions}}"
-                             is-open="avustushakemusAlkupvmKalenteri"
-                             ng-required="true"
-                             ui-validate="{ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.avustushakemusLoppupvm)'}"
-                             ui-validate-watch=" 'hakemuskausi.avustushakemusLoppupvm' "
-                             show-button-bar="false" noenter readonly/>
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"
-                                ng-click="avustushakemusAlkupvmKalenteri = !avustushakemusAlkupvmKalenteri;avaaKalenteri($event)">
-                          <i class="glyphicon glyphicon-calendar"></i>
-                        </button>
-                      </span>
-                    </p>
-                    <span class="help-block text-danger"
-                          ng-show="hakuaikaForm.avustushakemusalkupvm.$error.ennenLoppuPvm && !hakuaikaForm.avustushakemusalkupvm.$pristine">
-                      Päivämäärän tulee olla ennen loppumispäivämäärää.
+                    <input name="avustushakemusalkupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
+                           ng-model="hakemuskausi.avustushakemusAlkupvm" datepicker-options="{{dateOptions}}"
+                           is-open="avustushakemusAlkupvmKalenteri"
+                           ng-required="true"
+                           ui-validate="{ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.avustushakemusLoppupvm)'}"
+                           ui-validate-watch=" 'hakemuskausi.avustushakemusLoppupvm' "
+                           show-button-bar="false" noenter readonly/>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default"
+                              ng-click="avustushakemusAlkupvmKalenteri = !avustushakemusAlkupvmKalenteri;avaaKalenteri($event)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                      </button>
                     </span>
+                  </p>
+                  <span class="help-block text-danger"
+                        ng-show="hakuaikaForm.avustushakemusalkupvm.$error.ennenLoppuPvm && !hakuaikaForm.avustushakemusalkupvm.$pristine">
+                    Päivämäärän tulee olla ennen loppumispäivämäärää.
+                  </span>
 
-                    <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.avustushakemusAlkupvm |
-                      date:'d.M.yyyy'}}</p>
-                  </div>
-                  <div class="hakemuskausi-panel-hakuaika-viiva"></div>
-                  <div class="form-group" show-errors="{showSuccess: true}">
-                    <p ng-show="(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
-                       class="input-group hakuaika-input juku-datepicker">
-                      <input name="avustushakemusloppupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
-                             ng-model="hakemuskausi.avustushakemusLoppupvm" datepicker-options="{{dateOptions}}"
-                             is-open="avustushakemusLoppupvmKalenteri" ng-required="true"
-                             show-button-bar="false" noenter readonly/>
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"
-                                ng-click="avustushakemusLoppupvmKalenteri = !avustushakemusLoppupvmKalenteri;avaaKalenteri($event)">
-                          <i class="glyphicon glyphicon-calendar"></i></button>
-                      </span>
-                    </p>
-                    <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.avustushakemusLoppupvm |
-                      date:'d.M.yyyy'}}</p>
-                  </div>
+                  <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.avustushakemusAlkupvm |
+                    date:'d.M.yyyy'}}</p>
+                </div>
+                <div class="hakemuskausi-panel-hakuaika-viiva"></div>
+                <div class="form-group" show-errors="{showSuccess: true}">
+                  <p ng-show="(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
+                     class="input-group hakuaika-input juku-datepicker">
+
+                    <input name="avustushakemusloppupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
+                           ng-model="hakemuskausi.avustushakemusLoppupvm" datepicker-options="{{dateOptions}}"
+                           is-open="avustushakemusLoppupvmKalenteri" ng-required="true"
+                           show-button-bar="false" noenter readonly/>
+
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default"
+                              ng-click="avustushakemusLoppupvmKalenteri = !avustushakemusLoppupvmKalenteri;avaaKalenteri($event)">
+                        <i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+                  <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.avustushakemusLoppupvm |
+                    date:'d.M.yyyy'}}</p>
                 </div>
               </div>
-            </div>
+            </hakemuskausi-panel>
           </div>
           <div class="col-md-3 text-center">
-            <div class="panel panel-primary hakemuskausi-panel clickable" data-ng-click="valitseHakemustyyppi('MH1')">
-              <div class="panel-heading">
-                <p class="panel-title">1. maksatushakemus</p>
-              </div>
-              <div class="panel-body">
-                <hakemus-summary hakemus="hakemuskausi.mh1"></hakemus-summary>
-                <div class="row hakemuskausi-panel-hakuaika">
-                  <p>Hakuaika:</p>
 
-                  <div class="form-group" show-errors="{showSuccess: true}">
-                    <p ng-show="(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
-                       class="input-group hakuaika-input juku-datepicker">
-                      <input name="maksatushakemus1alkupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
-                             ng-model="hakemuskausi.maksatushakemus1Alkupvm" datepicker-options="{{dateOptions}}"
-                             is-open="maksatushakemus1AlkupvmKalenteri" ng-required="true"
-                             ui-validate="{ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.maksatushakemus1Loppupvm)'}"
-                             ui-validate-watch=" 'hakemuskausi.maksatushakemus1Loppupvm' "
-                             show-button-bar="false" noenter readonly/>
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"
-                                ng-click="maksatushakemus1AlkupvmKalenteri = !maksatushakemus1AlkupvmKalenteri;avaaKalenteri($event)">
-                          <i class="glyphicon glyphicon-calendar"></i></button>
-                      </span>
-                    </p>
-                    <span class="help-block text-danger"
-                          ng-show="hakuaikaForm.maksatushakemus1alkupvm.$error.ennenLoppuPvm && !hakuaikaForm.maksatushakemus1alkupvm.$pristine">
-                      Päivämäärän tulee olla ennen loppumispäivämäärää.
+            <hakemuskausi-panel title="1. maksatushakemus" data-ng-click="valitseHakemustyyppi('MH1')">
+              <hakemus-summary hakemus="hakemuskausi.mh1"></hakemus-summary>
+              <div class="row hakemuskausi-panel-hakuaika">
+                <p>Hakuaika:</p>
+
+                <div class="form-group" show-errors="{showSuccess: true}">
+                  <p ng-show="(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
+                     class="input-group hakuaika-input juku-datepicker">
+                    <input name="maksatushakemus1alkupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
+                           ng-model="hakemuskausi.maksatushakemus1Alkupvm" datepicker-options="{{dateOptions}}"
+                           is-open="maksatushakemus1AlkupvmKalenteri" ng-required="true"
+                           ui-validate="{ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.maksatushakemus1Loppupvm)'}"
+                           ui-validate-watch=" 'hakemuskausi.maksatushakemus1Loppupvm' "
+                           show-button-bar="false" noenter readonly/>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default"
+                              ng-click="maksatushakemus1AlkupvmKalenteri = !maksatushakemus1AlkupvmKalenteri;avaaKalenteri($event)">
+                        <i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
+                  </p>
+                  <span class="help-block text-danger"
+                        ng-show="hakuaikaForm.maksatushakemus1alkupvm.$error.ennenLoppuPvm && !hakuaikaForm.maksatushakemus1alkupvm.$pristine">
+                    Päivämäärän tulee olla ennen loppumispäivämäärää.
+                  </span>
 
-                    <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus1Alkupvm |
-                      date:'d.M.yyyy'}}</p>
-                  </div>
-                  <div class="hakemuskausi-panel-hakuaika-viiva"></div>
-                  <div class="form-group" show-errors="{showSuccess: true}">
-                    <p ng-show="(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
-                       class="input-group hakuaika-input juku-datepicker">
-                      <input name="maksatushakemus1loppupvm" type="text" class="form-control"
-                             datepicker-popup="d.M.yyyy"
-                             ng-model="hakemuskausi.maksatushakemus1Loppupvm" datepicker-options="{{dateOptions}}"
-                             is-open="maksatushakemus1LoppupvmKalenteri" ng-required="true"
-                             show-button-bar="false" noenter readonly/>
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"
-                                ng-click="maksatushakemus1LoppupvmKalenteri = !maksatushakemus1LoppupvmKalenteri;avaaKalenteri($event)">
-                          <i class="glyphicon glyphicon-calendar"></i></button>
-                      </span>
-                    </p>
-                    <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus1Loppupvm |
-                      date:'d.M.yyyy'}}</p>
-                  </div>
+                  <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus1Alkupvm |
+                    date:'d.M.yyyy'}}</p>
+                </div>
+                <div class="hakemuskausi-panel-hakuaika-viiva"></div>
+                <div class="form-group" show-errors="{showSuccess: true}">
+                  <p ng-show="(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
+                     class="input-group hakuaika-input juku-datepicker">
+                    <input name="maksatushakemus1loppupvm" type="text" class="form-control"
+                           datepicker-popup="d.M.yyyy"
+                           ng-model="hakemuskausi.maksatushakemus1Loppupvm" datepicker-options="{{dateOptions}}"
+                           is-open="maksatushakemus1LoppupvmKalenteri" ng-required="true"
+                           show-button-bar="false" noenter readonly/>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default"
+                              ng-click="maksatushakemus1LoppupvmKalenteri = !maksatushakemus1LoppupvmKalenteri;avaaKalenteri($event)">
+                        <i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+                  <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus1Loppupvm |
+                    date:'d.M.yyyy'}}</p>
                 </div>
               </div>
-            </div>
+            </hakemuskausi-panel>
+
           </div>
           <div class="col-md-3 text-center">
-            <div class="panel panel-primary hakemuskausi-panel clickable" data-ng-click="valitseHakemustyyppi('MH2')">
-              <div class="panel-heading">
-                <p class="panel-title">2. maksatushakemus</p>
-              </div>
-              <div class="panel-body">
-                <hakemus-summary hakemus="hakemuskausi.mh2"></hakemus-summary>
-                <div class="row hakemuskausi-panel-hakuaika">
-                  <p>Hakuaika:</p>
+            <hakemuskausi-panel title="2. maksatushakemus" data-ng-click="valitseHakemustyyppi('MH2')">
+              <hakemus-summary hakemus="hakemuskausi.mh2"></hakemus-summary>
+              <div class="row hakemuskausi-panel-hakuaika">
+                <p>Hakuaika:</p>
 
-                  <div class="form-group" show-errors="{showSuccess: true}">
-                    <p ng-show="(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
-                       class="input-group hakuaika-input juku-datepicker">
-                      <input name="maksatushakemus2alkupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
-                             ng-model="hakemuskausi.maksatushakemus2Alkupvm" datepicker-options="{{dateOptions}}"
-                             is-open="maksatushakemus2AlkupvmKalenteri" ng-required="true"
-                             ui-validate="{ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.maksatushakemus2Loppupvm)'}"
-                             ui-validate-watch=" 'hakemuskausi.maksatushakemus2Loppupvm' "
-                             show-button-bar="false" noenter readonly/>
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"
-                                ng-click="maksatushakemus2AlkupvmKalenteri = !maksatushakemus2AlkupvmKalenteri;avaaKalenteri($event)">
-                          <i class="glyphicon glyphicon-calendar"></i></button>
-                      </span>
-                    </p>
-                    <span class="help-block text-danger"
-                          ng-show="hakuaikaForm.maksatushakemus2alkupvm.$error.ennenLoppuPvm && !hakuaikaForm.maksatushakemus2alkupvm.$pristine">
-                      Päivämäärän tulee olla ennen loppumispäivämäärää.
+                <div class="form-group" show-errors="{showSuccess: true}">
+                  <p ng-show="(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
+                     class="input-group hakuaika-input juku-datepicker">
+                    <input name="maksatushakemus2alkupvm" type="text" class="form-control" datepicker-popup="d.M.yyyy"
+                           ng-model="hakemuskausi.maksatushakemus2Alkupvm" datepicker-options="{{dateOptions}}"
+                           is-open="maksatushakemus2AlkupvmKalenteri" ng-required="true"
+                           ui-validate="{ennenLoppuPvm: 'ennenLoppuPvm($value,hakemuskausi.maksatushakemus2Loppupvm)'}"
+                           ui-validate-watch=" 'hakemuskausi.maksatushakemus2Loppupvm' "
+                           show-button-bar="false" noenter readonly/>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default"
+                              ng-click="maksatushakemus2AlkupvmKalenteri = !maksatushakemus2AlkupvmKalenteri;avaaKalenteri($event)">
+                        <i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
+                  </p>
+                  <span class="help-block text-danger"
+                        ng-show="hakuaikaForm.maksatushakemus2alkupvm.$error.ennenLoppuPvm && !hakuaikaForm.maksatushakemus2alkupvm.$pristine">
+                    Päivämäärän tulee olla ennen loppumispäivämäärää.
+                  </span>
 
-                    <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus2Alkupvm |
-                      date:'d.M.yyyy'}}</p>
-                  </div>
-                  <div class="hakemuskausi-panel-hakuaika-viiva"></div>
-                  <div class="form-group" show-errors="{showSuccess: true}">
-                    <p ng-show="(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
-                       class="input-group hakuaika-input juku-datepicker">
-                      <input name="maksatushakemus2loppupvm" type="text" class="form-control"
-                             datepicker-popup="d.M.yyyy"
-                             ng-model="hakemuskausi.maksatushakemus2Loppupvm" datepicker-options="{{dateOptions}}"
-                             is-open="maksatushakemus2LoppupvmKalenteri" ng-required="true"
-                             show-button-bar="false" noenter readonly/>
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"
-                                ng-click="maksatushakemus2LoppupvmKalenteri = !maksatushakemus2LoppupvmKalenteri;avaaKalenteri($event)">
-                          <i class="glyphicon glyphicon-calendar"></i></button>
-                      </span>
-                    </p>
-                    <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus2Loppupvm |
-                      date:'d.M.yyyy'}}</p>
-                  </div>
+                  <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus2Alkupvm |
+                    date:'d.M.yyyy'}}</p>
+                </div>
+                <div class="hakemuskausi-panel-hakuaika-viiva"></div>
+                <div class="form-group" show-errors="{showSuccess: true}">
+                  <p ng-show="(muokkaaHakuaikojaVuosi==hakemuskausi.vuosi)"
+                     class="input-group hakuaika-input juku-datepicker">
+                    <input name="maksatushakemus2loppupvm" type="text" class="form-control"
+                           datepicker-popup="d.M.yyyy"
+                           ng-model="hakemuskausi.maksatushakemus2Loppupvm" datepicker-options="{{dateOptions}}"
+                           is-open="maksatushakemus2LoppupvmKalenteri" ng-required="true"
+                           show-button-bar="false" noenter readonly/>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default"
+                              ng-click="maksatushakemus2LoppupvmKalenteri = !maksatushakemus2LoppupvmKalenteri;avaaKalenteri($event)">
+                        <i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+                  <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.maksatushakemus2Loppupvm |
+                    date:'d.M.yyyy'}}</p>
                 </div>
               </div>
-            </div>
+            </hakemuskausi-panel>
           </div>
         </div>
       </div>

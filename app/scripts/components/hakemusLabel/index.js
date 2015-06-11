@@ -6,6 +6,7 @@ module.exports = function () {
       tila: '@'
     },
     template: require('./index.html'),
-    restrict: 'E'
+    restrict: 'E',
+    replace: true
   };
 };
