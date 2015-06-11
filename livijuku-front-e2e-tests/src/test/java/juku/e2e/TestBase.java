@@ -21,10 +21,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.*;
 
 import com.paulhammant.ngwebdriver.ByAngular;
 
@@ -132,12 +129,12 @@ public class TestBase {
     revertTo(SUITE_RESTORE_POINT);
   }
 
-  @BeforeTest
+  @BeforeMethod
   public void setupTest() {
     createRestorePoint(TEST_RESTORE_POINT);
   }
 
-  @AfterTest
+  @AfterMethod
   public void tear_down() {
     revertTo(TEST_RESTORE_POINT);
   }
@@ -231,9 +228,9 @@ public class TestBase {
     return driver().findElementByXPath(xpath);
   }
 
-  public List<WebElement> findElementsByXPath(String xpath) {
+  public List<WebElement> findElementsByXPath(String xpath, Object... n) {
     waitForAngularRequestsToFinish(driver());
-    return driver().findElementsByXPath(xpath);
+    return driver().findElementsByXPath(String.format(xpath,n));
   }
 
   public WebElement findElementByXPath(String xpath, Object... n) {
