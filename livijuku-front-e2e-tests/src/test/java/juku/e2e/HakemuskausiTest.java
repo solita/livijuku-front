@@ -214,7 +214,7 @@ public class HakemuskausiTest extends TestBase {
   }
 
   private WebElement linkInPosition(String text, int position) {
-    return findElementByXPath("//a[%s and %s][%s]",
+    return findElementByXPath("//*[(self::a or self::button) and %s and %s][%s]",
       containsText(text),
       isVisible(),
       position);
