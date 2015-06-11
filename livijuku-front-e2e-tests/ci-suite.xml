@@ -7,6 +7,7 @@
         <methods>
           <include name="hakuohje_kauden_avaus_ja_restorepoint_update"/>
           <include name="hakijaaInformoidaanHakemuksenTilasta"/>
+          <include name="hakijaSyottaaHakemukseenAlvillisetRahasummat"/>
         </methods>
         </class>
     </classes>

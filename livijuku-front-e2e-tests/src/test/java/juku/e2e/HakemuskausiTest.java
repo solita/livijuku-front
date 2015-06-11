@@ -4,6 +4,7 @@ import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitFor
 import static java.lang.Thread.sleep;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.testng.AssertJUnit.assertTrue;
 
@@ -154,8 +155,8 @@ public class HakemuskausiTest extends TestBase {
     login(User.KATRI);
     // Päätä hakemus
     spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu").click();
-    buttonInPosition("Suunnittelu ja päätöksenteko", 1).click();
-    buttonInPosition("Päätöksentekoon", 1).click();
+    linkInPosition("Suunnittelu ja päätöksenteko", 1).click();
+    linkInPosition("Päätöksentekoon", 1).click();
     spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
     findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
     findElementByXPath("//input[@type='text']").sendKeys("Paavo Päättäjä");
@@ -169,6 +170,38 @@ public class HakemuskausiTest extends TestBase {
 
   }
 
+    @Test
+    public void hakijaSyottaaHakemukseenAlvillisetRahasummat() {
+        login(User.HARRI);
+
+        //Avaa hakemus
+        spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
+
+        //Laita Alv-syotto paalle
+        WebElement haluanSyottaaAlvillisina = findElementByXPath("//span[%s and %s]",
+                containsText("Haluan syöttää summat arvonlisäverollisina."),
+                isVisible());
+        haluanSyottaaAlvillisina.click();
+
+
+        //Syota jokaiseen kenttaan rahasumma. Rahasumma tulee syottaa pilkun kanssa kokonaisuudessaan,
+        //jotta input kentassa oleva currency komponentti pystyy ottamaan arvon kasittelyyn ja arvovalidoinit toimivat
+        List<WebElement> rahakentat = findElementsByXPath("//input[@type='text' and %s]", isVisible());
+        for (int i=0;i<rahakentat.size();i+=2) {
+            rahakentat.get(i).clear();
+            rahakentat.get(i).sendKeys("1000,00");
+            rahakentat.get(i+1).clear();
+            rahakentat.get(i+1).sendKeys("3000,00");
+        }
+
+        //Tarkistetaan hakemuksen summa kentat
+        List<WebElement> h4t = findElementsByXPath("//h4");
+        assertThat(h4t.get(7).getText(), is(equalTo("12 000,00 € (sis. alv)")));
+
+        // Lähetä hakemus
+        lahetaHakemus();
+    }
+
   private void tarkistaHakijanHakemuksenTila(String teksti, String luokka) {
     List<WebElement> hakemuksenTilaIndikaattorit = findElementsByXPath(String.format("//span[%s and %s and %s]",
                                                                                      hasClass(luokka),
@@ -180,8 +213,8 @@ public class HakemuskausiTest extends TestBase {
                hasSize(equalTo(2)));
   }
 
-  private WebElement buttonInPosition(String text, int position) {
-    return findElementByXPath("//button[%s and %s][%s]",
+  private WebElement linkInPosition(String text, int position) {
+    return findElementByXPath("//a[%s and %s][%s]",
       containsText(text),
       isVisible(),
       position);
