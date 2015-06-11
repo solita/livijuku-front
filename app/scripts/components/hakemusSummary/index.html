@@ -1,0 +1,34 @@
+<div class="hakemus-summary">
+  <div ng-show="!hakemus.kaynnissa" class="hakemuskausi-panel-ei-kaynnissa">Ei Käynnissä</div>
+  <ul class="hakemus-summary__list" ng-show="hakemus.kaynnissa">
+    <li>
+      <span class="hakemus-summary__count">{{hakemus.tilat.K}}/{{hakemus.total}}</span>
+      <hakemus-label tila="K" />
+    </li>
+
+    <li>
+      <span class="hakemus-summary__count">{{hakemus.tilat.V}}/{{hakemus.total}}</span>
+      <hakemus-label tila="V" />
+    </li>
+
+    <li>
+      <span class="hakemus-summary__count">{{hakemus.tilat.T0}}/{{hakemus.total}}</span>
+      <hakemus-label tila="T0" />
+    </li>
+
+    <li>
+      <span class="hakemus-summary__count">{{hakemus.tilat.TV}}/{{hakemus.total}}</span>
+      <hakemus-label tila="TV" />
+    </li>
+
+    <li>
+      <span class="hakemus-summary__count">{{hakemus.tilat.T}}/{{hakemus.total}}</span>
+      <hakemus-label tila="T" />
+    </li>
+
+    <li>
+      <span class="hakemus-summary__count">{{hakemus.tilat.P}}/{{hakemus.total}}</span>
+      <hakemus-label tila="P" />
+    </li>
+  </ul>
+</div>

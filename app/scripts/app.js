@@ -107,6 +107,7 @@ angular
   .directive('jukuPoistumisvaroitus', require('components/poistumisvaroitus'))
   .directive('jukuVarmistusdialogi', require('components/varmistusdialogi'))
   .directive('hakemuksenTila', require('components/hakemuksenTila'))
+  .directive('hakemusSummary', require('components/hakemusSummary'))
   .directive('hakemusLabel', require('components/hakemusLabel'));
 
 require('./controllers/hakija/hakemukset');
@@ -117,7 +118,6 @@ require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/hakemus');
 require('./controllers/yhteinen/paanaytto');
 require('./directives/alvmuunnos');
-require('./directives/hakemussummary');
 require('./directives/jkuAvustusluokkaPanel');
 require('./directives/jkuAvustuskohde');
 require('./directives/noenter');
