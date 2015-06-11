@@ -6,10 +6,9 @@
   <!-- Navigaatio -->
   <div ng-show="sallittu('view-oma-hakemus')">
     <juku-navigation>
-      <a href="#/h/hakemukset">
-        <span class='glyphicon glyphicon-circle-arrow-left'></span>
+      <juku-link-prev href="#/h/hakemukset">
         Palaa hakemusten päänäkymään
-      </a>
+      </juku-link-prev>
 
       <div class="tabs">
         <a href="#/h/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
@@ -386,8 +385,9 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <a href="#/h/hakemukset"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
-            päänäkymään</a>
+          <juku-link-prev href="#/h/hakemukset">
+            Palaa hakemusten päänäkymään
+          </juku-link-prev>
         </div>
       </div>
     </form>

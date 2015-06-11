@@ -111,6 +111,8 @@ angular
   .directive('hakemusPanel', require('components/hakemusPanel'))
   .directive('hakemuskausiPanel', require('components/hakemuskausiPanel'))
   .directive('hakemusLaatikko', require('components/hakemusLaatikko'))
+  .directive('jukuLinkNext', require('components/navigationLink').next)
+  .directive('jukuLinkPrev', require('components/navigationLink').prev)
   .directive('hakemusLabel', require('components/hakemusLabel'));
 
 require('./controllers/hakija/hakemukset');

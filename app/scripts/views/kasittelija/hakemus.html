@@ -1,8 +1,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
-        päänäkymään</a>
+
+      <juku-link-prev href="#/k/hakemukset/{{tyyppi}}">
+        Palaa hakemusten päänäkymään
+      </juku-link-prev>
       <a href="#/k/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
          ng-class="onAvustushakemus()? 'btn btn-primary' : 'btn btn-default'">Avustushakemus {{hakemus.vuosi}}</a>
       <a
@@ -199,8 +201,9 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa hakemusten
-        päänäkymään</a>
+      <juku-link-prev href="#/k/hakemukset/{{tyyppi}}">
+        Palaa hakemusten päänäkymään
+      </juku-link-prev>
     </div>
     <div ng-show="sallittu('kasittely-hakemus')" class=" col-md-6">
       <button ng-show="hakemusVireilla()"

@@ -90,11 +90,10 @@
             </button>
           </div>
           <div ng-hide="hakemusPaatetty(hakemus)">
-            <button class="btn btn-primary"
-                    ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
-              Päätöksentekoon<span
-              class='glyphicon glyphicon-play'/>
-            </button>
+            <juku-link-next
+                ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
+              Päätöksentekoon
+            </juku-link-next>
           </div>
         </td>
       </tr>
@@ -109,9 +108,9 @@
     </table>
     <div class="row">
       <div class="col-md-12">
-        <a href="#/k/hakemukset/{{tyyppi}}"><span class='glyphicon glyphicon-circle-arrow-left'></span>Palaa
-          avustushakemusten
-          suunnittelunäkymään</a>
+        <juku-link-prev href="#/k/hakemukset/{{tyyppi}}">
+          Palaa avustushakemusten suunnittelunäkymään
+        </juku-link-prev>
       </div>
     </div>
   </div>
