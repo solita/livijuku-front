@@ -57,7 +57,7 @@ angular.module('jukufrontApp')
               }
             }
           ).value();
-          $scope.hakemuksetSuunnittelu = hakemuksetSuunnitteluTmp;
+          $scope.hakemuksetSuunnittelu = _.sortBy(hakemuksetSuunnitteluTmp,'hakija');
         })
         .error(function (data) {
           StatusService.virhe('SuunnitteluService.hae(' + $routeParams.vuosi + ',' + $routeParams.tyyppi + ')', data.message);
