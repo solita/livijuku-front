@@ -1,7 +1,7 @@
 'use strict';
 var angular = require('angular');
 angular.module('jukufrontApp')
-  .directive('jkuAvustuskohde', function () {
+  .directive('jukuAvustuskohde', function () {
     return {
       restrict: 'E',
       scope: {

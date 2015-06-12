@@ -43,10 +43,14 @@
       <div class="row" ng-show="hasPaatos(tyyppi, hakemus.hakemustilatunnus)">
         <div class="col-md-12">
           <p>
-            <a href="api/hakemus/{{hakemusid}}/paatos/pdf" target="_blank"><span
-              class="glyphicon glyphicon-file"></span> Avaa päätös (PDF)</a>
-            <a href="resources/OIKAISUVAATIMUSOSOITUS.docx" target="_blank"><span
-              class="glyphicon glyphicon-file"></span> Avaa oikaisuvaatimusosoitus (DOCX)</a>
+            <a href="api/hakemus/{{hakemusid}}/paatos/pdf" target="_blank">
+              <span class="glyphicon glyphicon-file"></span>
+              Avaa päätös (PDF)
+            </a>
+            <a href="resources/OIKAISUVAATIMUSOSOITUS.docx" target="_blank">
+              <span class="glyphicon glyphicon-file"></span>
+              Avaa oikaisuvaatimusosoitus (DOCX)
+            </a>
           </p>
         </div>
       </div>
@@ -108,17 +112,17 @@
             </div>
           </div>
 
-          <jku-avustusluokka-panel luokka="avustuskohdeluokka"
+          <juku-avustusluokka-panel luokka="avustuskohdeluokka"
                                    name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
                                    hakemus="hakemus"
                                    ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
-            <jku-avustuskohde vuosi="vuosi"
+            <juku-avustuskohde vuosi="vuosi"
                               vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)"
                               hakemustyyppi="tyyppi" kohde="avustuskohde" alv="alv"
                               hakemus="hakemus"
                               name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
                               ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet" />
-          </jku-avustusluokka-panel>
+          </juku-avustusluokka-panel>
 
           <div class="row">
             <div class="col-md-9">
