@@ -18,27 +18,12 @@
             <br>
           </div>
 
-          <div class="col-md-3 text-center">
+          <div class="col-md-3 text-center" ng-repeat="(lyhenne, tila) in tilaAvaimet">
             <hakemus-laatikko
-              ng-click="valitseHakemus('AH0', hakemuskausi)"
-              title="Avustushakemus"
-              tila="avustushakemus"
-              hakemuskausi="hakemuskausi" />
-          </div>
-
-          <div class="col-md-3 text-center">
-            <hakemus-laatikko
-              ng-click="valitseHakemus('MH1', hakemuskausi)"
-              title="1. maksatushakemus"
-              tila="maksatushakemus1"
-              hakemuskausi="hakemuskausi" />
-          </div>
-
-          <div class="col-md-3 text-center">
-            <hakemus-laatikko
-              ng-click="valitseHakemus('MH2', hakemuskausi)"
-              title="2. maksatushakemus"
-              tila="maksatushakemus2"
+              ng-click="valitseHakemus(lyhenne, hakemuskausi)"
+              title="{{ tila.nimi }}"
+              inactive="!hakemuskausi.avustushakemukset[tila.id].kaynnissa"
+              tila="{{ tila.id }}"
               hakemuskausi="hakemuskausi" />
           </div>
         </div>

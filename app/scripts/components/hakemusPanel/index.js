@@ -4,10 +4,11 @@ function hakemusPanel(opts = {}) {
   return function() {
     return {
       scope: {
-        title: '@'
+        title: '@',
+        inactive: '='
       },
       template: `
-        <div class="hakemus-panel panel panel-primary ${opts.className || ''}">
+        <div ng-class="{'hakemus-panel panel panel-primary ${opts.className || ''}': true, 'not-active': inactive}">
           <div class="panel-heading">
             <p class="panel-title">{{ title }}</p>
           </div>

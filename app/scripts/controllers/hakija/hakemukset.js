@@ -4,9 +4,18 @@ var _ = require('lodash');
 var angular = require('angular');
 
 var tilaAvaimet = {
-  'AH0': 'avustushakemus',
-  'MH1': 'maksatushakemus1',
-  'MH2': 'maksatushakemus2'
+  'AH0': {
+    id: 'avustushakemus',
+    nimi: 'Avustushakemus'
+  },
+  'MH1': {
+    id: 'maksatushakemus1',
+    nimi: '1. maksatushakemus'
+  },
+  'MH2': {
+    id: 'maksatushakemus2',
+    nimi: '2. maksatushakemus'
+  }
 };
 
 function luoHakemusVuosi(hakemusvuosi) {
@@ -14,11 +23,17 @@ function luoHakemusVuosi(hakemusvuosi) {
   var avustushakemukset = _.reduce(tilaAvaimet, (memo, tila, lyhenne) => {
 
     var hakemus = _.find(hakemusvuosi.hakemukset, {hakemustyyppitunnus: lyhenne});
-    memo[tila] = {
+
+    var alkupvm = Number(new Date(hakemus.hakuaika.alkupvm));
+    var loppupvm = Number(new Date(hakemus.hakuaika.loppupvm));
+    var now = Date.now();
+
+    memo[tila.id] = {
       id: hakemus.id,
       tilatunnus: hakemus.hakemustilatunnus,
-      alkupvm: Number(new Date(hakemus.hakuaika.alkupvm)),
-      loppupvm: Number(new Date(hakemus.hakuaika.loppupvm)),
+      alkupvm,
+      loppupvm,
+      kaynnissa: alkupvm < now && loppupvm > now
     };
 
     return memo;
@@ -32,6 +47,8 @@ function luoHakemusVuosi(hakemusvuosi) {
 
 angular.module('jukufrontApp')
   .controller('HakijaHakemuksetCtrl', ['$scope', '$location', 'HakemusService', 'StatusService', function ($scope, $location, HakemusService, StatusService) {
+
+    $scope.tilaAvaimet = tilaAvaimet;
 
     $scope.valitseHakemus = function (tyyppi, hakemuskausi) {
       if(hakemuskausi.avustushakemukset.maksatushakemus2.tilatunnus === 'FEK') {
