@@ -115,6 +115,7 @@ angular
   .directive('jukuFormSection', require('components/formSection'))
   .directive('jukuFormRow', require('components/formRow'))
   .directive('jukuForm', require('components/form'))
+  .directive('jukuAvustuskohde', require('components/avustuskohde'))
   .directive('hakemusLabel', require('components/hakemusLabel'));
 
 require('./controllers/hakija/hakemukset');
@@ -126,7 +127,6 @@ require('./controllers/yhteinen/hakemus');
 require('./controllers/yhteinen/paanaytto');
 require('./directives/alvmuunnos');
 require('./directives/jukuAvustusluokkaPanel');
-require('./directives/jukuAvustuskohde');
 require('./directives/noenter');
 require('./directives/selectonclick');
 require('./services/auth');
