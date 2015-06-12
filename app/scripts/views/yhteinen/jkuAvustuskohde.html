@@ -16,7 +16,8 @@
                      tooltip-placement="top"
                      ng-model="kohde.haettavaavustus"
                      ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo(kohde.haettavaavustus)'}"/>
-              <span ng-hide="isReadonly()" class="input-group-addon">alv {{ alv ? kohde.alv : 0 }}%</span>
+              <span ng-show="alv" class="input-group-addon">alv {{kohde.alv}} %</span>
+              <span ng-hide="alv" class="input-group-addon">alv 0 %</span>
             </div>
           </label>
 
@@ -37,7 +38,8 @@
                      ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
                      ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava(kohde.omarahoitus,kohde.haettavaavustus)',sallittuArvoOmarahoitus: 'sallittuArvo(kohde.omarahoitus)'}"
                      ui-validate-watch=" 'kohde.haettavaavustus' "/>
-              <span ng-hide="isReadonly()" class="input-group-addon">alv {{ alv ? kohde.alv : 0 }}%</span>
+              <span ng-show="alv" class="input-group-addon">alv {{kohde.alv}} %</span>
+              <span ng-hide="alv" class="input-group-addon">alv 0 %</span>
             </div>
           </label>
 

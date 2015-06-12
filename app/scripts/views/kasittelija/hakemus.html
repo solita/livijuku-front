@@ -99,16 +99,16 @@
       </div>
     </div>
 
-    <juku-avustusluokka-panel luokka="avustuskohdeluokka" name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
+    <jku-avustusluokka-panel luokka="avustuskohdeluokka" name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
                              hakemus="hakemus"
                              ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
-      <juku-avustuskohde vuosi="vuosi"
+      <jku-avustuskohde vuosi="vuosi"
                         vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)"
                         hakemustyyppi="tyyppi" kohde="avustuskohde" alv="alv"
                         hakemus="hakemus"
                         name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
                         ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet">
-    </juku-avustusluokka-panel>
+    </jku-avustusluokka-panel>
 
   </form>
   <div class="row">

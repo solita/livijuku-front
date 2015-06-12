@@ -4,7 +4,7 @@ var _ = require('lodash');
 var angular = require('angular');
 
 angular.module('jukufrontApp')
-  .directive('jukuAvustusluokkaPanel', function () {
+  .directive('jkuAvustusluokkaPanel', function () {
     return {
       restrict: 'E',
       scope: {
