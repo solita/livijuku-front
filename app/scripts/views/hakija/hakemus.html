@@ -31,7 +31,7 @@
       </juku-tabs>
     </juku-navigation>
 
-    <juku-form>
+    <juku-form name="hakemusForm" juku-poistumisvaroitus="">
       <h1>
         <div ng-switch on="tyyppi">
           <span ng-switch-when='MH1'>Joukkoliikenteen 1. maksatushakemus {{hakemus.vuosi}}</span>
@@ -85,207 +85,203 @@
           <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" tyyppi="{{tyyppi}}"/>
         </juku-form-row>
       </juku-form-section>
+      <juku-form-section>
 
-      <form name="hakemusForm" juku-poistumisvaroitus="">
-        <juku-form-section>
-
-          <div class="row">
-            <div class="col-md-12">
-              <h3 ng-switch on="tyyppi">
-                <span ng-switch-when='AH0'>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ</span>
-                <span ng-switch-default>HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{vuosi}}</span>
-              </h3>
+        <div class="row">
+          <div class="col-md-12">
+            <h3 ng-switch on="tyyppi">
+              <span ng-switch-when='AH0'>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ</span>
+              <span ng-switch-default>HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{vuosi}}</span>
+            </h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label ng-show="hakemusKeskenerainen()">
+                <input type="checkbox" ng-model="alv">
+                <span>Haluan syöttää summat arvonlisäverollisina.</span>
+              </label>
+              <label ng-hide="hakemusKeskenerainen()">
+                <input type="checkbox" ng-model="alv">
+                <span>Haluan katsoa arvoja arvonlisäverollisina.</span>
+              </label>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label ng-show="hakemusKeskenerainen()">
-                  <input type="checkbox" ng-model="alv">
-                  <span>Haluan syöttää summat arvonlisäverollisina.</span>
-                </label>
-                <label ng-hide="hakemusKeskenerainen()">
-                  <input type="checkbox" ng-model="alv">
-                  <span>Haluan katsoa arvoja arvonlisäverollisina.</span>
-                </label>
+        </div>
+
+        <juku-avustusluokka-panel luokka="avustuskohdeluokka"
+                                 name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
+                                 hakemus="hakemus"
+                                 ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
+          <juku-avustuskohde vuosi="vuosi"
+                            vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)"
+                            hakemustyyppi="tyyppi" kohde="avustuskohde" alv="alv"
+                            hakemus="hakemus"
+                            name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
+                            ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet" />
+        </juku-avustusluokka-panel>
+
+        <div class="row">
+          <div class="col-md-9">
+            <h4>JOUKKOLIIKENTEEN VALTIONAVUSTUSHAKEMUS YHTEENSÄ:</h4>
+          </div>
+          <div class="col-md-3">
+            <div class="pull-right">
+              <h4>{{sumHaettavaAvustus() | currency:"&euro;"}} (sis. alv)</h4>
+            </div>
+          </div>
+        </div>
+      </juku-form-section>
+      <juku-form-section>
+
+        <h3>LISÄTIETOJA AVUSTUSTEN KOHTEISTA JA HAKEMUKSEN ALLEKIRJOITTAJASTA</h3>
+
+        <div class="row">
+          <div class="col-md-12">
+            <p class="hakemus-lisatietoa-teksti">Liitä hakemukseesi lisätiedot kaikista hakemistasi
+              avustuskohteista.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="hakemus-lisatietoa-otsake">PSA:n mukaisen liikenteen hankinta:</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="hakemus-lisatietoa-teksti">Liitä ostosopimus uusista liikenteistä, josta ilmenee liikenteen
+              aikataulu ja reitti.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="hakemus-lisatietoa-otsake">Hintavelvotteiden korvaamien:</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="hakemus-lisatietoa-teksti">Erittele eri lipputyyppeihin haettava valtionavustus.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="hakemus-lisatietoa-otsake">Liikenteen suunnittelu- ja kehittämishankkeet:</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="hakemus-lisatietoa-teksti">Liitä hankesuunnitelma tai työohjelma, joka sisältää ainakin hankkeen
+              tavoitteet, sisällön, aikataulun,
+              organisoinnin ja rahoituksen.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="hakemus-lisatietoa-teksti">Liitä hakemukseen myös liite allekirjoitusoikeudesta.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="hakemus-lisatietoa-teksti">1. Lataa tiedosto: <a href="resources/JUKU_allekirjoitusoikeus.doc"
+                                                                       target="_blank">JUKU_allekirjoitusoikeus.doc</a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="hakemus-lisatietoa-teksti">2. Täytä allekirjoitusoikeuslomake.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="hakemus-lisatietoa-teksti">3. Tulosta lomake ja allekirjoituta se organisaationne joukkoliikenteen
+              avustushakemuksen hyväksyjällä.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="hakemus-lisatietoa-teksti">4. Skannaa allekirjoitettu lomake ja lataa se liitteeksi tähän
+              hakemukseen.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h2 class="panel-title">Liitteet</h2>
               </div>
-            </div>
-          </div>
+              <div class="panel-body">
+                <div
+                  ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
+                  <div class="col-md-12">
+                    <div ngf-drop ng-model="myFiles" class="drop-box"
+                         ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+                         ngf-multiple="true" ngf-allow-dir="false" ngf-drop-available="dropAvailable">
+                      <p ng-show="dropAvailable">Raahaa liite tähän tai</p>
 
-          <juku-avustusluokka-panel luokka="avustuskohdeluokka"
-                                   name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
-                                   hakemus="hakemus"
-                                   ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
-            <juku-avustuskohde vuosi="vuosi"
-                              vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)"
-                              hakemustyyppi="tyyppi" kohde="avustuskohde" alv="alv"
-                              hakemus="hakemus"
-                              name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
-                              ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet" />
-          </juku-avustusluokka-panel>
+                      <p ng-hide="dropAvailable">Tiedoston raahaaminen ei ole mahdollista tällä selain-versiolla</p>
 
-          <div class="row">
-            <div class="col-md-9">
-              <h4>JOUKKOLIIKENTEEN VALTIONAVUSTUSHAKEMUS YHTEENSÄ:</h4>
-            </div>
-            <div class="col-md-3">
-              <div class="pull-right">
-                <h4>{{sumHaettavaAvustus() | currency:"&euro;"}} (sis. alv)</h4>
-              </div>
-            </div>
-          </div>
-
-        </juku-form-section>
-        <juku-form-section>
-
-          <h3>LISÄTIETOJA AVUSTUSTEN KOHTEISTA JA HAKEMUKSEN ALLEKIRJOITTAJASTA</h3>
-
-          <div class="row">
-            <div class="col-md-12">
-              <p class="hakemus-lisatietoa-teksti">Liitä hakemukseesi lisätiedot kaikista hakemistasi
-                avustuskohteista.</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p class="hakemus-lisatietoa-otsake">PSA:n mukaisen liikenteen hankinta:</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p class="hakemus-lisatietoa-teksti">Liitä ostosopimus uusista liikenteistä, josta ilmenee liikenteen
-                aikataulu ja reitti.</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p class="hakemus-lisatietoa-otsake">Hintavelvotteiden korvaamien:</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p class="hakemus-lisatietoa-teksti">Erittele eri lipputyyppeihin haettava valtionavustus.</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p class="hakemus-lisatietoa-otsake">Liikenteen suunnittelu- ja kehittämishankkeet:</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p class="hakemus-lisatietoa-teksti">Liitä hankesuunnitelma tai työohjelma, joka sisältää ainakin hankkeen
-                tavoitteet, sisällön, aikataulun,
-                organisoinnin ja rahoituksen.</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p></p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p class="hakemus-lisatietoa-teksti">Liitä hakemukseen myös liite allekirjoitusoikeudesta.</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p class="hakemus-lisatietoa-teksti">1. Lataa tiedosto: <a href="resources/JUKU_allekirjoitusoikeus.doc"
-                                                                         target="_blank">JUKU_allekirjoitusoikeus.doc</a>
-              </p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p class="hakemus-lisatietoa-teksti">2. Täytä allekirjoitusoikeuslomake.</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p class="hakemus-lisatietoa-teksti">3. Tulosta lomake ja allekirjoituta se organisaationne joukkoliikenteen
-                avustushakemuksen hyväksyjällä.</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p class="hakemus-lisatietoa-teksti">4. Skannaa allekirjoitettu lomake ja lataa se liitteeksi tähän
-                hakemukseen.</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <p></p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h2 class="panel-title">Liitteet</h2>
-                </div>
-                <div class="panel-body">
-                  <div
-                    ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
-                    <div class="col-md-12">
-                      <div ngf-drop ng-model="myFiles" class="drop-box"
-                           ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
-                           ngf-multiple="true" ngf-allow-dir="false" ngf-drop-available="dropAvailable">
-                        <p ng-show="dropAvailable">Raahaa liite tähän tai</p>
-
-                        <p ng-hide="dropAvailable">Tiedoston raahaaminen ei ole mahdollista tällä selain-versiolla</p>
-
-                        <button ngf-select class="btn btn-primary" ng-model="myFiles" ngf-multiple="true">Valitse
-                          tiedosto
-                        </button>
-                      </div>
+                      <button ngf-select class="btn btn-primary" ng-model="myFiles" ngf-multiple="true">Valitse
+                        tiedosto
+                      </button>
                     </div>
                   </div>
-                  <div class="col-md-12">
-                    <div ng-show="liitteet.length > 0" class="response">
-                      <div class="sel-file" ng-repeat="l in liitteet">
-                        <div ng-show="hakemusKeskenerainen()">
-                          <div ng-show="l.liitenumero!=editoitavaLiite">
-                            <p>
-                              <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank"><span
-                                class="glyphicon glyphicon-file"></span>{{l.nimiteksti}}.{{l.nimipaate}}</a>
-                              <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Muuta liitenimi"
-                                 ng-click="asetaEditTilaan(l.liitenumero)"><span
-                                class='glyphicon glyphicon-pencil'></span>Nimeä uudelleen</a>
-                              <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Poista liite"
-                                 ng-click="poistaLiite(l.liitenumero)"><span
-                                class='glyphicon glyphicon-remove-sign'></span>Poista</a>
-                            </p>
-                          </div>
-                          <div ng-show="(l.liitenumero==editoitavaLiite)">
-                            <p><span class="glyphicon glyphicon-file"></span>
-                              <input name="liitenimi" type="text" class="input-small" noenter
-                                     ng-model="l.nimiteksti"
-                                     ng-focus="asetaLiitenimi(l.nimiteksti)"
-                                     ui-validate="{tyhja: 'liiteNimiTyhja($value)' }"/><span>.{{l.nimipaate}}</span>
-                              <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Tallenna liitenimi"
-                                 ng-click="paivitaLiiteNimi(l.liitenumero,l.nimiteksti, l.nimipaate)">
-                                <span class='glyphicon glyphicon-ok-circle'></span>Tallenna</a>
-                              <a href="" title="Palaa katselutilaan tallentamatta" ng-click="palaaTallentamattaLiite()">
-                                <span class='glyphicon glyphicon-ban-circle'></span>Peruuta</a>
-                              <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Poista liite"
-                                 ng-click="poistaLiite(l.liitenumero)"><span
-                                class='glyphicon glyphicon-remove-sign'></span>Poista</a>
-                            </p>
-
-                            <p
-                              ng-show="hakemusForm.liitenimi.$error.tyhja && !hakemusForm.liitenimi.$pristine"
-                              class="help-block">Liitenimi ei saa olla tyhjä.</p>
-                          </div>
-                        </div>
-                        <div
-                          ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
+                </div>
+                <div class="col-md-12">
+                  <div ng-show="liitteet.length > 0" class="response">
+                    <div class="sel-file" ng-repeat="l in liitteet">
+                      <div ng-show="hakemusKeskenerainen()">
+                        <div ng-show="l.liitenumero!=editoitavaLiite">
                           <p>
-                            <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}"><span
-                              class="glyphicon glyphicon-file"></span>{{l.nimi}}
-                              ({{l.contenttype}})</a>
+                            <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank"><span
+                              class="glyphicon glyphicon-file"></span>{{l.nimiteksti}}.{{l.nimipaate}}</a>
+                            <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Muuta liitenimi"
+                               ng-click="asetaEditTilaan(l.liitenumero)"><span
+                              class='glyphicon glyphicon-pencil'></span>Nimeä uudelleen</a>
+                            <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Poista liite"
+                               ng-click="poistaLiite(l.liitenumero)"><span
+                              class='glyphicon glyphicon-remove-sign'></span>Poista</a>
                           </p>
                         </div>
+                        <div ng-show="(l.liitenumero==editoitavaLiite)">
+                          <p><span class="glyphicon glyphicon-file"></span>
+                            <input name="liitenimi" type="text" class="input-small" noenter
+                                   ng-model="l.nimiteksti"
+                                   ng-focus="asetaLiitenimi(l.nimiteksti)"
+                                   ui-validate="{tyhja: 'liiteNimiTyhja($value)' }"/><span>.{{l.nimipaate}}</span>
+                            <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Tallenna liitenimi"
+                               ng-click="paivitaLiiteNimi(l.liitenumero,l.nimiteksti, l.nimipaate)">
+                              <span class='glyphicon glyphicon-ok-circle'></span>Tallenna</a>
+                            <a href="" title="Palaa katselutilaan tallentamatta" ng-click="palaaTallentamattaLiite()">
+                              <span class='glyphicon glyphicon-ban-circle'></span>Peruuta</a>
+                            <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Poista liite"
+                               ng-click="poistaLiite(l.liitenumero)"><span
+                              class='glyphicon glyphicon-remove-sign'></span>Poista</a>
+                          </p>
+
+                          <p
+                            ng-show="hakemusForm.liitenimi.$error.tyhja && !hakemusForm.liitenimi.$pristine"
+                            class="help-block">Liitenimi ei saa olla tyhjä.</p>
+                        </div>
+                      </div>
+                      <div
+                        ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
+                        <p>
+                          <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}"><span
+                            class="glyphicon glyphicon-file"></span>{{l.nimi}}
+                            ({{l.contenttype}})</a>
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -293,96 +289,94 @@
               </div>
             </div>
           </div>
-        </juku-form-section>
-        <juku-form-section>
-          <div class="row">
-            <div class="col-md-12">
-              <h3>HAKEMUKSEN PÄIVÄMÄÄRÄ JA HAKIJA</h3>
+        </div>
+      </juku-form-section>
+      <juku-form-section>
+        <div class="row">
+          <div class="col-md-12">
+            <h3>HAKEMUKSEN PÄIVÄMÄÄRÄ JA HAKIJA</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <h5>Päivämäärä</h5>
+
+            <p ng-show="((hakemusKeskenerainen()) && (hakemus.muokkaaja!=null))">{{hakemus.muokkausaika |
+              date:'dd.MM.yyyy'}}</p>
+
+            <p ng-hide="(hakemusKeskenerainen())">{{hakemus.lahetysaika |
+              date:'dd.MM.yyyy'}}</p>
+          </div>
+          <div class="col-md-6">
+            <h5 ng-show="hakemusKeskenerainen()">Viimeisin muokkaaja</h5>
+            <h5 ng-hide="hakemusKeskenerainen()">Hakija</h5>
+
+            <p ng-show="hakemusKeskenerainen()">{{hakemus.muokkaaja}}</p>
+
+            <p ng-hide="hakemusKeskenerainen()">{{hakemus.lahettaja}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6"></div>
+          <div class="col-md-3">
+            <div
+              ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
+              <button data-ng-click="tallennaHakemus(0)" class="pull-right btn btn-primary">Tallenna tiedot
+              </button>
+            </div>
+            <div
+              ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
+              <button data-ng-click="tallennaHakemus(0)" class="pull-right btn btn-primary" disabled>Tallenna
+                tiedot
+              </button>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h5>Päivämäärä</h5>
-
-              <p ng-show="((hakemusKeskenerainen()) && (hakemus.muokkaaja!=null))">{{hakemus.muokkausaika |
-                date:'dd.MM.yyyy'}}</p>
-
-              <p ng-hide="(hakemusKeskenerainen())">{{hakemus.lahetysaika |
-                date:'dd.MM.yyyy'}}</p>
+          <div class="col-md-3">
+            <div
+              ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
+              <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary"
+                      noenter>
+                Tallenna ja esikatsele hakemus
+              </button>
             </div>
-            <div class="col-md-6">
-              <h5 ng-show="hakemusKeskenerainen()">Viimeisin muokkaaja</h5>
-              <h5 ng-hide="hakemusKeskenerainen()">Hakija</h5>
-
-              <p ng-show="hakemusKeskenerainen()">{{hakemus.muokkaaja}}</p>
-
-              <p ng-hide="hakemusKeskenerainen()">{{hakemus.lahettaja}}</p>
+            <div
+              ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
+              <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary"
+                      noenter>
+                Esikatsele hakemus
+              </button>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6"></div>
-            <div class="col-md-3">
-              <div
-                ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
-                <button data-ng-click="tallennaHakemus(0)" class="pull-right btn btn-primary">Tallenna tiedot
-                </button>
-              </div>
-              <div
-                ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
-                <button data-ng-click="tallennaHakemus(0)" class="pull-right btn btn-primary" disabled>Tallenna
-                  tiedot
-                </button>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div
-                ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
-                <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary"
-                        noenter>
-                  Tallenna ja esikatsele hakemus
-                </button>
-              </div>
-              <div
-                ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
-                <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary"
-                        noenter>
-                  Esikatsele hakemus
-                </button>
-              </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label ng-show="hakemusKeskenerainen()">
+                <input type="checkbox" ng-model="allekirjoitusliitetty">
+                <span>Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen
+                  allekirjoitusoikeudesta.</span>
+              </label>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label ng-show="hakemusKeskenerainen()">
-                  <input type="checkbox" ng-model="allekirjoitusliitetty">
-                  <span>Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen
-                    allekirjoitusoikeudesta.</span>
-                </label>
-              </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div ng-show="sallittu('allekirjoita-oma-hakemus')">
+              <button
+                ng-show="(hakemusKeskenerainen() && allekirjoitusliitetty)"
+                juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen"
+                varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen. Lähetä hakemus painamalla Kyllä-painiketta. Huom! Liitteiden määrästä riippuen, hakemuksen lähettäminen asianhallintaan kestää 10-70 sekuntia."
+                operaatio="tallennaHakemus(2)"
+                class="pull-right btn btn-success">Tallenna ja lähetä hakemus
+              </button>
+              <button
+                ng-hide="(hakemusKeskenerainen() && allekirjoitusliitetty)"
+                class="pull-right btn btn-success" disabled>Tallenna ja lähetä hakemus
+              </button>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div ng-show="sallittu('allekirjoita-oma-hakemus')">
-                <button
-                  ng-show="(hakemusKeskenerainen() && allekirjoitusliitetty)"
-                  juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen"
-                  varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen. Lähetä hakemus painamalla Kyllä-painiketta. Huom! Liitteiden määrästä riippuen, hakemuksen lähettäminen asianhallintaan kestää 10-70 sekuntia."
-                  operaatio="tallennaHakemus(2)"
-                  class="pull-right btn btn-success">Tallenna ja lähetä hakemus
-                </button>
-                <button
-                  ng-hide="(hakemusKeskenerainen() && allekirjoitusliitetty)"
-                  class="pull-right btn btn-success" disabled>Tallenna ja lähetä hakemus
-                </button>
-              </div>
-            </div>
-          </div>
-        </juku-form-section>
-
-      </form>
-
+        </div>
+      </juku-form-section>
     </juku-form>
     <div class="row">
       <div class="col-md-12">

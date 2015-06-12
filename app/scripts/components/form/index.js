@@ -5,6 +5,6 @@ module.exports = function () {
     transclude: true,
     replace: true,
     template: `
-      <div class="form" ng-transclude></div>`
+      <form class="form" ng-transclude></form>`
   };
 };
