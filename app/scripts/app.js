@@ -1,5 +1,4 @@
 'use strict';
-
 var angular = require('angular');
 
 require('angular-toastr');
@@ -113,6 +112,10 @@ angular
   .directive('hakemusLaatikko', require('components/hakemusLaatikko'))
   .directive('jukuLinkNext', require('components/navigationLink').next)
   .directive('jukuLinkPrev', require('components/navigationLink').prev)
+  .directive('jukuFormSection', require('components/formSection'))
+  .directive('jukuFormRow', require('components/formRow'))
+  .directive('jukuForm', require('components/form'))
+  .directive('jukuAvustuskohde', require('components/avustuskohde'))
   .directive('hakemusLabel', require('components/hakemusLabel'));
 
 require('./controllers/hakija/hakemukset');
@@ -123,8 +126,7 @@ require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/hakemus');
 require('./controllers/yhteinen/paanaytto');
 require('./directives/alvmuunnos');
-require('./directives/jkuAvustusluokkaPanel');
-require('./directives/jkuAvustuskohde');
+require('./directives/jukuAvustusluokkaPanel');
 require('./directives/noenter');
 require('./directives/selectonclick');
 require('./services/auth');
