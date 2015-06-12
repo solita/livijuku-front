@@ -194,6 +194,7 @@ gulp.task('server', function() {
   return browserSync({
     port: 9000,
     open: false,
+    notify: false,
     server: {
       baseDir: './dist',
       middleware: [addAuthenticationHeaders, proxyAPIRequests]
