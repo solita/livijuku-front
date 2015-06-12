@@ -25,14 +25,14 @@
               </button>
             <p
               ng-show="hakemuskausiAvoin(hakemuskausi) && hakemuskausi.asetusLadattu && sallittu('modify-hakemuskausi')">
-              <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">Käynnistä
-                hakemuskausi
+              <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">
+                Käynnistä hakemuskausi
               </button>
             </p>
             <p
               ng-hide="hakemuskausiKaynnistetty(hakemuskausi) || (hakemuskausiAvoin(hakemuskausi) && hakemuskausi.asetusLadattu && sallittu('modify-hakemuskausi'))">
-              <button class="btn btn-success btn-lg" disabled>Käynnistä
-                hakemuskausi
+              <button class="btn btn-success btn-lg" disabled>
+                Käynnistä hakemuskausi
               </button>
             </p>
             <div class="row hakemuskausi-panel-hakuaikatoiminnot">
