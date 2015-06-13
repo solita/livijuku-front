@@ -42,27 +42,16 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-6">
-      <label>Hakija</label>
+  <juku-form-row>
+    <label>Hakija</label>
+    <p>{{hakija}}</p>
+  </juku-form-row>
 
-      <p>{{hakija}}</p>
-    </div>
-    <div class="col-md-6">
-      <label>Hakemuksen tila</label>
+  <juku-form-row>
+    <label>Hakemuksen tila</label>
+    <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" tyyppi="{{tyyppi}}"/>
+  </juku-form-row>
 
-      <p>
-        <hakemus-label tila="{{hakemus.hakemustilatunnus}}"/>
-      </p>
-    </div>
-  </div>
-  <br>
-
-  <div class="row">
-    <div class="hakemuksen-tila col-md-12">
-      <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" tyyppi="{{tyyppi}}"/>
-    </div>
-  </div>
   <div class="row">
     <div class="col-md-12">
       <div ng-show="onAvustushakemus()">

@@ -208,9 +208,9 @@ public class HakemuskausiTest extends TestBase {
                                                                                      containsText(teksti),
                                                                                      isVisible()));
 
-    assertThat(String.format("Hakijan hakemussivulla hakemuksen tila (%s) pitäisi näkyä kaksi kertaa.", teksti),
+    assertThat(String.format("Hakijan hakemussivulla hakemuksen tila (%s) pitäisi näkyä kerran.", teksti),
                hakemuksenTilaIndikaattorit,
-               hasSize(equalTo(2)));
+               hasSize(equalTo(1)));
   }
 
   private WebElement linkInPosition(String text, int position) {
