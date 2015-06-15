@@ -296,7 +296,7 @@ angular.module('jukufrontApp')
                     break;
                   case 1:
                     // Esikatselu
-                    $window.open('api/hakemus/' + $scope.hakemusid + '/pdf', 'target', '_blank');
+                    $window.open('api/hakemus/' + $scope.hakemusid + '/pdf');
                     break;
                   case 2:
                     // Laheta
