@@ -79,11 +79,12 @@ module.exports = function () {
       $scope.sallittuArvo = function (value) {
         if (typeof value === 'undefined') {
           return false;
-        }
-        var floatarvo;
-        if (typeof value === 'string') {
+        } else if (typeof value === 'string') {
+          var floatarvo;
           floatarvo = $scope.euroSyoteNumeroksi(value);
-          return (floatarvo >= 0 && floatarvo <= 999999999.00);
+          return (floatarvo >= 0 && floatarvo <= 999999999.99);
+        }  else if (typeof value === 'number') {
+          return (value >= 0 && value <= 999999999.99);
         }
         return true;
       };
