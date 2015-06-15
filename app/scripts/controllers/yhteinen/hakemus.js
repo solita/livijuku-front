@@ -189,7 +189,7 @@ angular.module('jukufrontApp')
         if (tila == 'K' || tila == 'T0') {
           $scope.tallennaHakemus(1);
         } else {
-          $window.open('api/hakemus/' + $scope.hakemusid + '/pdf', 'target', '_blank');
+          $window.open('api/hakemus/' + $scope.hakemusid + '/pdf');
         }
       };
 

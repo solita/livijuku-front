@@ -55,7 +55,7 @@ angular.module('jukufrontApp')
       if ($scope.hakemusTarkastettu()) {
         $scope.tallennaPaatos(1);
       } else {
-        $window.open('api/hakemus/' + $scope.hakemusid + '/paatos/pdf', 'target', '_blank');
+        $window.open('api/hakemus/' + $scope.hakemusid + '/paatos/pdf');
       }
     };
 
