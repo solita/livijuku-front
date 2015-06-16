@@ -1,10 +1,9 @@
 'use strict';
 
-module.exports = function () {
-  return {
-    transclude: true,
-    replace: true,
-    template: `
-      <form class="form" ng-transclude></form>`
-  };
+var transclude = require('utils/transclude');
+
+module.exports = function() {
+  return transclude({
+    template: `<form class="form"></form>`
+  });
 };
