@@ -6,8 +6,8 @@ var angular = require('angular');
 
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams',
-    'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', 'Upload', 'LiiteService', 'CommonService', '$window',
-    function ($rootScope, $scope, $location, $routeParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, Upload, LiiteService, common, $window) {
+    'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', 'CommonService', '$window',
+    function ($rootScope, $scope, $location, $routeParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, common, $window) {
 
       function haeAvustuskohteet(hakemusid, scopemuuttuja) {
         common.bindPromiseToScope(AvustuskohdeService.hae(hakemusid), $scope, scopemuuttuja,
@@ -34,23 +34,6 @@ angular.module('jukufrontApp')
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.hae(' + $scope.hakemusid + ')', data.message);
-          });
-
-        haeLiitteet();
-
-      }
-
-      function haeLiitteet() {
-        LiiteService.haeKaikki($scope.hakemusid)
-          .success(function (data) {
-            $scope.liitteet = _.map(data, function (element) {
-              var paate = element.nimi.split('.').pop();
-              var nimiosa = element.nimi.substring(0, (element.nimi.length - paate.length - 1));
-              return _.extend({}, element, {nimiteksti: nimiosa}, {nimipaate: paate});
-            });
-          })
-          .error(function (data) {
-            StatusService.virhe('LiiteService.hae(' + $scope.hakemusid + ')', data.message);
           });
       }
 
@@ -93,44 +76,6 @@ angular.module('jukufrontApp')
           });
       }
 
-      $scope.$watch('myFiles', function () {
-        if ($scope.myFiles != null) {
-          for (var i = 0; i < $scope.myFiles.length; i++) {
-            var file = $scope.myFiles[i];
-            console.log('Watched:' + file.name);
-            $scope.upload = Upload.upload({
-              url: 'api/hakemus/' + $scope.hakemusid + '/liite',
-              method: 'POST',
-              data: {myObj: $scope.myModelObj},
-              file: file,
-              fileFormDataName: 'liite'
-            }).progress(function (evt) {
-              console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.file.name);
-            }).success(function (data, status, headers, config) {
-              console.log('Liiteen lataus: ' + config.file.name + ' onnistui. Paluuarvo: ' + data);
-              StatusService.ok('Liitteen lataus(' + config.file.name + ')', 'Liitteen lataus:' + config.file.name + ' onnistui.');
-              haeLiitteet();
-            }).error(function (data, status, headers, config) {
-              console.log('Liitteen lataus: ' + config.file.name + ' epaonnistui. Paluuarvo: ' + data);
-              //StatusService.virhe('Liitteen lataus('+config.file.name+')','Liitteen lataus:' + config.file.name + ' epaonnistui:'+data);
-            });
-          }
-        }
-      });
-
-      /**
-       * Asettaa liitteen muokkaustilaan
-       * @param liitenumero
-       */
-      $scope.asetaEditTilaan = function (liitenumero) {
-        haeLiitteet();
-        $scope.editoitavaLiite = liitenumero;
-      };
-
-      $scope.asetaLiitenimi = function (nimi) {
-        $scope.liitenimi = nimi;
-      };
-
       $scope.haeAvustusProsentti = function (luokka, laji) {
         return AvustuskohdeService.avustusprosentti($scope.vuosi, luokka, laji);
       };
@@ -172,19 +117,6 @@ angular.module('jukufrontApp')
           hakemustilatunnus == 'M';
       };
 
-      $scope.liiteNimiTyhja = function (nimi) {
-        if (isNaN(nimi)) {
-          return true;
-        } else {
-          return false;
-        }
-      };
-
-      $scope.liitteetOlemassa = function () {
-        if (typeof $scope.liitteet === 'undefined') return false;
-        return $scope.liitteet.length > 0;
-      };
-
       $scope.naytaHakemus = function (tila) {
         if (tila == 'K' || tila == 'T0') {
           $scope.tallennaHakemus(1);
@@ -207,42 +139,6 @@ angular.module('jukufrontApp')
 
       $scope.paatosOlemassa = function () {
         return $scope.paatos != null;
-      };
-
-      $scope.palaaTallentamattaLiite = function () {
-        $scope.editoitavaLiite = -1;
-        haeLiitteet();
-      };
-
-      $scope.paivitaLiiteNimi = function (liiteid, nimi, paate) {
-        $scope.$broadcast('show-errors-check-validity');
-        if ($scope.hakemusForm.$valid) {
-          if (nimi != $scope.liiteNimi) {
-            var tiedostonimi = nimi + '.' + paate;
-            LiiteService.paivitaNimi($scope.hakemusid, liiteid, tiedostonimi)
-              .success(function (data) {
-                StatusService.ok('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + tiedostonimi + ')', 'Liitenimi päivitettiin onnistuneesti');
-                $scope.editoitavaLiite = -1;
-                haeLiitteet();
-              })
-              .error(function (data) {
-                StatusService.virhe('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + tiedostonimi + ')', data.message);
-              });
-          }
-        } else {
-          StatusService.virhe('LiiteService.paivitaNimi()', 'Anna liitteelle nimi ennen tallentamista.');
-        }
-      };
-
-      $scope.poistaLiite = function (liiteid) {
-        LiiteService.poista($scope.hakemusid, liiteid)
-          .success(function (data) {
-            StatusService.ok('LiiteService.poista(' + $scope.hakemusid + ',' + liiteid + ')', 'Liite poistettiin onnistuneesti');
-            haeLiitteet();
-          })
-          .error(function (data) {
-            StatusService.virhe('LiiteService.poista(' + $scope.hakemusid + ',' + liiteid + ')', data.message);
-          });
       };
 
       $scope.seliteOlemassa = function (hakemus) {
@@ -353,11 +249,8 @@ angular.module('jukufrontApp')
 
       $scope.allekirjoitusliitetty = false;
       $scope.avustushakemusid = $routeParams.id;
-      $scope.editoitavaLiite = -1;
-      $scope.liitenimi = '';
       $scope.maksatushakemus1id = $routeParams.m1id;
       $scope.maksatushakemus2id = $routeParams.m2id;
-      $scope.myFiles = [];
       $scope.tyyppi = $routeParams.tyyppi;
       $scope.vuosi = $routeParams.vuosi;
       $scope.alv = false;

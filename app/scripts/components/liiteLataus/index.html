@@ -1,0 +1,71 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Liitteet</h2>
+    </div>
+    <div class="panel-body">
+        <div ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
+            <div class="col-md-12">
+                <div ngf-drop ng-model="myFiles" class="drop-box"
+                     ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+                     ngf-multiple="true" ngf-allow-dir="false" ngf-drop-available="dropAvailable">
+                    <p ng-show="dropAvailable">Raahaa liite tähän tai</p>
+
+                    <p ng-hide="dropAvailable">Tiedoston raahaaminen ei ole mahdollista tällä selain-versiolla</p>
+
+                    <button ngf-select class="btn btn-primary" ng-model="myFiles" ngf-multiple="true">Valitse
+                        tiedosto
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div ng-show="liitteet.length > 0" class="response">
+                <div class="sel-file" ng-repeat="l in liitteet">
+                    <div ng-show="hakemusKeskenerainen()">
+                        <div ng-show="l.liitenumero!=editoitavaLiite">
+                            <p>
+                                <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}" target="_blank"><span
+                                        class="glyphicon glyphicon-file"></span>{{l.nimiteksti}}.{{l.nimipaate}}</a>
+                                <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Muuta liitenimi"
+                                   ng-click="asetaEditTilaan(l.liitenumero)"><span
+                                        class='glyphicon glyphicon-pencil'></span>Nimeä uudelleen</a>
+                                <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Poista liite"
+                                   ng-click="poistaLiite(l.liitenumero)"><span
+                                        class='glyphicon glyphicon-remove-sign'></span>Poista</a>
+                            </p>
+                        </div>
+                        <div ng-show="(l.liitenumero==editoitavaLiite)">
+                            <p><span class="glyphicon glyphicon-file"></span>
+                                <input name="liitenimi" type="text" class="input-small" noenter
+                                       ng-model="l.nimiteksti"
+                                       ng-focus="asetaLiitenimi(l.nimiteksti)"
+                                       ui-validate="{tyhja: 'liiteNimiTyhja($value)' }"/><span>.{{l.nimipaate}}</span>
+                                <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Tallenna liitenimi"
+                                   ng-click="paivitaLiiteNimi(l.liitenumero,l.nimiteksti, l.nimipaate)">
+                                    <span class='glyphicon glyphicon-ok-circle'></span>Tallenna</a>
+                                <a href="" title="Palaa katselutilaan tallentamatta"
+                                   ng-click="palaaTallentamattaLiite()">
+                                    <span class='glyphicon glyphicon-ban-circle'></span>Peruuta</a>
+                                <a ng-show="sallittu('modify-oma-hakemus')" href="" title="Poista liite"
+                                   ng-click="poistaLiite(l.liitenumero)"><span
+                                        class='glyphicon glyphicon-remove-sign'></span>Poista</a>
+                            </p>
+
+                            <p
+                                    ng-show="hakemusForm.liitenimi.$error.tyhja && !hakemusForm.liitenimi.$pristine"
+                                    class="help-block">Liitenimi ei saa olla tyhjä.</p>
+                        </div>
+                    </div>
+                    <div
+                            ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
+                        <p>
+                            <a href="api/hakemus/{{hakemusid}}/liite/{{l.liitenumero}}"><span
+                                    class="glyphicon glyphicon-file"></span>{{l.nimi}}
+                                ({{l.contenttype}})</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Liitetiedostot</h2>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <div ng-show="liitteetOlemassa()" class="response">
+                        <div class="sel-file" ng-repeat="l in liitteet">
+                            <p>
+                                <a href="api/hakemus/{{hakemus.id}}/liite/{{l.liitenumero}}" target="_blank"><span
+                                        class="glyphicon glyphicon-file"></span>{{l.nimi}}
+                                    ({{l.contenttype}})</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div ng-hide="liitteetOlemassa()">
+                        <p>Ei liitteitä.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
