@@ -28,147 +28,147 @@ import org.testng.annotations.Test;
 
 public class HakemuskausiTest extends TestBase {
 
-  @Test
-  public void hakuohje_kauden_avaus_ja_restorepoint_update() throws IOException,
-    InterruptedException {
+    @Test
+    public void hakuohje_kauden_avaus_ja_restorepoint_update() throws IOException,
+            InterruptedException {
 
-    postHakuohje(2016);
+        postHakuohje(2016);
 
-    login(User.KATRI);
+        login(User.KATRI);
 
-    boolean kaynnistaNapinTilaEnnen =
-      findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi")).isEnabled();
-    assertTrue("Käynnistä hakemuskausi == enabled", kaynnistaNapinTilaEnnen);
+        boolean kaynnistaNapinTilaEnnen =
+                findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi")).isEnabled();
+        assertTrue("Käynnistä hakemuskausi == enabled", kaynnistaNapinTilaEnnen);
 
-    // Aseta avustuskauden alkupäivä 1.1.
-    asetaAvustuskaudenAlkupaiva0101();
+        // Aseta avustuskauden alkupäivä 1.1.
+        asetaAvustuskaudenAlkupaiva0101();
 
-    button("Käynnistä hakemuskausi").click();
-    waitForAngularRequestsToFinish(driver());
+        button("Käynnistä hakemuskausi").click();
+        waitForAngularRequestsToFinish(driver());
 
-    boolean kaynnistaNappiNakyy = true;
-    for (int i = 0; i < 25; i++) {
-      sleep(100);
-      try {
-        button("Käynnistä hakemuskausi");
-      } catch (NoSuchElementException e) {
-        kaynnistaNappiNakyy = false;
-        break;
-      }
+        boolean kaynnistaNappiNakyy = true;
+        for (int i = 0; i < 25; i++) {
+            sleep(100);
+            try {
+                button("Käynnistä hakemuskausi");
+            } catch (NoSuchElementException e) {
+                kaynnistaNappiNakyy = false;
+                break;
+            }
+        }
+        assertThat("Käynnistä hakemuskausi jäi näkyviin vaikka kausi avattiin.", !kaynnistaNappiNakyy);
+
+        // Päivitetään testien restorepoint tähän, jotta kautta ei tarvitse avata muissa testeissä.
+        createRestorePoint(TEST_RESTORE_POINT);
     }
-    assertThat("Käynnistä hakemuskausi jäi näkyviin vaikka kausi avattiin.", !kaynnistaNappiNakyy);
 
-    // Päivitetään testien restorepoint tähän, jotta kautta ei tarvitse avata muissa testeissä.
-    createRestorePoint(TEST_RESTORE_POINT);
-  }
+    private void asetaAvustuskaudenAlkupaiva0101() {
+        findElementByLinkText("Muokkaa hakuaikoja").click();
+        String datepicker = ".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)";
 
-  private void asetaAvustuskaudenAlkupaiva0101() {
-    findElementByLinkText("Muokkaa hakuaikoja").click();
-    String datepicker = ".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)";
+        WebElement avustushakemuskaudenAlkupv = findElementByCssSelector(
+                datepicker + " > span:nth-child(3) > button:nth-child(1)");
+        avustushakemuskaudenAlkupv.click();
+        WebElement vuosikuukausiValitsin = findElementByCssSelector(
+                datepicker
+                        + " > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(2) > button");
+        vuosikuukausiValitsin.click();
+        WebElement kuukausi01 = findElementByCssSelector(
+                datepicker
+                        + " > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > button");
+        kuukausi01.click();
+        WebElement paiva01 = findElementByCssSelector(
+                datepicker
+                        + " > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(5) > button");
+        paiva01.click();
 
-    WebElement avustushakemuskaudenAlkupv = findElementByCssSelector(
-      datepicker + " > span:nth-child(3) > button:nth-child(1)");
-    avustushakemuskaudenAlkupv.click();
-    WebElement vuosikuukausiValitsin = findElementByCssSelector(
-      datepicker
-        + " > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(2) > button");
-    vuosikuukausiValitsin.click();
-    WebElement kuukausi01 = findElementByCssSelector(
-      datepicker
-        + " > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > button");
-    kuukausi01.click();
-    WebElement paiva01 = findElementByCssSelector(
-      datepicker
-        + " > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(5) > button");
-    paiva01.click();
+        findElementByLinkText("Tallenna hakuajat").click();
+        waitForAngularRequestsToFinish(driver());
+    }
 
-    findElementByLinkText("Tallenna hakuajat").click();
-    waitForAngularRequestsToFinish(driver());
-  }
+    @Test
+    public void hakijaaInformoidaanHakemuksenTilasta() {
+        login(User.HARRI);
 
-  @Test
-  public void hakijaaInformoidaanHakemuksenTilasta() {
-    login(User.HARRI);
+        // Varmista, että kausi on avoinna TODO: Korjaa tämä.
+        //    WebElement eiHakemuksia = findElementByXPath("//p[%s]", containsText("Ei hakemuksia, koska hakemuskautta ei ole vielä avattu."));
+        //    assertThat(eiHakemuksia, is(notNullValue()));
 
-    // Varmista, että kausi on avoinna TODO: Korjaa tämä.
-    //    WebElement eiHakemuksia = findElementByXPath("//p[%s]", containsText("Ei hakemuksia, koska hakemuskautta ei ole vielä avattu."));
-    //    assertThat(eiHakemuksia, is(notNullValue()));
+        // Assertoi tila keskeneräinen ja avaa hakemus
+        // TODO Assertoi hakijana myös hakemuksen tila ja bread crumbs.
+        spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
-    // Assertoi tila keskeneräinen ja avaa hakemus
-    // TODO Assertoi hakijana myös hakemuksen tila ja bread crumbs.
-    spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
+        tarkistaHakijanHakemuksenTila("Keskeneräinen", "hakemus-tila-keskenerainen");
 
-    tarkistaHakijanHakemuksenTila("Keskeneräinen", "hakemus-tila-keskenerainen");
+        // Lähetä hakemus
+        lahetaHakemus();
 
-    // Lähetä hakemus
-    lahetaHakemus();
+        // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
+        spanWithTextAndClass("Vireillä", "hakemus-tila-vireilla");
 
-    // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
-    spanWithTextAndClass("Vireillä", "hakemus-tila-vireilla");
+        // Kirjaa sisään käsittelijä
+        login(User.KATRI);
+        // Ota hakemus käsittelyyn
+        avaaHakemus("Vireillä", "hakemus-tila-vireilla");
 
-    // Kirjaa sisään käsittelijä
-    login(User.KATRI);
-    // Ota hakemus käsittelyyn
-    avaaHakemus("Vireillä", "hakemus-tila-vireilla");
+        tarkistaHakijanHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
 
-    tarkistaHakijanHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
+        // Palauta hakemus täydennettäväksi
+        button("Palauta täydennettäväksi").click();
 
-    // Palauta hakemus täydennettäväksi
-    button("Palauta täydennettäväksi").click();
+        //Assertoi käsittelijänä tila Täydennettävänä
+        spanWithTextAndClass("Täydennettävänä", "hakemus-tila-taydennettavana");
+        // Kirjaa sisään hakija
+        login(User.HARRI);
+        // Assertoi tila täydennettävänä
+        // Avaa hakemus
+        spanWithTextAndClass("Täydennettävänä", "hakemus-tila-taydennettavana").click();
 
-    //Assertoi käsittelijänä tila Täydennettävänä
-    spanWithTextAndClass("Täydennettävänä", "hakemus-tila-taydennettavana");
-    // Kirjaa sisään hakija
-    login(User.HARRI);
-    // Assertoi tila täydennettävänä
-    // Avaa hakemus
-    spanWithTextAndClass("Täydennettävänä", "hakemus-tila-taydennettavana").click();
+        tarkistaHakijanHakemuksenTila("Täydennettävänä", "hakemus-tila-taydennettavana");
 
-    tarkistaHakijanHakemuksenTila("Täydennettävänä","hakemus-tila-taydennettavana");
+        // Täydennä hakemus
+        lahetaHakemus();
 
-    // Täydennä hakemus
-    lahetaHakemus();
+        // Assetoi hakijana tila Täydennetty.
+        spanWithTextAndClass("Täydennetty", "hakemus-tila-taydennetty");
 
-    // Assetoi hakijana tila Täydennetty.
-    spanWithTextAndClass("Täydennetty", "hakemus-tila-taydennetty");
+        // Kirjaa sisään käsittelijä
+        login(User.KATRI);
 
-    // Kirjaa sisään käsittelijä
-    login(User.KATRI);
+        // Tarkasta hakemus
+        avaaHakemus("Täydennetty", "hakemus-tila-taydennetty");
 
-    // Tarkasta hakemus
-    avaaHakemus("Täydennetty", "hakemus-tila-taydennetty");
+        tarkistaHakijanHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
 
-    tarkistaHakijanHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
+        button("Merkitse tarkastetuksi").click();
+        okOlenVarma().click();
 
-    button("Merkitse tarkastetuksi").click();
-    okOlenVarma().click();
+        // Assertoi käsittelijänä tila Tarkastettu
+        spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
 
-    // Assertoi käsittelijänä tila Tarkastettu
-    spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
+        // Kirjaa sisään hakija
+        login(User.HARRI);
+        // Assertoi hakijana tila tarkastettu
+        spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
 
-    // Kirjaa sisään hakija
-    login(User.HARRI);
-    // Assertoi hakijana tila tarkastettu
-    spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
+        // Kirjaa sisään käsittelijä
+        login(User.KATRI);
+        // Päätä hakemus
+        spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu").click();
+        linkInPosition("Suunnittelu ja päätöksenteko", 1).click();
+        linkInPosition("Päätöksentekoon", 1).click();
+        spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
+        findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
+        findElementByXPath("//input[@type='text']").sendKeys("Paavo Päättäjä");
+        button("Tallenna ja hyväksy päätös").click();
+        okOlenVarma().click();
+        waitForAngularRequestsToFinish(driver());
 
-    // Kirjaa sisään käsittelijä
-    login(User.KATRI);
-    // Päätä hakemus
-    spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu").click();
-    linkInPosition("Suunnittelu ja päätöksenteko", 1).click();
-    linkInPosition("Päätöksentekoon", 1).click();
-    spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
-    findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
-    findElementByXPath("//input[@type='text']").sendKeys("Paavo Päättäjä");
-    button("Tallenna ja hyväksy päätös").click();
-    okOlenVarma().click();
-    waitForAngularRequestsToFinish(driver());
+        // Kirjaa sisään hakija
+        login(User.HARRI);
+        // Assertoi tila päätetty
 
-    // Kirjaa sisään hakija
-    login(User.HARRI);
-    // Assertoi tila päätetty
-
-  }
+    }
 
     @Test
     public void hakijaSyottaaHakemukseenAlvillisetRahasummat() {
@@ -178,104 +178,143 @@ public class HakemuskausiTest extends TestBase {
         spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
         //Laita Alv-syotto paalle
-        WebElement haluanSyottaaAlvillisina = findElementByXPath("//span[%s and %s]",
-                containsText("Haluan syöttää summat arvonlisäverollisina."),
-                isVisible());
-        haluanSyottaaAlvillisina.click();
-
+        klikkaaCheckboxia(containsText("Haluan syöttää summat arvonlisäverollisina."));
 
         //Syota jokaiseen kenttaan rahasumma. Rahasumma tulee syottaa pilkun kanssa kokonaisuudessaan,
         //jotta input kentassa oleva currency komponentti pystyy ottamaan arvon kasittelyyn ja arvovalidoinit toimivat
         List<WebElement> rahakentat = findElementsByXPath("//input[@type='text' and %s]", isVisible());
-        for (int i=0;i<rahakentat.size();i+=2) {
+
+       //Annetaan aluksi virheellinen summa ja katsotaan, että siitä tulee virheilmoitus
+       // rahakentat.get(0).clear();
+       //rahakentat.get(0).sendKeys("99999999999999999 ");
+       //tarkistaInputKentanTila("ng-invalid-sallittu-arvo-haettavaavustus");
+
+        for (int i = 0; i < rahakentat.size(); i += 2) {
             rahakentat.get(i).clear();
             rahakentat.get(i).sendKeys("1000,00");
-            rahakentat.get(i+1).clear();
-            rahakentat.get(i+1).sendKeys("3000,00");
+            rahakentat.get(i + 1).clear();
+            rahakentat.get(i + 1).sendKeys("3000,00");
         }
-
-        //Tarkistetaan hakemuksen summa kentat
-        List<WebElement> h4t = findElementsByXPath("//h4");
-        assertThat(h4t.get(7).getText(), is(equalTo("12 000,00 € (sis. alv)")));
+        tarkistaHakemuksenSummakentat();
+        klikkaaCheckboxia(containsText("Haluan syöttää summat arvonlisäverollisina."));
+        tarkistaHakemuksenSummakentat();
 
         // Lähetä hakemus
         lahetaHakemus();
+
+        // Kirjaa sisään käsittelijä
+        login(User.KATRI);
+        // Ota hakemus käsittelyyn
+        avaaHakemus("Vireillä", "hakemus-tila-vireilla");
+
+        //Tarkista summat
+        tarkistaHakemuksenSummakentat();
+        klikkaaCheckboxia(containsText("Haluan katsoa arvoja arvonlisäverollisina."));
+        tarkistaHakemuksenSummakentat();
     }
 
-  private void tarkistaHakijanHakemuksenTila(String teksti, String luokka) {
-    List<WebElement> hakemuksenTilaIndikaattorit = findElementsByXPath(String.format("//span[%s and %s and %s]",
-                                                                                     hasClass(luokka),
-                                                                                     containsText(teksti),
-                                                                                     isVisible()));
-
-    assertThat(String.format("Hakijan hakemussivulla hakemuksen tila (%s) pitäisi näkyä kerran.", teksti),
-               hakemuksenTilaIndikaattorit,
-               hasSize(equalTo(1)));
-  }
-
-  private WebElement linkInPosition(String text, int position) {
-    return findElementByXPath("//*[(self::a or self::button) and %s and %s][%s]",
-      containsText(text),
-      isVisible(),
-      position);
-  }
-
-  private void avaaHakemus(String tila, String statusClass) {
-    WebElement vireillaLaatikko =
-      spanWithTextAndClass(tila, statusClass);
-    vireillaLaatikko.click();
-
-    WebElement helsinginSeudunVireilla =
-      spanWithTextAndClass(tila, statusClass);
-    helsinginSeudunVireilla.click();
-  }
-
-  private void lahetaHakemus() {
-    WebElement olenLiittanyt = findElementByXPath("//span[%s and %s]", containsText("Olen liittänyt hakemukseen tarvittavat"), isVisible());
-    olenLiittanyt.click();
-    waitForAngularRequestsToFinish(driver());
-    button("Tallenna ja lähetä hakemus").click();
-    waitForAngularRequestsToFinish(driver());
-
-    okOlenVarma().click();
-    waitForAngularRequestsToFinish(driver());
-  }
-
-  private void postHakuohje(int vuosi) throws IOException {
-    CloseableHttpClient httpclient = HttpClients.createDefault();
-
-    HttpPost httpPost = new HttpPost(baseUrl() + "/api/hakemuskausi/" + vuosi + "/hakuohje");
-    httpPost.addHeader("oam-remote-user", User.KATRI.getLogin());
-    httpPost.addHeader("oam-user-organization", User.KATRI.getOrganization());
-    httpPost.addHeader("oam-groups", User.KATRI.getGroup());
-
-    FileBody hakuohje = new FileBody(getPathToTestPdf().toFile());
-
-    HttpEntity reqEntity = MultipartEntityBuilder.create()
-      .addPart("hakuohje", hakuohje)
-      .build();
-    httpPost.setEntity(reqEntity);
-    System.out.println("************************************");
-
-    try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
-      System.out.println(httpPost);
-      System.out.println(response.getStatusLine());
-      HttpEntity entity = response.getEntity();
-      // do something useful with the response body
-      // and ensure it is fully consumed
-      EntityUtils.consume(entity);
-    } finally {
-      System.out.println("************************************");
+    private void klikkaaCheckboxia(String s) {
+        WebElement checkboxi = findElementByXPath("//span[%s and %s]",
+                s,
+                isVisible());
+        checkboxi.click();
     }
-  }
 
-  private Path getPathToTestPdf() {
-    try {
-      return Paths.get(ClassLoader.getSystemResource("test.pdf").toURI());
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-      return null;
+    private void tarkistaHakemuksenSummakentat() {
+        //Tarkistetaan hakemuksen valisumma kentat
+        List<WebElement> h4t = findElementsByXPath("//h4[@class='panel-title ng-binding']");
+
+        assertThat(h4t.get(1).getText(), is(equalTo("3 000,00 € (sis. alv)")));
+        assertThat(h4t.get(3).getText(), is(equalTo("4 000,00 € (sis. alv)")));
+        assertThat(h4t.get(5).getText(), is(equalTo("5 000,00 € (sis. alv)")));
+
+        // Tarkistetaan hakemuksen yhteensa kentta
+        WebElement yhteensa = findElementByXPath("//h4[@class='ng-binding']");
+        assertThat(yhteensa.getText(), is(equalTo("12 000,00 € (sis. alv)")));
     }
-  }
+
+    private void tarkistaHakijanHakemuksenTila(String teksti, String luokka) {
+        List<WebElement> hakemuksenTilaIndikaattorit = findElementsByXPath(String.format("//span[%s and %s and %s]",
+                hasClass(luokka),
+                containsText(teksti),
+                isVisible()));
+
+        assertThat(String.format("Hakijan hakemussivulla hakemuksen tila (%s) pitäisi näkyä kerran.", teksti),
+                hakemuksenTilaIndikaattorit,
+                hasSize(equalTo(1)));
+    }
+
+    private void tarkistaInputKentanTila(String luokka) {
+        List<WebElement> inputkentat = findElementsByXPath(String.format("//input[%s]",
+                hasClass(luokka)));
+
+        assertThat(String.format("Hakijan hakemussivulla input kentän luokka (%s) pitäisi näkyä kerran.", luokka),
+                inputkentat,
+                hasSize(equalTo(1)));
+    }
+
+    private WebElement linkInPosition(String text, int position) {
+        return findElementByXPath("//*[(self::a or self::button) and %s and %s][%s]",
+                containsText(text),
+                isVisible(),
+                position);
+    }
+
+    private void avaaHakemus(String tila, String statusClass) {
+        WebElement vireillaLaatikko =
+                spanWithTextAndClass(tila, statusClass);
+        vireillaLaatikko.click();
+
+        WebElement helsinginSeudunVireilla =
+                spanWithTextAndClass(tila, statusClass);
+        helsinginSeudunVireilla.click();
+    }
+
+    private void lahetaHakemus() {
+        klikkaaCheckboxia(containsText("Olen liittänyt hakemukseen tarvittavat"));
+        waitForAngularRequestsToFinish(driver());
+        button("Tallenna ja lähetä hakemus").click();
+        waitForAngularRequestsToFinish(driver());
+
+        okOlenVarma().click();
+        waitForAngularRequestsToFinish(driver());
+    }
+
+    private void postHakuohje(int vuosi) throws IOException {
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+
+        HttpPost httpPost = new HttpPost(baseUrl() + "/api/hakemuskausi/" + vuosi + "/hakuohje");
+        httpPost.addHeader("oam-remote-user", User.KATRI.getLogin());
+        httpPost.addHeader("oam-user-organization", User.KATRI.getOrganization());
+        httpPost.addHeader("oam-groups", User.KATRI.getGroup());
+
+        FileBody hakuohje = new FileBody(getPathToTestPdf().toFile());
+
+        HttpEntity reqEntity = MultipartEntityBuilder.create()
+                .addPart("hakuohje", hakuohje)
+                .build();
+        httpPost.setEntity(reqEntity);
+        System.out.println("************************************");
+
+        try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
+            System.out.println(httpPost);
+            System.out.println(response.getStatusLine());
+            HttpEntity entity = response.getEntity();
+            // do something useful with the response body
+            // and ensure it is fully consumed
+            EntityUtils.consume(entity);
+        } finally {
+            System.out.println("************************************");
+        }
+    }
+
+    private Path getPathToTestPdf() {
+        try {
+            return Paths.get(ClassLoader.getSystemResource("test.pdf").toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }
