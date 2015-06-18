@@ -1,22 +1,22 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
+    <juku-navigation>
+      <juku-link-prev href="#/k/hakemukset/{{tyyppi}}">
+          Palaa hakemusten päänäkymään
+      </juku-link-prev>
+      <juku-tabs>
+        <juku-tab href="#/k/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}" selected="onAvustushakemus()">
+          Avustushakemukset {{hakemus.vuosi}}
+        </juku-tab>
 
-            <juku-link-prev href="#/k/hakemukset/{{tyyppi}}">
-                Palaa hakemusten päänäkymään
-            </juku-link-prev>
-            <a href="#/k/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-               ng-class="onAvustushakemus()? 'btn btn-primary' : 'btn btn-default'">Avustushakemus {{hakemus.vuosi}}</a>
-            <a
-                    href="#/k/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-                    ng-class="onMaksatushakemus1()? 'btn btn-primary' : 'btn btn-default'">1. maksatushakemus
-                {{hakemus.vuosi}}</a>
-            <a
-                    href="#/k/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-                    ng-class="onMaksatushakemus2()? 'btn btn-primary' : 'btn btn-default'">2. maksatushakemus
-                {{hakemus.vuosi}}</a>
-        </div>
-    </div>
+        <juku-tab href="#/k/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}" selected="onMaksatushakemus1()">
+          1. maksatushakemukset {{hakemus.vuosi}}
+        </juku-tab>
+
+        <juku-tab href="#/k/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}" selected="onMaksatushakemus2()">
+          2. maksatushakemukset {{hakemus.vuosi}}
+        </juku-tab>
+      </juku-tab>
+    </juku-navigation>
     <div class="row">
         <div class="col-md-12">
             <h2>
