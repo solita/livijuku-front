@@ -1,5 +1,6 @@
   'use strict';
 
+var autoprefixer = require('gulp-autoprefixer');
 var browserify = require('browserify');
 var browserSync = require('browser-sync');
 var es = require('event-stream');
@@ -10,6 +11,7 @@ var httpProxy = require('http-proxy');
 var ngAnnotate = require('gulp-ng-annotate');
 var os = require('os');
 var path = require('path');
+var pkg = require('./package.json');
 var protractor = require('gulp-protractor');
 var replace = require('gulp-replace');
 var rev = require('gulp-rev');
@@ -17,7 +19,6 @@ var rimraf = require('rimraf');
 var stylus = require('gulp-stylus');
 var uglify = require('gulp-uglify');
 var watchify = require('watchify');
-var pkg = require('./package.json');
 // Stream transformer for browserify
 var source = require('vinyl-source-stream');
 var streamify = require('gulp-streamify');
@@ -223,6 +224,10 @@ gulp.task('styles', function() {
     .src(paths.styles.source)
     .pipe(stylus({
       'include css': true
+    }))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
     }))
     .on('error', handleError)
     .pipe(gulp.dest(paths.styles.destination));
