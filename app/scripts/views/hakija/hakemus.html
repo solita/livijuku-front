@@ -33,11 +33,11 @@
 
     <juku-form name="hakemusForm" juku-poistumisvaroitus="">
       <h1>
-        <div ng-switch on="tyyppi">
+        <span ng-switch on="tyyppi">
           <span ng-switch-when='MH1'>Joukkoliikenteen 1. maksatushakemus {{hakemus.vuosi}}</span>
           <span ng-switch-when='MH2'>Joukkoliikenteen 2. maksatushakemus {{hakemus.vuosi}}</span>
           <span ng-switch-default>Joukkoliikenteen valtionavustushakemus {{hakemus.vuosi}}</span>
-        </div>
+        </span>
       </h1>
 
       <div class="row" ng-show="hasPaatos(tyyppi, hakemus.hakemustilatunnus)">
@@ -77,11 +77,11 @@
         <h3>PERUSTIEDOT</h3>
 
         <juku-form-row>
-          <label>Hakija</label>
+          <h5>Hakija</h5>
           {{hakija}}
         </juku-form-row>
         <juku-form-row>
-          <label>Hakemuksen tila</label>
+          <h5>Hakemuksen tila</h5>
           <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" tyyppi="{{tyyppi}}"/>
         </juku-form-row>
       </juku-form-section>
@@ -134,87 +134,43 @@
         </div>
       </juku-form-section>
       <juku-form-section>
-
         <h3>LISÄTIETOJA AVUSTUSTEN KOHTEISTA JA HAKEMUKSEN ALLEKIRJOITTAJASTA</h3>
+        <juku-ohje>
 
-        <div class="row">
-          <div class="col-md-12">
-            <p class="hakemus-lisatietoa-teksti">Liitä hakemukseesi lisätiedot kaikista hakemistasi
-              avustuskohteista.</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="hakemus-lisatietoa-otsake">PSA:n mukaisen liikenteen hankinta:</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="hakemus-lisatietoa-teksti">Liitä ostosopimus uusista liikenteistä, josta ilmenee liikenteen
-              aikataulu ja reitti.</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="hakemus-lisatietoa-otsake">Hintavelvotteiden korvaamien:</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="hakemus-lisatietoa-teksti">Erittele eri lipputyyppeihin haettava valtionavustus.</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="hakemus-lisatietoa-otsake">Liikenteen suunnittelu- ja kehittämishankkeet:</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="hakemus-lisatietoa-teksti">Liitä hankesuunnitelma tai työohjelma, joka sisältää ainakin hankkeen
-              tavoitteet, sisällön, aikataulun,
-              organisoinnin ja rahoituksen.</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="hakemus-lisatietoa-teksti">Liitä hakemukseen myös liite allekirjoitusoikeudesta.</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="hakemus-lisatietoa-teksti">1. Lataa tiedosto: <a href="resources/JUKU_allekirjoitusoikeus.doc"
-                                                                       target="_blank">JUKU_allekirjoitusoikeus.doc</a>
-            </p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="hakemus-lisatietoa-teksti">2. Täytä allekirjoitusoikeuslomake.</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="hakemus-lisatietoa-teksti">3. Tulosta lomake ja allekirjoituta se organisaationne joukkoliikenteen
-              avustushakemuksen hyväksyjällä.</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="hakemus-lisatietoa-teksti">4. Skannaa allekirjoitettu lomake ja lataa se liitteeksi tähän
-              hakemukseen.</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <p></p>
-          </div>
-        </div>
+          <p>Liitä hakemukseesi lisätiedot kaikista hakemistasi avustuskohteista.</p>
+
+          <h5>PSA:n mukaisen liikenteen hankinta:</h5>
+          <p>Liitä ostosopimus uusista liikenteistä, josta ilmenee liikenteen
+            aikataulu ja reitti.</p>
+          <h5>Hintavelvotteiden korvaamien:</h5>
+          <p>
+            Erittele eri lipputyyppeihin haettava valtionavustus.
+          </p>
+
+          <h5>Liikenteen suunnittelu- ja kehittämishankkeet:</h5>
+          <p>
+            Liitä hankesuunnitelma tai työohjelma, joka sisältää ainakin hankkeen
+            tavoitteet, sisällön, aikataulun,
+            organisoinnin ja rahoituksen.
+          </p>
+          <section>
+            <p>Liitä hakemukseen myös liite allekirjoitusoikeudesta.</p>
+            <ol>
+              <li>
+                Lataa tiedosto: <a href="resources/JUKU_allekirjoitusoikeus.doc" target="_blank">JUKU_allekirjoitusoikeus.doc</a>
+              </li>
+              <li>
+                Täytä allekirjoitusoikeuslomake.
+              </li>
+              <li>
+                Tulosta lomake ja allekirjoituta se organisaationne joukkoliikenteen avustushakemuksen hyväksyjällä.
+              </li>
+              <li>
+                Skannaa allekirjoitettu lomake ja lataa se liitteeksi tähän hakemukseen.
+              </li>
+            </ol>
+          </section>
+        </juku-ohje>
         <div class="row">
           <div class="col-md-12">
             <juku-liite-lataus>

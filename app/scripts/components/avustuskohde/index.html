@@ -1,45 +1,44 @@
 <div class="row avustuskohde">
   <ng-form name="{{getName()}}">
-    <div class="col-md-12">
-      <h5>{{name}}</h5>
-    </div>
-    <div ng-show="hakemustyyppi=='AH0' || (tyyppi!='AH0' && vertailuarvot().avustushakemusHaettavaAvustus>0)">
-      <div class="col-md-4">
-        <div class="form-group" show-errors="{showSuccess: true}">
-          <label>Haettava valtionavustus
-            <div class="input-group">
-              <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" noenter select-on-click
-                     alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
-                     ng-readonly="isReadonly()" class="form-control"
-                     tooltip="{{haeTooltip('haettavaavustus')}}"
-                     tooltip-trigger="focus"
-                     tooltip-placement="top"
-                     ng-model="kohde.haettavaavustus"
-                     ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo(kohde.haettavaavustus)'}"/>
-              <span ng-hide="isReadonly()" class="input-group-addon">alv {{ alv ? kohde.alv : 0 }}%</span>
-            </div>
-          </label>
-
-
-          <p class="help-block ng-invalid-sallittu-arvo-haettavaavustus">Arvon tulee olla välillä 0 - 999 999 999,99 € (sis. ALV).</p>
-
-        </div>
+    <juku-form-row ng-show="hakemustyyppi=='AH0' || (tyyppi!='AH0' && vertailuarvot().avustushakemusHaettavaAvustus>0)">
+      <div class="col-md-12">
+        <h5>{{name}}</h5>
       </div>
       <div class="col-md-4">
         <div class="form-group" show-errors="{showSuccess: true}">
-          <label>Kunnan oma rahoitusosuus
-            <div class="input-group">
-              <input name="{{getName('omarahoitus')}}" type="text" ng-currency="" noenter select-on-click
-                     alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
-                     class="form-control" tooltip="{{haeTooltip('omarahoitus')}}"
-                     tooltip-trigger="focus"
-                     tooltip-placement="top"
-                     ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
-                     ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava(kohde.omarahoitus,kohde.haettavaavustus)',sallittuArvoOmarahoitus: 'sallittuArvo(kohde.omarahoitus)'}"
-                     ui-validate-watch=" 'kohde.haettavaavustus' "/>
-              <span ng-hide="isReadonly()" class="input-group-addon">alv {{ alv ? kohde.alv : 0 }}%</span>
-            </div>
-          </label>
+          <label>Haettava valtionavustus</label>
+          <div class="input-group">
+            <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" noenter select-on-click
+                   alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
+                   ng-readonly="isReadonly()" class="form-control"
+                   tooltip="{{haeTooltip('haettavaavustus')}}"
+                   tooltip-trigger="focus"
+                   tooltip-placement="top"
+                   ng-model="kohde.haettavaavustus"
+                   ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo(kohde.haettavaavustus)'}"/>
+            <span ng-hide="isReadonly()" class="input-group-addon">alv {{ alv ? kohde.alv : 0 }}%</span>
+          </div>
+
+          <p class="help-block ng-invalid-sallittu-arvo-haettavaavustus">
+            Arvon tulee olla välillä 0 - 999 999 999,99 € (sis. ALV).
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-group" show-errors="{showSuccess: true}">
+          <label>Kunnan oma rahoitusosuus</label>
+          <div class="input-group">
+            <input name="{{getName('omarahoitus')}}" type="text" ng-currency="" noenter select-on-click
+                   alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
+                   class="form-control" tooltip="{{haeTooltip('omarahoitus')}}"
+                   tooltip-trigger="focus"
+                   tooltip-placement="top"
+                   ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
+                   ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava(kohde.omarahoitus,kohde.haettavaavustus)',sallittuArvoOmarahoitus: 'sallittuArvo(kohde.omarahoitus)'}"
+                   ui-validate-watch=" 'kohde.haettavaavustus' "/>
+            <span ng-hide="isReadonly()" class="input-group-addon">alv {{ alv ? kohde.alv : 0 }}%</span>
+          </div>
 
           <p class="help-block ng-invalid-sallittu-arvo-omarahoitus">Arvon tulee olla välillä 0 - 999 999 999,99 € (sis. ALV).</p>
 
@@ -49,12 +48,12 @@
         </div>
       </div>
       <div class="col-md-4">
-        <p>Yhteensä</p>
+        <label>Yhteensä</label>
 
-        <p ng-show="alv">{{(kohde.haettavaavustus + kohde.omarahoitus) | currency:"&euro;"}} alv {{kohde.alv}} %</p>
-        <p ng-hide="alv">{{((kohde.haettavaavustus + kohde.omarahoitus)/(1+(kohde.alv/100)))| currency:"&euro;"}} alv 0 %</p>
+        <p class="form-control-static" ng-show="alv">{{(kohde.haettavaavustus + kohde.omarahoitus) | currency:"&euro;"}} alv {{kohde.alv}} %</p>
+        <p class="form-control-static" ng-hide="alv">{{((kohde.haettavaavustus + kohde.omarahoitus)/(1+(kohde.alv/100)))| currency:"&euro;"}} alv 0 %</p>
       </div>
-    </div>
+    </juku-form-row>
     <div ng-show="hakemustyyppi!='AH0' && vertailuarvot().avustushakemusHaettavaAvustus==0">
       <div class="col-md-12">
         <p>Ei haettu avustusta.</p>

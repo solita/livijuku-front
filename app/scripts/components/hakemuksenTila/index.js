@@ -10,6 +10,7 @@ module.exports = function () {
     },
     template: require('./index.html'),
     restrict: 'E',
+    replace: true,
     controller: ['$scope', function($scope) {
       $scope.tilat = tilat.getAll($scope.tyyppi);
 

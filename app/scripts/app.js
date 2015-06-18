@@ -110,6 +110,7 @@ angular
     .directive('hakemusPanel', require('components/hakemusPanel'))
     .directive('hakemuskausiPanel', require('components/hakemuskausiPanel'))
     .directive('hakemusLaatikko', require('components/hakemusLaatikko'))
+    .directive('jukuOhje', require('components/ohje'))
     .directive('jukuLiiteLataus', require('components/liiteLataus'))
     .directive('jukuLiiteTarkistaminen', require('components/liiteTarkistaminen'))
     .directive('jukuUserDropdown', require('components/userDropdown'))

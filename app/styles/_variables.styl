@@ -7,3 +7,11 @@ height = {
   navbar: 50px
 }
 sidebarWidth = 250px
+
+clearfix()
+  &:before,
+  &:after
+    content " "
+    display table
+  &:after
+    clear both
