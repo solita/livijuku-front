@@ -32,58 +32,10 @@
     height: 100%
   .header__content
     height: height.navbar
-
-  .dropdown-menu
-    width: 100%
-    min-width: 0
-    margin: 0
-    border-radius: 0
-    box-shadow: none
-    border-top: 0
-    li
-      padding 0.25em 1em
-    li a
-      padding-left 0
-  .dropdown
-    min-width: 200px
-    height: height.navbar
-    position: relative
-    text-align: right
-    &.open
-      .dropdown-toggle__wrapper
-        background #1F8AC8
-  .dropdown-toggle__wrapper
-    padding-left: 2em
-    padding-right: 1em
-    cursor: pointer
-    border-left: 1px solid rgba(0, 0, 0, 0.15)
-    border-right: 1px solid rgba(0, 0, 0, 0.15)
-    &:before
-      content: ''
-      width: 12px
-      height: 12px
-      position: absolute
-      left: 1em
-      top: 50%
-      margin-top: -6px
-      background: url('../images/header_dropdown.svg')
-      background-size: 100% 100%
-
-  .dropdown-toggle
-    line-height: normal
-    vertical-align: middle
-    display: inline-block
+  .user-dropdown
+    float: right
 
 
 @media (max-width: 768px)
   .header__content
     display: none
-
-
-.navbar__user
-  font-weight normal
-  .navbar__user__name
-    font-size 0.9em
-  .navbar__user__name + .navbar__user__org
-    font-size 0.7em
-    color #eee

@@ -18,16 +18,6 @@ function headerController($scope, $rootScope, $location) {
       return route === $location.path();
     }
   };
-
-  $scope.fullName = function(user) {
-    if(!user) {
-      return null;
-    }
-    if(!(user.etunimi && user.sukunimi)) {
-      return null;
-    }
-    return user.etunimi + ' ' + user.sukunimi;
-  };
 }
 
 headerController.$inject = ['$scope', '$rootScope', '$location'];

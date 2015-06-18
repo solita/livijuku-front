@@ -112,6 +112,7 @@ angular
     .directive('hakemusLaatikko', require('components/hakemusLaatikko'))
     .directive('jukuLiiteLataus', require('components/liiteLataus'))
     .directive('jukuLiiteTarkistaminen', require('components/liiteTarkistaminen'))
+    .directive('jukuUserDropdown', require('components/userDropdown'))
     .directive('jukuLinkNext', require('components/navigationLink').next)
     .directive('jukuLinkPrev', require('components/navigationLink').prev)
     .directive('jukuFormSection', require('components/formSection'))

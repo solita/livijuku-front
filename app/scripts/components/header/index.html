@@ -32,27 +32,7 @@
         </li>
       </ul>
 
-      <ul class="nav navbar-nav pull-right">
-        <li class="dropdown" dropdown>
-          <div class="dropdown-toggle__wrapper" dropdown-toggle>
-            <a href class="dropdown-toggle navbar__user">
-              <div class="navbar__user__name" ng-if="fullName(user)">
-                {{fullName(user)}}
-              </div>
-              <div class="navbar__user__org">
-                {{$root.userOrganisaatio}}
-              </div>
-            </a>
-          </div>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="navbartxt" href="https://testiextranet.liikennevirasto.fi/extranet/c/portal/logout">
-                Kirjaudu ulos
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <juku-user-dropdown user="user"></juku-user-dropdown>
     </div>
   </div>
 </div>
