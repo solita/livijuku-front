@@ -17,7 +17,7 @@ var rimraf = require('rimraf');
 var stylus = require('gulp-stylus');
 var uglify = require('gulp-uglify');
 var watchify = require('watchify');
-
+var pkg = require('./package.json');
 // Stream transformer for browserify
 var source = require('vinyl-source-stream');
 var streamify = require('gulp-streamify');
@@ -72,13 +72,32 @@ var paths = {
     source: ['./dist/**/*.css', './dist/**/*.js', '!./dist/scripts/ie9/FileAPI.min.js'],
     base: path.join(__dirname, 'dist'),
     destination: './dist/'
-  },
-  version: {
-    destination: './dist/buildversion.html'
   }
 };
 
 var production = process.env.NODE_ENV === 'production';
+
+function getBrowserify() {
+  return browserify({
+    entries: [paths.scripts.source],
+    extensions: paths.scripts.extensions,
+    debug: !production,
+    cache: {},
+    packageCache: {},
+    fullPaths: true,
+    insertGlobalVars: {
+      __VERSION__: function() {
+        var pkgVersion = pkg.version;
+        var isCandidate = pkgVersion.split('-').length > 1;
+        var buildDetails = new Date().toISOString() + ' ' + os.hostname();
+
+        var version = isCandidate ? pkgVersion + ' ' + buildDetails : pkgVersion;
+
+        return JSON.stringify(version);
+      }
+    }
+  });
+}
 
 function handleError(err) {
   gutil.log(err);
@@ -123,10 +142,7 @@ gulp.task('copy', function() {
 
 gulp.task('scripts', function() {
 
-  var bundle = browserify({
-    entries: [paths.scripts.source],
-    debug: !production
-  })
+  var bundle = getBrowserify()
   .bundle()
   .on('error', handleError)
   .pipe(source(paths.scripts.filename));
@@ -218,27 +234,11 @@ gulp.task('styles', function() {
   return pipeline;
 });
 
-// Templates task riippuvuutena, jotta voidaan olla varmoja dist/ hakemiston olemassaolosta
-gulp.task('version', ['templates'], function() {
-  var today = new Date();
-
-  fs.writeFileSync(
-    paths.version.destination,
-    today.toISOString() + ' (' + os.hostname() + ')');
-});
-
 gulp.task('watch', ['scripts'], function() {
   gulp.watch(paths.styles.watch, ['styles']);
   gulp.watch(paths.templates.watch, ['templates']);
 
-  var bundle = watchify(browserify({
-    entries: [paths.scripts.source],
-    extensions: paths.scripts.extensions,
-    debug: !production,
-    cache: {},
-    packageCache: {},
-    fullPaths: true
-  }));
+  var bundle = watchify(getBrowserify());
 
   return bundle.on('update', function() {
     gutil.log('Rebundling...');
@@ -253,7 +253,7 @@ gulp.task('watch', ['scripts'], function() {
 gulp.task('webdriver_standalone', protractor.webdriver_standalone);
 gulp.task('webdriver_update', protractor.webdriver_update);
 
-var buildTasks = ['styles', 'templates', 'assets', 'version', 'copy'];
+var buildTasks = ['styles', 'templates', 'assets', 'copy'];
 
 // TODO poista revisioimattomat
 gulp.task('revision', buildTasks.concat(['scripts']), function() {
