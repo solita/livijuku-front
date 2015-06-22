@@ -22,11 +22,8 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
 public class HakemuskausiTest extends TestBase {
@@ -181,7 +178,7 @@ public class HakemuskausiTest extends TestBase {
         spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
         //Laita Alv-syotto paalle
-        klikkaaCheckboxia(containsText("Haluan syöttää summat arvonlisäverollisina."));
+        klikkaaCheckboxia("Haluan syöttää summat arvonlisäverollisina.");
 
         //Syota jokaiseen kenttaan rahasumma. Rahasumma tulee syottaa pilkun kanssa kokonaisuudessaan,
         //jotta input kentassa oleva currency komponentti pystyy ottamaan arvon kasittelyyn ja arvovalidoinit toimivat
@@ -189,6 +186,7 @@ public class HakemuskausiTest extends TestBase {
 
         //Tarkistetaan, että tyhjästä kentästä tulee virheilmoitus
         rahakentat.get(0).clear();
+        rahakentat.get(1).click();
         tarkistaInputKentanTila("ng-invalid-sallittu-arvo-haettavaavustus");
 
         // Tarkistetaan, että tulee virheilmoitus kun omarahoitusosuus on alle 50%
@@ -205,7 +203,7 @@ public class HakemuskausiTest extends TestBase {
             rahakentat.get(i + 1).sendKeys("3000,00");
         }
         tarkistaHakemuksenSummakentat();
-        klikkaaCheckboxia(containsText("Haluan syöttää summat arvonlisäverollisina."));
+        klikkaaCheckboxia("Haluan syöttää summat arvonlisäverollisina.");
         tarkistaHakemuksenSummakentat();
 
         // Lähetä hakemus
@@ -218,13 +216,13 @@ public class HakemuskausiTest extends TestBase {
 
         //Tarkista summat
         tarkistaHakemuksenSummakentat();
-        klikkaaCheckboxia(containsText("Haluan katsoa arvoja arvonlisäverollisina."));
+        klikkaaCheckboxia("Haluan katsoa arvoja arvonlisäverollisina.");
         tarkistaHakemuksenSummakentat();
     }
 
-    private void klikkaaCheckboxia(String s) {
+    private void klikkaaCheckboxia(String text) {
         WebElement checkboxi = findElementByXPath("//span[%s and %s]",
-                s,
+                containsText(text),
                 isVisible());
         checkboxi.click();
     }
@@ -281,7 +279,7 @@ public class HakemuskausiTest extends TestBase {
     }
 
     private void lahetaHakemus() {
-        klikkaaCheckboxia(containsText("Olen liittänyt hakemukseen tarvittavat"));
+        klikkaaCheckboxia("Olen liittänyt hakemukseen tarvittavat");
         waitForAngularRequestsToFinish(driver());
         button("Tallenna ja lähetä hakemus").click();
         waitForAngularRequestsToFinish(driver());
