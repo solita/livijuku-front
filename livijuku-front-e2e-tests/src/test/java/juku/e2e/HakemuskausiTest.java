@@ -254,6 +254,7 @@ public class HakemuskausiTest extends TestBase {
     }
 
     private void tarkistaInputKentanTila(String luokka) {
+        waitForAngularRequestsToFinish(driver());
         List<WebElement> inputkentat = findElementsByXPath(String.format("//input[%s]",
                 hasClass(luokka)));
 
