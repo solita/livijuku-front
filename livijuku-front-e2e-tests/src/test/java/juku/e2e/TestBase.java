@@ -43,6 +43,7 @@ public class TestBase {
   public RemoteWebDriver driver() {
     if(driver == null) {
       driver = createDriver();
+      System.out.println(driver.getCapabilities());
     }
     return driver;
   }
