@@ -22,8 +22,11 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
 public class HakemuskausiTest extends TestBase {
@@ -184,10 +187,16 @@ public class HakemuskausiTest extends TestBase {
         //jotta input kentassa oleva currency komponentti pystyy ottamaan arvon kasittelyyn ja arvovalidoinit toimivat
         List<WebElement> rahakentat = findElementsByXPath("//input[@type='text' and %s]", isVisible());
 
-       //Annetaan aluksi virheellinen summa ja katsotaan, että siitä tulee virheilmoitus
-       // rahakentat.get(0).clear();
-       //rahakentat.get(0).sendKeys("99999999999999999 ");
-       //tarkistaInputKentanTila("ng-invalid-sallittu-arvo-haettavaavustus");
+        //Tarkistetaan, että tyhjästä kentästä tulee virheilmoitus
+        rahakentat.get(0).clear();
+        tarkistaInputKentanTila("ng-invalid-sallittu-arvo-haettavaavustus");
+
+        // Tarkistetaan, että tulee virheilmoitus kun omarahoitusosuus on alle 50%
+        rahakentat.get(0).clear();
+        rahakentat.get(0).sendKeys("1000,00");
+        rahakentat.get(1).clear();
+        rahakentat.get(1).sendKeys("999,99");
+        tarkistaInputKentanTila("ng-invalid-omarahoitus-riittava");
 
         for (int i = 0; i < rahakentat.size(); i += 2) {
             rahakentat.get(i).clear();
