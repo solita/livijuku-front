@@ -59,8 +59,7 @@
     <div class="row">
         <div class="col-md-12">
             <div ng-show="onAvustushakemus()">
-                <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ<a href=""><span
-                        class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+                <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ</h3>
             </div>
             <div ng-hide="onAvustushakemus()">
                 <div ng-show="paatos!=null">
@@ -69,13 +68,11 @@
                             <h3>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}: <b>{{paatos.myonnettyavustus/2 |
                                 currency:"&euro;"}}</b><a
                                     href="" class="top" title="" data-toggle="tooltip" data-placement="top"
-                                    data-original-title="Avustus vuodelle {{vuosi}}: {{paatos.myonnettyavustus| currency:'&euro;'}}"><span
-                                    class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+                                    data-original-title="Avustus vuodelle {{vuosi}}: {{paatos.myonnettyavustus| currency:'&euro;'}}"></a></h3>
                         </div>
                     </div>
                 </div>
-                <h3>HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{hakemus.vuosi}}<a href=""><span
-                        class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+                <h3>HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{hakemus.vuosi}}</a></h3>
             </div>
         </div>
     </div>
@@ -122,8 +119,7 @@
     <div ng-show="onAvustushakemus()">
         <div class="row">
             <div class="col-md-12">
-                <h5>Lisätietoja avustusten kohteista<a href=""><span
-                        class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h5>
+                <h5>Lisätietoja avustusten kohteista</h5>
             </div>
         </div>
         <div class="row">
@@ -138,8 +134,7 @@
         </div>
     </div>
     <div ng-hide="onAvustushakemus()">
-        <h3>KULUTOSITTEET AJALLE {{ajankohta}}{{hakemus.vuosi}}<a href=""><span
-                class='jukutooltip glyphicon glyphicon-question-sign'></span></a></h3>
+        <h3>KULUTOSITTEET AJALLE {{ajankohta}}{{hakemus.vuosi}}</h3>
     </div>
     <juku-liite-tarkistaminen></juku-liite-tarkistaminen>
     <div class="row">
