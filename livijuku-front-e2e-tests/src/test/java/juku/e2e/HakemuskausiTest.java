@@ -115,6 +115,7 @@ public class HakemuskausiTest extends TestBase {
 
         // Palauta hakemus täydennettäväksi
         button("Palauta täydennettäväksi").click();
+        okOlenVarma().click();
 
         //Assertoi käsittelijänä tila Täydennettävänä
         spanWithTextAndClass("Täydennettävänä", "hakemus-tila-taydennettavana");
