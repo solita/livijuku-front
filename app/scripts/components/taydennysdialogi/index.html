@@ -1,0 +1,25 @@
+<div class="modal-header">Palauta täydennettäväksi</div>
+<div class="modal-body">
+  <form name="taydennysForm">
+    <div class="row">
+      <div class="col-md-12">
+        Oletko varma, että hakuat merkitä hakemuksen tarkastetuksi?
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <label for="taydennysselite">Kirjoita täydennyspyynnön selite hakijalle</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+          <textarea id="taydennysselite" name="taydennysselite" class="animate msd-elastic: \n;"
+                    ng-model="taydennysselite"></textarea>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary pull-right" ng-click="ok()">Kyllä</button>
+  <button class="btn btn-warning pull-left" ng-click="cancel()">Ei</button>
+</div>

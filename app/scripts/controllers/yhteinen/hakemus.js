@@ -236,17 +236,6 @@ angular.module('jukufrontApp')
           });
       };
 
-      $scope.taydennyspyynto = function () {
-        HakemusService.taydennyspyynto($scope.hakemusid)
-          .success(function () {
-            StatusService.ok('HakemusService.taydennyspyynto(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tädennettäväksi.');
-            $location.path('/k/hakemukset/' + $scope.tyyppi);
-          })
-          .error(function (data) {
-            StatusService.virhe('HakemusService.taydennyspyynto(' + $scope.hakemusid + ')', data.message);
-          });
-      };
-
       $scope.allekirjoitusliitetty = false;
       $scope.avustushakemusid = $routeParams.id;
       $scope.maksatushakemus1id = $routeParams.m1id;

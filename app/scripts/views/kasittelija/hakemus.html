@@ -15,7 +15,7 @@
         <juku-tab href="#/k/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}" selected="onMaksatushakemus2()">
           2. maksatushakemukset {{hakemus.vuosi}}
         </juku-tab>
-      </juku-tab>
+      </juku-tabs>
     </juku-navigation>
     <div class="row">
         <div class="col-md-12">
@@ -182,7 +182,7 @@
                     class="pull-right btn btn-success">Merkitse tarkastetuksi
             </button>
             <button ng-show="hakemusVireilla()"
-                    data-ng-click="taydennyspyynto()"
+                    juku-taydennysdialogi hakemusid="{{hakemusid}}" tyyppi="{{tyyppi}}"
                     class="pull-right btn btn-danger">Palauta täydennettäväksi
             </button>
             <button ng-hide="hakemusVireilla()"

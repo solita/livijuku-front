@@ -34,8 +34,8 @@ angular.module('services.hakemus', [])
       tarkastaTaydennys: function (hakemusid) {
         return $http.post('api/tarkasta-taydennys', {'hakemusid': hakemusid});
       },
-      taydennyspyynto: function (hakemusid) {
-        return $http.post('api/taydennyspyynto', {'hakemusid': hakemusid});
+      taydennyspyynto: function (hakemusid, selite) {
+        return $http.post('api/taydennyspyynto', {'hakemusid': hakemusid, 'selite': selite});
       }
     };
   }]);

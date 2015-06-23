@@ -105,6 +105,7 @@ angular
     .directive('jukuBadge', require('components/badge'))
     .directive('jukuPoistumisvaroitus', require('components/poistumisvaroitus'))
     .directive('jukuVarmistusdialogi', require('components/varmistusdialogi'))
+    .directive('jukuTaydennysdialogi', require('components/taydennysdialogi'))
     .directive('hakemuksenTila', require('components/hakemuksenTila'))
     .directive('hakemusSummary', require('components/hakemusSummary'))
     .directive('hakemusPanel', require('components/hakemusPanel'))
