@@ -4,6 +4,7 @@ import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitFor
 import static java.lang.Thread.sleep;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -16,12 +17,18 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
+import org.apache.pdfbox.pdfparser.PDFParser;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.util.PDFTextStripper;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 
 import com.paulhammant.ngwebdriver.ByAngular;
 
@@ -170,6 +177,39 @@ public class TestBase {
         } finally {
             System.out.println("************************************");
         }
+    }
+
+    String httpGetPdfText(String url, User user) throws IOException {
+        // http://stackoverflow.com/a/26149627
+        String result=null;
+
+        CloseableHttpClient httpclient = HttpClients.custom()
+                .setConnectionManager(connectionManager)
+                .build();
+
+        HttpGet httpGet = new HttpGet(url);
+        httpGet.addHeader("oam-remote-user", user.getLogin());
+        httpGet.addHeader("oam-groups", user.getGroup());
+        httpGet.addHeader("oam-user-organization", user.getOrganization());
+
+        System.out.println("************************************");
+        try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
+            HttpEntity entity = response.getEntity();
+            try (InputStream pdfStream = entity.getContent()) {
+                PDFParser testPDF = new PDFParser(pdfStream);
+                testPDF.parse();
+                try (PDDocument document = testPDF.getPDDocument()) {
+                    result = new PDFTextStripper().getText(document);
+                }
+            }
+            EntityUtils.consume(entity);
+            System.out.println(httpGet);
+            System.out.println(response.getStatusLine());
+            System.out.println("Response content length: " + entity.getContentLength());
+        } finally {
+            System.out.println("************************************");
+        }
+        return result;
     }
 
     private String oracleServiceUrl() {

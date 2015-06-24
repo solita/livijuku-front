@@ -87,7 +87,7 @@ public class HakemuskausiTest extends TestBase {
     }
 
     @Test
-    public void hakijaaInformoidaanHakemuksenTilasta() {
+    public void hakijaaInformoidaanHakemuksenTilasta() throws IOException {
         login(User.HARRI);
 
         // Varmista, että kausi on avoinna TODO: Korjaa tämä.
@@ -168,7 +168,17 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään hakija
         login(User.HARRI);
         // Assertoi tila päätetty
+        spanWithTextAndClass("Päätetty", "hakemus-tila-paatetty").click();
 
+        // Tarkista päätös pdf
+        String paatosHref = findElementByLinkText("Avaa päätös (PDF)").getAttribute("href");
+        String pdfText = httpGetPdfText(paatosHref, User.HARRI);
+
+        String expectedText = "Hakija: Helsingin seudun liikenne\n"
+                + "Hakija hakee vuonna 2016 suurten kaupunkiseutujen joukkoliikenteen \n"
+                + "valtionavustusta 0 euroa.";
+        assertThat(String.format("Päätös PDF sisältää tekstin %s", expectedText),
+                pdfText.contains(expectedText));
     }
 
     @Test
