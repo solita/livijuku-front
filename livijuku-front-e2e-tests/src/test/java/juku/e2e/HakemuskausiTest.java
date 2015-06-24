@@ -174,13 +174,13 @@ public class HakemuskausiTest extends TestBase {
 
         // Tarkista päätös pdf
         String paatosHref = findElementByLinkText("Avaa päätös (PDF)").getAttribute("href");
-        String pdfText = httpGetPdfText(paatosHref, User.HARRI);
+        String actual = httpGetPdfText(paatosHref, User.HARRI);
 
         String expectedText = "Hakija: Helsingin seudun liikenne\n"
                 + "Hakija hakee vuonna 2016 suurten kaupunkiseutujen joukkoliikenteen \n"
                 + "valtionavustusta 0 euroa.";
         assertThat(String.format("Päätös PDF sisältää tekstin %s", expectedText),
-                pdfText.contains(expectedText));
+                containsNormalized(actual, expectedText));
     }
 
     @Test
@@ -352,7 +352,7 @@ public class HakemuskausiTest extends TestBase {
         String hakemusid = modelAccessor.retrieveAsString(button("Tallenna tiedot"), "hakemusid");
         String pdfUrl = String.format("%s/api/hakemus/%s/pdf", urlBase, hakemusid);
 
-        String pdfText = httpGetPdfText(pdfUrl, User.HARRI);
+        String actual = httpGetPdfText(pdfUrl, User.HARRI);
 
         String expected = "Hakija: Helsingin seudun liikenne\n"
                 + "Hakija hakee vuonna 2016 suurten kaupunkiseutujen joukkoliikenteen \n"
@@ -372,10 +372,16 @@ public class HakemuskausiTest extends TestBase {
                 + "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 41700 euroa.\n"
                 + "Lähettäjä: <hakijan nimi, joka on lähettänyt hakemuksen>\n"
                 + "Liikennevirasto - esikatselu - hakemus on keskeneräinen\n"
-                + "1 (1)";
+                + "1 (1)\n";
 
-        assertThat("Hakemuksen esikatselussa pitää näkyä rahasummat.", pdfText.contains(expected));
+        assertThat("Hakemuksen esikatselussa pitää näkyä rahasummat.", containsNormalized(actual, expected));
 
+    }
+
+    private boolean containsNormalized(String actual, String expected) {
+        String a = actual.replaceAll("\\s+", " ");
+        String b = expected.replaceAll("\\s+", " ");
+        return a.contains(b);
     }
 
     private void tallennaHakemus() {
