@@ -26,6 +26,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
+import com.paulhammant.ngwebdriver.AngularModelAccessor;
+
 public class HakemuskausiTest extends TestBase {
 
     @Test
@@ -207,12 +209,8 @@ public class HakemuskausiTest extends TestBase {
         rahakentat.get(1).sendKeys("999,99");
         tarkistaInputKentanTila("ng-invalid-omarahoitus-riittava");
 
-        for (int i = 0; i < rahakentat.size(); i += 2) {
-            rahakentat.get(i).clear();
-            rahakentat.get(i).sendKeys("1000,00");
-            rahakentat.get(i + 1).clear();
-            rahakentat.get(i + 1).sendKeys("3000,00");
-        }
+        syotaRahasummat(rahakentat);
+
         tarkistaHakemuksenSummakentat();
         klikkaaCheckboxia("Haluan syöttää summat arvonlisäverollisina.");
         tarkistaHakemuksenSummakentat();
@@ -229,6 +227,15 @@ public class HakemuskausiTest extends TestBase {
         tarkistaHakemuksenSummakentat();
         klikkaaCheckboxia("Haluan katsoa arvoja arvonlisäverollisina.");
         tarkistaHakemuksenSummakentat();
+    }
+
+    private void syotaRahasummat(List<WebElement> rahakentat) {
+        for (int i = 0; i < rahakentat.size(); i += 2) {
+            rahakentat.get(i).clear();
+            rahakentat.get(i).sendKeys("1000,00");
+            rahakentat.get(i + 1).clear();
+            rahakentat.get(i + 1).sendKeys("3000,00");
+        }
     }
 
     private void klikkaaCheckboxia(String text) {
@@ -325,6 +332,54 @@ public class HakemuskausiTest extends TestBase {
         } finally {
             System.out.println("************************************");
         }
+    }
+
+    @Test
+    public void hakijaVoiEsikatsellaAvustushakemustaLIVIJUKU_128() throws IOException {
+        login(User.HARRI);
+
+        //Avaa hakemus
+        spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
+
+        List<WebElement> rahakentat = findElementsByXPath("//input[@type='text' and %s]", isVisible());
+
+        syotaRahasummat(rahakentat);
+
+        tallennaHakemus();
+
+        AngularModelAccessor modelAccessor = new AngularModelAccessor(driver());
+        String urlBase = driver().executeScript("return window.location.origin").toString();
+        String hakemusid = modelAccessor.retrieveAsString(button("Tallenna tiedot"), "hakemusid");
+        String pdfUrl = String.format("%s/api/hakemus/%s/pdf", urlBase, hakemusid);
+
+        String pdfText = httpGetPdfText(pdfUrl, User.HARRI);
+
+        String expected = "Hakija: Helsingin seudun liikenne\n"
+                + "Hakija hakee vuonna 2016 suurten kaupunkiseutujen joukkoliikenteen \n"
+                + "valtionavustusta 13900 euroa. Haettu avustus jakautuu seuraavasti:\n"
+                + "Paikallisliikenne 1100 e\n"
+                + "Integroitupalvelulinja 1100 e\n"
+                + "Muu PSA:n mukaisen liikenteen järjestäminen 1100 e\n"
+                + "Seutulippu 1100 e\n"
+                + "Kaupunkilippu tai kuntalippu 1100 e\n"
+                + "Liityntälippu 1100 e\n"
+                + "Työmatkalippu 1100 e\n"
+                + "Informaatio ja maksujärjestelmien kehittäminen 1240 e\n"
+                + "Matkapalvelukeskuksen suunnittelu ja kehittäminen 1240 e\n"
+                + "Matkakeskuksen suunnittelu ja kehittäminen 1240 e\n"
+                + "Raitiotien suunnittelu 1240 e\n"
+                + "Muu hanke 1240 e\n"
+                + "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 41700 euroa.\n"
+                + "Lähettäjä: <hakijan nimi, joka on lähettänyt hakemuksen>\n"
+                + "Liikennevirasto - esikatselu - hakemus on keskeneräinen\n"
+                + "1 (1)";
+
+        assertThat("Hakemuksen esikatselussa pitää näkyä rahasummat.", pdfText.contains(expected));
+
+    }
+
+    private void tallennaHakemus() {
+        button("Tallenna").click();
     }
 
     private Path getPathToTestPdf() {
