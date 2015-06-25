@@ -33,14 +33,14 @@
         <input type="text" min="-0.0001" ng-currency="" class="form-control"
                ng-focus="asetaVanhaArvo(maararaha)"
                ng-model="maararaha"
-               ng-blur="paivitaKokonaismaararaha('maararaha')"/>
+               ng-blur="paivitaKokonaismaararaha('maararaha')" select-on-click/>
       </div>
       <div class="col-md-4">
         <label>Siirtomääräraha vuodelta {{vuosi-1}}</label>
         <input type="text" min="-0.0001" ng-currency="" class="form-control"
                ng-focus="asetaVanhaArvo(ylijaama)"
                ng-model="ylijaama"
-               ng-blur="paivitaKokonaismaararaha('ylijaama')"/>
+               ng-blur="paivitaKokonaismaararaha('ylijaama')" select-on-click/>
       </div>
       <div class="col-md-4">
         <label>YHTEENSÄ</label>
@@ -78,7 +78,7 @@
             <input id="avustus_{{hakemus.hakemusId}}" type="text" min="-0.0001" ng-currency="" class="form-control"
                    ng-model="hakemus.myonnettavaAvustus"
                    ng-focus="asetaVanhaArvo(hakemus.myonnettavaAvustus)"
-                   ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)"/>
+                   ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)" select-on-click/>
           </div>
         </td>
         <td>
