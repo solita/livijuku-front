@@ -2,8 +2,7 @@
   "name": "livijukufrontApp",
   "version": "0.0.0",
   "dependencies": {
-    "ng-currency": "~0.8.5",
-    "angular-ui-utils": "bower-validate"
+    "ng-currency": "~0.8.5"
   },
   "appPath": "app"
 }
