@@ -242,8 +242,14 @@ public class HakemuskausiTest extends TestBase {
         WebElement checkboxi = findElementByXPath("//span[%s and %s]",
                 containsText(text),
                 isVisible());
-        driver().executeScript("arguments[0].scrollIntoViewIfNeeded()", checkboxi);
+        if (isChrome()) {
+            driver().executeScript("arguments[0].scrollIntoViewIfNeeded()", checkboxi);
+        }
         checkboxi.click();
+    }
+
+    private boolean isChrome() {
+        return System.getProperty("chrome")!=null;
     }
 
     private void tarkistaHakemuksenSummakentat() {
