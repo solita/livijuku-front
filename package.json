@@ -37,7 +37,6 @@
     "gulp": "^3.8.11",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-ng-annotate": "^0.5.3",
-    "gulp-protractor": "^1.0.0",
     "gulp-replace": "^0.5.3",
     "gulp-rev": "^3.0.1",
     "gulp-streamify": "0.0.5",
