@@ -242,6 +242,7 @@ public class HakemuskausiTest extends TestBase {
         WebElement checkboxi = findElementByXPath("//span[%s and %s]",
                 containsText(text),
                 isVisible());
+        driver().executeScript("arguments[0].scrollIntoViewIfNeeded()", checkboxi);
         checkboxi.click();
     }
 
