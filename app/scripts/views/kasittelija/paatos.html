@@ -70,35 +70,20 @@
       </div>
     </div>
     <form name="paatosForm" juku-poistumisvaroitus="">
-      <div class="row">
-        <div class="col-md-12">
-          <label for="paatosteksti">Päätösteksti</label>
-        </div>
+      <div class="form-group">
+        <label>Päätösteksti</label>
+          <textarea id="paatosteksti" name="paatosteksti" class="animate msd-elastic: \n;"
+                    ng-model="paatos.selite"></textarea>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <textarea id="paatosteksti" name="paatosteksti" class="animate msd-elastic: \n;" ng-model="paatos.selite"
-                    ng-required="true"></textarea>
-          <span class="help-block text-danger"
-                ng-show="paatosForm.paatosteksti.$error.required">
-            Päätösteksti on pakollinen tieto.
-          </span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <label for="paattajanimi">Päättäjän nimi</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <input id="paattajanimi" name="paattajanimi" class="form-control" type="text" ng-model="paatos.paattajanimi"
-                 ng-required="true"/>
-          <span class="help-block text-danger"
-                ng-show="paatosForm.paattajanimi.$error.required">
-            Päättäjän nimi on pakollinen tieto.
-          </span>
-        </div>
+      <div class="form-group"
+           ng-class="{ 'has-error' : paatosForm.paattajanimi.$invalid}">
+        <label>Päättäjän nimi</label>
+        <input id="paattajanimi" name="paattajanimi" class="form-control" type="text" ng-model="paatos.paattajanimi"
+               ng-required="true"/>
+
+        <p ng-show="paatosForm.paattajanimi.$invalid" class="help-block">
+          Päättäjän nimi on pakollinen tieto.
+        </p>
       </div>
     </form>
     <br>
