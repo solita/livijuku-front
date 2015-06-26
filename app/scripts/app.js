@@ -12,7 +12,7 @@ require('angular-animate');
 require('angular-route');
 require('ng-currency');
 require('angular-bootstrap-show-errors');
-require('angular-ui-validate');
+require('angular-ui-utils');
 require('angular-i18n/angular-locale_fi-fi');
 
 angular
@@ -131,6 +131,7 @@ require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/hakemus');
 require('./controllers/yhteinen/paanaytto');
 require('./directives/alvmuunnos');
+require('./directives/datepickerPopup');
 require('./directives/jukuAvustusluokkaPanel');
 require('./directives/noenter');
 require('./directives/selectonclick');
