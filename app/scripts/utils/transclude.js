@@ -14,6 +14,11 @@ module.exports = function transclude(options) {
       if(elem.length === 0) {
         elem = element;
       }
+
+      if(options.scope) {
+        scope = scope.$parent;
+      }
+
       transcludeFn(scope, function (clone) {
         elem.empty().append(clone);
       });
