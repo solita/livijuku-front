@@ -13,7 +13,7 @@
     "angular-route": "1.3.10",
     "angular-smart-table": "^2.0.2",
     "angular-toastr": "~1.3.1",
-    "angular-ui-utils": "0.1.1",
+    "angular-ui-validate": "1.0.0",
     "bootstrap": "~3.3.4",
     "es5-shim": "~4.1.1",
     "jquery": "^2.1.4",
@@ -51,12 +51,7 @@
     "jasmine-core": "^2.1.3",
     "jasmine-reporters": "^2.0.4",
     "jshint-stylish": "^0.2.0",
-    "karma": "^0.12.31",
-    "karma-browserify": "^4.1.2",
-    "karma-chrome-launcher": "^0.1.7",
-    "karma-cli": "0.0.4",
-    "karma-firefox-launcher": "^0.1.4",
-    "karma-jasmine": "^0.3.5",
+    "mocha": "^2.2.5",
     "rimraf": "^2.3.3",
     "stringify": "^3.1.0",
     "vinyl-source-stream": "^1.1.0",
@@ -69,12 +64,12 @@
     "build": "gulp build",
     "build-dev": "gulp build",
     "build-dist": "npm run build",
-    "test": "karma start test/karma.conf.js",
+    "test": "./test-unit.sh",
     "teste2e": "gulp e2e",
     "citeste2e": "gulp e2e-no-selenium-server",
     "serve": "gulp server",
     "prepublish": "bower install && webdriver-manager update",
-    "start": "gulp"
+    "start": "./start-dev.sh"
   },
   "browser": {
     "angular": "./bower_components/angular/angular.js"
