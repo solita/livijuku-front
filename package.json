@@ -74,7 +74,7 @@
     "citeste2e": "gulp e2e-no-selenium-server",
     "serve": "gulp server",
     "prepublish": "bower install && webdriver-manager update",
-    "start": "gulp"
+    "start": "./start-dev.sh"
   },
   "browser": {
     "angular": "./bower_components/angular/angular.js"
