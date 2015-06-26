@@ -30,6 +30,9 @@ fieldset[disabled] .form-control
       margin-left: 2px
       border-radius: 3px
 
+.form-control[readonly]
+  padding-left 0
+
 html
   position: relative
   height: 100%
@@ -72,13 +75,13 @@ textarea
 
 .drop-box
   background: none repeat scroll 0% 0% #EEF
-  border: 5px dashed #0067CE
+  border: 3px dashed colors.primary
   width: 100%
   height: 150px
   text-align: center
   padding-top: 40px
   float: left
-  margin-bottom: 25px
+  margin-bottom: 1em
 
 .hakija
   background-color: #EEEEEE
@@ -210,8 +213,7 @@ textarea
   padding: 1px 2px
 
 .uusihakemuskausi
-  border-style: dashed
-  border-width: 3px
+  border: 3px dashed colors.primary
   border-radius: 4px
   color: #0067ce
   margin-bottom: 30px

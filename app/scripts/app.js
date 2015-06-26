@@ -120,6 +120,9 @@ angular
     .directive('jukuFormSection', require('components/formSection'))
     .directive('jukuFormRow', require('components/formRow'))
     .directive('jukuForm', require('components/form'))
+    .directive('jukuIconLink', require('components/iconLink'))
+    .directive('jukuFileDetails', require('components/fileDetails'))
+    .directive('jukuFileActions', require('components/fileActions'))
     .directive('jukuCheckbox', require('components/checkbox'))
     .directive('jukuAvustuskohde', require('components/avustuskohde'))
     .directive('hakemusLabel', require('components/hakemusLabel'));

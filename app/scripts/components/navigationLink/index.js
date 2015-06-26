@@ -1,29 +1,22 @@
-function transitionLink(opts = {}) {
-  return function () {
-    return {
-      restrict: 'EA',
-      replace: true,
-      transclude: true,
-      template: `
-        <a class="view-link">
-          ${opts.content}
-        </a>
-      `
-    };
-  };
-}
+'use strict';
 
-module.exports.next = transitionLink({
-  content: `
-    <ng-transclude></ng-transclude>
-    <span class='glyphicon glyphicon-circle-arrow-right'></span>
-  `
-});
+const transclude = require('utils/transclude');
 
-module.exports.prev = transitionLink({
-  content: `
-    <span class='glyphicon glyphicon-circle-arrow-left'></span>
-    <ng-transclude></ng-transclude>
-  `
-});
+module.exports.next = function() {
+  return transclude({
+    replace: false,
+    template: `
+      <juku-icon-link icon="circle-arrow-right" icon-first="false"></juku-icon-link>
+    `
+  });
+};
+
+module.exports.prev = function() {
+  return transclude({
+    replace: false,
+    template: `
+      <juku-icon-link icon="circle-arrow-left"></juku-icon-link>
+    `
+  });
+};
 
