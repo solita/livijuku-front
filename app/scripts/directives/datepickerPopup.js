@@ -5,18 +5,11 @@ var angular = require('angular');
 angular.module('jukufrontApp')
   .directive('datepickerPopup', function () {
     return {
-      restrict: 'A',
-      link: function (scope, element) {
-        var focusedElement;
-        element.on('click', function () {
-          if (focusedElement != this) {
-            this.select();
-            focusedElement = this;
-          }
-        });
-        element.on('blur', function () {
-          focusedElement = null;
-        });
+      restrict: 'EAC',
+      require: 'ngModel',
+      link: function(scope, element, attr, controller) {
+        //remove the default formatter from the input directive to prevent conflict
+        controller.$formatters.shift();
       }
-    };
-});
+    }
+  });
