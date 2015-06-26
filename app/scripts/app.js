@@ -12,7 +12,7 @@ require('angular-animate');
 require('angular-route');
 require('ng-currency');
 require('angular-bootstrap-show-errors');
-require('angular-ui-utils');
+require('angular-ui-validate');
 require('angular-i18n/angular-locale_fi-fi');
 
 angular
