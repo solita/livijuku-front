@@ -90,7 +90,9 @@ public class TestBase {
 
     enum User {
         HARRI("juku_hakija", "juku_hakija", "helsingin ka"),
-        KATRI("juku_kasittelija", "juku_kasittelija", "liikennevirasto");
+        KATRI("juku_kasittelija", "juku_kasittelija", "liikennevirasto"),
+        PAIVI("juku_paatoksentekija", "juku_paatoksentekija", "liikennevirasto");
+
         private final String login;
         private final String group;
         private final String organization;
@@ -252,7 +254,6 @@ public class TestBase {
             throw new RuntimeException(e);
         }
     }
-
 
     public WebElement findElementByCssSelector(String css) {
         waitForAngularRequestsToFinish(driver());

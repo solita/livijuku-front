@@ -57,7 +57,7 @@ angular.module('jukufrontApp')
               }
             }
           ).value();
-          $scope.hakemuksetSuunnittelu = _.sortBy(hakemuksetSuunnitteluTmp,'hakija');
+          $scope.hakemuksetSuunnittelu = _.sortBy(hakemuksetSuunnitteluTmp, 'hakija');
         })
         .error(function (data) {
           StatusService.virhe('SuunnitteluService.hae(' + $routeParams.vuosi + ',' + $routeParams.tyyppi + ')', data.message);
@@ -76,14 +76,24 @@ angular.module('jukufrontApp')
       return $scope.lajitunnus == 'KS2';
     };
 
+    $scope.hakemusKeskenerainen = function (hakemus) {
+      if (typeof hakemus === 'undefined') return false;
+      return (hakemus.hakemuksenTila == 'K' || hakemus.hakemuksenTila == 'T0');
+    };
+
     $scope.hakemusPaatetty = function (hakemus) {
-      if (typeof $scope.hakemus === 'undefined') return false;
+      if (typeof hakemus === 'undefined') return false;
       return hakemus.hakemuksenTila == 'P';
     };
 
     $scope.hakemusTarkastettu = function (hakemus) {
-      if (typeof $scope.hakemus === 'undefined') return false;
+      if (typeof hakemus === 'undefined') return false;
       return hakemus.hakemuksenTila == 'T';
+    };
+
+    $scope.hakemusTarkastamatta = function (hakemus) {
+      if (typeof hakemus === 'undefined') return false;
+      return hakemus.hakemuksenTila != 'T';
     };
 
     $scope.hakijaElyKeskus = function () {
@@ -102,22 +112,35 @@ angular.module('jukufrontApp')
       return $scope.tyyppi == 'MH2';
     };
 
+    $scope.sallittuAvustus = function (myonnettavaAvustus, haettuAvustus, tila) {
+      if (tila == 'K' || tila == 'T0') return true;
+      if (typeof myonnettavaAvustus === 'undefined') {
+        return false;
+      } else if (typeof myonnettavaAvustus === 'number') {
+        return (myonnettavaAvustus >= 0 && myonnettavaAvustus <= haettuAvustus);
+      }
+      return true;
+    };
+
     $scope.siirryPaatokseen = function (hakemusId, haettuavustus, avustus) {
       $location.path('/k/paatos/' + $routeParams.vuosi + '/' + $routeParams.tyyppi + '/' + $scope.lajitunnus + '/' + hakemusId + '/' + haettuavustus + '/' + avustus);
     };
 
     $scope.paivitaAvustus = function (avustus, hakemusid) {
-      if (isNaN(avustus)) {
-        haeSuunnitteluData();
-      } else if (avustus != $scope.vanhaArvo) {
-        SuunnitteluService.suunniteltuAvustus(avustus, hakemusid)
-          .success(function () {
-            StatusService.ok('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', 'Myönnettävä avustus:' + avustus + ' päivitetty.');
-            haeSuunnitteluData();
-          })
-          .error(function (data) {
-            StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', data.message);
-          });
+      $scope.$broadcast('show-errors-check-validity');
+      if ($scope.suunnitteluForm.$valid) {
+        if (isNaN(avustus)) {
+          haeSuunnitteluData();
+        } else if (avustus != $scope.vanhaArvo) {
+          SuunnitteluService.suunniteltuAvustus(avustus, hakemusid)
+            .success(function () {
+              StatusService.ok('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', 'Myönnettävä avustus:' + avustus + ' € päivitetty.');
+              haeSuunnitteluData();
+            })
+            .error(function (data) {
+              StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', data.message);
+            });
+        }
       }
     };
 
