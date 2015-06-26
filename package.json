@@ -39,6 +39,7 @@
     "gulp-ng-annotate": "^0.5.3",
     "gulp-replace": "^0.5.3",
     "gulp-rev": "^3.0.1",
+    "gulp-sourcemaps": "^1.5.2",
     "gulp-streamify": "0.0.5",
     "gulp-stylus": "^2.0.1",
     "gulp-uglify": "^1.2.0",
