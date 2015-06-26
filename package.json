@@ -19,7 +19,7 @@
     "jquery": "^2.1.4",
     "json3": "~3.3.1",
     "lodash": "~3.7.0",
-    "ng-currency": "solita/ng-currency",
+    "ng-currency": "git+https://github.com/aguirrel/ng-currency.git",
     "ng-file-upload": "~4.2.1"
   },
   "devDependencies": {
