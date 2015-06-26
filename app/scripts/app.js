@@ -131,7 +131,6 @@ require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/hakemus');
 require('./controllers/yhteinen/paanaytto');
 require('./directives/alvmuunnos');
-require('./directives/datepickerPopup');
 require('./directives/jukuAvustusluokkaPanel');
 require('./directives/noenter');
 require('./directives/selectonclick');
