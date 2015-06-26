@@ -58,7 +58,7 @@ trapServices() {
 
   # Muuttujat evaluioidaan vasta kutsuttaessa. Tässä vaiheessa niillä ei vielä ole järkeviä arvoja.
   # Siksi siis yksinkertaiset hipsut literaalin ympärillä.
-  STOP_SERVICES='curl -sSLv http://localhost:4444/selenium-server/driver?cmd=shutDownSeleniumServer >$DEBUG_REDIRECT 2>&1;
+  STOP_SERVICES='
     if [ ! -z "$FRONTEND_PID" ]; then
        echo "Stopping frontend. ($FRONTEND_PID)";
        kill -TERM $FRONTEND_PID;
@@ -119,12 +119,6 @@ FRONTEND_PID=$!
 # Odota, kunnes front vastaa.
 while ! curl http://localhost:9000/ >$DEBUG_REDIRECT 2>&1; do sleep 1; done
 sleep 3
-
-# Käynnistä selenium
-./node_modules/protractor/bin/webdriver-manager start >$DEBUG_REDIRECT 2>&1 &
-
-# Odota, kunnes selenium vastaa
-while ! curl -sSLvi http://localhost:4444/wd/hub/status 2>&1; do sleep 1; done
 
 set +e
 runTests $DB_HTTP_RESTORE_SERVICE
