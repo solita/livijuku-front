@@ -39,10 +39,10 @@ createDb() {
     export DB_USER=juku_${DB_CREATE_ID}
     export DB_PASSWORD=juku
     cd $WORK/upstream/upstream/juku-db/target
-    echo "Clear-db saattaa kaatua virheeseen:"
-    echo " ORA-14452: jo käytössä olevan väliaikaisen taulun indeksiä yritettiin luoda, muuttaa tai poistaa"
-    echo ", mutta updaten pitäisi silti onnistua nyt."
-    ## eipä toiminut. kommentoin pois taas. java -jar juku-db.jar clear-db
+    ## Kannan tyhjennys heittää virhettä. Sallitaan se.
+    set +e
+    java -jar juku-db.jar clear-db
+    set -e
     java -jar juku-db.jar update-db
   )
 }
