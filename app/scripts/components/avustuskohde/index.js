@@ -83,10 +83,25 @@ module.exports = function () {
           var floatarvo;
           floatarvo = $scope.euroSyoteNumeroksi(value);
           return (floatarvo >= 0 && floatarvo <= 999999999.99);
-        }  else if (typeof value === 'number') {
+        } else if (typeof value === 'number') {
           return (value >= 0 && value <= 999999999.99);
         }
         return true;
+      };
+
+      $scope.sallittuMaksatusArvo = function (value) {
+        if ($scope.hakemustyyppi !== 'AH0') {
+          if (typeof value === 'undefined') {
+            return false;
+          } else if (typeof value === 'string') {
+            var floatarvo;
+            floatarvo = $scope.euroSyoteNumeroksi(value);
+            return (floatarvo <= ($scope.vertailuarvot().avustushakemusHaettavaAvustus + $scope.vertailuarvot().maksatushakemusHaettavaAvustus));
+          } else if (typeof value === 'number') {
+            return (value <= ($scope.vertailuarvot().avustushakemusHaettavaAvustus + $scope.vertailuarvot().maksatushakemusHaettavaAvustus));
+          }
+          return true;
+        }
       };
 
     }],

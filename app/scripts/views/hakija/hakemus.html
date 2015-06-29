@@ -4,7 +4,7 @@
   </div>
 
   <!-- Navigaatio -->
-  <div ng-show="sallittu('view-oma-hakemus')">
+  <juku-form-row ng-show="sallittu('view-oma-hakemus')">
     <juku-navigation>
       <juku-link-prev href="#/h/hakemukset">
         Palaa hakemusten päänäkymään
@@ -21,7 +21,7 @@
           href="#/h/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
           selected="onMaksatushakemus1()">
           1. maksatushakemus {{hakemus.vuosi}}
-        </juku-tab >
+        </juku-tab>
 
         <juku-tab
           href="#/h/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
@@ -55,15 +55,6 @@
         </div>
       </div>
 
-      <div ng-show="paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
-        <div class="row">
-          <div class="col-md-12">
-            <h3>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h3>
-            <h4>{{paatos.myonnettyavustus/2 | currency:"&euro;"}}</h4>
-          </div>
-        </div>
-      </div>
-
       <juku-form-section>
         <h3>PERUSTIEDOT</h3>
 
@@ -74,6 +65,10 @@
         <juku-form-row>
           <h5>Hakemuksen tila</h5>
           <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" tyyppi="{{tyyppi}}"/>
+        </juku-form-row>
+        <juku-form-row ng-show="paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
+          <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
+          {{paatos.myonnettyavustus/2 | currency:"&euro;"}}
         </juku-form-row>
       </juku-form-section>
       <juku-form-section>
@@ -97,15 +92,15 @@
         </div>
 
         <juku-avustusluokka-panel luokka="avustuskohdeluokka"
-                                 name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
-                                 hakemus="hakemus"
-                                 ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
+                                  name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
+                                  hakemus="hakemus"
+                                  ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
           <juku-avustuskohde vuosi="vuosi"
-                            vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)"
-                            hakemustyyppi="tyyppi" kohde="avustuskohde" alv="alv"
-                            hakemus="hakemus"
-                            name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
-                            ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet" />
+                             vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)"
+                             hakemustyyppi="tyyppi" kohde="avustuskohde" alv="alv"
+                             hakemus="hakemus"
+                             name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
+                             ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet"/>
         </juku-avustusluokka-panel>
 
         <div class="row">
@@ -126,14 +121,17 @@
           <p>Liitä hakemukseesi lisätiedot kaikista hakemistasi avustuskohteista.</p>
 
           <h5>PSA:n mukaisen liikenteen hankinta:</h5>
+
           <p>Liitä ostosopimus uusista liikenteistä, josta ilmenee liikenteen
             aikataulu ja reitti.</p>
           <h5>Hintavelvotteiden korvaamien:</h5>
+
           <p>
             Erittele eri lipputyyppeihin haettava valtionavustus.
           </p>
 
           <h5>Liikenteen suunnittelu- ja kehittämishankkeet:</h5>
+
           <p>
             Liitä hankesuunnitelma tai työohjelma, joka sisältää ainakin hankkeen
             tavoitteet, sisällön, aikataulun,
@@ -258,5 +256,5 @@
         </juku-link-prev>
       </div>
     </div>
-  </div>
+</div>
 </div>
