@@ -66,12 +66,20 @@
           <h5>Hakemuksen tila</h5>
           <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" tyyppi="{{tyyppi}}"/>
         </juku-form-row>
+        <juku-form-row ng-show="hakemusTaydennettavana() && taydennyspyyntoSeliteOlemassa()"
+                       class="alert alert-warning">
+          <strong>Täydennyspyyntöviesti käsittelijältä, määräpäivä: {{hakemus.taydennyspyynto.maarapvm |
+            date:'dd.MM.yyyy'}}! </strong><br> {{hakemus.taydennyspyynto.selite}}
+        </juku-form-row>
         <juku-form-row ng-show="paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
           <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
           {{myonnettyAvustusPerJakso() | currency:"&euro;"}}
         </juku-form-row>
-        <juku-form-row ng-show="(paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())) && haettuSummaYliMyonnetyn()" class="alert alert-danger">
-          <strong>Virhe! </strong> Haettu avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}}) ylittää myönnetyn avustuksen. Et voi hakea enemmän kuin on myönnetty.
+        <juku-form-row
+          ng-show="(paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())) && haettuSummaYliMyonnetyn()"
+          class="alert alert-danger">
+          <strong>Virhe! </strong> Haettu avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}}) ylittää myönnetyn
+          avustuksen. Et voi hakea enemmän kuin on myönnetty.
         </juku-form-row>
       </juku-form-section>
       <juku-form-section>

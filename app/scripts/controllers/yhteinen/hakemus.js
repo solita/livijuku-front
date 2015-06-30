@@ -110,6 +110,11 @@ angular.module('jukufrontApp')
         return ($scope.hakemus.hakemustilatunnus == 'K' || $scope.hakemus.hakemustilatunnus == 'T0');
       };
 
+      $scope.hakemusTaydennettavana = function () {
+        if (typeof $scope.hakemus === 'undefined') return false;
+        return ($scope.hakemus.hakemustilatunnus == 'T0');
+      };
+
       $scope.hakemusVireilla = function () {
         if (typeof $scope.hakemus === 'undefined') return false;
         return ($scope.hakemus.hakemustilatunnus == 'V' || $scope.hakemus.hakemustilatunnus == 'TV');
@@ -153,6 +158,11 @@ angular.module('jukufrontApp')
       $scope.seliteOlemassa = function (hakemus) {
         if (typeof hakemus === 'undefined') return false;
         return hakemus.selite != null;
+      };
+
+      $scope.taydennyspyyntoSeliteOlemassa = function () {
+        if (typeof $scope.hakemus === 'undefined') return false;
+        return $scope.hakemus.taydennyspyynto != null;
       };
 
       $scope.sumHaettavaAvustus = function () {
