@@ -355,9 +355,8 @@ public class HakemuskausiTest extends TestBase {
         tallennaHakemus();
 
         AngularModelAccessor modelAccessor = new AngularModelAccessor(driver());
-        String urlBase = driver().executeScript("return window.location.origin").toString();
         String hakemusid = modelAccessor.retrieveAsString(button("Tallenna tiedot"), "hakemusid");
-        String pdfUrl = String.format("%s/api/hakemus/%s/pdf", urlBase, hakemusid);
+        String pdfUrl = String.format("%s/api/hakemus/%s/pdf", baseUrl(), hakemusid);
 
         String actual = httpGetPdfText(pdfUrl, User.HARRI);
 
