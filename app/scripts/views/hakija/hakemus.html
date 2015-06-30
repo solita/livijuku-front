@@ -68,7 +68,10 @@
         </juku-form-row>
         <juku-form-row ng-show="paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
           <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
-          {{paatos.myonnettyavustus/2 | currency:"&euro;"}}
+          {{myonnettyAvustusPerJakso() | currency:"&euro;"}}
+        </juku-form-row>
+        <juku-form-row ng-show="(paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())) && haettuSummaYliMyonnetyn()" class="alert alert-danger">
+          <strong>Virhe! </strong> Haettu avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}}) ylittää myönnetyn avustuksen. Et voi hakea enemmän kuin on myönnetty.
         </juku-form-row>
       </juku-form-section>
       <juku-form-section>

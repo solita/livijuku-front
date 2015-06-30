@@ -101,6 +101,10 @@ angular.module('jukufrontApp')
         };
       };
 
+      $scope.haettuSummaYliMyonnetyn = function () {
+        return $scope.sumHaettavaAvustus() > $scope.myonnettyAvustusPerJakso();
+      };
+
       $scope.hakemusKeskenerainen = function () {
         if (typeof $scope.hakemus === 'undefined') return false;
         return ($scope.hakemus.hakemustilatunnus == 'K' || $scope.hakemus.hakemustilatunnus == 'T0');
@@ -115,6 +119,11 @@ angular.module('jukufrontApp')
         return tyyppi == 'AH0' &&
           hakemustilatunnus == 'P' ||
           hakemustilatunnus == 'M';
+      };
+
+      $scope.myonnettyAvustusPerJakso = function () {
+        if (typeof $scope.paatos === 'undefined') return false;
+        return ($scope.paatos.myonnettyavustus / 2);
       };
 
       $scope.naytaHakemus = function (tila) {
@@ -156,7 +165,7 @@ angular.module('jukufrontApp')
       $scope.tallennaHakemus = function (lisatoiminto) {
         StatusService.tyhjenna();
         $scope.$broadcast('show-errors-check-validity');
-        if ($scope.hakemusForm.$valid) {
+        if (($scope.hakemusForm.$valid && $scope.onAvustushakemus()) || (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2())&& $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn())) {
 
           var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
             return l.avustuskohteet
