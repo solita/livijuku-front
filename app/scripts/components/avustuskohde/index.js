@@ -90,7 +90,10 @@ module.exports = function () {
       };
 
       $scope.sallittuMaksatusArvo = function (value) {
-        if ($scope.hakemustyyppi !== 'AH0') {
+        if ($scope.hakemustyyppi === 'AH0') {
+          return true;
+        }
+        else {
           if (typeof value === 'undefined') {
             return false;
           } else if (typeof value === 'string') {

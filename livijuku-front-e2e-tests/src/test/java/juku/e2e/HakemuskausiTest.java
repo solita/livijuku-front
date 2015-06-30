@@ -262,7 +262,7 @@ public class HakemuskausiTest extends TestBase {
 
         // Tarkistetaan hakemuksen yhteensa kentta
         List<WebElement> h4s = findElementsByXPath("//h4[@class='ng-binding']");
-        assertThat(h4s.get(1).getText(), is(equalTo("12 000,00 € (sis. alv)")));
+        assertThat(h4s.get(0).getText(), is(equalTo("12 000,00 € (sis. alv)")));
     }
 
     private void tarkistaHakijanHakemuksenTila(String teksti, String luokka) {

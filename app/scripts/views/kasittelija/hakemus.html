@@ -61,6 +61,10 @@
     <label>Hakemuksen tila</label>
     <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" tyyppi="{{tyyppi}}"/>
   </juku-form-row>
+  <juku-form-row ng-show="paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
+    <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
+    {{paatos.myonnettyavustus/2 | currency:"&euro;"}}
+  </juku-form-row>
 
   <div class="row">
     <div class="col-md-12">
@@ -68,14 +72,6 @@
         <h3>VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ</h3>
       </div>
       <div ng-hide="onAvustushakemus()">
-        <div ng-show="paatos!=null">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h3>
-              <h4>{{paatos.myonnettyavustus/2 | currency:"&euro;"}}</h4>
-            </div>
-          </div>
-        </div>
         <h3>HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{hakemus.vuosi}}</a></h3>
       </div>
     </div>
