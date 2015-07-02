@@ -50,7 +50,7 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
     }
   };
 
-  $scope.liitteitaLadattavissa = function (){
+  $scope.liitteitaLadattavissa = function () {
     return ($scope.liitteidenMaksimiKoko - $scope.liitteidenKoko);
   };
 
@@ -99,26 +99,32 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
     if ($scope.myFiles != null) {
       for (var i = 0; i < $scope.myFiles.length; i++) {
         var file = $scope.myFiles[i];
-        console.log('Watched:' + file.name);
-        $scope.upload = Upload.upload({
-          url: 'api/hakemus/' + $scope.hakemusid + '/liite',
-          method: 'POST',
-          data: {myObj: $scope.myModelObj},
-          file: file,
-          fileFormDataName: 'liite'
-        }).progress(function (evt) {
-          console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.file.name);
-        }).success(function (data, status, headers, config) {
-          console.log('Liiteen lataus: ' + config.file.name + ' onnistui. Paluuarvo: ' + data);
-          StatusService.ok('Liitteen lataus(' + config.file.name + ')', 'Liitteen lataus:' + config.file.name + ' onnistui.');
-          $scope.haeLiitteet();
-        }).error(function (data, status, headers, config) {
-          console.log('Liitteen lataus: ' + config.file.name + ' epaonnistui. Paluuarvo: ' + data);
-          //StatusService.virhe('Liitteen lataus('+config.file.name+')','Liitteen lataus:' + config.file.name + ' epaonnistui:'+data);
-        });
+        console.log('Watched:' + file.name + 'file:', file);
+        if (file.size <= $scope.liitteitaLadattavissa()) {
+          $scope.upload = Upload.upload({
+            url: 'api/hakemus/' + $scope.hakemusid + '/liite',
+            method: 'POST',
+            data: {myObj: $scope.myModelObj},
+            file: file,
+            fileFormDataName: 'liite'
+          }).progress(function (evt) {
+            console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.file.name);
+          }).success(function (data, status, headers, config) {
+            console.log('Liiteen lataus: ' + config.file.name + ' onnistui. Paluuarvo: ' + data);
+            StatusService.ok('Liitteen lataus(' + config.file.name + ')', 'Liitteen lataus:' + config.file.name + ' onnistui.');
+            $scope.haeLiitteet();
+          }).error(function (data, status, headers, config) {
+            console.log('Liitteen lataus: ' + config.file.name + ' epaonnistui. Paluuarvo: ' + data);
+            StatusService.virhe('Liitteen lataus(' + config.file.name + ')', 'Liitteen lataus:' + config.file.name + ' epaonnistui:' + data.message);
+          });
+        }
+        else {
+          StatusService.virhe('Liitteen lataus(' + file.name + ')', 'Liitteen lataus:' + file.name + ' epaonnistui, liitteen koko on liian suuri: ' + $scope.formatFileSize(file.size) + '. Tarkista ettei liitteiden yhteiskoko ylitä '+$scope.formatFileSize($scope.liitteidenMaksimiKoko)+'.');
+        }
       }
     }
   });
+
 
   $scope.haeLiitteet();
 }
