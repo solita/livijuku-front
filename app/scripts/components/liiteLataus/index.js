@@ -47,7 +47,6 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
   }
 
   $scope.liiteNimiOk = function (nimi) {
-    console.log('Nimi:'+nimi+' isempty:'+isEmpty(nimi));
     if (isEmpty(nimi)) {
       return false;
     } else {
