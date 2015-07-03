@@ -97,10 +97,11 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
 
   $scope.$watch('myFiles', function () {
     if ($scope.myFiles != null) {
-      for (var i = 0; i < $scope.myFiles.length; i++) {
-        var file = $scope.myFiles[i];
-        console.log('Watched:' + file.name + 'file:', file);
-        if (file.size <= $scope.liitteitaLadattavissa()) {
+      var tiedostojenKoko = _.sum($scope.myFiles, 'size');
+      if (tiedostojenKoko <= $scope.liitteitaLadattavissa()) {
+        for (var i = 0; i < $scope.myFiles.length; i++) {
+          var file = $scope.myFiles[i];
+          console.log('Watched:' + file.name + 'file:', file);
           $scope.upload = Upload.upload({
             url: 'api/hakemus/' + $scope.hakemusid + '/liite',
             method: 'POST',
@@ -117,9 +118,9 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
             StatusService.virhe('Liitteen lataus(' + config.file.name + ')', 'Liitteen lataus:' + config.file.name + ' epaonnistui:' + data.message);
           });
         }
-        else {
-          StatusService.virhe('Liitteen lataus(' + file.name + ')', 'Liitteen lataus:' + file.name + ' epaonnistui, liitteen koko on liian suuri: ' + $scope.formatFileSize(file.size) + '. Tarkista ettei liitteiden yhteiskoko ylitä '+$scope.formatFileSize($scope.liitteidenMaksimiKoko)+'.');
-        }
+      }
+      else {
+        StatusService.virhe('Liitteen lataus', 'Liitteen lataus epaonnistui, liitteiden koko on liian suuri: ' + $scope.formatFileSize(tiedostojenKoko) + '. Voit vielä ladata liitteitä '+ $scope.formatFileSize($scope.liitteitaLadattavissa()) +'. Hakemuksen liitteiden yhteiskoko ei saa ylittää ' + $scope.formatFileSize($scope.liitteidenMaksimiKoko) + '.');
       }
     }
   });
