@@ -89,6 +89,7 @@ EofProperties
 runTests() {
   # run the tests
   ./teste2e.sh "-Doraclews.url=$1"
+  ./test-unit.sh
 }
 
 fetchUpstreamArtifacts

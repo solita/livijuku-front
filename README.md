@@ -35,6 +35,10 @@ Run the end to end tests (requires backend and front running locally)
 
     teste2e.sh
 
+Run unit tests
+
+    test-unit.sh
+
 Running the app
 ---------------
 
