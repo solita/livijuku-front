@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-default liitelataus">
   <div class="panel-heading">
     <h2 class="panel-title">Liitteet</h2>
   </div>
@@ -54,46 +54,47 @@
             </div>
 
             <div ng-show="liite.liitenumero === editoitavaLiite">
-              <span class="glyphicon glyphicon-file"></span>
-              <input name="liitenimi" type="text" class="input-small" noenter
-                     ng-model="liite.nimiteksti"
-                     ng-focus="asetaLiitenimi(liite.nimiteksti)"
-                     ui-validate="{tyhja: 'liiteNimiTyhja($value)' }"/>
-              <span>.{{liite.nimipaate}}</span>
-              <span>{{formatFileSize(liite.bytesize)}}</span>
+              <ng-form name="liiteRiviForm">
+                <span class="glyphicon glyphicon-file"></span>
+                <input name="liitenimi" type="text" class="input-small" noenter
+                       ng-model="liite.nimiteksti"
+                       ng-focus="asetaLiitenimi(liite.nimiteksti)"
+                       ui-validate="{tyhja: 'liiteNimiOk($value)' }"/>
+                <span>.{{liite.nimipaate}}</span>
+                <span>{{formatFileSize(liite.bytesize)}}</span>
 
-              <juku-file-actions>
-                <juku-icon-link
-                  icon="ok-circle"
-                  ng-show="sallittu('modify-oma-hakemus')"
-                  href=""
-                  title="Tallenna liitenimi"
-                  ng-click="paivitaLiiteNimi(liite.liitenumero,liite.nimiteksti, liite.nimipaate)">
-                  Tallenna
-                </juku-icon-link>
+                <juku-file-actions>
+                  <juku-icon-link
+                    icon="ok-circle"
+                    ng-show="sallittu('modify-oma-hakemus')"
+                    href=""
+                    title="Tallenna liitenimi"
+                    ng-click="paivitaLiiteNimi(liite.liitenumero,liite.nimiteksti, liite.nimipaate)">
+                    Tallenna
+                  </juku-icon-link>
 
-                <juku-icon-link
-                  icon="ban-circle"
-                  href=""
-                  title="Palaa katselutilaan tallentamatta"
-                  ng-click="palaaTallentamattaLiite()">
-                  Peruuta
-                </juku-icon-link>
+                  <juku-icon-link
+                    icon="ban-circle"
+                    href=""
+                    title="Palaa katselutilaan tallentamatta"
+                    ng-click="palaaTallentamattaLiite()">
+                    Peruuta
+                  </juku-icon-link>
 
-                <juku-icon-link
-                  icon="remove-sign"
-                  ng-show="sallittu('modify-oma-hakemus')"
-                  href=""
-                  title="Poista liite"
-                  ng-click="poistaLiite(liite.liitenumero)">
-                  Poista
-                </juku-icon-link>
-              </juku-file-actions>
-
-              <p ng-show="hakemusForm.liitenimi.$error.tyhja && !hakemusForm.liitenimi.$pristine"
-                 class="help-block">
-                Liitenimi ei saa olla tyhjä.
-              </p>
+                  <juku-icon-link
+                    icon="remove-sign"
+                    ng-show="sallittu('modify-oma-hakemus')"
+                    href=""
+                    title="Poista liite"
+                    ng-click="poistaLiite(liite.liitenumero)">
+                    Poista
+                  </juku-icon-link>
+                </juku-file-actions>
+                <p ng-show="liiteRiviForm.liitenimi.$error.tyhja && !liiteRiviForm.liitenimi.$pristine"
+                   class="help-block ng-invalid-tyhja">
+                  Liitenimi ei saa olla tyhjä.
+                </p>
+              </ng-form>
             </div>
           </div>
           <div ng-hide="hakemusKeskenerainen() && sallittu('modify-oma-hakemus')">
@@ -104,7 +105,7 @@
         </juku-file-details>
         <div ng-show="hakemusKeskenerainen() && sallittu('modify-oma-hakemus')" class="alert alert-info">
           Hakemuksen liitteiden yhteiskoko voi olla suurimmillaan
-          <strong>{{formatFileSize(liitteidenMaksimiKoko)}}</strong>.  Olet liittänyt liitteitä <strong>{{formatFileSize(liitteidenKoko)}}</strong>,
+          <strong>{{formatFileSize(liitteidenMaksimiKoko)}}</strong>. Olet liittänyt liitteitä <strong>{{formatFileSize(liitteidenKoko)}}</strong>,
           voit vielä liittää liitteitä <strong>{{formatFileSize(liitteitaLadattavissa())}}</strong>.
         </div>
       </div>

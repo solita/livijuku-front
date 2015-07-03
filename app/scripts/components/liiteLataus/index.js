@@ -42,11 +42,16 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
       });
   };
 
-  $scope.liiteNimiTyhja = function (nimi) {
-    if (isNaN(nimi)) {
-      return true;
-    } else {
+  function isEmpty(str) {
+    return (!str || 0 === str.length);
+  }
+
+  $scope.liiteNimiOk = function (nimi) {
+    console.log('Nimi:'+nimi+' isempty:'+isEmpty(nimi));
+    if (isEmpty(nimi)) {
       return false;
+    } else {
+      return true;
     }
   };
 
