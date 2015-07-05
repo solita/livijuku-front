@@ -15,20 +15,20 @@ describe('Auth', function() {
 
   beforeEach(ngModule('services.auth'));
 
-  it('should...', inject(function($rootScope, AuthService) {
+  beforeEach(function () {
+    ngModule(function ($provide) {
+      $provide.value('$rootScope', {
+        sallittu: function() {
+          return true;
+        },
+        user: {
+          organisaatioid: 2
+        }
+      });
+    });
+  });
 
-    /*
-     * Mock rootScope state
-     */
-
-    $rootScope.sallittu = function() {
-      return true;
-    };
-
-    $rootScope.user = {
-      organisaatioid: 2
-    };
-
+  it('should...', inject(function(AuthService) {
     assert.ok(AuthService.hakijaSaaMuokataHakemusta({
       organisaatioid: 2,
       hakemustilatunnus: 'K'
