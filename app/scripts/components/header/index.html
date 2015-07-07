@@ -1,7 +1,8 @@
 <div class="header navbar navbar-fixed-top" role="navigation">
   <div class="container">
-    <img src="images/juku_logo.svg" class="logo" />
-
+    <a ng-href="{{sallittu(user, 'view-hakemuskausi') ? '#/k/hakemuskaudenhallinta':'#/h/hakemukset'}}">
+      <img src="images/juku_logo.svg" class="logo"/>
+    </a>
     <!-- Mobiilinavigaatio -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" ng-click="toggleCollapse()">
@@ -15,7 +16,8 @@
       <ul class="nav navbar-nav">
 
 
-        <li ng-show="sallittu(user, 'view-hakemuskausi')" ng-class="{'is-active': isActive('/k/hakemuskaudenhallinta')}">
+        <li ng-show="sallittu(user, 'view-hakemuskausi')"
+            ng-class="{'is-active': isActive('/k/hakemuskaudenhallinta')}">
           <a href="#/k/hakemuskaudenhallinta" ng-href="#/k/hakemuskaudenhallinta">
             Hakemuskaudet
           </a>
