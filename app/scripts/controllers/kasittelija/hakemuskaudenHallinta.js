@@ -219,7 +219,6 @@ angular.module('jukufrontApp')
           StatusService.virhe('Asetuksen lataus: ' + config.file.name + ' vuodelle:' + vuosi, 'Asetuksen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui:' + data.message);
         });
       }
-      haeHakemuskaudet();
     };
 
     haeHakemuskaudet();
