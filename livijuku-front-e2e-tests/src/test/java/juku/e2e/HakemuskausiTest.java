@@ -384,6 +384,29 @@ public class HakemuskausiTest extends TestBase {
 
     }
 
+
+    /* Tätä testiä ei voi toteuttaa ennenkuin Angular file upload komponentti tukee sitä
+    @Test
+    public void liitteidenLisaaminenHakemukselleLIVIJUKU_325() throws IOException {
+        login(User.HARRI);
+
+        //Avaa hakemus
+        spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
+
+        //WebElement liitelataus = findElementByXPath("//input[@type='text' and %s]", isVisible());
+       driver().executeScript("var formi = document.createElement(\"form\");\n" +
+                "var node = document.createElement(\"input\");\n" +
+                "node.setAttribute('type', 'file');\n" +
+                "formi.appendChild(node);\n" +
+                "var element = document.getElementsByClassName(\"drop-box\")[0];\n" +
+                "element.appendChild(formi);",button("Valitse tiedosto"));
+
+        findElementByXPath("//input[@type='file']").sendKeys(getPathToTestPdf().toFile().getAbsolutePath());
+        button("Valitse tiedosto").click();
+
+ }
+ */
+
     private boolean containsNormalized(String actual, String expected) {
         String a = actual.replaceAll("\\s+", " ");
         String b = expected.replaceAll("\\s+", " ");
