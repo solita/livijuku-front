@@ -52,9 +52,9 @@ angular.module('jukufrontApp')
             }
 
             if (hakemuskausi.hakuohje_contenttype != null) {
-              processedHakemuskausi.asetusLadattu = true;
+              processedHakemuskausi.hakuohjeLadattu = true;
             } else {
-              processedHakemuskausi.asetusLadattu = false;
+              processedHakemuskausi.hakuohjeLadattu = false;
             }
 
             hakemuskaudetTmp.push(processedHakemuskausi);
@@ -211,12 +211,12 @@ angular.module('jukufrontApp')
           var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
           console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
         }).success(function (data, status, headers, config) {
-          console.log('Asetuksen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' onnistui. Paluuarvo: ' + data);
-          StatusService.ok('Asetuksen lataus: ' + config.file.name + ' vuodelle:' + vuosi, 'Asetuksen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' onnistui.');
+          console.log('Hakuohjeen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' onnistui. Paluuarvo: ' + data);
+          StatusService.ok('Hakuohjeen lataus: ' + config.file.name + ' vuodelle:' + vuosi, 'Hakuohjeen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' onnistui.');
           haeHakemuskaudet();
         }).error(function (data, status, headers, config) {
-          console.log('Asetuksen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui. Paluuarvo: ' + data);
-          StatusService.virhe('Asetuksen lataus: ' + config.file.name + ' vuodelle:' + vuosi, 'Asetuksen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui:' + data.message);
+          console.log('Hakuohjeen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui. Paluuarvo: ' + data);
+          StatusService.virhe('Hakuohjeen lataus: ' + config.file.name + ' vuodelle:' + vuosi, 'Hakuohjeen: ' + config.file.name + ' lataus vuodelle:' + vuosi + ' epäonnistui:' + data.message);
         });
       }
     };

@@ -9,8 +9,8 @@
           <div class="col-md-3 text-center">
             <p class="hakemuskausi-vuosi">{{hakemuskausi.vuosi}}</p>
 
-            <p ng-show="hakemuskausi.asetusLadattu || !hakemuskausi.uusi">
-              <a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" target="_blank">Valtioneuvoston asetus</a>
+            <p ng-show="hakemuskausi.hakuohjeLadattu || !hakemuskausi.uusi">
+              <a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" target="_blank">Hakuohje</a>
             </p>
 
             <p ng-show="hakemuskausi.uusi">
@@ -20,17 +20,17 @@
                       data-toggle="tooltip"
                       data-tooltip-trigger="mouseenter"
                       data-tooltip-placement="bottom"
-                      data-tooltip="Voimassaoleva valtioneuvoston asetus joukkoliikenteen valtionavustuksista">
-                <span>{{hakemuskausi.asetusLadattu ? 'Korvaa ladattu asetus':'Lataa asetus'}}</span>
+                      data-tooltip="Voimassaoleva hakuohje joukkoliikenteen valtionavustuksista">
+                <span>{{hakemuskausi.hakuohjeLadattu ? 'Korvaa ladattu hakuohje':'Lataa hakuohje'}}</span>
               </button>
             <p
-              ng-show="hakemuskausiAvoin(hakemuskausi) && hakemuskausi.asetusLadattu && sallittu('modify-hakemuskausi')">
+              ng-show="hakemuskausiAvoin(hakemuskausi) && hakemuskausi.hakuohjeLadattu && sallittu('modify-hakemuskausi')">
               <button data-ng-click="luoUusiHakemuskausi(hakemuskausi.vuosi)" class="btn btn-success btn-lg">
                 Käynnistä hakemuskausi
               </button>
             </p>
             <p
-              ng-hide="hakemuskausiKaynnistetty(hakemuskausi) || (hakemuskausiAvoin(hakemuskausi) && hakemuskausi.asetusLadattu && sallittu('modify-hakemuskausi'))">
+              ng-hide="hakemuskausiKaynnistetty(hakemuskausi) || (hakemuskausiAvoin(hakemuskausi) && hakemuskausi.hakuohjeLadattu && sallittu('modify-hakemuskausi'))">
               <button class="btn btn-success btn-lg" disabled>
                 Käynnistä hakemuskausi
               </button>
