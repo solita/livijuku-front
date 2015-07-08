@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.paulhammant.ngwebdriver.AngularModelAccessor;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -278,5 +279,10 @@ public class TestBase {
     public WebElement findElementByXPath(String xpath, Object... n) {
         waitForAngularRequestsToFinish(driver());
         return driver().findElementByXPath(String.format(xpath, n));
+    }
+
+    public String getScopeVariableValue(WebElement we, String variableName){
+        AngularModelAccessor modelAccessor = new AngularModelAccessor(driver());
+        return modelAccessor.retrieveAsString(we, variableName);
     }
 }

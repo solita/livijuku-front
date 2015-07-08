@@ -102,6 +102,16 @@ public class HakemuskausiTest extends TestBase {
 
         tarkistaHakijanHakemuksenTila("Keskeneräinen", "hakemus-tila-keskenerainen");
 
+        // Lisää allekirjoitusliite
+        lisaaAllekirjoitusLiite();
+
+        // Tallenna hakemus
+        tallennaHakemus();
+
+        // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
+        linkInPosition("Palaa hakemusten päänäkymään", 1).click();
+        spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
+
         // Lähetä hakemus
         lahetaHakemus();
 
@@ -184,7 +194,7 @@ public class HakemuskausiTest extends TestBase {
     }
 
     @Test
-    public void hakijaSyottaaHakemukseenAlvillisetRahasummat() {
+    public void hakijaSyottaaHakemukseenAlvillisetRahasummat() throws IOException {
         login(User.HARRI);
 
         //Avaa hakemus
@@ -214,6 +224,17 @@ public class HakemuskausiTest extends TestBase {
         tarkistaHakemuksenSummakentat();
         klikkaaCheckboxia("Haluan syöttää summat arvonlisäverollisina.");
         tarkistaHakemuksenSummakentat();
+
+        // Lisää allekirjoitusliite
+        lisaaAllekirjoitusLiite();
+
+        // Tallenna hakemus
+        tallennaHakemus();
+
+        // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
+        linkInPosition("Palaa hakemusten päänäkymään", 1).click();
+        spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
+
 
         // Lähetä hakemus
         lahetaHakemus();
@@ -313,6 +334,35 @@ public class HakemuskausiTest extends TestBase {
         waitForAngularRequestsToFinish(driver());
     }
 
+
+    private void lisaaAllekirjoitusLiite() throws IOException {
+        String hakemusId = getScopeVariableValue(button("Tallenna tiedot"), "hakemusid");
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost(baseUrl() + "/api/hakemus/" + hakemusId + "/liite");
+        httpPost.addHeader("oam-remote-user", User.HARRI.getLogin());
+        httpPost.addHeader("oam-user-organization", User.HARRI.getOrganization());
+        httpPost.addHeader("oam-groups", User.HARRI.getGroup());
+
+        FileBody liite = new FileBody(getPathToTestFile("JUKU_allekirjoitusoikeus.doc").toFile());
+
+        HttpEntity reqEntity = MultipartEntityBuilder.create()
+                .addPart("liite", liite)
+                .build();
+        httpPost.setEntity(reqEntity);
+        System.out.println("************************************");
+
+        try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
+            System.out.println(httpPost);
+            System.out.println(response.getStatusLine());
+            HttpEntity entity = response.getEntity();
+            // do something useful with the response body
+            // and ensure it is fully consumed
+            EntityUtils.consume(entity);
+        } finally {
+            System.out.println("************************************");
+        }
+    }
+
     private void postHakuohje(int vuosi) throws IOException {
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
@@ -321,7 +371,7 @@ public class HakemuskausiTest extends TestBase {
         httpPost.addHeader("oam-user-organization", User.KATRI.getOrganization());
         httpPost.addHeader("oam-groups", User.KATRI.getGroup());
 
-        FileBody hakuohje = new FileBody(getPathToTestPdf().toFile());
+        FileBody hakuohje = new FileBody(getPathToTestFile("test.pdf").toFile());
 
         HttpEntity reqEntity = MultipartEntityBuilder.create()
                 .addPart("hakuohje", hakuohje)
@@ -354,8 +404,7 @@ public class HakemuskausiTest extends TestBase {
 
         tallennaHakemus();
 
-        AngularModelAccessor modelAccessor = new AngularModelAccessor(driver());
-        String hakemusid = modelAccessor.retrieveAsString(button("Tallenna tiedot"), "hakemusid");
+        String hakemusid = getScopeVariableValue(button("Tallenna tiedot"), "hakemusid");
         String pdfUrl = String.format("%s/api/hakemus/%s/pdf", baseUrl(), hakemusid);
 
         String actual = httpGetPdfText(pdfUrl, User.HARRI);
@@ -417,9 +466,9 @@ public class HakemuskausiTest extends TestBase {
         button("Tallenna").click();
     }
 
-    private Path getPathToTestPdf() {
+    private Path getPathToTestFile(String filename) {
         try {
-            return Paths.get(ClassLoader.getSystemResource("test.pdf").toURI());
+            return Paths.get(ClassLoader.getSystemResource(filename).toURI());
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return null;

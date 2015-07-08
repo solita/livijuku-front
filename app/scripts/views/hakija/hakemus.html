@@ -47,7 +47,8 @@
               <span class="glyphicon glyphicon-file"></span>
               <b>Avaa päätös (PDF)</b>
             </a>
-            </p>
+          </p>
+
           <p>
             <a href="resources/OIKAISUVAATIMUSOSOITUS.docx" target="_blank">
               <span class="glyphicon glyphicon-file"></span>
@@ -235,8 +236,13 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <label ng-show="hakemusKeskenerainen()">
+              <label ng-show="hakemusKeskenerainen() && liitteetOlemassa()">
                 <input type="checkbox" ng-model="allekirjoitusliitetty">
+                <span>Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen
+                  allekirjoitusoikeudesta.</span>
+              </label>
+              <label ng-hide="hakemusKeskenerainen() && liitteetOlemassa()">
+                <input type="checkbox" ng-model="allekirjoitusliitetty" disabled>
                 <span>Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen
                   allekirjoitusoikeudesta.</span>
               </label>
@@ -247,14 +253,14 @@
           <div class="col-md-12">
             <div ng-show="sallittu('allekirjoita-oma-hakemus')">
               <button
-                ng-show="(hakemusKeskenerainen() && allekirjoitusliitetty)"
+                ng-show="(hakemusKeskenerainen() && allekirjoitusliitetty && liitteetOlemassa())"
                 juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen"
                 varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen. Lähetä hakemus painamalla Kyllä-painiketta. Huom! Liitteiden määrästä riippuen, hakemuksen lähettäminen asianhallintaan kestää 10-70 sekuntia."
                 operaatio="tallennaHakemus(2)"
                 class="pull-right btn btn-success">Tallenna ja lähetä hakemus
               </button>
               <button
-                ng-hide="(hakemusKeskenerainen() && allekirjoitusliitetty)"
+                ng-hide="(hakemusKeskenerainen() && allekirjoitusliitetty && liitteetOlemassa())"
                 class="pull-right btn btn-success" disabled>Tallenna ja lähetä hakemus
               </button>
             </div>

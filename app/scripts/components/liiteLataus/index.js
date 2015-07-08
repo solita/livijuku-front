@@ -36,6 +36,9 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
           var nimiosa = element.nimi.substring(0, (element.nimi.length - paate.length - 1));
           return _.extend({}, element, {nimiteksti: nimiosa}, {nimipaate: paate});
         });
+        if (!($scope.liitteetOlemassa())){
+          $scope.allekirjoitusliitetty = false;
+        }
       })
       .error(function (data) {
         StatusService.virhe('LiiteService.hae(' + $scope.hakemusid + ')', data.message);
