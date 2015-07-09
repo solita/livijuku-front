@@ -34,6 +34,14 @@
       </h2>
     </div>
   </div>
+  <div class="row" ng-hide="hakemusKeskenerainen()">
+    <div class="col-md-12">
+      <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="btn btn-primary"
+              noenter>
+        Esikatsele hakemus
+      </button>
+    </div>
+  </div>
   <div class="row" ng-show="hasPaatos(tyyppi, hakemus.hakemustilatunnus)">
     <div class="col-md-12">
       <p>
