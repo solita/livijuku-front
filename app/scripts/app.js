@@ -1,7 +1,7 @@
 'use strict';
 var angular = require('angular');
 var {isHakija, isKasittelija} = require('utils/user');
-var {restrictRoute, defaultView} = require('utils/route');
+var {restrictRoute, defaultView} = require('utils/router');
 
 require('angular-toastr');
 require('angular-resource');
