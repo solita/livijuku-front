@@ -1,5 +1,7 @@
 'use strict';
 var angular = require('angular');
+var {isHakija, isKasittelija} = require('utils/user');
+var {restrictRoute, defaultView} = require('utils/route');
 
 require('angular-toastr');
 require('angular-resource');
@@ -44,41 +46,46 @@ angular
         'ui.validate'
     ])
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider
-            .when('/', {
-                template: require('views/yhteinen/aloitus.html')
-            })
-            .when('/h/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
-                template: require('views/hakija/hakemus.html'),
-                controller: 'HakemusCtrl'
-            })
-            .when('/h/hakemukset', {
-                template: require('views/hakija/hakemukset.html'),
-                controller: 'HakijaHakemuksetCtrl'
-            })
-            .when('/k/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
-                template: require('views/kasittelija/hakemus.html'),
-                controller: 'HakemusCtrl'
-            })
-            .when('/k/hakemukset/:tyyppi', {
-                template: require('views/kasittelija/hakemukset.html'),
-                controller: 'KasittelijaHakemuksetCtrl'
-            })
-            .when('/k/hakemuskaudenhallinta', {
-                template: require('views/kasittelija/hakemuskaudenHallinta.html'),
-                controller: 'KasittelijaHakemuskaudenHallintaCtrl'
-            })
-            .when('/k/paatos/:vuosi/:tyyppi/:lajitunnus/:hakemusid/:haettuavustus/:avustus', {
-                template: require('views/kasittelija/paatos.html'),
-                controller: 'KasittelijaPaatosCtrl'
-            })
-            .when('/k/suunnittelu/:vuosi/:tyyppi/:lajitunnus', {
-                template: require('views/kasittelija/suunnittelu.html'),
-                controller: 'KasittelijaSuunnitteluCtrl'
-            })
-            .otherwise({
-                redirectTo: '/'
+      $routeProvider
+        .when('/', {
+          template: '<div></div>',
+          controller: ['$location', 'KayttajaService', function($location, KayttajaService) {
+            KayttajaService.hae().then(function(user) {
+              $location.path(defaultView(user));
             });
+          }]
+        })
+        .when('/y/hakemukset/:tyyppi', {
+          template: require('views/kasittelija/hakemukset.html'),
+          controller: 'KasittelijaHakemuksetCtrl'
+        })
+        .when('/h/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', restrictRoute(isHakija, {
+          template: require('views/hakija/hakemus.html'),
+          controller: 'HakemusCtrl'
+        }))
+        .when('/h/hakemukset', restrictRoute(isHakija, {
+          template: require('views/hakija/hakemukset.html'),
+          controller: 'HakijaHakemuksetCtrl'
+        }))
+        .when('/k/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', restrictRoute(isKasittelija, {
+          template: require('views/kasittelija/hakemus.html'),
+          controller: 'HakemusCtrl'
+        }))
+        .when('/k/hakemuskaudenhallinta', restrictRoute(isKasittelija, {
+          template: require('views/kasittelija/hakemuskaudenHallinta.html'),
+          controller: 'KasittelijaHakemuskaudenHallintaCtrl'
+        }))
+        .when('/k/paatos/:vuosi/:tyyppi/:lajitunnus/:hakemusid/:haettuavustus/:avustus', restrictRoute(isKasittelija, {
+          template: require('views/kasittelija/paatos.html'),
+          controller: 'KasittelijaPaatosCtrl'
+        }))
+        .when('/k/suunnittelu/:vuosi/:tyyppi/:lajitunnus', restrictRoute(isKasittelija, {
+          template: require('views/kasittelija/suunnittelu.html'),
+          controller: 'KasittelijaSuunnitteluCtrl'
+        }))
+        .otherwise({
+          redirectTo: '/'
+        });
     }])
     .config(['$httpProvider', function ($httpProvider) {
         //http://stackoverflow.com/questions/16098430/angular-ie-caching-issue-for-http
@@ -95,6 +102,9 @@ angular
         // extra
         $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
         $httpProvider.defaults.headers.Pragma = 'no-cache';
+    }])
+    .run(['$rootScope', '$location', function($rootScope, $location) {
+      $rootScope.$on('$routeChangeError', () => $location.path('/'));
     }])
     .directive('jukuHeader', require('components/header'))
     .directive('jukuSidebar', require('components/sidebar'))

@@ -24,23 +24,15 @@ angular.module('jukufrontApp')
       .success(function (data) {
         $rootScope.organisaatiot = data;
         KayttajaService.hae()
-          .success(function (data) {
-            $rootScope.user = data;
-            $rootScope.userOrganisaatio = _.find($rootScope.organisaatiot, {'id': $rootScope.user.organisaatioid}).nimi;
-            $rootScope.userOrganisaatioLajitunnus = _.find($rootScope.organisaatiot, {'id': $rootScope.user.organisaatioid}).lajitunnus;
+        .then(function (data) {
+          $rootScope.user = data;
+          $rootScope.userOrganisaatio = _.find($rootScope.organisaatiot, {'id': $rootScope.user.organisaatioid}).nimi;
+          $rootScope.userOrganisaatioLajitunnus = _.find($rootScope.organisaatiot, {'id': $rootScope.user.organisaatioid}).lajitunnus;
 
-            statusService.ok('KayttajaService.hae()', 'Käyttäjätiedot haettu onnistuneesti.');
-            if ($scope.sallittu('view-hakemuskausi')) {
-              $location.path("k/hakemuskaudenhallinta");
-            } else {
-              $location.path("h/hakemukset");
-            }
-          }
-        )
-          .
-          error(function (data) {
-            statusService.virhe('KayttajaService.hae()', data.message);
-          });
+          statusService.ok('KayttajaService.hae()', 'Käyttäjätiedot haettu onnistuneesti.');
+        }).catch(function (err) {
+          statusService.virhe('KayttajaService.hae()', err.message);
+        });
       })
       .error(function (data) {
         statusService.virhe('OrganisaatioService.hae()', data.message);
