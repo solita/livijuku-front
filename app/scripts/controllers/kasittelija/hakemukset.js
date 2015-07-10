@@ -78,7 +78,7 @@ angular.module('jukufrontApp')
     $scope.tyyppi = $routeParams.tyyppi;
 
     $scope.asetaTyyppi = function (tyyppi) {
-      $location.path('/k/hakemukset/' + tyyppi);
+      $location.path('/y/hakemukset/' + tyyppi);
     };
 
     $scope.sallittu = function (oikeus) {

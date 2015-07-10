@@ -31,7 +31,7 @@ module.exports = function ($modal, HakemusService, StatusService, $location) {
           HakemusService.taydennyspyynto(parseInt(scope.hakemusid), taydennysselite)
             .success(function () {
               StatusService.ok('HakemusService.taydennyspyynto(' + scope.hakemusid + ',' + taydennysselite + ')', 'Hakemus päivitettiin tädennettäväksi.');
-              $location.path('/k/hakemukset/' + scope.tyyppi);
+              $location.path('/y/hakemukset/' + scope.tyyppi);
             })
             .error(function (data) {
               StatusService.virhe('HakemusService.taydennyspyynto(' + scope.hakemusid + ',' + taydennysselite + ')', data.message);

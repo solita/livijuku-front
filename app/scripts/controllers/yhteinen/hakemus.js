@@ -237,7 +237,7 @@ angular.module('jukufrontApp')
         HakemusService.tarkastaHakemus($scope.hakemusid)
           .success(function () {
             StatusService.ok('HakemusService.tarkastaHakemus(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tarkastetuksi.');
-            $location.path('/k/hakemukset/' + $scope.tyyppi);
+            $location.path('/y/hakemukset/' + $scope.tyyppi);
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.tarkastaHakemus(' + $scope.hakemusid + ')', data.message);
@@ -248,7 +248,7 @@ angular.module('jukufrontApp')
         HakemusService.tarkastaTaydennys($scope.hakemusid)
           .success(function () {
             StatusService.ok('HakemusService.tarkastaTaydennys(' + $scope.hakemusid + ')', 'Täydennetty hakemus päivitettiin tarkastetuksi.');
-            $location.path('/k/hakemukset/' + $scope.tyyppi);
+            $location.path('/y/hakemukset/' + $scope.tyyppi);
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.tarkastaTaydennys(' + $scope.hakemusid + ')', data.message);

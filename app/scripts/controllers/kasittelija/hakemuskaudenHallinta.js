@@ -190,7 +190,7 @@ angular.module('jukufrontApp')
       }
 
       if (tyyppi) {
-        $location.path('/k/hakemukset/' + tyyppi);
+        $location.path('/y/hakemukset/' + tyyppi);
       } else {
         $location.path('/k/hakemukset');
       }
