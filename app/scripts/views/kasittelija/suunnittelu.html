@@ -1,34 +1,27 @@
-<div class="container">
+<div id="suunnittelu" class="container">
   <div ng-hide="sallittu('kasittely-hakemus')">
     <p>Ei hakemuksen käsittelyoikeutta.</p>
   </div>
   <div ng-show="sallittu('kasittely-hakemus')">
-    <div class="row">
-      <div ng-show="onAvustushakemus()" class="col-md-12">
-        <h2><b>Suunnittelunäkymä - avustushakemukset {{vuosi}}</b></h2>
-      </div>
-      <div ng-show="onMaksatushakemus1()" class="col-md-12">
-        <h2><b>Suunnittelunäkymä - maksatushakemukset 1.1-30.6.{{vuosi}}</b></h2>
-      </div>
-      <div ng-show="onMaksatushakemus2()" class="col-md-12">
-        <h2><b>Suunnittelunäkymä - maksatushakemukset 1.7-31.12.{{vuosi}}</b></h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div ng-show="hakijaSuuriKaupunkiseutu()">
-          <div class="suunnitteluheader">Suuret kaupunkiseudut</div>
-        </div>
-        <div ng-show="hakijaKeskisuuriKaupunkiseutu()">
-          <div class="suunnitteluheader">Keskisuuret kaupunkiseudut</div>
-        </div>
-        <div ng-show="hakijaElyKeskus()">
-          <div class="suunnitteluheader">Ely-keskukset</div>
-        </div>
-      </div>
-    </div>
+
+    <juku-form-row>
+      <h2 ng-show="onAvustushakemus()">
+        Suunnittelunäkymä - avustushakemukset {{vuosi}}
+      </h2>
+
+      <h2 ng-show="onMaksatushakemus1()">
+        Suunnittelunäkymä - maksatushakemukset 1.1-30.6.{{vuosi}}
+      </h2>
+
+      <h2 ng-show="onMaksatushakemus2()">
+        Suunnittelunäkymä - maksatushakemukset 1.7-31.12.{{vuosi}}
+      </h2>
+    </juku-form-row>
+
+    <h3>{{ lajitunnus | toApplicantName }}</h3>
+
     <form name="suunnitteluForm">
-      <div class="row">
+      <juku-form-row>
         <div class="col-md-4">
           <label>Määräraha vuosi {{vuosi}}</label>
           <input name="maararaha" type="text" min="-0.0001" ng-currency="" class="form-control"
@@ -48,8 +41,9 @@
           <input type="text" min="-0.0001" ng-currency="" class="form-control"
                  ng-model="jaettavaraha" disabled/>
         </div>
-      </div>
-      <table st-table="hakemuksetSuunnittelu" class="table table-hover table-condensed table-striped">
+      </juku-form-row>
+      <juku-form-row>
+      <table st-table="hakemuksetSuunnittelu" class="table table-hover table-condensed">
         <thead>
         <tr>
           <th>Hakija</th>
@@ -113,6 +107,7 @@
         </tbody>
       </table>
     </form>
+
     <div class="row">
       <div class="col-md-12">
         <juku-link-prev href="#/y/hakemukset/{{tyyppi}}">

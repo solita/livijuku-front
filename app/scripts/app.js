@@ -30,6 +30,7 @@ angular
         'services.status',
         'services.paatos',
         'services.common',
+        'filters.toApplicantName',
         'ngResource',
         'angular-loading-bar',
         'smart-table',
@@ -160,3 +161,4 @@ require('./services/organisaatio');
 require('./services/paatos');
 require('./services/status');
 require('./services/suunnittelu');
+require('./filters/toApplicantName');

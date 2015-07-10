@@ -68,14 +68,6 @@ angular.module('jukufrontApp')
       $scope.vanhaArvo = arvo;
     };
 
-    $scope.hakijaSuuriKaupunkiseutu = function () {
-      return $scope.lajitunnus == 'KS1';
-    };
-
-    $scope.hakijaKeskisuuriKaupunkiseutu = function () {
-      return $scope.lajitunnus == 'KS2';
-    };
-
     $scope.hakemusKeskenerainen = function (hakemus) {
       if (typeof hakemus === 'undefined') return false;
       return (hakemus.hakemuksenTila == 'K' || hakemus.hakemuksenTila == 'T0');
@@ -94,10 +86,6 @@ angular.module('jukufrontApp')
     $scope.hakemusTarkastamatta = function (hakemus) {
       if (typeof hakemus === 'undefined') return false;
       return hakemus.hakemuksenTila != 'T';
-    };
-
-    $scope.hakijaElyKeskus = function () {
-      return $scope.lajitunnus == 'ELY';
     };
 
     $scope.onAvustushakemus = function () {
