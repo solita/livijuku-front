@@ -1,7 +1,25 @@
 'use strict';
-const transclude = require('utils/transclude');
-const _ = require('lodash');
 
+ /**
+ * @ngdoc directive
+ * @name iconLink
+ *
+ * @param {object}  icon  glyphicon name to show
+ * @param {object}  icon-first  should icon be before text
+ *
+ * @description
+ * Link with an icon
+ *
+ * @example
+   <juku-icon-link
+     href="http://google.fi"
+     icon="file"
+     icon-first="true">
+    Download
+   </juku-icon-link>
+ */
+
+const transclude = require('utils/transclude');
 
 function iconLink(opts = {}) {
 
