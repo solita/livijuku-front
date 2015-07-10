@@ -40,7 +40,7 @@
         </span>
       </h1>
 
-      <div class="row" ng-show="hasPaatos(tyyppi, hakemus.hakemustilatunnus)">
+      <div class="row" ng-show="hasPaatos(hakemus.hakemustilatunnus)">
         <div class="col-md-12">
           <p>
             <a href="api/hakemus/{{hakemusid}}/paatos/pdf" target="_blank">
@@ -79,14 +79,56 @@
             date:'dd.MM.yyyy'}}! </strong><br> {{hakemus.taydennyspyynto.selite}}
         </juku-form-row>
         <juku-form-row ng-show="paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
+          <h5>MYÖNNETTY AVUSTUS VUODELLE {{vuosi}}</h5>
+          {{myonnettyAvustusPerVuosi() | currency:"&euro;"}} (sis. ALV)
+          <juku-icon-link
+            href="api/hakemus/{{avustushakemusid}}/paatos/pdf"
+            title="Avaa päätös"
+            target="_blank"
+            icon="file">
+            Avaa päätös (PDF)
+          </juku-icon-link>
+        </juku-form-row>
+        <juku-form-row ng-show="paatosOlemassa() && onMaksatushakemus1()">
           <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
-          {{myonnettyAvustusPerJakso() | currency:"&euro;"}}
+          {{myonnettyAvustusPerJakso() | currency:"&euro;"}} (sis. ALV)
+          <juku-icon-link
+            href="api/hakemus/{{hakemusid}}/paatos/pdf"
+            ng-show="hasPaatos(hakemus.hakemustilatunnus)"
+            title="Avaa päätös"
+            target="_blank"
+            icon="file">
+            Avaa päätös (PDF)
+          </juku-icon-link>
+        </juku-form-row>
+        <juku-form-row ng-show="maksatushakemus1PaatosOlemassa() && onMaksatushakemus2()">
+          <h5>MYÖNNETTY AVUSTUS 1. MAKSATUSHAKEMUKSEN PERUSTEELLA</h5>
+          {{maksatushakemus1PaatosMaksettu() | currency:"&euro;"}} (sis. ALV)
+          <juku-icon-link
+            href="api/hakemus/{{maksatushakemus1id}}/paatos/pdf"
+            title="Avaa päätös"
+            target="_blank"
+            icon="file">
+            Avaa päätös (PDF)
+          </juku-icon-link>
+          <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
+          {{myonnettyAvustusPerJakso() | currency:"&euro;"}} (sis. ALV)
+          <juku-icon-link
+            href="api/hakemus/{{hakemusid}}/paatos/pdf"
+            ng-show="hasPaatos(hakemus.hakemustilatunnus)"
+            title="Avaa päätös"
+            target="_blank"
+            icon="file">
+            Avaa päätös (PDF)
+          </juku-icon-link>
         </juku-form-row>
         <juku-form-row
           ng-show="(paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())) && haettuSummaYliMyonnetyn()"
           class="alert alert-danger">
           <strong>Virhe! </strong> Haettu avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}}) ylittää myönnetyn
-          avustuksen. Et voi hakea enemmän kuin on myönnetty.
+          avustuksen. Voit hakea ensimmäisellä maksatushakemuksella enintään 50% vuodelle myönnetystä avustuksesta.
+          Toisen maksatushakemuksen haettava avustussumma ei saa ylittää hakemusajalle myönnettyä summaa (vuodelle myönnetty
+          avustussumma vähennettynä myönnetty avustus ensimmäisen maksatushakemuksen perusteella).
         </juku-form-row>
       </juku-form-section>
       <juku-form-section>

@@ -47,6 +47,16 @@ angular.module('jukufrontApp')
           });
       }
 
+      function haeMaksatushakemus1Paatos() {
+        PaatosService.hae($scope.maksatushakemus1id)
+          .success(function (data) {
+            $scope.maksatushakemus1Paatos = data;
+          })
+          .error(function (data) {
+            StatusService.virhe('PaatosService.hae(' + $scope.maksatushakemus1id + ')', data.message);
+          });
+      }
+
       function haeVertailuArvo(data, avustuskohdeluokka, avustuskohdelaji, arvo) {
         return parseFloat((_.find(_.find(data, {'tunnus': avustuskohdeluokka}).avustuskohteet, {
           'avustuskohdeluokkatunnus': avustuskohdeluokka,
@@ -120,15 +130,28 @@ angular.module('jukufrontApp')
         return ($scope.hakemus.hakemustilatunnus == 'V' || $scope.hakemus.hakemustilatunnus == 'TV');
       };
 
-      $scope.hasPaatos = function (tyyppi, hakemustilatunnus) {
-        return tyyppi == 'AH0' &&
-          hakemustilatunnus == 'P' ||
-          hakemustilatunnus == 'M';
+      $scope.hasPaatos = function (hakemustilatunnus) {
+        return hakemustilatunnus == 'P' || hakemustilatunnus == 'M';
+      };
+
+      $scope.maksatushakemus1PaatosOlemassa = function () {
+        return ($scope.maksatushakemus1Paatos != null && $scope.maksatushakemus1Paatos.voimaantuloaika != null);
+      };
+
+      $scope.maksatushakemus1PaatosMaksettu = function () {
+        if (typeof $scope.maksatushakemus1Paatos !== 'undefined') return $scope.maksatushakemus1Paatos.myonnettyavustus;
       };
 
       $scope.myonnettyAvustusPerJakso = function () {
         if (typeof $scope.paatos === 'undefined') return false;
-        return ($scope.paatos.myonnettyavustus / 2);
+        if ($scope.tyyppi == "MH1") return ($scope.paatos.myonnettyavustus / 2);
+        if (typeof $scope.maksatushakemus1Paatos === 'undefined') return false;
+        if ($scope.tyyppi == "MH2") return ($scope.paatos.myonnettyavustus - $scope.maksatushakemus1Paatos.myonnettyavustus);
+      };
+
+      $scope.myonnettyAvustusPerVuosi = function () {
+        if (typeof $scope.paatos === 'undefined') return false;
+        return $scope.paatos.myonnettyavustus;
       };
 
       $scope.naytaHakemus = function (tila) {
@@ -274,6 +297,7 @@ angular.module('jukufrontApp')
         $scope.ajankohta = '1.7.-31.12.';
         haeAvustuskohteet($scope.avustushakemusid, "avustushakemusArvot");
         haeAvustuskohteet($scope.maksatushakemus1id, "maksatushakemusArvot");
+        haeMaksatushakemus1Paatos();
       }
 
       haeHakemukset();
