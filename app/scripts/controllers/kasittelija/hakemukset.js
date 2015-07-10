@@ -48,7 +48,7 @@ function luoLajitunnusLajittelija(kaikkiOrganisaatiot, hakemusTyyppitunnusFilter
         hakemuksenTila: hakemus.hakemustilatunnus,
         viimeisinMuutos: Number(new Date(hakemus.muokkausaika)),
         diaarinumero: hakemus.diaarinumero,
-        kasittelija: 'Ei määritelty',
+        kasittelija: hakemus.kasittelijanimi,
         avustushakemusId: haeHakemustyyppi(organisaationHakemukset, 'AH0').id,
         maksatushakemus1Id: haeHakemustyyppi(organisaationHakemukset, 'MH1').id,
         maksatushakemus2Id: haeHakemustyyppi(organisaationHakemukset, 'MH2').id

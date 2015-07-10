@@ -69,6 +69,10 @@
     <label>Hakemuksen tila</label>
     <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" tyyppi="{{tyyppi}}"/>
   </juku-form-row>
+  <juku-form-row ng-hide="hakemusKeskenerainen()">
+    <h5>Käsittelijä</h5>
+    {{hakemus.kasittelijanimi}}
+  </juku-form-row>
   <juku-form-row ng-show="paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
     <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
     {{myonnettyAvustusPerJakso() | currency:"&euro;"}}

@@ -69,6 +69,10 @@
           <h5>Hakemuksen tila</h5>
           <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" tyyppi="{{tyyppi}}"/>
         </juku-form-row>
+        <juku-form-row ng-hide="hakemusKeskenerainen()">
+          <h5>Käsittelijä</h5>
+          {{hakemus.kasittelijanimi}}
+        </juku-form-row>
         <juku-form-row ng-show="hakemusTaydennettavana() && taydennyspyyntoSeliteOlemassa()"
                        class="alert alert-warning">
           <strong>Täydennyspyyntöviesti käsittelijältä, määräpäivä: {{hakemus.taydennyspyynto.maarapvm |
