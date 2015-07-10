@@ -35,25 +35,22 @@
       <div ng-repeat="hakemuksetPerVuosi in hakemukset">
         <accordion-group is-open="hakemuksetPerVuosi.accordionOpen">
           <accordion-heading>
-            <div class="row">
-              <div ng-show="tyyppi=='AH0'">
-                <h4>
-                  <i class="pull-left glyphicon"
-                       ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}"></i>
-                  JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET {{hakemuksetPerVuosi.vuosi}}
-                </h4>
-              </div>
-              <div ng-show="tyyppi=='MH1'">
-                <h4><i class="pull-left glyphicon"
-                       ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
-                  MAKSATUSHAKEMUKSET AJALTA 1.1-30.6.{{hakemuksetPerVuosi.vuosi}}</i></h4>
-              </div>
-              <div ng-show="tyyppi=='MH2'">
-                <h4><i class="pull-left glyphicon"
-                       ng-class="{'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen, 'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen}">JOUKKOLIIKENTEEN
-                  MAKSATUSHAKEMUKSET AJALTA 1.7-31.12.{{hakemuksetPerVuosi.vuosi}}</i></h4>
-              </div>
-            </div>
+            <h4>
+              <i class="pull-left glyphicon"
+                 ng-class="{
+                  'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen,
+                  'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen
+                  }"></i>
+              <span ng-show="tyyppi === 'AH0'">
+                JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET {{hakemuksetPerVuosi.vuosi}}
+              </span>
+              <span ng-show="tyyppi === 'MH1'">
+                JOUKKOLIIKENTEEN MAKSATUSHAKEMUKSET AJALTA 1.1-30.6.{{hakemuksetPerVuosi.vuosi}}
+              </span>
+              <span ng-show="tyyppi === 'MH2'">
+                JOUKKOLIIKENTEEN MAKSATUSHAKEMUKSET AJALTA 1.7-31.12.{{hakemuksetPerVuosi.vuosi}}
+              </span>
+            </h4>
           </accordion-heading>
           <div class="row">
 
