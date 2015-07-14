@@ -78,7 +78,7 @@
           <strong>Täydennyspyyntöviesti käsittelijältä, määräpäivä: {{hakemus.taydennyspyynto.maarapvm |
             date:'dd.MM.yyyy'}}! </strong><br> {{hakemus.taydennyspyynto.selite}}
         </juku-form-row>
-        <juku-form-row ng-show="paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
+        <juku-form-row ng-show="avustushakemusPaatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
           <h5>MYÖNNETTY AVUSTUS VUODELLE {{vuosi}}</h5>
           {{myonnettyAvustusPerVuosi() | currency:"&euro;"}} (sis. ALV)
           <juku-icon-link
@@ -89,7 +89,7 @@
             Avaa päätös (PDF)
           </juku-icon-link>
         </juku-form-row>
-        <juku-form-row ng-show="paatosOlemassa() && onMaksatushakemus1()">
+        <juku-form-row ng-show="avustushakemusPaatosOlemassa() && onMaksatushakemus1()">
           <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
           {{myonnettyAvustusPerJakso() | currency:"&euro;"}} (sis. ALV)
           <juku-icon-link
@@ -123,11 +123,12 @@
           </juku-icon-link>
         </juku-form-row>
         <juku-form-row
-          ng-show="(paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())) && haettuSummaYliMyonnetyn()"
+          ng-show="(avustushakemusPaatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())) && haettuSummaYliMyonnetyn()"
           class="alert alert-danger">
           <strong>Virhe! </strong> Haettu avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}}) ylittää myönnetyn
           avustuksen. Voit hakea ensimmäisellä maksatushakemuksella enintään 50% vuodelle myönnetystä avustuksesta.
-          Toisen maksatushakemuksen haettava avustussumma ei saa ylittää hakemusajalle myönnettyä summaa (vuodelle myönnetty
+          Toisen maksatushakemuksen haettava avustussumma ei saa ylittää hakemusajalle myönnettyä summaa (vuodelle
+          myönnetty
           avustussumma vähennettynä myönnetty avustus ensimmäisen maksatushakemuksen perusteella).
         </juku-form-row>
       </juku-form-section>
@@ -299,14 +300,14 @@
           <div class="col-md-12">
             <div ng-show="sallittu('allekirjoita-oma-hakemus')">
               <button
-                ng-show="(hakemusKeskenerainen() && allekirjoitusliitetty && liitteetOlemassa())"
+                ng-show="(hakemusKeskenerainen() && allekirjoitusliitetty && liitteetOlemassa() && edellinenHakemusPaatetty())"
                 juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen"
                 varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen. Lähetä hakemus painamalla Kyllä-painiketta. Huom! Liitteiden määrästä riippuen, hakemuksen lähettäminen asianhallintaan kestää 10-70 sekuntia."
                 operaatio="tallennaHakemus(2)"
                 class="pull-right btn btn-success">Tallenna ja lähetä hakemus
               </button>
               <button
-                ng-hide="(hakemusKeskenerainen() && allekirjoitusliitetty && liitteetOlemassa())"
+                ng-hide="(hakemusKeskenerainen() && allekirjoitusliitetty && liitteetOlemassa() && edellinenHakemusPaatetty())"
                 class="pull-right btn btn-success" disabled>Tallenna ja lähetä hakemus
               </button>
             </div>

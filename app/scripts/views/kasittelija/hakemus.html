@@ -73,7 +73,7 @@
     <h5>Käsittelijä</h5>
     {{hakemus.kasittelijanimi}}
   </juku-form-row>
-  <juku-form-row ng-show="paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
+  <juku-form-row ng-show="avustushakemusPaatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
     <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
     {{myonnettyAvustusPerJakso() | currency:"&euro;"}}
   </juku-form-row>

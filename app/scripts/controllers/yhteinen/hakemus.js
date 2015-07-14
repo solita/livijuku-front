@@ -174,8 +174,18 @@ angular.module('jukufrontApp')
         return $scope.tyyppi == 'MH2';
       };
 
-      $scope.paatosOlemassa = function () {
-        return $scope.paatos != null;
+      $scope.avustushakemusPaatosOlemassa = function () {
+        return ($scope.paatos != null && $scope.paatos.voimaantuloaika != null);
+      };
+
+      $scope.edellinenHakemusPaatetty = function(){
+        if ($scope.onAvustushakemus()) {
+          return true;
+        } else if ($scope.onMaksatushakemus1()) {
+          return $scope.avustushakemusPaatosOlemassa();
+        } else if ($scope.onMaksatushakemus2()) {
+          return $scope.maksatushakemus1PaatosOlemassa();
+        }
       };
 
       $scope.seliteOlemassa = function (hakemus) {
