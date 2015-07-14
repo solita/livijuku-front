@@ -172,7 +172,12 @@ public class HakemuskausiTest extends TestBase {
         linkInPosition("Päätöksentekoon", 1).click();
         spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
         findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
-        findElementByXPath("//input[@type='text']").sendKeys("Paavo Päättäjä");
+        button("Tallenna").click();
+        // Kirjaa sisään päättäjä
+        login(User.PAIVI);
+        spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu").click();
+        linkInPosition("Suunnittelu ja päätöksenteko", 1).click();
+        linkInPosition("Päätöksentekoon", 1).click();
         button("Tallenna ja hyväksy päätös").click();
         okOlenVarma().click();
         waitForAngularRequestsToFinish(driver());

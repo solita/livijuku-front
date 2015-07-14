@@ -75,16 +75,6 @@
           <textarea id="paatosteksti" name="paatosteksti" class="animate msd-elastic: \n;"
                     ng-model="paatos.selite"></textarea>
       </div>
-      <div class="form-group"
-           ng-class="{ 'has-error' : paatosForm.paattajanimi.$invalid}">
-        <label>Päättäjän nimi</label>
-        <input id="paattajanimi" name="paattajanimi" class="form-control" type="text" ng-model="paatos.paattajanimi"
-               ng-required="true"/>
-
-        <p ng-show="paatosForm.paattajanimi.$invalid" class="help-block">
-          Päättäjän nimi on pakollinen tieto.
-        </p>
-      </div>
     </form>
     <br>
 
@@ -127,7 +117,7 @@
       <div class="col-md-4">
         <h5>Esittelijä</h5>
 
-        <p>{{user.etunimi}} {{user.sukunimi}}</p>
+        <p>{{avustushakemus.kasittelijanimi}}</p>
       </div>
       <div class="col-md-4">
         <h5>Päätöksentekijä</h5>
@@ -136,8 +126,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6"></div>
-      <div class="col-md-6">
+      <div class="col-md-9"></div>
+      <div class="col-md-3">
         <div ng-show="(hakemusTarkastettu() && sallittu('hyvaksy-paatos'))">
           <button juku-varmistusdialogi varmistusotsake="Päätöksen hyväksyminen"
                   varmistusteksti="Oletko varma, että haluat hyväksyä päätöksen? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
@@ -145,9 +135,11 @@
           </button>
         </div>
         <div ng-hide="(hakemusTarkastettu() && sallittu('hyvaksy-paatos'))">
-          <button data-ng-click="tallennaPaatos(2)" class="pull-right btn btn-success" disabled>Tallenna ja hyväksy
-            päätös
-          </button>
+            <button data-ng-click="tallennaPaatos(2)" class="pull-right btn btn-success disabled-button-tooltip" disabled>Tallenna ja hyväksy
+              päätös
+            </button>
+            <div tooltip="Päätöksenteko vaatii Päätöksentekijä-tason käyttöoikeudet JUKUun"
+                 class="disabled-button-tooltip-text"></div>
         </div>
       </div>
     </div>

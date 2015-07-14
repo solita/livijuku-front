@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var angular = require('angular');
+var $ = require('jquery');
 
 angular.module('jukufrontApp')
   .controller('KasittelijaPaatosCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'HakemusService', 'StatusService', 'PaatosService', 'SuunnitteluService', '$window', function ($rootScope, $scope, $routeParams, $location, HakemusService, StatusService, PaatosService, SuunnitteluService, $window) {
@@ -75,6 +76,11 @@ angular.module('jukufrontApp')
     $scope.tallennaPaatos = function (lisatoiminto) {
       StatusService.tyhjenna();
       if ($scope.paatosForm.$valid) {
+        if ($rootScope.sallittu('hyvaksy-paatos')) {
+          $scope.paatos.paattajanimi = $rootScope.user.etunimi + ' ' + $rootScope.user.sukunimi;
+        } else{
+          $scope.paatos.paattajanimi = '';
+        }
         var paatosdata = {
           "hakemusid": parseInt($scope.hakemusid),
           "myonnettyavustus": parseFloat($scope.avustus),
