@@ -178,14 +178,9 @@ angular.module('jukufrontApp')
         return ($scope.paatos != null && $scope.paatos.voimaantuloaika != null);
       };
 
-      $scope.edellinenHakemusPaatetty = function(){
-        if ($scope.onAvustushakemus()) {
-          return true;
-        } else if ($scope.onMaksatushakemus1()) {
-          return $scope.avustushakemusPaatosOlemassa();
-        } else if ($scope.onMaksatushakemus2()) {
-          return $scope.maksatushakemus1PaatosOlemassa();
-        }
+      $scope.edellinenHakemusPaatetty = function () {
+        if ($scope.onAvustushakemus()) return true;
+        else return $scope.avustushakemusPaatosOlemassa();
       };
 
       $scope.seliteOlemassa = function (hakemus) {
@@ -208,7 +203,7 @@ angular.module('jukufrontApp')
       $scope.tallennaHakemus = function (lisatoiminto) {
         StatusService.tyhjenna();
         $scope.$broadcast('show-errors-check-validity');
-        if (($scope.hakemusForm.$valid && $scope.onAvustushakemus()) || (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2())&& $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn())) {
+        if (($scope.hakemusForm.$valid && $scope.onAvustushakemus()) || (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) && $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn())) {
 
           var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
             return l.avustuskohteet
