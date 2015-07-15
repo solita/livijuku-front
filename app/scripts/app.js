@@ -68,6 +68,12 @@ angular
         template: require('views/hakija/hakemukset.html'),
         controller: 'HakijaHakemuksetCtrl'
       }))
+      .when('/h/tunnuslukujensyottaminen', {
+        template: require('views/hakija/tunnuslukujenSyottaminen.html'),
+      })
+      .when('/h/tunnuslukuraportit', {
+        template: require('views/hakija/tunnuslukuraportit.html'),
+      })
       .when('/k/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
         template: require('views/kasittelija/hakemus.html'),
         controller: 'HakemusCtrl'
@@ -136,7 +142,8 @@ angular
   .directive('jukuFileActions', require('components/fileActions'))
   .directive('jukuCheckbox', require('components/checkbox'))
   .directive('jukuAvustuskohde', require('components/avustuskohde'))
-  .directive('hakemusLabel', require('components/hakemusLabel'));
+  .directive('hakemusLabel', require('components/hakemusLabel'))
+  .directive('jukuStatisticDropdown', require('components/statisticDropdown'));
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemukset');
