@@ -24,14 +24,14 @@
       <juku-form-row>
         <div class="col-md-4">
           <label>Määräraha vuosi {{vuosi}}</label>
-          <input name="maararaha" type="text" min="-0.0001" ng-currency="" class="form-control"
+          <input name="maararaha" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
                  ng-focus="asetaVanhaArvo(maararaha)"
                  ng-model="maararaha"
                  ng-blur="paivitaKokonaismaararaha('maararaha')" select-on-click/>
         </div>
         <div class="col-md-4">
           <label>Siirtomääräraha vuodelta {{vuosi-1}}</label>
-          <input name="ylijaama" type="text" min="-0.0001" ng-currency="" class="form-control"
+          <input name="ylijaama" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
                  ng-focus="asetaVanhaArvo(ylijaama)"
                  ng-model="ylijaama"
                  ng-blur="paivitaKokonaismaararaha('ylijaama')" select-on-click/>
@@ -71,7 +71,7 @@
             </div>
             <div ng-hide="hakemusPaatetty(hakemus) || hakemusKeskenerainen(hakemus)" class="form-group" show-errors="{showSuccess: true}">
               <input id="avustus_{{hakemus.hakemusId}}" name="avustus_{{hakemus.hakemusId}}" type="text" min="-0.0001"
-                     ng-currency="" class="form-control"
+                     ng-currency="" numeric-only="" class="form-control"
                      ng-model="hakemus.myonnettavaAvustus"
                      ui-validate="{sallittuAvustus: 'sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)'}"
                      ng-focus="asetaVanhaArvo(hakemus.myonnettavaAvustus)"

@@ -156,6 +156,7 @@ require('./directives/alvmuunnos');
 require('./directives/datepickerPopup');
 require('./directives/jukuAvustusluokkaPanel');
 require('./directives/noenter');
+require('./directives/numericOnly');
 require('./directives/selectonclick');
 require('./services/auth');
 require('./services/avustuskohde');

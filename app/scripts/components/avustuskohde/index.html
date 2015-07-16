@@ -8,7 +8,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Haettava valtionavustus</label>
           <div class="input-group">
-            <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" noenter select-on-click
+            <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" numeric-only="" noenter select-on-click
                    alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
                    ng-readonly="isReadonly()" class="form-control"
                    tooltip="{{haeTooltip('haettavaavustus')}}"
@@ -32,7 +32,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Kunnan oma rahoitusosuus</label>
           <div class="input-group">
-            <input name="{{getName('omarahoitus')}}" type="text" ng-currency="" noenter select-on-click
+            <input name="{{getName('omarahoitus')}}" type="text"  ng-currency="" numeric-only="" noenter select-on-click
                    alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
                    class="form-control" tooltip="{{haeTooltip('omarahoitus')}}"
                    tooltip-trigger="focus"
