@@ -14,6 +14,7 @@ require('angular-animate');
 require('angular-route');
 require('ng-currency');
 require('angular-bootstrap-show-errors');
+require('angular-ui-grid/ui-grid.min.js');
 require('angular-ui-validate');
 require('angular-i18n/angular-locale_fi-fi');
 
@@ -44,7 +45,11 @@ angular
     'ngRoute',
     'ng-currency',
     'ui.bootstrap.showErrors',
-    'ui.validate'
+    'ui.validate',
+    'ui.grid',
+    'ui.grid.edit',
+    'ui.grid.rowEdit',
+    'ui.grid.resizeColumns'
   ])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
@@ -70,9 +75,11 @@ angular
       }))
       .when('/h/tunnuslukujensyottaminen', {
         template: require('views/hakija/tunnuslukujenSyottaminen.html'),
+        controller: 'HakijaTunnusluvutCtrl'
       })
       .when('/h/tunnuslukuraportit', {
         template: require('views/hakija/tunnuslukuraportit.html'),
+        controller: 'HakijaTunnusluvutCtrl'
       })
       .when('/k/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
         template: require('views/kasittelija/hakemus.html'),
@@ -146,6 +153,7 @@ angular
   .directive('jukuStatisticDropdown', require('components/statisticDropdown'));
 
 require('./controllers/hakija/hakemukset');
+require('./controllers/hakija/tunnusluvut');
 require('./controllers/kasittelija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
 require('./controllers/kasittelija/paatos');
