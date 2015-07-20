@@ -88,6 +88,10 @@ angular.module('jukufrontApp')
       return hakemus.hakemuksenTila != 'T';
     };
 
+    $scope.myonnettyLiikaa = function(){
+      return $scope.jaettavaraha<$scope.myonnettavaAvustusSum;
+    };
+
     $scope.onAvustushakemus = function () {
       return $scope.tyyppi == 'AH0';
     };

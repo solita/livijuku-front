@@ -15,7 +15,6 @@ angular.module('jukufrontApp')
         if (angular.isUndefined(inputValue)) {
           var inputValue = '';
         }
-        console.log('input:',inputValue);
         var transformedInput = inputValue ? inputValue.replace(/[^\d,€\s]/g,'') : null;
         if (transformedInput!=inputValue) {
           modelCtrl.$setViewValue(transformedInput);
