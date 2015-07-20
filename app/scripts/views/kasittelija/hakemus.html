@@ -109,14 +109,14 @@
                          hakemustyyppi="tyyppi" kohde="avustuskohde" alv="alv"
                          hakemus="hakemus"
                          name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
-                         ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet">
+                         ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet"/>
     </juku-avustusluokka-panel>
 
   </form>
   <div class="row">
     <div class="col-md-9">
       <div ng-show="onAvustushakemus()">
-        <h4>JOUKKOLIIKENTEEN VALTIONAVUSTUSHAKEMUS YHTEENSÄ:</h4>
+        <h4>HAETTAVA VALTIONAVUSTUS YHTEENSÄ:</h4>
       </div>
       <div ng-hide="onAvustushakemus()">
         <h4>HAETTAVAT MAKSATUKSET YHTEENSÄ:</h4>
