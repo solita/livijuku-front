@@ -72,8 +72,13 @@
     <form name="paatosForm" juku-poistumisvaroitus="">
       <div class="form-group">
         <label>Päätösteksti</label>
+        <div ng-show="hakemusTarkastettu()">
           <textarea id="paatosteksti" name="paatosteksti" class="animate msd-elastic: \n;"
                     ng-model="paatos.selite"></textarea>
+        </div>
+        <div ng-hide="hakemusTarkastettu()">
+          <p>{{paatos.selite}}</p>
+        </div>
       </div>
     </form>
     <br>
@@ -135,11 +140,12 @@
           </button>
         </div>
         <div ng-hide="(hakemusTarkastettu() && sallittu('hyvaksy-paatos'))">
-            <button data-ng-click="tallennaPaatos(2)" class="pull-right btn btn-success disabled-button-tooltip" disabled>Tallenna ja hyväksy
-              päätös
-            </button>
-            <div tooltip="Päätöksenteko vaatii Päätöksentekijä-tason käyttöoikeudet JUKUun"
-                 class="disabled-button-tooltip-text"></div>
+          <button data-ng-click="tallennaPaatos(2)" class="pull-right btn btn-success disabled-button-tooltip" disabled>
+            Tallenna ja hyväksy
+            päätös
+          </button>
+          <div tooltip="Päätöksenteko vaatii Päätöksentekijä-tason käyttöoikeudet JUKUun"
+               class="disabled-button-tooltip-text"></div>
         </div>
       </div>
     </div>
