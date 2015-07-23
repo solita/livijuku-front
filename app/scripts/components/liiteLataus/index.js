@@ -82,9 +82,8 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
       });
   };
 
-  $scope.paivitaLiiteNimi = function (liiteid, nimi, paate) {
-    $scope.$broadcast('show-errors-check-validity');
-    if ($scope.hakemusForm.$valid) {
+  $scope.paivitaLiiteNimi = function (liiteid, nimi, paate, validi) {
+    if (validi) {
       if (nimi != $scope.liiteNimi) {
         var tiedostonimi = nimi + '.' + paate;
         LiiteService.paivitaNimi($scope.hakemusid, liiteid, tiedostonimi)
