@@ -212,6 +212,7 @@ gulp.task('server', function() {
     port: 9000,
     open: false,
     notify: false,
+    ghostMode: false,
     server: {
       baseDir: './dist',
       middleware: [addAuthenticationHeaders, proxyAPIRequests]
