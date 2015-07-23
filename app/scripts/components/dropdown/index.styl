@@ -1,0 +1,41 @@
+.dropdown-menu
+  width: 100%
+  min-width: 0
+  margin: 0
+  padding: 0
+  border-radius: 0
+  box-shadow: none
+  border-top: 0
+  li
+    padding: 0
+  li a
+    padding: 0.5em 1em
+
+.dropdown
+  height: height.navbar
+  position: relative
+  text-align: right
+  &:hover
+    .dropdown-menu
+      display: block
+
+.dropdown-toggle__wrapper
+  padding-left: 2em
+  padding-right: 1em
+  cursor: pointer
+  &:before
+    content: ''
+    width: 12px
+    height: 12px
+    position: absolute
+    left: 1em
+    top: 50%
+    margin-top: -6px
+    background: url('../images/header_dropdown.svg')
+    background-size: 100% 100%
+
+.dropdown-toggle
+  padding-left: 0.5em
+  line-height: normal
+  vertical-align: middle
+  display: inline-block

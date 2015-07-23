@@ -1,16 +1,27 @@
 .navbar
   border-radius: 0px
-  a
+
+.header__button
+  padding: 0 0.5em
+  .header__link
+    padding: 1em 0.5em
     color: #fff
 
-.navbar-nav .is-active
-  background-color: #ffffff
-  border-radius: 6px 6px 0px 0px
-  top: 8px
-  height: 45px
-  a
-    padding-top 0.5em
-    color: colors.text
+  &:hover:not(.is-active)
+    .header__link
+      margin-top: 0.5em
+      padding: 0.5em 0.5em
+      border-radius: 3px
+      background: #0860A4
+
+  &.is-active
+    background-color: #ffffff
+    border-radius: 3px 3px 0px 0px
+    top: 8px
+    height: 42px
+    .header__link
+      padding-top 0.5em
+      color: colors.text
 
 
 // Bootstrap overwrites
@@ -26,8 +37,6 @@
 .header
   .container
     line-height: height.navbar
-  .dropdown-toggle
-    padding: 0
   .nav
     height: 100%
   .header__content
@@ -39,3 +48,20 @@
 @media (max-width: 768px)
   .header__content
     display: none
+
+// Statistics dropdown context styles
+.header__button.is-active
+  .statistic-dropdown
+    .dropdown-toggle
+      color: colors.text
+
+    .dropdown-toggle__wrapper
+      &:before
+        background: url('../images/header_dropdown_active.svg')
+        height: 11px
+        width: 13px
+        margin-top: -7px
+        opacity: 0.25
+
+    .dropdown-menu
+      left: -15px

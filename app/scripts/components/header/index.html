@@ -15,24 +15,25 @@
     <div class="header__content clearfix" ng-class="{'is-visible': !$root.isCollapsed}">
       <ul class="nav navbar-nav">
 
-
-        <li ng-show="sallittu(user, 'view-hakemuskausi')"
+        <li class="header__button" ng-show="sallittu(user, 'view-hakemuskausi')"
             ng-class="{'is-active': isActive('/k/hakemuskaudenhallinta')}">
-          <a href="#/k/hakemuskaudenhallinta" ng-href="#/k/hakemuskaudenhallinta">
+          <a class="header__link" href="#/k/hakemuskaudenhallinta" ng-href="#/k/hakemuskaudenhallinta">
             Hakemuskaudet
           </a>
         </li>
-        <li ng-show="sallittu(user, 'view-oma-hakemus')" ng-class="{'is-active': isActive('/h/hakemukset')}">
-          <a href="#/h/hakemukset" ng-href="#/h/hakemukset">
+        <li class="header__button" ng-show="sallittu(user, 'view-oma-hakemus')" ng-class="{'is-active': isActive('/h/hakemukset')}">
+          <a class="header__link" href="#/h/hakemukset" ng-href="#/h/hakemukset">
             Omat hakemukset
           </a>
         </li>
-        <li ng-show="sallittu(user, 'view-kaikki-hakemukset')" ng-class="{'is-active': isActive('/y/hakemukset/AH0')}">
-          <a href="#/y/hakemukset/AH0" ng-href="#/y/hakemukset/AH0">
+        <li class="header__button" ng-show="sallittu(user, 'view-kaikki-hakemukset')" ng-class="{'is-active': isActive('/y/hakemukset/AH0')}">
+          <a class="header__link" href="#/y/hakemukset/AH0" ng-href="#/y/hakemukset/AH0">
             Kaikki hakemukset
           </a>
         </li>
-        <juku-statistic-dropdown ng-show="sallittu(user, 'view-hakemuskausi')" user="user"></juku-statistic-dropdown>
+        <li class="header__button" ng-show="sallittu(user, 'view-hakemuskausi')" ng-class="{'is-active': isActive('/h/tunnuslukujensyottaminen') || isActive('/h/tunnuslukuraportit')}">
+          <juku-statistic-dropdown user="user"></juku-statistic-dropdown>
+        </li>
       </ul>
 
       <juku-user-dropdown user="user"></juku-user-dropdown>
