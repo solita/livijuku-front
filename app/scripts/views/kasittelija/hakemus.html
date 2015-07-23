@@ -42,7 +42,7 @@
       </button>
     </div>
   </div>
-  <div class="row" ng-show="hasPaatos(tyyppi, hakemus.hakemustilatunnus)">
+  <div class="row" ng-show="hasPaatos(hakemus.hakemustilatunnus)">
     <div class="col-md-12">
       <p>
         <a href="api/hakemus/{{hakemusid}}/paatos/pdf" target="_blank"><span
@@ -73,7 +73,7 @@
     <h5>Käsittelijä</h5>
     {{hakemus.kasittelijanimi}}
   </juku-form-row>
-  <juku-form-row ng-show="paatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
+  <juku-form-row ng-show="avustushakemusPaatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
     <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
     {{myonnettyAvustusPerJakso() | currency:"&euro;"}}
   </juku-form-row>
@@ -109,14 +109,14 @@
                          hakemustyyppi="tyyppi" kohde="avustuskohde" alv="alv"
                          hakemus="hakemus"
                          name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
-                         ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet">
+                         ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet"/>
     </juku-avustusluokka-panel>
 
   </form>
   <div class="row">
     <div class="col-md-9">
       <div ng-show="onAvustushakemus()">
-        <h4>JOUKKOLIIKENTEEN VALTIONAVUSTUSHAKEMUS YHTEENSÄ:</h4>
+        <h4>HAETTAVA VALTIONAVUSTUS YHTEENSÄ:</h4>
       </div>
       <div ng-hide="onAvustushakemus()">
         <h4>HAETTAVAT MAKSATUKSET YHTEENSÄ:</h4>

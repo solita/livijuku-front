@@ -99,9 +99,9 @@ module.exports = function () {
           } else if (typeof value === 'string') {
             var floatarvo;
             floatarvo = $scope.euroSyoteNumeroksi(value);
-            return (floatarvo <= ($scope.vertailuarvot().avustushakemusHaettavaAvustus - $scope.vertailuarvot().maksatushakemusHaettavaAvustus));
+            return (floatarvo <= $scope.vertailuarvot().avustushakemusHaettavaAvustus);
           } else if (typeof value === 'number') {
-            return (value <= ($scope.vertailuarvot().avustushakemusHaettavaAvustus - $scope.vertailuarvot().maksatushakemusHaettavaAvustus));
+            return (value <= $scope.vertailuarvot().avustushakemusHaettavaAvustus);
           }
           return true;
         }

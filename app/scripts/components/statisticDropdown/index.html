@@ -1,0 +1,23 @@
+<ul class="statistic-dropdown nav navbar-nav">
+  <li class="dropdown">
+    <div ng-class="{'dropdown-toggle__wrapper__active': (isActive('/h/tunnuslukujensyottaminen') || isActive('/h/tunnuslukuraportit')),'dropdown-toggle__wrapper': !(isActive('/h/tunnuslukujensyottaminen') || isActive('/h/tunnuslukuraportit'))}">
+      <a href class="dropdown-toggle">
+        <div>
+          Tunnusluvut
+        </div>
+      </a>
+    </div>
+    <ul class="dropdown-menu">
+      <li>
+        <a class="navbartxt" href="#/h/tunnuslukujensyottaminen">
+          Tunnuslukujen syöttäminen
+        </a>
+      </li>
+      <li>
+        <a class="navbartxt" href="#/h/tunnuslukuraportit">
+          Tunnuslukuraportit
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>

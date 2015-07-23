@@ -116,6 +116,18 @@ angular.module('jukufrontApp')
       return (alku_ts < loppu_ts);
     };
 
+    $scope.loppuPvmMenneisyydessa = function (loppupvm) {
+      var loppu_ts = 0;
+      var nykyhetki = Number(new Date());
+      if (typeof loppupvm === 'undefined') return false;
+      if (typeof loppupvm === 'string') {
+        loppu_ts = Date.parse(loppupvm);
+      } else {
+        loppu_ts = Number(loppupvm);
+      }
+      return (nykyhetki > loppu_ts);
+    };
+
     $scope.luoUusiHakemuskausi = function (vuosi) {
       HakemuskausiService.luoUusi(vuosi)
         .success(function () {
