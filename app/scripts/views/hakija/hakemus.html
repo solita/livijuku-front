@@ -43,7 +43,7 @@
       <div class="row" ng-show="hasPaatos(hakemus.hakemustilatunnus)">
         <div class="col-md-12">
           <p>
-            <a href="api/hakemus/{{hakemusid}}/paatos/pdf" target="_blank">
+            <a href="/pdf/web/viewer.html?file=/api/hakemus/{{hakemusid}}/paatos/pdf" target="_blank">
               <span class="glyphicon glyphicon-file"></span>
               <b>Avaa päätös (PDF)</b>
             </a>
@@ -82,7 +82,7 @@
           <h5>MYÖNNETTY AVUSTUS VUODELLE {{vuosi}}</h5>
           {{myonnettyAvustusPerVuosi() | currency:"&euro;"}} (sis. ALV)
           <juku-icon-link
-            href="api/hakemus/{{avustushakemusid}}/paatos/pdf"
+            href="/pdf/web/viewer.html?file=/api/hakemus/{{avustushakemusid}}/paatos/pdf"
             title="Avaa päätös"
             target="_blank"
             icon="file">
@@ -93,7 +93,7 @@
           <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
           {{myonnettyAvustusPerJakso() | currency:"&euro;"}} (sis. ALV)
           <juku-icon-link
-            href="api/hakemus/{{hakemusid}}/paatos/pdf"
+            href="/pdf/web/viewer.html?file=/api/hakemus/{{hakemusid}}/paatos/pdf"
             ng-show="hasPaatos(hakemus.hakemustilatunnus)"
             title="Avaa päätös"
             target="_blank"
@@ -105,7 +105,7 @@
           <h5>MYÖNNETTY AVUSTUS 1. MAKSATUSHAKEMUKSEN PERUSTEELLA</h5>
           {{maksatushakemus1PaatosMaksettu() | currency:"&euro;"}} (sis. ALV)
           <juku-icon-link
-            href="api/hakemus/{{maksatushakemus1id}}/paatos/pdf"
+            href="/pdf/web/viewer.html?file=/api/hakemus/{{maksatushakemus1id}}/paatos/pdf"
             title="Avaa päätös"
             target="_blank"
             icon="file">
@@ -114,7 +114,7 @@
           <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
           {{myonnettyAvustusPerJakso() | currency:"&euro;"}} (sis. ALV)
           <juku-icon-link
-            href="api/hakemus/{{hakemusid}}/paatos/pdf"
+            href="/pdf/web/viewer.html?file=/api/hakemus/{{hakemusid}}/paatos/pdf"
             ng-show="hasPaatos(hakemus.hakemustilatunnus)"
             title="Avaa päätös"
             target="_blank"

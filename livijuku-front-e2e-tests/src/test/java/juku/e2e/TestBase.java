@@ -190,7 +190,9 @@ public class TestBase {
                 .setConnectionManager(connectionManager)
                 .build();
 
-        HttpGet httpGet = new HttpGet(url);
+        // PDF viewer pois URL:sta
+        String uusiUrl = url.substring(0,22) + url.substring(48);
+        HttpGet httpGet = new HttpGet(uusiUrl);
         httpGet.addHeader("oam-remote-user", user.getLogin());
         httpGet.addHeader("oam-groups", user.getGroup());
         httpGet.addHeader("oam-user-organization", user.getOrganization());

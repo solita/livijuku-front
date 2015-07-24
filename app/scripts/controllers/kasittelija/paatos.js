@@ -56,7 +56,7 @@ angular.module('jukufrontApp')
       if ($scope.hakemusTarkastettu()) {
         $scope.tallennaPaatos(1);
       } else {
-        $window.open('api/hakemus/' + $scope.hakemusid + '/paatos/pdf');
+        $window.open('/pdf/web/viewer.html?file=/api/hakemus/' + $scope.hakemusid + '/paatos/pdf');
       }
     };
 
@@ -98,7 +98,7 @@ angular.module('jukufrontApp')
                 break;
               case 1:
                 // Esikatselu
-                $window.open('api/hakemus/' + $scope.hakemusid + '/paatos/pdf');
+                $window.open('/pdf/web/viewer.html?file=/api/hakemus/' + $scope.hakemusid + '/paatos/pdf');
                 break;
               case 2:
                 // Hyvaksy

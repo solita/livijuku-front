@@ -25,7 +25,7 @@
           <div ng-show="hakemusKeskenerainen()">
             <div ng-show="liite.liitenumero !== editoitavaLiite">
               <juku-icon-link
-                href="api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}"
+                href="/pdf/web/viewer.html?file=/api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}"
                 target="_blank"
                 icon="file">
                 {{liite.nimiteksti}}.{{liite.nimipaate}}
@@ -98,7 +98,7 @@
             </div>
           </div>
           <div ng-hide="hakemusKeskenerainen() && sallittu('modify-oma-hakemus')">
-            <juku-icon-link icon="file" href="api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}">
+            <juku-icon-link icon="file" href="/pdf/web/viewer.html?file=/api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}">
               {{liite.nimi}} ({{liite.contenttype}})
             </juku-icon-link>
           </div>

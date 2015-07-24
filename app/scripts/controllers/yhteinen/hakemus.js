@@ -158,7 +158,7 @@ angular.module('jukufrontApp')
         if (tila == 'K' || tila == 'T0') {
           $scope.tallennaHakemus(1);
         } else {
-          $window.open('api/hakemus/' + $scope.hakemusid + '/pdf');
+          $window.open('/pdf/web/viewer.html?file=/api/hakemus/' + $scope.hakemusid + '/pdf');
         }
       };
 
@@ -239,7 +239,7 @@ angular.module('jukufrontApp')
                     break;
                   case 1:
                     // Esikatselu
-                    $window.open('api/hakemus/' + $scope.hakemusid + '/pdf');
+                    $window.open('/pdf/web/viewer.html?file=/api/hakemus/' + $scope.hakemusid + '/pdf');
                     break;
                   case 2:
                     // Laheta
