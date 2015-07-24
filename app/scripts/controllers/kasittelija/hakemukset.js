@@ -70,16 +70,12 @@ function luoLajitunnusLajittelija(kaikkiOrganisaatiot, hakemusTyyppitunnusFilter
 angular.module('jukufrontApp')
   .controller('KasittelijaHakemuksetCtrl', [
     '$rootScope', '$scope', '$filter',
-    '$location', 'HakemuskausiService',
-    '$routeParams', 'StatusService',
-    function ($rootScope, $scope, $filter, $location, HakemuskausiService, $routeParams, StatusService) {
+    'HakemuskausiService',
+    '$stateParams', 'StatusService',
+    function ($rootScope, $scope, $filter, HakemuskausiService, $stateParams, StatusService) {
 
     $scope.displayed = [];
-    $scope.tyyppi = $routeParams.tyyppi;
-
-    $scope.asetaTyyppi = function (tyyppi) {
-      $location.path('/y/hakemukset/' + tyyppi);
-    };
+    $scope.tyyppi = $stateParams.tyyppi;
 
     $scope.sallittu = function (oikeus) {
       if (typeof $rootScope.user !== 'undefined') {
@@ -90,14 +86,6 @@ angular.module('jukufrontApp')
         }
         return false;
       }
-    };
-
-    $scope.siirryHakemukseen = function (vuosi, tyyppi, hakemusId, maksatusHakemus1Id, maksatusHakemus2Id) {
-      $location.path('/k/hakemus/' + vuosi + '/' + tyyppi + '/' + hakemusId + '/' + maksatusHakemus1Id + '/' + maksatusHakemus2Id);
-    };
-
-    $scope.siirrySuunnitteluun = function (vuosi, tyyppi, lajitunnus) {
-      $location.path('/k/suunnittelu/' + vuosi + '/' + tyyppi + '/' + lajitunnus);
     };
 
     HakemuskausiService.hae()

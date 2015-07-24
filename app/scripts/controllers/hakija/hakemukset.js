@@ -46,7 +46,7 @@ function luoHakemusVuosi(hakemusvuosi) {
 }
 
 angular.module('jukufrontApp')
-  .controller('HakijaHakemuksetCtrl', ['$scope', '$location', 'HakemusService', 'StatusService', function ($scope, $location, HakemusService, StatusService) {
+  .controller('HakijaHakemuksetCtrl', ['$scope', '$state', 'HakemusService', 'StatusService', function ($scope, $state, HakemusService, StatusService) {
 
     $scope.tilaAvaimet = tilaAvaimet;
 
@@ -54,7 +54,13 @@ angular.module('jukufrontApp')
       if(hakemuskausi.avustushakemukset.maksatushakemus2.tilatunnus === 'FEK') {
         return;
       }
-      $location.path(`/h/hakemus/${hakemuskausi.vuosi}/${tyyppi}/${hakemuskausi.avustushakemukset.avustushakemus.id}/${hakemuskausi.avustushakemukset.maksatushakemus1.id}/${hakemuskausi.avustushakemukset.maksatushakemus2.id}`);
+      $state.go('app.hakija.hakemukset.hakemus', {
+        vuosi: hakemuskausi.vuosi,
+        tyyppi,
+        id: hakemuskausi.avustushakemukset.avustushakemus.id,
+        m1id: hakemuskausi.avustushakemukset.maksatushakemus1.id,
+        m2id: hakemuskausi.avustushakemukset.maksatushakemus2.id
+      });
     };
 
     HakemusService.haeKaikki()

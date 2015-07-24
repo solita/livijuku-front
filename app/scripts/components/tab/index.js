@@ -7,7 +7,7 @@ module.exports = function () {
       selected: '&'
     },
     template: `
-      <a ng-class="selected() ? 'tab is-selected' : 'tab'">
+      <a ui-sref-active="is-selected" ng-class="selected() ? 'tab is-selected' : 'tab'">
         <ng-transclude />
       </div>
     `

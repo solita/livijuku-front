@@ -4,12 +4,12 @@ var _ = require('lodash');
 var angular = require('angular');
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'HakemuskausiService', 'HakemusService', 'SuunnitteluService', 'StatusService', function ($rootScope, $scope, $location, $routeParams, HakemuskausiService, HakemusService, SuunnitteluService, StatusService) {
+  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$stateParams', 'HakemuskausiService', 'HakemusService', 'SuunnitteluService', 'StatusService', function ($rootScope, $scope, $stateParams, HakemuskausiService, HakemusService, SuunnitteluService, StatusService) {
 
-    $scope.lajitunnus = $routeParams.lajitunnus;
-    $scope.tyyppi = $routeParams.tyyppi;
+    $scope.lajitunnus = $stateParams.lajitunnus;
+    $scope.tyyppi = $stateParams.tyyppi;
     $scope.vanhaArvo = 0;
-    $scope.vuosi = $routeParams.vuosi;
+    $scope.vuosi = $stateParams.vuosi;
 
     function haeMaararahat() {
       HakemuskausiService.haeMaararaha($scope.vuosi, $scope.lajitunnus)
@@ -60,7 +60,7 @@ angular.module('jukufrontApp')
           $scope.hakemuksetSuunnittelu = _.sortBy(hakemuksetSuunnitteluTmp, 'hakija');
         })
         .error(function (data) {
-          StatusService.virhe('SuunnitteluService.hae(' + $routeParams.vuosi + ',' + $routeParams.tyyppi + ')', data.message);
+          StatusService.virhe('SuunnitteluService.hae(' + $stateParams.vuosi + ',' + $stateParams.tyyppi + ')', data.message);
         });
     }
 
@@ -112,10 +112,6 @@ angular.module('jukufrontApp')
         return (myonnettavaAvustus >= 0 && myonnettavaAvustus <= haettuAvustus);
       }
       return true;
-    };
-
-    $scope.siirryPaatokseen = function (hakemusId, haettuavustus, avustus) {
-      $location.path('/k/paatos/' + $routeParams.vuosi + '/' + $routeParams.tyyppi + '/' + $scope.lajitunnus + '/' + hakemusId + '/' + haettuavustus + '/' + avustus);
     };
 
     $scope.paivitaAvustus = function (avustus, hakemusid) {

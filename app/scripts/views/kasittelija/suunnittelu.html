@@ -71,8 +71,7 @@
               <div ng-show="hakemusPaatetty(hakemus)">
                 <p>{{hakemus.myonnettavaAvustus|currency:"&euro;"}}</p>
               </div>
-              <div ng-hide="hakemusPaatetty(hakemus) || hakemusKeskenerainen(hakemus)" class="form-group"
-                   show-errors="{showSuccess: true}">
+              <div ng-hide="hakemusPaatetty(hakemus) || hakemusKeskenerainen(hakemus)" class="form-group" show-errors="{showSuccess: true}">
                 <input id="avustus_{{hakemus.hakemusId}}" name="avustus_{{hakemus.hakemusId}}" type="text" min="-0.0001"
                        ng-currency="" numeric-only="" class="form-control"
                        ng-model="hakemus.myonnettavaAvustus"
@@ -86,18 +85,27 @@
               </div>
             </td>
             <td>
-              <div ng-show="hakemusPaatetty(hakemus)">
-                <juku-link-next
-                  ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
+
+              <juku-link-next
+                ng-show="hakemusTarkastettu(hakemus)"
+                ui-sref="app.kasittelija.paatos({
+                  hakemusid: hakemus.hakemusId,
+                  haettuavustus: hakemus.haettuAvustus,
+                  avustus: hakemus.myonnettavaAvustus,
+                  vuosi: vuosi,
+                  tyyppi: tyyppi,
+                  lajitunnus: lajitunnus
+                })">
+
+                <span ng-show="hakemusPaatetty(hakemus)">
                   Päätetty
-                </juku-link-next>
-              </div>
-              <div ng-hide="hakemusPaatetty(hakemus) || hakemusKeskenerainen(hakemus)">
-                <juku-link-next
-                  ng-click="siirryPaatokseen(hakemus.hakemusId,hakemus.haettuAvustus, hakemus.myonnettavaAvustus)">
+                </span>
+
+                <span ng-hide="hakemusPaatetty(hakemus)">
                   Päätöksentekoon
-                </juku-link-next>
-              </div>
+                </span>
+
+              </juku-link-next>
             </td>
           </tr>
           <tr>

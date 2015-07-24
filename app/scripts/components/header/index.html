@@ -15,23 +15,27 @@
     <div class="header__content clearfix" ng-class="{'is-visible': !$root.isCollapsed}">
       <ul class="nav navbar-nav">
 
-        <li class="header__button" ng-show="sallittu(user, 'view-hakemuskausi')"
-            ng-class="{'is-active': isActive('/k/hakemuskaudenhallinta')}">
-          <a class="header__link" href="#/k/hakemuskaudenhallinta" ng-href="#/k/hakemuskaudenhallinta">
+        <li class="header__button" ng-show="sallittu(user, 'view-hakemuskausi')" ui-sref-active="is-active">
+          <a class="header__link" ui-sref="app.kasittelija.hakemuskaudenhallinta()">
             Hakemuskaudet
           </a>
         </li>
-        <li class="header__button" ng-show="sallittu(user, 'view-oma-hakemus')" ng-class="{'is-active': isActive('/h/hakemukset')}">
-          <a class="header__link" href="#/h/hakemukset" ng-href="#/h/hakemukset">
+
+        <li class="header__button" ng-show="sallittu(user, 'view-oma-hakemus')" ui-sref-active="is-active">
+          <a class="header__link" ui-sref="app.hakija.hakemukset.list()">
             Omat hakemukset
           </a>
         </li>
-        <li class="header__button" ng-show="sallittu(user, 'view-kaikki-hakemukset')" ng-class="{'is-active': isActive('/y/hakemukset/AH0')}">
-          <a class="header__link" href="#/y/hakemukset/AH0" ng-href="#/y/hakemukset/AH0">
+
+        <li class="header__button {{ 'hakemukset' | includedByState | toClass:'is-active' }}"
+            ng-show="sallittu(user, 'view-kaikki-hakemukset')">
+          <a class="header__link" ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'AH0'})">
             Kaikki hakemukset
           </a>
         </li>
-        <li class="header__button" ng-show="sallittu(user, 'view-hakemuskausi')" ng-class="{'is-active': isActive('/h/tunnuslukujensyottaminen') || isActive('/h/tunnuslukuraportit')}">
+        <li
+          class="header__button {{ 'app.hakija.tunnusluku' | includedByState | toClass:'is-active' }}"
+          ng-show="sallittu(user, 'view-hakemuskausi')">
           <juku-statistic-dropdown user="user"></juku-statistic-dropdown>
         </li>
       </ul>
