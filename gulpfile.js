@@ -168,7 +168,7 @@ gulp.task('server', function() {
   proxy.on('error', handleError);
 
   function proxyAPIRequests(req, res, next) {
-    if(req.url.indexOf('/api') > -1) {
+    if(req.url.match(/^\/api/)) {
       req.url = req.url.replace('/api', '');
       proxy.web(req, res);
       return;

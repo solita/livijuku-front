@@ -7,4 +7,5 @@
   export NODE_ENV=production
   rm -rf dist
   npm run build
+  ./build-pdfjs.sh
 )
