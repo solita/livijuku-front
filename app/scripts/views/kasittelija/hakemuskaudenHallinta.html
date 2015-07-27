@@ -10,7 +10,7 @@
             <p class="hakemuskausi-vuosi">{{hakemuskausi.vuosi}}</p>
 
             <p ng-show="hakemuskausi.hakuohjeLadattu || !hakemuskausi.uusi">
-              <a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" target="_blank">Hakuohje</a>
+              <a href="/pdf/web/viewer.html?file=/api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" target="_blank">Hakuohje</a>
             </p>
 
             <p ng-show="hakemuskausi.uusi">
