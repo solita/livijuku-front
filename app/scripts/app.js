@@ -17,6 +17,9 @@ require('angular-bootstrap-show-errors');
 require('angular-ui-grid/ui-grid.min.js');
 require('angular-ui-validate');
 require('angular-i18n/angular-locale_fi-fi');
+require('d3/d3.js');
+require('angular-nvd3/lib/nv.d3.js');
+require('angular-nvd3');
 
 angular
   .module('jukufrontApp', [
@@ -49,7 +52,8 @@ angular
     'ui.grid',
     'ui.grid.edit',
     'ui.grid.rowEdit',
-    'ui.grid.resizeColumns'
+    'ui.grid.resizeColumns',
+    'nvd3'
   ])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
@@ -73,13 +77,13 @@ angular
         template: require('views/hakija/hakemukset.html'),
         controller: 'HakijaHakemuksetCtrl'
       }))
-      .when('/h/tunnuslukujensyottaminen', {
-        template: require('views/hakija/tunnuslukujenSyottaminen.html'),
+      .when('/y/tunnuslukujensyottaminen', {
+        template: require('views/yhteinen/tunnuslukujenSyottaminen.html'),
         controller: 'HakijaTunnusluvutCtrl'
       })
-      .when('/h/tunnuslukuraportit', {
-        template: require('views/hakija/tunnuslukuraportit.html'),
-        controller: 'HakijaTunnusluvutCtrl'
+      .when('/y/tunnuslukuraportit', {
+        template: require('views/yhteinen/tunnuslukuraportit.html'),
+        controller: 'TunnuslukuraporttiCtrl'
       })
       .when('/k/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
         template: require('views/kasittelija/hakemus.html'),
@@ -153,13 +157,14 @@ angular
   .directive('jukuStatisticDropdown', require('components/statisticDropdown'));
 
 require('./controllers/hakija/hakemukset');
-require('./controllers/hakija/tunnusluvut');
 require('./controllers/kasittelija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
 require('./controllers/kasittelija/paatos');
 require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/hakemus');
 require('./controllers/yhteinen/paanaytto');
+require('./controllers/yhteinen/tunnusluvut');
+require('./controllers/yhteinen/tunnuslukuraportti');
 require('./directives/alvmuunnos');
 require('./directives/datepickerPopup');
 require('./directives/jukuAvustusluokkaPanel');

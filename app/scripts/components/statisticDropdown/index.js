@@ -2,9 +2,9 @@
 
 function dropdownController($scope, $location) {
   $scope.isActive = function(route) {
-    if (route.substr(0, 27) == '/h/tunnuslukujensyottaminen') {
+    if (route.substr(0, 27) == '/y/tunnuslukujensyottaminen') {
       return (route.substr(0, 27) == $location.path().substr(0, 27))
-    } else if (route.substr(0, 21) == '/h/tunnuslukuraportit') {
+    } else if (route.substr(0, 21) == '/y/tunnuslukuraportit') {
       return (route.substr(0, 21) == $location.path().substr(0, 21))
     } else {
       return route === $location.path();
