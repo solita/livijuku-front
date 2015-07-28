@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var $ = require('jquery');
 var angular = require('angular');
+var pdf = require('utils/pdf');
 
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams',
@@ -86,6 +87,22 @@ angular.module('jukufrontApp')
           });
       }
 
+      $scope.haePaatosPdf = function () {
+        return pdf.getPaatosPdfUrl($scope.hakemusid);
+      };
+
+      $scope.haeHakemusPdf = function () {
+        return pdf.getHakemusPdfUrl($scope.hakemusid);
+      };
+
+      $scope.haeAvustushakemusPaatosPdf = function () {
+        return pdf.getPaatosPdfUrl($scope.avustushakemusid);
+      };
+
+      $scope.haeMaksatushakemus1PaatosPdf = function () {
+        return pdf.getPaatosPdfUrl($scope.maksatushakemus1id);
+      };
+
       $scope.haeAvustusProsentti = function (luokka, laji) {
         return AvustuskohdeService.avustusprosentti($scope.vuosi, luokka, laji);
       };
@@ -158,7 +175,7 @@ angular.module('jukufrontApp')
         if (tila == 'K' || tila == 'T0') {
           $scope.tallennaHakemus(1);
         } else {
-          $window.open('/pdf/web/viewer.html?file=/api/hakemus/' + $scope.hakemusid + '/pdf');
+          $window.open(pdf.getHakemusPdfUrl($scope.hakemusid));
         }
       };
 
@@ -204,7 +221,7 @@ angular.module('jukufrontApp')
         StatusService.tyhjenna();
         $scope.$broadcast('show-errors-check-validity');
         if (($scope.hakemusForm.$valid && $scope.onAvustushakemus()) || (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) && $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn())) {
-
+          if (lisatoiminto === 1) var ikkuna = $window.open('about:blank', '_blank');
           var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
             return l.avustuskohteet
           }));
@@ -239,7 +256,7 @@ angular.module('jukufrontApp')
                     break;
                   case 1:
                     // Esikatselu
-                    $window.open('/pdf/web/viewer.html?file=/api/hakemus/' + $scope.hakemusid + '/pdf');
+                    ikkuna.location.href = pdf.getHakemusPdfUrl($scope.hakemusid);
                     break;
                   case 2:
                     // Laheta

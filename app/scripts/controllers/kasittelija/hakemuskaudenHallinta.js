@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var angular = require('angular');
+var pdf = require('utils/pdf');
 
 angular.module('jukufrontApp')
   .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', 'Upload', function ($scope, $location, $route, $log, HakemuskausiService, StatusService, Upload) {
@@ -114,6 +115,10 @@ angular.module('jukufrontApp')
         loppu_ts = Number(loppupvm);
       }
       return (alku_ts < loppu_ts);
+    };
+
+    $scope.getHakuohjePdf = function (vuosi) {
+      return pdf.getHakuohjePdfUrl(vuosi);
     };
 
     $scope.loppuPvmMenneisyydessa = function (loppupvm) {

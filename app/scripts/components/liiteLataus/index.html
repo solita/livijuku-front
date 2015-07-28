@@ -24,10 +24,16 @@
         <juku-file-details ng-repeat="liite in liitteet">
           <div ng-show="hakemusKeskenerainen()">
             <div ng-show="liite.liitenumero !== editoitavaLiite">
-              <juku-icon-link
-                href="/pdf/web/viewer.html?file=/api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}"
+              <juku-icon-link ng-show="isPdf(liite.nimipaate)"
+                href="{{getLiitePdf(hakemusid,liite.liitenumero)}}"
                 target="_blank"
                 icon="file">
+                {{liite.nimiteksti}}.{{liite.nimipaate}}
+              </juku-icon-link>
+              <juku-icon-link ng-hide="isPdf(liite.nimipaate)"
+                              href="api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}"
+                              target="_blank"
+                              icon="file">
                 {{liite.nimiteksti}}.{{liite.nimipaate}}
               </juku-icon-link>
               <span>{{formatFileSize(liite.bytesize)}}</span>
@@ -98,7 +104,10 @@
             </div>
           </div>
           <div ng-hide="hakemusKeskenerainen() && sallittu('modify-oma-hakemus')">
-            <juku-icon-link icon="file" href="/pdf/web/viewer.html?file=/api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}">
+            <juku-icon-link ng-show="isPdf(liite.nimipaate)" icon="file" href="{{getLiitePdf(hakemusid,liite.liitenumero)}}" target="_blank">
+              {{liite.nimi}} ({{liite.contenttype}})
+            </juku-icon-link>
+            <juku-icon-link ng-hide="isPdf(liite.nimipaate)" icon="file" href="api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}" target="_blank">
               {{liite.nimi}} ({{liite.contenttype}})
             </juku-icon-link>
           </div>

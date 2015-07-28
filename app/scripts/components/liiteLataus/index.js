@@ -1,5 +1,6 @@
 'use strict';
 var _ = require('lodash');
+var pdf = require('utils/pdf');
 
 function liitelatausController(LiiteService, $scope, StatusService, Upload) {
   $scope.myFiles = [];
@@ -26,6 +27,10 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
     return size;
   };
 
+  $scope.getLiitePdf = function (hakemusid, liitenumero) {
+    return pdf.getLiitePdfUrl(hakemusid, liitenumero);
+  };
+
   $scope.haeLiitteet = function () {
     LiiteService.haeKaikki($scope.hakemusid)
       .success(function (data) {
@@ -48,6 +53,10 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
   function isEmpty(str) {
     return (!str || 0 === str.length);
   }
+
+  $scope.isPdf = function(paate){
+    return (paate === 'pdf');
+  };
 
   $scope.liiteNimiOk = function (nimi) {
     if (isEmpty(nimi)) {

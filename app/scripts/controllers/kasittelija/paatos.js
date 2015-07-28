@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var angular = require('angular');
 var $ = require('jquery');
+var pdf = require('utils/pdf');
 
 angular.module('jukufrontApp')
   .controller('KasittelijaPaatosCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'HakemusService', 'StatusService', 'PaatosService', 'SuunnitteluService', '$window', function ($rootScope, $scope, $routeParams, $location, HakemusService, StatusService, PaatosService, SuunnitteluService, $window) {
@@ -22,7 +23,7 @@ angular.module('jukufrontApp')
           if (data == null) {
             $scope.paatos = {
               myonnettyavustus: 0,
-              paattajanimi:"",
+              paattajanimi: "",
               selite: ""
             };
           } else {
@@ -47,7 +48,15 @@ angular.module('jukufrontApp')
       $scope.vanhaArvo = arvo;
     };
 
-    $scope.hakemusTarkastettu = function(){
+    $scope.getPaatosPdf = function () {
+      return pdf.getPaatosPdfUrl($scope.hakemusid);
+    };
+
+    $scope.haeHakemusPdf = function () {
+      return pdf.getHakemusPdfUrl($scope.hakemusid);
+    };
+
+    $scope.hakemusTarkastettu = function () {
       if (typeof $scope.avustushakemus === 'undefined') return false;
       return $scope.avustushakemus.hakemustilatunnus == 'T';
     };
@@ -56,7 +65,7 @@ angular.module('jukufrontApp')
       if ($scope.hakemusTarkastettu()) {
         $scope.tallennaPaatos(1);
       } else {
-        $window.open('/pdf/web/viewer.html?file=/api/hakemus/' + $scope.hakemusid + '/paatos/pdf');
+        $window.open(pdf.getPaatosPdfUrl($scope.hakemusid));
       }
     };
 
@@ -78,9 +87,10 @@ angular.module('jukufrontApp')
       if ($scope.paatosForm.$valid) {
         if ($rootScope.sallittu('hyvaksy-paatos')) {
           $scope.paatos.paattajanimi = $rootScope.user.etunimi + ' ' + $rootScope.user.sukunimi;
-        } else{
+        } else {
           $scope.paatos.paattajanimi = '';
         }
+        if (lisatoiminto === 1) var ikkuna = $window.open('about:blank', '_blank');
         var paatosdata = {
           "hakemusid": parseInt($scope.hakemusid),
           "myonnettyavustus": parseFloat($scope.avustus),
@@ -98,7 +108,7 @@ angular.module('jukufrontApp')
                 break;
               case 1:
                 // Esikatselu
-                $window.open('/pdf/web/viewer.html?file=/api/hakemus/' + $scope.hakemusid + '/paatos/pdf');
+                ikkuna.location.href = pdf.getPaatosPdfUrl($scope.hakemusid);
                 break;
               case 2:
                 // Hyvaksy

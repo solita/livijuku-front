@@ -43,10 +43,14 @@
       <div class="row" ng-show="hasPaatos(hakemus.hakemustilatunnus)">
         <div class="col-md-12">
           <p>
-            <a href="/pdf/web/viewer.html?file=/api/hakemus/{{hakemusid}}/paatos/pdf" target="_blank">
+            <a href="{{haePaatosPdf()}}" target="_blank">
               <span class="glyphicon glyphicon-file"></span>
               <b>Avaa päätös (PDF)</b>
             </a>
+            &nbsp;&nbsp;
+            <a href="api/hakemus/{{hakemusid}}/paatos/pdf" target="_self"
+               download="{{tyyppi}}_paatos_{{vuosi}}.pdf"><span class="glyphicon glyphicon-download-alt"></span> Lataa
+              pdf</a>
           </p>
 
           <p>
@@ -82,7 +86,7 @@
           <h5>MYÖNNETTY AVUSTUS VUODELLE {{vuosi}}</h5>
           {{myonnettyAvustusPerVuosi() | currency:"&euro;"}} (sis. ALV)
           <juku-icon-link
-            href="/pdf/web/viewer.html?file=/api/hakemus/{{avustushakemusid}}/paatos/pdf"
+            href="{{haeAvustushakemusPaatosPdf()}}"
             title="Avaa päätös"
             target="_blank"
             icon="file">
@@ -93,7 +97,7 @@
           <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
           {{myonnettyAvustusPerJakso() | currency:"&euro;"}} (sis. ALV)
           <juku-icon-link
-            href="/pdf/web/viewer.html?file=/api/hakemus/{{hakemusid}}/paatos/pdf"
+            href="{{haePaatosPdf()}}"
             ng-show="hasPaatos(hakemus.hakemustilatunnus)"
             title="Avaa päätös"
             target="_blank"
@@ -105,16 +109,18 @@
           <h5>MYÖNNETTY AVUSTUS 1. MAKSATUSHAKEMUKSEN PERUSTEELLA</h5>
           {{maksatushakemus1PaatosMaksettu() | currency:"&euro;"}} (sis. ALV)
           <juku-icon-link
-            href="/pdf/web/viewer.html?file=/api/hakemus/{{maksatushakemus1id}}/paatos/pdf"
+            href="{{haeMaksatushakemus1PaatosPdf()}}"
             title="Avaa päätös"
             target="_blank"
             icon="file">
             Avaa päätös (PDF)
           </juku-icon-link>
-          <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
+        </juku-form-row>
+        <juku-form-row ng-show="maksatushakemus1PaatosOlemassa() && onMaksatushakemus2()">
+          <h5>MYÖNNETTY AVUSTUS 2. MAKSATUSHAKEMUKSEN PERUSTEELLA</h5>
           {{myonnettyAvustusPerJakso() | currency:"&euro;"}} (sis. ALV)
           <juku-icon-link
-            href="/pdf/web/viewer.html?file=/api/hakemus/{{hakemusid}}/paatos/pdf"
+            href="{{haePaatosPdf()}}"
             ng-show="hasPaatos(hakemus.hakemustilatunnus)"
             title="Avaa päätös"
             target="_blank"
@@ -323,15 +329,13 @@
           <div class="col-md-3">
             <div
               ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
-              <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary"
-                      noenter>
+              <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary">
                 Tallenna ja esikatsele hakemus
               </button>
             </div>
             <div
               ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
-              <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary"
-                      noenter>
+              <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary">
                 Esikatsele hakemus
               </button>
             </div>

@@ -9,7 +9,7 @@
                     <div ng-show="liitteetOlemassa()" class="response">
                         <div class="sel-file" ng-repeat="l in liitteet">
                             <p>
-                                <a href="/pdf/web/viewer.html?file=/api/hakemus/{{hakemus.id}}/liite/{{l.liitenumero}}" target="_blank"><span
+                                <a href="api/hakemus/{{hakemus.id}}/liite/{{l.liitenumero}}" target="_blank"><span
                                         class="glyphicon glyphicon-file"></span>{{l.nimi}}
                                     ({{l.contenttype}})</a>
                             </p>
