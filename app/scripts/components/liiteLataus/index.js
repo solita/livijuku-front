@@ -1,6 +1,6 @@
 'use strict';
 var _ = require('lodash');
-var pdf = require('utils/pdf');
+var pdf = require('utils/pdfurl');
 
 function liitelatausController(LiiteService, $scope, StatusService, Upload) {
   $scope.myFiles = [];

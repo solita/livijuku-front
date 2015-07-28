@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var angular = require('angular');
 var $ = require('jquery');
-var pdf = require('utils/pdf');
+var pdf = require('utils/pdfurl');
 
 angular.module('jukufrontApp')
   .controller('KasittelijaPaatosCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'HakemusService', 'StatusService', 'PaatosService', 'SuunnitteluService', '$window', function ($rootScope, $scope, $routeParams, $location, HakemusService, StatusService, PaatosService, SuunnitteluService, $window) {

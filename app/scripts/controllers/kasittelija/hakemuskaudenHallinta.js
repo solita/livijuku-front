@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var angular = require('angular');
-var pdf = require('utils/pdf');
+var pdf = require('utils/pdfurl');
 
 angular.module('jukufrontApp')
   .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', 'Upload', function ($scope, $location, $route, $log, HakemuskausiService, StatusService, Upload) {

@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var $ = require('jquery');
 var angular = require('angular');
-var pdf = require('utils/pdf');
+var pdf = require('utils/pdfurl');
 
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams',
