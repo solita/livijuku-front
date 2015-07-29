@@ -60,10 +60,10 @@ angular.module('jukufrontApp')
           return d[1];
         },
         stacked: true,
-        barColor: function (d, i) {
-          var colors = d3.scale.category20().range();
-          var rnd = Math.floor(Math.random() * colors.length)
-          return colors[rnd];
+        yAxis: {
+          tickFormat: function(d){
+            return d3.format('.02f')(d/1000000)+ " M€";
+          }
         }
       }
     };
