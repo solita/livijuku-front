@@ -27,7 +27,7 @@
           </a>
         </li>
 
-        <li class="header__button {{ 'hakemukset' | includedByState | toClass:'is-active' }}"
+        <li class="header__button {{ 'hakemukset' | stateNameIncludes:['app.hakija.hakemukset.list'] | toClass:'is-active' }}"
             ng-show="sallittu(user, 'view-kaikki-hakemukset')">
           <a class="header__link" ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'AH0'})">
             Kaikki hakemukset

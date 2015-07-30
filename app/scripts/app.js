@@ -36,6 +36,7 @@ angular
     'services.common',
     'filters.toApplicantName',
     'filters.toClass',
+    'filters.stateNameIncludes',
     'ngResource',
     'angular-loading-bar',
     'smart-table',
@@ -233,3 +234,4 @@ require('./services/status');
 require('./services/suunnittelu');
 require('./filters/toApplicantName');
 require('./filters/toClass');
+require('./filters/stateNameIncludes');
