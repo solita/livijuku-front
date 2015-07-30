@@ -278,7 +278,7 @@ angular.module('jukufrontApp')
               StatusService.virhe('AvustuskohdeService.tallenna()', data.message);
             });
         } else {
-          $('input.ng-invalid').focus();
+          $('input.ng-invalid').eq(0).focus();
           StatusService.virhe('AvustuskohdeService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
         }
       };
