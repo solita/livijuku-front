@@ -20,14 +20,7 @@
   </juku-navigation>
 
   <juku-form>
-
-    <h1>
-      <div ng-switch on="tyyppi">
-        <span ng-switch-when='MH1'>Joukkoliikenteen 1. maksatushakemus {{hakemus.vuosi}}</span>
-        <span ng-switch-when='MH2'>Joukkoliikenteen 2. maksatushakemus {{hakemus.vuosi}}</span>
-        <span ng-switch-default>Joukkoliikenteen valtionavustushakemus {{hakemus.vuosi}}</span>
-      </div>
-    </h1>
+    <h1>Joukkoliikenteen {{tyyppi | toApplicationName}} {{hakemus.vuosi}}</h1>
 
     <div class="row" ng-hide="hakemusKeskenerainen()">
       <div class="col-md-12">
