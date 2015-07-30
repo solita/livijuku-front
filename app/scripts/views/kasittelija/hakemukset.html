@@ -9,20 +9,20 @@
   <div ng-show="hakemukset.length> 0 && sallittu('view-kaikki-hakemukset')">
     <juku-navigation>
       <juku-tabs>
-        <juku-tab ng-click="asetaTyyppi('AH0')" selected="tyyppi === 'AH0'">
+        <juku-tab ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'AH0'})">
           Avustushakemukset
           <juku-badge
             number="kasiteltavatAvustushakemukset"
             ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" />
         </juku-tab>
 
-        <juku-tab ng-click="asetaTyyppi('MH1')" selected="tyyppi === 'MH1'">
+        <juku-tab ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'MH1'})">
           1. maksatushakemukset
           <juku-badge
             number="kasiteltavatMaksatus1hakemukset"
             ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" />
         </juku-tab>
-        <juku-tab ng-click="asetaTyyppi('MH2')" selected="tyyppi === 'MH2'">
+        <juku-tab ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'MH2'})">
           2. maksatushakemukset
           <juku-badge
             number="kasiteltavatMaksatus2hakemukset"
@@ -71,7 +71,13 @@
                   </thead>
                   <tbody>
                   <tr ng-repeat="hakemus in ks1displayed"
-                      ng-click="siirryHakemukseen(hakemuksetPerVuosi.vuosi, tyyppi, hakemus.avustushakemusId, hakemus.maksatushakemus1Id, hakemus.maksatushakemus2Id)">
+                      ui-sref="app.kasittelija.hakemukset.hakemus({
+                        vuosi: hakemuksetPerVuosi.vuosi,
+                        id: hakemus.avustushakemusId,
+                        m1id: hakemus.maksatushakemus1Id,
+                        m2id: hakemus.maksatushakemus2Id,
+                        tyyppi: tyyppi
+                      })">
                     <td>{{hakemus.hakija}}</td>
                     <td>
                       <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
@@ -91,7 +97,11 @@
 
                   <juku-link-next
                      ng-show="sallittu('kasittely-hakemus')"
-                     ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'KS1')">
+                     ui-sref="app.kasittelija.suunnittelu({
+                      vuosi: hakemuksetPerVuosi.vuosi,
+                      tyyppi: tyyppi,
+                      lajitunnus: 'KS1'
+                    })">
                     Suunnittelu ja päätöksenteko
                   </juku-link-next>
 
@@ -117,7 +127,13 @@
                   </thead>
                   <tbody>
                   <tr ng-repeat="hakemus in ks2displayed"
-                      ng-click="siirryHakemukseen(hakemuksetPerVuosi.vuosi, tyyppi, hakemus.avustushakemusId, hakemus.maksatushakemus1Id, hakemus.maksatushakemus2Id)">
+                      ui-sref="app.kasittelija.hakemukset.hakemus({
+                        vuosi: hakemuksetPerVuosi.vuosi,
+                        id: hakemus.avustushakemusId,
+                        m1id: hakemus.maksatushakemus1Id,
+                        m2id: hakemus.maksatushakemus2Id,
+                        tyyppi: tyyppi
+                      })">
                     <td>{{hakemus.hakija}}</td>
                     <td>
                       <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
@@ -135,8 +151,12 @@
               <div class="col-md-4">
                 <div class="pull-right">
                   <juku-link-next
-                      ng-show="sallittu('kasittely-hakemus')"
-                      ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'KS2')">
+                    ng-show="sallittu('kasittely-hakemus')"
+                    ui-sref="app.kasittelija.suunnittelu({
+                      vuosi: hakemuksetPerVuosi.vuosi,
+                      tyyppi: tyyppi,
+                      lajitunnus: 'KS2'
+                    })">
                     Suunnittelu ja päätöksenteko
                   </juku-link-next>
                 </div>
@@ -162,7 +182,13 @@
                   </thead>
                   <tbody>
                   <tr ng-repeat="hakemus in elydisplayed"
-                      ng-click="siirryHakemukseen(hakemuksetPerVuosi.vuosi, tyyppi, hakemus.avustushakemusId, hakemus.maksatushakemus1Id, hakemus.maksatushakemus2Id)">
+                      ui-sref="app.kasittelija.hakemukset.hakemus({
+                        vuosi: hakemuksetPerVuosi.vuosi,
+                        id: hakemus.avustushakemusId,
+                        m1id: hakemus.maksatushakemus1Id,
+                        m2id: hakemus.maksatushakemus2Id,
+                        tyyppi: tyyppi
+                      })">
                     <td>{{hakemus.hakija}}</td>
                     <td>
                       <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
@@ -180,8 +206,12 @@
               <div class="col-md-4">
                 <div class="pull-right">
                   <juku-link-next
-                      ng-show="sallittu('kasittely-hakemus')"
-                      ng-click="siirrySuunnitteluun(hakemuksetPerVuosi.vuosi, tyyppi, 'ELY')">
+                    ng-show="sallittu('kasittely-hakemus')"
+                    ui-sref="app.kasittelija.suunnittelu({
+                      vuosi: hakemuksetPerVuosi.vuosi,
+                      tyyppi: tyyppi,
+                      lajitunnus: 'ELY'
+                    })">
                     Suunnittelu ja päätöksenteko
                   </juku-link-next>
                 </div>

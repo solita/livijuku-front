@@ -12,7 +12,7 @@ function ModalInstanceCtrl($scope, $modalInstance) {
 
 ModalInstanceCtrl.$inject = ['$scope', '$modalInstance'];
 
-module.exports = function ($modal, HakemusService, StatusService, $location) {
+module.exports = function ($modal, HakemusService, StatusService, $state) {
   return {
     restrict: 'A',
     replace: true,
@@ -31,7 +31,9 @@ module.exports = function ($modal, HakemusService, StatusService, $location) {
           HakemusService.taydennyspyynto(parseInt(scope.hakemusid), taydennysselite)
             .success(function () {
               StatusService.ok('HakemusService.taydennyspyynto(' + scope.hakemusid + ',' + taydennysselite + ')', 'Hakemus päivitettiin tädennettäväksi.');
-              $location.path('/y/hakemukset/' + scope.tyyppi);
+              $state.go('app.yhteinen.hakemukset.list', {
+                tyyppi: scope.tyyppi
+              });
             })
             .error(function (data) {
               StatusService.virhe('HakemusService.taydennyspyynto(' + scope.hakemusid + ',' + taydennysselite + ')', data.message);
@@ -45,4 +47,4 @@ module.exports = function ($modal, HakemusService, StatusService, $location) {
   };
 };
 
-module.exports.$inject = ['$modal', 'HakemusService', 'StatusService', '$location'];
+module.exports.$inject = ['$modal', 'HakemusService', 'StatusService', '$state'];

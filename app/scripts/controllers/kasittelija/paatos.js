@@ -6,7 +6,7 @@ var $ = require('jquery');
 var pdf = require('utils/pdfurl');
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaPaatosCtrl', ['$rootScope', '$scope', '$routeParams', '$location', 'HakemusService', 'StatusService', 'PaatosService', 'SuunnitteluService', '$window', function ($rootScope, $scope, $routeParams, $location, HakemusService, StatusService, PaatosService, SuunnitteluService, $window) {
+  .controller('KasittelijaPaatosCtrl', ['$rootScope', '$scope', '$stateParams', '$state', 'HakemusService', 'StatusService', 'PaatosService', 'SuunnitteluService', '$window', function ($rootScope, $scope, $stateParams, $state, HakemusService, StatusService, PaatosService, SuunnitteluService, $window) {
 
     function haePaatosTiedot() {
       HakemusService.hae($scope.hakemusid)
@@ -15,7 +15,7 @@ angular.module('jukufrontApp')
           $scope.hakija = _.find($rootScope.organisaatiot, {'id': $scope.avustushakemus.organisaatioid}).nimi;
         })
         .error(function (data) {
-          StatusService.virhe('HakemusService.hae(' + $routeParams.id + ')', data.message);
+          StatusService.virhe('HakemusService.hae(' + $stateParams.id + ')', data.message);
         });
 
       PaatosService.hae($scope.hakemusid)
@@ -35,12 +35,12 @@ angular.module('jukufrontApp')
         });
     }
 
-    $scope.hakemusid = parseInt($routeParams.hakemusid);
-    $scope.haettuavustus = $routeParams.haettuavustus;
-    $scope.avustus = $routeParams.avustus;
-    $scope.vuosi = $routeParams.vuosi;
-    $scope.tyyppi = $routeParams.tyyppi;
-    $scope.lajitunnus = $routeParams.lajitunnus;
+    $scope.hakemusid = parseInt($stateParams.hakemusid);
+    $scope.haettuavustus = $stateParams.haettuavustus;
+    $scope.avustus = $stateParams.avustus;
+    $scope.vuosi = $stateParams.vuosi;
+    $scope.tyyppi = $stateParams.tyyppi;
+    $scope.lajitunnus = $stateParams.lajitunnus;
     $scope.aikaleima = new Date();
     $scope.vanhaArvo = 0;
 
@@ -74,7 +74,7 @@ angular.module('jukufrontApp')
      PaatosService.peru($scope.hakemusid)
      .success(function () {
      StatusService.ok('PaatosService.peru(' + $scope.hakemusid + ')', 'Hakemuksen päätös peruttiin.');
-     $location.path('/k/suunnittelu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus);
+     $state.path('/k/suunnittelu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus);
      })
      .error(function (data) {
      StatusService.virhe('PaatosService.peru(' + $scope.hakemusid + ')', data);
@@ -121,7 +121,7 @@ angular.module('jukufrontApp')
                       .error(function (data) {
                         StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + $scope.avustus + ',' + $scope.hakemusid + ')', data);
                       });
-                    $location.path('/k/suunnittelu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus);
+                    $state.go('app.kasittelija.suunnittelu', {tyyppi: $scope.tyyppi, vuosi: $scope.vuosi, lajitunnus: $scope.lajitunnus});
                   })
                   .error(function (data) {
                     StatusService.virhe('PaatosService.hyvaksy(' + $scope.hakemusid + ')', data.message);

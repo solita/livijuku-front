@@ -5,7 +5,7 @@ var angular = require('angular');
 var pdf = require('utils/pdfurl');
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$location', '$route', '$log', 'HakemuskausiService', 'StatusService', 'Upload', function ($scope, $location, $route, $log, HakemuskausiService, StatusService, Upload) {
+  .controller('KasittelijaHakemuskaudenHallintaCtrl', ['$scope', '$state', '$log', 'HakemuskausiService', 'StatusService', 'Upload', function ($scope, $state, $log, HakemuskausiService, StatusService, Upload) {
 
     function epochToISOString(epoch) {
       return toISODateString(new Date(epoch));
@@ -207,9 +207,9 @@ angular.module('jukufrontApp')
       }
 
       if (tyyppi) {
-        $location.path('/y/hakemukset/' + tyyppi);
+        $state.go('app.yhteinen.hakemukset.list', {tyyppi});
       } else {
-        $location.path('/k/hakemukset');
+        $state.go('app.kasittelija.hakemukset');
       }
     };
 

@@ -15,6 +15,7 @@
     "angular-smart-table": "^2.0.2",
     "angular-toastr": "~1.4.1",
     "angular-ui-grid": "^3.0.1",
+    "angular-ui-router": "^0.2.15",
     "angular-ui-validate": "1.0.0",
     "bootstrap": "~3.3.4",
     "d3": "^3.5.6",
