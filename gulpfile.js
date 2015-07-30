@@ -18,6 +18,7 @@ var rimraf = require('rimraf');
 var stylus = require('gulp-stylus');
 var uglify = require('gulp-uglify');
 var watchify = require('watchify');
+var notifier = require('node-notifier');
 var sourcemaps = require('gulp-sourcemaps');
 // Stream transformer for browserify
 var source = require('vinyl-source-stream');
@@ -107,6 +108,11 @@ function handleError(err) {
   if(production) {
     throw err;
   }
+
+  notifier.notify({
+    title: 'Compile Error',
+    message: err.message
+  });
 
   return this.emit('end');
 };
