@@ -210,6 +210,10 @@ angular.module('jukufrontApp')
         return $scope.hakemus.taydennyspyynto != null;
       };
 
+      $scope.siirrySuunnitteluun = function () {
+        $location.path('/k/suunnittelu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + _.find($rootScope.organisaatiot, {'id': $scope.hakemus.organisaatioid}).lajitunnus);
+      };
+
       $scope.sumHaettavaAvustus = function () {
         var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
           return l.avustuskohteet

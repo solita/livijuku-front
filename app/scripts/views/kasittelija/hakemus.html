@@ -45,7 +45,7 @@
   <div class="row" ng-show="hasPaatos(hakemus.hakemustilatunnus)">
     <div class="col-md-12">
       <p>
-        <a href="{{haePaatosPdf()}}"  target="_blank"><span
+        <a href="{{haePaatosPdf()}}" target="_blank"><span
           class="glyphicon glyphicon-file"></span>
           Avaa päätös (PDF)</a>
         <a href="resources/OIKAISUVAATIMUSOSOITUS.docx" target="_blank"><span
@@ -176,12 +176,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
-      <juku-link-prev href="#/y/hakemukset/{{tyyppi}}">
-        Palaa hakemusten päänäkymään
-      </juku-link-prev>
-    </div>
-    <div ng-show="sallittu('kasittely-hakemus')" class=" col-md-6">
+    <div ng-show="sallittu('kasittely-hakemus')" class=" col-md-12">
       <button ng-show="hakemusVireilla()"
               juku-varmistusdialogi varmistusotsake="Hakemuksen tarkastaminen"
               varmistusteksti="Oletko varma, että haluat merkitä hakemuksen tarkastetuksi? Hakemuksen tarkastettu-merkintää ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa tarkastamisen jälkeen."
@@ -201,6 +196,20 @@
               data-ng-click="taydennyspyynto()"
               class="pull-right btn btn-danger" disabled>Palauta täydennettäväksi
       </button>
+    </div>
+  </div>
+  <div class="row">&nbsp;</div>
+  <div class="row">
+    <div class="pull-left">
+      <juku-link-prev href="#/y/hakemukset/{{tyyppi}}">
+        Palaa hakemusten päänäkymään
+      </juku-link-prev>
+    </div>
+    <div class="pull-right">
+      <juku-link-next
+        ng-click="siirrySuunnitteluun()">
+        Suunnittelu ja päätöksenteko
+      </juku-link-next>
     </div>
   </div>
 </div>
