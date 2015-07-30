@@ -77,8 +77,10 @@
                     Päivämäärän tulee olla ennen loppumispäivämäärää.
                   </span>
 
-                  <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.avustushakemusAlkupvm |
-                    date:'d.M.yyyy'}}</p>
+                  <div ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">
+                    {{hakemuskausi.avustushakemusAlkupvm | date:'d.M.yyyy'}} -
+                    {{hakemuskausi.avustushakemusLoppupvm | date:'d.M.yyyy'}}
+                  </div>
                 </div>
                 <div class="hakemuskausi-panel-hakuaika-viiva"></div>
                 <div class="form-group" show-errors="{showSuccess: true}">
@@ -96,8 +98,6 @@
                         <i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
-                  <p ng-show="(muokkaaHakuaikojaVuosi!=hakemuskausi.vuosi)">{{hakemuskausi.avustushakemusLoppupvm |
-                    date:'d.M.yyyy'}}</p>
                 </div>
               </div>
             </hakemuskausi-panel>
