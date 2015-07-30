@@ -19,7 +19,7 @@ module.exports.restrictRoute = function restrictRoute(fn, routeConfig) {
 
 module.exports.defaultView = function defaultView(user) {
   if(isHakija(user)) {
-    return '/h/hakemukset';
+    return 'app.hakija.hakemukset.list';
   }
-  return '/k/hakemuskaudenhallinta';
+  return 'app.kasittelija.hakemuskaudenhallinta';
 };

@@ -6,16 +6,16 @@ var angular = require('angular');
 var pdf = require('utils/pdfurl');
 
 angular.module('jukufrontApp')
-  .controller('HakemusCtrl', ['$rootScope', '$scope', '$location', '$routeParams',
+  .controller('HakemusCtrl', ['$rootScope', '$scope', '$state', '$stateParams',
     'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', 'CommonService', '$window',
-    function ($rootScope, $scope, $location, $routeParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, common, $window) {
+    function ($rootScope, $scope, $state, $stateParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, common, $window) {
 
       function haeAvustuskohteet(hakemusid, scopemuuttuja) {
         common.bindPromiseToScope(AvustuskohdeService.hae(hakemusid), $scope, scopemuuttuja,
           function (data) {
             return _.map(
               common.partitionBy(function (v) {
-                return v.avustuskohdeluokkatunnus
+                return v.avustuskohdeluokkatunnus;
               }, data),
               function (kohteet) {
                 return {
@@ -69,7 +69,7 @@ angular.module('jukufrontApp')
         HakemusService.lahetaHakemus($scope.hakemusid)
           .success(function () {
             StatusService.ok('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', 'Lähettäminen onnistui.');
-            $location.path('/h/hakemukset');
+            $state.go('app.hakija.hakemukset');
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', data.message);
@@ -80,7 +80,7 @@ angular.module('jukufrontApp')
         HakemusService.lahetaTaydennys($scope.hakemusid)
           .success(function () {
             StatusService.ok('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', 'Täydennyksen lähettäminen onnistui.');
-            $location.path('/h/hakemukset');
+            $state.go('app.hakija.hakemukset');
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', data.message);
@@ -216,7 +216,7 @@ angular.module('jukufrontApp')
 
       $scope.sumHaettavaAvustus = function () {
         var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
-          return l.avustuskohteet
+          return l.avustuskohteet;
         }));
         return _.sum(avustuskohteet, 'haettavaavustus');
       };
@@ -227,7 +227,7 @@ angular.module('jukufrontApp')
         if (($scope.hakemusForm.$valid && $scope.onAvustushakemus()) || (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) && $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn())) {
           if (lisatoiminto === 1) var ikkuna = $window.open('about:blank', '_blank');
           var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
-            return l.avustuskohteet
+            return l.avustuskohteet;
           }));
 
           avustuskohteet = _.map(avustuskohteet, function (kohde) {
@@ -286,7 +286,7 @@ angular.module('jukufrontApp')
         HakemusService.tarkastaHakemus($scope.hakemusid)
           .success(function () {
             StatusService.ok('HakemusService.tarkastaHakemus(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tarkastetuksi.');
-            $location.path('/y/hakemukset/' + $scope.tyyppi);
+            $state.go('app.yhteinen.hakemukset.list', {tyyppi: $scope.tyyppi});
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.tarkastaHakemus(' + $scope.hakemusid + ')', data.message);
@@ -297,7 +297,7 @@ angular.module('jukufrontApp')
         HakemusService.tarkastaTaydennys($scope.hakemusid)
           .success(function () {
             StatusService.ok('HakemusService.tarkastaTaydennys(' + $scope.hakemusid + ')', 'Täydennetty hakemus päivitettiin tarkastetuksi.');
-            $location.path('/y/hakemukset/' + $scope.tyyppi);
+            $state.go('app.yhteinen.hakemukset.list', {tyyppi: $scope.tyyppi});
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.tarkastaTaydennys(' + $scope.hakemusid + ')', data.message);
@@ -305,11 +305,11 @@ angular.module('jukufrontApp')
       };
 
       $scope.allekirjoitusliitetty = false;
-      $scope.avustushakemusid = $routeParams.id;
-      $scope.maksatushakemus1id = $routeParams.m1id;
-      $scope.maksatushakemus2id = $routeParams.m2id;
-      $scope.tyyppi = $routeParams.tyyppi;
-      $scope.vuosi = $routeParams.vuosi;
+      $scope.avustushakemusid = $stateParams.id;
+      $scope.maksatushakemus1id = $stateParams.m1id;
+      $scope.maksatushakemus2id = $stateParams.m2id;
+      $scope.tyyppi = $stateParams.tyyppi;
+      $scope.vuosi = $stateParams.vuosi;
       $scope.alv = false;
 
       if ($scope.tyyppi === "AH0") {

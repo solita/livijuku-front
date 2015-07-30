@@ -11,7 +11,7 @@ require('angular-bootstrap');
 require('angular-elastic');
 require('ng-file-upload');
 require('angular-animate');
-require('angular-route');
+require('angular-ui-router');
 require('ng-currency');
 require('angular-bootstrap-show-errors');
 require('angular-ui-grid/ui-grid.min.js');
@@ -35,6 +35,8 @@ angular
     'services.paatos',
     'services.common',
     'filters.toApplicantName',
+    'filters.toClass',
+    'filters.stateNameIncludes',
     'ngResource',
     'angular-loading-bar',
     'smart-table',
@@ -45,7 +47,7 @@ angular
     'ngFileUpload',
     'toastr',
     'ngAnimate',
-    'ngRoute',
+    'ui.router',
     'ng-currency',
     'ui.bootstrap.showErrors',
     'ui.validate',
@@ -55,55 +57,100 @@ angular
     'ui.grid.resizeColumns',
     'nvd3'
   ])
-  .config(['$routeProvider', function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        template: '<div></div>',
-        controller: ['$location', 'KayttajaService', function($location, KayttajaService) {
+  .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+
+    $urlRouterProvider.otherwise('/');
+
+    function root(url) {
+      const opts = {
+        abstract: true,
+        template: '<ui-view></ui-view>'
+      };
+      if(url) {
+        opts.url = url;
+      }
+      return opts;
+    }
+
+    $stateProvider
+      .state('redirect', {
+        url: '/',
+        controller: ['$state', 'KayttajaService', function($state, KayttajaService) {
           KayttajaService.hae().then(function(user) {
-            $location.path(defaultView(user));
+            $state.go(defaultView(user));
           });
         }]
       })
-      .when('/y/hakemukset/:tyyppi', {
+      .state('app', root())
+      .state('app.yhteinen', root('/y'))
+      .state('app.yhteinen.hakemukset', root('/hakemukset/:tyyppi'))
+      .state('app.yhteinen.hakemukset.list', {
+        url: '',
         template: require('views/kasittelija/hakemukset.html'),
         controller: 'KasittelijaHakemuksetCtrl'
       })
-      .when('/h/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', restrictRoute(isHakija, {
+
+      /*
+       * Hakija
+       */
+
+      .state('app.hakija', root('/h'))
+      .state('app.hakija.hakemukset', root('/hakemukset'))
+      .state('app.hakija.hakemukset.hakemus', restrictRoute(isHakija, {
+        url: '/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id',
         template: require('views/hakija/hakemus.html'),
         controller: 'HakemusCtrl'
       }))
-      .when('/h/hakemukset', restrictRoute(isHakija, {
+      .state('app.hakija.hakemukset.list', restrictRoute(isHakija, {
+        url: '/',
         template: require('views/hakija/hakemukset.html'),
         controller: 'HakijaHakemuksetCtrl'
       }))
-      .when('/y/tunnuslukujensyottaminen', {
+      .state('app.hakija.tunnusluku', root('/tunnusluvut'))
+      .state('app.hakija.tunnusluku.syottaminen', {
+        url: '/syottaminen',
         template: require('views/yhteinen/tunnuslukujenSyottaminen.html'),
         controller: 'HakijaTunnusluvutCtrl'
       })
-      .when('/y/tunnuslukuraportit', {
+      .state('app.hakija.tunnusluku.raportit', {
+        url: '/raportit',
         template: require('views/yhteinen/tunnuslukuraportit.html'),
         controller: 'TunnuslukuraporttiCtrl'
       })
-      .when('/k/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id', {
+
+      /*
+       * Käsittelijä
+       */
+
+      .state('app.kasittelija', root('/k'))
+      .state('app.kasittelija.hakemukset', root('/hakemukset/:tyyppi'))
+      .state('app.kasittelija.hakemukset.list', {
+        url: '',
+        template: require('views/kasittelija/hakemukset.html'),
+        controller: 'KasittelijaHakemuksetCtrl'
+      })
+      .state('app.kasittelija.hakemukset.hakemus', {
+        url: '/hakemus/:vuosi/:id/:m1id/:m2id',
         template: require('views/kasittelija/hakemus.html'),
         controller: 'HakemusCtrl'
       })
-      .when('/k/hakemuskaudenhallinta', restrictRoute(isKasittelija, {
+      .state('app.kasittelija.hakemuskaudenhallinta', restrictRoute(isKasittelija, {
+        url: '/hakemuskaudenhallinta',
         template: require('views/kasittelija/hakemuskaudenHallinta.html'),
         controller: 'KasittelijaHakemuskaudenHallintaCtrl'
       }))
-      .when('/k/paatos/:vuosi/:tyyppi/:lajitunnus/:hakemusid/:haettuavustus/:avustus', restrictRoute(isKasittelija, {
-        template: require('views/kasittelija/paatos.html'),
-        controller: 'KasittelijaPaatosCtrl'
-      }))
-      .when('/k/suunnittelu/:vuosi/:tyyppi/:lajitunnus', restrictRoute(isKasittelija, {
+      .state('app.kasittelija.suunnittelu', restrictRoute(isKasittelija, {
+        url: '/suunnittelu/:vuosi/:tyyppi/:lajitunnus',
         template: require('views/kasittelija/suunnittelu.html'),
         controller: 'KasittelijaSuunnitteluCtrl'
       }))
-      .otherwise({
-        redirectTo: '/'
-      });
+      .state('app.kasittelija.paatos', restrictRoute(isKasittelija, {
+        url: '/paatos/:vuosi/:tyyppi/:lajitunnus/:hakemusid/:haettuavustus/:avustus',
+        template: require('views/kasittelija/paatos.html'),
+        controller: 'KasittelijaPaatosCtrl'
+      }));
+
+      // $urlRouterProvider.otherwise('/');
   }])
   .config(['$httpProvider', function ($httpProvider) {
     //http://stackoverflow.com/questions/16098430/angular-ie-caching-issue-for-http
@@ -121,8 +168,11 @@ angular
     $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
     $httpProvider.defaults.headers.Pragma = 'no-cache';
   }])
-  .run(['$rootScope', '$location', function ($rootScope, $location) {
-    $rootScope.$on('$routeChangeError', () => $location.path('/'));
+  .run(['$rootScope', '$state', function ($rootScope, $state) {
+    $rootScope.$on('$stateChangeError', () => {
+      console.log('$stateChangeError');
+      $state.go('redirect');
+    });
   }])
   .directive('jukuHeader', require('components/header'))
   .directive('jukuSidebar', require('components/sidebar'))
@@ -183,3 +233,5 @@ require('./services/paatos');
 require('./services/status');
 require('./services/suunnittelu');
 require('./filters/toApplicantName');
+require('./filters/toClass');
+require('./filters/stateNameIncludes');

@@ -3,30 +3,25 @@
     <p>Ei omien hakemusten katseluoikeutta.</p>
   </div>
 
-  <!-- Navigaatio -->
-  <juku-form-row ng-show="sallittu('view-oma-hakemus')">
+  <div ng-show="sallittu('view-oma-hakemus')">
+
+    <!-- Navigaatio -->
     <juku-navigation>
       <juku-link-prev href="#/h/hakemukset">
         Palaa hakemusten päänäkymään
       </juku-link-prev>
 
       <juku-tabs>
-        <juku-tab
-          href="#/h/hakemus/{{hakemus.vuosi}}/AH0/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-          selected="onAvustushakemus()">
-          Avustushakemus {{hakemus.vuosi}}
+        <juku-tab ui-sref="app.hakija.hakemukset.hakemus({vuosi: hakemus.vuosi, tyyppi: 'AH0', id: avustushakemusid, m1id: maksatushakemus1id, m2id: maksatushakemus2id})">
+          Avustushakemus
         </juku-tab>
 
-        <juku-tab
-          href="#/h/hakemus/{{hakemus.vuosi}}/MH1/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-          selected="onMaksatushakemus1()">
-          1. maksatushakemus {{hakemus.vuosi}}
+        <juku-tab ui-sref="app.hakija.hakemukset.hakemus({vuosi: hakemus.vuosi, tyyppi: 'MH1', id: avustushakemusid, m1id: maksatushakemus1id, m2id: maksatushakemus2id})">
+          1. maksatushakemus
         </juku-tab>
 
-        <juku-tab
-          href="#/h/hakemus/{{hakemus.vuosi}}/MH2/{{avustushakemusid}}/{{maksatushakemus1id}}/{{maksatushakemus2id}}"
-          selected="onMaksatushakemus2()">
-          2. maksatushakemus {{hakemus.vuosi}}
+        <juku-tab ui-sref="app.hakija.hakemukset.hakemus({vuosi: hakemus.vuosi, tyyppi: 'MH2', id: avustushakemusid, m1id: maksatushakemus1id, m2id: maksatushakemus2id})">
+          2. maksatushakemus
         </juku-tab>
       </juku-tabs>
     </juku-navigation>
@@ -376,6 +371,7 @@
         </div>
       </juku-form-section>
     </juku-form>
+
     <div class="row">
       <div class="col-md-12">
         <juku-link-prev href="#/h/hakemukset">
@@ -383,5 +379,5 @@
         </juku-link-prev>
       </div>
     </div>
-</div>
+  </div>
 </div>
