@@ -69,7 +69,7 @@ angular.module('jukufrontApp')
         HakemusService.lahetaHakemus($scope.hakemusid)
           .success(function () {
             StatusService.ok('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', 'Lähettäminen onnistui.');
-            $state.go('app.hakija.hakemukset');
+            $state.go('app.hakija.hakemukset.list');
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', data.message);
@@ -80,7 +80,7 @@ angular.module('jukufrontApp')
         HakemusService.lahetaTaydennys($scope.hakemusid)
           .success(function () {
             StatusService.ok('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', 'Täydennyksen lähettäminen onnistui.');
-            $state.go('app.hakija.hakemukset');
+            $state.go('app.hakija.hakemukset.list');
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', data.message);

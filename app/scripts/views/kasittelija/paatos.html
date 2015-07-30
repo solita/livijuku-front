@@ -5,7 +5,7 @@
   <div ng-show="sallittu('kasittely-hakemus')">
     <div class="row">
       <div class="col-md-12">
-        <juku-link-prev href="#/k/suunnittelu/{{vuosi}}/{{tyyppi}}/{{lajitunnus}}">
+        <juku-link-prev ui-sref="app.kasittelija.suunnittelu({vuosi: vuosi, tyyppi: tyyppi, lajitunnus: lajitunnus})">
           Palaa suunnittelunäkymään
         </juku-link-prev>
       </div>
@@ -85,7 +85,7 @@
 
     <div class="row">
       <div class="col-md-6">
-        <juku-link-prev href="#/k/suunnittelu/{{vuosi}}/{{tyyppi}}/{{lajitunnus}}">
+        <juku-link-prev ui-sref="app.kasittelija.suunnittelu({vuosi: vuosi, tyyppi: tyyppi, lajitunnus: lajitunnus})">
           Palaa suunnittelunäkymään
         </juku-link-prev>
       </div>
