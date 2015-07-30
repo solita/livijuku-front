@@ -224,6 +224,7 @@ angular.module('jukufrontApp')
       $scope.tallennaHakemus = function (lisatoiminto) {
         StatusService.tyhjenna();
         $scope.$broadcast('show-errors-check-validity');
+
         if (($scope.hakemusForm.$valid && $scope.onAvustushakemus()) || (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) && $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn())) {
           if (lisatoiminto === 1) var ikkuna = $window.open('about:blank', '_blank');
           var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {

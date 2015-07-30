@@ -37,6 +37,7 @@ angular
     'filters.toApplicantName',
     'filters.toClass',
     'filters.stateNameIncludes',
+    'filters.toApplicationName',
     'ngResource',
     'angular-loading-bar',
     'smart-table',
@@ -169,8 +170,11 @@ angular
     $httpProvider.defaults.headers.Pragma = 'no-cache';
   }])
   .run(['$rootScope', '$state', function ($rootScope, $state) {
+    $rootScope.constants = {
+      hakemustyypit: ['AH0', 'MH1', 'MH2']
+    };
+
     $rootScope.$on('$stateChangeError', () => {
-      console.log('$stateChangeError');
       $state.go('redirect');
     });
   }])
@@ -235,3 +239,4 @@ require('./services/suunnittelu');
 require('./filters/toApplicantName');
 require('./filters/toClass');
 require('./filters/stateNameIncludes');
+require('./filters/toApplicationName');

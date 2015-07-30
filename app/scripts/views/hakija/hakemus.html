@@ -12,16 +12,16 @@
       </juku-link-prev>
 
       <juku-tabs>
-        <juku-tab ui-sref="app.hakija.hakemukset.hakemus({vuosi: hakemus.vuosi, tyyppi: 'AH0', id: avustushakemusid, m1id: maksatushakemus1id, m2id: maksatushakemus2id})">
-          Avustushakemus
-        </juku-tab>
-
-        <juku-tab ui-sref="app.hakija.hakemukset.hakemus({vuosi: hakemus.vuosi, tyyppi: 'MH1', id: avustushakemusid, m1id: maksatushakemus1id, m2id: maksatushakemus2id})">
-          1. maksatushakemus
-        </juku-tab>
-
-        <juku-tab ui-sref="app.hakija.hakemukset.hakemus({vuosi: hakemus.vuosi, tyyppi: 'MH2', id: avustushakemusid, m1id: maksatushakemus1id, m2id: maksatushakemus2id})">
-          2. maksatushakemus
+        <juku-tab
+          ng-repeat="tyyppi in constants.hakemustyypit"
+          ui-sref="app.hakija.hakemukset.hakemus({
+            vuosi: hakemus.vuosi,
+            tyyppi: tyyppi,
+            id: avustushakemusid,
+            m1id: maksatushakemus1id,
+            m2id: maksatushakemus2id
+          })">
+          {{ tyyppi | toApplicationName }}
         </juku-tab>
       </juku-tabs>
     </juku-navigation>
