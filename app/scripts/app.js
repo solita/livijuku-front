@@ -211,6 +211,7 @@ angular
   .directive('hakemusLabel', require('components/hakemusLabel'))
   .directive('jukuControls', require('components/controls'))
   .directive('jukuControlsButtons', require('components/controls/buttons'))
+  .directive('jukuConfirmation', require('components/confirmation'))
   .directive('jukuStatisticDropdown', require('components/statisticDropdown'));
 
 require('./controllers/hakija/hakemukset');
