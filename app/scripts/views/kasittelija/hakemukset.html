@@ -13,22 +13,22 @@
           Avustushakemukset
           <juku-badge
             number="kasiteltavatAvustushakemukset"
-            ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" />
+            ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')"/>
         </juku-tab>
 
         <juku-tab ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'MH1'})">
           1. maksatushakemukset
           <juku-badge
             number="kasiteltavatMaksatus1hakemukset"
-            ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" />
+            ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')"/>
         </juku-tab>
         <juku-tab ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'MH2'})">
           2. maksatushakemukset
           <juku-badge
             number="kasiteltavatMaksatus2hakemukset"
-            ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')" />
+            ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')"/>
         </juku-tab>
-      </juku-tab>
+      </juku-tabs>
     </juku-navigation>
 
     <accordion close-others="false">
@@ -96,8 +96,8 @@
                 <div class="pull-right">
 
                   <juku-link-next
-                     ng-show="sallittu('kasittely-hakemus')"
-                     ui-sref="app.kasittelija.suunnittelu({
+                    ng-show="sallittu('kasittely-hakemus')"
+                    ui-sref="app.kasittelija.suunnittelu({
                       vuosi: hakemuksetPerVuosi.vuosi,
                       tyyppi: tyyppi,
                       lajitunnus: 'KS1'
