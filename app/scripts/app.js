@@ -118,6 +118,11 @@ angular
         template: require('views/yhteinen/tunnuslukuraportit.html'),
         controller: 'TunnuslukuraporttiCtrl'
       })
+      .state('app.yhteinen.kayttajatiedot', {
+        url: '/kayttajatiedot',
+        template: require('views/yhteinen/kayttajatiedot.html'),
+        controller: 'KayttajatiedotCtrl'
+      })
 
       /*
        * Käsittelijä
@@ -220,6 +225,7 @@ require('./controllers/kasittelija/hakemuskaudenHallinta');
 require('./controllers/kasittelija/paatos');
 require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/hakemus');
+require('./controllers/yhteinen/kayttajatiedot');
 require('./controllers/yhteinen/paanaytto');
 require('./controllers/yhteinen/tunnusluvut');
 require('./controllers/yhteinen/tunnuslukuraportti');
