@@ -22,26 +22,20 @@
   <juku-form>
     <h1>Joukkoliikenteen {{tyyppi | toApplicationName}} {{hakemus.vuosi}}</h1>
 
-    <div class="row" ng-hide="hakemusKeskenerainen()">
-      <div class="col-md-12">
-        <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="btn btn-primary"
-                noenter>
-          Avaa hakemus (PDF)
-        </button>
-      </div>
-    </div>
+    <juku-form-row ng-hide="hakemusKeskenerainen()">
+      <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="btn btn-primary"
+              noenter>
+        Avaa hakemus (PDF)
+      </button>
+    </juku-form-row>
 
-    <div class="row" ng-show="hasPaatos(hakemus.hakemustilatunnus)">
-      <div class="col-md-12">
-        <p>
-          <a href="{{haePaatosPdf()}}" target="_blank"><span
-            class="glyphicon glyphicon-file"></span>
-            Avaa päätös (PDF)</a>
-          <a href="resources/OIKAISUVAATIMUSOSOITUS.docx" target="_blank"><span
-            class="glyphicon glyphicon-file"></span> Avaa oikaisuvaatimusosoitus (DOCX)</a>
-        </p>
-      </div>
-    </div>
+    <juku-form-row ng-show="hasPaatos(hakemus.hakemustilatunnus)" id="hakemus-paatoslinkit">
+        <a href="{{haePaatosPdf()}}" target="_blank"><span
+          class="glyphicon glyphicon-file"></span>
+          Avaa päätös (PDF)</a>
+        <a href="resources/OIKAISUVAATIMUSOSOITUS.docx" target="_blank"><span
+          class="glyphicon glyphicon-file"></span> Avaa oikaisuvaatimusosoitus (DOCX)</a>
+    </juku-form-row>
 
     <div class="row">
       <div class="col-md-12">
