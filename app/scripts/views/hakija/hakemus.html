@@ -301,77 +301,39 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6"></div>
-          <div class="col-md-3">
-            <div
-              ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
-              <button data-ng-click="tallennaHakemus(0)" class="pull-right btn btn-primary">Tallenna tiedot
-              </button>
-            </div>
-            <div
-              ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
-              <button data-ng-click="tallennaHakemus(0)" class="pull-right btn btn-primary" disabled>Tallenna
-                tiedot
-              </button>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div
-              ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
-              <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary">
-                Tallenna ja esikatsele hakemus
-              </button>
-            </div>
-            <div
-              ng-hide="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
-              <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="pull-right btn btn-primary">
-                Avaa hakemus (PDF)
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="row">
           <div class="col-md-12">
-            <div class="form-group">
-              <label ng-show="hakemusKeskenerainen() && liitteetOlemassa()">
-                <input type="checkbox" ng-model="allekirjoitusliitetty">
-                <span>Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen
-                  allekirjoitusoikeudesta.</span>
-              </label>
-              <label ng-hide="hakemusKeskenerainen() && liitteetOlemassa()">
-                <input type="checkbox" ng-model="allekirjoitusliitetty" disabled>
-                <span>Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen
-                  allekirjoitusoikeudesta.</span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div ng-show="sallittu('allekirjoita-oma-hakemus')">
-              <button
-                ng-show="(hakemusKeskenerainen() && allekirjoitusliitetty && liitteetOlemassa() && edellinenHakemusPaatetty())"
-                juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen"
-                varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen. Lähetä hakemus painamalla Kyllä-painiketta. Huom! Liitteiden määrästä riippuen, hakemuksen lähettäminen asianhallintaan kestää 10-70 sekuntia."
-                operaatio="tallennaHakemus(2)"
-                class="pull-right btn btn-success">Tallenna ja lähetä hakemus
-              </button>
-              <button
-                ng-hide="(hakemusKeskenerainen() && allekirjoitusliitetty && liitteetOlemassa() && edellinenHakemusPaatetty())"
-                class="pull-right btn btn-success" disabled>Tallenna ja lähetä hakemus
-              </button>
-            </div>
+
+            <juku-confirmation ng-model="allekirjoitusliitetty" ng-disabled="!hakemusKeskenerainen() || !liitteetOlemassa()">
+              Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen allekirjoitusoikeudesta.
+            </juku-confirmation>
+
+            <juku-controls>
+              <juku-link-prev ui-sref="app.hakija.hakemukset.list()">
+                Palaa hakemusten päänäkymään
+              </juku-link-prev>
+              <juku-controls-buttons ng-show="sallittu('allekirjoita-oma-hakemus')">
+                <button
+                  ng-disabled="!hakemusKeskenerainen() || !sallittu('modify-oma-hakemus')"
+                  data-ng-click="tallennaHakemus(0)"
+                  class="btn btn-primary">
+                    Tallenna tiedot
+                </button>
+                <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="btn btn-primary">
+                  {{ hakemusKeskenerainen() && sallittu('modify-oma-hakemus') ? 'Tallenna ja esikatsele hakemus' : 'Avaa hakemus (PDF)' }}
+                </button>
+                <button
+                  juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen"
+                  varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen. Lähetä hakemus painamalla Kyllä-painiketta. Huom! Liitteiden määrästä riippuen, hakemuksen lähettäminen asianhallintaan kestää 10-70 sekuntia."
+                  operaatio="tallennaHakemus(2)"
+                  class="btn btn-success"
+                  ng-disabled="!hakemusKeskenerainen() || !allekirjoitusliitetty || !liitteetOlemassa() || !edellinenHakemusPaatetty()">
+                    Tallenna ja lähetä hakemus
+                </button>
+              </juku-controls-buttons>
+            </juku-controls>
           </div>
         </div>
       </juku-form-section>
     </juku-form>
-
-    <div class="row">
-      <div class="col-md-12">
-        <juku-link-prev ui-sref="app.hakija.hakemukset.list()">
-          Palaa hakemusten päänäkymään
-        </juku-link-prev>
-      </div>
-    </div>
   </div>
 </div>
