@@ -210,7 +210,11 @@ angular.module('jukufrontApp')
         return $scope.hakemus.taydennyspyynto != null;
       };
 
-      $scope.haeLajitunnus = function(organisaatioid){
+      $scope.haeLajitunnus = function(organisaatioid) {
+        if(organisaatioid === undefined) {
+          return;
+        }
+
         return _.find($rootScope.organisaatiot, {'id': organisaatioid}).lajitunnus;
       };
 

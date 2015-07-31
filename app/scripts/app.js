@@ -199,6 +199,7 @@ angular
   .directive('jukuUserDropdown', require('components/userDropdown'))
   .directive('jukuLinkNext', require('components/navigationLink').next)
   .directive('jukuLinkPrev', require('components/navigationLink').prev)
+  .directive('jukuNavigationLinks', require('components/navigationLinks'))
   .directive('jukuFormSection', require('components/formSection'))
   .directive('jukuFormRow', require('components/formRow'))
   .directive('jukuForm', require('components/form'))
@@ -208,6 +209,8 @@ angular
   .directive('jukuCheckbox', require('components/checkbox'))
   .directive('jukuAvustuskohde', require('components/avustuskohde'))
   .directive('hakemusLabel', require('components/hakemusLabel'))
+  .directive('jukuControls', require('components/controls'))
+  .directive('jukuControlsButtons', require('components/controls/buttons'))
   .directive('jukuStatisticDropdown', require('components/statisticDropdown'));
 
 require('./controllers/hakija/hakemukset');
