@@ -6,6 +6,7 @@ var angular = require('angular');
 angular.module('jukufrontApp')
   .controller('HakijaTunnusluvutCtrl', ['$scope', 'uiGridConstants', '$q', function ($scope, uiGridConstants, $q) {
     $scope.lks_grid1 = {
+      enableCellEditOnFocus: true,
       minRowsToShow: 3,
       columnDefs: [
         {name: 'Selite', displayName: 'Selite', enableCellEdit: false, width: '60%'},
@@ -35,6 +36,7 @@ angular.module('jukufrontApp')
     ];
 
     $scope.lks_grid2 = {
+      enableCellEditOnFocus: true,
       minRowsToShow: 12,
       columnDefs: [
         {
@@ -124,6 +126,7 @@ angular.module('jukufrontApp')
     ];
 
     $scope.lks_grid3 = {
+      enableCellEditOnFocus: true,
       minRowsToShow: 5,
       columnDefs: [
         {name: 'Bruttoliikenteen tarjouskilpailut', displayName: 'Bruttoliikenteen tarjouskilpailut', enableCellEdit: true, width: '40%'},
