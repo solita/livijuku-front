@@ -2,7 +2,7 @@
 <h1>JUKU-palvelun käyttäjätiedot</h1>
   <h3>TOIMIVALTAISET VIRANOMAISET</h3>
   <table st-table="toimivaltaiset" class="table table-hover table-condensed"
-         st-safe-src=toimivaltaiset>
+         st-safe-src=toimivaltaiset_viranomaiset>
     <thead>
     <tr>
       <th st-sort="nimi">Nimi</th>
@@ -14,11 +14,19 @@
     </tr>
     </thead>
     <tbody>
+    <tr ng-repeat="toimivaltainen in toimivaltaiset">
+      <td>{{toimivaltainen.nimi}}</td>
+      <td>{{toimivaltainen.organisaatio}}</td>
+      <td>{{toimivaltainen.rooli}}</td>
+      <td>{{toimivaltainen.sahkoposti}}</td>
+      <td>{{toimivaltainen.puhelinnumero}}</td>
+      <td>{{toimivaltainen.viimeisin_kirjautuminen | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+    </tr>
      </tbody>
   </table>
   <h3>LIIKENNEVIRASTON HENKILÖT</h3>
-  <table st-table="toimivaltaiset" class="table table-hover table-condensed"
-         st-safe-src=toimivaltaiset>
+  <table st-table="liikennevirasto" class="table table-hover table-condensed"
+         st-safe-src=liikenneviraston_henkilot>
     <thead>
     <tr>
       <th st-sort="nimi">Nimi</th>
@@ -28,6 +36,12 @@
     </tr>
     </thead>
     <tbody>
+    <tr ng-repeat="henkilo in liikennevirasto">
+      <td>{{henkilo.nimi}}</td>
+      <td>{{henkilo.rooli}}</td>
+      <td>{{henkilo.sahkoposti}}</td>
+      <td>{{henkilo.puhelinnumero}}</td>
+    </tr>
     </tbody>
   </table>
 </div>
