@@ -1,0 +1,54 @@
+<div class="container">
+  <h1>JUKUn käyttäjätilin asetukset</h1>
+  <juku-form name="asetuksetForm">
+    <juku-form-section>
+      <h3>PERUSTIEDOT</h3>
+      <juku-form-row>
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Nimi</h5>
+
+            <p>{{nimi}}</p>
+          </div>
+          <div class="col-md-4">
+            <h5>Organisaatio</h5>
+
+            <p>Suomenkylä</p>
+          </div>
+          <div class="col-md-4">
+            <h5>Rooli</h5>
+
+            <p>{{rooli}}</p>
+          </div>
+        </div>
+      </juku-form-row>
+      <juku-form-row>
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Käyttäjätunnus</h5>
+
+            <p>{{kayttajatunnus}}</p>
+          </div>
+          <div class="col-md-4">
+            <h5>Sähköposti</h5>
+
+            <p>{{sahkoposti}}</p>
+          </div>
+          <div class="col-md-4">
+            <h5>Puhelinnumero</h5>
+
+            <p>{{puhelinnumero}}</p>
+          </div>
+        </div>
+      </juku-form-row>
+      <p>Onko käyttäjätiedoissa virheitä? Lähetä korjauspyyntö osoitteeseen <a href="mailto:juku@liikennevirasto.fi">juku@liikennevirasto.fi</a>.
+        Korjaamme tietosi mahdollisimman pian.</p>
+    </juku-form-section>
+    <juku-form-section>
+      <h3>SÄHKÖPOSTIASETUKSET</h3>
+      <juku-form-row>
+        <label><input type="checkbox" ng-model="sahkopostitilaus"> Haluan vastaanottaa JUKU-palvelun lähettämiä sähköposteja.</label>
+      </juku-form-row>
+    </juku-form-section>
+  </juku-form>
+</div>

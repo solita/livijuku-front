@@ -123,6 +123,11 @@ angular
         template: require('views/yhteinen/kayttajatiedot.html'),
         controller: 'KayttajatiedotCtrl'
       })
+      .state('app.hakija.asetukset', {
+        url: '/asetukset',
+        template: require('views/hakija/asetukset.html'),
+        controller: 'HakijaAsetuksetCtrl'
+      })
 
       /*
        * Käsittelijä
@@ -219,6 +224,7 @@ angular
   .directive('jukuConfirmation', require('components/confirmation'))
   .directive('jukuStatisticDropdown', require('components/statisticDropdown'));
 
+require('./controllers/hakija/asetukset');
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
