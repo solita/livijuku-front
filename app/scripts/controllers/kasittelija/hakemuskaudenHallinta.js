@@ -140,7 +140,7 @@ angular.module('jukufrontApp')
           haeHakemuskaudet();
         })
         .error(function (data) {
-          StatusService.virhe('HakemuskausiService.luoUusi(' + vuosi + ')', data.type+':'+data.message);
+          StatusService.virhe('HakemuskausiService.luoUusi(' + vuosi + ')', data.type + ':' + data.message);
         });
     };
 
@@ -153,50 +153,51 @@ angular.module('jukufrontApp')
       $scope.muokkaaHakuaikojaVuosi = vuosi;
     };
 
-    $scope.hakemuskausiAvoin = function(hakemuskausi){
+    $scope.hakemuskausiAvoin = function (hakemuskausi) {
       if (typeof hakemuskausi === 'undefined') return false;
-      return hakemuskausi.tilatunnus=='A';
+      return hakemuskausi.tilatunnus == 'A';
     };
 
-    $scope.hakemuskausiKaynnistetty = function(hakemuskausi){
+    $scope.hakemuskausiKaynnistetty = function (hakemuskausi) {
       if (typeof hakemuskausi === 'undefined') return false;
-      return hakemuskausi.tilatunnus=='K';
+      return hakemuskausi.tilatunnus == 'K';
     };
 
     $scope.tallennaHakuajat = function (formi, vuosi, ah0alkupvm, ah0loppupvm, mh1alkupvm, mh1loppupvm, mh2alkupvm, mh2loppupvm) {
       StatusService.tyhjenna();
       $scope.$broadcast('show-errors-check-validity');
-      if (formi.$valid) {
-        var hakuajat = [
-          {
-            hakemustyyppitunnus: "AH0",
-            alkupvm: epochToISOString(ah0alkupvm),
-            loppupvm: epochToISOString(ah0loppupvm)
-          },
-          {
-            hakemustyyppitunnus: "MH1",
-            alkupvm: epochToISOString(mh1alkupvm),
-            loppupvm: epochToISOString(mh1loppupvm)
-          },
-          {
-            hakemustyyppitunnus: "MH2",
-            alkupvm: epochToISOString(mh2alkupvm),
-            loppupvm: epochToISOString(mh2loppupvm)
-          }
-        ];
 
-        HakemuskausiService.saveHakuajat(vuosi, hakuajat)
-          .success(function () {
-            StatusService.ok('HakemuskausiService.saveHakuajat(' + vuosi + ')', 'Hakuaikojen: tallennus vuodelle ' + vuosi + ' onnistui.');
-            $scope.muokkaaHakuaikojaVuosi = null;
-            haeHakemuskaudet();
-          })
-          .error(function (data) {
-            StatusService.virhe('HakemuskausiService.saveHakuajat(' + vuosi + ')', data.message);
-          });
-      } else {
+      if (!formi.$valid) {
         StatusService.virhe('HakemuskausiService.saveHakuajat()', 'Korjaa lomakkeen virheet ennen tallentamista.');
+        return;
       }
+      var hakuajat = [
+        {
+          hakemustyyppitunnus: "AH0",
+          alkupvm: epochToISOString(ah0alkupvm),
+          loppupvm: epochToISOString(ah0loppupvm)
+        },
+        {
+          hakemustyyppitunnus: "MH1",
+          alkupvm: epochToISOString(mh1alkupvm),
+          loppupvm: epochToISOString(mh1loppupvm)
+        },
+        {
+          hakemustyyppitunnus: "MH2",
+          alkupvm: epochToISOString(mh2alkupvm),
+          loppupvm: epochToISOString(mh2loppupvm)
+        }
+      ];
+
+      HakemuskausiService.saveHakuajat(vuosi, hakuajat)
+        .success(function () {
+          StatusService.ok('HakemuskausiService.saveHakuajat(' + vuosi + ')', 'Hakuaikojen: tallennus vuodelle ' + vuosi + ' onnistui.');
+          $scope.muokkaaHakuaikojaVuosi = null;
+          haeHakemuskaudet();
+        })
+        .error(function (data) {
+          StatusService.virhe('HakemuskausiService.saveHakuajat(' + vuosi + ')', data.message);
+        });
     };
 
     $scope.valitseHakemustyyppi = function (tyyppi) {
