@@ -149,49 +149,31 @@ angular.module('jukufrontApp')
       }
       ];
 
-    $scope.saveRow_grid1 = function (rowEntity) {
-      console.log('Saving row:', rowEntity);
-      //create a fake promise - normally you'd use the promise returned by $http or $resource
-      var promise = $q.defer();
-      $scope.lks_grid1Api.rowEdit.setSavePromise(rowEntity, promise.promise);
-
-      promise.resolve();
-    };
-
-    $scope.saveRow_grid2 = function (rowEntity) {
-      console.log('Saving row:', rowEntity);
-      //create a fake promise - normally you'd use the promise returned by $http or $resource
-      var promise = $q.defer();
-      $scope.lks_grid2Api.rowEdit.setSavePromise(rowEntity, promise.promise);
-
-      promise.resolve();
-    };
-
-    $scope.saveRow_grid3 = function (rowEntity) {
-      console.log('Saving row:', rowEntity);
-      //create a fake promise - normally you'd use the promise returned by $http or $resource
-      var promise = $q.defer();
-      $scope.lks_grid3Api.rowEdit.setSavePromise(rowEntity, promise.promise);
-
-      promise.resolve();
-    };
-
-    $scope.lks_grid1.onRegisterApi = function(gridApi){
+    $scope.lks_grid1.onRegisterApi = function (gridApi) {
       //set gridApi on scope
       $scope.lks_grid1Api = gridApi;
-      gridApi.rowEdit.on.saveRow($scope, $scope.saveRow_grid1);
+      gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+        console.log('rowentity:',rowEntity);
+        $scope.$apply();
+      });
     };
 
-    $scope.lks_grid2.onRegisterApi = function(gridApi){
+    $scope.lks_grid2.onRegisterApi = function (gridApi) {
       //set gridApi on scope
       $scope.lks_grid2Api = gridApi;
-      gridApi.rowEdit.on.saveRow($scope, $scope.saveRow_grid2);
+      gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+        console.log('rowentity:',rowEntity);
+        $scope.$apply();
+      });
     };
 
-    $scope.lks_grid3.onRegisterApi = function(gridApi){
+    $scope.lks_grid3.onRegisterApi = function (gridApi) {
       //set gridApi on scope
       $scope.lks_grid3Api = gridApi;
-      gridApi.rowEdit.on.saveRow($scope, $scope.saveRow_grid3);
+      gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+        console.log('rowentity:',rowEntity);
+        $scope.$apply();
+      });
     };
 
     $scope.uusiRivi = function() {
