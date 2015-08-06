@@ -54,8 +54,7 @@ angular
     'ui.validate',
     'ui.grid',
     'ui.grid.edit',
-    'ui.grid.rowEdit',
-    'ui.grid.resizeColumns',
+    'ui.grid.cellNav',
     'nvd3'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
@@ -102,6 +101,11 @@ angular
         template: require('views/hakija/hakemus.html'),
         controller: 'HakemusCtrl'
       }))
+      .state('app.hakija.hakemukset.elyhakemus', {
+        url: '/elyhakemus/:vuosi/:id',
+        template: require('views/hakija/elyhakemus.html'),
+        controller: 'ElyHakemusCtrl'
+      })
       .state('app.hakija.hakemukset.list', restrictRoute(isHakija, {
         url: '/',
         template: require('views/hakija/hakemukset.html'),
@@ -231,6 +235,7 @@ require('./controllers/kasittelija/hakemuskaudenHallinta');
 require('./controllers/kasittelija/paatos');
 require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/hakemus');
+require('./controllers/yhteinen/elyhakemus');
 require('./controllers/yhteinen/kayttajatiedot');
 require('./controllers/yhteinen/paanaytto');
 require('./controllers/yhteinen/tunnusluvut');

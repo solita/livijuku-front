@@ -1,0 +1,67 @@
+<div class="container">
+
+  <div>
+    <!-- Navigaatio -->
+    <juku-navigation>
+      <juku-link-prev ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'AH0'})">
+        Palaa hakemusten päänäkymään
+      </juku-link-prev>
+    </juku-navigation>
+
+    <juku-form name="elyhakemusForm" juku-poistumisvaroitus="">
+      <h1>ELYjen määrärahatarpeet {{hakemus.vuosi}}</h1>
+
+      <div class="row" ng-show="hasPaatos(hakemus.hakemustilatunnus)">
+        <div class="col-md-12">
+          <p>
+            <a href="{{haePaatosPdf()}}" target="_blank">
+              <span class="glyphicon glyphicon-file"></span>
+              <b>Avaa päätös (PDF)</b>
+            </a>
+            &nbsp;&nbsp;
+            <a href="api/hakemus/{{hakemusid}}/paatos/pdf" target="_self"
+               download="{{tyyppi}}_paatos_{{vuosi}}.pdf"><span class="glyphicon glyphicon-download-alt"></span> Lataa
+              pdf</a>
+          </p>
+
+          <p>
+            <a href="resources/OIKAISUVAATIMUSOSOITUS.docx" target="_blank">
+              <span class="glyphicon glyphicon-file"></span>
+              Avaa oikaisuvaatimusosoitus (DOCX)
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <juku-form-section>
+        <h3>PERUSTIEDOT</h3>
+
+        <juku-form-row>
+          <h5>ELY-keskus</h5>
+          {{hakija}}
+        </juku-form-row>
+        <juku-form-row>
+          <h5>Hakemuksen tila</h5>
+          <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" tyyppi="{{tyyppi}}"/>
+        </juku-form-row>
+        <juku-form-row ng-hide="hakemusKeskenerainen()">
+          <h5>Käsittelijä</h5>
+          {{hakemus.kasittelijanimi}}
+        </juku-form-row>
+        <juku-form-row ng-show="hakemusTaydennettavana() && taydennyspyyntoSeliteOlemassa()"
+                       class="alert alert-warning">
+          <strong>Täydennyspyyntöviesti käsittelijältä, määräpäivä: {{hakemus.taydennyspyynto.maarapvm |
+            date:'dd.MM.yyyy'}}! </strong><br> {{hakemus.taydennyspyynto.selite}}
+        </juku-form-row>
+      </juku-form-section>
+      <juku-form-section>
+        <h3>MÄÄRÄTARPEET</h3>
+        <div id="ely_maaratarpeet" ui-grid="ely_maaratarpeet" ui-grid-resize-columns ui-grid-edit ui-grid-cellnav class="grid"></div>
+      </juku-form-section>
+      <juku-form-section>
+        <h3>KEHITTÄMISHANKKEIDEN ERITTELY HANKKEITTAIN</h3>
+        <div id="ely_kehittamishankkeet" ui-grid="ely_kehittamishankkeet" ui-grid-resize-columns ui-grid-edit ui-grid-cellnav class="grid"></div>
+      </juku-form-section>
+    </juku-form>
+  </div>
+</div>

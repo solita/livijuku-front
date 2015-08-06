@@ -182,12 +182,9 @@
                   </thead>
                   <tbody>
                   <tr ng-repeat="hakemus in elydisplayed"
-                      ui-sref="app.kasittelija.hakemukset.hakemus({
+                      ui-sref="app.hakija.hakemukset.elyhakemus({
                         vuosi: hakemuksetPerVuosi.vuosi,
-                        id: hakemus.avustushakemusId,
-                        m1id: hakemus.maksatushakemus1Id,
-                        m2id: hakemus.maksatushakemus2Id,
-                        tyyppi: tyyppi
+                        id: hakemus.avustushakemusId
                       })">
                     <td>{{hakemus.hakija}}</td>
                     <td>
