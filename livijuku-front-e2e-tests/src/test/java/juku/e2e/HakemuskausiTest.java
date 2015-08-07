@@ -65,26 +65,21 @@ public class HakemuskausiTest extends TestBase {
     }
 
     private void asetaAvustuskaudenAlkupaiva0101() {
-        findElementByLinkText("Muokkaa hakuaikoja").click();
-        String datepicker = ".panel-primary > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > p:nth-child(1)";
+        findElementByCssSelector("#test-muokkaa-hakuaikoja").click();
 
-        WebElement avustushakemuskaudenAlkupv = findElementByCssSelector(
-                datepicker + " > span:nth-child(3) > button:nth-child(1)");
+        WebElement avustushakemuskaudenAlkupv = findElementByCssSelector("#test-alkupvm-datepicker-button");
         avustushakemuskaudenAlkupv.click();
-        WebElement vuosikuukausiValitsin = findElementByCssSelector(
-                datepicker
-                        + " > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(2) > button");
+
+        WebElement vuosikuukausiValitsin = findElementByCssSelector("#test-alkupvm-datepicker thead > tr:nth-child(1) > th:nth-child(2) button");
         vuosikuukausiValitsin.click();
-        WebElement kuukausi01 = findElementByCssSelector(
-                datepicker
-                        + " > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > button");
+
+        WebElement kuukausi01 = findElementByCssSelector("#test-alkupvm-datepicker tbody tr:first-child td:first-child button");
         kuukausi01.click();
-        WebElement paiva01 = findElementByCssSelector(
-                datepicker
-                        + " > ul:nth-child(2) > li:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(5) > button");
+
+        WebElement paiva01 = findElementByCssSelector("#test-alkupvm-datepicker tbody tr:first-child td:nth-child(5) button");
         paiva01.click();
 
-        findElementByLinkText("Tallenna hakuajat").click();
+        findElementByCssSelector("#test-alkupvm-tallenna").click();
         waitForAngularRequestsToFinish(driver());
     }
 
