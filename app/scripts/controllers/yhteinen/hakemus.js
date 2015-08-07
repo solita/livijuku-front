@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-var $ = require('jquery');
 var angular = require('angular');
 var pdf = require('utils/pdfurl');
 
@@ -249,68 +248,76 @@ angular.module('jukufrontApp')
         return _.sum(avustuskohteet, 'haettavaavustus');
       };
 
+      function validiHakemus() {
+        return ($scope.hakemusForm.$valid && $scope.onAvustushakemus()) ||
+               (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) &&
+                $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn());
+      }
+
       $scope.tallennaHakemus = function (lisatoiminto) {
         StatusService.tyhjenna();
         $scope.$broadcast('show-errors-check-validity');
 
-        if(($scope.hakemusForm.$valid && $scope.onAvustushakemus()) || (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) && $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn())) {
-          if(lisatoiminto === 1) {
-            var ikkuna = $window.open('about:blank', '_blank');
-          }
-          var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
-            return l.avustuskohteet;
-          }));
-
-          avustuskohteet = _.map(avustuskohteet, function (kohde) {
-            return _.omit(kohde, 'alv');
-          });
-
-          AvustuskohdeService.tallenna(avustuskohteet)
-            .success(function () {
-              var tallennusOk = true;
-              if($scope.hakemus.selite) {
-                var selitedata = {
-                  'selite': $scope.hakemus.selite,
-                  'hakemusid': $scope.hakemusid
-                };
-                HakemusService.tallennaSelite(selitedata)
-                  .success(function () {
-                  })
-                  .error(function (data) {
-                    StatusService.virhe('HakemusService.tallennaSelite(' + selitedata + ')', data.message);
-                    tallennusOk = false;
-                  });
-              }
-              if(tallennusOk) {
-                StatusService.ok('AvustuskohdeService.tallenna()', 'Tallennus onnistui.');
-                $scope.hakemusForm.$setPristine();
-                haeHakemukset();
-                switch (lisatoiminto) {
-                  case 0:
-                    // Pelkka tallennus
-                    break;
-                  case 1:
-                    // Esikatselu
-                    ikkuna.location.href = pdf.getHakemusPdfUrl($scope.hakemusid);
-                    break;
-                  case 2:
-                    // Laheta
-                    if($scope.hakemus.hakemustilatunnus === 'K') {
-                      lahetaHakemus();
-                    } else if($scope.hakemus.hakemustilatunnus === 'T0') {
-                      lahetaTaydennys();
-                    }
-                    break;
-                }
-              }
-            })
-            .error(function (data) {
-              StatusService.virhe('AvustuskohdeService.tallenna()', data.message);
-            });
-        } else {
-          $('input.ng-invalid').eq(0).focus();
+        if(!validiHakemus()) {
+          $scope.$emit('focus-invalid');
           StatusService.virhe('AvustuskohdeService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
+          return;
         }
+
+        if(lisatoiminto === 1) {
+          var ikkuna = $window.open('about:blank', '_blank');
+        }
+        var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
+          return l.avustuskohteet;
+        }));
+
+        avustuskohteet = _.map(avustuskohteet, function (kohde) {
+          return _.omit(kohde, 'alv');
+        });
+
+        AvustuskohdeService.tallenna(avustuskohteet)
+        .success(function () {
+          var tallennusOk = true;
+          if($scope.hakemus.selite) {
+            var selitedata = {
+              'selite': $scope.hakemus.selite,
+              'hakemusid': $scope.hakemusid
+            };
+            HakemusService.tallennaSelite(selitedata)
+              .success(function () {
+              })
+              .error(function (data) {
+                StatusService.virhe('HakemusService.tallennaSelite(' + selitedata + ')', data.message);
+                tallennusOk = false;
+              });
+          }
+          if(tallennusOk) {
+            StatusService.ok('AvustuskohdeService.tallenna()', 'Tallennus onnistui.');
+            $scope.hakemusForm.$setPristine();
+            haeHakemukset();
+            switch (lisatoiminto) {
+              case 0:
+                // Pelkka tallennus
+                break;
+              case 1:
+                // Esikatselu
+                ikkuna.location.href = pdf.getHakemusPdfUrl($scope.hakemusid);
+                break;
+              case 2:
+                // Laheta
+                if($scope.hakemus.hakemustilatunnus === 'K') {
+                  lahetaHakemus();
+                } else if($scope.hakemus.hakemustilatunnus === 'T0') {
+                  lahetaTaydennys();
+                }
+                break;
+            }
+          }
+        })
+        .error(function (data) {
+          StatusService.virhe('AvustuskohdeService.tallenna()', data.message);
+        });
+
       };
 
       $scope.tarkastaHakemus = function () {
