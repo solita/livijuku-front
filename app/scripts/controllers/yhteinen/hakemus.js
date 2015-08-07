@@ -112,11 +112,11 @@ angular.module('jukufrontApp')
         var avustushakemusOmaRahoitus = 0;
         var maksatushakemusHaettavaAvustus = 0;
         var maksatushakemusOmaRahoitus = 0;
-        if ($scope.tyyppi !== "AH0" && (typeof $scope.avustushakemusArvot) !== 'undefined') {
+        if($scope.tyyppi !== 'AH0' && (typeof $scope.avustushakemusArvot) !== 'undefined') {
           avustushakemusHaettavaAvustus = haeVertailuArvo($scope.avustushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'haettavaavustus');
           avustushakemusOmaRahoitus = haeVertailuArvo($scope.avustushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'omarahoitus');
         }
-        if ($scope.tyyppi === "MH2" && (typeof $scope.maksatushakemusArvot) !== 'undefined') {
+        if($scope.tyyppi === 'MH2' && (typeof $scope.maksatushakemusArvot) !== 'undefined') {
           maksatushakemusHaettavaAvustus = haeVertailuArvo($scope.maksatushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'haettavaavustus');
           maksatushakemusOmaRahoitus = haeVertailuArvo($scope.maksatushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'omarahoitus');
         }
@@ -133,46 +133,64 @@ angular.module('jukufrontApp')
       };
 
       $scope.hakemusKeskenerainen = function () {
-        if (typeof $scope.hakemus === 'undefined') return false;
-        return ($scope.hakemus.hakemustilatunnus == 'K' || $scope.hakemus.hakemustilatunnus == 'T0');
+        if(typeof $scope.hakemus === 'undefined') {
+          return false;
+        }
+        return ($scope.hakemus.hakemustilatunnus === 'K' || $scope.hakemus.hakemustilatunnus === 'T0');
       };
 
       $scope.hakemusTaydennettavana = function () {
-        if (typeof $scope.hakemus === 'undefined') return false;
-        return ($scope.hakemus.hakemustilatunnus == 'T0');
+        if(typeof $scope.hakemus === 'undefined') {
+          return false;
+        }
+        return ($scope.hakemus.hakemustilatunnus === 'T0');
       };
 
       $scope.hakemusVireilla = function () {
-        if (typeof $scope.hakemus === 'undefined') return false;
-        return ($scope.hakemus.hakemustilatunnus == 'V' || $scope.hakemus.hakemustilatunnus == 'TV');
+        if(typeof $scope.hakemus === 'undefined') {
+          return false;
+        }
+        return ($scope.hakemus.hakemustilatunnus === 'V' || $scope.hakemus.hakemustilatunnus === 'TV');
       };
 
       $scope.hasPaatos = function (hakemustilatunnus) {
-        return hakemustilatunnus == 'P' || hakemustilatunnus == 'M';
+        return hakemustilatunnus === 'P' || hakemustilatunnus === 'M';
       };
 
       $scope.maksatushakemus1PaatosOlemassa = function () {
-        return ($scope.maksatushakemus1Paatos != null && $scope.maksatushakemus1Paatos.voimaantuloaika != null);
+        return ($scope.maksatushakemus1Paatos && $scope.maksatushakemus1Paatos.voimaantuloaika);
       };
 
       $scope.maksatushakemus1PaatosMaksettu = function () {
-        if (typeof $scope.maksatushakemus1Paatos !== 'undefined') return $scope.maksatushakemus1Paatos.myonnettyavustus;
+        if(typeof $scope.maksatushakemus1Paatos !== 'undefined') {
+          return $scope.maksatushakemus1Paatos.myonnettyavustus;
+        }
       };
 
       $scope.myonnettyAvustusPerJakso = function () {
-        if (typeof $scope.paatos === 'undefined') return false;
-        if ($scope.tyyppi == "MH1") return ($scope.paatos.myonnettyavustus / 2);
-        if (typeof $scope.maksatushakemus1Paatos === 'undefined') return false;
-        if ($scope.tyyppi == "MH2") return ($scope.paatos.myonnettyavustus - $scope.maksatushakemus1Paatos.myonnettyavustus);
+        if(typeof $scope.paatos === 'undefined') {
+          return false;
+        }
+        if($scope.tyyppi === 'MH1') {
+          return ($scope.paatos.myonnettyavustus / 2);
+        }
+        if(typeof $scope.maksatushakemus1Paatos === 'undefined') {
+          return false;
+        }
+        if($scope.tyyppi === 'MH2') {
+          return $scope.paatos.myonnettyavustus - $scope.maksatushakemus1Paatos.myonnettyavustus;
+        }
       };
 
       $scope.myonnettyAvustusPerVuosi = function () {
-        if (typeof $scope.paatos === 'undefined') return false;
+        if(typeof $scope.paatos === 'undefined') {
+          return false;
+        }
         return $scope.paatos.myonnettyavustus;
       };
 
       $scope.naytaHakemus = function (tila) {
-        if (tila == 'K' || tila == 'T0') {
+        if(tila === 'K' || tila === 'T0') {
           $scope.tallennaHakemus(1);
         } else {
           $window.open(pdf.getHakemusPdfUrl($scope.hakemusid));
@@ -180,34 +198,40 @@ angular.module('jukufrontApp')
       };
 
       $scope.onAvustushakemus = function () {
-        return $scope.tyyppi == 'AH0';
+        return $scope.tyyppi === 'AH0';
       };
 
       $scope.onMaksatushakemus1 = function () {
-        return $scope.tyyppi == 'MH1';
+        return $scope.tyyppi === 'MH1';
       };
 
       $scope.onMaksatushakemus2 = function () {
-        return $scope.tyyppi == 'MH2';
+        return $scope.tyyppi === 'MH2';
       };
 
       $scope.avustushakemusPaatosOlemassa = function () {
-        return ($scope.paatos != null && $scope.paatos.voimaantuloaika != null);
+        return $scope.paatos && $scope.paatos.voimaantuloaika;
       };
 
       $scope.edellinenHakemusPaatetty = function () {
-        if ($scope.onAvustushakemus()) return true;
-        else return $scope.avustushakemusPaatosOlemassa();
+        if($scope.onAvustushakemus()) {
+          return true;
+        }
+        return $scope.avustushakemusPaatosOlemassa();
       };
 
       $scope.seliteOlemassa = function (hakemus) {
-        if (typeof hakemus === 'undefined') return false;
-        return hakemus.selite != null;
+        if(typeof hakemus === 'undefined') {
+          return false;
+        }
+        return hakemus.selite;
       };
 
       $scope.taydennyspyyntoSeliteOlemassa = function () {
-        if (typeof $scope.hakemus === 'undefined') return false;
-        return $scope.hakemus.taydennyspyynto != null;
+        if(typeof $scope.hakemus === 'undefined') {
+          return false;
+        }
+        return $scope.hakemus.taydennyspyynto;
       };
 
       $scope.haeLajitunnus = function(organisaatioid) {
@@ -229,8 +253,10 @@ angular.module('jukufrontApp')
         StatusService.tyhjenna();
         $scope.$broadcast('show-errors-check-validity');
 
-        if (($scope.hakemusForm.$valid && $scope.onAvustushakemus()) || (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) && $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn())) {
-          if (lisatoiminto === 1) var ikkuna = $window.open('about:blank', '_blank');
+        if(($scope.hakemusForm.$valid && $scope.onAvustushakemus()) || (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) && $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn())) {
+          if(lisatoiminto === 1) {
+            var ikkuna = $window.open('about:blank', '_blank');
+          }
           var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
             return l.avustuskohteet;
           }));
@@ -242,7 +268,7 @@ angular.module('jukufrontApp')
           AvustuskohdeService.tallenna(avustuskohteet)
             .success(function () {
               var tallennusOk = true;
-              if ($scope.hakemus.selite !== null) {
+              if($scope.hakemus.selite) {
                 var selitedata = {
                   'selite': $scope.hakemus.selite,
                   'hakemusid': $scope.hakemusid
@@ -255,7 +281,7 @@ angular.module('jukufrontApp')
                     tallennusOk = false;
                   });
               }
-              if (tallennusOk) {
+              if(tallennusOk) {
                 StatusService.ok('AvustuskohdeService.tallenna()', 'Tallennus onnistui.');
                 $scope.hakemusForm.$setPristine();
                 haeHakemukset();
@@ -269,9 +295,9 @@ angular.module('jukufrontApp')
                     break;
                   case 2:
                     // Laheta
-                    if ($scope.hakemus.hakemustilatunnus == 'K') {
+                    if($scope.hakemus.hakemustilatunnus === 'K') {
                       lahetaHakemus();
-                    } else if ($scope.hakemus.hakemustilatunnus == 'T0') {
+                    } else if($scope.hakemus.hakemustilatunnus === 'T0') {
                       lahetaTaydennys();
                     }
                     break;
@@ -317,22 +343,22 @@ angular.module('jukufrontApp')
       $scope.vuosi = $stateParams.vuosi;
       $scope.alv = false;
 
-      if ($scope.tyyppi === "AH0") {
+      if($scope.tyyppi === 'AH0') {
         $scope.hakemusid = parseInt($scope.avustushakemusid);
-      } else if ($scope.tyyppi == "MH1") {
+      } else if($scope.tyyppi === 'MH1') {
         $scope.hakemusid = parseInt($scope.maksatushakemus1id);
         $scope.ajankohta = '1.1.-30.6.';
-        haeAvustuskohteet($scope.avustushakemusid, "avustushakemusArvot");
-      } else if ($scope.tyyppi == "MH2") {
+        haeAvustuskohteet($scope.avustushakemusid, 'avustushakemusArvot');
+      } else if($scope.tyyppi === 'MH2') {
         $scope.hakemusid = parseInt($scope.maksatushakemus2id);
         $scope.ajankohta = '1.7.-31.12.';
-        haeAvustuskohteet($scope.avustushakemusid, "avustushakemusArvot");
-        haeAvustuskohteet($scope.maksatushakemus1id, "maksatushakemusArvot");
+        haeAvustuskohteet($scope.avustushakemusid, 'avustushakemusArvot');
+        haeAvustuskohteet($scope.maksatushakemus1id, 'maksatushakemusArvot');
         haeMaksatushakemus1Paatos();
       }
 
       haeHakemukset();
-      haeAvustuskohteet($scope.hakemusid, "avustuskohdeluokat");
+      haeAvustuskohteet($scope.hakemusid, 'avustuskohdeluokat');
       haePaatos();
       $window.scrollTo(0, 0);
     }
