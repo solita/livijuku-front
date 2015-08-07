@@ -6,7 +6,7 @@
     display inline-block
     margin-top 0.25em
     .hakemus-summary__count
-      width 3em
+      width 4em
       display inline-block
 
     li
@@ -15,3 +15,43 @@
 
 .hakemus-summary__not-active
   padding-top: 40%
+
+
+.hakemus-summary__hakuajat
+  position: absolute
+  width: 100%
+  bottom: 0
+  left: 0
+  padding: 1em
+  padding-bottom: 1em
+
+
+.hakuajat__button
+  margin-top: 0.5em
+
+.hakuajat_input
+  font-size: 10px
+  border-radius: 3px
+  margin-bottom: 0.5em
+
+  .form-control[readonly]
+    padding: 0.4em
+    background: #fbfbfb
+    color: #bbb
+    border: 1px solid #ccc
+
+  .form-control.ng-invalid
+    border-color: #E48280
+    color: #E48280
+    & ~ .input-group-btn .hakuajat_calendar
+      border-color: #E48280
+
+  table
+    background: #fff
+
+
+.hakuajat__error
+  margin-top: 1em
+
+.hakemus-summary__warning
+  font-size 0.7em

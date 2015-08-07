@@ -2,6 +2,7 @@
 var angular = require('angular');
 var {isHakija, isKasittelija} = require('utils/user');
 var {restrictRoute, defaultView} = require('utils/router');
+var hakemuksenTilat = require('utils/hakemuksenTilat');
 
 require('angular-toastr');
 require('angular-resource');
@@ -187,13 +188,15 @@ angular
   }])
   .run(['$rootScope', '$state', function ($rootScope, $state) {
     $rootScope.constants = {
-      hakemustyypit: ['AH0', 'MH1', 'MH2']
+      hakemustyypit: ['AH0', 'MH1', 'MH2'],
+      hakemuksenTilat: hakemuksenTilat.getAll()
     };
 
     $rootScope.$on('$stateChangeError', () => {
       $state.go('redirect');
     });
   }])
+  .directive('chronologicalOrder', require('validators/chronologicalOrder'))
   .directive('jukuHeader', require('components/header'))
   .directive('jukuSidebar', require('components/sidebar'))
   .directive('jukuNavigation', require('components/navigation'))

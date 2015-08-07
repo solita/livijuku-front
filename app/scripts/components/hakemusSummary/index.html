@@ -1,34 +1,71 @@
 <div class="hakemus-summary">
-  <div ng-show="!hakemus.kaynnissa" class="hakemus-summary__not-active">Ei Käynnissä</div>
-  <ul class="hakemus-summary__list" ng-show="hakemus.kaynnissa">
-    <li>
-      <span class="hakemus-summary__count">{{hakemus.tilat.K}}/{{hakemus.total}}</span>
-      <hakemus-label tila="K" />
-    </li>
+  <div ng-show="!utils.hakemusKaynnissa(hakemus)" class="hakemus-summary__not-active">Ei Käynnissä</div>
+  <ul class="hakemus-summary__list" ng-show="utils.hakemusKaynnissa(hakemus)">
 
-    <li>
-      <span class="hakemus-summary__count">{{hakemus.tilat.V}}/{{hakemus.total}}</span>
-      <hakemus-label tila="V" />
-    </li>
-
-    <li>
-      <span class="hakemus-summary__count">{{hakemus.tilat.T0}}/{{hakemus.total}}</span>
-      <hakemus-label tila="T0" />
-    </li>
-
-    <li>
-      <span class="hakemus-summary__count">{{hakemus.tilat.TV}}/{{hakemus.total}}</span>
-      <hakemus-label tila="TV" />
-    </li>
-
-    <li>
-      <span class="hakemus-summary__count">{{hakemus.tilat.T}}/{{hakemus.total}}</span>
-      <hakemus-label tila="T" />
-    </li>
-
-    <li>
-      <span class="hakemus-summary__count">{{hakemus.tilat.P}}/{{hakemus.total}}</span>
-      <hakemus-label tila="P" />
+    <li ng-repeat="tila in hakemuksenTilat">
+      <span class="hakemus-summary__count">
+        {{$parent.utils.hakemuksiaTilassa($parent.hakemus, tila.id)}}
+        / {{$parent.utils.hakemuksiaYhteensa($parent.hakemus)}}
+      </span>
+      <hakemus-label tila="{{tila.id}}" />
     </li>
   </ul>
+  <div class="hakemus-summary__hakuajat" ng-click="stopPropagation($event)">
+    <p>Hakuaika:</p>
+
+    <div ng-hide="editing">
+      <a href="#" ng-click="toggleEditMode($event)" id="{{ testIds ? 'test-muokkaa-hakuaikoja' : ''}}">
+        <i class="glyphicon glyphicon-pencil hakemus-summary__edit"></i>
+      </a>
+      {{hakemus.hakuaika.alkupvm | date:'d.M.yyyy'}} -
+      {{hakemus.hakuaika.loppupvm | date:'d.M.yyyy'}}
+    </div>
+
+    <div ng-show="editing" ng-form="hakuaikaForm">
+
+      <div ng-show="editing"
+           class="input-group hakuajat_input juku-datepicker"
+           tooltip="Alkamispäivämäärän tulee olla ennen loppumispäivämäärää."
+           tooltip-trigger="mouseover"
+           id="{{ testIds && $index === 0 ? 'test-alkupvm-datepicker' : ''}}"
+           tooltip-enable="$index === 0 && $parent.hakuaikaForm.$error.chronologicalOrder"
+           ng-repeat="input in inputs">
+
+        <input name="{{input}}"
+               type="text"
+               class="form-control"
+               datepicker-popup="d.M.yyyy"
+               ng-model="values[input]"
+               datepicker-options="{{dateOptions}}"
+               is-open="calendarOpen[input]"
+               ng-required="true"
+               chronological-order="$parent.inputs"
+               chronological-index="$index"
+               chronological-values="$parent.values"
+               show-button-bar="false" noenter readonly/>
+
+        <span class="input-group-btn">
+          <button
+            type="button"
+            class="btn btn-default hakuajat_calendar"
+            id="{{ testIds && $index === 0 ? 'test-alkupvm-datepicker-button' : ''}}"
+            ng-click="toggleCalendar($event, input)">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </button>
+        </span>
+      </div>
+
+      <div class="hakemus-summary__warning" ng-if="inPast(values.loppupvm)">
+       Huomaa, että loppumispäivämäärä on menneisyydessä
+      </div>
+
+      <button
+        ng-disabled="hakuaikaForm.$invalid"
+        ng-click="save($event)"
+        id="{{ testIds ? 'test-alkupvm-tallenna' : ''}}"
+        class="btn btn-primary hakuajat__button">
+        Tallenna hakuajat
+      </button>
+    </div>
+  </div>
 </div>
