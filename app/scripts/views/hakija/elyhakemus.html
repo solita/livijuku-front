@@ -63,5 +63,46 @@
         <div id="ely_kehittamishankkeet" ui-grid="ely_kehittamishankkeet" ui-grid-resize-columns ui-grid-edit ui-grid-cellnav class="grid"></div>
       </juku-form-section>
     </juku-form>
+    <h3>MÄÄRÄTARPEET (pikainen kokeilu Angular xedittable komponentilla)</h3>
+    <form editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
+
+      <!-- table -->
+      <table class="table table-bordered table-hover table-condensed">
+        <tr style="font-weight: bold">
+          <td style="width:30%">Määrätarpeet</td>
+          <td style="width:15%">€ (2015)</td>
+          <td style="width:55%">Kommentit</td>
+        </tr>
+        <tr ng-repeat="rivi in ely_maaratarpeet.data">
+          <td>
+              {{ rivi.maaratarpeet || 'empty' }}
+            </span>
+          </td>
+          <td>
+            <!-- editable status (select-local) -->
+            <span editable-number="rivi.euros" e-name="euros">
+              {{ rivi.euros }}
+            </span>
+          </td>
+          <td>
+            <!-- editable group (select-remote) -->
+            <span editable-textarea="rivi.kommentit" e-name="kommentit">
+              {{ rivi.kommentit }}
+            </span>
+          </td>
+        </tr>
+      </table>
+
+      <!-- buttons -->
+      <div class="btn-edit">
+        <button type="button" class="btn btn-default" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+          edit
+        </button>
+      </div>
+      <div class="btn-form" ng-show="tableform.$visible">
+        <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
+        <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-default">cancel</button>
+      </div>
+    </form>
   </div>
 </div>

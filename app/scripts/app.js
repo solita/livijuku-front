@@ -20,6 +20,7 @@ require('angular-i18n/angular-locale_fi-fi');
 require('d3/d3.js');
 require('angular-nvd3/lib/nv.d3.js');
 require('angular-nvd3');
+require('angular-xeditable/dist/js/xeditable')
 
 angular
   .module('jukufrontApp', [
@@ -55,7 +56,8 @@ angular
     'ui.grid',
     'ui.grid.edit',
     'ui.grid.cellNav',
-    'nvd3'
+    'nvd3',
+    'xeditable'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 

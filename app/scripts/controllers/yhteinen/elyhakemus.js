@@ -38,15 +38,15 @@ angular.module('jukufrontApp')
         minRowsToShow: 11,
         columnDefs: [
           {
-            name: 'Määrätarpeet',
-            displayName: 'Määrätarpeet',
-            cellTemplate: '<div class="grid-tooltip" tooltip="{{ row.entity.Tooltip }}" tooltip-placement="top" tooltip-append-to-body="true"><div class="ui-grid-cell-contents" >{{ COL_FIELD }}</div>',
+            name: 'maaratarpeet',
+            displayName: 'maaratarpeet',
+            cellTemplate: '<div class="grid-tooltip" tooltip="{{ row.entity.tooltip }}" tooltip-placement="top" tooltip-append-to-body="true"><div class="ui-grid-cell-contents" >{{ COL_FIELD }} <span class="glyphicon glyphicon-question-sign"></span></div>',
             footerCellTemplate: '<div class="ui-grid-cell-contents">Yhteensä</div>',
             enableCellEdit: false,
             width: '30%'
           },
           {
-            name: 'Euros',
+            name: 'euros',
             displayName: '€ (' + $scope.vuosi + ')',
             enableCellEdit: true,
             type: 'number',
@@ -57,8 +57,9 @@ angular.module('jukufrontApp')
             width: '15%'
           },
           {
-            name: 'Kommentit', displayName: 'Kommentit', enableCellEdit: true, width: '55%',
-            cellTemplate: '<div class="ui-grid-cell-contents" style="white-space: normal">{{COL_FIELD CUSTOM_FILTERS}}</div>',
+            name: 'kommentit', displayName: 'kommentit', width: '55%',
+     /*       cellTemplate: '<div class="ui-grid-cell-contents" style="white-space: normal">{{COL_FIELD CUSTOM_FILTERS}}</div>', */
+            editableCellTemplate: '<textarea style="width:100%" ng-class="\'colt\' + col.index" ng-input="MODEL_COL_FIELD" ng-model="MODEL_COL_FIELD"></textarea>',
             footerCellTemplate: '<div class="ui-grid-cell-contents">Menot yhteensä (tulot vähennettynä)</div>'
           }
         ],
@@ -74,7 +75,7 @@ angular.module('jukufrontApp')
         headerRowHeight: 50,
         columnDefs: [
           {
-            name: 'Kehittämishanke',
+            name: 'kehittamishanke',
             displayName: 'Kehittämishankkeiden (jatkuvat / uudet) erittely hankkeittain',
             footerCellTemplate: '<div class="ui-grid-cell-contents">Kehittämishankkeet yhteensä</div>',
 
@@ -82,7 +83,7 @@ angular.module('jukufrontApp')
             width: '30%'
           },
           {
-            name: 'Euros',
+            name: 'euros',
             displayName: '€ (' + $scope.vuosi + ')',
             enableCellEdit: true,
             type: 'number',
@@ -93,7 +94,7 @@ angular.module('jukufrontApp')
             width: '15%'
           },
           {
-            name: 'Nimi',
+            name: 'nimi',
             displayName: 'Kehityshankkeen nimi, hankkeen ajanjakso (vuodet eli onko hanke jatkuva vai uusi), lyhyt perustelu hankkeelle',
             enableCellEdit: true,
             cellTemplate: '<div class="ui-grid-cell-contents" style="white-space: normal">{{COL_FIELD CUSTOM_FILTERS}}</div>',
@@ -109,113 +110,134 @@ angular.module('jukufrontApp')
 
       $scope.ely_maaratarpeet.data = [
         {
-          "Määrätarpeet": "Siirtymäajan sopimukset",
-          "Euros": 0,
-          "Kommentit": "",
-          "Tooltip": "Siirtymäajan sopimusten määrärahatarve"
+          "id":0,
+          "maaratarpeet": "Siirtymäajan sopimukset",
+          "euros": 0,
+          "kommentit": "",
+          "tooltip": "Siirtymäajan sopimusten määrärahatarve"
         }, {
-          "Määrätarpeet": "Bruttosopimukset, sidotut kustannukset",
-          "Euros": 0,
-          "Kommentit": "",
-          "Tooltip": "Voimassa olevat bruttosopimukset, joiden kustannukset on jo sidottu vuodelle 2015"
+          "id":1,
+          "maaratarpeet": "Bruttosopimukset, sidotut kustannukset",
+          "euros": 0,
+          "kommentit": "",
+          "tooltip": "Voimassa olevat bruttosopimukset, joiden kustannukset on jo sidottu vuodelle 2015"
         }, {
-          "Määrätarpeet": "Bruttosopimukset, uudet",
-          "Euros": 0,
-          "Kommentit": "",
-          "Tooltip": "Uudet bruttosopimukset vuodelle 2015, Kommentit -kenttään perustelu uudelle hankittavalle liikenteelle esimerkiksi palvelutasomäärittelyn pohjalta"
+          "id":2,
+          "maaratarpeet": "Bruttosopimukset, uudet",
+          "euros": 0,
+          "kommentit": "",
+          "tooltip": "Uudet bruttosopimukset vuodelle 2015, kommentit -kenttään perustelu uudelle hankittavalle liikenteelle esimerkiksi palvelutasomäärittelyn pohjalta"
         }, {
-          "Määrätarpeet": "Bruttosopimusten tulot",
-          "Euros": 0,
-          "Kommentit": "",
-          "Tooltip": "Bruttosopimusten tulot"
+          "id":3,
+          "maaratarpeet": "Bruttosopimusten tulot",
+          "euros": 0,
+          "kommentit": "",
+          "tooltip": "Bruttosopimusten tulot"
         }, {
-          "Määrätarpeet": "Käyttösopimuskorvaukset (alueellinen), sidotut",
-          "Euros": 0,
-          "Kommentit": "",
-          "Tooltip": "Voimassa olevat käyttösopimuskorvaukset (alueellinen), joiden kustannukset on jo sidottu vuodelle 2015"
+          "id":4,
+          "maaratarpeet": "Käyttösopimuskorvaukset (alueellinen), sidotut",
+          "euros": 0,
+          "kommentit": "",
+          "tooltip": "Voimassa olevat käyttösopimuskorvaukset (alueellinen), joiden kustannukset on jo sidottu vuodelle 2015"
         }, {
-          "Määrätarpeet": "Käyttösopimuskorvaukset (alueellinen), uudet",
-          "Euros": 0,
-          "Kommentit": "",
-          "Tooltip": "Uudet käyttösopimuskorvaukset (alueellinen) vuodelle 2015, Kommentit -kenttään perustelu uudelle hankittavalle liikenteelle esimerkiksi palvelutasomäärittelyn pohjalta"
+          "id":5,
+          "maaratarpeet": "Käyttösopimuskorvaukset (alueellinen), uudet",
+          "euros": 0,
+          "kommentit": "",
+          "tooltip": "Uudet käyttösopimuskorvaukset (alueellinen) vuodelle 2015, kommentit -kenttään perustelu uudelle hankittavalle liikenteelle esimerkiksi palvelutasomäärittelyn pohjalta"
         }, {
-          "Määrätarpeet": "Käyttösopimuskorvaukset (alueellinen), tulot",
-          "Euros": 0,
-          "Kommentit": "",
-          "Tooltip": "Käyttösopimuskorvausten (alueellinen) tulot"
+          "id":6,
+          "maaratarpeet": "Käyttösopimuskorvaukset (alueellinen), tulot",
+          "euros": 0,
+          "kommentit": "",
+          "tooltip": "Käyttösopimuskorvausten (alueellinen) tulot"
         }, {
-          "Määrätarpeet": "Käyttösopimuskorvaukset (reitti), sidotut",
-          "Euros": 0,
-          "Kommentit": "",
-          "Tooltip": "Voimassa olevat käyttösopimuskorvaukset (reitti), joiden kustannukset on jo sidottu vuodelle 2015"
+          "id":7,
+          "maaratarpeet": "Käyttösopimuskorvaukset (reitti), sidotut",
+          "euros": 0,
+          "kommentit": "",
+          "tooltip": "Voimassa olevat käyttösopimuskorvaukset (reitti), joiden kustannukset on jo sidottu vuodelle 2015"
         }, {
-          "Määrätarpeet": "Käyttösopimuskorvaukset (reitti), uudet",
-          "Euros": 0,
-          "Kommentit": "",
-          "Tooltip": "Uudet käyttösopimuskorvaukset (reitti) vuodelle 2015, Kommentit -kenttään perustelu uudelle hankittavalle liikenteelle esimerkiksi palvelutasomäärittelyn pohjalta"
+          "id":8,
+          "maaratarpeet": "Käyttösopimuskorvaukset (reitti), uudet",
+          "euros": 0,
+          "kommentit": "",
+          "tooltip": "Uudet käyttösopimuskorvaukset (reitti) vuodelle 2015, kommentit -kenttään perustelu uudelle hankittavalle liikenteelle esimerkiksi palvelutasomäärittelyn pohjalta"
         }, {
-          "Määrätarpeet": "Käyttösopimuskorvaukset (reitti), tulot",
-          "Euros": 0,
-          "Kommentit": "",
-          "Tooltip": "Käyttösopimuskorvausten (reitti) tulot"
+          "id":9,
+          "maaratarpeet": "Käyttösopimuskorvaukset (reitti), tulot",
+          "euros": 0,
+          "kommentit": "",
+          "tooltip": "Käyttösopimuskorvausten (reitti) tulot"
         }, {
-          "Määrätarpeet": "Joukkoliikennetuki kunnille",
-          "Euros": 0,
-          "Kommentit": "",
-          "Tooltip": "ELYn kunnille myöntämä joukkoliikennetuki"
+          "id":10,
+          "maaratarpeet": "Joukkoliikennetuki kunnille",
+          "euros": 0,
+          "kommentit": "",
+          "tooltip": "ELYn kunnille myöntämä joukkoliikennetuki"
         }
       ];
 
       $scope.ely_kehittamishankkeet.data = [
         {
-          "Kehittämishanke": "Kehittämishanke 1",
-          "Euros": 0,
-          "Nimi": ""
+          "id":0,
+          "kehittamishanke": "kehittamishanke 1",
+          "euros": 0,
+          "nimi": ""
         },
         {
-          "Kehittämishanke": "Kehittämishanke 2",
-          "Euros": 0,
-          "Nimi": ""
+          "id":1,
+          "kehittamishanke": "kehittamishanke 2",
+          "euros": 0,
+          "nimi": ""
         },
         {
-          "Kehittämishanke": "Kehittämishanke 3",
-          "Euros": 0,
-          "Nimi": ""
+          "id":2,
+          "kehittamishanke": "kehittamishanke 3",
+          "euros": 0,
+          "nimi": ""
         },
         {
-          "Kehittämishanke": "Kehittämishanke 4",
-          "Euros": 0,
-          "Nimi": ""
+          "id":3,
+          "kehittamishanke": "kehittamishanke 4",
+          "euros": 0,
+          "nimi": ""
         },
         {
-          "Kehittämishanke": "Kehittämishanke 5",
-          "Euros": 0,
-          "Nimi": ""
+          "id":4,
+          "kehittamishanke": "kehittamishanke 5",
+          "euros": 0,
+          "nimi": ""
         },
         {
-          "Kehittämishanke": "Kehittämishanke 6",
-          "Euros": 0,
-          "Nimi": ""
+          "id":5,
+          "kehittamishanke": "kehittamishanke 6",
+          "euros": 0,
+          "nimi": ""
         },
         {
-          "Kehittämishanke": "Kehittämishanke 7",
-          "Euros": 0,
-          "Nimi": ""
+          "id":6,
+          "kehittamishanke": "kehittamishanke 7",
+          "euros": 0,
+          "nimi": ""
         },
         {
-          "Kehittämishanke": "Kehittämishanke 8",
-          "Euros": 0,
-          "Nimi": ""
+          "id":7,
+          "kehittamishanke": "kehittamishanke 8",
+          "euros": 0,
+          "nimi": ""
         },
         {
-          "Kehittämishanke": "Kehittämishanke 9",
-          "Euros": 0,
-          "Nimi": ""
+          "id":8,
+          "kehittamishanke": "kehittamishanke 9",
+          "euros": 0,
+          "nimi": ""
         },
         {
-          "Kehittämishanke": "Kehittämishanke 10",
-          "Euros": 0,
-          "Nimi": ""
+          "id":9,
+          "kehittamishanke": "kehittamishanke 10",
+          "euros": 0,
+          "nimi": ""
         }
       ];
 
