@@ -8,16 +8,23 @@ angular.module('jukufrontApp')
     return {
       restrict: 'E',
       scope: {
-        name: "@",
-        luokka: "=",
-        hakemus: "="
+        name: '@',
+        luokka: '=',
+        kohde: '=',
+        hakemus: '='
       },
       transclude: true,
       template: require('views/yhteinen/jkuAvustusluokkaPanel.html'),
-      controller: ["$scope", function ($scope) {
-        $scope.sumHaettavaAvustusOverLuokka = function (luokka) {
-          return _.sum(luokka.avustuskohteet, 'haettavaavustus');
+      controller: ['$scope', function ($scope) {
+
+        $scope.kokonaisOmarahoitus = function(kohteet) {
+          return _.sum(kohteet, 'omarahoitus');
         };
+
+        $scope.kokonaisHaettavaAvustus = function(kohteet) {
+          return _.sum(kohteet, 'haettavaavustus');
+        };
+
       }]
     };
   });
