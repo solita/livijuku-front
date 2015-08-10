@@ -231,7 +231,8 @@ angular
   .directive('jukuControls', require('components/controls'))
   .directive('jukuControlsButtons', require('components/controls/buttons'))
   .directive('jukuConfirmation', require('components/confirmation'))
-  .directive('jukuStatisticDropdown', require('components/statisticDropdown'));
+  .directive('jukuStatisticDropdown', require('components/statisticDropdown'))
+  .directive('jukuPaatosTiedot', require('components/paatosTiedot'));
 
 require('./controllers/hakija/asetukset');
 require('./controllers/hakija/hakemukset');

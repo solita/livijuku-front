@@ -3,7 +3,7 @@
     <p>Ei omien hakemusten katseluoikeutta.</p>
   </div>
 
-  <div ng-show="sallittu('view-oma-hakemus')">
+  <juku-form-row ng-show="sallittu('view-oma-hakemus')">
 
     <!-- Navigaatio -->
     <juku-navigation>
@@ -29,27 +29,9 @@
     <juku-form name="hakemusForm" juku-poistumisvaroitus="">
       <h1>Joukkoliikenteen {{tyyppi | toApplicationName}} {{hakemus.vuosi}}</h1>
 
-      <div class="row" ng-show="hasPaatos(hakemus.hakemustilatunnus)">
-        <div class="col-md-12">
-          <p>
-            <a href="{{haePaatosPdf()}}" target="_blank">
-              <span class="glyphicon glyphicon-file"></span>
-              <b>Avaa päätös (PDF)</b>
-            </a>
-            &nbsp;&nbsp;
-            <a href="api/hakemus/{{hakemusid}}/paatos/pdf" target="_self"
-               download="{{tyyppi}}_paatos_{{vuosi}}.pdf"><span class="glyphicon glyphicon-download-alt"></span> Lataa
-              pdf</a>
-          </p>
-
-          <p>
-            <a href="resources/OIKAISUVAATIMUSOSOITUS.docx" target="_blank">
-              <span class="glyphicon glyphicon-file"></span>
-              Avaa oikaisuvaatimusosoitus (DOCX)
-            </a>
-          </p>
-        </div>
-      </div>
+      <juku-form-row ng-show="hasPaatos(hakemus.hakemustilatunnus)">
+        <juku-paatos-tiedot></juku-paatos-tiedot>
+      </juku-form-row>
 
       <juku-form-section>
         <h3>PERUSTIEDOT</h3>
