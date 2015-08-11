@@ -79,8 +79,7 @@ angular.module('jukufrontApp')
     };
 
     $scope.hakemusTarkastettu = function (hakemus) {
-      if (typeof hakemus === 'undefined') return false;
-      return hakemus.hakemuksenTila == 'T';
+      return ['T', 'P'].indexOf(hakemus.hakemuksenTila) > -1;
     };
 
     $scope.hakemusTarkastamatta = function (hakemus) {
