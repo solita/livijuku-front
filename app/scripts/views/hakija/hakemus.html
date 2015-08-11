@@ -26,7 +26,7 @@
       </juku-tabs>
     </juku-navigation>
 
-    <juku-form name="hakemusForm" juku-poistumisvaroitus="">
+    <juku-form name="hakemusForm" juku-poistumisvaroitus="{{hakemusKeskenerainen()}}">
       <h1>Joukkoliikenteen {{tyyppi | toApplicationName}} {{hakemus.vuosi}}</h1>
 
       <juku-form-row ng-show="hasPaatos(hakemus.hakemustilatunnus)">

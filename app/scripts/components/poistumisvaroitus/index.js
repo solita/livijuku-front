@@ -24,7 +24,7 @@ module.exports = function ($modal, $state) {
 
       var $stateChangeStartUnbind = scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
-        if (!form.$dirty) {
+        if (!form.$dirty || (attrs.jukuPoistumisvaroitus=='false')) {
           return;
         }
 
