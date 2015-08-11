@@ -46,7 +46,10 @@ var tilat = [
 ];
 
 module.exports = {
-  getAll: function(tyyppi) {
+  getAll: function() {
+    return tilat;
+  },
+  getByType: function(tyyppi) {
     if (tyyppi==='AH0')
       return _.dropRight(tilat);
     else return tilat;
