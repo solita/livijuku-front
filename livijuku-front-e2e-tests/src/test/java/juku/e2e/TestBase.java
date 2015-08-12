@@ -191,7 +191,7 @@ public class TestBase {
                 .build();
 
         // PDF viewer pois URL:sta
-        String uusiUrl = url.substring(0,22) + url.substring(48);
+        String uusiUrl = url.substring(0,22) + url.substring(53);
         HttpGet httpGet = new HttpGet(uusiUrl);
         httpGet.addHeader("oam-remote-user", user.getLogin());
         httpGet.addHeader("oam-groups", user.getGroup());
