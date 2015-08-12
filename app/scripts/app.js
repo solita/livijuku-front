@@ -8,7 +8,7 @@ require('angular-toastr');
 require('angular-resource');
 require('angular-loading-bar');
 require('angular-smart-table');
-require('angular-bootstrap/dist/ui-bootstrap-tpls');
+require('angular-bootstrap/ui-bootstrap-tpls');
 require('angular-elastic');
 require('ng-file-upload');
 require('angular-animate');
