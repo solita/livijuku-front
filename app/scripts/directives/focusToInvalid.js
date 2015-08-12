@@ -9,7 +9,12 @@ angular.module('jukufrontApp')
     restrict: 'A',
     link: function($scope, element) {
       const removeListener = $scope.$on('focus-invalid', function() {
-        $(element).find('.ng-invalid').focus();
+        // angular-bootstrap listens 'focus' events and calls $scope.$apply
+        // which causes an exception without a timeout
+        setTimeout(function() {
+          $(element).find('input.ng-invalid')[0].focus();
+          $(window).scrollTop($(window).scrollTop() - 150);
+        });
       });
 
       $scope.$on('$destroy', removeListener);
