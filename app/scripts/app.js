@@ -8,7 +8,7 @@ require('angular-toastr');
 require('angular-resource');
 require('angular-loading-bar');
 require('angular-smart-table');
-require('angular-bootstrap/ui-bootstrap-tpls.js');
+require('angular-bootstrap');
 require('angular-elastic');
 require('ng-file-upload');
 require('angular-animate');
@@ -21,7 +21,7 @@ require('angular-i18n/angular-locale_fi-fi');
 require('d3/d3.js');
 require('angular-nvd3/lib/nv.d3.js');
 require('angular-nvd3');
-require('angular-xeditable/dist/js/xeditable')
+require('angular-xeditable/dist/js/xeditable');
 
 angular
   .module('jukufrontApp', [
