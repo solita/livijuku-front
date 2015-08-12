@@ -405,7 +405,7 @@ public class HakemuskausiTest extends TestBase {
         tallennaHakemus();
 
         String hakemusid = getScopeVariableValue(button("Tallenna tiedot"), "hakemusid");
-        String pdfUrl = String.format("%s/pdf/web/viewer.html?file=/api/hakemus/%s/pdf", baseUrl(), hakemusid);
+        String pdfUrl = String.format("%s/pdf/web/viewer.html?file=../../api/hakemus/%s/pdf", baseUrl(), hakemusid);
 
         String actual = httpGetPdfText(pdfUrl, User.HARRI);
 
