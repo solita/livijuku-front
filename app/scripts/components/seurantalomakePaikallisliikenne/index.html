@@ -1,0 +1,32 @@
+<div class="panel panel-default seurantalomakepaikallisliikenne">
+  <form name="seurantaPaikallisliikenne">
+    <table class="table table-bordered table-hover table-condensed">
+      <thead>
+      <tr style="font-weight: bold">
+        <th style="width:30%">Linjan numero tai nimi</th>
+        <th style="width:10%">Linja-auto</th>
+        <th style="width:10%">Taksi</th>
+        <th style="width:10%">Ajokilometrit</th>
+        <th style="width:10%">Matkustajamäärät</th>
+        <th style="width:10%">Asiakastulo</th>
+        <th style="width:10%">Nettohinta</th>
+        <th style="width:10%">Bruttohinta</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="rivi in data">
+        <td>{{rivi.linja}}</td>
+        <td>{{rivi.linjaauto}}</td>
+        <td>{{rivi.taksi}}</td>
+        <td>{{rivi.ajokm}}</td>
+        <td>{{rivi.matkustajamaarat}}</td>
+        <td><input name="asiakastulo" type="text" ng-currency="" numeric-only="" noenter
+                   select-on-click
+                   ng-model="rivi.asiakastulo"></td>
+        <td>{{rivi.nettohinta}}</td>
+        <td>{{rivi.bruttohinta}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
