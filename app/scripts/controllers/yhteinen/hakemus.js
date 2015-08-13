@@ -9,6 +9,53 @@ angular.module('jukufrontApp')
     'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', 'CommonService', '$window',
     function ($rootScope, $scope, $state, $stateParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, common, $window) {
 
+      $scope.isHakija = $state.includes('app.hakija');
+      $scope.allekirjoitusliitetty = false;
+      $scope.avustushakemusid = $stateParams.id;
+      $scope.maksatushakemus1id = $stateParams.m1id;
+      $scope.maksatushakemus2id = $stateParams.m2id;
+      $scope.tyyppi = $stateParams.tyyppi;
+      $scope.vuosi = $stateParams.vuosi;
+      $scope.alv = false;
+
+      if($scope.tyyppi === 'AH0') {
+        $scope.hakemusid = parseInt($scope.avustushakemusid);
+      } else if($scope.tyyppi === 'MH1') {
+        $scope.hakemusid = parseInt($scope.maksatushakemus1id);
+        $scope.ajankohta = '1.1.-30.6.';
+        haeAvustuskohteet($scope.avustushakemusid, 'avustushakemusArvot');
+      } else if($scope.tyyppi === 'MH2') {
+        $scope.hakemusid = parseInt($scope.maksatushakemus2id);
+        $scope.ajankohta = '1.7.-31.12.';
+      }
+
+      $scope.backToList = function backToList() {
+        if($scope.isHakija) {
+          return $state.go('app.hakija.hakemukset.list');
+        }
+        $state.go('app.yhteinen.hakemukset.list', {
+          tyyppi: $scope.tyyppi
+        });
+      };
+
+      $scope.isTabSelected = function isTabSelected(tyyppi) {
+        return $scope.tyyppi === tyyppi;
+      };
+
+      $scope.toApplication = function toApplication(tyyppi) {
+        $state.go('app.hakija.hakemukset.hakemus', {
+          vuosi: $scope.hakemus.vuosi,
+          tyyppi: tyyppi,
+          id: $scope.avustushakemusid,
+          m1id: $scope.maksatushakemus1id,
+          m2id: $scope.maksatushakemus2id
+        });
+      };
+
+      $scope.canEdit = function canEdit() {
+        return $scope.hakemusKeskenerainen() && $scope.isHakija;
+      };
+
       function haeAvustuskohteet(hakemusid, scopemuuttuja) {
         common.bindPromiseToScope(AvustuskohdeService.hae(hakemusid), $scope, scopemuuttuja,
           function (data) {
@@ -342,28 +389,11 @@ angular.module('jukufrontApp')
           });
       };
 
-      $scope.allekirjoitusliitetty = false;
-      $scope.avustushakemusid = $stateParams.id;
-      $scope.maksatushakemus1id = $stateParams.m1id;
-      $scope.maksatushakemus2id = $stateParams.m2id;
-      $scope.tyyppi = $stateParams.tyyppi;
-      $scope.vuosi = $stateParams.vuosi;
-      $scope.alv = false;
-
-      if($scope.tyyppi === 'AH0') {
-        $scope.hakemusid = parseInt($scope.avustushakemusid);
-      } else if($scope.tyyppi === 'MH1') {
-        $scope.hakemusid = parseInt($scope.maksatushakemus1id);
-        $scope.ajankohta = '1.1.-30.6.';
-        haeAvustuskohteet($scope.avustushakemusid, 'avustushakemusArvot');
-      } else if($scope.tyyppi === 'MH2') {
-        $scope.hakemusid = parseInt($scope.maksatushakemus2id);
-        $scope.ajankohta = '1.7.-31.12.';
+      if($scope.tyyppi === 'MH2') {
         haeAvustuskohteet($scope.avustushakemusid, 'avustushakemusArvot');
         haeAvustuskohteet($scope.maksatushakemus1id, 'maksatushakemusArvot');
         haeMaksatushakemus1Paatos();
       }
-
       haeHakemukset();
       haeAvustuskohteet($scope.hakemusid, 'avustuskohdeluokat');
       haePaatos();
