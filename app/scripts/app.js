@@ -86,9 +86,9 @@ angular
       })
       .state('app', root())
       .state('app.yhteinen', root('/y'))
-      .state('app.yhteinen.hakemukset', root('/hakemukset/:tyyppi'))
+      .state('app.yhteinen.hakemukset', root('/hakemukset'))
       .state('app.yhteinen.hakemukset.list', {
-        url: '',
+        url: '/:tyyppi',
         template: require('views/kasittelija/hakemukset.html'),
         controller: 'KasittelijaHakemuksetCtrl'
       })
@@ -101,7 +101,7 @@ angular
       .state('app.hakija.hakemukset', root('/hakemukset'))
       .state('app.hakija.hakemukset.hakemus', restrictRoute(isHakija, {
         url: '/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id',
-        template: require('views/hakija/hakemus.html'),
+        template: require('views/hakemus/index.html'),
         controller: 'HakemusCtrl'
       }))
       .state('app.hakija.hakemukset.elyhakemus', {
@@ -149,7 +149,7 @@ angular
       })
       .state('app.kasittelija.hakemukset.hakemus', {
         url: '/hakemus/:vuosi/:id/:m1id/:m2id',
-        template: require('views/kasittelija/hakemus.html'),
+        template: require('views/hakemus/index.html'),
         controller: 'HakemusCtrl'
       })
       .state('app.kasittelija.hakemuskaudenhallinta', restrictRoute(isKasittelija, {
@@ -213,6 +213,8 @@ angular
   .directive('hakemuskausiPanel', require('components/hakemuskausiPanel'))
   .directive('hakemusLaatikko', require('components/hakemusLaatikko'))
   .directive('jukuOhje', require('components/ohje'))
+  .directive('jukuOhjeAvustushakemus', require('components/ohje/avustushakemus'))
+  .directive('jukuOhjeMaksatushakemus', require('components/ohje/maksatushakemus'))
   .directive('jukuLiiteLataus', require('components/liiteLataus'))
   .directive('jukuLiiteTarkistaminen', require('components/liiteTarkistaminen'))
   .directive('jukuUserDropdown', require('components/userDropdown'))

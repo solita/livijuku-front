@@ -1,0 +1,312 @@
+<div class="container" focus-to-invalid>
+
+  <!-- Navigaatio -->
+  <juku-navigation>
+    <juku-link-prev ng-click="backToList()">
+      Palaa hakemusten päänäkymään
+    </juku-link-prev>
+
+    <juku-tabs>
+      <juku-tab
+        ng-repeat="tyyppi in constants.hakemustyypit"
+        selected="isTabSelected(tyyppi)"
+        ng-click="toApplication(tyyppi)">
+        {{ tyyppi | toApplicationName }}
+      </juku-tab>
+    </juku-tabs>
+  </juku-navigation>
+
+  <juku-form name="hakemusForm" juku-poistumisvaroitus="{{hakemusKeskenerainen()}}">
+    <h1>Joukkoliikenteen {{tyyppi | toApplicationName}} {{hakemus.vuosi}}</h1>
+
+    <!-- Käsittelijä -->
+    <juku-form-row ng-hide="isHakija || hakemusKeskenerainen()">
+      <button
+        data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)"
+        class="btn btn-primary"
+        noenter>
+        Avaa hakemus (PDF)
+      </button>
+    </juku-form-row>
+
+    <juku-form-row
+      ng-show="hasPaatos(hakemus.hakemustilatunnus)"
+      id="hakemus-paatoslinkit">
+      <juku-paatos-tiedot></juku-paatos-tiedot>
+    </juku-form-row>
+
+    <juku-form-section>
+      <h3>PERUSTIEDOT</h3>
+
+      <juku-form-row>
+        <h5>Hakija</h5>
+        {{hakija}}
+      </juku-form-row>
+      <juku-form-row>
+        <h5>Hakemuksen tila</h5>
+        <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" tyyppi="{{tyyppi}}"/>
+      </juku-form-row>
+      <juku-form-row ng-hide="hakemusKeskenerainen()">
+        <h5>Käsittelijä</h5>
+        {{hakemus.kasittelijanimi}}
+      </juku-form-row>
+
+      <!-- Hakija -->
+      <juku-form-row
+        ng-show="isHakija && hakemusTaydennettavana() && taydennyspyyntoSeliteOlemassa()"
+        class="alert alert-warning">
+        <strong>
+          Täydennyspyyntöviesti käsittelijältä, määräpäivä: {{hakemus.taydennyspyynto.maarapvm |
+          date:'dd.MM.yyyy'}}!
+        </strong><br />
+        {{hakemus.taydennyspyynto.selite}}
+      </juku-form-row>
+
+      <juku-form-row ng-show="avustushakemusPaatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
+        <h5>MYÖNNETTY AVUSTUS VUODELLE {{vuosi}}</h5>
+        {{myonnettyAvustusPerVuosi() | currency:"&euro;"}} (sis. ALV)
+        <juku-icon-link
+          ng-show="isHakija"
+          href="{{haeAvustushakemusPaatosPdf()}}"
+          title="Avaa päätös"
+          target="_blank"
+          icon="file">
+          Avaa päätös (PDF)
+        </juku-icon-link>
+      </juku-form-row>
+
+      <juku-form-row ng-show="avustushakemusPaatosOlemassa() && onMaksatushakemus1()">
+        <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{vuosi}}</h5>
+        {{myonnettyAvustusPerJakso() | currency:"&euro;"}} (sis. ALV)
+        <juku-icon-link
+          href="{{haePaatosPdf()}}"
+          ng-show="hasPaatos(hakemus.hakemustilatunnus)"
+          title="Avaa päätös"
+          target="_blank"
+          icon="file">
+          Avaa päätös (PDF)
+        </juku-icon-link>
+      </juku-form-row>
+      <juku-form-row ng-show="maksatushakemus1PaatosOlemassa() && onMaksatushakemus2()">
+        <h5>MYÖNNETTY AVUSTUS 1. MAKSATUSHAKEMUKSEN PERUSTEELLA</h5>
+        {{maksatushakemus1PaatosMaksettu() | currency:"&euro;"}} (sis. ALV)
+        <juku-icon-link
+          href="{{haeMaksatushakemus1PaatosPdf()}}"
+          title="Avaa päätös"
+          target="_blank"
+          icon="file">
+          Avaa päätös (PDF)
+        </juku-icon-link>
+      </juku-form-row>
+      <juku-form-row ng-show="maksatushakemus1PaatosOlemassa() && onMaksatushakemus2()">
+        <h5>MYÖNNETTY AVUSTUS 2. MAKSATUSHAKEMUKSEN PERUSTEELLA</h5>
+        {{myonnettyAvustusPerJakso() | currency:"&euro;"}} (sis. ALV)
+        <juku-icon-link
+          href="{{haePaatosPdf()}}"
+          ng-show="hasPaatos(hakemus.hakemustilatunnus)"
+          title="Avaa päätös"
+          target="_blank"
+          icon="file">
+          Avaa päätös (PDF)
+        </juku-icon-link>
+      </juku-form-row>
+
+      <!-- Hakija -->
+      <juku-form-row
+        ng-show="isHakija && (avustushakemusPaatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())) && haettuSummaYliMyonnetyn()"
+        class="alert alert-danger">
+        <strong>Virhe! </strong> Haettu avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}}) ylittää myönnetyn
+        avustuksen. Voit hakea ensimmäisellä maksatushakemuksella enintään 50% vuodelle myönnetystä avustuksesta.
+        Toisen maksatushakemuksen haettava avustussumma ei saa ylittää hakemusajalle myönnettyä summaa (vuodelle
+        myönnetty
+        avustussumma vähennettynä myönnetty avustus ensimmäisen maksatushakemuksen perusteella).
+      </juku-form-row>
+
+    </juku-form-section>
+    <juku-form-section>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3 ng-switch on="tyyppi">
+            <span ng-switch-when='AH0'>
+              VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ
+            </span>
+            <span ng-switch-default>
+              HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{vuosi}}
+            </span>
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <juku-checkbox ng-model="alv">
+              Haluan {{ canEdit() ? "syöttää summat" : "katsoa arvoja" }} arvonlisäverollisina.
+            </juku-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <juku-avustusluokka-panel luokka="avustuskohdeluokka"
+                                name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
+                                hakemus="hakemus"
+                                kohde="avustuskohdeluokka"
+                                ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
+
+        <juku-avustuskohde vuosi="vuosi"
+                           vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)"
+                           hakemustyyppi="tyyppi"
+                           kohde="avustuskohde"
+                           alv="alv"
+                           hakemus="hakemus"
+                           name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
+                           ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet"/>
+
+      </juku-avustusluokka-panel>
+
+      <div class="row">
+        <div class="col-md-9">
+          <h4>
+            {{ tyyppi === 'AH0' || isHakija ?
+              'HAETTAVA VALTIONAVUSTUS YHTEENSÄ:' :
+              'HAETTAVAT MAKSATUKSET YHTEENSÄ:'
+            }}
+          </h4>
+        </div>
+        <div class="col-md-3">
+          <div class="pull-right">
+            <h4>{{sumHaettavaAvustus() | currency:"&euro;"}} (sis. alv)</h4>
+          </div>
+        </div>
+      </div>
+    </juku-form-section>
+
+    <!-- Hakija -->
+    <div ng-show="isHakija">
+      <juku-form-section ng-show="onAvustushakemus()">
+        <juku-ohje-avustushakemus></juku-ohje-avustushakemus>
+      </juku-form-section>
+
+      <juku-form-section ng-show="onMaksatushakemus1() || onMaksatushakemus2()">
+        <juku-ohje-maksatushakemus></juku-ohje-maksatushakemus>
+      </juku-form-section>
+
+      <juku-form-section>
+        <juku-liite-lataus></juku-liite-lataus>
+      </juku-form-section>
+    </div>
+
+    <!-- Käsittelijä -->
+    <div ng-show="!isHakija">
+      <div ng-show="onAvustushakemus()">
+        <h5>Lisätietoja avustusten kohteista</h5>
+        <p>{{seliteOlemassa() ? hakemus.selite : 'Ei selitettä.' }}</p>
+      </div>
+
+      <div ng-hide="onAvustushakemus()">
+        <h3>KULUTOSITTEET AJALLE {{ajankohta}}{{hakemus.vuosi}}</h3>
+      </div>
+
+      <juku-liite-tarkistaminen></juku-liite-tarkistaminen>
+    </div>
+
+    <juku-form-section>
+      <h3>
+        HAKEMUKSEN PÄIVÄMÄÄRÄ JA {{ isHakija ? 'HAKIJA' : 'ALLEKIRJOITTAJA' }}
+      </h3>
+
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Päivämäärä</h5>
+
+          <p ng-show="hakemusKeskenerainen() && hakemus.muokkaaja">
+            {{hakemus.muokkausaika | date: 'dd.MM.yyyy' }}
+          </p>
+
+          <p ng-hide="hakemusKeskenerainen()">
+            {{hakemus.lahetysaika |date:'dd.MM.yyyy'}}
+          </p>
+        </div>
+        <div class="col-md-6">
+          <h5 ng-show="hakemusKeskenerainen()">Viimeisin muokkaaja</h5>
+          <h5 ng-hide="hakemusKeskenerainen()">Hakija</h5>
+          <p ng-show="hakemusKeskenerainen()">{{hakemus.muokkaaja}}</p>
+          <p ng-hide="hakemusKeskenerainen()">{{hakemus.lahettaja}}</p>
+        </div>
+      </div>
+
+      <!-- Hakija -->
+      <juku-confirmation
+        ng-show="isHakija"
+        ng-model="allekirjoitusliitetty"
+        ng-disabled="!hakemusKeskenerainen() || !liitteetOlemassa()">
+        Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen allekirjoitusoikeudesta.
+      </juku-confirmation>
+
+      <juku-controls>
+
+        <!-- Hakija -->
+        <juku-controls-buttons ng-show="isHakija && sallittu('allekirjoita-oma-hakemus')">
+          <button
+            ng-disabled="!hakemusKeskenerainen() || !sallittu('modify-oma-hakemus')"
+            data-ng-click="tallennaHakemus(0)"
+            class="btn btn-primary">
+              Tallenna tiedot
+          </button>
+          <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="btn btn-primary">
+            {{ hakemusKeskenerainen() && sallittu('modify-oma-hakemus') ? 'Tallenna ja esikatsele hakemus' : 'Avaa hakemus (PDF)' }}
+          </button>
+          <button
+            juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen"
+            varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen. Lähetä hakemus painamalla Kyllä-painiketta. Huom! Liitteiden määrästä riippuen, hakemuksen lähettäminen asianhallintaan kestää 10-70 sekuntia."
+            operaatio="tallennaHakemus(2)"
+            class="btn btn-success"
+            ng-disabled="!hakemusKeskenerainen() || !allekirjoitusliitetty || !liitteetOlemassa() || !edellinenHakemusPaatetty()">
+              Tallenna ja lähetä hakemus
+          </button>
+        </juku-controls-buttons>
+
+        <!-- Käsittelijä -->
+        <juku-controls ng-show="sallittu('kasittely-hakemus')">
+          <juku-controls-buttons>
+            <button ng-show="hakemusVireilla()"
+                    juku-varmistusdialogi varmistusotsake="Hakemuksen tarkastaminen"
+                    varmistusteksti="Oletko varma, että haluat merkitä hakemuksen tarkastetuksi? Hakemuksen tarkastettu-merkintää ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa tarkastamisen jälkeen."
+                    operaatio="tarkastaHakemus()"
+                    class="btn btn-success">
+              Merkitse tarkastetuksi
+            </button>
+            <button ng-show="hakemusVireilla()"
+                    juku-taydennysdialogi hakemusid="{{hakemusid}}" tyyppi="{{tyyppi}}"
+                    class="btn btn-danger">
+              Palauta täydennettäväksi
+            </button>
+            <button ng-hide="hakemusVireilla()"
+                    data-ng-click="tarkastaHakemus()"
+                    class="btn btn-success" disabled>
+              Merkitse tarkastetuksi
+            </button>
+            <button ng-hide="hakemusVireilla()"
+                    data-ng-click="taydennyspyynto()"
+                    class="btn btn-danger" disabled>
+              Palauta täydennettäväksi
+            </button>
+          </juku-controls-buttons>
+        </juku-controls>
+      </juku-controls>
+
+      <juku-navigation-links>
+        <juku-link-prev ng-click="backToList()">
+          Palaa hakemusten päänäkymään
+        </juku-link-prev>
+
+        <!-- Käsittelijä -->
+        <juku-link-next
+          ng-show="!isHakija"
+          ui-sref="app.kasittelija.suunnittelu({vuosi:vuosi, tyyppi:tyyppi, lajitunnus: haeLajitunnus(hakemus.organisaatioid)})">
+          Suunnittelu ja päätöksenteko
+        </juku-link-next>
+      </juku-navigation-links>
+    </juku-form-section>
+  </juku-form>
+</div>
