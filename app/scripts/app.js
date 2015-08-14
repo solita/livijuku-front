@@ -69,7 +69,7 @@ angular
         abstract: true,
         template: '<ui-view></ui-view>'
       };
-      if (url) {
+      if(url) {
         opts.url = url;
       }
       return opts;
@@ -78,8 +78,8 @@ angular
     $stateProvider
       .state('redirect', {
         url: '/',
-        controller: ['$state', 'KayttajaService', function ($state, KayttajaService) {
-          KayttajaService.hae().then(function (user) {
+        controller: ['$state', 'KayttajaService', function($state, KayttajaService) {
+          KayttajaService.hae().then(function(user) {
             $state.go(defaultView(user));
           });
         }]
@@ -169,12 +169,12 @@ angular
         controller: 'KasittelijaPaatosCtrl'
       }));
 
-    // $urlRouterProvider.otherwise('/');
+      $urlRouterProvider.otherwise('/');
   }])
   .config(['$httpProvider', function ($httpProvider) {
     //http://stackoverflow.com/questions/16098430/angular-ie-caching-issue-for-http
     //initialize get if not there
-    if (!$httpProvider.defaults.headers.get) {
+    if(!$httpProvider.defaults.headers.get) {
       $httpProvider.defaults.headers.get = {};
     }
 
