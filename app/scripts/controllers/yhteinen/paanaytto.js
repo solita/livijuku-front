@@ -21,7 +21,7 @@ angular.module('jukufrontApp')
     function ($scope, $rootScope, $location, KayttajaService, OrganisaatioService, statusService, avustusKohdeService, common) {
 
     OrganisaatioService.hae()
-      .success(function (data) {
+      .then(function (data) {
         $rootScope.organisaatiot = data;
         KayttajaService.hae()
         .then(function (data) {
@@ -34,7 +34,7 @@ angular.module('jukufrontApp')
           statusService.virhe('KayttajaService.hae()', err.message);
         });
       })
-      .error(function (data) {
+      .catch(function (data) {
         statusService.virhe('OrganisaatioService.hae()', data.message);
       });
 
