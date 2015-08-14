@@ -1,151 +1,86 @@
 <div class="container">
-  <div ng-hide="sallittu('view-kaikki-hakemukset')">
-    <p>Ei kaikkien hakemusten katseluoikeutta.</p>
-  </div>
-  <div ng-show="hakemukset.length==0">
+  <div ng-show="hakemukset.hakemuskaudet.length === 0">
     <p>Ei hakemuksia, koska hakemuskautta ei ole vielä avattu.</p>
   </div>
 
-  <div ng-show="hakemukset.length> 0 && sallittu('view-kaikki-hakemukset')">
-    <juku-navigation>
-      <juku-tabs>
-        <juku-tab ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'AH0'})">
-          Avustushakemukset
-          <juku-badge
-            number="kasiteltavatAvustushakemukset"
-            ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')"/>
-        </juku-tab>
+  <div ng-show="hakemukset.hakemuskaudet.length > 0">
 
-        <juku-tab ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'MH1'})">
-          1. maksatushakemukset
+    <juku-navigation>
+      <juku-link-prev ng-click="hakemukset.backToList()">
+        Palaa hakemusten päänäkymään
+      </juku-link-prev>
+
+      <juku-tabs>
+        <juku-tab
+          ng-repeat="tyyppi in constants.hakemustyypit"
+          ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppi})">
+          {{ tyyppi | toApplicationName }}
           <juku-badge
-            number="kasiteltavatMaksatus1hakemukset"
-            ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')"/>
-        </juku-tab>
-        <juku-tab ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'MH2'})">
-          2. maksatushakemukset
-          <juku-badge
-            number="kasiteltavatMaksatus2hakemukset"
+            number="hakemukset.hakemuksiaYhteensa(tyyppi, hakemuskaudet)"
             ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')"/>
         </juku-tab>
       </juku-tabs>
     </juku-navigation>
 
     <accordion close-others="false">
-      <div ng-repeat="hakemuksetPerVuosi in hakemukset">
-        <accordion-group is-open="hakemuksetPerVuosi.accordionOpen">
+      <div ng-repeat="hakemuskausi in hakemukset.hakemuskaudet">
+        <accordion-group is-open="hakemukset.yearsOpen[hakemuskausi.vuosi]">
           <accordion-heading>
             <h4>
               <i class="pull-left glyphicon"
                  ng-class="{
-                  'glyphicon-chevron-down': hakemuksetPerVuosi.accordionOpen,
-                  'glyphicon-chevron-right': !hakemuksetPerVuosi.accordionOpen
+                  'glyphicon-chevron-down': hakemukset.yearsOpen[hakemuskausi.vuosi],
+                  'glyphicon-chevron-right': !hakemukset.yearsOpen[hakemuskausi.vuosi]
                   }"></i>
-              <span ng-show="tyyppi === 'AH0'">
-                JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET {{hakemuksetPerVuosi.vuosi}}
+
+              <span ng-show="hakemukset.tyyppi === 'AH0'">
+                JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET {{hakemuskausi.vuosi}}
               </span>
-              <span ng-show="tyyppi === 'MH1'">
-                JOUKKOLIIKENTEEN MAKSATUSHAKEMUKSET AJALTA 1.1-30.6.{{hakemuksetPerVuosi.vuosi}}
+
+              <span ng-show="hakemukset.tyyppi === 'MH1'">
+                JOUKKOLIIKENTEEN MAKSATUSHAKEMUKSET AJALTA 1.1-30.6.{{hakemuskausi.vuosi}}
               </span>
-              <span ng-show="tyyppi === 'MH2'">
-                JOUKKOLIIKENTEEN MAKSATUSHAKEMUKSET AJALTA 1.7-31.12.{{hakemuksetPerVuosi.vuosi}}
+
+              <span ng-show="hakemukset.tyyppi === 'MH2'">
+                JOUKKOLIIKENTEEN MAKSATUSHAKEMUKSET AJALTA 1.7-31.12.{{hakemuskausi.vuosi}}
               </span>
             </h4>
           </accordion-heading>
-          <div class="row">
+          <div class="row" ng-repeat="hakijatyyppi in constants.hakijaTyypit">
 
-            <h4>Suuret kaupunkiseudut</h4>
+            <h4>{{hakijatyyppi | toApplicantName}}</h4>
 
             <div class="row">
               <div class="col-md-12">
-                <table st-table="ks1displayed" class="table table-hover"
-                       st-safe-src=hakemuksetPerVuosi.ks1HakemuksetPerVuosi>
+                <table
+                  st-table="displayedCollection"
+                  st-safe-src="hakemukset.hakemukset[hakemuskausi.vuosi][hakijatyyppi]"
+                  class="table table-hover">
                   <thead>
                   <tr>
-                    <th st-sort="hakija">Hakija</th>
-                    <th st-sort="hakemuksenTila">Hakemuksen tila</th>
-                    <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
+                    <th st-sort-default="true" st-sort="hakemukset.hakijanNimi">Hakija</th>
+                    <th st-sort="hakemustilatunnus">Hakemuksen tila</th>
+                    <th st-sort="muokkausaika">Viimeisin muutos</th>
                     <th st-sort="diaarinumero">Diaarinumero</th>
-                    <th st-sort="kasittelija">Käsittelijä</th>
+                    <th st-sort="kasittelijanimi">Käsittelijä</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr ng-repeat="hakemus in ks1displayed"
-                      ui-sref="app.kasittelija.hakemukset.hakemus({
-                        vuosi: hakemuksetPerVuosi.vuosi,
-                        id: hakemus.avustushakemusId,
-                        m1id: hakemus.maksatushakemus1Id,
-                        m2id: hakemus.maksatushakemus2Id,
-                        tyyppi: tyyppi
-                      })">
-                    <td>{{hakemus.hakija}}</td>
+                  <tr ng-repeat="hakemus in displayedCollection"
+                      ng-click="hakemukset.siirryHakemukseen(hakemus, hakemuskausi)">
+                    <td>{{hakemukset.hakijanNimi(hakemus)}}</td>
                     <td>
-                      <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
+                      <hakemus-label tila="{{hakemus.hakemustilatunnus}}"></hakemus-label>
                     </td>
-                    <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                    <td>{{hakemus.muokkausaika | date:'dd.MM.yyyy HH:mm:ss'}}</td>
                     <td>{{hakemus.diaarinumero}}</td>
-                    <td>{{hakemus.kasittelija}}</td>
+                    <td>{{hakemus.kasittelijanimi}}</td>
                   </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-8"></div>
-              <div class="col-md-4">
-                <div class="pull-right">
 
-                  <juku-link-next
-                    ng-show="sallittu('kasittely-hakemus')"
-                    ui-sref="app.kasittelija.suunnittelu({
-                      vuosi: hakemuksetPerVuosi.vuosi,
-                      tyyppi: tyyppi,
-                      lajitunnus: 'KS1'
-                    })">
-                    Suunnittelu ja päätöksenteko
-                  </juku-link-next>
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <h4>Keskisuuret kaupunkiseudut</h4>
-
-            <div class="row">
-              <div class="col-md-12">
-                <table st-table="ks2displayed" class="table table-hover table-condensed"
-                       st-safe-src=hakemuksetPerVuosi.ks2HakemuksetPerVuosi>
-                  <thead>
-                  <tr>
-                    <th st-sort="hakija">Hakija</th>
-                    <th st-sort="hakemuksenTila">Hakemuksen tila</th>
-                    <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
-                    <th st-sort="diaarinumero">Diaarinumero</th>
-                    <th st-sort="kasittelija">Käsittelijä</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr ng-repeat="hakemus in ks2displayed"
-                      ui-sref="app.kasittelija.hakemukset.hakemus({
-                        vuosi: hakemuksetPerVuosi.vuosi,
-                        id: hakemus.avustushakemusId,
-                        m1id: hakemus.maksatushakemus1Id,
-                        m2id: hakemus.maksatushakemus2Id,
-                        tyyppi: tyyppi
-                      })">
-                    <td>{{hakemus.hakija}}</td>
-                    <td>
-                      <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
-                    </td>
-                    <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
-                    <td>{{hakemus.diaarinumero}}</td>
-                    <td>{{hakemus.kasittelija}}</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-8"></div>
               <div class="col-md-4">
@@ -153,61 +88,9 @@
                   <juku-link-next
                     ng-show="sallittu('kasittely-hakemus')"
                     ui-sref="app.kasittelija.suunnittelu({
-                      vuosi: hakemuksetPerVuosi.vuosi,
-                      tyyppi: tyyppi,
-                      lajitunnus: 'KS2'
-                    })">
-                    Suunnittelu ja päätöksenteko
-                  </juku-link-next>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-
-            <h4>Ely-keskukset</h4>
-
-            <div class="row">
-              <div class="col-md-12">
-                <table st-table="elydisplayed" class="table table-hover table-condensed"
-                       st-safe-src=hakemuksetPerVuosi.elyHakemuksetPerVuosi>
-                  <thead>
-                  <tr>
-                    <th st-sort="hakija">Hakija</th>
-                    <th st-sort="hakemuksenTila">Hakemuksen tila</th>
-                    <th st-sort="viimeisinMuutos">Viimeisin muutos</th>
-                    <th st-sort="diaarinumero">Diaarinumero</th>
-                    <th st-sort="kasittelija">Käsittelijä</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr ng-repeat="hakemus in elydisplayed"
-                      ui-sref="app.hakija.hakemukset.elyhakemus({
-                        vuosi: hakemuksetPerVuosi.vuosi,
-                        id: hakemus.avustushakemusId
-                      })">
-                    <td>{{hakemus.hakija}}</td>
-                    <td>
-                      <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
-                    </td>
-                    <td>{{hakemus.viimeisinMuutos | date:'dd.MM.yyyy HH:mm:ss'}}</td>
-                    <td>{{hakemus.diaarinumero}}</td>
-                    <td>{{hakemus.kasittelija}}</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-8"></div>
-              <div class="col-md-4">
-                <div class="pull-right">
-                  <juku-link-next
-                    ng-show="sallittu('kasittely-hakemus')"
-                    ui-sref="app.kasittelija.suunnittelu({
-                      vuosi: hakemuksetPerVuosi.vuosi,
-                      tyyppi: tyyppi,
-                      lajitunnus: 'ELY'
+                      vuosi: hakemuskausi.vuosi,
+                      tyyppi: hakemukset.tyyppi,
+                      lajitunnus: hakijatyyppi
                     })">
                     Suunnittelu ja päätöksenteko
                   </juku-link-next>
