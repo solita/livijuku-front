@@ -2,8 +2,15 @@
 
   <!-- Navigaatio -->
   <juku-navigation>
-    <juku-link-prev ng-click="backToList()">
+
+    <!-- Käsittelijä -->
+    <juku-link-prev ng-hide="isHakija" ng-click="backToList()">
       Palaa hakemusten päänäkymään
+    </juku-link-prev>
+
+    <!-- Hakija -->
+    <juku-link-prev ng-show="isHakija" ng-click="backToList()">
+      Palaa omiin hakemuksiin
     </juku-link-prev>
 
     <juku-tabs>
@@ -296,8 +303,14 @@
       </juku-controls>
 
       <juku-navigation-links>
-        <juku-link-prev ng-click="backToList()">
+        <!-- Käsittelijä -->
+        <juku-link-prev ng-hide="isHakija" ng-click="backToList()">
           Palaa hakemusten päänäkymään
+        </juku-link-prev>
+
+        <!-- Hakija -->
+        <juku-link-prev ng-show="isHakija" ng-click="backToList()">
+          Palaa omiin hakemuksiin
         </juku-link-prev>
 
         <!-- Käsittelijä -->
