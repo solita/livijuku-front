@@ -22,12 +22,12 @@
         </li>
 
         <li class="header__button {{ 'app.hakija.hakemukset' | includedByState | toClass:'is-active' }}" ng-show="sallittu(user, 'view-oma-hakemus')">
-          <a class="header__link" ui-sref="app.hakija.hakemukset.list()">
+          <a class="header__link" ui-sref="app.hakija.hakemukset.omat()">
             Omat hakemukset
           </a>
         </li>
 
-        <li class="header__button {{ 'hakemukset' | stateNameIncludes:['app.hakija.hakemukset.hakemus', 'app.hakija.hakemukset.list'] | toClass:'is-active' }}"
+        <li class="header__button {{ 'hakemukset' | stateNameIncludes:['app.hakija.hakemukset.hakemus', 'app.hakija.hakemukset.omat'] | toClass:'is-active' }}"
             ng-show="sallittu(user, 'view-kaikki-hakemukset')">
           <a class="header__link" ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'AH0'})">
             Kaikki hakemukset

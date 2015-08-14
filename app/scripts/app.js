@@ -69,7 +69,7 @@ angular
         abstract: true,
         template: '<ui-view></ui-view>'
       };
-      if (url) {
+      if(url) {
         opts.url = url;
       }
       return opts;
@@ -78,8 +78,8 @@ angular
     $stateProvider
       .state('redirect', {
         url: '/',
-        controller: ['$state', 'KayttajaService', function ($state, KayttajaService) {
-          KayttajaService.hae().then(function (user) {
+        controller: ['$state', 'KayttajaService', function($state, KayttajaService) {
+          KayttajaService.hae().then(function(user) {
             $state.go(defaultView(user));
           });
         }]
@@ -101,7 +101,7 @@ angular
       .state('app.hakija', root('/h'))
       .state('app.hakija.hakemukset', root('/hakemukset'))
       .state('app.hakija.hakemukset.hakemus', restrictRoute(isHakija, {
-        url: '/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id',
+        url: '/:vuosi/:tyyppi/:id/:m1id/:m2id',
         template: require('views/hakemus/index.html'),
         controller: 'HakemusCtrl'
       }))
@@ -110,7 +110,7 @@ angular
         template: require('views/hakija/elyhakemus.html'),
         controller: 'ElyHakemusCtrl'
       })
-      .state('app.hakija.hakemukset.list', restrictRoute(isHakija, {
+      .state('app.hakija.hakemukset.omat', restrictRoute(isHakija, {
         url: '/',
         template: require('views/hakija/hakemukset.html'),
         controller: 'HakijaHakemuksetCtrl'
@@ -169,12 +169,12 @@ angular
         controller: 'KasittelijaPaatosCtrl'
       }));
 
-    // $urlRouterProvider.otherwise('/');
+      $urlRouterProvider.otherwise('/');
   }])
   .config(['$httpProvider', function ($httpProvider) {
     //http://stackoverflow.com/questions/16098430/angular-ie-caching-issue-for-http
     //initialize get if not there
-    if (!$httpProvider.defaults.headers.get) {
+    if(!$httpProvider.defaults.headers.get) {
       $httpProvider.defaults.headers.get = {};
     }
 

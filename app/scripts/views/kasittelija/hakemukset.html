@@ -6,10 +6,6 @@
   <div ng-show="hakemukset.hakemuskaudet.length > 0">
 
     <juku-navigation>
-      <juku-link-prev ng-click="hakemukset.backToList()">
-        Palaa hakemusten päänäkymään
-      </juku-link-prev>
-
       <juku-tabs>
         <juku-tab
           ng-repeat="tyyppi in constants.hakemustyypit"
