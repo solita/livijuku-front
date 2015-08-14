@@ -256,6 +256,8 @@ require('./directives/datepickerPopup');
 require('./directives/jukuAvustusluokkaPanel');
 require('./directives/noenter');
 require('./directives/numericOnly');
+require('./directives/numericIntegerOnly');
+require('./directives/numericKmOnly');
 require('./directives/focusToInvalid');
 require('./directives/selectonclick');
 require('./services/auth');

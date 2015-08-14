@@ -2,30 +2,56 @@
   <form name="seurantaPaikallisliikenne">
     <table class="table table-bordered table-hover table-condensed">
       <thead>
-      <tr style="font-weight: bold">
-        <th style="width:30%">Linjan numero tai nimi</th>
-        <th style="width:10%">Linja-auto</th>
-        <th style="width:10%">Taksi</th>
-        <th style="width:10%">Ajokilometrit</th>
-        <th style="width:10%">Matkustajamäärät</th>
-        <th style="width:10%">Asiakastulo</th>
-        <th style="width:10%">Nettohinta</th>
-        <th style="width:10%">Bruttohinta</th>
-      </tr>
+        <tr>
+          <th>Linjan numero tai nimi</th>
+          <th>Linja-auto</th>
+          <th>Taksi</th>
+          <th>Ajokilometrit</th>
+          <th>Matkustajamäärät</th>
+          <th>Asiakastulo</th>
+          <th>Nettohinta</th>
+          <th>Bruttohinta</th>
+          <th></th>
+        </tr>
       </thead>
+      <tfoot>
+        <tr>
+          <td colspan="3">
+            <button class="btn btn-primary" ng-click="lisaaRivi()">Lisää rivi</button>
+            <span class="yhteensa">Yhteensä:</span>
+          </td>
+          <td>{{ajokmSumma() | currency : 'km'}}</td>
+          <td>{{matkustajatSumma() | currency : '' : 0}}</td>
+          <td>{{asiakastuloSumma() | currency}}</td>
+          <td>{{nettohintaSumma() | currency}}</td>
+          <td>{{bruttohintaSumma() | currency}}</td>
+          <td></td>
+        </tr>
+      </tfoot>
       <tbody>
-      <tr ng-repeat="rivi in data">
-        <td>{{rivi.linja}}</td>
-        <td>{{rivi.linjaauto}}</td>
-        <td>{{rivi.taksi}}</td>
-        <td>{{rivi.ajokm}}</td>
-        <td>{{rivi.matkustajamaarat}}</td>
-        <td><input name="asiakastulo" type="text" ng-currency="" numeric-only="" noenter
-                   select-on-click
-                   ng-model="rivi.asiakastulo"></td>
-        <td>{{rivi.nettohinta}}</td>
-        <td>{{rivi.bruttohinta}}</td>
-      </tr>
+        <tr ng-repeat="rivi in data track by $index">
+          <td><input name="linja" type="text" noenter
+                     select-on-click
+                     ng-model="rivi.linja"></td>
+          <td><input type="checkbox" name="linjaauto" ng-model="rivi.linjaauto"></td>
+          <td><input type="checkbox" name="taksi" ng-model="rivi.taksi"></td>
+          <td><input name="ajokm" type="text" numeric-km-only="" ng-currency="" currency-symbol="km" noenter
+                     select-on-click
+                     ng-model="rivi.ajokm"></td>
+          <td><input name="matkustajamaarat" type="text" numeric-integer-only="" noenter
+                     select-on-click
+                     ng-model="rivi.matkustajamaarat"></td>
+          <td><input name="asiakastulo" type="text" ng-currency="" numeric-only="" noenter
+                     select-on-click
+                     ng-model="rivi.asiakastulo"></td>
+          <td><input name="nettohinta" type="text" ng-currency="" numeric-only="" noenter
+                     select-on-click
+                     ng-model="rivi.nettohinta"></td>
+          <td><input name="bruttohinta" type="text" ng-currency="" numeric-only="" noenter
+                     select-on-click
+                     ng-model="rivi.bruttohinta"></td>
+          <td><a href="" ng-click="poistaRivi($index)"><span class="glyphicon glyphicon-remove-sign"></span></a></td>
+        </tr>
       </tbody>
     </table>
   </form>
