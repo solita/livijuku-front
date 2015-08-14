@@ -31,7 +31,7 @@ angular.module('jukufrontApp')
 
       $scope.backToList = function backToList() {
         if($scope.isHakija) {
-          return $state.go('app.hakija.hakemukset.list');
+          return $state.go('app.hakija.hakemukset.omat');
         }
         $state.go('app.yhteinen.hakemukset.list', {
           tyyppi: $scope.tyyppi
@@ -115,7 +115,7 @@ angular.module('jukufrontApp')
         HakemusService.lahetaHakemus($scope.hakemusid)
           .success(function () {
             StatusService.ok('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', 'Lähettäminen onnistui.');
-            $state.go('app.hakija.hakemukset.list');
+            $state.go('app.hakija.hakemukset.omat');
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', data.message);
@@ -126,7 +126,7 @@ angular.module('jukufrontApp')
         HakemusService.lahetaTaydennys($scope.hakemusid)
           .success(function () {
             StatusService.ok('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', 'Täydennyksen lähettäminen onnistui.');
-            $state.go('app.hakija.hakemukset.list');
+            $state.go('app.hakija.hakemukset.omat');
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', data.message);

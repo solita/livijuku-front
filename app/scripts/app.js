@@ -101,7 +101,7 @@ angular
       .state('app.hakija', root('/h'))
       .state('app.hakija.hakemukset', root('/hakemukset'))
       .state('app.hakija.hakemukset.hakemus', restrictRoute(isHakija, {
-        url: '/hakemus/:vuosi/:tyyppi/:id/:m1id/:m2id',
+        url: '/:vuosi/:tyyppi/:id/:m1id/:m2id',
         template: require('views/hakemus/index.html'),
         controller: 'HakemusCtrl'
       }))
@@ -110,7 +110,7 @@ angular
         template: require('views/hakija/elyhakemus.html'),
         controller: 'ElyHakemusCtrl'
       })
-      .state('app.hakija.hakemukset.list', restrictRoute(isHakija, {
+      .state('app.hakija.hakemukset.omat', restrictRoute(isHakija, {
         url: '/',
         template: require('views/hakija/hakemukset.html'),
         controller: 'HakijaHakemuksetCtrl'
