@@ -1,58 +1,82 @@
-<div class="panel panel-default seurantalomakepaikallisliikenne">
+<div class="seurantalomakepaikallisliikenne">
   <form name="seurantaPaikallisliikenne">
-    <table class="table table-bordered table-hover table-condensed">
-      <thead>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-condensed">
         <tr>
           <th>Linjan numero tai nimi</th>
-          <th>Linja-auto</th>
-          <th>Taksi</th>
-          <th>Ajokilometrit</th>
-          <th>Matkustajamäärät</th>
+          <th>
+            <div tooltip="Linjan tyyppi merkitään sarakkeeseen rastilla (X)" tooltip-placement="top"
+                 tooltip-append-to-body="true">Linja-Auto<span class="glyphicon glyphicon-question-sign"></span></div>
+          </th>
+          <th>
+            <div tooltip="Linjan tyyppi merkitään sarakkeeseen rastilla (X)" tooltip-placement="top"
+                 tooltip-append-to-body="true">Taksi<span class="glyphicon glyphicon-question-sign"></span></div>
+          </th>
+          <th>
+            <div tooltip="Varsinaisen paikallisliikenteen ajokilometrit"
+                 tooltip-append-to-body="true">Ajokilometrit<span class="glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th>
+            <div tooltip="Varsinaisen paikallisliikenteen matkustajamäärät" tooltip-placement="top"
+                 tooltip-append-to-body="true">Matkustajat<span class="glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
           <th>Asiakastulo</th>
-          <th>Nettohinta</th>
-          <th>Bruttohinta</th>
+          <th>
+            <div tooltip="Kunnan/kaupungin liikennöitsijöille maksama hinta, sisältää valtionavun"
+                 tooltip-placement="top"
+                 tooltip-append-to-body="true">Nettohinta<span class="glyphicon glyphicon-question-sign"></span></div>
+          </th>
+          <th>
+            <div tooltip="Asiakastulo + nettohinta" tooltip-placement="top"
+                 tooltip-append-to-body="true">Bruttohinta<span class="glyphicon glyphicon-question-sign"></span></div>
+          </th>
           <th></th>
         </tr>
-      </thead>
-      <tfoot>
-        <tr>
-          <td colspan="3">
-            <button class="btn btn-primary" ng-click="lisaaRivi()">Lisää rivi</button>
-            <span class="yhteensa">Yhteensä:</span>
-          </td>
-          <td>{{ajokmSumma() | currency : 'km'}}</td>
-          <td>{{matkustajatSumma() | currency : '' : 0}}</td>
-          <td>{{asiakastuloSumma() | currency}}</td>
-          <td>{{nettohintaSumma() | currency}}</td>
-          <td>{{bruttohintaSumma() | currency}}</td>
-          <td></td>
-        </tr>
-      </tfoot>
-      <tbody>
-        <tr ng-repeat="rivi in data track by $index">
-          <td><input name="linja" type="text" noenter
-                     select-on-click
-                     ng-model="rivi.linja"></td>
-          <td><input type="checkbox" name="linjaauto" ng-model="rivi.linjaauto"></td>
-          <td><input type="checkbox" name="taksi" ng-model="rivi.taksi"></td>
-          <td><input name="ajokm" type="text" numeric-km-only="" ng-currency="" currency-symbol="km" noenter
-                     select-on-click
-                     ng-model="rivi.ajokm"></td>
-          <td><input name="matkustajamaarat" type="text" numeric-integer-only="" noenter
-                     select-on-click
-                     ng-model="rivi.matkustajamaarat"></td>
-          <td><input name="asiakastulo" type="text" ng-currency="" numeric-only="" noenter
-                     select-on-click
-                     ng-model="rivi.asiakastulo"></td>
-          <td><input name="nettohinta" type="text" ng-currency="" numeric-only="" noenter
-                     select-on-click
-                     ng-model="rivi.nettohinta"></td>
-          <td><input name="bruttohinta" type="text" ng-currency="" numeric-only="" noenter
-                     select-on-click
-                     ng-model="rivi.bruttohinta"></td>
-          <td><a href="" ng-click="poistaRivi($index)"><span class="glyphicon glyphicon-remove-sign"></span></a></td>
-        </tr>
-      </tbody>
-    </table>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan="3">
+              <button class="btn btn-primary" ng-click="lisaaRivi()">Lisää rivi</button>
+              <span class="yhteensa">Yhteensä:</span>
+            </td>
+            <td>{{ajokmSumma() | currency : 'km'}}</td>
+            <td>{{matkustajatSumma() | currency : '' : 0}}</td>
+            <td>{{asiakastuloSumma() | currency}}</td>
+            <td>{{nettohintaSumma() | currency}}</td>
+            <td>{{bruttohintaSumma() | currency}}</td>
+            <td></td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr ng-repeat="rivi in data track by $index">
+            <td><input name="linja" type="text" class="form-control" noenter
+                       select-on-click
+                       ng-model="rivi.linja"></td>
+            <td><input type="checkbox" class="form-control" name="linjaauto" ng-model="rivi.linjaauto"></td>
+            <td><input type="checkbox" class="form-control" name="taksi" ng-model="rivi.taksi"></td>
+            <td><input name="ajokm" type="text" class="form-control" numeric-km-only="" ng-currency=""
+                       currency-symbol="km" noenter
+                       select-on-click
+                       ng-model="rivi.ajokm"></td>
+            <td><input name="matkustajamaarat" type="text" class="form-control" numeric-integer-only="" noenter
+                       select-on-click
+                       ng-model="rivi.matkustajamaarat"></td>
+            <td><input name="asiakastulo" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+                       select-on-click
+                       ng-model="rivi.asiakastulo"></td>
+            <td><input name="nettohinta" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+                       select-on-click
+                       ng-model="rivi.nettohinta"></td>
+            <td><input name="bruttohinta" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+                       select-on-click
+                       ng-model="rivi.bruttohinta"></td>
+            <td><a href="" ng-click="poistaRivi($index)"><span class="glyphicon glyphicon-remove-sign"></span></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </form>
 </div>
