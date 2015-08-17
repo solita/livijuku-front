@@ -63,7 +63,7 @@
                   </thead>
                   <tbody>
                   <tr ng-repeat="hakemus in displayedCollection"
-                      ng-click="hakemukset.siirryHakemukseen(hakemus, hakemuskausi)">
+                      ng-click="hakemukset.siirryHakemukseen(hakemus, hakemuskausi, hakijatyyppi)">
                     <td>{{hakemukset.hakijanNimi(hakemus)}}</td>
                     <td>
                       <hakemus-label tila="{{hakemus.hakemustilatunnus}}"></hakemus-label>
