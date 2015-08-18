@@ -104,7 +104,7 @@ public class HakemuskausiTest extends TestBase {
         tallennaHakemus();
 
         // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
-        linkInPosition("Palaa hakemusten päänäkymään", 1).click();
+        linkInPosition("Palaa omiin hakemuksiin", 1).click();
         spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
         // Lähetä hakemus
@@ -210,7 +210,7 @@ public class HakemuskausiTest extends TestBase {
         //Tarkistetaan, että tyhjästä kentästä tulee virheilmoitus
         rahakentat.get(0).clear();
         rahakentat.get(1).click();
-        tarkistaInputKentanTila("ng-invalid-sallittu-arvo-haettavaavustus");
+        tarkistaInputKentanTila("ng-invalid-omarahoitus-riittava");
 
         // Tarkistetaan, että tulee virheilmoitus kun omarahoitusosuus on alle 50%
         rahakentat.get(0).clear();
@@ -232,7 +232,7 @@ public class HakemuskausiTest extends TestBase {
         tallennaHakemus();
 
         // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
-        linkInPosition("Palaa hakemusten päänäkymään", 1).click();
+        linkInPosition("Palaa omiin hakemuksiin", 1).click();
         spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
 
@@ -270,7 +270,7 @@ public class HakemuskausiTest extends TestBase {
     }
 
     private boolean isChrome() {
-        return System.getProperty("chrome")!=null;
+        return System.getProperty("chrome") != null;
     }
 
     private void tarkistaHakemuksenSummakentat() {
@@ -283,7 +283,7 @@ public class HakemuskausiTest extends TestBase {
 
         // Tarkistetaan hakemuksen yhteensa kentta
         List<WebElement> h4s = findElementsByXPath("//h4[@class='ng-binding']");
-        assertThat(h4s.get(3).getText(), is(equalTo("12 000,00 € (sis. alv)")));
+        assertThat(h4s.get(4).getText(), is(equalTo("12 000,00 € (sis. alv)")));
     }
 
     private void tarkistaHakijanHakemuksenTila(String teksti, String luokka) {
@@ -409,25 +409,28 @@ public class HakemuskausiTest extends TestBase {
 
         String actual = httpGetPdfText(pdfUrl, User.HARRI);
 
-        String expected = "Hakija: Helsingin seudun liikenne\n"
-                + "Hakija hakee vuonna 2016 suurten kaupunkiseutujen joukkoliikenteen \n"
-                + "valtionavustusta 13900 euroa. Haettu avustus jakautuu seuraavasti:\n"
-                + "Paikallisliikenne 1100 e\n"
-                + "Integroitupalvelulinja 1100 e\n"
-                + "Muu PSA:n mukaisen liikenteen järjestäminen 1100 e\n"
-                + "Seutulippu 1100 e\n"
-                + "Kaupunkilippu tai kuntalippu 1100 e\n"
-                + "Liityntälippu 1100 e\n"
-                + "Työmatkalippu 1100 e\n"
-                + "Informaatio ja maksujärjestelmien kehittäminen 1240 e\n"
-                + "Matkapalvelukeskuksen suunnittelu ja kehittäminen 1240 e\n"
-                + "Matkakeskuksen suunnittelu ja kehittäminen 1240 e\n"
-                + "Raitiotien suunnittelu 1240 e\n"
-                + "Muu hanke 1240 e\n"
-                + "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 41700 euroa.\n"
-                + "Lähettäjä: <hakijan nimi, joka on lähettänyt hakemuksen>\n"
-                + "Liikennevirasto - esikatselu - hakemus on keskeneräinen\n"
-                + "1 (1)\n";
+        String expected = "Hakija: Helsingin seudun liikenne\n" +
+                "Hakija hakee vuonna 2016 suurten kaupunkiseutujen joukkoliikenteen \n" +
+                "valtionavustusta 13 900 euroa. Haettu avustus jakautuu seuraavasti:\n" +
+                "PSA:n mukaisen liikenteen hankinta\n" +
+                "Paikallisliikenne 1 100 e\n" +
+                "Integroitupalvelulinja 1 100 e\n" +
+                "Muu PSA:n mukaisen liikenteen järjestäminen 1 100 e\n" +
+                "Hintavelvoitteiden korvaaminen\n" +
+                "Seutulippu 1 100 e\n" +
+                "Kaupunkilippu tai kuntalippu 1 100 e\n" +
+                "Liityntälippu 1 100 e\n" +
+                "Työmatkalippu 1 100 e\n" +
+                "Liikenteen suunnittelu ja kehittämishankkeet\n" +
+                "Informaatio ja maksujärjestelmien kehittäminen 1 240 e\n" +
+                "Matkapalvelukeskuksen suunnittelu ja kehittäminen 1 240 e\n" +
+                "Matkakeskuksen suunnittelu ja kehittäminen 1 240 e\n" +
+                "Raitiotien suunnittelu 1 240 e\n" +
+                "Muu hanke 1 240 e\n" +
+                "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 41 700 euroa.\n" +
+                "Lähettäjä: <hakijan nimi, joka on lähettänyt hakemuksen>\n" +
+                "Liikennevirasto - esikatselu - hakemus on keskeneräinen\n" +
+                "1 (1)\n";
 
         assertThat("Hakemuksen esikatselussa pitää näkyä rahasummat.", containsNormalized(actual, expected));
 
