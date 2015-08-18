@@ -93,6 +93,16 @@ angular
         controller: 'KasittelijaHakemuksetCtrl',
         controllerAs: 'hakemukset'
       })
+      .state('app.yhteinen.kayttajatiedot', {
+        url: '/kayttajatiedot',
+        template: require('views/yhteinen/kayttajatiedot.html'),
+        controller: 'KayttajatiedotCtrl'
+      })
+      .state('app.yhteinen.asetukset', {
+        url: '/asetukset',
+        template: require('views/yhteinen/asetukset.html'),
+        controller: 'AsetuksetCtrl'
+      })
 
       /*
        * Hakija
@@ -125,16 +135,6 @@ angular
         url: '/raportit',
         template: require('views/yhteinen/tunnuslukuraportit.html'),
         controller: 'TunnuslukuraporttiCtrl'
-      })
-      .state('app.yhteinen.kayttajatiedot', {
-        url: '/kayttajatiedot',
-        template: require('views/yhteinen/kayttajatiedot.html'),
-        controller: 'KayttajatiedotCtrl'
-      })
-      .state('app.hakija.asetukset', {
-        url: '/asetukset',
-        template: require('views/hakija/asetukset.html'),
-        controller: 'HakijaAsetuksetCtrl'
       })
 
       /*
@@ -239,12 +239,12 @@ angular
   .directive('jukuPaatosTiedot', require('components/paatosTiedot'))
   .directive('jukuSeurantalomakePaikallisliikenne', require('components/seurantalomakePaikallisliikenne'));
 
-require('./controllers/hakija/asetukset');
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
 require('./controllers/kasittelija/paatos');
 require('./controllers/kasittelija/suunnittelu');
+require('./controllers/yhteinen/asetukset');
 require('./controllers/yhteinen/hakemus');
 require('./controllers/yhteinen/elyhakemus');
 require('./controllers/yhteinen/kayttajatiedot');

@@ -13,7 +13,7 @@
           <div class="col-md-4">
             <h5>Organisaatio</h5>
 
-            <p>Suomenkylä</p>
+            <p>{{organisaatio}}</p>
           </div>
           <div class="col-md-4">
             <h5>Rooli</h5>
@@ -34,11 +34,6 @@
 
             <p>{{sahkoposti}}</p>
           </div>
-          <div class="col-md-4">
-            <h5>Puhelinnumero</h5>
-
-            <p>{{puhelinnumero}}</p>
-          </div>
         </div>
       </juku-form-row>
       <p>Onko käyttäjätiedoissa virheitä? Lähetä korjauspyyntö osoitteeseen <a href="mailto:juku@liikennevirasto.fi">juku@liikennevirasto.fi</a>.
@@ -47,7 +42,7 @@
     <juku-form-section>
       <h3>SÄHKÖPOSTIASETUKSET</h3>
       <juku-form-row>
-        <label><input type="checkbox" ng-model="sahkopostitilaus"> Haluan vastaanottaa JUKU-palvelun lähettämiä sähköposteja.</label>
+        <label><input type="checkbox" ng-model="sahkopostiviestit" ng-change="paivitaAsetus()"> Haluan vastaanottaa JUKU-palvelun lähettämiä sähköposteja.</label>
       </juku-form-row>
     </juku-form-section>
   </juku-form>

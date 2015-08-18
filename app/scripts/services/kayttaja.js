@@ -31,6 +31,21 @@ angular.module('services.kayttaja', [])
         });
 
         return getPromise;
+      },
+      paivitaSahkopostiviestit: function (sahkopostiviestit) {
+        var req = {
+          method: 'PUT',
+          url: 'api/user',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: {
+            'sahkopostiviestit': sahkopostiviestit
+          }
+        };
+        getPromise = null;
+        user = null;
+        return $http(req);
       }
     };
   }]);
