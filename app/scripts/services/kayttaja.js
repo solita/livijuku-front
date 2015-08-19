@@ -9,28 +9,30 @@ angular.module('services.kayttaja', [])
 
     return {
       hae: function () {
-        if(getPromise) {
+        if (getPromise) {
           return getPromise;
         }
 
-        if(user) {
+        if (user) {
           return $q.when(user);
         }
 
         getPromise = $http.get('api/user')
-        .then((res) => {
-          user = res.data;
-          return user;
-        })
-        .catch((err) => {
-          user = null
-          throw err;
-        })
-        .finally(() => {
-          getPromise = null
-        });
+          .then((res) => {
+            user = res.data;
+            return user;
+          })
+          .catch((err) => {
+            user = null
+            throw err;
+          })
+          .finally(() => {
+            getPromise = null
+          });
 
         return getPromise;
+      }, haeKaikki: function (sahkopostiviestit) {
+        return $http.get('api/users');
       },
       paivitaSahkopostiviestit: function (sahkopostiviestit) {
         var req = {

@@ -5,22 +5,18 @@
          st-safe-src=toimivaltaiset_viranomaiset>
     <thead>
     <tr>
-      <th st-sort="nimi">Nimi</th>
-      <th st-sort="organisaatio">Organisaatio</th>
-      <th st-sort="rooli">Rooli</th>
+      <th st-sort="etunimi">Nimi</th>
+      <th st-sort="organisaationimi">Organisaatio</th>
       <th st-sort="sahkoposti">Sähköposti</th>
-      <th st-sort="puhelinnumero">Puhelinnumero</th>
       <th st-sort="viimeisin_kirjautuminen">Viimeisin kirjautuminen</th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="toimivaltainen in toimivaltaiset">
-      <td>{{toimivaltainen.nimi}}</td>
-      <td>{{toimivaltainen.organisaatio}}</td>
-      <td>{{toimivaltainen.rooli}}</td>
-      <td>{{toimivaltainen.sahkoposti}}</td>
-      <td>{{toimivaltainen.puhelinnumero}}</td>
-      <td>{{toimivaltainen.viimeisin_kirjautuminen | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+    <tr ng-repeat="viranomainen in toimivaltaiset">
+      <td>{{viranomainen.etunimi}} {{viranomainen.sukunimi}}</td>
+      <td>{{viranomainen.organisaationimi}}</td>
+      <td>{{viranomainen.sahkoposti}}</td>
+      <td>{{viranomainen.viimeisin_kirjautuminen | date:'dd.MM.yyyy HH:mm:ss'}}</td>
     </tr>
      </tbody>
   </table>
@@ -29,18 +25,14 @@
          st-safe-src=liikenneviraston_henkilot>
     <thead>
     <tr>
-      <th st-sort="nimi">Nimi</th>
-      <th st-sort="rooli">Rooli</th>
+      <th st-sort="etunimi">Nimi</th>
       <th st-sort="sahkoposti">Sähköposti</th>
-      <th st-sort="puhelinnumero">Puhelinnumero</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="henkilo in liikennevirasto">
-      <td>{{henkilo.nimi}}</td>
-      <td>{{henkilo.rooli}}</td>
+      <td>{{henkilo.etunimi}} {{henkilo.sukunimi}}</td>
       <td>{{henkilo.sahkoposti}}</td>
-      <td>{{henkilo.puhelinnumero}}</td>
     </tr>
     </tbody>
   </table>
