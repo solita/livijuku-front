@@ -65,7 +65,7 @@
         <strong>
           Täydennyspyyntöviesti käsittelijältä, määräpäivä: {{hakemus.taydennyspyynto.maarapvm |
           date:'dd.MM.yyyy'}}!
-        </strong><br />
+        </strong><br/>
         {{hakemus.taydennyspyynto.selite}}
       </juku-form-row>
 
@@ -175,8 +175,8 @@
         <div class="col-md-9">
           <h4>
             {{ tyyppi === 'AH0' || isHakija ?
-              'HAETTAVA VALTIONAVUSTUS YHTEENSÄ:' :
-              'HAETTAVAT MAKSATUKSET YHTEENSÄ:'
+            'HAETTAVA VALTIONAVUSTUS YHTEENSÄ:' :
+            'HAETTAVAT MAKSATUKSET YHTEENSÄ:'
             }}
           </h4>
         </div>
@@ -207,6 +207,7 @@
     <div ng-show="!isHakija">
       <div ng-show="onAvustushakemus()">
         <h5>Lisätietoja avustusten kohteista</h5>
+
         <p>{{seliteOlemassa() ? hakemus.selite : 'Ei selitettä.' }}</p>
       </div>
 
@@ -237,7 +238,9 @@
         <div class="col-md-6">
           <h5 ng-show="hakemusKeskenerainen()">Viimeisin muokkaaja</h5>
           <h5 ng-hide="hakemusKeskenerainen()">Hakija</h5>
+
           <p ng-show="hakemusKeskenerainen()">{{hakemus.muokkaaja}}</p>
+
           <p ng-hide="hakemusKeskenerainen()">{{hakemus.lahettaja}}</p>
         </div>
       </div>
@@ -258,10 +261,11 @@
             ng-disabled="!hakemusKeskenerainen() || !sallittu('modify-oma-hakemus')"
             data-ng-click="tallennaHakemus(0)"
             class="btn btn-primary">
-              Tallenna tiedot
+            Tallenna tiedot
           </button>
           <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="btn btn-primary">
-            {{ hakemusKeskenerainen() && sallittu('modify-oma-hakemus') ? 'Tallenna ja esikatsele hakemus' : 'Avaa hakemus (PDF)' }}
+            {{ hakemusKeskenerainen() && sallittu('modify-oma-hakemus') ? 'Tallenna ja esikatsele hakemus' : 'Avaa
+            hakemus (PDF)' }}
           </button>
           <button
             juku-varmistusdialogi varmistusotsake="Hakemuksen lähettäminen"
@@ -269,7 +273,7 @@
             operaatio="tallennaHakemus(2)"
             class="btn btn-success"
             ng-disabled="!hakemusKeskenerainen() || !allekirjoitusliitetty || !liitteetOlemassa() || !edellinenHakemusPaatetty()">
-              Tallenna ja lähetä hakemus
+            Tallenna ja lähetä hakemus
           </button>
         </juku-controls-buttons>
 
@@ -277,26 +281,26 @@
         <juku-controls ng-show="sallittu('kasittely-hakemus')">
           <juku-controls-buttons>
             <button ng-show="hakemusVireilla()"
+                    juku-taydennysdialogi hakemusid="{{hakemusid}}" tyyppi="{{tyyppi}}"
+                    class="btn btn-danger">
+              Palauta täydennettäväksi
+            </button>
+            <button ng-show="hakemusVireilla()"
                     juku-varmistusdialogi varmistusotsake="Hakemuksen tarkastaminen"
                     varmistusteksti="Oletko varma, että haluat merkitä hakemuksen tarkastetuksi? Hakemuksen tarkastettu-merkintää ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa tarkastamisen jälkeen."
                     operaatio="tarkastaHakemus()"
                     class="btn btn-success">
               Merkitse tarkastetuksi
             </button>
-            <button ng-show="hakemusVireilla()"
-                    juku-taydennysdialogi hakemusid="{{hakemusid}}" tyyppi="{{tyyppi}}"
-                    class="btn btn-danger">
+            <button ng-hide="hakemusVireilla()"
+                    data-ng-click="taydennyspyynto()"
+                    class="btn btn-danger" disabled>
               Palauta täydennettäväksi
             </button>
             <button ng-hide="hakemusVireilla()"
                     data-ng-click="tarkastaHakemus()"
                     class="btn btn-success" disabled>
               Merkitse tarkastetuksi
-            </button>
-            <button ng-hide="hakemusVireilla()"
-                    data-ng-click="taydennyspyynto()"
-                    class="btn btn-danger" disabled>
-              Palauta täydennettäväksi
             </button>
           </juku-controls-buttons>
         </juku-controls>
