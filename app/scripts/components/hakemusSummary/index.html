@@ -14,7 +14,7 @@
     <p>Hakuaika:</p>
 
     <div ng-hide="editing">
-      <a href="#" ng-click="toggleEditMode($event)" id="{{ testIds ? 'test-muokkaa-hakuaikoja' : ''}}">
+      <a ng-hide="hakemuskausiSuljettu()" href="#" ng-click="toggleEditMode($event)" id="{{ testIds ? 'test-muokkaa-hakuaikoja' : ''}}">
         <i class="glyphicon glyphicon-pencil hakemus-summary__edit"></i>
       </a>
       {{hakemus.hakuaika.alkupvm | date:'d.M.yyyy'}} -

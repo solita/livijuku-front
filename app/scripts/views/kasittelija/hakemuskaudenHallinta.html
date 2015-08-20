@@ -34,9 +34,18 @@
           <p>
             <button
               ng-disabled="!voiKaynnistaa(hakemuskausi)"
+              ng-hide="hakemuskausiKaynnistetty(hakemuskausi) || hakemuskausiSuljettu(hakemuskausi)"
               ng-click="kaynnistaHakemuskausi(hakemuskausi.vuosi)"
               class="btn btn-success btn-lg">
               Käynnistä hakemuskausi
+            </button>
+            <button
+              ng-show="hakemuskausiKaynnistetty(hakemuskausi)"
+              class="btn btn-primary btn-lg"
+              juku-varmistusdialogi varmistusotsake="Hakemuskauden päättäminen"
+              varmistusteksti="Oletko varma, että haluat päättää käynnissäolevan hakemuskauden? Hakemuksiin ja hakemuskauden tietoihin ei ole mahdollista tehdä mitään muutoksia kauden päättämisen jälkeen."
+              operaatio="suljeHakemuskausi(hakemuskausi.vuosi)">
+              Päätä hakemuskausi
             </button>
           </p>
         </div>
@@ -48,6 +57,7 @@
             ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
             <hakemus-summary
               test-ids="$index === 0"
+              hakemuskauden-tila="hakemuskausi.tilatunnus"
               hakemus="utils.haeHakemus(hakemuskausi, tyyppitunnus)"
               on-save="tallennaHakuajat(hakemuskausi.vuosi, utils.haeHakemus(hakemuskausi, tyyppitunnus), values)">
             </hakemus-summary>

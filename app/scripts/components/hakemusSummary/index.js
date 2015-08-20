@@ -7,6 +7,7 @@ module.exports = function() {
   return {
     scope: {
       hakemus: '=hakemus',
+      hakemuskaudenTila: '=hakemuskaudenTila',
       testIds: '=',
       onSave: '&',
       onEdit: '&'
@@ -23,6 +24,10 @@ module.exports = function() {
         formatYear: 'yyyy',
         startingDay: 1,
         formatMonth: 'MM'
+      };
+
+      $scope.hakemuskausiSuljettu= function () {
+        return $scope.hakemuskaudenTila === 'S';
       };
 
       $scope.inputs = ['alkupvm', 'loppupvm'];
