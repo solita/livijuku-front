@@ -43,6 +43,7 @@
 
         <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit">
           <hakemuskausi-panel
+            inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
             title="{{tyyppitunnus | toApplicationName}}"
             ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
             <hakemus-summary
