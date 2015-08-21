@@ -1,13 +1,11 @@
 <div class="container">
-  <div ng-repeat="hakemuskausi in hakemuskaudet">
-
+  <div ng-repeat="hakemuskausi in avoimetHakemuskaudet">
     <div ng-class="{
       uusihakemuskausi: uusiHakemuskausi(hakemuskausi),
       well: !uusiHakemuskausi(hakemuskausi)
     }">
       <div class="row">
         <div class="col-md-3 text-center">
-
           <p class="hakemuskausi-vuosi">
             {{hakemuskausi.vuosi}}
           </p>
@@ -49,7 +47,6 @@
             </button>
           </p>
         </div>
-
         <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit">
           <hakemuskausi-panel
             inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
@@ -63,6 +60,36 @@
             </hakemus-summary>
           </hakemuskausi-panel>
         </div>
+      </div>
+    </div>
+  </div>
+  <h3>PÄÄTTYNEET HAKEMUSKAUDET</h3>
+
+  <div ng-repeat="hakemuskausi in suljetutHakemuskaudet">
+    <div class="row well">
+      <div class="col-md-3 text-center">
+        <p class="hakemuskausi-vuosi">
+          {{hakemuskausi.vuosi}}
+        </p>
+
+        <p>
+          <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">
+            Hakuohje
+          </a>
+        </p>
+      </div>
+      <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit">
+        <hakemuskausi-panel
+          inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
+          title="{{tyyppitunnus | toApplicationName}}"
+          ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
+          <hakemus-summary
+            test-ids="$index === 0"
+            hakemuskauden-tila="hakemuskausi.tilatunnus"
+            hakemus="utils.haeHakemus(hakemuskausi, tyyppitunnus)"
+            on-save="tallennaHakuajat(hakemuskausi.vuosi, utils.haeHakemus(hakemuskausi, tyyppitunnus), values)">
+          </hakemus-summary>
+        </hakemuskausi-panel>
       </div>
     </div>
   </div>
