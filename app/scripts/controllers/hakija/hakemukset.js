@@ -54,12 +54,8 @@ angular.module('jukufrontApp')
       if(hakemuskausi.avustushakemukset.maksatushakemus2.tilatunnus === 'FEK') {
         return;
       }
-      $state.go('app.hakija.hakemukset.hakemus', {
-        vuosi: hakemuskausi.vuosi,
-        tyyppi,
-        id: hakemuskausi.avustushakemukset.avustushakemus.id,
-        m1id: hakemuskausi.avustushakemukset.maksatushakemus1.id,
-        m2id: hakemuskausi.avustushakemukset.maksatushakemus2.id
+      $state.go('app.hakemus', {
+        id: hakemuskausi.avustushakemukset.avustushakemus.id
       });
     };
 

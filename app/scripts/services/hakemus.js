@@ -9,7 +9,8 @@ angular.module('services.hakemus', [])
         return $http.get('api/hakemukset/hakija', {params: {isArray: true}});
       },
       hae: function (hakemusid) {
-        return $http.get('api/hakemus/' + hakemusid);
+        return $http.get('api/hakemus/' + hakemusid)
+          .then(res => res.data);
       },
       tallennaSelite: function (selitedata) {
         var req = {

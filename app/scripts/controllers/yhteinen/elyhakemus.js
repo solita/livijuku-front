@@ -9,22 +9,22 @@ angular.module('jukufrontApp')
     function ($rootScope, $scope, $state, $stateParams, HakemusService, PaatosService, StatusService, $window, uiGridConstants, $q) {
       function haeHakemukset() {
         HakemusService.hae($scope.hakemusid)
-          .success(function (data) {
+          .then(function (data) {
             $scope.hakemus = data;
             $scope.hakija = _.find($rootScope.organisaatiot, {'id': data.organisaatioid}).nimi;
             $scope.pankkitilinumero = _.find($rootScope.organisaatiot, {'id': data.organisaatioid}).pankkitilinumero;
           })
-          .error(function (data) {
+          .catch(function (data) {
             StatusService.virhe('HakemusService.hae(' + $scope.hakemusid + ')', data.message);
           });
       }
 
       function haePaatos() {
         PaatosService.hae($scope.hakemusid)
-          .success(function (data) {
+          .then(function (data) {
             $scope.paatos = data;
           })
-          .error(function (data) {
+          .catch(function (data) {
             StatusService.virhe('PaatosService.hae(' + $scope.hakemusid + ')', data.message);
           });
       }
