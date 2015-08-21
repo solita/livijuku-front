@@ -2,13 +2,13 @@
   <div ng-hide="sallittu('view-oma-hakemus')">
     <p>Ei omien hakemusten katseluoikeutta.</p>
   </div>
-  <div ng-show="hakemukset.length === 0">
+  <div ng-show="hakemuskaudet.length === 0">
     <p>Ei hakemuksia, koska hakemuskautta ei ole vielä avattu.</p>
   </div>
-  <div ng-show="hakemukset.length > 0 && sallittu('view-oma-hakemus')">
+  <div ng-show="hakemuskaudet.length > 0 && sallittu('view-oma-hakemus')">
     <h3>AKTIIVISET JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET</h3>
 
-    <div ng-repeat="hakemuskausi in hakemukset">
+    <div ng-repeat="hakemuskausi in hakemuskaudet | orderBy: 'vuosi': true">
       <div class="well">
         <div class="row">
           <div class="col-md-3 text-center">
@@ -18,13 +18,12 @@
             <br>
           </div>
 
-          <div class="col-md-3 text-center" ng-repeat="(lyhenne, tila) in tilaAvaimet">
+          <div class="col-md-3 text-center" ng-repeat="tyyppi in constants.hakemustyypit">
             <hakemus-laatikko
-              ng-click="valitseHakemus(lyhenne, hakemuskausi)"
-              title="{{ tila.nimi }}"
-              inactive="!hakemuskausi.avustushakemukset[tila.id].kaynnissa"
-              tila="{{ tila.id }}"
-              hakemuskausi="hakemuskausi" />
+              ng-click="valitseHakemus(utils.haeHakemus(hakemuskausi, tyyppi))"
+              title="{{ tyyppi | toApplicationName }}"
+              hakemus="utils.haeHakemus(hakemuskausi, tyyppi)">
+            </hakemus-laatikko>
           </div>
         </div>
       </div>
