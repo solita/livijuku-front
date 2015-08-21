@@ -13,7 +13,8 @@ angular.module('services.avustuskohde', [])
           return avustusprosentti;
       },
       hae: function (hakemusid) {
-        return $http.get('api/hakemus/avustuskohteet/' + hakemusid);
+        return $http.get('api/hakemus/avustuskohteet/' + hakemusid)
+          .then(res => res.data);
       },
       luokittelu: function () {
         return $http.get('api/avustuskohdeluokittelu');

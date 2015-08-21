@@ -1,19 +1,22 @@
 'use strict';
 
+const hakemusUtils = require('utils/hakemus');
+
 module.exports = function () {
   return {
     scope: {
       title: '@',
-      inactive: '=',
-      tila: '@',
-      hakemuskausi: '='
+      hakemus: '='
     },
+    controller: ['$scope', function($scope) {
+      $scope.utils = hakemusUtils;
+    }],
     template: `
-      <hakemus-panel class="hakemus-laatikko" title="{{title}}" inactive="inactive">
-        <hakemus-label tila="{{hakemuskausi.avustushakemukset[tila].tilatunnus}}"></hakemus-label>
-        <div class="hakemus-laatikko__hakuaika">
+      <hakemus-panel class="hakemus-laatikko" title="{{title}}" inactive="!utils.hakemusKaynnissa(hakemus)">
+        <hakemus-label tila="{{ hakemus.hakemustilatunnus }}"></hakemus-label>
+        <div class="hakemus-laatikko__hakuaika" transclude>
           <strong>Hakuaika:</strong>
-          {{ hakemuskausi.avustushakemukset[tila].alkupvm | date: 'dd.MM yyyy' }} - {{ hakemuskausi.avustushakemukset[tila].loppupvm | date: 'dd.MM yyyy' }}
+          {{ hakemus.hakuaika.alkupvm | date: 'dd.MM yyyy' }} - {{ hakemus.hakuaika.loppupvm | date: 'dd.MM yyyy' }}
         </div>
       </hakemus-panel>`
   };

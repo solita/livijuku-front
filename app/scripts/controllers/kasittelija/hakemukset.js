@@ -73,14 +73,8 @@ angular.module('jukufrontApp')
           return;
         }
 
-        var isOwn = $rootScope.user.organisaatioid === hakemus.organisaatioid;
-
-        $state.go(isOwn ? 'app.hakija.hakemukset.hakemus' : 'app.kasittelija.hakemukset.hakemus', {
-          vuosi: hakemuskausi.vuosi,
-          id: this.hakemustyypinId('AH0', hakemus, hakemuskausi.hakemukset),
-          m1id: this.hakemustyypinId('MH1', hakemus, hakemuskausi.hakemukset),
-          m2id: this.hakemustyypinId('MH2', hakemus, hakemuskausi.hakemukset),
-          tyyppi: this.tyyppi
+        $state.go('app.hakemus', {
+          id: this.hakemustyypinId('AH0', hakemus, hakemuskausi.hakemukset)
         });
       };
 

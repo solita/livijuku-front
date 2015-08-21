@@ -10,16 +10,16 @@ angular.module('jukufrontApp')
 
     function haePaatosTiedot() {
       HakemusService.hae($scope.hakemusid)
-        .success(function (data) {
+        .then(function (data) {
           $scope.avustushakemus = data;
           $scope.hakija = _.find($rootScope.organisaatiot, {'id': $scope.avustushakemus.organisaatioid}).nimi;
         })
-        .error(function (data) {
+        .catch(function (data) {
           StatusService.virhe('HakemusService.hae(' + $stateParams.id + ')', data.message);
         });
 
       PaatosService.hae($scope.hakemusid)
-        .success(function (data) {
+        .then(function (data) {
           if (data == null) {
             $scope.paatos = {
               myonnettyavustus: 0,
@@ -30,7 +30,7 @@ angular.module('jukufrontApp')
             $scope.paatos = data;
           }
         })
-        .error(function (data) {
+        .catch(function (data) {
           StatusService.virhe('PaatosService.hae(' + $scope.hakemusid + ')', data.message);
         });
     }

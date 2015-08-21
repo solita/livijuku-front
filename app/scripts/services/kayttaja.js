@@ -3,12 +3,13 @@
 var angular = require('angular');
 angular.module('services.kayttaja', [])
 
-  .factory('KayttajaService', ['$http', '$q', function ($http, $q) {
+  .factory('KayttajaService', ['$http', '$q',
+    function($http, $q) {
     var getPromise = null;
     var user = null;
 
     return {
-      hae: function () {
+      hae: function() {
         if (getPromise) {
           return getPromise;
         }
@@ -31,10 +32,11 @@ angular.module('services.kayttaja', [])
           });
 
         return getPromise;
-      }, haeKaikki: function (sahkopostiviestit) {
+      },
+      haeKaikki: function() {
         return $http.get('api/users');
       },
-      paivitaSahkopostiviestit: function (sahkopostiviestit) {
+      paivitaSahkopostiviestit: function(sahkopostiviestit) {
         var req = {
           method: 'PUT',
           url: 'api/user',

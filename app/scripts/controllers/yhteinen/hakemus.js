@@ -3,106 +3,116 @@
 var _ = require('lodash');
 var angular = require('angular');
 var pdf = require('utils/pdfurl');
+var hasPermission = require('utils/hasPermission');
+var Promise = require('bluebird');
 
+function haeHakemus(tyyppi, hakemus) {
+  if(hakemus.hakemustyyppitunnus === tyyppi) {
+    return hakemus;
+  }
+
+  return _.findWhere(hakemus['other-hakemukset'], {
+    hakemustyyppitunnus: tyyppi
+  });
+}
+
+loadInitialData.$inject = ['CommonService', '$stateParams', 'AvustuskohdeService', 'HakemusService', 'KayttajaService', 'PaatosService'];
+
+function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusService, KayttajaService, PaatosService) {
+  function haeAvustuskohteet(hakemusid) {
+    return AvustuskohdeService.hae(hakemusid).then((data) => {
+      return _.map(
+        common.partitionBy(v => v.avustuskohdeluokkatunnus, data),
+        (kohteet) => ({
+          avustuskohteet: kohteet,
+          tunnus: (_.first(kohteet).avustuskohdeluokkatunnus)
+        }));
+    });
+  }
+
+  const hakemusId = $stateParams.id;
+  const hakemusPromise = HakemusService.hae(hakemusId);
+
+  return Promise.props({
+    hakemus: hakemusPromise,
+    user: KayttajaService.hae(),
+    paatos: PaatosService.hae(hakemusId),
+    avustuskohdeluokat: haeAvustuskohteet(hakemusId),
+    avustushakemusArvot: hakemusPromise.then((hakemus) => {
+      if(['MH1', 'MH2'].indexOf(hakemus.hakemustyyppitunnus)) {
+        return haeAvustuskohteet(hakemusId);
+      }
+    }),
+    ajankohta: hakemusPromise.then((hakemus) => {
+      const ajankohdat = {
+        MH1: '1.1.-30.6.',
+        MH2: '1.7.-31.12.'
+      };
+      return ajankohdat[hakemus.hakemustyyppitunnus];
+    }),
+    maksatushakemusArvot: hakemusPromise.then((hakemus) => {
+      const id = haeHakemus('MH1', hakemus).id;
+      return haeAvustuskohteet(id);
+    }),
+    maksatushakemus1Paatos: hakemusPromise.then((hakemus) => {
+      const id = haeHakemus('MH1', hakemus).id;
+      return PaatosService.hae(id);
+    })
+  });
+}
+
+module.exports.loadInitialData = loadInitialData;
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$state', '$stateParams',
-    'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', 'CommonService', '$window',
-    function ($rootScope, $scope, $state, $stateParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, common, $window) {
+    'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', 'CommonService', '$window', 'initials',
+    function ($rootScope, $scope, $state, $stateParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, common, $window, initials) {
 
-      $scope.isHakija = $state.includes('app.hakija');
-      $scope.allekirjoitusliitetty = false;
-      $scope.avustushakemusid = $stateParams.id;
-      $scope.maksatushakemus1id = $stateParams.m1id;
-      $scope.maksatushakemus2id = $stateParams.m2id;
-      $scope.tyyppi = $stateParams.tyyppi;
-      $scope.vuosi = $stateParams.vuosi;
-      $scope.alv = false;
+      _.extend($scope, initials);
 
-      if($scope.tyyppi === 'AH0') {
-        $scope.hakemusid = parseInt($scope.avustushakemusid);
-      } else if($scope.tyyppi === 'MH1') {
-        $scope.hakemusid = parseInt($scope.maksatushakemus1id);
-        $scope.ajankohta = '1.1.-30.6.';
-        haeAvustuskohteet($scope.avustushakemusid, 'avustushakemusArvot');
-      } else if($scope.tyyppi === 'MH2') {
-        $scope.hakemusid = parseInt($scope.maksatushakemus2id);
-        $scope.ajankohta = '1.7.-31.12.';
+      function bindToScope(key) {
+        return (value) => {
+          $scope[key] = value;
+        };
       }
 
+      $scope.isHakija = function isHakija(user) {
+        return hasPermission(user, 'modify-oma-hakemus');
+      };
+
+      $scope.hasPermission = hasPermission;
+      $scope.allekirjoitusliitetty = false;
+      $scope.hakemusid = parseInt($stateParams.id, 10);
+      $scope.alv = false;
+
       $scope.backToList = function backToList() {
-        if($scope.isHakija) {
+        if($scope.isHakija($scope.user)) {
           return $state.go('app.hakija.hakemukset.omat');
         }
         $state.go('app.yhteinen.hakemukset.list', {
-          tyyppi: $scope.tyyppi
+          tyyppi: $scope.hakemus.hakemustyyppitunnus
         });
       };
 
       $scope.isTabSelected = function isTabSelected(tyyppi) {
-        return $scope.tyyppi === tyyppi;
+        return $scope.hakemus.hakemustyyppitunnus === tyyppi;
       };
 
       $scope.toApplication = function toApplication(tyyppi) {
-        $state.go('app.hakija.hakemukset.hakemus', {
-          vuosi: $scope.hakemus.vuosi,
-          tyyppi: tyyppi,
-          id: $scope.avustushakemusid,
-          m1id: $scope.maksatushakemus1id,
-          m2id: $scope.maksatushakemus2id
+        const hakemus = haeHakemus(tyyppi, $scope.hakemus);
+
+        $state.go('app.hakemus', {
+          id: hakemus.id
         });
       };
 
       $scope.canEdit = function canEdit() {
-        return $scope.hakemusKeskenerainen() && $scope.isHakija;
+        return $scope.hakemusKeskenerainen() && $scope.isHakija($scope.user);
       };
 
-      function haeAvustuskohteet(hakemusid, scopemuuttuja) {
-        common.bindPromiseToScope(AvustuskohdeService.hae(hakemusid), $scope, scopemuuttuja,
-          function (data) {
-            return _.map(
-              common.partitionBy(function (v) {
-                return v.avustuskohdeluokkatunnus;
-              }, data),
-              function (kohteet) {
-                return {
-                  avustuskohteet: kohteet,
-                  tunnus: (_.first(kohteet).avustuskohdeluokkatunnus)
-                }
-              });
-          }, 'AvustuskohdeService.hae(' + hakemusid + ')');
-      }
+      $scope.getHakija = function getHakija(hakemus) {
+        return _.find($rootScope.organisaatiot, {id: hakemus.organisaatioid}).nimi;
+      };
 
-      function haeHakemukset() {
-        HakemusService.hae($scope.hakemusid)
-          .success(function (data) {
-            $scope.hakemus = data;
-            $scope.hakija = _.find($rootScope.organisaatiot, {'id': data.organisaatioid}).nimi;
-            $scope.pankkitilinumero = _.find($rootScope.organisaatiot, {'id': data.organisaatioid}).pankkitilinumero;
-          })
-          .error(function (data) {
-            StatusService.virhe('HakemusService.hae(' + $scope.hakemusid + ')', data.message);
-          });
-      }
-
-      function haePaatos() {
-        PaatosService.hae($scope.avustushakemusid)
-          .success(function (data) {
-            $scope.paatos = data;
-          })
-          .error(function (data) {
-            StatusService.virhe('PaatosService.hae(' + $scope.avustushakemusid + ')', data.message);
-          });
-      }
-
-      function haeMaksatushakemus1Paatos() {
-        PaatosService.hae($scope.maksatushakemus1id)
-          .success(function (data) {
-            $scope.maksatushakemus1Paatos = data;
-          })
-          .error(function (data) {
-            StatusService.virhe('PaatosService.hae(' + $scope.maksatushakemus1id + ')', data.message);
-          });
-      }
 
       function haeVertailuArvo(data, avustuskohdeluokka, avustuskohdelaji, arvo) {
         return parseFloat((_.find(_.find(data, {'tunnus': avustuskohdeluokka}).avustuskohteet, {
@@ -142,15 +152,15 @@ angular.module('jukufrontApp')
       };
 
       $scope.haeAvustushakemusPaatosPdf = function () {
-        return pdf.getPaatosPdfUrl($scope.avustushakemusid);
+        return pdf.getPaatosPdfUrl($scope.hakemusid);
       };
 
       $scope.haeMaksatushakemus1PaatosPdf = function () {
-        return pdf.getPaatosPdfUrl($scope.maksatushakemus1id);
+        return pdf.getPaatosPdfUrl(haeHakemus('MH1', $scope.hakemus).id);
       };
 
       $scope.haeAvustusProsentti = function (luokka, laji) {
-        return AvustuskohdeService.avustusprosentti($scope.vuosi, luokka, laji);
+        return AvustuskohdeService.avustusprosentti($scope.hakemus.vuosi, luokka, laji);
       };
 
       $scope.haeVertailuarvot = function (avustuskohdeluokka, avustuskohdelaji) {
@@ -158,11 +168,11 @@ angular.module('jukufrontApp')
         var avustushakemusOmaRahoitus = 0;
         var maksatushakemusHaettavaAvustus = 0;
         var maksatushakemusOmaRahoitus = 0;
-        if($scope.tyyppi !== 'AH0' && (typeof $scope.avustushakemusArvot) !== 'undefined') {
+        if($scope.hakemus.hakemustyyppitunnus !== 'AH0' && (typeof $scope.avustushakemusArvot) !== 'undefined') {
           avustushakemusHaettavaAvustus = haeVertailuArvo($scope.avustushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'haettavaavustus');
           avustushakemusOmaRahoitus = haeVertailuArvo($scope.avustushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'omarahoitus');
         }
-        if($scope.tyyppi === 'MH2' && (typeof $scope.maksatushakemusArvot) !== 'undefined') {
+        if($scope.hakemus.hakemustyyppitunnus === 'MH2' && (typeof $scope.maksatushakemusArvot) !== 'undefined') {
           maksatushakemusHaettavaAvustus = haeVertailuArvo($scope.maksatushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'haettavaavustus');
           maksatushakemusOmaRahoitus = haeVertailuArvo($scope.maksatushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'omarahoitus');
         }
@@ -179,23 +189,14 @@ angular.module('jukufrontApp')
       };
 
       $scope.hakemusKeskenerainen = function () {
-        if(typeof $scope.hakemus === 'undefined') {
-          return false;
-        }
         return ($scope.hakemus.hakemustilatunnus === 'K' || $scope.hakemus.hakemustilatunnus === 'T0');
       };
 
       $scope.hakemusTaydennettavana = function () {
-        if(typeof $scope.hakemus === 'undefined') {
-          return false;
-        }
         return ($scope.hakemus.hakemustilatunnus === 'T0');
       };
 
       $scope.hakemusVireilla = function () {
-        if(typeof $scope.hakemus === 'undefined') {
-          return false;
-        }
         return ($scope.hakemus.hakemustilatunnus === 'V' || $scope.hakemus.hakemustilatunnus === 'TV');
       };
 
@@ -208,30 +209,19 @@ angular.module('jukufrontApp')
       };
 
       $scope.maksatushakemus1PaatosMaksettu = function () {
-        if(typeof $scope.maksatushakemus1Paatos !== 'undefined') {
-          return $scope.maksatushakemus1Paatos.myonnettyavustus;
-        }
+        return $scope.maksatushakemus1Paatos.myonnettyavustus;
       };
 
       $scope.myonnettyAvustusPerJakso = function () {
-        if(typeof $scope.paatos === 'undefined') {
-          return false;
-        }
-        if($scope.tyyppi === 'MH1') {
+        if($scope.hakemus.hakemustyyppitunnus === 'MH1') {
           return ($scope.paatos.myonnettyavustus / 2);
         }
-        if(typeof $scope.maksatushakemus1Paatos === 'undefined') {
-          return false;
-        }
-        if($scope.tyyppi === 'MH2') {
+        if($scope.hakemus.hakemustyyppitunnus === 'MH2') {
           return $scope.paatos.myonnettyavustus - $scope.maksatushakemus1Paatos.myonnettyavustus;
         }
       };
 
       $scope.myonnettyAvustusPerVuosi = function () {
-        if(typeof $scope.paatos === 'undefined') {
-          return false;
-        }
         return $scope.paatos.myonnettyavustus;
       };
 
@@ -244,15 +234,15 @@ angular.module('jukufrontApp')
       };
 
       $scope.onAvustushakemus = function () {
-        return $scope.tyyppi === 'AH0';
+        return $scope.hakemus.hakemustyyppitunnus === 'AH0';
       };
 
       $scope.onMaksatushakemus1 = function () {
-        return $scope.tyyppi === 'MH1';
+        return $scope.hakemus.hakemustyyppitunnus === 'MH1';
       };
 
       $scope.onMaksatushakemus2 = function () {
-        return $scope.tyyppi === 'MH2';
+        return $scope.hakemus.hakemustyyppitunnus === 'MH2';
       };
 
       $scope.avustushakemusPaatosOlemassa = function () {
@@ -266,25 +256,11 @@ angular.module('jukufrontApp')
         return $scope.avustushakemusPaatosOlemassa();
       };
 
-      $scope.seliteOlemassa = function (hakemus) {
-        if(typeof hakemus === 'undefined') {
-          return false;
-        }
-        return hakemus.selite;
-      };
-
       $scope.taydennyspyyntoSeliteOlemassa = function () {
-        if(typeof $scope.hakemus === 'undefined') {
-          return false;
-        }
         return $scope.hakemus.taydennyspyynto;
       };
 
       $scope.haeLajitunnus = function(organisaatioid) {
-        if(organisaatioid === undefined) {
-          return;
-        }
-
         return _.find($rootScope.organisaatiot, {'id': organisaatioid}).lajitunnus;
       };
 
@@ -325,6 +301,7 @@ angular.module('jukufrontApp')
         AvustuskohdeService.tallenna(avustuskohteet)
         .success(function () {
           var tallennusOk = true;
+
           if($scope.hakemus.selite) {
             var selitedata = {
               'selite': $scope.hakemus.selite,
@@ -338,10 +315,14 @@ angular.module('jukufrontApp')
                 tallennusOk = false;
               });
           }
+
           if(tallennusOk) {
             StatusService.ok('AvustuskohdeService.tallenna()', 'Tallennus onnistui.');
             $scope.hakemusForm.$setPristine();
-            haeHakemukset();
+
+            HakemusService.hae($scope.hakemusid)
+              .then(bindToScope('hakemus'));
+
             switch (lisatoiminto) {
               case 0:
                 // Pelkka tallennus
@@ -371,7 +352,7 @@ angular.module('jukufrontApp')
         HakemusService.tarkastaHakemus($scope.hakemusid)
           .success(function () {
             StatusService.ok('HakemusService.tarkastaHakemus(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tarkastetuksi.');
-            $state.go('app.yhteinen.hakemukset.list', {tyyppi: $scope.tyyppi});
+            $state.go('app.yhteinen.hakemukset.list', {tyyppi: $scope.hakemus.hakemustyyppitunnus});
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.tarkastaHakemus(' + $scope.hakemusid + ')', data.message);
@@ -382,21 +363,13 @@ angular.module('jukufrontApp')
         HakemusService.tarkastaTaydennys($scope.hakemusid)
           .success(function () {
             StatusService.ok('HakemusService.tarkastaTaydennys(' + $scope.hakemusid + ')', 'Täydennetty hakemus päivitettiin tarkastetuksi.');
-            $state.go('app.yhteinen.hakemukset.list', {tyyppi: $scope.tyyppi});
+            $state.go('app.yhteinen.hakemukset.list', {tyyppi: $scope.hakemus.hakemustyyppitunnus});
           })
           .error(function (data) {
             StatusService.virhe('HakemusService.tarkastaTaydennys(' + $scope.hakemusid + ')', data.message);
           });
       };
 
-      if($scope.tyyppi === 'MH2') {
-        haeAvustuskohteet($scope.avustushakemusid, 'avustushakemusArvot');
-        haeAvustuskohteet($scope.maksatushakemus1id, 'maksatushakemusArvot');
-        haeMaksatushakemus1Paatos();
-      }
-      haeHakemukset();
-      haeAvustuskohteet($scope.hakemusid, 'avustuskohdeluokat');
-      haePaatos();
       $window.scrollTo(0, 0);
     }
   ]);

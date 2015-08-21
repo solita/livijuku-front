@@ -6,7 +6,7 @@ angular.module('services.paatos', [])
   .factory('PaatosService', ['$http', function ($http) {
     return {
       hae: function (hakemusid) {
-        return $http.get('api/hakemus/' + hakemusid + '/paatos');
+        return $http.get('api/hakemus/' + hakemusid + '/paatos').then(res => res.data);
       },
       hyvaksy: function (hakemusid) {
         return $http.post('api/hakemus/' + hakemusid + '/hyvaksy-paatos');
