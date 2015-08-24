@@ -40,6 +40,7 @@ angular
     'filters.toClass',
     'filters.stateNameIncludes',
     'filters.toApplicationName',
+    'filters.erotteleRoolit',
     'ngResource',
     'angular-loading-bar',
     'smart-table',
@@ -272,6 +273,7 @@ require('./services/organisaatio');
 require('./services/paatos');
 require('./services/status');
 require('./services/suunnittelu');
+require('./filters/erotteleRoolit');
 require('./filters/toApplicantName');
 require('./filters/toClass');
 require('./filters/stateNameIncludes');

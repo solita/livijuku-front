@@ -7,6 +7,7 @@
     <tr>
       <th st-sort="etunimi">Nimi</th>
       <th st-sort="organisaationimi">Organisaatio</th>
+      <th st-sort="roolit">Roolit</th>
       <th st-sort="sahkoposti">Sähköposti</th>
       <th st-sort="viimeisin_kirjautuminen">Viimeisin kirjautuminen</th>
     </tr>
@@ -15,6 +16,7 @@
     <tr ng-repeat="viranomainen in toimivaltaiset">
       <td>{{viranomainen.etunimi}} {{viranomainen.sukunimi}}</td>
       <td>{{viranomainen.organisaationimi}}</td>
+      <td>{{viranomainen.roolit | erotteleRoolit}}</td>
       <td>{{viranomainen.sahkoposti}}</td>
       <td>{{viranomainen.viimeisin_kirjautuminen | date:'dd.MM.yyyy HH:mm:ss'}}</td>
     </tr>
@@ -26,12 +28,14 @@
     <thead>
     <tr>
       <th st-sort="etunimi">Nimi</th>
+      <th st-sort="roolit">Roolit</th>
       <th st-sort="sahkoposti">Sähköposti</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="henkilo in liikennevirasto">
       <td>{{henkilo.etunimi}} {{henkilo.sukunimi}}</td>
+      <td>{{henkilo.roolit | erotteleRoolit}}</td>
       <td>{{henkilo.sahkoposti}}</td>
     </tr>
     </tbody>
