@@ -24,7 +24,7 @@ function validateOrder(value, index, fields, values) {
   return true;
 }
 
-module.exports = function ($timeout) {
+module.exports =  ['$timeout', function ($timeout) {
  return {
     require: 'ngModel',
     link: function(scope, elem, attr, ngModel) {
@@ -53,4 +53,4 @@ module.exports = function ($timeout) {
       });
     }
  };
-};
+}];

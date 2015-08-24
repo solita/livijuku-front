@@ -4,7 +4,7 @@ var angular = require('angular');
 
 angular.module('filters.stateNameIncludes', [])
 .filter('stateNameIncludes', ['$state', function($state) {
-  const filter = function stateNameIncludes(name, excludedStates) {
+  const filter = function stateNameIncludes(name, excludedStates = []) {
     if(excludedStates.indexOf($state.$current.name) > -1) {
       return false;
     }

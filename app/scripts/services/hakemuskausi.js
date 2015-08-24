@@ -24,7 +24,11 @@ angular.module('services.hakemuskausi', [])
           .then(res => res.data);
       },
       saveHakuajat: function(vuosi, hakuajat) {
-        return $http.put('api/hakemuskausi/' + vuosi + '/hakuajat', hakuajat);
+        return $http.put('api/hakemuskausi/' + vuosi + '/hakuajat', hakuajat)
+          .then(res => res.data);
+      },
+      sulje: function(vuosi) {
+        return $http.post('api/hakemuskausi/' + vuosi + '/sulje');
       },
       paivitaMaararaha: function (vuosi, organisaatiolajitunnus, maararahadata) {
         var req = {

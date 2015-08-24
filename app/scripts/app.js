@@ -40,6 +40,7 @@ angular
     'filters.toClass',
     'filters.stateNameIncludes',
     'filters.toApplicationName',
+    'filters.erotteleRoolit',
     'ngResource',
     'angular-loading-bar',
     'smart-table',
@@ -85,6 +86,14 @@ angular
         }]
       })
       .state('app', root())
+      .state('app.hakemus', {
+        url: '/hakemukset/:id',
+        template: require('views/hakemus/index.html'),
+        controller: 'HakemusCtrl',
+        resolve: {
+          initials: require('./controllers/yhteinen/hakemus').loadInitialData
+        }
+      })
       .state('app.yhteinen', root('/y'))
       .state('app.yhteinen.hakemukset', root('/hakemukset'))
       .state('app.yhteinen.hakemukset.list', {
@@ -103,18 +112,16 @@ angular
         template: require('views/yhteinen/asetukset.html'),
         controller: 'AsetuksetCtrl'
       })
-
+      .state('app.yhteinen.seurantalomakedemo', {
+        url: '/seurantalomakedemo',
+        template: require('views/yhteinen/seurantalomakeDemo.html')
+      })
       /*
        * Hakija
        */
 
       .state('app.hakija', root('/h'))
       .state('app.hakija.hakemukset', root('/hakemukset'))
-      .state('app.hakija.hakemukset.hakemus', restrictRoute(isHakija, {
-        url: '/:vuosi/:tyyppi/:id/:m1id/:m2id',
-        template: require('views/hakemus/index.html'),
-        controller: 'HakemusCtrl'
-      }))
       .state('app.hakija.hakemukset.elyhakemus', {
         url: '/elyhakemus/:vuosi/:id',
         template: require('views/hakija/elyhakemus.html'),
@@ -147,11 +154,6 @@ angular
         url: '',
         template: require('views/kasittelija/hakemukset.html'),
         controller: 'KasittelijaHakemuksetCtrl'
-      })
-      .state('app.kasittelija.hakemukset.hakemus', {
-        url: '/hakemus/:vuosi/:id/:m1id/:m2id',
-        template: require('views/hakemus/index.html'),
-        controller: 'HakemusCtrl'
       })
       .state('app.kasittelija.hakemuskaudenhallinta', restrictRoute(isKasittelija, {
         url: '/hakemuskaudenhallinta',
@@ -271,6 +273,7 @@ require('./services/organisaatio');
 require('./services/paatos');
 require('./services/status');
 require('./services/suunnittelu');
+require('./filters/erotteleRoolit');
 require('./filters/toApplicantName');
 require('./filters/toClass');
 require('./filters/stateNameIncludes');
