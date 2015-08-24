@@ -111,7 +111,10 @@ angular
         template: require('views/yhteinen/asetukset.html'),
         controller: 'AsetuksetCtrl'
       })
-
+      .state('app.yhteinen.seurantalomakedemo', {
+        url: '/seurantalomakedemo',
+        template: require('views/yhteinen/seurantalomakeDemo.html')
+      })
       /*
        * Hakija
        */
