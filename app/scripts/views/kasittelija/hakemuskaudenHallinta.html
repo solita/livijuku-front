@@ -1,71 +1,98 @@
 <div class="container">
-  <div ng-repeat="hakemuskausi in avoimetHakemuskaudet">
-    <div ng-class="{
-      uusihakemuskausi: uusiHakemuskausi(hakemuskausi),
-      well: !uusiHakemuskausi(hakemuskausi)
-    }">
-      <div class="row">
-        <div class="col-md-3 text-center">
-          <p class="hakemuskausi-vuosi">
-            {{hakemuskausi.vuosi}}
-          </p>
+  <div ng-repeat="hakemuskausi in avoimetHakemuskaudet | orderBy: 'vuosi': true">
+    <div class="row uusihakemuskausi">
+      <div class="col-md-3 text-center">
+        <p class="hakemuskausi-vuosi">
+          {{hakemuskausi.vuosi}}
+        </p>
 
-          <p ng-show="hakuohjeLadattu(hakemuskausi) || !uusiHakemuskausi(hakemuskausi)">
-            <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">
-              Hakuohje
-            </a>
-          </p>
+        <p ng-show="hakuohjeLadattu(hakemuskausi)">
+          <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">
+            Hakuohje
+          </a>
+        </p>
 
-          <p ng-show="uusiHakemuskausi(hakemuskausi)">
-            <button class="btn btn-primary"
-                    ng-show="sallittu('modify-hakemuskausi')"
-                    ngf-select ngf-change="upload($files, hakemuskausi)"
-                    data-toggle="tooltip"
-                    data-tooltip-trigger="mouseenter"
-                    data-tooltip-placement="bottom"
-                    data-tooltip="Voimassaoleva hakuohje joukkoliikenteen valtionavustuksista">
-              <span>
-                {{ hakuohjeLadattu(hakemuskausi) ? 'Korvaa ladattu hakuohje':' Lataa hakuohje' }}
-              </span>
-            </button>
-          </p>
-          <p>
-            <button
-              ng-disabled="!voiKaynnistaa(hakemuskausi)"
-              ng-hide="hakemuskausiKaynnistetty(hakemuskausi) || hakemuskausiSuljettu(hakemuskausi)"
-              ng-click="kaynnistaHakemuskausi(hakemuskausi.vuosi)"
-              class="btn btn-success btn-lg">
-              Käynnistä hakemuskausi
-            </button>
-            <button
-              ng-show="hakemuskausiKaynnistetty(hakemuskausi)"
-              class="btn btn-primary btn-lg"
-              juku-varmistusdialogi varmistusotsake="Hakemuskauden päättäminen"
-              varmistusteksti="Oletko varma, että haluat päättää käynnissäolevan hakemuskauden? Hakemuksiin ja hakemuskauden tietoihin ei ole mahdollista tehdä mitään muutoksia kauden päättämisen jälkeen."
-              operaatio="suljeHakemuskausi(hakemuskausi.vuosi)">
-              Päätä hakemuskausi
-            </button>
-          </p>
-        </div>
-        <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit">
-          <hakemuskausi-panel
-            inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
-            title="{{tyyppitunnus | toApplicationName}}"
-            ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
-            <hakemus-summary
-              test-ids="$index === 0"
-              hakemuskauden-tila="hakemuskausi.tilatunnus"
-              hakemus="utils.haeHakemus(hakemuskausi, tyyppitunnus)"
-              on-save="tallennaHakuajat(hakemuskausi.vuosi, utils.haeHakemus(hakemuskausi, tyyppitunnus), values)">
-            </hakemus-summary>
-          </hakemuskausi-panel>
-        </div>
+        <p>
+          <button class="btn btn-primary"
+                  ng-show="sallittu('modify-hakemuskausi')"
+                  ngf-select ngf-change="upload($files, hakemuskausi)"
+                  data-toggle="tooltip"
+                  data-tooltip-trigger="mouseenter"
+                  data-tooltip-placement="bottom"
+                  data-tooltip="Voimassaoleva hakuohje joukkoliikenteen valtionavustuksista">
+            <span>
+              {{ hakuohjeLadattu(hakemuskausi) ? 'Korvaa ladattu hakuohje':' Lataa hakuohje' }}
+            </span>
+          </button>
+        </p>
+        <p>
+          <button
+            ng-disabled="!voiKaynnistaa(hakemuskausi)"
+            ng-click="kaynnistaHakemuskausi(hakemuskausi.vuosi)"
+            class="btn btn-success btn-lg">
+            Käynnistä hakemuskausi
+          </button>
+        </p>
+      </div>
+      <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit">
+        <hakemuskausi-panel
+          inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
+          title="{{tyyppitunnus | toApplicationName}}"
+          ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
+          <hakemus-summary
+            test-ids="$index === 0"
+            hakemuskauden-tila="hakemuskausi.tilatunnus"
+            hakemus="utils.haeHakemus(hakemuskausi, tyyppitunnus)"
+            on-save="tallennaHakuajat(hakemuskausi.vuosi, utils.haeHakemus(hakemuskausi, tyyppitunnus), values)">
+          </hakemus-summary>
+        </hakemuskausi-panel>
       </div>
     </div>
   </div>
-  <h3>PÄÄTTYNEET HAKEMUSKAUDET</h3>
 
-  <div ng-repeat="hakemuskausi in suljetutHakemuskaudet">
+  <h3>KÄYNNISSÄ OLEVAT HAKEMUSKAUDET</h3>
+
+  <div ng-repeat="hakemuskausi in kaynnistetytHakemuskaudet | orderBy: 'vuosi': true">
+    <div class="row well">
+      <div class="col-md-3 text-center">
+        <p class="hakemuskausi-vuosi">
+          {{hakemuskausi.vuosi}}
+        </p>
+
+        <p>
+          <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">
+            Hakuohje
+          </a>
+        </p>
+
+        <p>
+          <button
+            class="btn btn-primary btn-lg"
+            juku-varmistusdialogi varmistusotsake="Hakemuskauden päättäminen"
+            varmistusteksti="Oletko varma, että haluat päättää käynnissäolevan hakemuskauden? Hakemuksiin ja hakemuskauden tietoihin ei ole mahdollista tehdä mitään muutoksia kauden päättämisen jälkeen."
+            operaatio="suljeHakemuskausi(hakemuskausi.vuosi)">
+            Päätä hakemuskausi
+          </button>
+        </p>
+      </div>
+      <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit">
+        <hakemuskausi-panel
+          inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
+          title="{{tyyppitunnus | toApplicationName}}"
+          ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
+          <hakemus-summary
+            test-ids="$index === 0"
+            hakemuskauden-tila="hakemuskausi.tilatunnus"
+            hakemus="utils.haeHakemus(hakemuskausi, tyyppitunnus)"
+            on-save="tallennaHakuajat(hakemuskausi.vuosi, utils.haeHakemus(hakemuskausi, tyyppitunnus), values)">
+          </hakemus-summary>
+        </hakemuskausi-panel>
+      </div>
+    </div>
+  </div>
+  <h3>PÄÄTETYT HAKEMUSKAUDET</h3>
+
+  <div ng-repeat="hakemuskausi in suljetutHakemuskaudet | orderBy: 'vuosi': true">
     <div class="row well">
       <div class="col-md-3 text-center">
         <p class="hakemuskausi-vuosi">

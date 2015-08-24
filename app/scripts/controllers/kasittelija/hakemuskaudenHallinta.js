@@ -21,7 +21,10 @@ angular.module('jukufrontApp')
         // TODO - korvaa kun backend palauttaa uuden resurssin
         HakemuskausiService.haeSummary().then((hakemuskaudet) => {
           $scope.avoimetHakemuskaudet = _.filter(hakemuskaudet, function (hakemuskausi) {
-            return hakemuskausi.tilatunnus !== "S";
+            return (hakemuskausi.tilatunnus === "0" || hakemuskausi.tilatunnus === "A");
+          });
+          $scope.kaynnistetytHakemuskaudet = _.filter(hakemuskaudet, function (hakemuskausi) {
+            return hakemuskausi.tilatunnus === "K";
           });
           $scope.suljetutHakemuskaudet = _.filter(hakemuskaudet, function (hakemuskausi) {
             return hakemuskausi.tilatunnus === "S";
