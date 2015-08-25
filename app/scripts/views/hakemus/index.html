@@ -257,13 +257,12 @@
         <juku-controls-buttons ng-show="isHakija(user) && sallittu('allekirjoita-oma-hakemus')">
           <button
             ng-disabled="!hakemusKeskenerainen() || !sallittu('modify-oma-hakemus')"
-            data-ng-click="tallennaHakemus(0)"
+            data-ng-click="tallennaHakemus(lisatoiminto.EI)"
             class="btn btn-primary">
             Tallenna tiedot
           </button>
           <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="btn btn-primary">
-            {{ hakemusKeskenerainen() && sallittu('modify-oma-hakemus') ? 'Tallenna ja esikatsele hakemus' : 'Avaa
-            hakemus (PDF)' }}
+            {{ hakemusKeskenerainen() && sallittu('modify-oma-hakemus') ? 'Tallenna ja esikatsele hakemus' : 'Avaa hakemus (PDF)' }}
           </button>
 
           <button
@@ -271,7 +270,7 @@
             varmistusotsake="Hakemuksen lähettäminen"
             varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen. Lähetä hakemus painamalla Kyllä-painiketta. Huom! Liitteiden määrästä riippuen, hakemuksen lähettäminen asianhallintaan kestää 10-70 sekuntia."
 
-            operaatio="tallennaHakemus(2)"
+            operaatio="tallennaHakemus(lisatoiminto.LAHETA)"
             class="btn btn-success"
             ng-disabled="!hakemusKeskenerainen() || !allekirjoitusliitetty || !liitteetOlemassa() || !edellinenHakemusPaatetty()">
             Tallenna ja lähetä hakemus

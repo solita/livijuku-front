@@ -7,7 +7,7 @@ var hasPermission = require('utils/hasPermission');
 var Promise = require('bluebird');
 
 function haeHakemus(tyyppi, hakemus) {
-  if(hakemus.hakemustyyppitunnus === tyyppi) {
+  if (hakemus.hakemustyyppitunnus === tyyppi) {
     return hakemus;
   }
 
@@ -39,7 +39,7 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusServi
     paatos: PaatosService.hae(hakemusId),
     avustuskohdeluokat: haeAvustuskohteet(hakemusId),
     avustushakemusArvot: hakemusPromise.then((hakemus) => {
-      if(['MH1', 'MH2'].indexOf(hakemus.hakemustyyppitunnus)) {
+      if (['MH1', 'MH2'].indexOf(hakemus.hakemustyyppitunnus)) {
         return haeAvustuskohteet(hakemusId);
       }
     }),
@@ -75,6 +75,12 @@ angular.module('jukufrontApp')
         };
       }
 
+      $scope.lisatoiminto = {
+        EI:0,
+        ESIKATSELU: 1,
+        LAHETA: 2
+      };
+
       $scope.isHakija = function isHakija(user) {
         return hasPermission(user, 'modify-oma-hakemus');
       };
@@ -85,7 +91,7 @@ angular.module('jukufrontApp')
       $scope.alv = false;
 
       $scope.backToList = function backToList() {
-        if($scope.isHakija($scope.user)) {
+        if ($scope.isHakija($scope.user)) {
           return $state.go('app.hakija.hakemukset.omat');
         }
         $state.go('app.yhteinen.hakemukset.list', {
@@ -168,11 +174,11 @@ angular.module('jukufrontApp')
         var avustushakemusOmaRahoitus = 0;
         var maksatushakemusHaettavaAvustus = 0;
         var maksatushakemusOmaRahoitus = 0;
-        if($scope.hakemus.hakemustyyppitunnus !== 'AH0' && (typeof $scope.avustushakemusArvot) !== 'undefined') {
+        if ($scope.hakemus.hakemustyyppitunnus !== 'AH0' && (typeof $scope.avustushakemusArvot) !== 'undefined') {
           avustushakemusHaettavaAvustus = haeVertailuArvo($scope.avustushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'haettavaavustus');
           avustushakemusOmaRahoitus = haeVertailuArvo($scope.avustushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'omarahoitus');
         }
-        if($scope.hakemus.hakemustyyppitunnus === 'MH2' && (typeof $scope.maksatushakemusArvot) !== 'undefined') {
+        if ($scope.hakemus.hakemustyyppitunnus === 'MH2' && (typeof $scope.maksatushakemusArvot) !== 'undefined') {
           maksatushakemusHaettavaAvustus = haeVertailuArvo($scope.maksatushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'haettavaavustus');
           maksatushakemusOmaRahoitus = haeVertailuArvo($scope.maksatushakemusArvot, avustuskohdeluokka, avustuskohdelaji, 'omarahoitus');
         }
@@ -213,10 +219,10 @@ angular.module('jukufrontApp')
       };
 
       $scope.myonnettyAvustusPerJakso = function () {
-        if($scope.hakemus.hakemustyyppitunnus === 'MH1') {
+        if ($scope.hakemus.hakemustyyppitunnus === 'MH1') {
           return ($scope.paatos.myonnettyavustus / 2);
         }
-        if($scope.hakemus.hakemustyyppitunnus === 'MH2') {
+        if ($scope.hakemus.hakemustyyppitunnus === 'MH2') {
           return $scope.paatos.myonnettyavustus - $scope.maksatushakemus1Paatos.myonnettyavustus;
         }
       };
@@ -226,8 +232,8 @@ angular.module('jukufrontApp')
       };
 
       $scope.naytaHakemus = function (tila) {
-        if(tila === 'K' || tila === 'T0') {
-          $scope.tallennaHakemus(1);
+        if (tila === 'K' || tila === 'T0') {
+          $scope.tallennaHakemus($scope.lisatoiminto.ESIKATSELU);
         } else {
           $window.open(pdf.getHakemusPdfUrl($scope.hakemusid));
         }
@@ -250,7 +256,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.edellinenHakemusPaatetty = function () {
-        if($scope.onAvustushakemus()) {
+        if ($scope.onAvustushakemus()) {
           return true;
         }
         return $scope.avustushakemusPaatosOlemassa();
@@ -260,7 +266,7 @@ angular.module('jukufrontApp')
         return $scope.hakemus.taydennyspyynto;
       };
 
-      $scope.haeLajitunnus = function(organisaatioid) {
+      $scope.haeLajitunnus = function (organisaatioid) {
         return _.find($rootScope.organisaatiot, {'id': organisaatioid}).lajitunnus;
       };
 
@@ -273,21 +279,21 @@ angular.module('jukufrontApp')
 
       function validiHakemus() {
         return ($scope.hakemusForm.$valid && $scope.onAvustushakemus()) ||
-               (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) &&
-                $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn());
+          (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) &&
+          $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn());
       }
 
-      $scope.tallennaHakemus = function (lisatoiminto) {
+      $scope.tallennaHakemus = function (lisa_toiminto) {
         StatusService.tyhjenna();
         $scope.$broadcast('show-errors-check-validity');
 
-        if(!validiHakemus()) {
+        if (!validiHakemus()) {
           $scope.$emit('focus-invalid');
           StatusService.virhe('AvustuskohdeService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
           return;
         }
 
-        if(lisatoiminto === 1) {
+        if (lisa_toiminto === $scope.lisatoiminto.ESIKATSELU) {
           var ikkuna = $window.open('about:blank', '_blank');
         }
         var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
@@ -299,52 +305,35 @@ angular.module('jukufrontApp')
         });
 
         AvustuskohdeService.tallenna(avustuskohteet)
-        .success(function () {
-          var tallennusOk = true;
-
-          if($scope.hakemus.selite) {
-            var selitedata = {
-              'selite': $scope.hakemus.selite,
-              'hakemusid': $scope.hakemusid
-            };
-            HakemusService.tallennaSelite(selitedata)
-              .success(function () {
-              })
-              .error(function (data) {
-                StatusService.virhe('HakemusService.tallennaSelite(' + selitedata + ')', data.message);
-                tallennusOk = false;
-              });
-          }
-
-          if(tallennusOk) {
+          .success(function () {
             StatusService.ok('AvustuskohdeService.tallenna()', 'Tallennus onnistui.');
             $scope.hakemusForm.$setPristine();
 
             HakemusService.hae($scope.hakemusid)
               .then(bindToScope('hakemus'));
 
-            switch (lisatoiminto) {
-              case 0:
+            switch (lisa_toiminto) {
+              case $scope.lisatoiminto.EI:
                 // Pelkka tallennus
                 break;
-              case 1:
+              case $scope.lisatoiminto.ESIKATSELU:
                 // Esikatselu
                 ikkuna.location.href = pdf.getHakemusPdfUrl($scope.hakemusid);
                 break;
-              case 2:
+              case $scope.lisatoiminto.LAHETA:
                 // Laheta
-                if($scope.hakemus.hakemustilatunnus === 'K') {
+                if ($scope.hakemus.hakemustilatunnus === 'K') {
                   lahetaHakemus();
-                } else if($scope.hakemus.hakemustilatunnus === 'T0') {
+                } else if ($scope.hakemus.hakemustilatunnus === 'T0') {
                   lahetaTaydennys();
                 }
                 break;
             }
-          }
-        })
-        .error(function (data) {
-          StatusService.virhe('AvustuskohdeService.tallenna()', data.message);
-        });
+
+          })
+          .error(function (data) {
+            StatusService.virhe('AvustuskohdeService.tallenna()', data.message);
+          });
 
       };
 
