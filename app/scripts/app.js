@@ -239,7 +239,8 @@ angular
   .directive('jukuConfirmation', require('components/confirmation'))
   .directive('jukuStatisticDropdown', require('components/statisticDropdown'))
   .directive('jukuPaatosTiedot', require('components/paatosTiedot'))
-  .directive('jukuSeurantalomakePaikallisliikenne', require('components/seurantalomakePaikallisliikenne'));
+  .directive('jukuSeurantalomakePaikallisliikenne', require('components/seurantalomakePaikallisliikenne'))
+  .directive('jukuSeurantalomakeSeutulippu', require('components/seurantalomakeSeutulippu'));
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemukset');

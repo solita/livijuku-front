@@ -4,8 +4,9 @@ var _ = require('lodash');
 function seurantalomakePaikallisliikenneController($scope) {
   $scope.data = [{
     linja: 'linja 1',
-    linjaauto: true,
-    taksi: false,
+    suoritetyyppi: '0',
+    linjaautot: 2,
+    taksit: 3,
     ajokm: 199,
     matkustajamaarat: 2323,
     asiakastulo: 10000,
@@ -14,8 +15,9 @@ function seurantalomakePaikallisliikenneController($scope) {
   },
     {
       linja: 'linja 2',
-      linjaauto: false,
-      taksi: true,
+      suoritetyyppi: '0',
+      linjaautot: 3,
+      taksit: 4,
       ajokm: 199,
       matkustajamaarat: 2323,
       asiakastulo: 10000,
@@ -26,8 +28,9 @@ function seurantalomakePaikallisliikenneController($scope) {
   $scope.lisaaRivi = function () {
     var tyhja = {
       linja: '',
-      linjaauto: false,
-      taksi: false,
+      suoritetyyppi: '1',
+      linjaautot: 0,
+      taksit: 0,
       ajokm: 0.0,
       matkustajamaarat: 0,
       asiakastulo: 0,
@@ -38,8 +41,15 @@ function seurantalomakePaikallisliikenneController($scope) {
     $scope.data.push(tyhja);
   };
   $scope.poistaRivi = function (indeksi) {
-    console.log('PoistaRivi:', indeksi);
     $scope.data.splice(indeksi, 1);
+  };
+
+  $scope.linjaautotSumma = function () {
+    return _.sum($scope.data, 'linjaautot');
+  };
+
+  $scope.taksitSumma = function () {
+    return _.sum($scope.data, 'taksit');
   };
 
   $scope.ajokmSumma = function () {
