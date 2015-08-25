@@ -1,0 +1,79 @@
+<div class="seurantalomakeseutulippu">
+  <form name="seurantaSeutulippu">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-condensed">
+        <tr>
+          <th>Seutulippualue</th>
+          <th>
+            <div tooltip="Myynti (kpl)" tooltip-placement="top"
+                 tooltip-append-to-body="true">Myynti (kpl)<span class="glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th>
+            <div tooltip="Matkat (kpl)" tooltip-placement="top"
+                 tooltip-append-to-body="true">Matkat (kpl)<span class="glyphicon glyphicon-question-sign"></span></div>
+          </th>
+          <th>
+            <div tooltip="Asiakashinta euroa" tooltip-placement="top"
+                 tooltip-append-to-body="true">Asiakashinta euroa<span class="glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th>
+            <div tooltip="Lipuilla tehtyjen matkojen keskipituus"
+                 tooltip-append-to-body="true">Lipuilla tehtyjen matkojen keskipituus<span
+              class="glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th>
+            <div tooltip="Asiakastulot yhteensä (myynti €)" tooltip-placement="top"
+                 tooltip-append-to-body="true">Asiakastulot yhteensä (myynti €)<span
+              class="glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th>
+            <div tooltip="Valtion ja kunnan rahoitus yhteensä (matkustus € - myynti € = subventio) euroa"
+                 tooltip-placement="top"
+                 tooltip-append-to-body="true">Valtion ja kunnan rahoitus yhteensä (matkustus € - myynti € = subventio)
+              euroa<span class="glyphicon glyphicon-question-sign"></span></div>
+          </th>
+          <th></th>
+        </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan="8">
+              <button class="btn btn-primary" ng-click="lisaaRivi()">Lisää rivi</button>
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr ng-repeat="rivi in seutulippudata track by $index">
+            <td><input name="seutulippualue" type="text" class="form-control" noenter
+                       select-on-click
+                       ng-model="rivi.seutulippualue"></td>
+            <td><input name="myynti" type="text" class="form-control" numeric-integer-only="" select-on-click
+                       ng-model="rivi.myynti"></td>
+            <td><input name="matkat" type="text" class="form-control" numeric-integer-only="" select-on-click
+                       ng-model="rivi.matkat"></td>
+            <td><input name="asiakashinta" type="text" class="form-control" numeric-integer-only="" ng-currency=""
+                       noenter
+                       select-on-click
+                       ng-model="rivi.asiakashinta"></td>
+            <td><input name="keskipituus" type="text" class="form-control" numeric-km-only="" ng-currency="" currency-symbol="km"
+                       noenter
+                       select-on-click
+                       ng-model="rivi.keskipituus"></td>
+            <td><input name="asiakastulot" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+                       select-on-click
+                       ng-model="rivi.asiakastulot"></td>
+            <td><input name="rahoitus" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+                       select-on-click
+                       ng-model="rivi.rahoitus"></td>
+            <td><a href="" ng-click="poistaRivi($index)"><span class="glyphicon glyphicon-remove-sign"></span></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>
