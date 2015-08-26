@@ -5,10 +5,34 @@
   <div ng-show="hakemuskaudet.length === 0">
     <p>Ei hakemuksia, koska hakemuskautta ei ole vielä avattu.</p>
   </div>
-  <div ng-show="hakemuskaudet.length > 0 && sallittu('view-oma-hakemus')">
-    <h3>AKTIIVISET JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET</h3>
+  <div ng-show="kaynnistetytHakemuskaudet.length > 0 && sallittu('view-oma-hakemus')">
+    <h3>KÄYNNISSÄ OLEVAT HAKEMUSKAUDET</h3>
 
-    <div ng-repeat="hakemuskausi in hakemuskaudet | orderBy: 'vuosi': true">
+    <div ng-repeat="hakemuskausi in kaynnistetytHakemuskaudet | orderBy: 'vuosi': true">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-3 text-center">
+            <h1>{{hakemuskausi.vuosi}}</h1>
+            <a href="api/hakemuskausi/{{hakemuskausi.vuosi}}/hakuohje" target="_blank">Hakuohje</a>
+            <br>
+            <br>
+          </div>
+
+          <div class="col-md-3 text-center" ng-repeat="tyyppi in constants.hakemustyypit">
+            <hakemus-laatikko
+              ng-click="valitseHakemus(utils.haeHakemus(hakemuskausi, tyyppi))"
+              title="{{ tyyppi | toApplicationName }}"
+              hakemus="utils.haeHakemus(hakemuskausi, tyyppi)">
+            </hakemus-laatikko>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-show="suljetutHakemuskaudet.length > 0 && sallittu('view-oma-hakemus')">
+    <h3>PÄÄTETYT HAKEMUSKAUDET</h3>
+
+    <div ng-repeat="hakemuskausi in suljetutHakemuskaudet | orderBy: 'vuosi': true">
       <div class="well">
         <div class="row">
           <div class="col-md-3 text-center">

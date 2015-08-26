@@ -9,6 +9,10 @@ angular.module('services.hakemuskausi', [])
         return $http.get('api/hakemuskaudet', {params: {isArray: true}})
           .then(res => res.data);
       },
+      haeOmat: function () {
+        return $http.get('api/hakemuskaudet/omat')
+          .then(res => res.data);
+      },
       haeSummary: function () {
         return $http.get('api/hakemuskaudet/yhteenveto', {params: {isArray: true}})
           .then(res => res.data);

@@ -5,7 +5,7 @@ var angular = require('angular');
 var hakemusUtils = require('utils/hakemus');
 
 angular.module('jukufrontApp')
-  .controller('HakijaHakemuksetCtrl', ['$scope', '$state', 'HakemusService', 'StatusService', function ($scope, $state, HakemusService, StatusService) {
+  .controller('HakijaHakemuksetCtrl', ['$scope', '$state', 'HakemuskausiService', 'StatusService', function ($scope, $state, HakemuskausiService, StatusService) {
 
     $scope.utils = hakemusUtils;
 
@@ -21,11 +21,17 @@ angular.module('jukufrontApp')
       });
     };
 
-    HakemusService.haeKaikki()
-    .then(function (hakemuskaudet) {
-      $scope.hakemuskaudet = hakemuskaudet;
-    })
-    .catch(function (err) {
-      StatusService.virhe('HakemusService.haeKaikki())', err.message);
-    });
+    HakemuskausiService.haeOmat()
+      .then(function (hakemuskaudet) {
+        $scope.hakemuskaudet = hakemuskaudet;
+        $scope.kaynnistetytHakemuskaudet = _.filter(hakemuskaudet, function (hakemuskausi) {
+          return hakemuskausi.tilatunnus !== "S";
+        });
+        $scope.suljetutHakemuskaudet = _.filter(hakemuskaudet, function (hakemuskausi) {
+          return hakemuskausi.tilatunnus === "S";
+        });
+      })
+      .catch(function (err) {
+        StatusService.virhe('HakemusService.haeKaikki())', err.message);
+      });
   }]);

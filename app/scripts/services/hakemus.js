@@ -5,10 +5,6 @@ angular.module('services.hakemus', [])
 
   .factory('HakemusService', ['$http', function ($http) {
     return {
-      haeKaikki: function () {
-        return $http.get('api/hakemukset/hakija')
-          .then(res => res.data);
-      },
       hae: function (hakemusid) {
         return $http.get('api/hakemus/' + hakemusid)
           .then(res => res.data);
