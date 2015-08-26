@@ -2,7 +2,7 @@
 var _ = require('lodash');
 
 function seurantalomakePaikallisliikenneController($scope) {
-  $scope.data = [{
+  $scope.paikallisliikennedata = [{
     linja: 'linja 1',
     suoritetyyppi: '0',
     linjaautot: 2,
@@ -25,7 +25,7 @@ function seurantalomakePaikallisliikenneController($scope) {
       bruttohinta: 800
     }
   ];
-  $scope.lisaaRivi = function () {
+  $scope.lisaaPaikallisliikenneRivi = function () {
     var tyhja = {
       linja: '',
       suoritetyyppi: '1',
@@ -38,38 +38,38 @@ function seurantalomakePaikallisliikenneController($scope) {
       bruttohinta: 0
 
     };
-    $scope.data.push(tyhja);
+    $scope.paikallisliikennedata.push(tyhja);
   };
-  $scope.poistaRivi = function (indeksi) {
-    $scope.data.splice(indeksi, 1);
+  $scope.poistaPaikallisliikenneRivi = function (indeksi) {
+    $scope.paikallisliikennedata.splice(indeksi, 1);
   };
 
   $scope.linjaautotSumma = function () {
-    return _.sum($scope.data, 'linjaautot');
+    return _.sum($scope.paikallisliikennedata, 'linjaautot');
   };
 
   $scope.taksitSumma = function () {
-    return _.sum($scope.data, 'taksit');
+    return _.sum($scope.paikallisliikennedata, 'taksit');
   };
 
   $scope.ajokmSumma = function () {
-    return _.sum($scope.data, 'ajokm');
+    return _.sum($scope.paikallisliikennedata, 'ajokm');
   };
 
   $scope.asiakastuloSumma = function () {
-    return _.sum($scope.data, 'asiakastulo');
+    return _.sum($scope.paikallisliikennedata, 'asiakastulo');
   };
 
   $scope.bruttohintaSumma = function () {
-    return _.sum($scope.data, 'bruttohinta');
+    return _.sum($scope.paikallisliikennedata, 'bruttohinta');
   };
 
   $scope.matkustajatSumma = function () {
-    return _.sum($scope.data, 'matkustajamaarat');
+    return _.sum($scope.paikallisliikennedata, 'matkustajamaarat');
   };
 
   $scope.nettohintaSumma = function () {
-    return _.sum($scope.data, 'nettohinta');
+    return _.sum($scope.paikallisliikennedata, 'nettohinta');
   };
 
 

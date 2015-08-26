@@ -13,7 +13,7 @@ function seurantalomakeSeutulippuController($scope) {
     rahoitus: 1800
   }
   ];
-  $scope.lisaaRivi = function () {
+  $scope.lisaaSeutulippuRivi = function () {
     var tyhja = {
       seutulippualue: '',
       myynti: 0,
@@ -26,7 +26,7 @@ function seurantalomakeSeutulippuController($scope) {
     };
     $scope.seutulippudata.push(tyhja);
   };
-  $scope.poistaRivi = function (indeksi) {
+  $scope.poistaSeutulippuRivi = function (indeksi) {
     $scope.seutulippudata.splice(indeksi, 1);
   };
 }

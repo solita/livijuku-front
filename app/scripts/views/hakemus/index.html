@@ -9,8 +9,11 @@
     </juku-link-prev>
 
     <!-- Hakija -->
-    <juku-link-prev ng-show="isHakija(user)" ng-click="backToList()">
+    <juku-link-prev ng-show="isHakija(user) && isOmaHakemus(user)" ng-click="backToList()">
       Palaa omiin hakemuksiin
+    </juku-link-prev>
+    <juku-link-prev ng-show="isHakija(user) && !isOmaHakemus(user)" ng-click="backToList()">
+      Palaa hakemusten päänäkymään
     </juku-link-prev>
 
     <juku-tabs>
@@ -188,8 +191,8 @@
       </div>
     </juku-form-section>
 
-    <!-- Hakija -->
-    <div ng-show="isHakija(user)">
+    <!-- Hakija (oma hakemus) -->
+    <div ng-show="(isHakija(user) && isOmaHakemus(user))">
       <juku-form-section ng-show="onAvustushakemus()">
         <juku-ohje-avustushakemus></juku-ohje-avustushakemus>
       </juku-form-section>
@@ -203,8 +206,8 @@
       </juku-form-section>
     </div>
 
-    <!-- Käsittelijä -->
-    <div ng-show="!isHakija(user)">
+    <!-- Käsittelijä ja Hakija (toisen organisaation hakemus) -->
+    <div ng-show="(!isHakija(user) || (isHakija(user) && !isOmaHakemus(user)))">
       <div ng-show="onAvustushakemus()">
         <h5>Lisätietoja avustusten kohteista</h5>
       </div>
@@ -245,7 +248,7 @@
 
       <!-- Hakija -->
       <juku-confirmation
-        ng-show="isHakija(user) && hakemusKeskenerainen()"
+        ng-show="isHakija(user) && isOmaHakemus(user) && hakemusKeskenerainen()"
         ng-model="allekirjoitusliitetty"
         ng-disabled="!hakemusKeskenerainen() || !liitteetOlemassa()">
         Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen allekirjoitusoikeudesta.
@@ -256,13 +259,14 @@
         <!-- Hakija -->
         <juku-controls-buttons ng-show="isHakija(user) && sallittu('allekirjoita-oma-hakemus')">
           <button
-            ng-disabled="!hakemusKeskenerainen() || !sallittu('modify-oma-hakemus')"
+            ng-disabled="!hakemusKeskenerainen() || !sallittu('modify-oma-hakemus') || !isOmaHakemus(user)"
             data-ng-click="tallennaHakemus(lisatoiminto.EI)"
             class="btn btn-primary">
             Tallenna tiedot
           </button>
           <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="btn btn-primary">
-            {{ hakemusKeskenerainen() && sallittu('modify-oma-hakemus') ? 'Tallenna ja esikatsele hakemus' : 'Avaa hakemus (PDF)' }}
+            {{ hakemusKeskenerainen() && sallittu('modify-oma-hakemus') && isOmaHakemus(user) ? 'Tallenna ja esikatsele hakemus' : 'Avaa
+            hakemus (PDF)' }}
           </button>
 
           <button
@@ -314,8 +318,11 @@
         </juku-link-prev>
 
         <!-- Hakija -->
-        <juku-link-prev ng-show="isHakija(user)" ng-click="backToList()">
+        <juku-link-prev ng-show="isHakija(user) && isOmaHakemus(user)" ng-click="backToList()">
           Palaa omiin hakemuksiin
+        </juku-link-prev>
+        <juku-link-prev ng-show="isHakija(user) && !isOmaHakemus(user)" ng-click="backToList()">
+          Palaa hakemusten päänäkymään
         </juku-link-prev>
 
         <!-- Käsittelijä -->

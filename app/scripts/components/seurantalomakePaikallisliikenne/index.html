@@ -43,7 +43,7 @@
         <tfoot>
           <tr>
             <td colspan="2">
-              <button class="btn btn-primary" ng-click="lisaaRivi()">Lisää rivi</button>
+              <button class="btn btn-primary" ng-click="lisaaPaikallisliikenneRivi()">Lisää rivi</button>
               <span class="yhteensa">Yhteensä:</span>
             </td>
             <td>{{linjaautotSumma() | currency : '' : 0}}</td>
@@ -57,7 +57,7 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr ng-repeat="rivi in data track by $index">
+          <tr ng-repeat="rivi in paikallisliikennedata track by $index">
             <td><input name="linja" type="text" class="form-control" noenter
                        select-on-click
                        ng-model="rivi.linja"></td>
@@ -86,7 +86,7 @@
             <td><input name="bruttohinta" type="text" class="form-control" ng-currency="" numeric-only="" noenter
                        select-on-click
                        ng-model="rivi.bruttohinta"></td>
-            <td><a href="" ng-click="poistaRivi($index)"><span class="glyphicon glyphicon-remove-sign"></span></a>
+            <td><a href="" ng-click="poistaPaikallisliikenneRivi($index)"><span class="glyphicon glyphicon-remove-sign"></span></a>
             </td>
           </tr>
         </tbody>
