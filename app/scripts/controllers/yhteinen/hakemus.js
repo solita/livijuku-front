@@ -85,13 +85,17 @@ angular.module('jukufrontApp')
         return hasPermission(user, 'modify-oma-hakemus');
       };
 
+      $scope.isOmaHakemus = function isOmaHakemus(user) {
+        return $scope.hakemus.organisaatioid===user.organisaatioid;
+      };
+
       $scope.hasPermission = hasPermission;
       $scope.allekirjoitusliitetty = false;
       $scope.hakemusid = parseInt($stateParams.id, 10);
       $scope.alv = false;
 
       $scope.backToList = function backToList() {
-        if ($scope.isHakija($scope.user)) {
+        if ($scope.isHakija($scope.user) && $scope.isOmaHakemus($scope.user)) {
           return $state.go('app.hakija.hakemukset.omat');
         }
         $state.go('app.yhteinen.hakemukset.list', {
@@ -232,7 +236,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.naytaHakemus = function (tila) {
-        if (tila === 'K' || tila === 'T0') {
+        if ((tila === 'K' || tila === 'T0') && $scope.isOmaHakemus($scope.user)) {
           $scope.tallennaHakemus($scope.lisatoiminto.ESIKATSELU);
         } else {
           $window.open(pdf.getHakemusPdfUrl($scope.hakemusid));
