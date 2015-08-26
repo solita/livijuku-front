@@ -32,6 +32,10 @@ angular.module('jukufrontApp')
         })
       }
 
+      function tiedostotyyppiPdf(tiedostotyyppi) {
+        return tiedostotyyppi === 'application/pdf'
+      }
+
       $scope.uusiHakemuskausi = function uusiHakemuskausi(hakemuskausi) {
         return ['A', '0'].indexOf(hakemuskausi.tilatunnus) > -1;
       };
@@ -109,8 +113,11 @@ angular.module('jukufrontApp')
 
       $scope.upload = function (tiedostot, hakemuskausi) {
         const {vuosi} = hakemuskausi;
-
         if (tiedostot && tiedostot.length > 0) {
+          if (!tiedostotyyppiPdf(tiedostot[0].type)) {
+            StatusService.virhe('Hakuohjetta ei voitu ladata, koska hakuohje ei ollut PDF-formaattia', 'Hakuohjetta ei voitu ladata, koska hakuohjetiedosto:' + tiedostot[0].name + ' ei ollut PDF-formaattia');
+            return;
+          }
           Upload.upload({
             url: 'api/hakemuskausi/' + vuosi + '/hakuohje',
             file: tiedostot[0],
