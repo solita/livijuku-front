@@ -33,7 +33,7 @@ angular.module('jukufrontApp')
       }
 
       function tiedostotyyppiPdf(tiedostotyyppi) {
-        return tiedostotyyppi === 'application/pdf'
+        return (tiedostotyyppi === 'application/pdf' || tiedostotyyppi === 'pdf');
       }
 
       $scope.uusiHakemuskausi = function uusiHakemuskausi(hakemuskausi) {
