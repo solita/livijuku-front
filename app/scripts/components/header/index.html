@@ -32,7 +32,7 @@
           {{ ('hakemukset' | stateNameIncludes:['app.hakija.hakemukset.omat']) ||
              ('app.hakemus' | isState) && !isOwnApplication()
             | toClass:'is-active'
-          }}" ng-show="sallittu(user, 'view-kaikki-hakemukset')">
+          }}" ng-show="sallittu(user, 'view-hakemus')">
           <a class="header__link" ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'AH0'})">
             Kaikki hakemukset
           </a>
