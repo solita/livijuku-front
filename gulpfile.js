@@ -51,11 +51,11 @@ var paths = {
     destination: './dist/'
   },
   copy: [{
-    source: './node_modules/ng-file-upload-shim/*.swf',
+    source: './node_modules/ng-file-upload/dist/*.swf',
     destination: './dist/scripts/ie9/'
   },
   {
-    source: './node_modules/ng-file-upload-shim/FileAPI.min.js',
+    source: './node_modules/ng-file-upload/dist/FileAPI.min.js',
     destination: './dist/scripts/ie9/'
   },
   {
