@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var angular = require('angular');
 var hakemusUtils = require('utils/hakemus');
+var pdf = require('utils/pdfurl');
 
 angular.module('jukufrontApp')
   .controller('HakijaHakemuksetCtrl', ['$scope', '$state', 'HakemuskausiService', 'StatusService', function ($scope, $state, HakemuskausiService, StatusService) {
@@ -19,6 +20,10 @@ angular.module('jukufrontApp')
       return _.findWhere(hakemuskausi.hakemukset, {
         hakemustyyppitunnus: tyyppi
       });
+    };
+
+    $scope.getHakuohjePdf = function (vuosi) {
+      return pdf.getHakuohjePdfUrl(vuosi);
     };
 
     HakemuskausiService.haeOmat()
