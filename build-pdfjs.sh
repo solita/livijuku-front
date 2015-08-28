@@ -5,7 +5,7 @@
   npm install
   node make generic
   cd ..
-  mkdir -p dist/
   rm -rf dist/pdf
-  cp -r pdf.js/build/generic dist/pdf
+  cp -r pdf.js/build/generic dist/
+  mv dist/generic dist/pdf
 )
