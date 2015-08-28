@@ -19,8 +19,8 @@ function haeHakemus(tyyppi, hakemus) {
 loadInitialData.$inject = ['CommonService', '$stateParams', 'AvustuskohdeService', 'HakemusService', 'KayttajaService', 'PaatosService'];
 
 function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusService, KayttajaService, PaatosService) {
-  function haeAvustuskohteet(hakemusid) {
-    return AvustuskohdeService.hae(hakemusid).then((data) => {
+  function haeAvustuskohteet(hakemus) {
+    return AvustuskohdeService.hae(hakemus.id).then((data) => {
       return _.map(
         common.partitionBy(v => v.avustuskohdeluokkatunnus, data),
         (kohteet) => ({
@@ -33,16 +33,26 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusServi
   const hakemusId = $stateParams.id;
   const hakemusPromise = HakemusService.hae(hakemusId);
 
+  function isContentVisible(handler) {
+    return function(hakemus) {
+      if (hakemus.contentvisible) {
+        return handler(hakemus);
+      } else {
+        return null;
+      }
+    }
+  }
+
   return Promise.props({
     hakemus: hakemusPromise,
     user: KayttajaService.hae(),
     paatos: PaatosService.hae(hakemusId),
-    avustuskohdeluokat: haeAvustuskohteet(hakemusId),
-    avustushakemusArvot: hakemusPromise.then((hakemus) => {
+    avustuskohdeluokat: hakemusPromise.then(isContentVisible(haeAvustuskohteet)),
+    avustushakemusArvot: hakemusPromise.then(isContentVisible((hakemus) => {
       if (['MH1', 'MH2'].indexOf(hakemus.hakemustyyppitunnus)) {
-        return haeAvustuskohteet(hakemusId);
+        return haeAvustuskohteet(haeHakemus('AH0', hakemus));
       }
-    }),
+    })),
     ajankohta: hakemusPromise.then((hakemus) => {
       const ajankohdat = {
         MH1: '1.1.-30.6.',
@@ -50,10 +60,10 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusServi
       };
       return ajankohdat[hakemus.hakemustyyppitunnus];
     }),
-    maksatushakemusArvot: hakemusPromise.then((hakemus) => {
-      const id = haeHakemus('MH1', hakemus).id;
-      return haeAvustuskohteet(id);
-    }),
+    maksatushakemusArvot: hakemusPromise.then(isContentVisible((hakemus) => {
+      const h = haeHakemus('MH1', hakemus);
+      return haeAvustuskohteet(h);
+    })),
     maksatushakemus1Paatos: hakemusPromise.then((hakemus) => {
       const id = haeHakemus('MH1', hakemus).id;
       return PaatosService.hae(id);
