@@ -8,5 +8,5 @@
   rm -rf dist
   npm run build
   npm install shelljs
-  bash -x ./build-pdfjs.sh
+  ./build-pdfjs.sh
 )
