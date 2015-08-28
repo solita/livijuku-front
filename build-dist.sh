@@ -7,6 +7,5 @@
   export NODE_ENV=production
   rm -rf dist
   npm run build
-  npm install shelljs
-  ./build-pdfjs.sh
+  ./fetch-pdfjs.sh
 )
