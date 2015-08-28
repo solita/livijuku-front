@@ -132,8 +132,14 @@
         avustussumma vähennettynä myönnetty avustus ensimmäisen maksatushakemuksen perusteella).
       </juku-form-row>
 
+      <juku-form-row
+        ng-hide="hakemus.contentvisible"
+        class="alert alert-warning">
+        <strong>Riittämättömät oikeudet!</strong> Keskeneräisen hakemuksen sisältö on näkyvissä vain hakijalle.
+      </juku-form-row>
+
     </juku-form-section>
-    <juku-form-section>
+    <juku-form-section ng-show="hakemus.contentvisible">
 
       <div class="row">
         <div class="col-md-12">
@@ -192,7 +198,7 @@
     </juku-form-section>
 
     <!-- Hakija (oma hakemus) -->
-    <div ng-show="(isHakija(user) && isOmaHakemus(user))">
+    <div ng-show="(isHakija(user) && isOmaHakemus(user)) && hakemus.contentvisible">
       <juku-form-section ng-show="onAvustushakemus()">
         <juku-ohje-avustushakemus></juku-ohje-avustushakemus>
       </juku-form-section>
@@ -207,7 +213,7 @@
     </div>
 
     <!-- Käsittelijä ja Hakija (toisen organisaation hakemus) -->
-    <div ng-show="(!isHakija(user) || (isHakija(user) && !isOmaHakemus(user)))">
+    <div ng-show="(!isHakija(user) || (isHakija(user) && !isOmaHakemus(user))) && hakemus.contentvisible">
       <div ng-show="onAvustushakemus()">
         <h5>Lisätietoja avustusten kohteista</h5>
       </div>
@@ -264,7 +270,7 @@
             class="btn btn-primary">
             Tallenna tiedot
           </button>
-          <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="btn btn-primary">
+          <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="btn btn-primary" ng-disabled="!hakemus.contentvisible">
             {{ hakemusKeskenerainen() && sallittu('modify-oma-hakemus') && isOmaHakemus(user) ? 'Tallenna ja esikatsele hakemus' : 'Avaa
             hakemus (PDF)' }}
           </button>
