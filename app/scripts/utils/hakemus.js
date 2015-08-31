@@ -2,8 +2,14 @@
 
 var _ = require('lodash');
 
+export function hakemusSuljettu(hakemus) {
+  return (hakemus.hakemustilat.length === 1) &&
+         (hakemus.hakemustilat[0].hakemustilatunnus === "S");
+}
+
 export function hakemusKaynnissa(hakemus) {
-  return new Date() > new Date(hakemus.hakuaika.alkupvm);
+  return (new Date() > new Date(hakemus.hakuaika.alkupvm)) &&
+         !hakemusSuljettu(hakemus);
 }
 
 export function haeHakemus(hakemuskausi, tyyppitunnus) {

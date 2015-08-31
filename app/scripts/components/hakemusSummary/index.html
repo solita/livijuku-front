@@ -1,5 +1,10 @@
 <div class="hakemus-summary">
-  <div ng-show="!utils.hakemusKaynnissa(hakemus)" class="hakemus-summary__not-active"><span class="label hakemus-tila-eikaynnissa">Ei käynnissä</span></div>
+  <div ng-show="!utils.hakemusKaynnissa(hakemus)" class="hakemus-summary__not-active">
+    <span class="label hakemus-tila-eikaynnissa" ng-show="!utils.hakemusSuljettu(hakemus)">Ei käynnissä</span>
+    <div ng-show="utils.hakemusSuljettu(hakemus)">
+      {{utils.hakemuksiaTilassa(hakemus, "S")}} kpl <span class="label hakemus-tila-eikaynnissa">Suljettu</span>
+    </div>
+  </div>
   <ul class="hakemus-summary__list" ng-show="utils.hakemusKaynnissa(hakemus)">
 
     <li ng-repeat="tila in hakemuksenTilat">
