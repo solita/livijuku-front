@@ -3,8 +3,10 @@
 var _ = require('lodash');
 
 export function hakemusSuljettu(hakemus) {
-  return (hakemus.hakemustilat.length === 1) &&
-         (hakemus.hakemustilat[0].hakemustilatunnus === "S");
+  return (hakemus.hakemustilat === undefined) ?
+    (hakemus.hakemustilatunnus === "S") :
+    (hakemus.hakemustilat.length === 1) &&
+    (hakemus.hakemustilat[0].hakemustilatunnus === "S");
 }
 
 export function hakemusKaynnissa(hakemus) {
