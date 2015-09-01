@@ -14,25 +14,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
-
-import com.paulhammant.ngwebdriver.AngularModelAccessor;
 
 public class HakemuskausiTest extends TestBase {
 
     @Test
     public void hakuohje_kauden_avaus_ja_restorepoint_update() throws IOException,
-            InterruptedException {
+            InterruptedException, URISyntaxException {
 
         postHakuohje(2016);
 
@@ -84,7 +74,7 @@ public class HakemuskausiTest extends TestBase {
     }
 
     @Test
-    public void hakijaaInformoidaanHakemuksenTilasta() throws IOException {
+    public void hakijaaInformoidaanHakemuksenTilasta() throws IOException, URISyntaxException {
         login(User.HARRI);
 
         // Varmista, että kausi on avoinna TODO: Korjaa tämä.
@@ -194,7 +184,7 @@ public class HakemuskausiTest extends TestBase {
     }
 
     @Test
-    public void hakijaSyottaaHakemukseenAlvillisetRahasummat() throws IOException {
+    public void hakijaSyottaaHakemukseenAlvillisetRahasummat() throws IOException, URISyntaxException {
         login(User.HARRI);
 
         //Avaa hakemus
@@ -335,60 +325,19 @@ public class HakemuskausiTest extends TestBase {
     }
 
 
-    private void lisaaAllekirjoitusLiite() throws IOException {
-        String hakemusId = getScopeVariableValue(button("Tallenna tiedot"), "hakemusid");
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(baseUrl() + "/api/hakemus/" + hakemusId + "/liite");
-        httpPost.addHeader("oam-remote-user", User.HARRI.getLogin());
-        httpPost.addHeader("oam-user-organization", User.HARRI.getOrganization());
-        httpPost.addHeader("oam-groups", User.HARRI.getGroup());
-
-        FileBody liite = new FileBody(getPathToTestFile("JUKU_allekirjoitusoikeus.doc").toFile());
-
-        HttpEntity reqEntity = MultipartEntityBuilder.create()
-                .addPart("liite", liite)
-                .build();
-        httpPost.setEntity(reqEntity);
-        System.out.println("************************************");
-
-        try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
-            System.out.println(httpPost);
-            System.out.println(response.getStatusLine());
-            HttpEntity entity = response.getEntity();
-            // do something useful with the response body
-            // and ensure it is fully consumed
-            EntityUtils.consume(entity);
-        } finally {
-            System.out.println("************************************");
-        }
+    private void lisaaAllekirjoitusLiite() throws IOException, URISyntaxException {
+        WebElement fileInput = findElementByXPath("//input[@type='file']");
+        driver().executeScript("angular.element(arguments[0]).css('visibility', 'visible').css('width','').css('height','');", fileInput);
+        String allekirjoitusliite = getPathToTestFile("JUKU_allekirjoitusoikeus.doc").toFile().getAbsolutePath();
+        fileInput.sendKeys(allekirjoitusliite);
     }
 
-    private void postHakuohje(int vuosi) throws IOException {
-        CloseableHttpClient httpclient = HttpClients.createDefault();
+    private void postHakuohje(int vuosi) throws IOException, URISyntaxException {
 
-        HttpPost httpPost = new HttpPost(baseUrl() + "/api/hakemuskausi/" + vuosi + "/hakuohje");
-        httpPost.addHeader("oam-remote-user", User.KATRI.getLogin());
-        httpPost.addHeader("oam-user-organization", User.KATRI.getOrganization());
-        httpPost.addHeader("oam-groups", User.KATRI.getGroup());
-
-        FileBody hakuohje = new FileBody(getPathToTestFile("test.pdf").toFile());
-
-        HttpEntity reqEntity = MultipartEntityBuilder.create()
-                .addPart("hakuohje", hakuohje)
-                .build();
-        httpPost.setEntity(reqEntity);
-        System.out.println("************************************");
-
-        try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
-            System.out.println(httpPost);
-            System.out.println(response.getStatusLine());
-            HttpEntity entity = response.getEntity();
-            // do something useful with the response body
-            // and ensure it is fully consumed
-            EntityUtils.consume(entity);
-        } finally {
-            System.out.println("************************************");
-        }
+        WebElement fileInput = findElementByXPath("//input[@type='file']");
+        driver().executeScript("angular.element(arguments[0]).css('visibility', 'visible').css('width','').css('height','');", fileInput);
+        String hakuohje = getPathToTestFile("test.pdf").toFile().getAbsolutePath();
+        fileInput.sendKeys(hakuohje);
     }
 
     @Test
@@ -469,12 +418,12 @@ public class HakemuskausiTest extends TestBase {
         button("Tallenna").click();
     }
 
-    private Path getPathToTestFile(String filename) {
+    private Path getPathToTestFile(String filename) throws URISyntaxException {
         try {
             return Paths.get(ClassLoader.getSystemResource(filename).toURI());
         } catch (URISyntaxException e) {
             e.printStackTrace();
-            return null;
+            throw e;
         }
     }
 
