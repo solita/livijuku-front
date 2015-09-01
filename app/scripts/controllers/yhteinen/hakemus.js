@@ -49,7 +49,7 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusServi
     paatos: PaatosService.hae(hakemusId),
     avustuskohdeluokat: hakemusPromise.then(isContentVisible(haeAvustuskohteet)),
     avustushakemusArvot: hakemusPromise.then(isContentVisible((hakemus) => {
-      if (['MH1', 'MH2'].indexOf(hakemus.hakemustyyppitunnus)) {
+      if (_.contains(['MH1', 'MH2'], (hakemus.hakemustyyppitunnus))) {
         return haeAvustuskohteet(haeHakemus('AH0', hakemus));
       }
     })),
@@ -61,12 +61,20 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusServi
       return ajankohdat[hakemus.hakemustyyppitunnus];
     }),
     maksatushakemusArvot: hakemusPromise.then(isContentVisible((hakemus) => {
-      const h = haeHakemus('MH1', hakemus);
-      return haeAvustuskohteet(h);
+      if (hakemus.hakemustyyppitunnus === 'MH2') {
+        const h = haeHakemus('MH1', hakemus);
+        return haeAvustuskohteet(h);
+      } else {
+        return [];
+      }
     })),
     maksatushakemus1Paatos: hakemusPromise.then((hakemus) => {
-      const id = haeHakemus('MH1', hakemus).id;
-      return PaatosService.hae(id);
+      if (hakemus.hakemustyyppitunnus === 'MH2') {
+        const id = haeHakemus('MH1', hakemus).id;
+        return PaatosService.hae(id);
+      } else {
+        return {};
+      }
     })
   });
 }
