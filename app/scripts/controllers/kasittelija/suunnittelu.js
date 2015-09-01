@@ -68,24 +68,25 @@ angular.module('jukufrontApp')
       $scope.vanhaArvo = arvo;
     };
 
-    $scope.hakemusKeskenerainen = function (hakemus) {
-      if (typeof hakemus === 'undefined') return false;
-      return (hakemus.hakemuksenTila == 'K' || hakemus.hakemuksenTila == 'T0');
-    };
+    function safe(f) {
+      return function(hakemus) { return (hakemus !== undefined) && (hakemus !== null) ? f(hakemus) : false; };
+    }
 
-    $scope.hakemusPaatetty = function (hakemus) {
-      if (typeof hakemus === 'undefined') return false;
-      return hakemus.hakemuksenTila == 'P';
-    };
+    $scope.hakemusKeskenerainen = safe(function (hakemus) {
+      return _.contains(['0', 'K', 'T0'], hakemus.hakemuksenTila)
+    });
 
-    $scope.hakemusTarkastettu = function (hakemus) {
-      return ['T', 'P'].indexOf(hakemus.hakemuksenTila) > -1;
-    };
+    $scope.hakemusPaatetty = safe(function (hakemus) {
+      return _.contains(['P', 'S'], hakemus.hakemuksenTila);
+    });
 
-    $scope.hakemusTarkastamatta = function (hakemus) {
-      if (typeof hakemus === 'undefined') return false;
+    $scope.hakemusTarkastettu = safe(function (hakemus) {
+      return _.contains(['T', 'P', 'S'], hakemus.hakemuksenTila);
+    });
+
+    $scope.hakemusTarkastamatta = safe(function (hakemus) {
       return hakemus.hakemuksenTila != 'T';
-    };
+    });
 
     $scope.myonnettyLiikaa = function(){
       return $scope.jaettavaraha<$scope.myonnettavaAvustusSum;

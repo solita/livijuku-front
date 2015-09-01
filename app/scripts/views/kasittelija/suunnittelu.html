@@ -69,7 +69,7 @@
             </td>
             <td>
               <div ng-show="hakemusPaatetty(hakemus)">
-                <p>{{hakemus.myonnettavaAvustus|currency:"&euro;"}}</p>
+                {{hakemus.myonnettavaAvustus|currency:"&euro;"}}
               </div>
               <div ng-hide="hakemusPaatetty(hakemus) || hakemusKeskenerainen(hakemus)" class="form-group" show-errors="{showSuccess: true}">
                 <input id="avustus_{{hakemus.hakemusId}}" name="avustus_{{hakemus.hakemusId}}" type="text" min="-0.0001"
