@@ -181,6 +181,60 @@ public class HakemuskausiTest extends TestBase {
                 + "valtionavustusta 0 euroa.";
         assertThat(String.format("Päätös PDF sisältää tekstin %s", expectedText),
                 containsNormalized(actual, expectedText));
+
+        // Avaa maksatushakemus 1
+        // Lisää allekirjoitusliite
+        // Tallenna hakemus
+        // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
+        // Lähetä maksatushakemus 1
+        // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
+        // Kirjaa sisään käsittelijä
+        // Ota maksatushakemus 1 käsittelyyn
+        // Palauta maksatushakemus 1 täydennettäväksi
+        // Kirjaa sisään hakija
+        // Assertoi tila täydennettävänä
+        // Avaa maksatushakemus 1
+        // Täydennä maksatushakemus 1
+        // Assetoi hakijana tila Täydennetty.
+        // Kirjaa sisään käsittelijä
+        // Tarkasta maksatushakemus 1
+        // Assertoi käsittelijänä tila Tarkastettu
+        // Kirjaa sisään hakija
+        // Assertoi hakijana tila tarkastettu
+        // Kirjaa sisään käsittelijä
+        // Päätä maksatushakemus 1
+        // Kirjaa sisään päättäjä
+        // Kirjaa sisään hakija
+        // Assertoi tila päätetty
+        // Tarkista päätös pdf
+
+
+        // Avaa maksatushakemus 2
+        // Lisää allekirjoitusliite
+        // Tallenna hakemus
+        // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
+        // Lähetä maksatushakemus 2
+        // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
+        // Kirjaa sisään käsittelijä
+        // Ota maksatushakemus 2 käsittelyyn
+        // Palauta maksatushakemus 2 täydennettäväksi
+        // Kirjaa sisään hakija
+        // Assertoi tila täydennettävänä
+        // Avaa maksatushakemus 2
+        // Täydennä maksatushakemus 2
+        // Assetoi hakijana tila Täydennetty.
+        // Kirjaa sisään käsittelijä
+        // Tarkasta maksatushakemus 2
+        // Assertoi käsittelijänä tila Tarkastettu
+        // Kirjaa sisään hakija
+        // Assertoi hakijana tila tarkastettu
+        // Kirjaa sisään käsittelijä
+        // Päätä maksatushakemus 2
+        // Kirjaa sisään päättäjä
+        // Kirjaa sisään hakija
+        // Assertoi tila päätetty
+        // Tarkista päätös pdf
+
     }
 
     @Test
