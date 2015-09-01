@@ -6,7 +6,7 @@
 
     <juku-form-row>
       <h2 ng-show="onAvustushakemus()">
-        Suunnittelunäkymä - avustushakemukset {{vuosi}}
+        Suunnittelunäkymä - avustushakemukset {{vuosi}} <br/> <small> {{ lajitunnus | toApplicantName }} </small>
       </h2>
 
       <h2 ng-show="onMaksatushakemus1()">
@@ -18,7 +18,7 @@
       </h2>
     </juku-form-row>
 
-    <h3>{{ lajitunnus | toApplicantName }}</h3>
+    <h3>Määrärahat</h3>
 
     <form name="suunnitteluForm">
       <juku-form-row>
@@ -42,6 +42,9 @@
                  ng-model="jaettavaraha"  ng-class="{'varoitusvari':myonnettyLiikaa()}" disabled/>
         </div>
       </juku-form-row>
+
+      <h3>Hakemukset</h3>
+
       <juku-form-row>
         <table st-table="hakemuksetSuunnittelu" class="table table-hover table-condensed">
           <thead>
@@ -51,7 +54,7 @@
             <th>Haettu avustus</th>
             <th>Muutos</th>
             <th>Myönnettävä avustus</th>
-            <th></th>
+            <th>Päätös</th>
           </tr>
           </thead>
           <tbody>
