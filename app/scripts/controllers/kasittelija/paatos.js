@@ -41,8 +41,12 @@ angular.module('jukufrontApp')
     $scope.vuosi = $stateParams.vuosi;
     $scope.tyyppi = $stateParams.tyyppi;
     $scope.lajitunnus = $stateParams.lajitunnus;
-    $scope.aikaleima = new Date();
     $scope.vanhaArvo = 0;
+
+    $scope.hasPaatos = function () {
+      if (typeof $scope.paatos === 'undefined') return false;
+      return $scope.paatos.paatosnumero > -1;
+    }
 
     $scope.asetaVanhaArvo = function (arvo) {
       $scope.vanhaArvo = arvo;
@@ -68,19 +72,6 @@ angular.module('jukufrontApp')
         $window.open(pdf.getPaatosPdfUrl($scope.hakemusid));
       }
     };
-
-    /* Toiminnallisuus poistettu toistaiseksi, koska ASHA ei tue peruuttamista, JEG/15.5.2015
-     $scope.peruPaatos = function () {
-     PaatosService.peru($scope.hakemusid)
-     .success(function () {
-     StatusService.ok('PaatosService.peru(' + $scope.hakemusid + ')', 'Hakemuksen päätös peruttiin.');
-     $state.path('/k/suunnittelu/' + $scope.vuosi + '/' + $scope.tyyppi + '/' + $scope.lajitunnus);
-     })
-     .error(function (data) {
-     StatusService.virhe('PaatosService.peru(' + $scope.hakemusid + ')', data);
-     });
-     };
-     */
 
     $scope.tallennaPaatos = function (lisatoiminto) {
       StatusService.tyhjenna();

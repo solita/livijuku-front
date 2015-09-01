@@ -3,30 +3,18 @@
     <p>Ei hakemuksen käsittelyoikeutta.</p>
   </div>
   <div ng-show="sallittu('kasittely-hakemus')">
-    <div class="row">
-      <div class="col-md-12">
-        <juku-link-prev ui-sref="app.kasittelija.suunnittelu({vuosi: vuosi, tyyppi: tyyppi, lajitunnus: lajitunnus})">
-          Palaa suunnittelunäkymään
-        </juku-link-prev>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <h2>Valtionavustuspäätös vuodelle {{avustushakemus.vuosi}}</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <h3>HAKEMUSTIEDOT</h3>
-      </div>
-    </div>
+
+    <h2>Valtionavustuspäätös vuodelle {{avustushakemus.vuosi}} </br> <small>{{hakija}}</small></h2>
+
+    <h3>HAKEMUSTIEDOT</h3>
+
     <div class="row">
       <div class="col-md-4">
         <label>Hakija</label>
 
         <p>{{hakija}}</p>
 
-        <p>{{avustushakemus.lahettaja}}</p>
+        <p><span class="glyphicon glyphicon-user" aria-hidden="true" ng-hide="avustushakemus.lahettaja === null"></span> {{avustushakemus.lahettaja}}</p>
       </div>
       <div class="col-md-4">
         <label>Päivämäärä</label>
@@ -48,27 +36,39 @@
       </div>
       <div class="col-md-4">
         <label>Hakemuksen tila</label>
-
         <p>
           <hakemus-label tila="{{avustushakemus.hakemustilatunnus}}"/>
         </p>
       </div>
     </div>
+
+
+    <h3>PÄÄTÖS</h3>
+
     <div class="row">
-      <div class="col-md-12">
-        <h3>PÄÄTÖS</h3>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-4">
         <label>Myönnetty avustus</label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
         <p>{{avustus| currency:"&euro;"}}</p>
       </div>
+
+      <div class="col-md-4">
+        <label>Päivämäärä</label>
+        <p>{{paatos.voimaantuloaika ? paatos.voimaantuloaika : "Päätöstä ei ole annettu" | date:'dd.MM.yyyy'}}</p>
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <label>Esittelijä</label>
+        <p>{{avustushakemus.kasittelijanimi ? avustushakemus.kasittelijanimi : "Ei tiedossa"}}</p>
+      </div>
+
+      <div class="col-md-4">
+        <label>Päätöksentekijä</label>
+        <p>{{paatos.paattajanimi ? paatos.paattajanimi : "Ei tiedossa"}}</p>
+      </div>
+    </div>
+
     <form name="paatosForm" juku-poistumisvaroitus="{{hakemusTarkastettu()}}">
       <div class="form-group">
         <label>Päätösteksti</label>
@@ -77,77 +77,49 @@
                     ng-model="paatos.selite"></textarea>
         </div>
         <div ng-hide="hakemusTarkastettu()">
-          <p>{{paatos.selite}}</p>
+          <p>{{paatos.selite ? paatos.selite : "Ei määritelty"}}</p>
         </div>
       </div>
     </form>
+
     <br>
 
-    <div class="row">
-      <div class="col-md-6">
-        <juku-link-prev ui-sref="app.kasittelija.suunnittelu({vuosi: vuosi, tyyppi: tyyppi, lajitunnus: lajitunnus})">
+    <juku-controls>
+
+      <juku-controls-buttons>
+        <button juku-varmistusdialogi varmistusotsake="Päätöksen hyväksyminen"
+                varmistusteksti="Oletko varma, että haluat hyväksyä päätöksen? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
+                operaatio="tallennaPaatos(2)" class="pull-right btn btn-success disabled-button-tooltip"
+                ng-disabled="(!hakemusTarkastettu() || !sallittu('hyvaksy-paatos'))">Tallenna ja hyväksy päätös
+
+                <div tooltip="Päätöksenteko vaatii päätöksentekijä-tason käyttöoikeudet."
+                     class="disabled-button-tooltip-text"
+                     ng-if="(hakemusTarkastettu() && !sallittu('hyvaksy-paatos'))"></div>
+                <div tooltip="Päätöksen voi hyväksyä vain kun hakemus on tarkastettu tilassa."
+                     class="disabled-button-tooltip-text"
+                     ng-if="!hakemusTarkastettu()"></div>
+        </button>
+
+        <button data-ng-click="naytaPaatos()" ng-disabled="!hasPaatos() && !hakemusTarkastettu()"
+                class="pull-right btn btn-primary">{{hakemusTarkastettu() ? "Tallenna ja esikatsele päätös" : "Näytä päätös"}}
+        </button>
+
+        <button data-ng-click="tallennaPaatos(0)" class="pull-right btn btn-primary disabled-button-tooltip"
+                ng-disabled="!hakemusTarkastettu()">Tallenna tiedot
+
+
+
+                <div tooltip="Päätöksen tiedot voi tallentaa vain kun hakemus on tarkastettu tilassa."
+                     class="disabled-button-tooltip-text"
+                     ng-if="!hakemusTarkastettu()"></div>
+        </button>
+      </juku-controls-buttons>
+    </juku-controls>
+
+    <juku-navigation-links>
+      <juku-link-prev ui-sref="app.kasittelija.suunnittelu({vuosi: vuosi, tyyppi: tyyppi, lajitunnus: lajitunnus})">
           Palaa suunnittelunäkymään
-        </juku-link-prev>
-      </div>
-      <div class="col-md-3">
-        <div ng-show="hakemusTarkastettu()">
-          <button data-ng-click="tallennaPaatos(0)" class="pull-right btn btn-primary">Tallenna tiedot
-          </button>
-        </div>
-        <div ng-hide="hakemusTarkastettu()">
-          <button data-ng-click="tallennaPaatos(0)" class="pull-right btn btn-primary" disabled>Tallenna
-            tiedot
-          </button>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div ng-show="hakemusTarkastettu()">
-          <button data-ng-click="naytaPaatos()" class="pull-right btn btn-primary">
-            Tallenna ja esikatsele päätös
-          </button>
-        </div>
-        <div ng-hide="hakemusTarkastettu()">
-          <button data-ng-click="naytaPaatos()" class="pull-right btn btn-primary">
-            Esikatsele päätös
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        <h5>Päivämäärä</h5>
-
-        <p>{{aikaleima | date:'dd.MM.yyyy'}}</p>
-      </div>
-      <div class="col-md-4">
-        <h5>Esittelijä</h5>
-
-        <p>{{avustushakemus.kasittelijanimi}}</p>
-      </div>
-      <div class="col-md-4">
-        <h5>Päätöksentekijä</h5>
-
-        <p>{{paatos.paattajanimi}}</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-9"></div>
-      <div class="col-md-3">
-        <div ng-show="(hakemusTarkastettu() && sallittu('hyvaksy-paatos'))">
-          <button juku-varmistusdialogi varmistusotsake="Päätöksen hyväksyminen"
-                  varmistusteksti="Oletko varma, että haluat hyväksyä päätöksen? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
-                  operaatio="tallennaPaatos(2)" class="pull-right btn btn-success">Tallenna ja hyväksy päätös
-          </button>
-        </div>
-        <div ng-hide="(hakemusTarkastettu() && sallittu('hyvaksy-paatos'))">
-          <button data-ng-click="tallennaPaatos(2)" class="pull-right btn btn-success disabled-button-tooltip" disabled>
-            Tallenna ja hyväksy
-            päätös
-          </button>
-          <div tooltip="Päätöksenteko vaatii Päätöksentekijä-tason käyttöoikeudet JUKUun"
-               class="disabled-button-tooltip-text"></div>
-        </div>
-      </div>
-    </div>
+      </juku-link-prev>
+    </juku-navigation-links>
   </div>
 </div>
