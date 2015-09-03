@@ -1,77 +1,19 @@
 package juku.e2e;
 
 import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
-import static java.lang.Thread.sleep;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.testng.AssertJUnit.assertTrue;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 public class HakemuskausiTest extends TestBase {
-
-    @Test
-    public void hakuohje_kauden_avaus_ja_restorepoint_update() throws IOException,
-            InterruptedException, URISyntaxException {
-
-        postHakuohje(2016);
-
-        login(User.KATRI);
-
-        boolean kaynnistaNapinTilaEnnen =
-                findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi")).isEnabled();
-        assertTrue("Käynnistä hakemuskausi == enabled", kaynnistaNapinTilaEnnen);
-
-        // Aseta avustuskauden alkupäivä 1.1.
-        asetaAvustuskaudenAlkupaiva0101();
-
-        button("Käynnistä hakemuskausi").click();
-        waitForAngularRequestsToFinish(driver());
-
-        boolean kaynnistaNappiNakyy = true;
-        for (int i = 0; i < 25; i++) {
-            sleep(100);
-            try {
-                button("Käynnistä hakemuskausi");
-            } catch (NoSuchElementException e) {
-                kaynnistaNappiNakyy = false;
-                break;
-            }
-        }
-        assertThat("Käynnistä hakemuskausi jäi näkyviin vaikka kausi avattiin.", !kaynnistaNappiNakyy);
-
-        // Päivitetään testien restorepoint tähän, jotta kautta ei tarvitse avata muissa testeissä.
-        createRestorePoint(TEST_RESTORE_POINT);
-    }
-
-    private void asetaAvustuskaudenAlkupaiva0101() {
-        findElementByCssSelector("#test-muokkaa-hakuaikoja").click();
-
-        WebElement avustushakemuskaudenAlkupv = findElementByCssSelector("#test-alkupvm-datepicker-button");
-        avustushakemuskaudenAlkupv.click();
-
-        WebElement vuosikuukausiValitsin = findElementByCssSelector("#test-alkupvm-datepicker thead > tr:nth-child(1) > th:nth-child(2) button");
-        vuosikuukausiValitsin.click();
-
-        WebElement kuukausi01 = findElementByCssSelector("#test-alkupvm-datepicker tbody tr:first-child td:first-child button");
-        kuukausi01.click();
-
-        WebElement paiva01 = findElementByCssSelector("#test-alkupvm-datepicker tbody tr:first-child td:nth-child(5) button");
-        paiva01.click();
-
-        findElementByCssSelector("#test-alkupvm-tallenna").click();
-        waitForAngularRequestsToFinish(driver());
-    }
 
     @Test
     public void hakijaaInformoidaanHakemuksenTilasta() throws IOException, URISyntaxException {
@@ -379,19 +321,11 @@ public class HakemuskausiTest extends TestBase {
     }
 
 
-    private void lisaaAllekirjoitusLiite() throws IOException, URISyntaxException {
+    private void lisaaAllekirjoitusLiite() throws IOException {
         WebElement fileInput = findElementByXPath("//input[@type='file']");
         driver().executeScript("angular.element(arguments[0]).css('visibility', 'visible').css('width','').css('height','');", fileInput);
         String allekirjoitusliite = getPathToTestFile("JUKU_allekirjoitusoikeus.doc").toFile().getAbsolutePath();
         fileInput.sendKeys(allekirjoitusliite);
-    }
-
-    private void postHakuohje(int vuosi) throws IOException, URISyntaxException {
-
-        WebElement fileInput = findElementByXPath("//input[@type='file']");
-        driver().executeScript("angular.element(arguments[0]).css('visibility', 'visible').css('width','').css('height','');", fileInput);
-        String hakuohje = getPathToTestFile("test.pdf").toFile().getAbsolutePath();
-        fileInput.sendKeys(hakuohje);
     }
 
     @Test
@@ -440,7 +374,6 @@ public class HakemuskausiTest extends TestBase {
     }
 
 
-    /* Tätä testiä ei voi toteuttaa ennenkuin Angular file upload komponentti tukee sitä
     @Test
     public void liitteidenLisaaminenHakemukselleLIVIJUKU_325() throws IOException {
         login(User.HARRI);
@@ -448,19 +381,10 @@ public class HakemuskausiTest extends TestBase {
         //Avaa hakemus
         spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
-        //WebElement liitelataus = findElementByXPath("//input[@type='text' and %s]", isVisible());
-       driver().executeScript("var formi = document.createElement(\"form\");\n" +
-                "var node = document.createElement(\"input\");\n" +
-                "node.setAttribute('type', 'file');\n" +
-                "formi.appendChild(node);\n" +
-                "var element = document.getElementsByClassName(\"drop-box\")[0];\n" +
-                "element.appendChild(formi);",button("Valitse tiedosto"));
+        postHakuohje(getPathToTestFile("test.pdf").toFile());
 
-        findElementByXPath("//input[@type='file']").sendKeys(getPathToTestPdf().toFile().getAbsolutePath());
-        button("Valitse tiedosto").click();
-
+        // TODO Assertoi liitteen tiedot sivulta.
  }
- */
 
     private boolean containsNormalized(String actual, String expected) {
         String a = actual.replaceAll("\\s+", " ");
@@ -470,15 +394,6 @@ public class HakemuskausiTest extends TestBase {
 
     private void tallennaHakemus() {
         button("Tallenna").click();
-    }
-
-    private Path getPathToTestFile(String filename) throws URISyntaxException {
-        try {
-            return Paths.get(ClassLoader.getSystemResource(filename).toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            throw e;
-        }
     }
 
 }

@@ -2,13 +2,18 @@ package juku.e2e;
 
 import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
 import static java.lang.Thread.sleep;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.AssertJUnit.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import com.paulhammant.ngwebdriver.AngularModelAccessor;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -21,6 +26,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -31,6 +37,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import com.paulhammant.ngwebdriver.AngularModelAccessor;
 import com.paulhammant.ngwebdriver.ByAngular;
 
 public class TestBase {
@@ -40,6 +47,7 @@ public class TestBase {
     private RemoteWebDriver driver;
     ByAngular ng;
     private PoolingHttpClientConnectionManager connectionManager;
+    public static final int DEFAULT_IMPLICIT_WAIT = 10;
 
     protected WebElement button(String text) {
         waitForAngularRequestsToFinish(driver());
@@ -67,8 +75,12 @@ public class TestBase {
             drv = new FirefoxDriver(fp);
         }
         drv.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-        drv.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        setImplicitTimeout(drv, DEFAULT_IMPLICIT_WAIT);
         return drv;
+    }
+
+    private void setImplicitTimeout(RemoteWebDriver drv, int DEFAULT_IMPLICIT_WAIT) {
+        drv.manage().timeouts().implicitlyWait(DEFAULT_IMPLICIT_WAIT, TimeUnit.SECONDS);
     }
 
     String isVisible() {
@@ -87,6 +99,41 @@ public class TestBase {
                 containsText(tila),
                 hasClass(statusClass),
                 isVisible());
+    }
+
+    protected void postHakuohje(File fileToUpload) {
+        WebElement fileInput = findElementByXPath("//input[@type='file']");
+        driver().executeScript("angular.element(arguments[0]).css('visibility', 'visible').css('width','').css('height','');", fileInput);
+        String hakuohje = fileToUpload.getAbsolutePath();
+        fileInput.sendKeys(hakuohje);
+    }
+
+    protected Path getPathToTestFile(String filename) {
+        try {
+            return Paths.get(ClassLoader.getSystemResource(filename).toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void asetaAvustuskaudenAlkupaiva0101() {
+        findElementByCssSelector("#test-muokkaa-hakuaikoja").click();
+
+        WebElement avustushakemuskaudenAlkupv = findElementByCssSelector("#test-alkupvm-datepicker-button");
+        avustushakemuskaudenAlkupv.click();
+
+        WebElement vuosikuukausiValitsin = findElementByCssSelector("#test-alkupvm-datepicker thead > tr:nth-child(1) > th:nth-child(2) button");
+        vuosikuukausiValitsin.click();
+
+        WebElement kuukausi01 = findElementByCssSelector("#test-alkupvm-datepicker tbody tr:first-child td:first-child button");
+        kuukausi01.click();
+
+        WebElement paiva01 = findElementByCssSelector("#test-alkupvm-datepicker tbody tr:first-child td:nth-child(5) button");
+        paiva01.click();
+
+        findElementByCssSelector("#test-alkupvm-tallenna").click();
+        waitForAngularRequestsToFinish(driver());
     }
 
     enum User {
@@ -132,6 +179,49 @@ public class TestBase {
         // Increase max connections for localhost:80 to 50
         HttpHost localhost = new HttpHost("locahost", 80);
         connectionManager.setMaxPerRoute(new HttpRoute(localhost), 50);
+
+        avaaKausi();
+
+    }
+
+    private void avaaKausi() {
+        login(User.KATRI);
+
+        postHakuohje(getPathToTestFile("test.pdf").toFile());
+
+        boolean kaynnistaNapinTilaEnnen =
+                findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi")).isEnabled();
+        assertTrue("Käynnistä hakemuskausi == enabled", kaynnistaNapinTilaEnnen);
+
+        // Aseta avustuskauden alkupäivä 1.1.
+        asetaAvustuskaudenAlkupaiva0101();
+
+        button("Käynnistä hakemuskausi").click();
+        waitForAngularRequestsToFinish(driver());
+
+        boolean kaynnistaNappiNakyy = true;
+        for (int i = 0; i < 25; i++) {
+            try {
+                sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                // Nopeutetaan hieman, kun tässä odotetaan, ettei käynnnistä nappia enää ole.
+                // Implicit wait on oletuksena niin pitkä.
+                setImplicitTimeout(driver(),1);
+                button("Käynnistä hakemuskausi");
+            } catch (NoSuchElementException e) {
+                kaynnistaNappiNakyy = false;
+                break;
+            } finally {
+                setImplicitTimeout(driver(),DEFAULT_IMPLICIT_WAIT);
+            }
+        }
+        assertThat("Käynnistä hakemuskausi jäi näkyviin vaikka kausi avattiin.", !kaynnistaNappiNakyy);
+
+        // Päivitetään testien restorepoint tähän, jotta kautta ei tarvitse avata muissa testeissä.
+        createRestorePoint(TEST_RESTORE_POINT);
     }
 
     @AfterSuite
@@ -184,14 +274,14 @@ public class TestBase {
 
     String httpGetPdfText(String url, User user) throws IOException {
         // http://stackoverflow.com/a/26149627
-        String result=null;
+        String result = null;
 
         CloseableHttpClient httpclient = HttpClients.custom()
                 .setConnectionManager(connectionManager)
                 .build();
 
         // PDF viewer pois URL:sta
-        String uusiUrl = url.substring(0,22) + url.substring(53);
+        String uusiUrl = url.substring(0, 22) + url.substring(53);
         HttpGet httpGet = new HttpGet(uusiUrl);
         httpGet.addHeader("oam-remote-user", user.getLogin());
         httpGet.addHeader("oam-groups", user.getGroup());
@@ -283,7 +373,7 @@ public class TestBase {
         return driver().findElementByXPath(String.format(xpath, n));
     }
 
-    public String getScopeVariableValue(WebElement we, String variableName){
+    public String getScopeVariableValue(WebElement we, String variableName) {
         AngularModelAccessor modelAccessor = new AngularModelAccessor(driver());
         return modelAccessor.retrieveAsString(we, variableName);
     }
