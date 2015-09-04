@@ -68,6 +68,14 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusServi
         return [];
       }
     })),
+    avustushakemusPaatos: hakemusPromise.then((hakemus) => {
+      if (_.contains(['MH1', 'MH2'], (hakemus.hakemustyyppitunnus))) {
+        const id = haeHakemus('AH0', hakemus).id;
+        return PaatosService.hae(id);
+      } else {
+        return {}
+      }
+    }),
     maksatushakemus1Paatos: hakemusPromise.then((hakemus) => {
       if (hakemus.hakemustyyppitunnus === 'MH2') {
         const id = haeHakemus('MH1', hakemus).id;
@@ -242,15 +250,15 @@ angular.module('jukufrontApp')
 
       $scope.myonnettyAvustusPerJakso = function () {
         if ($scope.hakemus.hakemustyyppitunnus === 'MH1') {
-          return ($scope.paatos.myonnettyavustus / 2);
+          return ($scope.avustushakemusPaatos.myonnettyavustus / 2);
         }
         if ($scope.hakemus.hakemustyyppitunnus === 'MH2') {
-          return $scope.paatos.myonnettyavustus - $scope.maksatushakemus1Paatos.myonnettyavustus;
+          return $scope.avustushakemusPaatos.myonnettyavustus - $scope.maksatushakemus1Paatos.myonnettyavustus;
         }
       };
 
       $scope.myonnettyAvustusPerVuosi = function () {
-        return $scope.paatos.myonnettyavustus;
+        return $scope.avustushakemusPaatos.myonnettyavustus;
       };
 
       $scope.naytaHakemus = function (tila) {
@@ -274,7 +282,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.avustushakemusPaatosOlemassa = function () {
-        return $scope.paatos && $scope.paatos.voimaantuloaika;
+        return $scope.avustushakemusPaatos && $scope.avustushakemusPaatos.voimaantuloaika;
       };
 
       $scope.edellinenHakemusPaatetty = function () {
