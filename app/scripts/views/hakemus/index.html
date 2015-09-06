@@ -263,16 +263,19 @@
       <juku-controls>
 
         <!-- Hakija -->
-        <juku-controls-buttons ng-show="isHakija(user) && sallittu('allekirjoita-oma-hakemus')">
+        <juku-controls-buttons ng-show="isHakija(user)">
           <button
-            ng-disabled="!hakemusKeskenerainen() || !sallittu('modify-oma-hakemus') || !isOmaHakemus(user)"
+            ng-disabled="!hakemusTallentaminenEnabled()"
             data-ng-click="tallennaHakemus(lisatoiminto.EI)"
-            class="btn btn-primary">
-            Tallenna tiedot
+            class="btn btn-primary disabled-button-tooltip">Tallenna tiedot
+
+            <div tooltip="{{tallentaminenDisabledTooltip()}}" tooltip-placement="bottom"
+                 class="disabled-button-tooltip-text"
+                 ng-if="!hakemusTallentaminenEnabled()"></div>
           </button>
+
           <button data-ng-click="naytaHakemus(hakemus.hakemustilatunnus)" class="btn btn-primary" ng-disabled="!hakemus.contentvisible">
-            {{ hakemusKeskenerainen() && sallittu('modify-oma-hakemus') && isOmaHakemus(user) ? 'Tallenna ja esikatsele hakemus' : 'Avaa
-            hakemus (PDF)' }}
+            {{ hakemusTallentaminenEnabled() ? 'Tallenna ja esikatsele hakemus' : 'Avaa hakemus (PDF)' }}
           </button>
 
           <button
@@ -281,11 +284,13 @@
             varmistusteksti="Oletko varma, että haluat lähettää hakemuksen? Hakemuksen lähettämistä ei ole mahdollista peruuttaa ja hakemuksen sisältöä ei ole mahdollista muuttaa lähettämisen jälkeen. Lähetä hakemus painamalla Kyllä-painiketta. Huom! Liitteiden määrästä riippuen, hakemuksen lähettäminen asianhallintaan kestää 10-70 sekuntia."
 
             operaatio="tallennaHakemus(lisatoiminto.LAHETA)"
-            class="btn btn-success"
-            ng-disabled="!hakemusKeskenerainen() || !allekirjoitusliitetty || !liitteetOlemassa() || !edellinenHakemusPaatetty()">
-            Tallenna ja lähetä hakemus
-          </button>
+            class="btn btn-success disabled-button-tooltip"
+            ng-disabled="!hakemusLahettaminenEnabled()">Tallenna ja lähetä hakemus
 
+            <div tooltip="{{lahetysDisabledTooltip()}}"
+               class="disabled-button-tooltip-text"
+               ng-if="!hakemusLahettaminenEnabled()"></div>
+          </button>
         </juku-controls-buttons>
 
         <!-- Käsittelijä -->

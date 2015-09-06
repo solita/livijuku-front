@@ -108,7 +108,8 @@ angular.module('jukufrontApp')
       };
 
       $scope.isHakija = function isHakija(user) {
-        return hasPermission(user, 'modify-oma-hakemus');
+        return hasPermission(user, 'modify-oma-hakemus') ||
+               hasPermission(user, 'allekirjoita-oma-hakemus');
       };
 
       $scope.isOmaHakemus = function isOmaHakemus(user) {
@@ -311,6 +312,49 @@ angular.module('jukufrontApp')
         return ($scope.hakemusForm.$valid && $scope.onAvustushakemus()) ||
           (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) &&
           $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn());
+      }
+
+      $scope.hakemusTallentaminenEnabled = function() {
+        return $scope.hakemusKeskenerainen() &&
+               $scope.sallittu('modify-oma-hakemus') &&
+               $scope.isOmaHakemus($scope.user);
+      }
+
+      $scope.tallentaminenDisabledTooltip = function() {
+        if (!$scope.sallittu('modify-oma-hakemus')) {
+          return "Käyttäjällä ei ole oikeutta muokata hakemuksia";
+        } else if (!$scope.isOmaHakemus($scope.user)) {
+          return "Vain oman hakemuksen tiedot voi tallentaa";
+        } else if (!$scope.hakemusKeskenerainen()) {
+          return "Vain keskeneräistä hakemusta voi muokata";
+        } else {
+          return ""
+        }
+      }
+
+      $scope.hakemusLahettaminenEnabled = function() {
+        return $scope.hakemusKeskenerainen() &&
+               $scope.allekirjoitusliitetty &&
+               $scope.liitteetOlemassa() &&
+               $scope.edellinenHakemusPaatetty() &&
+               $scope.sallittu('allekirjoita-oma-hakemus') &&
+               $scope.isOmaHakemus($scope.user);
+      }
+
+      $scope.lahetysDisabledTooltip = function() {
+        if (!$scope.hakemusKeskenerainen()) {
+          return "Hakemuksen voi lähettää vain jos se on keskeneräinen";
+        } else if (!$scope.sallittu('allekirjoita-oma-hakemus')) {
+          return "Käyttäjällä ei ole oikeutta lähettää hakemuksia";
+        } else if (!$scope.isOmaHakemus($scope.user)) {
+          return "Vain hakijaorganisaation edustajilla on oikeus lähettää hakemus.";
+        } else if (!$scope.allekirjoitusliitetty || !$scope.liitteetOlemassa()) {
+          return "Allekirjoitusoikeusdokumenttia ei ole liitetty";
+        } else if (!$scope.edellinenHakemusPaatetty()) {
+          return "Edeltävää hakemusta ei ole päätetty."
+        } else {
+          return ""
+        }
       }
 
       $scope.tallennaHakemus = function (lisa_toiminto) {
