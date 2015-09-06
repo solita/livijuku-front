@@ -74,7 +74,7 @@ angular.module('jukufrontApp')
         }
 
         $state.go('app.hakemus', {
-          id: this.hakemustyypinId('AH0', hakemus, hakemuskausi.hakemukset)
+          id: hakemus.id
         });
       };
 
