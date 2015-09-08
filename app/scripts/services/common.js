@@ -13,8 +13,8 @@ angular.module('services.common', [])
     return {
       bindPromiseToScope: function(promise, $scope, name, convert) {
         handlePromise(promise,
-          function (data) {
-            $scope[name] = convert(data);
+          function (response) {
+            $scope[name] = convert(response.data);
           });
       },
 
