@@ -17,7 +17,7 @@ angular.module('services.avustuskohde', [])
           .then(res => res.data);
       },
       luokittelu: function () {
-        return $http.get('api/avustuskohdeluokittelu');
+        return $http.get('api/avustuskohdeluokittelu').then(res => res.data);
       },
       tallenna: function (avustuskohteet) {
         return $http.put('api/avustuskohteet', avustuskohteet);
