@@ -159,14 +159,11 @@ angular.module('jukufrontApp')
       }
 
       function lahetaHakemus() {
-        HakemusService.lahetaHakemus($scope.hakemusid)
-          .success(function () {
+        HakemusService.lahetaHakemus($scope.hakemusid).then(
+          function () {
             StatusService.ok('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', 'Lähettäminen onnistui.');
             $state.go('app.hakija.hakemukset.omat');
-          })
-          .error(function (data) {
-            StatusService.virhe('HakemusService.lahetaHakemus(' + $scope.hakemusid + ')', data.message);
-          });
+          }, StatusService.errorHandler);
       }
 
       function lahetaTaydennys() {

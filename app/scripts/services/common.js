@@ -6,20 +6,16 @@ var angular = require('angular');
 angular.module('services.common', [])
   .factory('CommonService', ['StatusService', function (StatusService) {
 
-    function handlePromise(promise, success, toiminto) {
-      promise.success(success)
-        .error(function (data) {
-          StatusService.virhe(toiminto, data.message);
-        })
+    function handlePromise(promise, success) {
+      promise.then(success, StatusService.errorHandler)
     }
 
     return {
-      bindPromiseToScope: function(promise, $scope, name, convert, toiminto) {
+      bindPromiseToScope: function(promise, $scope, name, convert) {
         handlePromise(promise,
           function (data) {
             $scope[name] = convert(data);
-          },
-          toiminto);
+          });
       },
 
       partitionBy: function (f, collection) {
