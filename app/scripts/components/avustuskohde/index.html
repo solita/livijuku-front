@@ -57,10 +57,13 @@
         <p class="form-control-static" ng-hide="alv">{{((kohde.haettavaavustus + kohde.omarahoitus)/(1+(kohde.alv/100)))| currency:"&euro;"}} alv 0 %</p>
       </div>
     </juku-form-row>
-    <div ng-show="hakemustyyppi!='AH0' && vertailuarvot().avustushakemusHaettavaAvustus==0">
+    <juku-form-row ng-show="hakemustyyppi!='AH0' && vertailuarvot().avustushakemusHaettavaAvustus==0">
+      <div class="col-md-12">
+        <h5>{{name}}</h5>
+      </div>
       <div class="col-md-12">
         <p>Ei haettu avustusta.</p>
       </div>
-    </div>
+    </juku-form-row>
   </ng-form>
 </div>
