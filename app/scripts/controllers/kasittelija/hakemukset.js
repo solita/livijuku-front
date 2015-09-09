@@ -111,8 +111,6 @@ angular.module('jukufrontApp')
           this.yearsOpen = _.reduce(this.hakemuskaudet,
             (memo, kausi) => _.set(memo, kausi.vuosi, true), {});
 
-        }, function (err) {
-          StatusService.virhe('OrganisaatioService.hae(): ' + err.message);
-        });
+        }, StatusService.errorHandler);
 
     }]);

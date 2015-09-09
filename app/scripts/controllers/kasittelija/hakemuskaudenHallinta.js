@@ -79,10 +79,7 @@ angular.module('jukufrontApp')
           );
 
           haeHakemuskaudet();
-        })
-          .catch((err) => {
-            StatusService.virhe(`HakemuskausiService.saveHakuajat(${vuosi})`, err.message);
-          });
+        }, StatusService.errorHandler);
       };
 
       $scope.kaynnistaHakemuskausi = function kaynnistaHakemuskausi(vuosi) {
@@ -90,10 +87,7 @@ angular.module('jukufrontApp')
           .then(function (/* hakemuskausi */) {
             haeHakemuskaudet();
             StatusService.ok('HakemuskausiService.luoUusi(' + vuosi + ')', 'Hakemuskauden ' + vuosi + ' luonti onnistui.');
-          })
-          .catch(function (err) {
-            StatusService.virhe('HakemuskausiService.luoUusi(' + vuosi + ')', err.type + ':' + err.message);
-          });
+          }, StatusService.errorHandler);
       };
 
       $scope.suljeHakemuskausi = function suljeHakemuskausi(vuosi) {
@@ -101,10 +95,7 @@ angular.module('jukufrontApp')
           .then(function (/* sulje hakemuskausi */) {
             haeHakemuskaudet();
             StatusService.ok('HakemuskausiService.sulje(' + vuosi + ')', 'Hakemuskauden ' + vuosi + ' sulkeminen onnistui.');
-          })
-          .catch(function (err) {
-            StatusService.virhe('HakemuskausiService.sulje(' + vuosi + ')', err.type + ':' + err.message);
-          });
+          }, StatusService.errorHandler);
       };
 
       $scope.getHakuohjePdf = function (vuosi) {

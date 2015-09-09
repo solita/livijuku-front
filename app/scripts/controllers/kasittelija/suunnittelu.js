@@ -13,7 +13,8 @@ angular.module('jukufrontApp')
 
     function haeMaararahat() {
       HakemuskausiService.haeMaararaha($scope.vuosi, $scope.lajitunnus)
-        .success(function (data) {
+        .then(function (response) {
+          var data = response.data;
           if (data != null) {
             $scope.maararaha = data.maararaha;
             $scope.ylijaama = data.ylijaama;
@@ -22,15 +23,13 @@ angular.module('jukufrontApp')
             $scope.ylijaama = 0;
           }
           $scope.jaettavaraha = $scope.maararaha + $scope.ylijaama;
-        })
-        .error(function (data) {
-          StatusService.virhe('HakemuskausiService.haeMaararaha(' + $scope.vuosi + ',' + $scope.lajitunnus + ')', data.message);
-        });
+        }, StatusService.errorHandler);
     }
 
     function haeSuunnitteluData() {
       SuunnitteluService.hae($scope.vuosi, $scope.tyyppi)
-        .success(function (data) {
+        .then(function (response) {
+          var data = response.data;
           var hakemuksetSuunnitteluTmp = [];
           var organisaatiolajitunnus = "";
           $scope.haettuAvustusSum = 0;
@@ -58,10 +57,7 @@ angular.module('jukufrontApp')
             }
           ).value();
           $scope.hakemuksetSuunnittelu = _.sortBy(hakemuksetSuunnitteluTmp, 'hakija');
-        })
-        .error(function (data) {
-          StatusService.virhe('SuunnitteluService.hae(' + $stateParams.vuosi + ',' + $stateParams.tyyppi + ')', data.message);
-        });
+        }, StatusService.errorHandler);
     }
 
     $scope.asetaVanhaArvo = function (arvo) {
@@ -121,13 +117,10 @@ angular.module('jukufrontApp')
           haeSuunnitteluData();
         } else if (avustus != $scope.vanhaArvo) {
           SuunnitteluService.suunniteltuAvustus(avustus, hakemusid)
-            .success(function () {
+            .then(function () {
               StatusService.ok('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', 'Myönnettävä avustus:' + avustus + ' € päivitetty.');
               haeSuunnitteluData();
-            })
-            .error(function (data) {
-              StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', data.message);
-            });
+            }, StatusService.errorHandler);
         }
       }
     };
@@ -154,12 +147,9 @@ angular.module('jukufrontApp')
           'ylijaama': $scope.ylijaama
         };
         HakemuskausiService.paivitaMaararaha($scope.vuosi, $scope.lajitunnus, maararahadata)
-          .success(function () {
+          .then(function () {
             haeMaararahat();
-          })
-          .error(function (data) {
-            StatusService.virhe('HakemuskausiService.paivitaMaararaha(' + $scope.vuosi + ',' + $scope.lajitunnus + ',' + maararahadata + ')', data.message.message);
-          });
+          }, StatusService.errorHandler);
       }
     };
 

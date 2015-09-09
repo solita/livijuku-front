@@ -168,13 +168,10 @@ angular.module('jukufrontApp')
 
       function lahetaTaydennys() {
         HakemusService.lahetaTaydennys($scope.hakemusid)
-          .success(function () {
+          .then(function () {
             StatusService.ok('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', 'Täydennyksen lähettäminen onnistui.');
             $state.go('app.hakija.hakemukset.omat');
-          })
-          .error(function (data) {
-            StatusService.virhe('HakemusService.lahetaTaydennys(' + $scope.hakemusid + ')', data.message);
-          });
+          }, StatusService.errorHandler);
       }
 
       $scope.haePaatosPdf = function () {
@@ -376,7 +373,7 @@ angular.module('jukufrontApp')
         });
 
         AvustuskohdeService.tallenna(avustuskohteet)
-          .success(function () {
+          .then(function () {
             StatusService.ok('AvustuskohdeService.tallenna()', 'Tallennus onnistui.');
             $scope.hakemusForm.$setPristine();
 
@@ -401,10 +398,7 @@ angular.module('jukufrontApp')
                 break;
             }
 
-          })
-          .error(function (data) {
-            StatusService.virhe('AvustuskohdeService.tallenna()', data.message);
-          });
+          }, StatusService.errorHandler);
 
       };
 

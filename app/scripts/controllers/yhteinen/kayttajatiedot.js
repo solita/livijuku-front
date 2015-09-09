@@ -7,7 +7,8 @@ angular.module('jukufrontApp')
   .controller('KayttajatiedotCtrl', ['$scope', '$rootScope', 'KayttajaService', function ($scope, $rootScope, KayttajaService) {
 
     KayttajaService.haeKaikki()
-      .success(function (data) {
+      .then(function (response) {
+        var data = response.data;
         $scope.kayttajat = data;
         $scope.liikenneviraston_henkilot=_.filter(data, function(henkilo){
           return henkilo.organisaatioid === 15;
@@ -20,8 +21,5 @@ angular.module('jukufrontApp')
         });
 
 
-      })
-      .error(function (data) {
-        StatusService.virhe('KayttajaService.haeKaikki()', data.message);
-      });
+      }, StatusService.errorHandler);
   }]);

@@ -35,8 +35,5 @@ angular.module('jukufrontApp')
         $scope.suljetutHakemuskaudet = _.filter(hakemuskaudet, function (hakemuskausi) {
           return hakemuskausi.tilatunnus === "S";
         });
-      })
-      .catch(function (err) {
-        StatusService.virhe('HakemusService.haeKaikki())', err.message);
-      });
+      }, StatusService.errorHandler);
   }]);

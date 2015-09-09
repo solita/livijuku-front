@@ -13,10 +13,7 @@ angular.module('jukufrontApp')
         .then(function (data) {
           $scope.avustushakemus = data;
           $scope.hakija = _.find($rootScope.organisaatiot, {'id': $scope.avustushakemus.organisaatioid}).nimi;
-        })
-        .catch(function (data) {
-          StatusService.virhe('HakemusService.hae(' + $stateParams.id + ')', data.message);
-        });
+        }, StatusService.errorHandler);
 
       PaatosService.hae($scope.hakemusid)
         .then(function (data) {
@@ -29,10 +26,7 @@ angular.module('jukufrontApp')
           } else {
             $scope.paatos = data;
           }
-        })
-        .catch(function (data) {
-          StatusService.virhe('PaatosService.hae(' + $scope.hakemusid + ')', data.message);
-        });
+        }, StatusService.errorHandler);
     }
 
     $scope.hakemusid = parseInt($stateParams.hakemusid);
@@ -92,7 +86,7 @@ angular.module('jukufrontApp')
         "selite": $scope.paatos.selite
       };
       PaatosService.tallenna($scope.hakemusid, paatosdata)
-        .success(function () {
+        .then(function () {
           StatusService.ok('PaatosService.tallenna()', 'Tallennus onnistui.');
           $scope.paatosForm.$setPristine();
           haePaatosTiedot();
@@ -107,29 +101,20 @@ angular.module('jukufrontApp')
             case 2:
               // Hyvaksy
               PaatosService.hyvaksy($scope.hakemusid)
-                .success(function () {
+                .then(function () {
                   StatusService.ok('PaatosService.hyvaksy(' + $scope.hakemusid + ')', 'Hakemus päivitettiin päätetyksi.');
                   SuunnitteluService.suunniteltuAvustus(parseFloat($scope.avustus), $scope.hakemusid)
-                    .success(function () {
-                    })
-                    .error(function (data) {
-                      StatusService.virhe('SuunnitteluService.suunniteltuAvustus(' + $scope.avustus + ',' + $scope.hakemusid + ')', data);
-                    });
+                    .then(function () {
+                    }, StatusService.errorHandler);
                   $state.go('app.kasittelija.suunnittelu', {
                     tyyppi: $scope.tyyppi,
                     vuosi: $scope.vuosi,
                     lajitunnus: $scope.lajitunnus
                   });
-                })
-                .error(function (data) {
-                  StatusService.virhe('PaatosService.hyvaksy(' + $scope.hakemusid + ')', data.message);
-                });
+                }, StatusService.errorHandler);
               break;
           }
-        })
-        .error(function (data) {
-          StatusService.virhe('PaatosService.tallenna(' + paatosdata + ')', data.message);
-        });
+        }, StatusService.errorHandler);
     };
 
     $scope.tarkistaTyhja = function (arvo) {

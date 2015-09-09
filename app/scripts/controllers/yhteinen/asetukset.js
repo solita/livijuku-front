@@ -17,24 +17,17 @@ angular.module('jukufrontApp')
     }
 
     function haeKayttajatiedot() {
-      KayttajaService.hae()
-        .then(function (k) {
-          paivitaTiedot(k);
-        })
-        .catch(function (data) {
-          StatusService.virhe('KayttajaService.hae()', data.message);
-        });
+      KayttajaService.hae().then(paivitaTiedot, StatusService.errorHandler);
     }
 
     $scope.paivitaAsetus = function () {
       KayttajaService.paivitaSahkopostiviestit($scope.sahkopostiviestit)
-        .success(function (data) {
+        .then(function (response) {
+          var data = response.data;
           StatusService.ok('KayttajaService.paivitaSahkopostiviestit(' + $scope.sahkopostiviestit + ')', 'Sähköpostiasetukset päivitettiin onnistuneesti.');
           paivitaTiedot(data);
-        })
-        .error(function (data) {
-          StatusService.virhe('KayttajaService.paivitaSahkopostiviestit(' + $scope.sahkopostiviestit + ')', data.message);
-        });
+        }, StatusService.errorHandler);
     };
+
     haeKayttajatiedot();
   }]);
