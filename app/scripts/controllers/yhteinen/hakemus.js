@@ -16,9 +16,9 @@ function haeHakemus(tyyppi, hakemus) {
   });
 }
 
-loadInitialData.$inject = ['CommonService', '$stateParams', 'AvustuskohdeService', 'HakemusService', 'KayttajaService', 'PaatosService'];
+loadInitialData.$inject = ['CommonService', '$stateParams', 'AvustuskohdeService', 'HakemusService', 'KayttajaService', 'PaatosService', 'StatusService'];
 
-function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusService, KayttajaService, PaatosService) {
+function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusService, KayttajaService, PaatosService, StatusService) {
   function haeAvustuskohteet(hakemus) {
     return AvustuskohdeService.hae(hakemus.id).then((data) => {
       return _.map(
@@ -84,7 +84,7 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusServi
         return {};
       }
     })
-  });
+  }).then(_.identity, StatusService.errorHandler);
 }
 
 module.exports.loadInitialData = loadInitialData;

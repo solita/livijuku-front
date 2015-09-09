@@ -4,7 +4,7 @@ var _ = require('lodash');
 var angular = require('angular');
 
 angular.module('jukufrontApp')
-  .controller('KayttajatiedotCtrl', ['$scope', '$rootScope', 'KayttajaService', function ($scope, $rootScope, KayttajaService) {
+  .controller('KayttajatiedotCtrl', ['$scope', '$rootScope', 'KayttajaService', 'StatusService', function ($scope, $rootScope, KayttajaService, StatusService) {
 
     KayttajaService.haeKaikki()
       .then(function (response) {
