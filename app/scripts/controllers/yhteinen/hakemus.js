@@ -404,24 +404,10 @@ angular.module('jukufrontApp')
 
       $scope.tarkastaHakemus = function () {
         HakemusService.tarkastaHakemus($scope.hakemusid)
-          .success(function () {
+          .then(function () {
             StatusService.ok('HakemusService.tarkastaHakemus(' + $scope.hakemusid + ')', 'Hakemus päivitettiin tarkastetuksi.');
             $state.go('app.yhteinen.hakemukset.list', {tyyppi: $scope.hakemus.hakemustyyppitunnus});
-          })
-          .error(function (data) {
-            StatusService.virhe('HakemusService.tarkastaHakemus(' + $scope.hakemusid + ')', data.message);
-          });
-      };
-
-      $scope.tarkastaTaydennys = function () {
-        HakemusService.tarkastaTaydennys($scope.hakemusid)
-          .success(function () {
-            StatusService.ok('HakemusService.tarkastaTaydennys(' + $scope.hakemusid + ')', 'Täydennetty hakemus päivitettiin tarkastetuksi.');
-            $state.go('app.yhteinen.hakemukset.list', {tyyppi: $scope.hakemus.hakemustyyppitunnus});
-          })
-          .error(function (data) {
-            StatusService.virhe('HakemusService.tarkastaTaydennys(' + $scope.hakemusid + ')', data.message);
-          });
+          }, StatusService.errorHandler);
       };
 
       $window.scrollTo(0, 0);
