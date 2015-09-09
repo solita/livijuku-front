@@ -29,15 +29,12 @@ module.exports = function ($modal, HakemusService, StatusService, $state) {
         });
         modalInstance.result.then(function (taydennysselite) {
           HakemusService.taydennyspyynto(parseInt(scope.hakemusid), taydennysselite)
-            .success(function () {
+            .then(function () {
               StatusService.ok('HakemusService.taydennyspyynto(' + scope.hakemusid + ',' + taydennysselite + ')', 'Hakemus päivitettiin tädennettäväksi.');
               $state.go('app.yhteinen.hakemukset.list', {
                 tyyppi: scope.tyyppi
               });
-            })
-            .error(function (data) {
-              StatusService.virhe('HakemusService.taydennyspyynto(' + scope.hakemusid + ',' + taydennysselite + ')', data.message);
-            });
+            }, StatusService.errorHandler);
         }, function () {
           //Cancel
         });
