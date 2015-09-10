@@ -125,11 +125,14 @@ public class HakemuskausiTest extends TestBase {
                 containsNormalized(actual, expectedText));
 
         // Avaa maksatushakemus 1
+        findElementByLinkText("1. maksatushakemus").click();
         // Lisää allekirjoitusliite
-        // Tallenna hakemus
-        // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
+        lisaaAllekirjoitusLiite();
         // Lähetä maksatushakemus 1
+        lahetaHakemus();
         // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
+        spanWithTextAndClass("Vireillä", "hakemus-tila-vireilla");
+
         // Kirjaa sisään käsittelijä
         // Ota maksatushakemus 1 käsittelyyn
         // Palauta maksatushakemus 1 täydennettäväksi
