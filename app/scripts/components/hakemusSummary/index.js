@@ -8,7 +8,7 @@ module.exports = function() {
     scope: {
       hakemus: '=hakemus',
       hakemuskaudenTila: '=hakemuskaudenTila',
-      testIds: '=',
+      testIdIndex: '=',
       onSave: '&',
       onEdit: '&'
     },

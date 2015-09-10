@@ -19,7 +19,7 @@
     <p>Hakuaika:</p>
 
     <div ng-hide="editing">
-      <a ng-hide="hakemuskausiSuljettu()" href="#" ng-click="toggleEditMode($event)" id="{{ testIds ? 'test-muokkaa-hakuaikoja' : ''}}">
+      <a ng-hide="hakemuskausiSuljettu()" href="#" ng-click="toggleEditMode($event)" id="{{ 'test-muokkaa-hakuaikoja-' + testIdIndex }}">
         <i class="glyphicon glyphicon-pencil hakemus-summary__edit"></i>
       </a>
       {{hakemus.hakuaika.alkupvm | date:'d.M.yyyy'}} -
@@ -32,7 +32,7 @@
            class="input-group hakuajat_input juku-datepicker"
            tooltip="Alkamispäivämäärän tulee olla ennen loppumispäivämäärää."
            tooltip-trigger="mouseover"
-           id="{{ testIds && $index === 0 ? 'test-alkupvm-datepicker' : ''}}"
+           id="{{ 'test-alkupvm-datepicker-' + testIdIndex }}"
            tooltip-enable="$index === 0 && $parent.hakuaikaForm.$error.chronologicalOrder"
            ng-repeat="input in inputs">
 
@@ -53,7 +53,7 @@
           <button
             type="button"
             class="btn btn-default hakuajat_calendar"
-            id="{{ testIds && $index === 0 ? 'test-alkupvm-datepicker-button' : ''}}"
+            id="{{ 'test-alkupvm-datepicker-button-' + testIdIndex }}"
             ng-click="toggleCalendar($event, input)">
             <i class="glyphicon glyphicon-calendar"></i>
           </button>
@@ -67,7 +67,7 @@
       <button
         ng-disabled="hakuaikaForm.$invalid"
         ng-click="save($event)"
-        id="{{ testIds ? 'test-alkupvm-tallenna' : ''}}"
+        id="{{ 'test-alkupvm-tallenna-' + testIdIndex }}"
         class="btn btn-primary hakuajat__button">
         Tallenna hakuajat
       </button>

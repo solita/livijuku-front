@@ -117,23 +117,33 @@ public class TestBase {
         }
     }
 
-    protected void asetaAvustuskaudenAlkupaiva0101() {
-        findElementByCssSelector("#test-muokkaa-hakuaikoja").click();
+    protected void asetaAlkupaivat0101() {
+        for (int i = 0; i<3; i++) {
+            WebElement muokkaaAikoja = findElementByCssSelector("#test-muokkaa-hakuaikoja-" + i);
+            muokkaaAikoja.click();
 
-        WebElement avustushakemuskaudenAlkupv = findElementByCssSelector("#test-alkupvm-datepicker-button");
-        avustushakemuskaudenAlkupv.click();
+            WebElement alkupv = findElementByCssSelector("#test-alkupvm-datepicker-button-" + i);
+            alkupv.click();
 
-        WebElement vuosikuukausiValitsin = findElementByCssSelector("#test-alkupvm-datepicker thead > tr:nth-child(1) > th:nth-child(2) button");
-        vuosikuukausiValitsin.click();
+            WebElement vuosikuukausiValitsin =
+                    findElementByCssSelector("#test-alkupvm-datepicker-" + i + " thead > tr:nth-child(1) > th:nth-child(2) button");
+            vuosikuukausiValitsin.click();
 
-        WebElement kuukausi01 = findElementByCssSelector("#test-alkupvm-datepicker tbody tr:first-child td:first-child button");
-        kuukausi01.click();
+            WebElement vuosiValitsin = findElementByCssSelector("#test-alkupvm-datepicker-" + i + " thead tr:first-child th:nth-child(2) button");
+            vuosiValitsin.click();
 
-        WebElement paiva01 = findElementByCssSelector("#test-alkupvm-datepicker tbody tr:first-child td:nth-child(5) button");
-        paiva01.click();
+            WebElement vuosi01 = findElementByCssSelector("#test-alkupvm-datepicker-" + i + " tbody tr:first-child td:first-child button");
+            vuosi01.click();
 
-        findElementByCssSelector("#test-alkupvm-tallenna").click();
-        waitForAngularRequestsToFinish(driver());
+            WebElement kuukausi01 = findElementByCssSelector("#test-alkupvm-datepicker-" + i + " tbody tr:first-child td:first-child button");
+            kuukausi01.click();
+
+            WebElement paiva01 = findElementByCssSelector("#test-alkupvm-datepicker-" + i + " tbody tr:first-child td:nth-child(5) button");
+            paiva01.click();
+
+            findElementByCssSelector("#test-alkupvm-tallenna-" + i).click();
+            waitForAngularRequestsToFinish(driver());
+        }
     }
 
     enum User {
@@ -193,8 +203,8 @@ public class TestBase {
                 findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi")).isEnabled();
         assertTrue("Käynnistä hakemuskausi == enabled", kaynnistaNapinTilaEnnen);
 
-        // Aseta avustuskauden alkupäivä 1.1.
-        asetaAvustuskaudenAlkupaiva0101();
+        // Aseta avustus- ja maksatuskausien alkupäivä 1.1. kuluvaa vuotta
+        asetaAlkupaivat0101();
 
         button("Käynnistä hakemuskausi").click();
         waitForAngularRequestsToFinish(driver());

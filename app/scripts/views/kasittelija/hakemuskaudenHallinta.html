@@ -41,7 +41,7 @@
           title="{{tyyppitunnus | toApplicationName}}"
           ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
           <hakemus-summary
-            test-ids="$index === 0"
+            test-id-index="$index"
             hakemuskauden-tila="hakemuskausi.tilatunnus"
             hakemus="utils.haeHakemus(hakemuskausi, tyyppitunnus)"
             on-save="tallennaHakuajat(hakemuskausi.vuosi, utils.haeHakemus(hakemuskausi, tyyppitunnus), values)">
