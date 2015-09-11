@@ -24,7 +24,7 @@ angular.module('services.hakemuskausi', [])
         return $http.get('api/maararaha/'+vuosi+'/'+organisaatiolajitunnus);
       },
       luoUusi: function(vuosi) {
-        return $http.post('api/hakemuskausi', {vuosi: vuosi})
+        return $http.post('api/hakemuskausi/' + vuosi)
           .then(res => res.data);
       },
       saveHakuajat: function(vuosi, hakuajat) {
