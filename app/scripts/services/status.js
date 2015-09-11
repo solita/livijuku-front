@@ -8,6 +8,7 @@ var errorTitles = {
   400: "Virhe",
   404: "Tietoa ei löytynyt 404",
   403: "Käyttöoikeusvirhe",
+  409: "Käyttöliittymän tiedot vanhentuneet",
   500: "Järjestelmävirhe",
   arkistointi: "Asiahallintavirhe"
 };
@@ -15,6 +16,10 @@ var errorTitles = {
 var errorMessages = {
   404: ["Palvelimelta pyydettyä resurssia ei ole olemassa.",
         "Käyttöliittymän tiedot eivät ole ajantasalla tai käyttämäsi linkki on vanhentunut.",
+        "Kokeile päivittää käyttöliittymän tiedot. "].join(" "),
+
+  409: ["Toiminnon kohde on tilassa, jossa toiminto ei ole enää sallittu.",
+        "Käyttöliittymän tiedot eivät ole ajantasalla.",
         "Kokeile päivittää käyttöliittymän tiedot. "].join(" "),
 
   arkistointi: ["Tapahtuman arkistointi asiahallintajärjestelmään epäonnistui.",
