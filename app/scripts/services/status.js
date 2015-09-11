@@ -6,7 +6,7 @@ var Promise = require('bluebird');
 
 var errorTitles = {
   400: "Virhe",
-  404: "Tietoa ei löytynyt",
+  404: "Tietoa ei löytynyt 404",
   403: "Käyttöoikeusvirhe",
   500: "Järjestelmävirhe",
   arkistointi: "Asiahallintavirhe"
@@ -20,6 +20,20 @@ var errorMessages = {
   arkistointi: ["Tapahtuman arkistointi asiahallintajärjestelmään epäonnistui.",
                 "Voit kokeilla toimintoa vähän ajan kuluttua uudestaan. "].join(" ")
 };
+
+function resolveDetailErrorMessage(data) {
+  if (c.isNullOrUndefined(data)) {
+    return "";
+  } else if (data.message) {
+    return data.message;
+  } else if (data.errors) {
+    return "Käyttöliittymä lähetti virheellisen muotoisen komennon palvelimelle - tekninen kuvaus virheestä: " + data.errors;
+  } else if (_.isString(data)) {
+    return data;
+  } else {
+    JSON.stringify(data);
+  }
+}
 
 var angular = require('angular');
 angular.module('services.status', ['toastr'])
@@ -69,7 +83,7 @@ angular.module('services.status', ['toastr'])
         var title = c.coalesce(errorTitles[type], errorTitles[status], "Virhe");
         var intro = c.coalesce(errorMessages[type], errorMessages[status], "");
 
-        var message = c.coalesce(_.get(response, "data.message"), response.data, "");
+        var message = resolveDetailErrorMessage(response.data);
 
         toastr.error(intro + message, title, {closeButton: true, timeOut: 0, extendedTimeOut: 0});
 

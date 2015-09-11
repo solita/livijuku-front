@@ -9,28 +9,17 @@ angular.module('services.hakemus', [])
         return $http.get('api/hakemus/' + hakemusid)
           .then(res => res.data);
       },
-      tallennaSelite: function (selitedata) {
-        var req = {
-          method: 'PUT',
-          url: 'api/hakemus/selite',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data: selitedata
-        };
-        return $http(req);
-      },
       lahetaHakemus: function (hakemusid) {
-        return $http.post('api/laheta-hakemus', {'hakemusid': hakemusid});
+        return $http.post('api/hakemus/' + hakemusid +'/laheta');
       },
       lahetaTaydennys: function (hakemusid) {
-        return $http.post('api/laheta-taydennys', {'hakemusid': hakemusid});
+        return $http.post('api/hakemus/' + hakemusid +'/laheta-taydennys');
       },
       tarkastaHakemus: function (hakemusid) {
-        return $http.post('api/tarkasta-hakemus', {'hakemusid': hakemusid});
+        return $http.post('api/hakemus/' + hakemusid +'/tarkasta');
       },
       taydennyspyynto: function (hakemusid, selite) {
-        return $http.post('api/taydennyspyynto', {'hakemusid': hakemusid, 'selite': selite});
+        return $http.post('api/hakemus/' + hakemusid +'/taydennyspyynto', {'selite': selite});
       }
     };
   }]);

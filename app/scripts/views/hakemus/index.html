@@ -63,7 +63,7 @@
 
       <!-- Hakija -->
       <juku-form-row
-        ng-show="isHakija(user) && hakemusTaydennettavana() && taydennyspyyntoSeliteOlemassa()"
+        ng-show="hakemusTaydennettavana() && taydennyspyyntoSeliteOlemassa()"
         class="alert alert-warning">
         <strong>
           Täydennyspyyntöviesti käsittelijältä, määräpäivä: {{hakemus.taydennyspyynto.maarapvm |
@@ -76,7 +76,6 @@
         <h5>MYÖNNETTY AVUSTUS VUODELLE {{hakemus.vuosi}}</h5>
         {{myonnettyAvustusPerVuosi() | currency:"&euro;"}} (sis. ALV)
         <juku-icon-link
-          ng-show="isHakija(user)"
           href="{{haeAvustushakemusPaatosPdf()}}"
           title="Avaa päätös"
           target="_blank"
