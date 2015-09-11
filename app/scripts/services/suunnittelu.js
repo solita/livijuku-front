@@ -9,7 +9,7 @@ angular.module('services.suunnittelu', [])
         return $http.get('api/hakemussuunnitelmat/'+vuosi+'/'+hakemustyyppitunnus, {params: {isArray: true}});
       },
       suunniteltuAvustus: function (suunniteltuavustus, hakemusid) {
-        return $http.put('api/hakemus/suunniteltuavustus', {'suunniteltuavustus': suunniteltuavustus,'hakemusid': hakemusid});
+        return $http.put('api/hakemus/' + hakemusid +'/suunniteltuavustus', {'suunniteltuavustus': suunniteltuavustus});
       }
     };
   }]);
