@@ -32,7 +32,7 @@ function resolveDetailErrorMessage(data) {
   } else if (data.message) {
     return data.message;
   } else if (data.errors) {
-    return "Käyttöliittymä lähetti virheellisen muotoisen komennon palvelimelle - tekninen kuvaus virheestä: " + data.errors;
+    return "Käyttöliittymä lähetti virheellisen muotoisen komennon palvelimelle - tekninen kuvaus virheestä: " + JSON.stringify(data.errors);
   } else if (_.isString(data)) {
     return data;
   } else {

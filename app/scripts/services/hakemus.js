@@ -19,7 +19,7 @@ angular.module('services.hakemus', [])
         return $http.post('api/hakemus/' + hakemusid +'/tarkasta');
       },
       taydennyspyynto: function (hakemusid, selite) {
-        return $http.post('api/hakemus/' + hakemusid +'/taydennyspyynto', {'selite': selite});
+        return $http.post('api/hakemus/' + hakemusid +'/taydennyspyynto', {selite: (selite ? selite : null)});
       }
     };
   }]);
