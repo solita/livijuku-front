@@ -15,6 +15,22 @@ import org.testng.annotations.Test;
 
 public class HakemuskausiTest extends TestBase {
 
+    enum Hakemuslaji {
+        AVUSTUS("Avustushakemus"),
+        MAKSATUS1("1. maksatushakemus"),
+        MAKSATUS2("2. maksatushakemus");
+
+        private final String otsikko;
+
+            Hakemuslaji(String otsikko) {
+                this.otsikko = otsikko;
+            }
+
+            public String getOtsikko() {
+                return otsikko;
+            }
+    }
+
     @Test
     public void hakijaaInformoidaanHakemuksenTilasta() throws IOException, URISyntaxException {
         login(User.HARRI);
@@ -48,12 +64,13 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Ota hakemus käsittelyyn
-        avaaHakemus("Vireillä", "hakemus-tila-vireilla");
+        avaaHakemus(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla");
 
         tarkistaHakijanHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
 
         // Palauta hakemus täydennettäväksi
         button("Palauta täydennettäväksi").click();
+        // TODO Lisää selite täydennyspyynnölle
         okOlenVarma().click();
 
         //Assertoi käsittelijänä tila Täydennettävänä
@@ -66,6 +83,8 @@ public class HakemuskausiTest extends TestBase {
 
         tarkistaHakijanHakemuksenTila("Täydennettävänä", "hakemus-tila-taydennettavana");
 
+        // TODO Lisää joku avustussumma jollekin kohteelle
+
         // Täydennä hakemus
         lahetaHakemus();
 
@@ -76,7 +95,7 @@ public class HakemuskausiTest extends TestBase {
         login(User.KATRI);
 
         // Tarkasta hakemus
-        avaaHakemus("Täydennetty", "hakemus-tila-taydennetty");
+        avaaHakemus(Hakemuslaji.AVUSTUS, "Täydennetty", "hakemus-tila-taydennetty");
 
         tarkistaHakijanHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
 
@@ -134,7 +153,12 @@ public class HakemuskausiTest extends TestBase {
         spanWithTextAndClass("Vireillä", "hakemus-tila-vireilla");
 
         // Kirjaa sisään käsittelijä
+        login(User.KATRI);
         // Ota maksatushakemus 1 käsittelyyn
+        avaaHakemus(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla");
+
+        tarkistaHakijanHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
+
         // Palauta maksatushakemus 1 täydennettäväksi
         // Kirjaa sisään hakija
         // Assertoi tila täydennettävänä
@@ -231,7 +255,7 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Ota hakemus käsittelyyn
-        avaaHakemus("Vireillä", "hakemus-tila-vireilla");
+        avaaHakemus(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla");
 
         //Tarkista summat
         tarkistaHakemuksenSummakentat();
@@ -303,11 +327,13 @@ public class HakemuskausiTest extends TestBase {
                 position);
     }
 
-    private void avaaHakemus(String tila, String statusClass) {
+    private void avaaHakemus(Hakemuslaji hakemuslaji, String tila, String statusClass) {
         WebElement vireillaLaatikko =
-                spanWithTextAndClass(tila, statusClass);
+                findElementByXPath("//div[.//p[string()='" + hakemuslaji.getOtsikko() + "'] and contains(@class, 'col-md-3')]"
+                        + "/div/div[2]//span[%s and %s]", containsText("Vireillä"), hasClass("hakemus-tila-vireilla"));
         vireillaLaatikko.click();
 
+        // Tässä oletetaan, että ainoa vireilläoleva hakemus on kyseisen hakijan.
         WebElement helsinginSeudunVireilla =
                 spanWithTextAndClass(tila, statusClass);
         helsinginSeudunVireilla.click();
