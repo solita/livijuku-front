@@ -120,8 +120,7 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
           $scope.upload = Upload.upload({
             url: 'api/hakemus/' + $scope.hakemusid + '/liite',
             method: 'POST',
-            file: file,
-            fileFormDataName: 'liite'
+            file: {'liite':file}
           }).progress(function (evt) {
             console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.file.name);
           }).success(function (data, status, headers, config) {
