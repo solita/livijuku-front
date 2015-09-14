@@ -219,7 +219,7 @@ public class TestBase {
             try {
                 // Nopeutetaan hieman, kun tässä odotetaan, ettei käynnnistä nappia enää ole.
                 // Implicit wait on oletuksena niin pitkä.
-                setImplicitTimeout(driver(),1);
+                setImplicitTimeout(driver(),2);
                 button("Käynnistä hakemuskausi");
             } catch (NoSuchElementException e) {
                 kaynnistaNappiNakyy = false;
