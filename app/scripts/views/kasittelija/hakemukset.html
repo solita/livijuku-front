@@ -70,7 +70,7 @@
                       </td>
                       <td>{{hakemus.muokkausaika | date:'dd.MM.yyyy HH:mm:ss'}}</td>
                       <td>{{hakemus.diaarinumero}}</td>
-                      <td>{{hakemus.kasittelijanimi}}</td>
+                      <td>{{hakemus.kasittelijanimi ? hakemus.kasittelijanimi : "Ei määritelty"}}</td>
                     </tr>
                     </tbody>
                   </table>
