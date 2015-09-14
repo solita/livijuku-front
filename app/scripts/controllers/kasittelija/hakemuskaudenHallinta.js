@@ -111,9 +111,8 @@ angular.module('jukufrontApp')
           }
           Upload.upload({
             url: 'api/hakemuskausi/' + vuosi + '/hakuohje',
-            file: tiedostot[0],
-            method: 'PUT',
-            fileFormDataName: 'hakuohje'
+            file: {'hakuohje':tiedostot[0]},
+            method: 'PUT'
           }).success(function (data, status, headers, config) {
             StatusService.ok(
               `Hakuohjeen lataus: ${config.file.name} vuodelle: ${vuosi}`,
