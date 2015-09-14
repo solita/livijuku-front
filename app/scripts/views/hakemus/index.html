@@ -58,7 +58,7 @@
       </juku-form-row>
       <juku-form-row ng-hide="hakemusKeskenerainen()">
         <h5>Käsittelijä</h5>
-        {{hakemus.kasittelijanimi}}
+        {{hakemus.kasittelijanimi ? hakemus.kasittelijanimi : "Ei määritelty"}}
       </juku-form-row>
 
       <!-- Hakija -->

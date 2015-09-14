@@ -68,6 +68,25 @@ angular.module('services.status', ['toastr'])
     });
   })
   .factory("StatusService", ['toastr', function (toastr) {
+    function errorHandler(defaultMessage) {
+      return function(response) {
+        var status = response.status;
+        var type = _.get(response, "data.type");
+        var title = c.coalesce(errorTitles[type], errorTitles[status], "Virhe");
+        var intro = c.coalesce(defaultMessage, errorMessages[type], errorMessages[status], "");
+
+        var message = resolveDetailErrorMessage(response.data);
+
+        toastr.error(intro + message, title, {closeButton: true, timeOut: 0, extendedTimeOut: 0});
+
+        if (response.config) {
+          console.log(title, response.config.method, response.config.url, response);
+        } else {
+          console.log(title, response);
+        }
+
+        return Promise.reject(response);
+    }}
     return {
       ok: function (toiminto, teksti) {
         toastr.success(teksti,'', {timeOut: 1000});
@@ -82,23 +101,7 @@ angular.module('services.status', ['toastr'])
       tyhjenna: function(){
         toastr.clear();
       },
-      errorHandler: function(response) {
-        var status = response.status;
-        var type = _.get(response, "data.type");
-        var title = c.coalesce(errorTitles[type], errorTitles[status], "Virhe");
-        var intro = c.coalesce(errorMessages[type], errorMessages[status], "");
-
-        var message = resolveDetailErrorMessage(response.data);
-
-        toastr.error(intro + message, title, {closeButton: true, timeOut: 0, extendedTimeOut: 0});
-
-        if (response.config) {
-          console.log(title, response.config.method, response.config.url, response);
-        } else {
-          console.log(title, response);
-        }
-
-        return Promise.reject(response);
-      }
+      errorHandler: errorHandler(null),
+      errorHandlerWithMessage: errorHandler
     };
   }]);

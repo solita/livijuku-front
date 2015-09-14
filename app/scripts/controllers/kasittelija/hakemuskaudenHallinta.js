@@ -111,20 +111,16 @@ angular.module('jukufrontApp')
           }
           Upload.upload({
             url: 'api/hakemuskausi/' + vuosi + '/hakuohje',
-            file: {'hakuohje':tiedostot[0]},
+            file: {hakuohje: tiedostot[0]},
             method: 'PUT'
-          }).success(function (data, status, headers, config) {
+          }).then(function (response) {
             StatusService.ok(
-              `Hakuohjeen lataus: ${config.file.name} vuodelle: ${vuosi}`,
-              `Hakuohjeen: ${config.file.name} lataus vuodelle: ${vuosi} onnistui.`
+              `Hakuohjeen lataus: ${response.config.file.hakuohje.name} vuodelle: ${vuosi}`,
+              `Hakuohjeen: ${response.config.file.hakuohje.name} lataus vuodelle: ${vuosi} onnistui.`
             );
             haeHakemuskaudet();
-          }).error(function (data, status, headers, config) {
-            StatusService.ok(
-              `Hakuohjeen lataus: ${config.file.name} vuodelle: ${vuosi}`,
-              `Hakuohjeen: ${config.file.name} lataus vuodelle: ${vuosi} epäonnistui: ${data.message}.`
-            );
-          });
+          }, StatusService.errorHandlerWithMessage(
+            `Hakuohjeen: ${tiedostot[0].name} lataus vuodelle: ${vuosi} epäonnistui. `));
         }
       };
       haeHakemuskaudet();
