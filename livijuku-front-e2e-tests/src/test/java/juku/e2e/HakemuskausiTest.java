@@ -41,9 +41,7 @@ public class HakemuskausiTest extends TestBase {
 
         // Assertoi tila keskeneräinen ja avaa hakemus
         // TODO Assertoi hakijana myös hakemuksen tila ja bread crumbs.
-        spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
-
-        tarkistaHakijanHakemuksenTila("Keskeneräinen", "hakemus-tila-keskenerainen");
+        hakijanEtusivunTilalaatikko(Hakemuslaji.AVUSTUS, "Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
         // Lisää allekirjoitusliite
         lisaaAllekirjoitusLiite();
@@ -53,7 +51,7 @@ public class HakemuskausiTest extends TestBase {
 
         // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
         linkInPosition("Palaa omiin hakemuksiin", 1).click();
-        spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
+        hakijanEtusivunTilalaatikko(Hakemuslaji.AVUSTUS, "Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
         // Lähetä hakemus
         lahetaHakemus();
@@ -64,9 +62,10 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Ota hakemus käsittelyyn
-        avaaHakemus(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla");
+        kasittelijanEtusivunTilalaatikko(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
+        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
 
-        tarkistaHakijanHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
+        tarkistaHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
 
         // Palauta hakemus täydennettäväksi
         button("Palauta täydennettäväksi").click();
@@ -81,7 +80,7 @@ public class HakemuskausiTest extends TestBase {
         // Avaa hakemus
         spanWithTextAndClass("Täydennettävänä", "hakemus-tila-taydennettavana").click();
 
-        tarkistaHakijanHakemuksenTila("Täydennettävänä", "hakemus-tila-taydennettavana");
+        tarkistaHakemuksenTila("Täydennettävänä", "hakemus-tila-taydennettavana");
 
         // TODO Lisää joku avustussumma jollekin kohteelle
 
@@ -95,9 +94,10 @@ public class HakemuskausiTest extends TestBase {
         login(User.KATRI);
 
         // Tarkasta hakemus
-        avaaHakemus(Hakemuslaji.AVUSTUS, "Täydennetty", "hakemus-tila-taydennetty");
+        kasittelijanEtusivunTilalaatikko(Hakemuslaji.AVUSTUS, "Täydennetty", "hakemus-tila-taydennetty").click();
+        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.AVUSTUS, "Täydennetty", "hakemus-tila-taydennetty").click();
 
-        tarkistaHakijanHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
+        tarkistaHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
 
         button("Merkitse tarkastetuksi").click();
         okOlenVarma().click();
@@ -118,7 +118,9 @@ public class HakemuskausiTest extends TestBase {
         linkInPosition("Päätöksentekoon", 1).click();
         spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
         findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
-        button("Tallenna").click();
+        button("Tallenna tiedot").click();
+        waitForAngularRequestsToFinish(driver());
+
         // Kirjaa sisään päättäjä
         login(User.PAIVI);
         spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu").click();
@@ -155,19 +157,53 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Ota maksatushakemus 1 käsittelyyn
-        avaaHakemus(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla");
+        kasittelijanEtusivunTilalaatikko(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
+        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
 
-        tarkistaHakijanHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
+        tarkistaHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
 
         // Palauta maksatushakemus 1 täydennettäväksi
+        button("Palauta täydennettäväksi").click();
+        findElementByCssSelector("#taydennysselite").sendKeys("Ole hyvä ja täydennä.");
+        okOlenVarma().click();
+        waitForAngularRequestsToFinish(driver());
+
+        tarkistaHakemuksenTila("Täydennettävänä", "hakemus-tila-taydennettavana");
+
         // Kirjaa sisään hakija
+        login(User.HARRI);
         // Assertoi tila täydennettävänä
+        tarkistaHakemuksenTila("Täydennettävänä", "hakemus-tila-taydennettavana");
+
         // Avaa maksatushakemus 1
+        spanWithTextAndClass("Täydennettävänä", "hakemus-tila-taydennettavana").click();
+
+        // Assertoi täydennyspyynnön selite
+        findElementsByXPath("//div[ %s and .//span[ %s ]]",
+                hasClass("alert-warning"),
+                containsText("Ole hyvä ja täydennä."));
+
         // Täydennä maksatushakemus 1
+        // TODO Syötä rahasumma
+        lahetaHakemus();
+
         // Assetoi hakijana tila Täydennetty.
+        spanWithTextAndClass("Täydennetty", "hakemus-tila-taydennetty");
+
         // Kirjaa sisään käsittelijä
+        login(User.KATRI);
+
         // Tarkasta maksatushakemus 1
+        kasittelijanEtusivunTilalaatikko(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
+        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
+
+        tarkistaHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
+
+        button("Merkitse tarkastetuksi").click();
+        okOlenVarma().click();
+
         // Assertoi käsittelijänä tila Tarkastettu
+
         // Kirjaa sisään hakija
         // Assertoi hakijana tila tarkastettu
         // Kirjaa sisään käsittelijä
@@ -255,7 +291,8 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Ota hakemus käsittelyyn
-        avaaHakemus(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla");
+        kasittelijanEtusivunTilalaatikko(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
+        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
 
         //Tarkista summat
         tarkistaHakemuksenSummakentat();
@@ -299,13 +336,13 @@ public class HakemuskausiTest extends TestBase {
         assertThat(h4s.get(4).getText(), is(equalTo("12 000,00 € (sis. alv)")));
     }
 
-    private void tarkistaHakijanHakemuksenTila(String teksti, String luokka) {
+    private void tarkistaHakemuksenTila(String teksti, String luokka) {
         List<WebElement> hakemuksenTilaIndikaattorit = findElementsByXPath(String.format("//span[%s and %s and %s]",
                 hasClass(luokka),
                 containsText(teksti),
                 isVisible()));
 
-        assertThat(String.format("Hakijan hakemussivulla hakemuksen tila (%s) pitäisi näkyä kerran.", teksti),
+        assertThat(String.format("Hakemussivulla hakemuksen tila (%s) pitäisi näkyä kerran.", teksti),
                 hakemuksenTilaIndikaattorit,
                 hasSize(equalTo(1)));
     }
@@ -327,16 +364,21 @@ public class HakemuskausiTest extends TestBase {
                 position);
     }
 
-    private void avaaHakemus(Hakemuslaji hakemuslaji, String tila, String statusClass) {
-        WebElement vireillaLaatikko =
-                findElementByXPath("//div[.//p[string()='" + hakemuslaji.getOtsikko() + "'] and contains(@class, 'col-md-3')]"
-                        + "/div/div[2]//span[%s and %s]", containsText("Vireillä"), hasClass("hakemus-tila-vireilla"));
-        vireillaLaatikko.click();
+    private WebElement hakijanEtusivunTilalaatikko(Hakemuslaji hakemuslaji, String tila, String statusClass) {
+        return findElementByXPath("//div[.//p[string()='" + hakemuslaji.getOtsikko() + "'] and contains(@class, 'col-md-3')]"
+                + "//span[%s and %s]", containsText(tila), hasClass(statusClass));
+    }
 
-        // Tässä oletetaan, että ainoa vireilläoleva hakemus on kyseisen hakijan.
-        WebElement helsinginSeudunVireilla =
-                spanWithTextAndClass(tila, statusClass);
-        helsinginSeudunVireilla.click();
+
+    private WebElement kasittelijanEtusivunTilalaatikko(Hakemuslaji hakemuslaji, String tila, String statusClass) {
+        return findElementByXPath("//div[.//p[string()='" + hakemuslaji.getOtsikko() + "'] and contains(@class, 'col-md-3')]"
+                + "/div/div[2]//span[%s and %s]", containsText(tila), hasClass(statusClass));
+    }
+
+    private WebElement kasittelijanKaikkiHakemuksetHSL(Hakemuslaji hakemuslaji, String tila, String statusClass) {
+        // TODO Assertoi, että kyseisen hakemuslajin välilehti on avoinna
+        // TODO Tässä oletetaan, että ainoa vireilläoleva hakemus on kyseisen hakijan (HSL).
+        return spanWithTextAndClass(tila, statusClass);
     }
 
     private void lahetaHakemus() {
