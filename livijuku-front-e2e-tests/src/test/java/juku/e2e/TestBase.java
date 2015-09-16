@@ -44,27 +44,63 @@ public class TestBase {
 
     public static final String TEST_RESTORE_POINT = "bf_test";
     private static final String SUITE_RESTORE_POINT = "bf_suite";
-    private RemoteWebDriver driver;
+    public static final RemoteWebDriver driver = createDriver();
     ByAngular ng;
     private PoolingHttpClientConnectionManager connectionManager;
     public static final int DEFAULT_IMPLICIT_WAIT = 10;
 
-    protected WebElement button(String text) {
-        waitForAngularRequestsToFinish(driver());
+    public enum Hakemuslaji {
+        AVUSTUS("Avustushakemus"),
+        MAKSATUS1("1. maksatushakemus"),
+        MAKSATUS2("2. maksatushakemus");
+
+        private final String otsikko;
+
+        Hakemuslaji(String otsikko) {
+            this.otsikko = otsikko;
+        }
+
+        public String getOtsikko() {
+            return otsikko;
+        }
+    }
+
+    public enum User {
+        HARRI("juku_hakija", "juku_hakija", "helsingin ka"),
+        KATRI("juku_kasittelija", "juku_kasittelija", "liikennevirasto"),
+        PAIVI("juku_paatoksentekija", "juku_paatoksentekija", "liikennevirasto");
+
+        private final String login;
+        private final String group;
+        private final String organization;
+
+        User(String login, String group, String organization) {
+            this.login = login;
+            this.group = group;
+            this.organization = organization;
+        }
+
+        public String getLogin() {
+            return login;
+        }
+
+        public String getGroup() {
+            return group;
+        }
+
+        public String getOrganization() {
+            return organization;
+        }
+    }
+
+    public static WebElement button(String text) {
+        waitForAngularRequestsToFinish(driver);
         return findElementByXPath("//button[%s and %s]",
                 containsText(text),
                 isVisible());
     }
 
-    public RemoteWebDriver driver() {
-        if (driver == null) {
-            driver = createDriver();
-            System.out.println(driver.getCapabilities());
-        }
-        return driver;
-    }
-
-    private RemoteWebDriver createDriver() {
+    private static RemoteWebDriver createDriver() {
         RemoteWebDriver drv;
         if (System.getProperty("chrome") != null) {
             drv = new ChromeDriver();
@@ -79,22 +115,22 @@ public class TestBase {
         return drv;
     }
 
-    private void setImplicitTimeout(RemoteWebDriver drv, int DEFAULT_IMPLICIT_WAIT) {
+    private static void setImplicitTimeout(RemoteWebDriver drv, int DEFAULT_IMPLICIT_WAIT) {
         drv.manage().timeouts().implicitlyWait(DEFAULT_IMPLICIT_WAIT, TimeUnit.SECONDS);
     }
 
-    String isVisible() {
-        waitForAngularRequestsToFinish(driver());
+    public static String isVisible() {
+        waitForAngularRequestsToFinish(driver);
         return "not(self::*[@disabled] or ancestor::*[@disabled]) and not(ancestor::*[contains(concat( ' ', @class, ' '), ' ng-hide ')])";
     }
 
     protected WebElement okOlenVarma() {
-        waitForAngularRequestsToFinish(driver());
+        waitForAngularRequestsToFinish(driver);
         return findElementByXPath("//button[%s]", containsText("Kyllä"));
     }
 
     protected WebElement spanWithTextAndClass(String tila, String statusClass) {
-        waitForAngularRequestsToFinish(driver());
+        waitForAngularRequestsToFinish(driver);
         return findElementByXPath("//span[%s and %s and %s]",
                 containsText(tila),
                 hasClass(statusClass),
@@ -103,7 +139,7 @@ public class TestBase {
 
     protected void postHakuohje(File fileToUpload) {
         WebElement fileInput = findElementByXPath("//input[@type='file']");
-        driver().executeScript("angular.element(arguments[0]).css('visibility', 'visible').css('width','').css('height','');", fileInput);
+        driver.executeScript("angular.element(arguments[0]).css('visibility', 'visible').css('width','').css('height','');", fileInput);
         String hakuohje = fileToUpload.getAbsolutePath();
         fileInput.sendKeys(hakuohje);
     }
@@ -142,35 +178,7 @@ public class TestBase {
             paiva01.click();
 
             findElementByCssSelector("#test-alkupvm-tallenna-" + i).click();
-            waitForAngularRequestsToFinish(driver());
-        }
-    }
-
-    enum User {
-        HARRI("juku_hakija", "juku_hakija", "helsingin ka"),
-        KATRI("juku_kasittelija", "juku_kasittelija", "liikennevirasto"),
-        PAIVI("juku_paatoksentekija", "juku_paatoksentekija", "liikennevirasto");
-
-        private final String login;
-        private final String group;
-        private final String organization;
-
-        User(String login, String group, String organization) {
-            this.login = login;
-            this.group = group;
-            this.organization = organization;
-        }
-
-        public String getLogin() {
-            return login;
-        }
-
-        public String getGroup() {
-            return group;
-        }
-
-        public String getOrganization() {
-            return organization;
+            waitForAngularRequestsToFinish(driver);
         }
     }
 
@@ -178,8 +186,8 @@ public class TestBase {
     public void setupSuite() {
         createRestorePoint(SUITE_RESTORE_POINT);
         login(User.KATRI);
-        ng = new ByAngular(driver());
-        waitForAngularRequestsToFinish(driver());
+        ng = new ByAngular(driver);
+        waitForAngularRequestsToFinish(driver);
 
         connectionManager = new PoolingHttpClientConnectionManager();
         // Increase max total connection to 200
@@ -207,7 +215,7 @@ public class TestBase {
         asetaAlkupaivat0101();
 
         button("Käynnistä hakemuskausi").click();
-        waitForAngularRequestsToFinish(driver());
+        waitForAngularRequestsToFinish(driver);
 
         boolean kaynnistaNappiNakyy = true;
         for (int i = 0; i < 25; i++) {
@@ -219,13 +227,13 @@ public class TestBase {
             try {
                 // Nopeutetaan hieman, kun tässä odotetaan, ettei käynnnistä nappia enää ole.
                 // Implicit wait on oletuksena niin pitkä.
-                setImplicitTimeout(driver(),2);
+                setImplicitTimeout(driver,2);
                 button("Käynnistä hakemuskausi");
             } catch (NoSuchElementException e) {
                 kaynnistaNappiNakyy = false;
                 break;
             } finally {
-                setImplicitTimeout(driver(),DEFAULT_IMPLICIT_WAIT);
+                setImplicitTimeout(driver,DEFAULT_IMPLICIT_WAIT);
             }
         }
         assertThat("Käynnistä hakemuskausi jäi näkyviin vaikka kausi avattiin.", !kaynnistaNappiNakyy);
@@ -236,7 +244,7 @@ public class TestBase {
 
     @AfterSuite
     public void tearDownSuite() {
-        driver().quit();
+        driver.quit();
         revertTo(SUITE_RESTORE_POINT);
     }
 
@@ -321,29 +329,29 @@ public class TestBase {
         return System.getProperty("oraclews.url", "http://juku:juku@127.0.0.1:50000/juku/");
     }
 
-    void login(User user) {
-        driver().get(baseUrl());
-        waitForAngularRequestsToFinish(driver());
+    public static void login(User user) {
+        driver.get(baseUrl());
+        waitForAngularRequestsToFinish(driver);
         setUser(user);
-        driver().get(baseUrl());
-        waitForAngularRequestsToFinish(driver());
+        driver.get(baseUrl());
+        waitForAngularRequestsToFinish(driver);
     }
 
-    String hasClass(String classname) {
+    public static String hasClass(String classname) {
         // http://stackoverflow.com/questions/8808921/selecting-a-css-class-with-xpath
         return "contains(concat(' ', normalize-space(@class), ' '), ' " + classname + " ')";
     }
 
-    String containsText(String text) {
+    public static String containsText(String text) {
         return "contains(normalize-space(string()),'" + text + "')";
     }
 
-    String baseUrl() {
+    public static String baseUrl() {
         return System.getProperty("baseurl", "http://localhost:9000");
     }
 
-    private void setUser(User user) {
-        driver().executeScript("document.cookie='oam-remote-user=" + user.getLogin() + "';"
+    public static void setUser(User user) {
+        driver.executeScript("document.cookie='oam-remote-user=" + user.getLogin() + "';"
                 + "document.cookie='oam-user-organization=" + user.getOrganization() + "';"
                 + "document.cookie='oam-groups=" + user.getGroup() + "';"
                 + "console.log('Cookies:', document.cookie);");
@@ -358,33 +366,34 @@ public class TestBase {
         }
     }
 
-    public WebElement findElementByCssSelector(String css) {
-        waitForAngularRequestsToFinish(driver());
-        return driver().findElementByCssSelector(css);
+    public static WebElement findElementByCssSelector(String css) {
+        waitForAngularRequestsToFinish(driver);
+        return driver.findElementByCssSelector(css);
     }
 
-    public WebElement findElementByLinkText(String text) {
-        waitForAngularRequestsToFinish(driver());
-        return driver().findElementByLinkText(text);
+    public static WebElement findElementByLinkText(String text) {
+        waitForAngularRequestsToFinish(driver);
+        return driver.findElementByLinkText(text);
     }
 
-    public WebElement findElementByXPath(String xpath) {
-        waitForAngularRequestsToFinish(driver());
-        return driver().findElementByXPath(xpath);
+    public static WebElement findElementByXPath(String xpath) {
+        waitForAngularRequestsToFinish(driver);
+        return driver.findElementByXPath(xpath);
     }
 
-    public List<WebElement> findElementsByXPath(String xpath, Object... n) {
-        waitForAngularRequestsToFinish(driver());
-        return driver().findElementsByXPath(String.format(xpath, n));
+    public static List<WebElement> findElementsByXPath(String xpath, Object... n) {
+        waitForAngularRequestsToFinish(driver);
+        return driver.findElementsByXPath(String.format(xpath, n));
     }
 
-    public WebElement findElementByXPath(String xpath, Object... n) {
-        waitForAngularRequestsToFinish(driver());
-        return driver().findElementByXPath(String.format(xpath, n));
+    public static WebElement findElementByXPath(String xpath, Object... n) {
+        waitForAngularRequestsToFinish(driver);
+        return driver.findElementByXPath(String.format(xpath, n));
     }
 
-    public String getScopeVariableValue(WebElement we, String variableName) {
-        AngularModelAccessor modelAccessor = new AngularModelAccessor(driver());
+    public static String getScopeVariableValue(WebElement we, String variableName) {
+        AngularModelAccessor modelAccessor = new AngularModelAccessor(driver);
         return modelAccessor.retrieveAsString(we, variableName);
     }
+
 }
