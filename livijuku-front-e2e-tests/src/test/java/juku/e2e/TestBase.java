@@ -11,9 +11,12 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -27,11 +30,13 @@ import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -47,7 +52,7 @@ public class TestBase {
     public static final RemoteWebDriver driver = createDriver();
     ByAngular ng;
     private PoolingHttpClientConnectionManager connectionManager;
-    public static final int DEFAULT_IMPLICIT_WAIT = 10;
+    private static final int DEFAULT_IMPLICIT_WAIT_MS = 10000;
 
     public enum Hakemuslaji {
         AVUSTUS("Avustushakemus"),
@@ -111,12 +116,12 @@ public class TestBase {
             drv = new FirefoxDriver(fp);
         }
         drv.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
-        setImplicitTimeout(drv, DEFAULT_IMPLICIT_WAIT);
+        setImplicitTimeout(drv, DEFAULT_IMPLICIT_WAIT_MS);
         return drv;
     }
 
-    private static void setImplicitTimeout(RemoteWebDriver drv, int DEFAULT_IMPLICIT_WAIT) {
-        drv.manage().timeouts().implicitlyWait(DEFAULT_IMPLICIT_WAIT, TimeUnit.SECONDS);
+    private static void setImplicitTimeout(RemoteWebDriver drv, int timeInMilliSeconds) {
+        drv.manage().timeouts().implicitlyWait(timeInMilliSeconds, TimeUnit.MILLISECONDS);
     }
 
     public static String isVisible() {
@@ -227,13 +232,13 @@ public class TestBase {
             try {
                 // Nopeutetaan hieman, kun tässä odotetaan, ettei käynnnistä nappia enää ole.
                 // Implicit wait on oletuksena niin pitkä.
-                setImplicitTimeout(driver,2);
+                setImplicitTimeout(driver, 2000);
                 button("Käynnistä hakemuskausi");
             } catch (NoSuchElementException e) {
                 kaynnistaNappiNakyy = false;
                 break;
             } finally {
-                setImplicitTimeout(driver,DEFAULT_IMPLICIT_WAIT);
+                setImplicitTimeout(driver, DEFAULT_IMPLICIT_WAIT_MS);
             }
         }
         assertThat("Käynnistä hakemuskausi jäi näkyviin vaikka kausi avattiin.", !kaynnistaNappiNakyy);
@@ -254,9 +259,40 @@ public class TestBase {
     }
 
     @AfterMethod
-    public void tear_down() {
+    public void tear_down(ITestResult result) {
+        if( ! result.isSuccess() ) {
+            String filenamePart = "FAILED-" + result.getMethod().getTestClass().getName() + "." + result.getMethod().getMethodName();
+            takeScreenshot(filenamePart);
+        }
         revertTo(TEST_RESTORE_POINT);
     }
+
+    public static void takeScreenshot(String fileNamePart) {
+
+        File v = driver.getScreenshotAs(OutputType.FILE);
+        File destFile = targetPath().resolve("screenshot-" + fileNamePart + "-" + timestamp() + ".png").toFile();
+        try {
+            FileUtils.copyFile(v, destFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(destFile.getAbsolutePath());
+    }
+
+
+    private static String timestamp() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss-SSSS");
+        return df.format(new Date());
+    }
+
+    private static Path targetPath() {
+        try {
+            return Paths.get(ClassLoader.getSystemResource("screenshots").toURI());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     void createRestorePoint(String restorepoint) {
         try {
