@@ -7,7 +7,7 @@ public class WorkAround {
     public enum Delay {
         SHORT(200),
         MEDIUM(1000),
-        LONG(5000);
+        LONG(15000);
 
         private static final int SCALE = 1;
         private final int delay;
