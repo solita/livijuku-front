@@ -1,7 +1,7 @@
 'use strict';
 var _ = require('lodash');
 
-function liitetarkistaminenController(LiiteService, $scope, StatusService, Upload) {
+function liitetarkistaminenController(LiiteService, $scope, StatusService) {
 
     $scope.haeLiitteet = function () {
         LiiteService.haeKaikki($scope.hakemusid)
@@ -25,7 +25,7 @@ function liitetarkistaminenController(LiiteService, $scope, StatusService, Uploa
      $scope.haeLiitteet();
 }
 
-liitetarkistaminenController.$inject = ['LiiteService','$scope', 'StatusService','Upload'];
+liitetarkistaminenController.$inject = ['LiiteService','$scope', 'StatusService'];
 
 module.exports = function () {
     return {

@@ -11,7 +11,7 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
 
 
   $scope.asetaEditTilaan = function (liitenumero) {
-    $scope.haeLiitteet();
+    $scope.haeLiitteetLaskeKoko();
     $scope.editoitavaLiite = liitenumero;
   };
 
@@ -20,7 +20,7 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
   };
 
   $scope.formatFileSize = function (size) {
-    var sizes = [' Bytes', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
+    var sizes = [' B', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
     for (var i = 1; i < sizes.length; i++) {
       if (size < Math.pow(1024, i)) return (Math.round((size / Math.pow(1024, i - 1)) * 100) / 100) + sizes[i - 1];
     }
@@ -31,7 +31,7 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
     return pdf.getLiitePdfUrl(hakemusid, liitenumero);
   };
 
-  $scope.haeLiitteet = function () {
+  $scope.haeLiitteetLaskeKoko = function () {
     LiiteService.haeKaikki($scope.hakemusid)
       .success(function (data) {
         $scope.liitteidenKoko = 0;
@@ -77,14 +77,14 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
 
   $scope.palaaTallentamattaLiite = function () {
     $scope.editoitavaLiite = -1;
-    $scope.haeLiitteet();
+    $scope.haeLiitteetLaskeKoko();
   };
 
   $scope.poistaLiite = function (liiteid) {
     LiiteService.poista($scope.hakemusid, liiteid)
       .success(function (data) {
         StatusService.ok('LiiteService.poista(' + $scope.hakemusid + ',' + liiteid + ')', 'Liite poistettiin onnistuneesti');
-        $scope.haeLiitteet();
+        $scope.haeLiitteetLaskeKoko();
       })
       .error(function (data) {
         StatusService.virhe('LiiteService.poista(' + $scope.hakemusid + ',' + liiteid + ')', data.message);
@@ -99,7 +99,7 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
           .success(function (data) {
             StatusService.ok('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + tiedostonimi + ')', 'Liitenimi päivitettiin onnistuneesti');
             $scope.editoitavaLiite = -1;
-            $scope.haeLiitteet();
+            $scope.haeLiitteetLaskeKoko();
           })
           .error(function (data) {
             StatusService.virhe('LiiteService.paivitaNimi(' + $scope.hakemusid + ',' + liiteid + ',' + tiedostonimi + ')', data.message);
@@ -111,14 +111,11 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
   };
 
   $scope.uploadFiles = function (tiedostot) {
-    console.log('tiedostot:',tiedostot);
     if (tiedostot && tiedostot.length > 0) {
-      console.log('MyFilesLength:', tiedostot.length);
       var tiedostojenKoko = _.sum(tiedostot, 'size');
-      console.log('TiedostojenKoko:', tiedostojenKoko);
       if (tiedostojenKoko <= $scope.liitteitaLadattavissa()) {
         for (var i = 0; i < tiedostot.length; i++) {
-          console.log('Watched:' + tiedostot[i].name + ' size:' + tiedostot[i].size + ' file:', tiedostot[i]);
+          console.log('Upload filename:' + tiedostot[i].name + ' size:' + tiedostot[i].size + ' file:', tiedostot[i]);
             Upload.upload({
               url: 'api/hakemus/' + $scope.hakemusid + '/liite',
               file: {'liite':tiedostot[i]},
@@ -128,7 +125,7 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
                 `Liitteen lataus: ${response.config.file.liite.name} onnistui.`,
                 `Liitteen lataus: ${response.config.file.liite.name} onnistui.`
               );
-              $scope.haeLiitteet();
+              $scope.haeLiitteetLaskeKoko();
             }, StatusService.errorHandlerWithMessage(
               `Liitteen: ${tiedostot[i].name} lataus epäonnistui. `));
           }
@@ -140,7 +137,7 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
   };
 
 
-  $scope.haeLiitteet();
+  $scope.haeLiitteetLaskeKoko();
 }
 
 liitelatausController.$inject = ['LiiteService', '$scope', 'StatusService', 'Upload'];
