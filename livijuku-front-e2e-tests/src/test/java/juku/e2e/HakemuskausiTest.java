@@ -369,7 +369,7 @@ public class HakemuskausiTest extends TestBase {
                         + ".css('height','30px');",
                 yhteinen.Hakemus.uniqueFileInput());
 
-        WorkAround.sleep(WorkAround.Delay.MEDIUM);
+        WorkAround.sleep(WorkAround.Delay.LONG);
 
         // DEBUG screenshot
         TestBase.takeScreenshot("DEBUG");
