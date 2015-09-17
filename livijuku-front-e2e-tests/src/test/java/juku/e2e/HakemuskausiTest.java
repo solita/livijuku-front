@@ -132,59 +132,59 @@ public class HakemuskausiTest extends TestBase {
         // Avaa maksatushakemus 1
         findElementByLinkText("1. maksatushakemus").click();
         // Lisää allekirjoitusliite
-//        lisaaAllekirjoitusLiite();
+        lisaaAllekirjoitusLiite();
         // Lähetä maksatushakemus 1
-//        lahetaHakemus();
+        lahetaHakemus();
         // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
-//        spanWithTextAndClass("Vireillä", "hakemus-tila-vireilla");
+        spanWithTextAndClass("Vireillä", "hakemus-tila-vireilla");
 
         // Kirjaa sisään käsittelijä
-//        login(User.KATRI);
+        login(User.KATRI);
         // Ota maksatushakemus 1 käsittelyyn
-//        kasittelijanEtusivunTilalaatikko(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
-//        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
-//
-//        tarkistaHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
+        kasittelijanEtusivunTilalaatikko(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
+        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
+
+        tarkistaHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
 
         // Palauta maksatushakemus 1 täydennettäväksi
-//        button("Palauta täydennettäväksi").click();
-//        findElementByCssSelector("#taydennysselite").sendKeys("Ole hyvä ja täydennä.");
-//        okOlenVarma().click();
-//        waitForAngularRequestsToFinish(driver);
-//
-//        tarkistaHakemuksenTila("Täydennettävänä", "hakemus-tila-taydennettavana");
+        button("Palauta täydennettäväksi").click();
+        findElementByCssSelector("#taydennysselite").sendKeys("Ole hyvä ja täydennä.");
+        okOlenVarma().click();
+        waitForAngularRequestsToFinish(driver);
+
+        tarkistaHakemuksenTila("Täydennettävänä", "hakemus-tila-taydennettavana");
 
         // Kirjaa sisään hakija
-//        login(User.HARRI);
+        login(User.HARRI);
         // Assertoi tila täydennettävänä
-//        tarkistaHakemuksenTila("Täydennettävänä", "hakemus-tila-taydennettavana");
+        tarkistaHakemuksenTila("Täydennettävänä", "hakemus-tila-taydennettavana");
 
         // Avaa maksatushakemus 1
-//        spanWithTextAndClass("Täydennettävänä", "hakemus-tila-taydennettavana").click();
+        spanWithTextAndClass("Täydennettävänä", "hakemus-tila-taydennettavana").click();
 
         // Assertoi täydennyspyynnön selite
-//        findElementsByXPath("//div[ %s and .//span[ %s ]]",
-//                hasClass("alert-warning"),
-//                containsText("Ole hyvä ja täydennä."));
+        findElementsByXPath("//div[ %s and .//span[ %s ]]",
+                hasClass("alert-warning"),
+                containsText("Ole hyvä ja täydennä."));
 
         // Täydennä maksatushakemus 1
         // TODO Syötä rahasumma
-//        lahetaHakemus();
+        lahetaHakemus();
 
         // Assetoi hakijana tila Täydennetty.
-//        spanWithTextAndClass("Täydennetty", "hakemus-tila-taydennetty");
+        spanWithTextAndClass("Täydennetty", "hakemus-tila-taydennetty");
 
         // Kirjaa sisään käsittelijä
-//        login(User.KATRI);
+        login(User.KATRI);
 
         // Tarkasta maksatushakemus 1
-//        kasittelijanEtusivunTilalaatikko(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
-//        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
-//
-//        tarkistaHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
-//
-//        button("Merkitse tarkastetuksi").click();
-//        okOlenVarma().click();
+        kasittelijanEtusivunTilalaatikko(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
+        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
+
+        tarkistaHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
+
+        button("Merkitse tarkastetuksi").click();
+        okOlenVarma().click();
 
         // Assertoi käsittelijänä tila Tarkastettu
 
@@ -196,7 +196,6 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään hakija
         // Assertoi tila päätetty
         // Tarkista päätös pdf
-
 
         // Avaa maksatushakemus 2
         // Lisää allekirjoitusliite
@@ -267,7 +266,6 @@ public class HakemuskausiTest extends TestBase {
         // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
         yhteinen.Hakemus.palaaOmiinHakemuksiin().click();
         spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
-
 
         // Lähetä hakemus
         lahetaHakemus();
@@ -362,16 +360,30 @@ public class HakemuskausiTest extends TestBase {
         waitForAngularRequestsToFinish(driver);
     }
 
-
     private void lisaaAllekirjoitusLiite() throws IOException {
-        WebElement fileInput = yhteinen.Hakemus.firstFileInput();
+        // Tuodaan ng-file-uploadin piilottama file-input näkyviin, jotta siihen voidaan
+        // Syöttää liitteen tiedostonimi
         driver.executeScript("angular.element(arguments[0])"
-                + ".css('visibility', 'visible')"
-                + ".css('width','')"
-                + ".css('height','');",
-                fileInput);
+                        + ".css('visibility', 'visible')"
+                        + ".css('width','100px')"
+                        + ".css('height','30px');",
+                yhteinen.Hakemus.uniqueFileInput());
+
+        WorkAround.sleep(WorkAround.Delay.MEDIUM);
+
+        // DEBUG screenshot
+        TestBase.takeScreenshot("DEBUG");
+
+        waitForAngularRequestsToFinish(driver);
+
         String allekirjoitusliite = getPathToTestFile("JUKU_allekirjoitusoikeus.doc").toFile().getAbsolutePath();
-        fileInput.sendKeys(allekirjoitusliite);
+
+        // Tiedostonimen syöttäminen file-inputtiin laukaisee
+        // upload toiminnon automaattisesti
+        yhteinen.Hakemus.uniqueFileInput().sendKeys(allekirjoitusliite);
+
+        // Odotetaan, että liite tallentuu
+        waitForAngularRequestsToFinish(driver);
     }
 
     @Test
@@ -419,7 +431,6 @@ public class HakemuskausiTest extends TestBase {
 
     }
 
-
     @Test
     public void liitteidenLisaaminenHakemukselleLIVIJUKU_325() throws IOException {
         login(User.HARRI);
@@ -430,7 +441,7 @@ public class HakemuskausiTest extends TestBase {
         postHakuohje(getPathToTestFile("test.pdf").toFile());
 
         // TODO Assertoi liitteen tiedot sivulta.
- }
+    }
 
     private boolean containsNormalized(String actual, String expected) {
         String a = actual.replaceAll("\\s+", " ");
