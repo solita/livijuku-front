@@ -433,11 +433,15 @@ public class TestBase {
     }
 
     // http://stackoverflow.com/questions/12035023/selenium-webdriver-cant-click-on-a-link-outside-the-page
-    public static void click(WebElement element) {
+    public static void scrollIntoView(WebElement element) {
         //driver.executeScript("arguments[0].scrollIntoView(true);", element);
         int elementPosition = element.getLocation().getY();
         String js = String.format("window.scroll(0, %s)", elementPosition - 55);
         driver.executeScript(js);
+    }
+
+    public static void click(WebElement element) {
+        scrollIntoView(element);
         WorkAround.sleep(WorkAround.Delay.MEDIUM);
         element.click();
     }
