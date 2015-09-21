@@ -254,6 +254,7 @@ angular
   .directive('jukuStatisticDropdown', require('components/statisticDropdown'))
   .directive('jukuPaatosTiedot', require('components/paatosTiedot'))
   .directive('jukuSeurantalomakePaikallisliikenne', require('components/seurantalomakePaikallisliikenne'))
+  .directive('jukuSeurantalomakePalveluliikenne', require('components/seurantalomakePalveluliikenne'))
   .directive('jukuSeurantalomakeSeutulippu', require('components/seurantalomakeSeutulippu'));
 
 require('./controllers/hakija/hakemukset');
