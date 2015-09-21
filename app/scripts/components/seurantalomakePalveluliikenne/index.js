@@ -86,6 +86,7 @@ seurantalomakePalveluliikenneController.$inject = ['$scope'];
 module.exports = function () {
   return {
     restrict: 'E',
+    scope:{},
     template: require('./index.html'),
     replace: true,
     controller: seurantalomakePalveluliikenneController

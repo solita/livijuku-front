@@ -255,7 +255,8 @@ angular
   .directive('jukuPaatosTiedot', require('components/paatosTiedot'))
   .directive('jukuSeurantalomakePaikallisliikenne', require('components/seurantalomakePaikallisliikenne'))
   .directive('jukuSeurantalomakePalveluliikenne', require('components/seurantalomakePalveluliikenne'))
-  .directive('jukuSeurantalomakeSeutulippu', require('components/seurantalomakeSeutulippu'));
+  .directive('jukuSeurantalomakeSeutulippu', require('components/seurantalomakeSeutulippu'))
+  .directive('jukuSeurantalomakeKaupunkiliput', require('components/seurantalomakeKaupunkiliput'));
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemukset');
