@@ -4,6 +4,18 @@ var {isHakija, isKasittelija} = require('utils/user');
 var {restrictRoute, defaultView} = require('utils/router');
 var hakemuksenTilat = require('utils/hakemuksenTilat');
 
+/**
+ * Tämä window muuttuja on ng-file-upload-direktiiviä varten.
+ * Tämä direktiivi käyttää elementin document offset laskennassa jqueryn offset toteutusta tai
+ * omaa versiota ja oma versio on virheellinen. Virheestä seuraa se että flash-file-select
+ * komponentti ei peitä haluttua select-painiketta.
+ *
+ * Katso:
+ * - shim-elem.js funktio: getOffset(obj)
+ * - http://api.jquery.com/offset/
+ */
+window.jQuery = require('jquery');
+
 require('angular-toastr');
 require('angular-resource');
 require('angular-loading-bar');
