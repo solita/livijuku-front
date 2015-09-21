@@ -74,7 +74,9 @@ function seurantalomakePaikallisliikenneController($scope) {
 
   $scope.laskeBruttohinta = function (i) {
     return $scope.paikallisliikennedata[i].lipputulo + $scope.paikallisliikennedata[i].nettohinta;
-  }
+  };
+
+  $scope.accordionOpen=false;
 
 
 }

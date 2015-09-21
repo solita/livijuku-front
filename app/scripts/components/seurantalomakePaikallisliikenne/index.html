@@ -1,99 +1,121 @@
 <div class="seurantalomakepaikallisliikenne">
-  <form name="seurantaPaikallisliikenne">
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover table-condensed">
-        <tr>
-          <th>
-            <div tooltip="Valitse linja-, sopimus- tai kokonaissuorite" tooltip-placement="top"
-                 tooltip-append-to-body="true">Suoritetyyppi<span class="glyphicon glyphicon-question-sign"></span>
+  <div class="panel panel-default">
+    <accordion close-others="false">
+      <accordion-group is-open="accordionOpen">
+        <accordion-heading>
+          <div class="panel-heading">
+            <div class="panel-title"><i class="pull-left glyphicon"
+                                        ng-class="{
+                  'glyphicon-triangle-bottom':accordionOpen,
+                  'glyphicon-triangle-right': !accordionOpen
+                  }"></i><span>Paikallisliikenne tai muu PSA:n mukainen liikenne</span></div>
+          </div>
+        </accordion-heading>
+        <div class="panel-body">
+          <form name="seurantaPaikallisliikenne">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover table-condensed">
+                <tr>
+                  <th>Suoritetyyppi</th>
+                  <th>Suoritteen nimi</th>
+                  <th>
+                    <div tooltip="Linja-autojen lukumäärä" tooltip-placement="top"
+                         tooltip-append-to-body="true">Linja-autot<span
+                      class="glyphicon glyphicon-question-sign"></span>
+                    </div>
+                  </th>
+                  <th>
+                    <div tooltip="Taksien lukumäärä" tooltip-placement="top"
+                         tooltip-append-to-body="true">Taksit<span class="glyphicon glyphicon-question-sign"></span>
+                    </div>
+                  </th>
+                  <th>
+                    <div tooltip="Paikallisliikenteen ajokilometrit"
+                         tooltip-append-to-body="true">Ajokilometrit<span
+                      class="glyphicon glyphicon-question-sign"></span>
+                    </div>
+                  </th>
+                  <th>
+                    <div tooltip="Paikallisliikenteen matkustajamäärä" tooltip-placement="top"
+                         tooltip-append-to-body="true">Matkustaja-määrä<span
+                      class="glyphicon glyphicon-question-sign"></span>
+                    </div>
+                  </th>
+                  <th>
+                    <div tooltip="Saadut matkalipputulot" tooltip-placement="top"
+                         tooltip-append-to-body="true">Lipputulo<span class="glyphicon glyphicon-question-sign"></span>
+                    </div>
+                  </th>
+                  <th>
+                    <div tooltip="Kaupungin liikennöitsijöille maksama hinta, sisältää valtionavun"
+                         tooltip-placement="top"
+                         tooltip-append-to-body="true">Nettohinta<span class="glyphicon glyphicon-question-sign"></span>
+                    </div>
+                  </th>
+                  <th>
+                    <div tooltip="Lipputulo + nettohinta" tooltip-placement="top"
+                         tooltip-append-to-body="true">Bruttohinta<span
+                      class="glyphicon glyphicon-question-sign"></span>
+                    </div>
+                  </th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <td colspan="2">
+                      <button class="btn btn-primary" ng-click="lisaaPaikallisliikenneRivi()">Lisää rivi</button>
+                      <span class="yhteensa">Yhteensä:</span>
+                    </td>
+                    <td>{{linjaautotSumma() | currency : '' : 0}}</td>
+                    <td>{{taksitSumma() | currency : '' : 0}}</td>
+                    <td>{{ajokmSumma() | currency : 'km'}}</td>
+                    <td>{{matkustajatSumma() | currency : '' : 0}}</td>
+                    <td>{{lipputuloSumma() | currency}}</td>
+                    <td>{{nettohintaSumma() | currency}}</td>
+                    <td>{{bruttohintaSumma() | currency}}</td>
+                    <td></td>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr ng-repeat="rivi in paikallisliikennedata track by $index">
+                    <td><select name="suoritetyyppi" ng-model="rivi.suoritetyyppi">
+                      <option value="0">Linjasuorite</option>
+                      <option value="1">Sopimussuorite</option>
+                      <option value="2">Kokonaissuorite</option>
+                    </select></td>
+                    <td><input name="nimi" type="text" class="form-control" noenter
+                               select-on-click
+                               ng-model="rivi.nimi"></td>
+                    <td><input name="linjaautot" type="text" class="form-control" numeric-integer-only=""
+                               select-on-click
+                               ng-model="rivi.linjaautot"></td>
+                    <td><input name="taksit" type="text" class="form-control" numeric-integer-only="" select-on-click
+                               ng-model="rivi.taksit"></td>
+                    <td><input name="ajokm" type="text" class="form-control" numeric-km-only="" ng-currency=""
+                               currency-symbol="km" noenter
+                               select-on-click
+                               ng-model="rivi.ajokm"></td>
+                    <td><input name="matkustajamaarat" type="text" class="form-control" numeric-integer-only="" noenter
+                               select-on-click
+                               ng-model="rivi.matkustajamaarat"></td>
+                    <td><input name="lipputulo" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+                               select-on-click
+                               ng-model="rivi.lipputulo"></td>
+                    <td><input name="nettohinta" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+                               select-on-click
+                               ng-model="rivi.nettohinta"></td>
+                    <td>{{laskeBruttohinta($index) | currency}}</td>
+                    <td><a href="" ng-click="poistaPaikallisliikenneRivi($index)"><span
+                      class="glyphicon glyphicon-remove-sign"></span></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </th>
-          <th>Suoritteen nimi</th>
-          <th>
-            <div tooltip="Linja-autojen lukumäärä" tooltip-placement="top"
-                 tooltip-append-to-body="true">Linja-autot<span class="glyphicon glyphicon-question-sign"></span></div>
-          </th>
-          <th>
-            <div tooltip="Taksien lukumäärä" tooltip-placement="top"
-                 tooltip-append-to-body="true">Taksit<span class="glyphicon glyphicon-question-sign"></span></div>
-          </th>
-          <th>
-            <div tooltip="Paikallisliikenteen ajokilometrit"
-                 tooltip-append-to-body="true">Ajokilometrit<span class="glyphicon glyphicon-question-sign"></span>
-            </div>
-          </th>
-          <th>
-            <div tooltip="Paikallisliikenteen matkustajamäärä" tooltip-placement="top"
-                 tooltip-append-to-body="true">Matkustaja-määrä<span class="glyphicon glyphicon-question-sign"></span>
-            </div>
-          </th>
-          <th>
-            <div tooltip="Saadut matkalipputulot" tooltip-placement="top"
-                 tooltip-append-to-body="true">Lipputulo<span class="glyphicon glyphicon-question-sign"></span>
-            </div>
-          </th>
-          <th>
-            <div tooltip="Kaupungin liikennöitsijöille maksama hinta, sisältää valtionavun"
-                 tooltip-placement="top"
-                 tooltip-append-to-body="true">Nettohinta<span class="glyphicon glyphicon-question-sign"></span></div>
-          </th>
-          <th>
-            <div tooltip="Lipputulo + nettohinta" tooltip-placement="top"
-                 tooltip-append-to-body="true">Bruttohinta<span class="glyphicon glyphicon-question-sign"></span></div>
-          </th>
-          <th></th>
-        </tr>
-        </thead>
-        <tfoot>
-          <tr>
-            <td colspan="2">
-              <button class="btn btn-primary" ng-click="lisaaPaikallisliikenneRivi()">Lisää rivi</button>
-              <span class="yhteensa">Yhteensä:</span>
-            </td>
-            <td>{{linjaautotSumma() | currency : '' : 0}}</td>
-            <td>{{taksitSumma() | currency : '' : 0}}</td>
-            <td>{{ajokmSumma() | currency : 'km'}}</td>
-            <td>{{matkustajatSumma() | currency : '' : 0}}</td>
-            <td>{{lipputuloSumma() | currency}}</td>
-            <td>{{nettohintaSumma() | currency}}</td>
-            <td>{{bruttohintaSumma() | currency}}</td>
-            <td></td>
-          </tr>
-        </tfoot>
-        <tbody>
-          <tr ng-repeat="rivi in paikallisliikennedata track by $index">
-            <td><select name="suoritetyyppi" ng-model="rivi.suoritetyyppi">
-              <option value="0">Linjasuorite</option>
-              <option value="1">Sopimussuorite</option>
-              <option value="2">Kokonaissuorite</option>
-            </select></td>
-            <td><input name="nimi" type="text" class="form-control" noenter
-                       select-on-click
-                       ng-model="rivi.nimi"></td>
-            <td><input name="linjaautot" type="text" class="form-control" numeric-integer-only="" select-on-click
-                       ng-model="rivi.linjaautot"></td>
-            <td><input name="taksit" type="text" class="form-control" numeric-integer-only="" select-on-click
-                       ng-model="rivi.taksit"></td>
-            <td><input name="ajokm" type="text" class="form-control" numeric-km-only="" ng-currency=""
-                       currency-symbol="km" noenter
-                       select-on-click
-                       ng-model="rivi.ajokm"></td>
-            <td><input name="matkustajamaarat" type="text" class="form-control" numeric-integer-only="" noenter
-                       select-on-click
-                       ng-model="rivi.matkustajamaarat"></td>
-            <td><input name="lipputulo" type="text" class="form-control" ng-currency="" numeric-only="" noenter
-                       select-on-click
-                       ng-model="rivi.lipputulo"></td>
-            <td><input name="nettohinta" type="text" class="form-control" ng-currency="" numeric-only="" noenter
-                       select-on-click
-                       ng-model="rivi.nettohinta"></td>
-            <td>{{laskeBruttohinta($index) | currency}}</td>
-            <td><a href="" ng-click="poistaPaikallisliikenneRivi($index)"><span
-              class="glyphicon glyphicon-remove-sign"></span></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </form>
+          </form>
+        </div>
+      </accordion-group>
+    </accordion>
+  </div>
 </div>
