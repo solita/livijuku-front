@@ -432,6 +432,7 @@ public class TestBase {
         return modelAccessor.retrieveAsString(we, variableName);
     }
 
+    // http://stackoverflow.com/questions/12035023/selenium-webdriver-cant-click-on-a-link-outside-the-page
     public static void click(WebElement element) {
         //driver.executeScript("arguments[0].scrollIntoView(true);", element);
         int elementPosition = element.getLocation().getY();

@@ -13,6 +13,8 @@ var hakemuksenTilat = require('utils/hakemuksenTilat');
  * Katso:
  * - shim-elem.js funktio: getOffset(obj)
  * - http://api.jquery.com/offset/
+ * - http://stackoverflow.com/questions/5598743/finding-elements-position-relative-to-the-document
+ * - http://api.jquery.com/offset/
  */
 window.jQuery = require('jquery');
 
