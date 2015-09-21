@@ -168,7 +168,7 @@ gulp.task('server', function() {
 
   var proxy = httpProxy.createProxyServer({
     changeOrigin: true,
-    target: 'http://192.168.50.1:8082'
+    target: 'http://localhost:8082'
   });
 
   proxy.on('error', handleError);
