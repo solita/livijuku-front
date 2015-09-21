@@ -353,7 +353,7 @@ public class HakemuskausiTest extends TestBase {
     private void lahetaHakemus() {
         checkbox("Olen liittänyt hakemukseen tarvittavat").click();
         waitForAngularRequestsToFinish(driver);
-        button("Tallenna ja lähetä hakemus").click();
+        click(button("Tallenna ja lähetä hakemus"));
         waitForAngularRequestsToFinish(driver);
 
         okOlenVarma().click();
@@ -361,26 +361,29 @@ public class HakemuskausiTest extends TestBase {
     }
 
     private void lisaaAllekirjoitusLiite() throws IOException {
+        waitForAngularRequestsToFinish(driver);
+
+        WebElement fileInput = yhteinen.Hakemus.uniqueFileInput();
+
         // Tuodaan ng-file-uploadin piilottama file-input näkyviin, jotta siihen voidaan
         // Syöttää liitteen tiedostonimi
         driver.executeScript("angular.element(arguments[0])"
-                        + ".css('visibility', 'visible')"
-                        + ".css('width','100px')"
-                        + ".css('height','30px');",
-                yhteinen.Hakemus.uniqueFileInput());
+                + ".css('visibility', 'visible')"
+                + ".css('z-index', '1000001')"
+                + ".css('width','100px')"
+                + ".css('height','30px');", fileInput);
 
-        WorkAround.sleep(WorkAround.Delay.LONG);
+        String allekirjoitusliite = getPathToTestFile("JUKU_allekirjoitusoikeus.doc").toFile().getAbsolutePath();
+
+        scrollIntoView(fileInput);
 
         // DEBUG screenshot
         TestBase.takeScreenshot("DEBUG");
 
-        waitForAngularRequestsToFinish(driver);
-
-        String allekirjoitusliite = getPathToTestFile("JUKU_allekirjoitusoikeus.doc").toFile().getAbsolutePath();
-
+        WorkAround.sleep(WorkAround.Delay.SHORT);
         // Tiedostonimen syöttäminen file-inputtiin laukaisee
         // upload toiminnon automaattisesti
-        yhteinen.Hakemus.uniqueFileInput().sendKeys(allekirjoitusliite);
+        fileInput.sendKeys(allekirjoitusliite);
 
         // Odotetaan, että liite tallentuu
         waitForAngularRequestsToFinish(driver);
