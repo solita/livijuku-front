@@ -183,7 +183,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.haeAvustushakemusPaatosPdf = function () {
-        return pdf.getPaatosPdfUrl($scope.hakemusid);
+        return pdf.getPaatosPdfUrl(haeHakemus('AH0', $scope.hakemus).id);
       };
 
       $scope.haeMaksatushakemus1PaatosPdf = function () {
@@ -312,7 +312,7 @@ angular.module('jukufrontApp')
         return $scope.hakemusKeskenerainen() &&
                $scope.sallittu('modify-oma-hakemus') &&
                $scope.isOmaHakemus($scope.user);
-      }
+      };
 
       $scope.tallentaminenDisabledTooltip = function() {
         if (!$scope.sallittu('modify-oma-hakemus')) {
@@ -324,7 +324,7 @@ angular.module('jukufrontApp')
         } else {
           return ""
         }
-      }
+      };
 
       $scope.hakemusLahettaminenEnabled = function() {
         return $scope.hakemusKeskenerainen() &&
@@ -333,7 +333,7 @@ angular.module('jukufrontApp')
                $scope.edellinenHakemusPaatetty() &&
                $scope.sallittu('allekirjoita-oma-hakemus') &&
                $scope.isOmaHakemus($scope.user);
-      }
+      };
 
       $scope.lahetysDisabledTooltip = function() {
         if (!$scope.hakemusKeskenerainen()) {
@@ -349,7 +349,7 @@ angular.module('jukufrontApp')
         } else {
           return ""
         }
-      }
+      };
 
       $scope.tallennaHakemus = function (lisa_toiminto) {
         StatusService.tyhjenna();
