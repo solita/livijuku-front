@@ -34,7 +34,7 @@ public class HakemuskausiTest extends TestBase {
         yhteinen.Hakemus.tallennaHakemus().click();
 
         // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
-        yhteinen.Hakemus.palaaOmiinHakemuksiin().click();
+        click(yhteinen.Hakemus.palaaOmiinHakemuksiin());
         hakija.Hakemukset.hakemuksenTila(Hakemuslaji.AVUSTUS, "Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
         // Lähetä hakemus
@@ -264,7 +264,7 @@ public class HakemuskausiTest extends TestBase {
         yhteinen.Hakemus.tallennaHakemus().click();
 
         // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
-        yhteinen.Hakemus.palaaOmiinHakemuksiin().click();
+        click(yhteinen.Hakemus.palaaOmiinHakemuksiin());
         spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
         // Lähetä hakemus

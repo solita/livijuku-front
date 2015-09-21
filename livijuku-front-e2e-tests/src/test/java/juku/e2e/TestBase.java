@@ -335,7 +335,7 @@ public class TestBase {
                 .build();
 
         // PDF viewer pois URL:sta
-        String uusiUrl = url.substring(0, 22) + url.substring(53);
+        String uusiUrl = url.replace("pdf/web/viewer.html?file=../../", "");
         HttpGet httpGet = new HttpGet(uusiUrl);
         httpGet.addHeader("oam-remote-user", user.getLogin());
         httpGet.addHeader("oam-groups", user.getGroup());
@@ -432,4 +432,12 @@ public class TestBase {
         return modelAccessor.retrieveAsString(we, variableName);
     }
 
+    public static void click(WebElement element) {
+        //driver.executeScript("arguments[0].scrollIntoView(true);", element);
+        int elementPosition = element.getLocation().getY();
+        String js = String.format("window.scroll(0, %s)", elementPosition - 55);
+        driver.executeScript(js);
+        WorkAround.sleep(WorkAround.Delay.MEDIUM);
+        element.click();
+    }
 }
