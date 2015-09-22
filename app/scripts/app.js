@@ -113,7 +113,7 @@ angular
       .state('app.yhteinen.hakemukset', root('/hakemukset'))
       .state('app.yhteinen.hakemukset.list', {
         url: '/:tyyppi',
-        template: require('views/kasittelija/hakemukset.html'),
+        template: require('views/yhteinen/hakemukset.html'),
         controller: 'KasittelijaHakemuksetCtrl',
         controllerAs: 'hakemukset'
       })
@@ -164,12 +164,6 @@ angular
        */
 
       .state('app.kasittelija', root('/k'))
-      .state('app.kasittelija.hakemukset', root('/hakemukset/:tyyppi'))
-      .state('app.kasittelija.hakemukset.list', {
-        url: '',
-        template: require('views/kasittelija/hakemukset.html'),
-        controller: 'KasittelijaHakemuksetCtrl'
-      })
       .state('app.kasittelija.hakemuskaudenhallinta', restrictRoute(isKasittelija, {
         url: '/hakemuskaudenhallinta',
         template: require('views/kasittelija/hakemuskaudenHallinta.html'),
