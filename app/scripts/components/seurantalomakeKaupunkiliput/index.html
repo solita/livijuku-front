@@ -1,4 +1,4 @@
-<div class="seurantalomakeseutulippu">
+<div class="seurantalomakekaupunkiliput">
   <div class="panel panel-default">
     <accordion close-others="false">
       <accordion-group is-open="accordionOpen">
@@ -8,7 +8,7 @@
                                         ng-class="{
                   'glyphicon-triangle-bottom':accordionOpen,
                   'glyphicon-triangle-right': !accordionOpen
-                  }"></i><span>Seutulippu</span></div>
+                  }"></i><span>Kaupunkiliput</span></div>
           </div>
         </accordion-heading>
         <div class="panel-body">
@@ -16,7 +16,7 @@
             <div class="table-responsive">
               <table class="table table-bordered table-hover table-condensed">
                 <tr>
-                  <th>Seutulippualue</th>
+                  <th>Suoritetyyppi</th>
                   <th>Myynti (kpl)</th>
                   <th>Matkat (kpl)</th>
                   <th>Asiakashinta</th>
@@ -29,7 +29,7 @@
                 <tfoot>
                   <tr>
                     <td>
-                      <button class="btn btn-primary" ng-click="lisaaSeutulippuRivi()">Lisää rivi</button>
+                      <button class="btn btn-primary" ng-click="lisaaKaupunkilippuRivi()">Lisää rivi</button>
                       <span class="yhteensa">Yhteensä:</span>
                     </td>
                     <td>{{myyntiSumma() | currency : '' : 0}}</td>
@@ -42,10 +42,15 @@
                   </tr>
                 </tfoot>
                 <tbody>
-                  <tr ng-repeat="rivi in seutulippudata track by $index">
-                    <td><input name="seutulippualue" type="text" class="form-control" noenter
-                               select-on-click
-                               ng-model="rivi.seutulippualue"></td>
+                  <tr ng-repeat="rivi in kaupunkilippudata track by $index">
+                    <td><select name="suoritetyyppi" ng-model="rivi.suoritetyyppi">
+                      <option value="0">30 päivän kausikortti</option>
+                      <option value="1">Vuosilippu</option>
+                      <option value="2">Sarjalippu (max. 3kk)</option>
+                      <option value="3">Kaupunkilippu</option>
+                      <option value="4">Nuorisolippu</option>
+                      <option value="5">Muut (kunnan tukemat)</option>
+                    </select></td>
                     <td><input name="myynti" type="text" class="form-control" numeric-integer-only="" select-on-click
                                ng-model="rivi.myynti"></td>
                     <td><input name="matkat" type="text" class="form-control" numeric-integer-only="" select-on-click
@@ -66,7 +71,7 @@
                     <td><input name="rahoitus" type="text" class="form-control" ng-currency="" numeric-only="" noenter
                                select-on-click
                                ng-model="rivi.rahoitus"></td>
-                    <td><a href="" ng-click="poistaSeutulippuRivi($index)"><span
+                    <td><a href="" ng-click="poistaKaupunkilippuRivi($index)"><span
                       class="glyphicon glyphicon-remove-sign"></span></a>
                     </td>
                   </tr>
