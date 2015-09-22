@@ -1,4 +1,4 @@
-package kasittelija;
+package hakija;
 
 import static juku.e2e.TestBase.Hakemuslaji;
 import static juku.e2e.TestBase.Hakemustila;
@@ -9,11 +9,13 @@ import static juku.e2e.TestBase.hasClass;
 import org.openqa.selenium.WebElement;
 
 /**
- * Created by petrisi on 22.9.15.
+ * Created by petrisi on 16.9.15.
  */
-public class Hakemuskaudet {
-    public static WebElement tilaindikaattori(Hakemuslaji hakemuslaji, Hakemustila tila) {
+public class OmatHakemukset {
+
+    public static WebElement hakemuksenTila(Hakemuslaji hakemuslaji, Hakemustila tila) {
         return findElementByXPath("//div[.//p[string()='" + hakemuslaji.getOtsikko() + "'] and contains(@class, 'col-md-3')]"
-                + "/div/div[2]//span[%s and %s]", containsText(tila.getName()), hasClass(tila.getCssClass()));
+                + "//span[%s and %s]", containsText(tila.getName()), hasClass(tila.getCssClass()));
     }
+
 }
