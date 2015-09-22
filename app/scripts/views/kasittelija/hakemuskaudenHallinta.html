@@ -13,18 +13,7 @@
         </p>
 
         <p>
-          <button class="btn btn-primary"
-                  ng-show="sallittu('modify-hakemuskausi')"
-                  ngf-select ngf-change="upload($files, hakemuskausi)" accept="application/pdf" ngf-pattern=".pdf"
-                  data-toggle="tooltip"
-                  data-tooltip-trigger="mouseenter"
-                  data-tooltip-placement="bottom"
-                  data-tooltip="Voimassaoleva hakuohje(PDF) joukkoliikenteen valtionavustuksista">
-            <span>
-              {{ hakuohjeLadattu(hakemuskausi) ? 'Korvaa ladattu hakuohje':' Lataa hakuohje' }}
-            </span>
-          </button>
-
+          <juku-upload-hakuohje-button></juku-upload-hakuohje-button>
         </p>
         <p>
           <button
@@ -65,7 +54,9 @@
             Hakuohje
           </a>
         </p>
-
+        <p>
+          <juku-upload-hakuohje-button></juku-upload-hakuohje-button>
+        </p>
         <p>
           <button
             class="btn btn-primary btn-lg"

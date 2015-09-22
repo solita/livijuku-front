@@ -3,6 +3,7 @@ var angular = require('angular');
 var {isHakija, isKasittelija} = require('utils/user');
 var {restrictRoute, defaultView} = require('utils/router');
 var hakemuksenTilat = require('utils/hakemuksenTilat');
+var directive = require('utils/directive');
 
 /**
  * Tämä window muuttuja on ng-file-upload-direktiiviä varten.
@@ -256,7 +257,8 @@ angular
   .directive('jukuSeurantalomakePaikallisliikenne', require('components/seurantalomakePaikallisliikenne'))
   .directive('jukuSeurantalomakePalveluliikenne', require('components/seurantalomakePalveluliikenne'))
   .directive('jukuSeurantalomakeSeutulippu', require('components/seurantalomakeSeutulippu'))
-  .directive('jukuSeurantalomakeKaupunkiliput', require('components/seurantalomakeKaupunkiliput'));
+  .directive('jukuSeurantalomakeKaupunkiliput', require('components/seurantalomakeKaupunkiliput'))
+  .directive('jukuUploadHakuohjeButton', directive.template(require('views/kasittelija/hakuohje-upload-button.html')));
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemukset');
