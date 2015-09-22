@@ -444,6 +444,8 @@ public class TestBase {
         driver.executeScript(js);
     }
 
+    // Chrome selaimessa Windowsissa nappulat jäävät joskus jonkin toisen elementin alle.
+    // Siksi tässä scrollataan ensin.
     public static void click(WebElement element) {
         scrollIntoView(element);
         WorkAround.sleep(WorkAround.Delay.MEDIUM);

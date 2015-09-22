@@ -46,7 +46,7 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Ota hakemus käsittelyyn
-        kasittelijanEtusivunTilalaatikko(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
+        kasittelija.Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
         kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
 
         tarkistaHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
@@ -66,7 +66,8 @@ public class HakemuskausiTest extends TestBase {
 
         tarkistaHakemuksenTila("Täydennettävänä", "hakemus-tila-taydennettavana");
 
-        // TODO Lisää joku avustussumma jollekin kohteelle
+        // Lisätään avustussummat
+        syotaRahasummat(yhteinen.Hakemus.rahakentat());
 
         // Täydennä hakemus
         lahetaHakemus();
@@ -78,7 +79,7 @@ public class HakemuskausiTest extends TestBase {
         login(User.KATRI);
 
         // Tarkasta hakemus
-        kasittelijanEtusivunTilalaatikko(Hakemuslaji.AVUSTUS, "Täydennetty", "hakemus-tila-taydennetty").click();
+        kasittelija.Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, "Täydennetty", "hakemus-tila-taydennetty").click();
         kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.AVUSTUS, "Täydennetty", "hakemus-tila-taydennetty").click();
 
         tarkistaHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
@@ -123,9 +124,8 @@ public class HakemuskausiTest extends TestBase {
         String paatosHref = findElementByLinkText("Avaa päätös (PDF)").getAttribute("href");
         String actual = httpGetPdfText(paatosHref, User.HARRI);
 
-        String expectedText = "Hakija: Helsingin seudun liikenne\n"
-                + "Hakija hakee vuonna 2016 suurten kaupunkiseutujen joukkoliikenteen \n"
-                + "valtionavustusta 0 euroa.";
+        String expectedText = " suurten kaupunkiseutujen joukkoliikenteen \n"
+                + "valtionavustusta 13 900 euroa.";
         assertThat(String.format("Päätös PDF sisältää tekstin %s", expectedText),
                 containsNormalized(actual, expectedText));
 
@@ -141,7 +141,7 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Ota maksatushakemus 1 käsittelyyn
-        kasittelijanEtusivunTilalaatikko(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
+        kasittelija.Hakemuskaudet.tilaindikaattori(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
         kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
 
         tarkistaHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
@@ -178,7 +178,7 @@ public class HakemuskausiTest extends TestBase {
         login(User.KATRI);
 
         // Tarkasta maksatushakemus 1
-        kasittelijanEtusivunTilalaatikko(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
+        kasittelija.Hakemuskaudet.tilaindikaattori(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
         kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
 
         tarkistaHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
@@ -187,6 +187,7 @@ public class HakemuskausiTest extends TestBase {
         okOlenVarma().click();
 
         // Assertoi käsittelijänä tila Tarkastettu
+        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.MAKSATUS1, "Tarkastettu", "hakemus-tila-tarkastettu");
 
         // Kirjaa sisään hakija
         // Assertoi hakijana tila tarkastettu
@@ -237,7 +238,7 @@ public class HakemuskausiTest extends TestBase {
 
         //Syota jokaiseen kenttaan rahasumma. Rahasumma tulee syottaa pilkun kanssa kokonaisuudessaan,
         //jotta input kentassa oleva currency komponentti pystyy ottamaan arvon kasittelyyn ja arvovalidoinit toimivat
-        List<WebElement> rahakentat = findElementsByXPath("//input[@type='text' and %s]", isVisible());
+        List<WebElement> rahakentat = yhteinen.Hakemus.rahakentat();
 
         //Tarkistetaan, että tyhjästä kentästä tulee virheilmoitus
         rahakentat.get(0).clear();
@@ -273,7 +274,7 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Ota hakemus käsittelyyn
-        kasittelijanEtusivunTilalaatikko(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
+        kasittelija.Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
         kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
 
         //Tarkista summat
@@ -337,11 +338,6 @@ public class HakemuskausiTest extends TestBase {
         assertThat(String.format("Hakijan hakemussivulla input kentän luokka (%s) pitäisi näkyä kerran.", luokka),
                 inputkentat,
                 hasSize(equalTo(1)));
-    }
-
-    private WebElement kasittelijanEtusivunTilalaatikko(Hakemuslaji hakemuslaji, String tila, String statusClass) {
-        return findElementByXPath("//div[.//p[string()='" + hakemuslaji.getOtsikko() + "'] and contains(@class, 'col-md-3')]"
-                + "/div/div[2]//span[%s and %s]", containsText(tila), hasClass(statusClass));
     }
 
     private WebElement kasittelijanKaikkiHakemuksetHSL(Hakemuslaji hakemuslaji, String tila, String statusClass) {

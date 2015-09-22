@@ -1,5 +1,9 @@
 package yhteinen;
 
+import static juku.e2e.TestBase.findElementsByXPath;
+import static juku.e2e.TestBase.isVisible;
+import static util.ViewBase.linkInPosition;
+
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -7,12 +11,11 @@ import org.openqa.selenium.WebElement;
 import com.thoughtworks.selenium.SeleneseTestNgHelper;
 
 import juku.e2e.TestBase;
-import util.ViewBase;
 
 /**
  * Created by petrisi on 16.9.15.
  */
-public class Hakemus extends ViewBase {
+public class Hakemus {
     public static WebElement uniqueFileInput() {
         List<WebElement> fileInputs = TestBase.driver.findElementsByXPath("//input[@type='file']");
         if (fileInputs.size()>1) {
@@ -36,4 +39,7 @@ public class Hakemus extends ViewBase {
         return linkInPosition("Suunnittelu ja päätöksenteko", 1);
     }
 
+    public static List<WebElement> rahakentat() {
+        return findElementsByXPath("//input[@type='text' and %s]", isVisible());
+    }
 }
