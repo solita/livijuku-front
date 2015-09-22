@@ -1,5 +1,7 @@
 package juku.e2e;
 
+import org.openqa.selenium.WebElement;
+
 /**
  * Created by petrisi on 17.9.15.
  */
@@ -27,6 +29,22 @@ public class WorkAround {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // http://stackoverflow.com/questions/12035023/selenium-webdriver-cant-click-on-a-link-outside-the-page
+    public static void scrollIntoView(WebElement element) {
+        //driver.executeScript("arguments[0].scrollIntoView(true);", element);
+        int elementPosition = element.getLocation().getY();
+        String js = String.format("window.scroll(0, %s)", elementPosition - 55);
+        TestBase.driver.executeScript(js);
+    }
+
+    // Chrome selaimessa Windowsissa nappulat jäävät joskus jonkin toisen elementin alle.
+    // Siksi tässä scrollataan ensin.
+    public static void click(WebElement element) {
+        scrollIntoView(element);
+        //WorkAround.sleep(WorkAround.Delay.SHORT);
+        element.click();
     }
 
 }
