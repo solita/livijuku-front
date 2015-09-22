@@ -1,6 +1,8 @@
 package juku.e2e;
 
 import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
+import static juku.e2e.WorkAround.click;
+import static juku.e2e.WorkAround.scrollIntoView;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
