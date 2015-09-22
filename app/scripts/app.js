@@ -257,9 +257,8 @@ angular
   .directive('jukuSeurantalomakePaikallisliikenne', require('components/seurantalomakePaikallisliikenne'))
   .directive('jukuSeurantalomakePalveluliikenne', require('components/seurantalomakePalveluliikenne'))
   .directive('jukuSeurantalomakeSeutulippu', require('components/seurantalomakeSeutulippu'))
+  .directive('jukuSeurantalomakeKaupunkiliput', require('components/seurantalomakeKaupunkiliput'))
   .directive('jukuUploadHakuohjeButton', directive.template(require('views/kasittelija/hakuohje-upload-button.html')));
-  .directive('jukuSeurantalomakeSeutulippu', require('components/seurantalomakeSeutulippu'))
-  .directive('jukuSeurantalomakeKaupunkiliput', require('components/seurantalomakeKaupunkiliput'));
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemukset');
