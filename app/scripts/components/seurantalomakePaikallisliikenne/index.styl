@@ -1,10 +1,11 @@
 .seurantalomakepaikallisliikenne
   .table
-    border: 1px solid #ddd
+    border: none
     th:first-child
       width: 17%
     th:last-child
       width: 4%
+      border: none
     th
       width: 10%
       font-weight: bold
@@ -12,6 +13,11 @@
       vertical-align: middle
     tfoot
       font-weight: bold
+      tr:last-child
+        td:first-child
+          border: none
+        td:last-child
+          border: none
    .yhteensa
       float: right
       margin-top:7px
