@@ -1,17 +1,21 @@
 package hakija;
 
-import org.openqa.selenium.WebElement;
+import static juku.e2e.TestBase.Hakemuslaji;
+import static juku.e2e.TestBase.Hakemustila;
+import static juku.e2e.TestBase.containsText;
+import static juku.e2e.TestBase.findElementByXPath;
+import static juku.e2e.TestBase.hasClass;
 
-import juku.e2e.TestBase;
+import org.openqa.selenium.WebElement;
 
 /**
  * Created by petrisi on 16.9.15.
  */
 public class OmatHakemukset {
 
-    public static WebElement hakemuksenTila(TestBase.Hakemuslaji hakemuslaji, String tila, String statusClass) {
-        return TestBase.findElementByXPath("//div[.//p[string()='" + hakemuslaji.getOtsikko() + "'] and contains(@class, 'col-md-3')]"
-                + "//span[%s and %s]", TestBase.containsText(tila), TestBase.hasClass(statusClass));
+    public static WebElement hakemuksenTila(Hakemuslaji hakemuslaji, Hakemustila tila) {
+        return findElementByXPath("//div[.//p[string()='" + hakemuslaji.getOtsikko() + "'] and contains(@class, 'col-md-3')]"
+                + "//span[%s and %s]", containsText(tila.getName()), hasClass(tila.getCssClass()));
     }
 
 }

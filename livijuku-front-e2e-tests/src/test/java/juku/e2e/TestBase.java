@@ -70,6 +70,31 @@ public class TestBase {
         }
     }
 
+    public enum Hakemustila {
+        KESKENERAINEN("Keskeneräinen", "keskenerainen"),
+        VIREILLA("Vireillä", "vireilla"),
+        TAYDENNETTAVANA("Täydennettävänä", "taydennettavana"),
+        TAYDENNETTY("Täydennetty", "taydennetty"),
+        TARKASTETTU("Tarkastettu", "tarkastettu"),
+        PAATETTY("Päätetty", "paatetty");
+
+        private final String nimi;
+        private final String cssPaate;
+
+        Hakemustila(String nimi, String cssPaate) {
+            this.nimi = nimi;
+            this.cssPaate = cssPaate;
+        }
+
+        public String getName() {
+            return nimi;
+        }
+
+        public String getCssClass() {
+            return "hakemus-tila-" + cssPaate;
+        }
+    }
+
     public enum User {
         HARRI("juku_hakija", "juku_hakija", "helsingin ka"),
         KATRI("juku_kasittelija", "juku_kasittelija", "liikennevirasto"),
@@ -134,11 +159,11 @@ public class TestBase {
         return findElementByXPath("//button[%s]", containsText("Kyllä"));
     }
 
-    public static WebElement spanWithTextAndClass(String tila, String statusClass) {
+    public static WebElement spanWithHakemustila(Hakemustila tila) {
         waitForAngularRequestsToFinish(driver);
         return findElementByXPath("//span[%s and %s and %s]",
-                containsText(tila),
-                hasClass(statusClass),
+                containsText(tila.getName()),
+                hasClass(tila.getCssClass()),
                 isVisible());
     }
 
