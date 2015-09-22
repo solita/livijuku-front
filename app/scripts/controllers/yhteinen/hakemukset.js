@@ -8,7 +8,7 @@ function haeOrganisaatio(id, organisaatiot) {
 }
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaHakemuksetCtrl', [
+  .controller('KaikkiHakemuksetCtrl', [
     '$rootScope',
     'HakemuskausiService',
     '$stateParams',

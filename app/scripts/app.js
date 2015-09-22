@@ -114,7 +114,7 @@ angular
       .state('app.yhteinen.hakemukset.list', {
         url: '/:tyyppi',
         template: require('views/yhteinen/hakemukset.html'),
-        controller: 'KasittelijaHakemuksetCtrl',
+        controller: 'KaikkiHakemuksetCtrl',
         controllerAs: 'hakemukset'
       })
       .state('app.yhteinen.kayttajatiedot', {
@@ -255,11 +255,11 @@ angular
   .directive('jukuUploadHakuohjeButton', directive.template(require('views/kasittelija/hakuohje-upload-button.html')));
 
 require('./controllers/hakija/hakemukset');
-require('./controllers/kasittelija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
 require('./controllers/kasittelija/paatos');
 require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/asetukset');
+require('./controllers/yhteinen/hakemukset');
 require('./controllers/yhteinen/hakemus');
 require('./controllers/yhteinen/elyhakemus');
 require('./controllers/yhteinen/kayttajatiedot');
