@@ -1,31 +1,36 @@
 <div class="sidebar">
   <ul>
-    <li ng-show="sallittu(user, 'view-hakemuskausi')" ng-class="{'is-active': isActive('/k/hakemuskaudenhallinta')}">
-      <a href="#/k/hakemuskaudenhallinta" ng-href="#/k/hakemuskaudenhallinta">
+    <li ng-show="sallittu(user, 'view-hakemuskausi')">
+      <a ui-sref-active="is-active" ui-sref="app.kasittelija.hakemuskaudenhallinta()">
         Hakemuskaudet
       </a>
     </li>
-    <li ng-show="sallittu(user, 'view-oma-hakemus')" ng-class="{'is-active': isActive('/h/hakemukset')}">
-      <a href="#/h/hakemukset" ng-href="#/h/hakemukset">
+    <li ng-show="sallittu(user, 'view-oma-hakemus')">
+      <a ui-sref-active="is-active" ui-sref="app.hakija.hakemukset.omat()">
         Omat hakemukset
       </a>
     </li>
-    <li ng-show="sallittu(user, 'view-hakemus')" ng-class="{'is-active': isActive('/y/hakemukset/AH0')}">
-      <a href="#/y/hakemukset/AH0" ng-href="#/y/hakemukset/AH0">
+    <li ng-show="sallittu(user, 'view-hakemus')">
+      <a ui-sref-active="is-active" ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'AH0'})">
         Kaikki hakemukset
       </a>
     </li>
   </ul>
-  <ul>
-    <li>Tunnusluvut</li>
-    <li>
-      <a class="navbartxt" href="#/h/tunnuslukujensyottaminen">
+  <ul ng-show="sallittu(user, 'view-hakemuskausi')">
+    <li ng-show="sallittu(user, 'view-hakemuskausi')">Tunnusluvut</li>
+    <li ng-show="sallittu(user, 'view-hakemuskausi')">
+      <a ui-sref-active="is-active" ui-sref="app.hakija.tunnusluku.syottaminen()">
         Tunnuslukujen syöttäminen
       </a>
     </li>
-    <li>
-      <a class="navbartxt" href="#/h/tunnuslukuraportit">
+    <li ng-show="sallittu(user, 'view-hakemuskausi')">
+      <a ui-sref-active="is-active" ui-sref="app.hakija.tunnusluku.raportit()">
         Tunnuslukuraportit
+      </a>
+    </li>
+    <li ng-show="sallittu(user, 'view-hakemuskausi')">
+      <a ui-sref-active="is-active" ui-sref="app.yhteinen.seurantalomakedemo()">
+        Seurantalomake demo
       </a>
     </li>
   </ul>
@@ -38,8 +43,14 @@
         {{$root.userOrganisaatio}}
       </div>
     </li>
-  </ul>
-  <ul>
+    <li>
+      <a ui-sref-active="is-active" ui-sref="app.yhteinen.asetukset">
+        Asetukset
+      </a>
+    </li>
+    <li><a ui-sref-active="is-active" ui-sref="app.yhteinen.kayttajatiedot">
+      JUKUn käyttäjät
+    </a></li>
     <li>
       <a class="navbartxt" href="https://testiextranet.liikennevirasto.fi/extranet/c/portal/logout">
         Kirjaudu ulos
