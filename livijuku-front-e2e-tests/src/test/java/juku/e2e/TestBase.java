@@ -249,6 +249,10 @@ public class TestBase {
 
     @AfterSuite
     public void tearDownSuite() {
+        for (String wh : driver.getWindowHandles()) {
+            driver.switchTo().window(wh);
+            driver.close();
+        }
         driver.quit();
         revertTo(SUITE_RESTORE_POINT);
     }
