@@ -15,6 +15,12 @@ import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
+import hakija.OmatHakemukset;
+import kasittelija.Hakemuskaudet;
+import kasittelija.KaikkiHakemukset;
+import kasittelija.Suunnittelu;
+import yhteinen.Hakemus;
+
 public class HakemuskausiTest extends TestBase {
 
     @Test
@@ -27,29 +33,29 @@ public class HakemuskausiTest extends TestBase {
 
         // Assertoi tila keskeneräinen ja avaa hakemus
         // TODO Assertoi hakijana myös hakemuksen tila ja bread crumbs.
-        hakija.Hakemukset.hakemuksenTila(Hakemuslaji.AVUSTUS, "Keskeneräinen", "hakemus-tila-keskenerainen").click();
+        OmatHakemukset.hakemuksenTila(Hakemuslaji.AVUSTUS, "Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
         // Lisää allekirjoitusliite
         lisaaAllekirjoitusLiite();
 
         // Tallenna hakemus
-        yhteinen.Hakemus.tallennaHakemus().click();
+        Hakemus.tallennaHakemus().click();
 
         // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
-        click(yhteinen.Hakemus.palaaOmiinHakemuksiin());
-        hakija.Hakemukset.hakemuksenTila(Hakemuslaji.AVUSTUS, "Keskeneräinen", "hakemus-tila-keskenerainen").click();
+        click(Hakemus.palaaOmiinHakemuksiin());
+        OmatHakemukset.hakemuksenTila(Hakemuslaji.AVUSTUS, "Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
         // Lähetä hakemus
         lahetaHakemus();
 
         // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
-        hakija.Hakemukset.hakemuksenTila(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla");
+        OmatHakemukset.hakemuksenTila(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla");
 
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Ota hakemus käsittelyyn
-        kasittelija.Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
-        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
+        Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
+        KaikkiHakemukset.ensimmainenTilaindikaattori(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
 
         tarkistaHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
 
@@ -69,7 +75,7 @@ public class HakemuskausiTest extends TestBase {
         tarkistaHakemuksenTila("Täydennettävänä", "hakemus-tila-taydennettavana");
 
         // Lisätään avustussummat
-        syotaRahasummat(yhteinen.Hakemus.rahakentat());
+        syotaRahasummat(Hakemus.rahakentat());
 
         // Täydennä hakemus
         lahetaHakemus();
@@ -81,8 +87,10 @@ public class HakemuskausiTest extends TestBase {
         login(User.KATRI);
 
         // Tarkasta hakemus
-        kasittelija.Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, "Täydennetty", "hakemus-tila-taydennetty").click();
-        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.AVUSTUS, "Täydennetty", "hakemus-tila-taydennetty").click();
+        Hakemuskaudet.tilaindikaattori(
+                Hakemuslaji.AVUSTUS, "Täydennetty", "hakemus-tila-taydennetty").click();
+        KaikkiHakemukset.ensimmainenTilaindikaattori(
+                Hakemuslaji.AVUSTUS, "Täydennetty", "hakemus-tila-taydennetty").click();
 
         tarkistaHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
 
@@ -95,14 +103,15 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään hakija
         login(User.HARRI);
         // Assertoi hakijana tila tarkastettu
-        spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
+        OmatHakemukset.hakemuksenTila(Hakemuslaji.AVUSTUS, "Tarkastettu", "hakemus-tila-tarkastettu");
 
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Päätä hakemus
-        spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu").click();
-        yhteinen.Hakemus.suunnitteluJaPaatoksenteko().click();
-        kasittelija.Suunnittelu.paatoksentekoon().click();
+        Hakemuskaudet.tilaindikaattori(
+                Hakemuslaji.AVUSTUS, "Tarkastettu", "hakemus-tila-tarkastettu").click();
+        Hakemus.suunnitteluJaPaatoksenteko().click();
+        Suunnittelu.paatoksentekoon().click();
         spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu");
         findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
         button("Tallenna tiedot").click();
@@ -111,8 +120,8 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään päättäjä
         login(User.PAIVI);
         spanWithTextAndClass("Tarkastettu", "hakemus-tila-tarkastettu").click();
-        yhteinen.Hakemus.suunnitteluJaPaatoksenteko().click();
-        kasittelija.Suunnittelu.paatoksentekoon().click();
+        Hakemus.suunnitteluJaPaatoksenteko().click();
+        Suunnittelu.paatoksentekoon().click();
         button("Tallenna ja hyväksy päätös").click();
         okOlenVarma().click();
         waitForAngularRequestsToFinish(driver);
@@ -143,8 +152,9 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Ota maksatushakemus 1 käsittelyyn
-        kasittelija.Hakemuskaudet.tilaindikaattori(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
-        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
+        Hakemuskaudet.tilaindikaattori(Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
+        KaikkiHakemukset.ensimmainenTilaindikaattori(
+                Hakemuslaji.MAKSATUS1, "Vireillä", "hakemus-tila-vireilla").click();
 
         tarkistaHakemuksenTila("Vireillä", "hakemus-tila-vireilla");
 
@@ -180,8 +190,8 @@ public class HakemuskausiTest extends TestBase {
         login(User.KATRI);
 
         // Tarkasta maksatushakemus 1
-        kasittelija.Hakemuskaudet.tilaindikaattori(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
-        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
+        Hakemuskaudet.tilaindikaattori(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
+        KaikkiHakemukset.ensimmainenTilaindikaattori(Hakemuslaji.MAKSATUS1, "Täydennetty", "hakemus-tila-taydennetty").click();
 
         tarkistaHakemuksenTila("Täydennetty", "hakemus-tila-taydennetty");
 
@@ -189,7 +199,7 @@ public class HakemuskausiTest extends TestBase {
         okOlenVarma().click();
 
         // Assertoi käsittelijänä tila Tarkastettu
-        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.MAKSATUS1, "Tarkastettu", "hakemus-tila-tarkastettu");
+        KaikkiHakemukset.ensimmainenTilaindikaattori(Hakemuslaji.MAKSATUS1, "Tarkastettu", "hakemus-tila-tarkastettu");
 
         // Kirjaa sisään hakija
         // Assertoi hakijana tila tarkastettu
@@ -240,7 +250,7 @@ public class HakemuskausiTest extends TestBase {
 
         //Syota jokaiseen kenttaan rahasumma. Rahasumma tulee syottaa pilkun kanssa kokonaisuudessaan,
         //jotta input kentassa oleva currency komponentti pystyy ottamaan arvon kasittelyyn ja arvovalidoinit toimivat
-        List<WebElement> rahakentat = yhteinen.Hakemus.rahakentat();
+        List<WebElement> rahakentat = Hakemus.rahakentat();
 
         //Tarkistetaan, että tyhjästä kentästä tulee virheilmoitus
         rahakentat.get(0).clear();
@@ -264,10 +274,10 @@ public class HakemuskausiTest extends TestBase {
         lisaaAllekirjoitusLiite();
 
         // Tallenna hakemus
-        yhteinen.Hakemus.tallennaHakemus().click();
+        Hakemus.tallennaHakemus().click();
 
         // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
-        click(yhteinen.Hakemus.palaaOmiinHakemuksiin());
+        click(Hakemus.palaaOmiinHakemuksiin());
         spanWithTextAndClass("Keskeneräinen", "hakemus-tila-keskenerainen").click();
 
         // Lähetä hakemus
@@ -276,8 +286,8 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Ota hakemus käsittelyyn
-        kasittelija.Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
-        kasittelijanKaikkiHakemuksetHSL(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
+        Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
+        kasittelija.KaikkiHakemukset.ensimmainenTilaindikaattori(Hakemuslaji.AVUSTUS, "Vireillä", "hakemus-tila-vireilla").click();
 
         //Tarkista summat
         tarkistaHakemuksenSummakentat();
@@ -342,12 +352,6 @@ public class HakemuskausiTest extends TestBase {
                 hasSize(equalTo(1)));
     }
 
-    private WebElement kasittelijanKaikkiHakemuksetHSL(Hakemuslaji hakemuslaji, String tila, String statusClass) {
-        // TODO Assertoi, että kyseisen hakemuslajin välilehti on avoinna
-        // TODO Tässä oletetaan, että ainoa vireilläoleva hakemus on kyseisen hakijan (HSL).
-        return spanWithTextAndClass(tila, statusClass);
-    }
-
     private void lahetaHakemus() {
         checkbox("Olen liittänyt hakemukseen tarvittavat").click();
         waitForAngularRequestsToFinish(driver);
@@ -361,7 +365,7 @@ public class HakemuskausiTest extends TestBase {
     private void lisaaAllekirjoitusLiite() throws IOException {
         waitForAngularRequestsToFinish(driver);
 
-        WebElement fileInput = yhteinen.Hakemus.uniqueFileInput();
+        WebElement fileInput = Hakemus.uniqueFileInput();
 
         // Tuodaan ng-file-uploadin piilottama file-input näkyviin, jotta siihen voidaan
         // Syöttää liitteen tiedostonimi
@@ -398,7 +402,7 @@ public class HakemuskausiTest extends TestBase {
 
         syotaRahasummat(rahakentat);
 
-        yhteinen.Hakemus.tallennaHakemus().click();
+        Hakemus.tallennaHakemus().click();
 
         String hakemusid = getScopeVariableValue(button("Tallenna tiedot"), "hakemusid");
         String pdfUrl = String.format("%s/pdf/web/viewer.html?file=../../api/hakemus/%s/pdf", baseUrl(), hakemusid);

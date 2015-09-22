@@ -134,7 +134,7 @@ public class TestBase {
         return findElementByXPath("//button[%s]", containsText("Kyllä"));
     }
 
-    protected WebElement spanWithTextAndClass(String tila, String statusClass) {
+    public static WebElement spanWithTextAndClass(String tila, String statusClass) {
         waitForAngularRequestsToFinish(driver);
         return findElementByXPath("//span[%s and %s and %s]",
                 containsText(tila),
