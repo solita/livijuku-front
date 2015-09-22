@@ -1,8 +1,8 @@
-package kasittelija;
+package juku.kasittelija;
 
 import org.openqa.selenium.WebElement;
 
-import util.ViewBase;
+import juku.util.ViewBase;
 
 /**
  * Created by petrisi on 16.9.15.

@@ -1,4 +1,4 @@
-package juku.e2e;
+package juku;
 
 import org.openqa.selenium.WebElement;
 

@@ -1,10 +1,10 @@
-package kasittelija;
+package juku.kasittelija;
 
-import static juku.e2e.TestBase.Hakemuslaji;
-import static juku.e2e.TestBase.Hakemustila;
-import static juku.e2e.TestBase.containsText;
-import static juku.e2e.TestBase.findElementByXPath;
-import static juku.e2e.TestBase.hasClass;
+import static juku.TestBase.Hakemuslaji;
+import static juku.TestBase.Hakemustila;
+import static juku.TestBase.containsText;
+import static juku.TestBase.findElementByXPath;
+import static juku.TestBase.hasClass;
 
 import org.openqa.selenium.WebElement;
 

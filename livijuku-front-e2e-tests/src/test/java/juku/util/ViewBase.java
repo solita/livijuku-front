@@ -1,8 +1,8 @@
-package util;
+package juku.util;
 
 import org.openqa.selenium.WebElement;
 
-import juku.e2e.TestBase;
+import juku.TestBase;
 
 /**
  * Created by petrisi on 16.9.15.

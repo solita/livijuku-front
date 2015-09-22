@@ -1,4 +1,4 @@
-package juku.e2e;
+package juku;
 
 import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
 import static java.lang.Thread.sleep;
@@ -52,7 +52,7 @@ public class TestBase {
     public static final RemoteWebDriver driver = createDriver();
     ByAngular ng;
     private PoolingHttpClientConnectionManager connectionManager;
-    private static final int DEFAULT_IMPLICIT_WAIT_MS = 10000;
+    private static final int DEFAULT_IMPLICIT_WAIT_MS = 6000;
 
     public enum Hakemuslaji {
         AVUSTUS("Avustushakemus"),
