@@ -13,4 +13,8 @@ public class KaikkiHakemukset {
         // TODO Tässä oletetaan, että ainoa vireilläoleva hakemus on kyseisen hakijan (HSL).
         return TestBase.spanWithHakemustila(tila);
     }
+
+    public static WebElement suunnitteluJaPaatoksenteko(int index) {
+        return TestBase.findElementsByLinkText("Suunnittelu ja päätöksenteko").get(index);
+    }
 }

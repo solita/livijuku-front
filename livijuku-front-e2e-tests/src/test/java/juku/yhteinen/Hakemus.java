@@ -54,10 +54,6 @@ public class Hakemus {
         return linkInPosition("Palaa omiin hakemuksiin", 1);
     }
 
-    public static WebElement suunnitteluJaPaatoksenteko() {
-        return linkInPosition("Suunnittelu ja päätöksenteko", 1);
-    }
-
     public static List<WebElement> rahakentat() {
         return findElementsByXPath("//input[@type='text' and %s]", isVisible());
     }

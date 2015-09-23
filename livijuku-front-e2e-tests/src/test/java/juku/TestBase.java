@@ -50,9 +50,13 @@ public class TestBase {
     public static final String TEST_RESTORE_POINT = "bf_test";
     private static final String SUITE_RESTORE_POINT = "bf_suite";
     public static final RemoteWebDriver driver = createDriver();
-    ByAngular ng;
+    public static ByAngular ng;
     private PoolingHttpClientConnectionManager connectionManager;
     private static final int DEFAULT_IMPLICIT_WAIT_MS = 6000;
+
+    public static List<WebElement> findElementsByLinkText(String text) {
+        return driver.findElementsByLinkText(text);
+    }
 
     public enum Hakemuslaji {
         AVUSTUS("Avustushakemus"),
