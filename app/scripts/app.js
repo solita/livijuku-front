@@ -51,6 +51,7 @@ angular
     'services.status',
     'services.paatos',
     'services.common',
+    'services.config',
     'filters.toApplicantName',
     'filters.toClass',
     'filters.stateNameIncludes',
@@ -278,6 +279,7 @@ require('./directives/selectonclick');
 require('./services/auth');
 require('./services/avustuskohde');
 require('./services/common');
+require('./services/config');
 require('./services/hakemus');
 require('./services/hakemuskausi');
 require('./services/kayttaja');
