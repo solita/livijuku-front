@@ -1,25 +1,47 @@
 'use strict';
 
 var _ = require('lodash');
+var c = require('utils/core');
 var angular = require('angular');
+var hasPermission = require('utils/hasPermission');
+var Promise = require('bluebird');
 
 angular.module('jukufrontApp')
-  .controller('KayttajatiedotCtrl', ['$scope', '$rootScope', 'KayttajaService', 'StatusService', function ($scope, $rootScope, KayttajaService, StatusService) {
+  .controller('KayttajatiedotCtrl', ['$scope', '$rootScope', 'KayttajaService', 'OrganisaatioService', 'StatusService', '$q',
+    function ($scope, $rootScope, KayttajaService, OrganisaatioService, StatusService, $q) {
 
-    KayttajaService.haeKaikki()
-      .then(function (response) {
-        var data = response.data;
-        $scope.kayttajat = data;
-        $scope.liikenneviraston_henkilot=_.filter(data, function(henkilo){
-          return henkilo.organisaatioid === 15;
-        });
-        var toimivaltaiset = _.filter(data, function(henkilo){
-            return henkilo.organisaatioid !== 15;
+      function loadUsers() {
+        KayttajaService.findLiviUsers().then(
+          users => $scope.liikenneviraston_henkilot = users,
+          StatusService.errorHandler);
+
+        $q.all([KayttajaService.findNonLiviUsers(), OrganisaatioService.hae()]).then(
+          ([users, organizations]) => $scope.toimivaltaiset_viranomaiset = assocOrganisaationimi(users, organizations),
+          StatusService.errorHandler);
+      }
+
+      $scope.hasDeleteKayttajaPermission = false;
+
+      $scope.delete = function(tunnus) {
+        KayttajaService.deleteKayttaja(tunnus).then(
+          function() {
+            StatusService.ok("", "Käyttäjän " + tunnus + " poisto onnistui")
+            loadUsers();
+          },
+          StatusService.errorHandler);
+      }
+
+      KayttajaService.hae().then(
+        user => $scope.hasDeleteKayttajaPermission = hasPermission(user, "delete-kayttaja"),
+        StatusService.errorHandler);
+
+      loadUsers();
+
+      function assocOrganisaationimi (users, organizations) {
+        return _.map(users, function(user) {
+            user.organisaationimi = c.coalesce(_.find(organizations, {'id': user.organisaatioid}).nimi, "");
+            return user;
           });
-        $scope.toimivaltaiset_viranomaiset = _.map(toimivaltaiset, function(element) {
-          return _.extend({}, element, {organisaationimi:  _.find($rootScope.organisaatiot, {'id': element.organisaatioid}).nimi});
-        });
+      }
 
-
-      }, StatusService.errorHandler);
   }]);

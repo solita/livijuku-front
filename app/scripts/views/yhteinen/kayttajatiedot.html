@@ -1,5 +1,6 @@
 <div class="container">
 <h1>JUKU-palvelun käyttäjätiedot</h1>
+
   <h3>TOIMIVALTAISET VIRANOMAISET</h3>
   <table st-table="toimivaltaiset" class="table table-condensed"
          st-safe-src=toimivaltaiset_viranomaiset>
@@ -10,6 +11,7 @@
       <th st-sort="roolit">Roolit</th>
       <th st-sort="sahkoposti">Sähköposti</th>
       <th st-sort="viimeisin_kirjautuminen">Viimeisin kirjautuminen</th>
+      <th ng-if="hasDeleteKayttajaPermission">Toiminnot</th>
     </tr>
     </thead>
     <tbody>
@@ -19,9 +21,19 @@
       <td>{{viranomainen.roolit | erotteleRoolit}}</td>
       <td>{{viranomainen.sahkoposti}}</td>
       <td>{{viranomainen.kirjautumisaika | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+      <td ng-if="hasDeleteKayttajaPermission">
+        <a href="" juku-varmistusdialogi
+            varmistusotsake="Oletko varma että haluat merkitä käyttäjän poistetuksi juku-järjestelmästä? "
+            varmistusteksti="Poistetulle käyttäjälle ei enää lähetetä sähköposti-ilmoituksia ja käyttäjää ei näytetä käyttäjälistauksissa. Käyttäjän poistaminen juku-järjestelmästä ei poista käyttäjän liikenneviraston käyttäjätunnusta eikä estä käyttäjää kirjautumasta juku-järjestelmään. Jos käyttäjä halutaan kokonaan poistaa, niin käyttäjä pitää poistaa liikenneviraston käyttäjähallinnasta ja tämän jälkeen juku-järjestelmästä."
+
+            operaatio="delete(viranomainen.tunnus)">
+          <span class="glyphicon glyphicon-remove-sign"></span> Poista
+        </a>
+      </td>
     </tr>
      </tbody>
   </table>
+
   <h3>LIIKENNEVIRASTON HENKILÖT</h3>
   <table st-table="liikennevirasto" class="table table-condensed"
          st-safe-src=liikenneviraston_henkilot>
@@ -30,6 +42,7 @@
       <th st-sort="etunimi">Nimi</th>
       <th st-sort="roolit">Roolit</th>
       <th st-sort="sahkoposti">Sähköposti</th>
+      <th ng-if="hasDeleteKayttajaPermission">Toiminnot</th>
     </tr>
     </thead>
     <tbody>
@@ -37,6 +50,15 @@
       <td>{{henkilo.etunimi}} {{henkilo.sukunimi}}</td>
       <td>{{henkilo.roolit | erotteleRoolit}}</td>
       <td>{{henkilo.sahkoposti}}</td>
+      <td ng-if="hasDeleteKayttajaPermission">
+        <a href="" juku-varmistusdialogi
+            varmistusotsake="Oletko varma että haluat merkitä käyttäjän poistetuksi juku-järjestelmästä? "
+            varmistusteksti="Poistetulle käyttäjälle ei enää lähetetä sähköposti-ilmoituksia ja käyttäjää ei näytetä käyttäjälistauksissa. Käyttäjän poistaminen juku-järjestelmästä ei poista käyttäjän liikenneviraston käyttäjätunnusta eikä estä käyttäjää kirjautumasta juku-järjestelmään. Jos käyttäjä halutaan kokonaan poistaa, niin käyttäjä pitää poistaa liikenneviraston käyttäjähallinnasta ja tämän jälkeen juku-järjestelmästä."
+
+            operaatio="delete(viranomainen.tunnus)">
+          <span class="glyphicon glyphicon-remove-sign"></span> Poista
+        </a>
+      </td>
     </tr>
     </tbody>
   </table>
