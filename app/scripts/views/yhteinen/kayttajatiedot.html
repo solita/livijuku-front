@@ -1,9 +1,10 @@
 <div class="container">
 <h1>JUKU-palvelun käyttäjätiedot</h1>
 
-  <h3>TOIMIVALTAISET VIRANOMAISET</h3>
+  <h3 ng-if="hasViewNonLiviUserPermission">TOIMIVALTAISET VIRANOMAISET</h3>
   <table st-table="toimivaltaiset" class="table table-condensed"
-         st-safe-src=toimivaltaiset_viranomaiset>
+         st-safe-src=toimivaltaiset_viranomaiset
+         ng-if="hasViewNonLiviUserPermission">
     <thead>
     <tr>
       <th st-sort="etunimi">Nimi</th>

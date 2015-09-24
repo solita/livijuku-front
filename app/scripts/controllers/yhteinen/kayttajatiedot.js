@@ -15,9 +15,13 @@ angular.module('jukufrontApp')
           users => $scope.liikenneviraston_henkilot = users,
           StatusService.errorHandler);
 
-        $q.all([KayttajaService.findNonLiviUsers(), OrganisaatioService.hae()]).then(
-          ([users, organizations]) => $scope.toimivaltaiset_viranomaiset = assocOrganisaationimi(users, organizations),
-          StatusService.errorHandler);
+        KayttajaService.hae().then(user => {
+          if (hasPermission(user, "view-non-livi-kayttaja")) {
+            $q.all([KayttajaService.findNonLiviUsers(), OrganisaatioService.hae()]).then(
+              ([users, organizations]) => $scope.toimivaltaiset_viranomaiset = assocOrganisaationimi(users, organizations),
+              StatusService.errorHandler)
+          }
+        });
       }
 
       $scope.hasDeleteKayttajaPermission = false;
@@ -32,7 +36,9 @@ angular.module('jukufrontApp')
       }
 
       KayttajaService.hae().then(
-        user => $scope.hasDeleteKayttajaPermission = hasPermission(user, "delete-kayttaja"),
+        user => {
+          $scope.hasDeleteKayttajaPermission = hasPermission(user, "delete-kayttaja")
+          $scope.hasViewNonLiviUserPermission = hasPermission(user, "view-non-livi-kayttaja")},
         StatusService.errorHandler);
 
       loadUsers();
