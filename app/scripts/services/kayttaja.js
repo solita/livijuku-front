@@ -1,40 +1,33 @@
 'use strict';
 
 var angular = require('angular');
+
 angular.module('services.kayttaja', [])
 
-  .factory('KayttajaService', ['$http', '$q',
-    function($http, $q) {
-    var getPromise = null;
-    var user = null;
+  .factory('KayttajaService', ['$http', function($http) {
+
+    function createUserPromise() {
+      return $http.get('api/user').then(response => response.data);
+    }
+
+    function isRejected(promise) {
+      return promise.$$state.status === 2
+    }
+
+    var user = createUserPromise();
 
     return {
       hae: function() {
-        if (getPromise) {
-          return getPromise;
+        if (isRejected(user)) {
+          user = createUserPromise();
         }
-
-        if (user) {
-          return $q.when(user);
-        }
-
-        getPromise = $http.get('api/user')
-          .then((res) => {
-            user = res.data;
-            return user;
-          })
-          .catch((err) => {
-            user = null
-            throw err;
-          })
-          .finally(() => {
-            getPromise = null
-          });
-
-        return getPromise;
+        return user;
       },
-      haeKaikki: function() {
-        return $http.get('api/users');
+      findLiviUsers: function() {
+        return $http.get('api/users/livi').then(response => response.data);
+      },
+      findNonLiviUsers: function() {
+        return $http.get('api/users/others').then(response => response.data);
       },
       paivitaSahkopostiviestit: function(sahkopostiviestit) {
         var req = {
@@ -47,9 +40,11 @@ angular.module('services.kayttaja', [])
             'sahkopostiviestit': sahkopostiviestit
           }
         };
-        getPromise = null;
-        user = null;
-        return $http(req);
+        user = $http(req).then(response => response.data);
+        return user;
+      },
+      deleteKayttaja: function (tunnus) {
+        return $http.delete('api/user/' + tunnus);
       }
     };
   }]);

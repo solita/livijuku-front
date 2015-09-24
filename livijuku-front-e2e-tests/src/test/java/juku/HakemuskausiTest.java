@@ -23,6 +23,11 @@ public class HakemuskausiTest extends TestBase {
 
     @Test
     public void hakijaaInformoidaanHakemuksenTilasta() throws IOException, URISyntaxException {
+
+        /************************************************************
+         * Avustushakemus
+         */
+
         login(User.HARRI);
 
         // Varmista, että kausi on avoinna TODO: Korjaa tämä.
@@ -73,7 +78,7 @@ public class HakemuskausiTest extends TestBase {
         Hakemus.tarkistaHakemuksenTila(Hakemuslaji.AVUSTUS, Hakemustila.TAYDENNETTAVANA);
 
         // Lisätään avustussummat
-        syotaRahasummat(Hakemus.rahakentat());
+        syotaRahasummat(Hakemus.rahakentat(), "1000,00", "3000,00");
 
         // Täydennä hakemus
         lahetaHakemus();
@@ -106,9 +111,14 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Päätä hakemus
-        Hakemuskaudet.tilaindikaattori(
-                Hakemuslaji.AVUSTUS, Hakemustila.TARKASTETTU).click();
-        Hakemus.suunnitteluJaPaatoksenteko().click();
+        Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, Hakemustila.TARKASTETTU).click();
+        KaikkiHakemukset.suunnitteluJaPaatoksenteko(0).click();
+
+        // Myönnetään 13 900 €
+        WebElement hslMyonnettavaAvustus = Suunnittelu.hslMyonnettavaAvustus();
+        hslMyonnettavaAvustus.clear();
+        hslMyonnettavaAvustus.sendKeys("13900,00");
+
         Suunnittelu.paatoksentekoon().click();
         spanWithHakemustila(Hakemustila.TARKASTETTU);
         findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
@@ -117,8 +127,8 @@ public class HakemuskausiTest extends TestBase {
 
         // Kirjaa sisään päättäjä
         login(User.PAIVI);
-        spanWithHakemustila(Hakemustila.TARKASTETTU).click();
-        Hakemus.suunnitteluJaPaatoksenteko().click();
+        Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, Hakemustila.TARKASTETTU).click();
+        KaikkiHakemukset.suunnitteluJaPaatoksenteko(0).click();
         Suunnittelu.paatoksentekoon().click();
         button("Tallenna ja hyväksy päätös").click();
         okOlenVarma().click();
@@ -137,39 +147,60 @@ public class HakemuskausiTest extends TestBase {
                 + "valtionavustusta 13 900 euroa.";
         assertThat(String.format("Päätös PDF sisältää tekstin %s", expectedText),
                 containsNormalized(actual, expectedText));
+        String expectedText2 = "Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle \n"
+                + "toimivaltaisena viranomaisena valtionavustuksena enintään 13 900 euroa (sis. alv)";
+        assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText2),
+                containsNormalized(actual, expectedText2));
 
-        // Avaa maksatushakemus 1
-        findElementByLinkText("1. maksatushakemus").click();
+        /*****************************************************
+         * 1. maksatushakemus
+         */
+
+        testMaksatushakemus(Hakemuslaji.MAKSATUS1);
+
+        /*****************************************************
+         * 2. maksatushakemus
+         */
+
+        testMaksatushakemus(Hakemuslaji.MAKSATUS2);
+
+    }
+
+
+    private void testMaksatushakemus(Hakemuslaji hakemuslaji) throws IOException {
+        login(User.HARRI);
+        // Avaa maksatushakemus
+        OmatHakemukset.hakemuksenTila(hakemuslaji, Hakemustila.KESKENERAINEN).click();
         // Lisää allekirjoitusliite
         lisaaAllekirjoitusLiite();
-        // Lähetä maksatushakemus 1
+        // Lähetä maksatushakemus
         lahetaHakemus();
         // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
         spanWithHakemustila(Hakemustila.VIREILLA);
 
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
-        // Ota maksatushakemus 1 käsittelyyn
-        Hakemuskaudet.tilaindikaattori(Hakemuslaji.MAKSATUS1, Hakemustila.VIREILLA).click();
+        // Ota maksatushakemus käsittelyyn
+        Hakemuskaudet.tilaindikaattori(hakemuslaji, Hakemustila.VIREILLA).click();
         KaikkiHakemukset.ensimmainenTilaindikaattori(
-                Hakemuslaji.MAKSATUS1, Hakemustila.VIREILLA).click();
+                hakemuslaji, Hakemustila.VIREILLA).click();
 
-        Hakemus.tarkistaHakemuksenTila(Hakemuslaji.MAKSATUS1, Hakemustila.VIREILLA);
+        Hakemus.tarkistaHakemuksenTila(hakemuslaji, Hakemustila.VIREILLA);
 
-        // Palauta maksatushakemus 1 täydennettäväksi
+        // Palauta maksatushakemus täydennettäväksi
         button("Palauta täydennettäväksi").click();
         findElementByCssSelector("#taydennysselite").sendKeys("Ole hyvä ja täydennä.");
         okOlenVarma().click();
         waitForAngularRequestsToFinish(driver);
 
-        Hakemus.tarkistaHakemuksenTila(Hakemuslaji.MAKSATUS1, Hakemustila.TAYDENNETTAVANA);
+        Hakemus.tarkistaHakemuksenTila(hakemuslaji, Hakemustila.TAYDENNETTAVANA);
 
         // Kirjaa sisään hakija
         login(User.HARRI);
         // Assertoi tila täydennettävänä
-        Hakemus.tarkistaHakemuksenTila(Hakemuslaji.MAKSATUS1, Hakemustila.TAYDENNETTAVANA);
+        Hakemus.tarkistaHakemuksenTila(hakemuslaji, Hakemustila.TAYDENNETTAVANA);
 
-        // Avaa maksatushakemus 1
+        // Avaa maksatushakemus
         spanWithHakemustila(Hakemustila.TAYDENNETTAVANA).click();
 
         // Assertoi täydennyspyynnön selite
@@ -177,8 +208,8 @@ public class HakemuskausiTest extends TestBase {
                 hasClass("alert-warning"),
                 containsText("Ole hyvä ja täydennä."));
 
-        // Täydennä maksatushakemus 1
-        // TODO Syötä rahasumma
+        // Täydennä maksatushakemus
+        syotaRahasummat(Hakemus.rahakentat(), "400,00", "1000,00");
         lahetaHakemus();
 
         // Assetoi hakijana tila Täydennetty.
@@ -187,56 +218,54 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
 
-        // Tarkasta maksatushakemus 1
-        Hakemuskaudet.tilaindikaattori(Hakemuslaji.MAKSATUS1, Hakemustila.TAYDENNETTY).click();
-        KaikkiHakemukset.ensimmainenTilaindikaattori(Hakemuslaji.MAKSATUS1, Hakemustila.TAYDENNETTY).click();
+        // Tarkasta maksatushakemus
+        Hakemuskaudet.tilaindikaattori(hakemuslaji, Hakemustila.TAYDENNETTY).click();
+        KaikkiHakemukset.ensimmainenTilaindikaattori(hakemuslaji, Hakemustila.TAYDENNETTY).click();
 
-        Hakemus.tarkistaHakemuksenTila(Hakemuslaji.MAKSATUS1, Hakemustila.TAYDENNETTY);
+        Hakemus.tarkistaHakemuksenTila(hakemuslaji, Hakemustila.TAYDENNETTY);
 
         button("Merkitse tarkastetuksi").click();
         okOlenVarma().click();
 
         // Assertoi käsittelijänä tila Tarkastettu
-        KaikkiHakemukset.ensimmainenTilaindikaattori(Hakemuslaji.MAKSATUS1, Hakemustila.TARKASTETTU);
+        KaikkiHakemukset.ensimmainenTilaindikaattori(hakemuslaji, Hakemustila.TARKASTETTU);
 
         // Kirjaa sisään hakija
         login(User.HARRI);
         // Assertoi hakijana tila tarkastettu
-        OmatHakemukset.hakemuksenTila(Hakemuslaji.MAKSATUS1, Hakemustila.TARKASTETTU);
+        OmatHakemukset.hakemuksenTila(hakemuslaji, Hakemustila.TARKASTETTU);
 
         // Kirjaa sisään käsittelijä
-        // Päätä maksatushakemus 1
+        login(User.KATRI);
+        // Päätä maksatushakemus
+        Hakemuskaudet.tilaindikaattori(hakemuslaji, Hakemustila.TARKASTETTU).click();
+        KaikkiHakemukset.suunnitteluJaPaatoksenteko(0).click();
+
+        // Myönnetään 5 560 €
+        WebElement hslMyonnettavaAvustus = Suunnittelu.hslMyonnettavaAvustus();
+        hslMyonnettavaAvustus.clear();
+        hslMyonnettavaAvustus.sendKeys("5560,00");
+
+        Suunnittelu.paatoksentekoon().click();
+        spanWithHakemustila(Hakemustila.TARKASTETTU);
+        findElementByXPath("//textarea[1]").sendKeys("maksatuksen päätöstekstiä");
+        button("Tallenna tiedot").click();
+        waitForAngularRequestsToFinish(driver);
+
         // Kirjaa sisään päättäjä
-        // Kirjaa sisään hakija
-        // Assertoi tila päätetty
-        // Tarkista päätös pdf
+        login(User.PAIVI);
+        Hakemuskaudet.tilaindikaattori(hakemuslaji, Hakemustila.TARKASTETTU).click();
+        KaikkiHakemukset.suunnitteluJaPaatoksenteko(0).click();
+        Suunnittelu.paatoksentekoon().click();
+        button("Tallenna ja hyväksy päätös").click();
+        okOlenVarma().click();
+        waitForAngularRequestsToFinish(driver);
 
-        // Avaa maksatushakemus 2
-        // Lisää allekirjoitusliite
-        // Tallenna hakemus
-        // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
-        // Lähetä maksatushakemus 2
-        // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
-        // Kirjaa sisään käsittelijä
-        // Ota maksatushakemus 2 käsittelyyn
-        // Palauta maksatushakemus 2 täydennettäväksi
         // Kirjaa sisään hakija
-        // Assertoi tila täydennettävänä
-        // Avaa maksatushakemus 2
-        // Täydennä maksatushakemus 2
-        // Assetoi hakijana tila Täydennetty.
-        // Kirjaa sisään käsittelijä
-        // Tarkasta maksatushakemus 2
-        // Assertoi käsittelijänä tila Tarkastettu
-        // Kirjaa sisään hakija
-        // Assertoi hakijana tila tarkastettu
-        // Kirjaa sisään käsittelijä
-        // Päätä maksatushakemus 2
-        // Kirjaa sisään päättäjä
-        // Kirjaa sisään hakija
-        // Assertoi tila päätetty
-        // Tarkista päätös pdf
+        login(User.HARRI);
 
+        // Assertoi tila päätetty
+        OmatHakemukset.hakemuksenTila(hakemuslaji, Hakemustila.PAATETTY);
     }
 
     @Test
@@ -265,7 +294,7 @@ public class HakemuskausiTest extends TestBase {
         rahakentat.get(1).sendKeys("999,99");
         tarkistaInputKentanTila("ng-invalid-omarahoitus-riittava");
 
-        syotaRahasummat(rahakentat);
+        syotaRahasummat(rahakentat, "1000,00", "3000,00");
 
         tarkistaHakemuksenSummakentat();
         checkbox("Haluan syöttää summat arvonlisäverollisina.").click();
@@ -296,12 +325,12 @@ public class HakemuskausiTest extends TestBase {
         tarkistaHakemuksenSummakentat();
     }
 
-    private void syotaRahasummat(List<WebElement> rahakentat) {
+    private void syotaRahasummat(List<WebElement> rahakentat, String avustus, String oma) {
         for (int i = 0; i < rahakentat.size(); i += 2) {
             rahakentat.get(i).clear();
-            rahakentat.get(i).sendKeys("1000,00");
+            rahakentat.get(i).sendKeys(avustus);
             rahakentat.get(i + 1).clear();
-            rahakentat.get(i + 1).sendKeys("3000,00");
+            rahakentat.get(i + 1).sendKeys(oma);
         }
     }
 
@@ -369,9 +398,6 @@ public class HakemuskausiTest extends TestBase {
 
         WorkAround.scrollIntoView(fileInput);
 
-        // DEBUG screenshot
-        TestBase.takeScreenshot("DEBUG");
-
         WorkAround.sleep(WorkAround.Delay.SHORT);
         // Tiedostonimen syöttäminen file-inputtiin laukaisee
         // upload toiminnon automaattisesti
@@ -390,7 +416,7 @@ public class HakemuskausiTest extends TestBase {
 
         List<WebElement> rahakentat = findElementsByXPath("//input[@type='text' and %s]", isVisible());
 
-        syotaRahasummat(rahakentat);
+        syotaRahasummat(rahakentat, "1000,00", "3000,00");
 
         Hakemus.tallennaHakemus().click();
 
