@@ -90,7 +90,7 @@
             <td>
 
               <juku-link-next
-                ng-show="hakemusTarkastettu(hakemus)"
+                ng-show="hakemusTarkastettu(hakemus) && sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
                 ui-sref="app.kasittelija.paatos({
                   hakemusid: hakemus.hakemusId,
                   haettuavustus: hakemus.haettuAvustus,
