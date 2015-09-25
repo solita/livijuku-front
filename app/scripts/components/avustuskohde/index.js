@@ -12,7 +12,7 @@ module.exports = function () {
       hakemustyyppi: '=',
       alv: '='
     },
-    controller: ['$scope', '$rootScope', 'AvustuskohdeService', 'AuthService', function ($scope, $rootScope, AvustuskohdeService, AuthService) {
+    controller: ['$scope', '$rootScope', 'AvustuskohdeService', 'AuthService', '$sce', function ($scope, $rootScope, AvustuskohdeService, AuthService, $sce) {
 
       $scope.avustusprosentti = AvustuskohdeService.avustusprosentti($scope.vuosi, $scope.kohde.avustuskohdeluokkatunnus, $scope.kohde.avustuskohdelajitunnus);
 
@@ -28,18 +28,18 @@ module.exports = function () {
         var tooltip = '';
         if ($scope.hakemustyyppi !== 'AH0') {
           if (syotekentta === 'haettavaavustus') {
-            tooltip = 'Avustushakemus:' + $scope.vertailuarvot().avustushakemusHaettavaAvustus.toString().replace('.', ',') + ' € (sis. alv)';
+            tooltip = 'Avustushakemuksessa haettu avustus:\t\t' + $scope.vertailuarvot().avustushakemusHaettavaAvustus.toString().replace('.', ',') + ' € (sis. alv)';
           }
           else if (syotekentta === 'omarahoitus') {
-            tooltip = 'Avustushakemus:' + $scope.vertailuarvot().avustushakemusOmaRahoitus.toString().replace('.', ',') + ' € (sis. alv)';
+            tooltip = 'Avustushakemuksessa omarahoitus:\t' + $scope.vertailuarvot().avustushakemusOmaRahoitus.toString().replace('.', ',') + ' € (sis. alv)';
           }
         }
         if ($scope.hakemustyyppi === 'MH2') {
           if (syotekentta === 'haettavaavustus') {
-            tooltip = tooltip + ' ' + '1. Maksatushakemus:' + $scope.vertailuarvot().maksatushakemusHaettavaAvustus.toString().replace('.', ',') + ' € (sis. alv)';
+            tooltip = tooltip + '\n' + 'Maksatushakemuksessa haettu avustus:\t' + $scope.vertailuarvot().maksatushakemusHaettavaAvustus.toString().replace('.', ',') + ' € (sis. alv)';
           }
           else if (syotekentta === 'omarahoitus') {
-            tooltip = tooltip + ' ' + '1. Maksatushakemus:' + $scope.vertailuarvot().maksatushakemusOmaRahoitus.toString().replace('.', ',') + ' € (sis. alv)';
+            tooltip = tooltip + '\n' + 'Maksatushakemuksessa omarahoitus:\t' + $scope.vertailuarvot().maksatushakemusOmaRahoitus.toString().replace('.', ',') + ' € (sis. alv)';
           }
         }
         return tooltip;
