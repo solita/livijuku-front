@@ -11,7 +11,7 @@ angular.module('jukufrontApp')
       if(!modelCtrl) {
         return;
       }
-      modelCtrl.$parsers.push(function (inputValue) {
+      modelCtrl.$parsers.unshift(function (inputValue) {
         if (angular.isUndefined(inputValue)) {
           var inputValue = '';
         }

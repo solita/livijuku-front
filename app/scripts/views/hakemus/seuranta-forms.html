@@ -1,0 +1,36 @@
+
+
+<juku-form-section>
+  <h3>SEURANTATIEDOT</h3>
+  <accordion close-others="false">
+    <accordion-group is-open="isOpenPSA">
+      <accordion-heading>
+        <div class="panel-heading">
+          <div class="panel-title"><i class="pull-left glyphicon"
+                                      ng-class="{
+                'glyphicon-triangle-bottom':isOpenPSA,
+                'glyphicon-triangle-right': !isOpenPSA
+                }"></i><span>Paikallisliikenne tai muu PSA:n mukainen liikenne</span></div>
+        </div>
+      </accordion-heading>
+      <div class="panel-body">
+        <juku-seuranta-liikenne suoritteet="psaLiikenneSuoritteet" tyyppi="PSA" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
+      </div>
+    </accordion-group>
+    <accordion-group is-open="isOpenPAL">
+      <accordion-heading>
+        <div class="panel-heading">
+          <div class="panel-title"><i class="pull-left glyphicon"
+                                      ng-class="{
+                'glyphicon-triangle-bottom':isOpenPAL,
+                'glyphicon-triangle-right': !isOpenPAL
+                }"></i><span>Palveluliikenne</span></div>
+        </div>
+      </accordion-heading>
+      <div class="panel-body">
+        <juku-seuranta-liikenne suoritteet="palLiikenneSuoritteet" tyyppi="PAL"></juku-seuranta-liikenne>
+      </div>
+    </accordion-group>
+  </accordion>
+</juku-form-section>
+

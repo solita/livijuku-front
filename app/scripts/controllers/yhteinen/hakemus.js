@@ -16,9 +16,15 @@ function haeHakemus(tyyppi, hakemus) {
   });
 }
 
-loadInitialData.$inject = ['CommonService', '$stateParams', 'AvustuskohdeService', 'HakemusService', 'KayttajaService', 'PaatosService', 'StatusService'];
+function isMaksatushakemus(hakemus) {
+  return _.contains(['MH1', 'MH2'], hakemus.hakemustyyppitunnus)
+}
 
-function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusService, KayttajaService, PaatosService, StatusService) {
+loadInitialData.$inject = [
+  'CommonService', '$stateParams', 'AvustuskohdeService', 'LiikenneSuoriteService',
+  'HakemusService', 'KayttajaService', 'PaatosService', 'StatusService'];
+
+function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuoriteService, HakemusService, KayttajaService, PaatosService, StatusService) {
   function haeAvustuskohteet(hakemus) {
     return AvustuskohdeService.hae(hakemus.id).then((data) => {
       return _.map(
@@ -42,6 +48,18 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusServi
       }
     }
   }
+
+  function ifMaksatushakemus(then, defaultvalue) {
+    return hakemusPromise.then((hakemus) => {
+      if (isMaksatushakemus(hakemus)) {
+        return then(hakemus);
+      } else {
+        return defaultvalue;
+      }
+    });
+  }
+
+  var liikenneSuoritteet = ifMaksatushakemus(hakemus => LiikenneSuoriteService.hae(hakemus.id), [])
 
   return Promise.props({
     hakemus: hakemusPromise,
@@ -68,14 +86,10 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusServi
         return [];
       }
     })),
-    avustushakemusPaatos: hakemusPromise.then((hakemus) => {
-      if (_.contains(['MH1', 'MH2'], (hakemus.hakemustyyppitunnus))) {
+    avustushakemusPaatos: ifMaksatushakemus((hakemus) => {
         const id = haeHakemus('AH0', hakemus).id;
         return PaatosService.hae(id);
-      } else {
-        return {}
-      }
-    }),
+    }, {}),
     maksatushakemus1Paatos: hakemusPromise.then((hakemus) => {
       if (hakemus.hakemustyyppitunnus === 'MH2') {
         const id = haeHakemus('MH1', hakemus).id;
@@ -83,15 +97,17 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, HakemusServi
       } else {
         return {};
       }
-    })
+    }),
+    psaLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PSA")),
+    palLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PAL"))
   }).then(_.identity, StatusService.errorHandler);
 }
 
 module.exports.loadInitialData = loadInitialData;
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$state', '$stateParams',
-    'PaatosService', 'HakemusService', 'AvustuskohdeService', 'StatusService', 'CommonService', '$window', 'initials',
-    function ($rootScope, $scope, $state, $stateParams, PaatosService, HakemusService, AvustuskohdeService, StatusService, common, $window, initials) {
+    'PaatosService', 'HakemusService', 'AvustuskohdeService', 'LiikenneSuoriteService', 'StatusService', 'CommonService', '$window', 'initials',
+    function ($rootScope, $scope, $state, $stateParams, PaatosService, HakemusService, AvustuskohdeService, LiikenneSuoriteService, StatusService, common, $window, initials) {
 
       _.extend($scope, initials);
 
@@ -276,6 +292,8 @@ angular.module('jukufrontApp')
         return $scope.hakemus.hakemustyyppitunnus === 'MH2';
       };
 
+      $scope.isMaksatushakemus = isMaksatushakemus($scope.hakemus);
+
       $scope.avustushakemusPaatosOlemassa = function () {
         return $scope.avustushakemusPaatos && $scope.avustushakemusPaatos.voimaantuloaika;
       };
@@ -372,7 +390,13 @@ angular.module('jukufrontApp')
           return _.omit(kohde, 'alv');
         });
 
-        AvustuskohdeService.tallenna(avustuskohteet)
+        var tallennusPromise = [AvustuskohdeService.tallenna(avustuskohteet)];
+        if (isMaksatushakemus($scope.hakemus))  {
+          tallennusPromise.push(LiikenneSuoriteService.tallenna(
+            $scope.hakemus.id, $scope.psaLiikenneSuoritteet.concat($scope.palLiikenneSuoritteet)));
+        }
+
+        Promise.all(tallennusPromise)
           .then(function () {
             StatusService.ok('AvustuskohdeService.tallenna()', 'Tallennus onnistui.');
             $scope.hakemusForm.$setPristine();

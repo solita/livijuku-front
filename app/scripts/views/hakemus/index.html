@@ -72,7 +72,7 @@
         {{hakemus.taydennyspyynto.selite}}
       </juku-form-row>
 
-      <juku-form-row ng-show="avustushakemusPaatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())">
+      <juku-form-row ng-show="avustushakemusPaatosOlemassa() && isMaksatushakemus">
         <h5>MYÖNNETTY AVUSTUS VUODELLE {{hakemus.vuosi}}</h5>
         {{myonnettyAvustusPerVuosi() | currency:"&euro;"}} (sis. ALV)
         <juku-icon-link
@@ -122,7 +122,7 @@
 
       <!-- Hakija -->
       <juku-form-row
-        ng-show="isHakija(user) && (avustushakemusPaatosOlemassa() && (onMaksatushakemus1() || onMaksatushakemus2())) && haettuSummaYliMyonnetyn()"
+        ng-show="avustushakemusPaatosOlemassa() && isMaksatushakemus && haettuSummaYliMyonnetyn()"
         class="alert alert-danger">
         <strong>Virhe! </strong> Haettu avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}}) ylittää myönnetyn
         avustuksen. Voit hakea ensimmäisellä maksatushakemuksella enintään 50% vuodelle myönnetystä avustuksesta.
@@ -223,6 +223,9 @@
 
       <juku-liite-tarkistaminen></juku-liite-tarkistaminen>
     </div>
+
+    <!-- Seurantatiedot -->
+    <juku-seuranta-forms ng-if="isMaksatushakemus"></juku-seuranta-forms>
 
     <juku-form-section>
       <h3>

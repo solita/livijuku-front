@@ -42,6 +42,7 @@ angular
   .module('jukufrontApp', [
     'services.auth',
     'services.avustuskohde',
+    'services.seuranta',
     'services.hakemus',
     'services.hakemuskausi',
     'services.kayttaja',
@@ -253,6 +254,8 @@ angular
   .directive('jukuSeurantalomakePalveluliikenne', require('components/seurantalomakePalveluliikenne'))
   .directive('jukuSeurantalomakeSeutulippu', require('components/seurantalomakeSeutulippu'))
   .directive('jukuSeurantalomakeKaupunkiliput', require('components/seurantalomakeKaupunkiliput'))
+  .directive('jukuSeurantaLiikenne', require('components/seuranta/liikenne'))
+  .directive('jukuSeurantaForms', directive.template(require('views/hakemus/seuranta-forms.html')))
   .directive('jukuUploadHakuohjeButton', directive.template(require('views/kasittelija/hakuohje-upload-button.html')))
   .directive('jukuDeleteKayttajaLink', directive.template(require('views/yhteinen/delete-kayttaja-link.html')));
 
@@ -279,6 +282,7 @@ require('./directives/focusToInvalid');
 require('./directives/selectonclick');
 require('./services/auth');
 require('./services/avustuskohde');
+require('./services/seuranta');
 require('./services/common');
 require('./services/config');
 require('./services/hakemus');
