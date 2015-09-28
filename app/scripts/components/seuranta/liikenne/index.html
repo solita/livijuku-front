@@ -74,13 +74,21 @@
             <option value="KS">Kokonaissuorite</option>
           </select></td>
           <td>
-            <div class="form-group" show-errors>
+            <div class="form-group has-feedback" show-errors="{ showSuccess: true }"
+                 tooltip="{{inputs.nimi.$error.required ? 'Nimi on pakollinen tieto.' :
+                            inputs.nimi.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' : ''}}"
+                 tooltip-placement="top">
+
               <label for="{{nimi + rivi.numero}}" class="sr-only">Nimi</label>
-              <input name="{{nimi + rivi.numero}}" type="text" class="form-control" noenter required
+              <input name="{{nimi + rivi.numero}}" type="text" class="form-control" noenter required ng-minlength="2"
+                     bind-model="nimi"
                      ng-minlength="1" placeholder="Nimi"
                      select-on-click
                      ng-readonly="isReadonly()"
                      ng-model="rivi.nimi">
+              <span ng-show="inputs.nimi.$invalid"
+                    class="glyphicon glyphicon-warning-sign form-control-feedback"
+                    aria-hidden="true"></span>
             </div>
           </td>
           <td><input name="linjaautot" type="number" class="form-control" numeric-integer-only=""
