@@ -2,6 +2,7 @@
 'use strict';
 
 var angular = require('angular');
+var c = require('utils/core');
 
 angular.module('jukufrontApp')
 .directive('numericIntegerOnly', function(){
@@ -11,16 +12,16 @@ angular.module('jukufrontApp')
       if(!modelCtrl) {
         return;
       }
+
       modelCtrl.$parsers.unshift(function (inputValue) {
-        if (angular.isUndefined(inputValue)) {
-          var inputValue = '';
+        if (inputValue) {
+          var transformedInput = inputValue.replace(/[^\d]/g, '');
+          if (transformedInput !== inputValue) {
+            modelCtrl.$setViewValue(transformedInput);
+            modelCtrl.$render();
+          }
+          return transformedInput;
         }
-        var transformedInput = inputValue ? inputValue.replace(/[^\d]/g,'') : null;
-        if (transformedInput!=inputValue) {
-          modelCtrl.$setViewValue(transformedInput);
-          modelCtrl.$render();
-        }
-        return transformedInput;
       });
     }
   };
