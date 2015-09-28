@@ -1,4 +1,4 @@
-<form name="{{liikennetyyppi + '-liikennesuoritteet'}}">
+<form name="{{liikennetyyppi + 'liikennesuoritteet'}}">
   <div class="table-responsive">
     <table class="table table-hover table-condensed">
       <tr>
@@ -73,10 +73,16 @@
             <option value="SS">Sopimussuorite</option>
             <option value="KS">Kokonaissuorite</option>
           </select></td>
-          <td><input name="nimi" type="text" class="form-control" noenter
+          <td>
+            <div class="form-group" show-errors>
+              <label for="{{nimi + rivi.numero}}" class="sr-only">Nimi</label>
+              <input name="{{nimi + rivi.numero}}" type="text" class="form-control" noenter required
+                     ng-minlength="1" placeholder="Nimi"
                      select-on-click
                      ng-readonly="isReadonly()"
-                     ng-model="rivi.nimi"></td>
+                     ng-model="rivi.nimi">
+            </div>
+          </td>
           <td><input name="linjaautot" type="number" class="form-control" numeric-integer-only=""
                      ng-readonly="isReadonly()"
                      select-on-click
