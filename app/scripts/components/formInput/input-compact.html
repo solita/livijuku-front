@@ -1,0 +1,15 @@
+<div class="form-group" ng-class="{'has-feedback': input().$invalid,
+                                   'has-error': input().$invalid,
+                                   'has-success': input().$valid && input().$dirty}"
+     tooltip="{{errormessage()}}"
+     tooltip-placement="top"
+     tooltip-enable="input().$invalid">
+
+  <label for="{{name()}}" class="sr-only">Nimi</label>
+
+  <ng-transclude></ng-transclude>
+
+  <span ng-show="input().$invalid"
+        class="glyphicon glyphicon-warning-sign form-control-feedback"
+        aria-hidden="true"></span>
+</div>

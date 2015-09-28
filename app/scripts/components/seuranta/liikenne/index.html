@@ -79,8 +79,8 @@
                             inputs.nimi.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' : ''}}"
                  tooltip-placement="top">
 
-              <label for="{{nimi + rivi.numero}}" class="sr-only">Nimi</label>
-              <input name="{{nimi + rivi.numero}}" type="text" class="form-control" noenter required ng-minlength="2"
+              <label for="{{'nimi' + rivi.numero}}" class="sr-only">Nimi</label>
+              <input name="{{'nimi' + rivi.numero}}" type="text" class="form-control" noenter required ng-minlength="2"
                      bind-model="nimi"
                      ng-minlength="1" placeholder="Nimi"
                      select-on-click
@@ -91,13 +91,24 @@
                     aria-hidden="true"></span>
             </div>
           </td>
-          <td><input name="linjaautot" type="number" class="form-control" numeric-integer-only=""
-                     ng-readonly="isReadonly()"
-                     select-on-click
-                     ng-model="rivi.linjaautot"></td>
-          <td><input name="taksit" type="number" class="form-control" numeric-integer-only="" select-on-click
-                     ng-readonly="isReadonly()"
-                     ng-model="rivi.taksit"></td>
+          <td>
+            <form-group-compact name="'linjaautot' + rivi.numero" input="inputs.linjaautot"
+                                errormessage="inputs.linjaautot.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''">
+              <input bind-model="linjaautot"
+                     ng-model="rivi.linjaautot"
+                     type="number" numeric-integer-only="" select-on-click
+                     ng-readonly="isReadonly()">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact name="'taksit' + rivi.numero" input="inputs.taksit"
+                                errormessage="inputs.taksit.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''">
+              <input bind-model="taksit"
+                     ng-model="rivi.taksit"
+                     type="number" numeric-integer-only="" select-on-click
+                     ng-readonly="isReadonly()">
+            </form-group-compact>
+          </td>
           <td><input name="ajokilometrit" type="text" class="form-control" numeric-km-only="" ng-currency=""
                      ng-readonly="isReadonly()"
                      currency-symbol="km" noenter
