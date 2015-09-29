@@ -73,7 +73,7 @@ var paths = {
   // Sen alla olevaa ie9:a ei voi uudelleennimeta koska latauskomponentti
   // kayttaa suoraan FileAPI.min.js tiedostoa (JEG)
   inject: {
-    resources: ['./dist/**/*.css', './dist/**/*.js', '!./dist/scripts/ie9/FileAPI.min.js']
+    resources: ['./dist/**/*.css', '!./dist/pdf/**/*.css', './dist/**/*.js', '!./dist/scripts/ie9/*.js', '!./dist/pdf/**/*.js']
   }
 };
 
