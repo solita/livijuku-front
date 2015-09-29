@@ -38,8 +38,8 @@ var paths = {
     filename: 'scripts.js'
   },
   templates: {
-    source: './app/**/*.html',
-    watch: './app/**/*.html',
+    source: './app/*.html',
+    watch: './app/*.html',
     destination: './dist/',
     revision: './dist/**/*.html'
   },
