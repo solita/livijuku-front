@@ -3,7 +3,7 @@ var _ = require('lodash');
 var hakemus = require('utils/hakemus');
 var tilat = require('utils/hakemuksenTilat');
 
-module.exports = function() {
+module.exports = function () {
   return {
     scope: {
       hakemus: '=hakemus',
@@ -15,7 +15,7 @@ module.exports = function() {
     restrict: 'E',
     replace: true,
     template: require('./index.html'),
-    controller: ['$scope', function($scope) {
+    controller: ['$scope', function ($scope) {
       $scope.hakemuksenTilat = _.filter(tilat.getAll(), (tila) => ['0', 'M'].indexOf(tila.id) === -1);
       $scope.utils = hakemus;
       $scope.editing = false;
@@ -26,14 +26,17 @@ module.exports = function() {
         formatMonth: 'MM'
       };
 
-      $scope.hakemuskausiSuljettu= function () {
+      $scope.hakemuskausiSuljettu = function () {
         return $scope.hakemuskaudenTila === 'S';
       };
 
       $scope.inputs = ['alkupvm', 'loppupvm'];
 
-      const {alkupvm, loppupvm} = $scope.hakemus.hakuaika;
+      $scope.changeFlag = false;
 
+      //const {alkupvm, loppupvm} = $scope.hakemus.hakuaika;
+      const alkupvm = new Date($scope.hakemus.hakuaika.alkupvm);
+      const loppupvm = new Date($scope.hakemus.hakuaika.loppupvm);
       $scope.values = {alkupvm, loppupvm};
 
       $scope.toggleEditMode = function toggleEditMode() {
@@ -42,8 +45,8 @@ module.exports = function() {
 
       $scope.toggleCalendar = function toggleCalendar(ev, field) {
 
-        for(let fieldName in $scope.calendarOpen) {
-          if(fieldName !== field) {
+        for (let fieldName in $scope.calendarOpen) {
+          if (fieldName !== field) {
             $scope.calendarOpen[fieldName] = false;
           }
         }
@@ -52,8 +55,22 @@ module.exports = function() {
       };
 
       $scope.inPast = function (value) {
-        return new Date(value) < new Date();
+        return value < new Date();
       };
+
+      $scope.validDateOrder = function (value, index) {
+        // changeFlag is used to trigger also alkupvm validation when loppupvm is changed
+        if ((typeof(value) === 'string') || (index===1 && $scope.changeFlag)) return true;
+        $scope.changeFlag=false;
+        if (index === 0) {
+          return value < $scope.values.loppupvm;
+        } else {
+          $scope.changeFlag=true;
+          return value > $scope.values.alkupvm;
+        }
+      };
+
+
 
       $scope.save = function onSave() {
         $scope.onSave({values: $scope.values});

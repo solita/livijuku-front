@@ -23,7 +23,7 @@ require('angular-toastr');
 require('angular-resource');
 require('angular-loading-bar');
 require('angular-smart-table');
-require('angular-bootstrap');
+require('angular-ui-bootstrap');
 require('angular-elastic');
 require('ng-file-upload');
 require('angular-animate');
@@ -211,7 +211,6 @@ angular
       $state.go('redirect');
     });
   }])
-  .directive('chronologicalOrder', require('validators/chronologicalOrder'))
   .directive('jukuHeader', require('components/header'))
   .directive('jukuSidebar', require('components/sidebar'))
   .directive('jukuNavigation', require('components/navigation'))
@@ -274,7 +273,6 @@ require('./controllers/yhteinen/paanaytto');
 require('./controllers/yhteinen/tunnusluvut');
 require('./controllers/yhteinen/tunnuslukuraportti');
 require('./directives/alvmuunnos');
-require('./directives/datepickerPopup');
 require('./directives/jukuAvustusluokkaPanel');
 require('./directives/noenter');
 require('./directives/numericOnly');

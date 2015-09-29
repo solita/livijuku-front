@@ -33,7 +33,7 @@
            tooltip="Alkamispäivämäärän tulee olla ennen loppumispäivämäärää."
            tooltip-trigger="mouseover"
            id="{{ 'test-alkupvm-datepicker-' + testIdIndex }}"
-           tooltip-enable="$index === 0 && $parent.hakuaikaForm.$error.chronologicalOrder"
+           tooltip-enable="$index === 0 && $parent.hakuaikaForm.$error.validDateOrder"
            ng-repeat="input in inputs">
 
         <input name="{{input}}"
@@ -44,9 +44,8 @@
                datepicker-options="{{dateOptions}}"
                is-open="calendarOpen[input]"
                ng-required="true"
-               chronological-order="$parent.inputs"
-               chronological-index="$index"
-               chronological-values="$parent.values"
+               ui-validate="{validDateOrder: 'validDateOrder($value, $index,{{input}})'}"
+               ui-validate-watch=" 'changeFlag' "
                show-button-bar="false" noenter readonly/>
 
         <span class="input-group-btn">
