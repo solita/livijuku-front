@@ -93,7 +93,7 @@
             <form-group-compact label="Linja-autot" errormessage="kokonaislukuErrorMessage">
               <input name="linjaautot"
                      ng-model="rivi.linjaautot"
-                     placeholder="Linja-autot"
+                     placeholder="Linja-autot" noenter
                      type="number" numeric-integer-only="" select-on-click
                      ng-readonly="isReadonly()">
             </form-group-compact>
@@ -102,28 +102,44 @@
             <form-group-compact label="Taksit" errormessage="kokonaislukuErrorMessage">
               <input name="taksit"
                      ng-model="rivi.taksit"
-                     placeholder="Taksit"
+                     placeholder="Taksit" noenter
                      type="number" numeric-integer-only="" select-on-click
                      ng-readonly="isReadonly()">
             </form-group-compact>
           </td>
-          <td><input name="ajokilometrit" type="text" class="form-control" numeric-km-only="" ng-currency=""
-                     ng-readonly="isReadonly()"
-                     currency-symbol="km" noenter
-                     select-on-click
-                     ng-model="rivi.ajokilometrit"></td>
-          <td><input name="matkustajamaara" type="number" class="form-control" numeric-integer-only="" noenter
-                     ng-readonly="isReadonly()"
-                     select-on-click
-                     ng-model="rivi.matkustajamaara"></td>
-          <td><input name="lipputulo" type="text" class="form-control" ng-currency="" numeric-only="" noenter
-                     ng-readonly="isReadonly()"
-                     select-on-click
-                     ng-model="rivi.lipputulo"></td>
-          <td><input name="nettohinta" type="text" class="form-control" ng-currency="" numeric-only="" noenter
-                     ng-readonly="isReadonly()"
-                     select-on-click
-                     ng-model="rivi.nettohinta"></td>
+          <td>
+            <form-group-compact label="Ajokilometrit" errormessage="ajokilometritErrorMessage">
+              <input name="ajokilometrit" type="text" class="form-control" numeric-km-only="" ng-currency=""
+                       ng-readonly="isReadonly()" required
+                       currency-symbol="km" noenter
+                       select-on-click
+                       ng-model="rivi.ajokilometrit">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Matkustajamäärä" errormessage="kokonaislukuErrorMessage">
+              <input name="matkustajamaara" type="number" class="form-control" numeric-integer-only="" noenter
+                       ng-readonly="isReadonly()"
+                       select-on-click
+                       ng-model="rivi.matkustajamaara">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Lipputulo" errormessage="lipputuloErrorMessage">
+              <input name="lipputulo" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+                       ng-readonly="isReadonly()" required
+                       select-on-click
+                       ng-model="rivi.lipputulo">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Nettohinta" errormessage="nettohintaErrorMessage">
+              <input name="nettohinta" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+                       ng-readonly="isReadonly()" required
+                       select-on-click
+                       ng-model="rivi.nettohinta">
+            </form-group-compact>
+          </td>
           <td>{{laskeBruttohinta($index) | currency}}</td>
           <td><a href="" ng-click="poistaPaikallisliikenneRivi($index)" ng-hide="isReadonly()"><span
             class="glyphicon glyphicon-remove-sign"></span> Poista</a>

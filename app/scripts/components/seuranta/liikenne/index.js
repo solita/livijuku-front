@@ -1,6 +1,12 @@
 'use strict';
 var _ = require('lodash');
 
+function pakollinnenErrorMessage(nimi) {
+  return function(input) {
+    return input.$error.required ? nimi +' on pakollinen tieto.' : '';
+  }
+}
+
 function liikenneController($scope) {
 
   $scope.lisaaSuorite = function () {
@@ -64,6 +70,10 @@ function liikenneController($scope) {
   $scope.kokonaislukuErrorMessage = function(input) {
     return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
   }
+
+  $scope.ajokilometritErrorMessage = pakollinnenErrorMessage("Ajokilometrit");
+  $scope.lipputuloErrorMessage = pakollinnenErrorMessage("Lipputulo");
+  $scope.nettohintaErrorMessage = pakollinnenErrorMessage("Nettohinta");
 }
 
 module.exports = function () {
