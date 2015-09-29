@@ -55,6 +55,15 @@ function liikenneController($scope) {
   $scope.laskeBruttohinta = function (i) {
     return $scope.suoritteet[i].lipputulo + $scope.suoritteet[i].nettohinta;
   };
+
+  $scope.nimiErrorMessage = function(input) {
+    return input.$error.required ? 'Nimi on pakollinen tieto.' :
+           input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' : '';
+  }
+
+  $scope.kokonaislukuErrorMessage = function(input) {
+    return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
+  }
 }
 
 module.exports = function () {

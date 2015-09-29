@@ -2,8 +2,8 @@
   <div class="table-responsive">
     <table class="table table-hover table-condensed">
       <tr>
-        <th>Suoritetyyppi</th>
-        <th>Suoritteen nimi</th>
+        <th class="col-md-2">Suoritetyyppi</th>
+        <th class="col-md-2">Suoritteen nimi</th>
         <th>
           <div tooltip="Linja-autojen lukumäärä" tooltip-placement="top"
                tooltip-append-to-body="true">Linja-autot
@@ -37,13 +37,13 @@
         <th>
           <div tooltip="Kaupungin liikennöitsijöille maksama hinta, sisältää valtionavun"
                tooltip-placement="top"
-               tooltip-append-to-body="true">Nettohinta
+               tooltip-append-to-body="true">Netto&shy;hinta
                <span class="glyphicon glyphicon-question-sign"></span>
           </div>
         </th>
         <th>
           <div tooltip="Lipputulo + nettohinta" tooltip-placement="top"
-               tooltip-append-to-body="true">Bruttohinta
+               tooltip-append-to-body="true">Brutto&shy;hinta
                <span class="glyphicon glyphicon-question-sign"></span>
           </div>
         </th>
@@ -67,47 +67,45 @@
         </tr>
       </tfoot>
       <tbody>
-        <tr ng-repeat="rivi in suoritteet track by $index">
-          <td><select name="suoritetyyppitunnus" ng-model="rivi.suoritetyyppitunnus" ng-disabled="isReadonly()">
-            <option value="LS">Linjasuorite</option>
-            <option value="SS">Sopimussuorite</option>
-            <option value="KS">Kokonaissuorite</option>
-          </select></td>
+        <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">
           <td>
-            <div class="form-group has-feedback" show-errors="{ showSuccess: true }"
-                 tooltip="{{inputs.nimi.$error.required ? 'Nimi on pakollinen tieto.' :
-                            inputs.nimi.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' : ''}}"
-                 tooltip-placement="top">
+            <form-group-compact label="Suoritetyyppi">
 
-              <label for="{{'nimi' + rivi.numero}}" class="sr-only">Nimi</label>
-              <input name="{{'nimi' + rivi.numero}}" type="text" class="form-control" noenter required ng-minlength="2"
-                     bind-model="nimi"
-                     ng-minlength="1" placeholder="Nimi"
+              <select name="suoritetyyppi" ng-model="rivi.suoritetyyppitunnus" ng-disabled="isReadonly()" placeholder="Suoritetyyppi">
+                <option value="LS">Linjasuorite</option>
+                <option value="SS">Sopimussuorite</option>
+                <option value="KS">Kokonaissuorite</option>
+              </select>
+
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Nimi" errormessage="nimiErrorMessage">
+              <input name="nimi"
+                     type="text" noenter required ng-minlength="2"
+                     placeholder="Nimi"
                      select-on-click
                      ng-readonly="isReadonly()"
                      ng-model="rivi.nimi">
-              <span ng-show="inputs.nimi.$invalid"
-                    class="glyphicon glyphicon-warning-sign form-control-feedback"
-                    aria-hidden="true"></span>
-            </div>
+            </form-group-compact>
           </td>
           <td>
-            <form-group-compact name="'linjaautot' + rivi.numero" input="inputs.linjaautot"
-                                errormessage="inputs.linjaautot.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''">
-              <input bind-model="linjaautot"
+            <form-group-compact label="Linja-autot" errormessage="kokonaislukuErrorMessage">
+              <input name="linjaautot"
                      ng-model="rivi.linjaautot"
+                     placeholder="Linja-autot"
                      type="number" numeric-integer-only="" select-on-click
                      ng-readonly="isReadonly()">
-            </form-group-compact>
+            </form-group-compact-->
           </td>
           <td>
-            <form-group-compact name="'taksit' + rivi.numero" input="inputs.taksit"
-                                errormessage="inputs.taksit.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''">
-              <input bind-model="taksit"
+            <form-group-compact label="Taksit" errormessage="kokonaislukuErrorMessage">
+              <input name="taksit"
                      ng-model="rivi.taksit"
+                     placeholder="Taksit"
                      type="number" numeric-integer-only="" select-on-click
                      ng-readonly="isReadonly()">
-            </form-group-compact>
+            </form-group-compact-->
           </td>
           <td><input name="ajokilometrit" type="text" class="form-control" numeric-km-only="" ng-currency=""
                      ng-readonly="isReadonly()"
