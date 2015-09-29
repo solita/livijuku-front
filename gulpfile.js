@@ -146,7 +146,7 @@ gulp.task('scripts', function () {
     .pipe(source(paths.scripts.filename));
 
   if (production) {
-    bundle
+    bundle = bundle
       .pipe(ngAnnotate())
       .pipe(streamify(uglify()))
       .pipe(streamify(rev()));
@@ -230,10 +230,15 @@ gulp.task('styles', function () {
       cascade: false
     }))
     .pipe(sourcemaps.write())
-    .on('error', handleError)
-    .pipe(gulp.dest(paths.styles.destination));
+    .on('error', handleError);
 
-  if (!production) {
+  if(production) {
+    pipeline = pipeline.pipe(rev());
+  }
+
+  pipeline = pipeline.pipe(gulp.dest(paths.styles.destination));
+
+  if(!production) {
     pipeline.pipe(browserSync.reload({stream: true}));
   }
 
