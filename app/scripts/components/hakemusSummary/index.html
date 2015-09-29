@@ -1,6 +1,7 @@
 <div class="hakemus-summary">
   <div ng-show="!utils.hakemusKaynnissa(hakemus)" class="hakemus-summary__not-active">
     <span class="label hakemus-tila-eikaynnissa" ng-show="!utils.hakemusSuljettu(hakemus)">Ei käynnissä</span>
+
     <div ng-show="utils.hakemusSuljettu(hakemus)">
       {{utils.hakemuksiaTilassa(hakemus, "S")}} kpl <span class="label hakemus-tila-eikaynnissa">Suljettu</span>
     </div>
@@ -12,14 +13,15 @@
         {{$parent.utils.hakemuksiaTilassa($parent.hakemus, tila.id)}}
         / {{$parent.utils.hakemuksiaYhteensa($parent.hakemus)}}
       </span>
-      <hakemus-label tila="{{tila.id}}" />
+      <hakemus-label tila="{{tila.id}}"/>
     </li>
   </ul>
   <div class="hakemus-summary__hakuajat" ng-click="stopPropagation($event)">
     <p>Hakuaika:</p>
 
     <div ng-hide="editing">
-      <a ng-hide="hakemuskausiSuljettu()" href="#" ng-click="toggleEditMode($event)" id="{{ 'test-muokkaa-hakuaikoja-' + testIdIndex }}">
+      <a ng-hide="hakemuskausiSuljettu()" href="#" ng-click="toggleEditMode($event)"
+         id="{{ 'test-muokkaa-hakuaikoja-' + testIdIndex }}">
         <i class="glyphicon glyphicon-pencil hakemus-summary__edit"></i>
       </a>
       {{hakemus.hakuaika.alkupvm | date:'d.M.yyyy'}} -
@@ -44,7 +46,7 @@
                datepicker-options="{{dateOptions}}"
                is-open="calendarOpen[input]"
                ng-required="true"
-               ui-validate="{validDateOrder: 'validDateOrder($value, $index,{{input}})'}"
+               ui-validate="{validDateOrder: 'validDateOrder($value, $index)'}"
                ui-validate-watch=" 'changeFlag' "
                show-button-bar="false" noenter readonly/>
 
@@ -60,7 +62,7 @@
       </div>
 
       <div class="hakemus-summary__warning" ng-if="inPast(values.loppupvm)">
-       Huomaa, että loppumispäivämäärä on menneisyydessä
+        Huomaa, että loppumispäivämäärä on menneisyydessä
       </div>
 
       <button

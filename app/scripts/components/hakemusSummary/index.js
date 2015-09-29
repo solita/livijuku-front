@@ -34,7 +34,6 @@ module.exports = function () {
 
       $scope.changeFlag = false;
 
-      //const {alkupvm, loppupvm} = $scope.hakemus.hakuaika;
       const alkupvm = new Date($scope.hakemus.hakuaika.alkupvm);
       const loppupvm = new Date($scope.hakemus.hakuaika.loppupvm);
       $scope.values = {alkupvm, loppupvm};
@@ -60,17 +59,15 @@ module.exports = function () {
 
       $scope.validDateOrder = function (value, index) {
         // changeFlag is used to trigger also alkupvm validation when loppupvm is changed
-        if ((typeof(value) === 'string') || (index===1 && $scope.changeFlag)) return true;
-        $scope.changeFlag=false;
+        if ((typeof(value) === 'string') || (index === 1 && $scope.changeFlag)) return true;
+        $scope.changeFlag = false;
         if (index === 0) {
           return value < $scope.values.loppupvm;
         } else {
-          $scope.changeFlag=true;
+          $scope.changeFlag = true;
           return value > $scope.values.alkupvm;
         }
       };
-
-
 
       $scope.save = function onSave() {
         $scope.onSave({values: $scope.values});
