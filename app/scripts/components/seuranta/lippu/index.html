@@ -1,9 +1,8 @@
-
 <form name="{{lippuluokka + 'lippusuoritteet'}}">
   <div class="table-responsive">
     <table class="table table-hover table-condensed">
       <tr>
-        <th>Lipputyyppi</th>
+        <th>{{kaupunkilippu ? "Kaupunkiliput" : "Seutulippu"}}</th>
         <th>Myynti (kpl)</th>
         <th>Matkat (kpl)</th>
         <th>Asiakashinta</th>
@@ -16,7 +15,7 @@
       <tfoot>
         <tr>
           <td>
-            <button class="btn btn-primary" ng-click="lisaaKaupunkilippuRivi()">Lisää rivi</button>
+            <button class="btn btn-primary" ng-click="lisaaSuorite()">Lisää rivi</button>
             <span class="yhteensa">Yhteensä:</span>
           </td>
           <td>{{myyntiSumma() | currency : '' : 0}}</td>
@@ -29,35 +28,78 @@
         </tr>
       </tfoot>
       <tbody>
-        <tr ng-repeat="rivi in suoritteet track by $index">
-          <td><select name="lipputyyppi" ng-model="rivi.lipputyyppi">
-            <option value="30">30 päivän kausikortti</option>
-            <option value="VL">Vuosilippu</option>
-            <option value="SL">Sarjalippu (max. 3kk)</option>
-            <option value="KL">Kaupunkilippu</option>
-            <option value="NL">Nuorisolippu</option>
-            <option value="M">Muut (kunnan tukemat)</option>
-          </select></td>
-          <td><input name="myynti" type="text" class="form-control" numeric-integer-only="" select-on-click
-                     ng-model="rivi.myynti"></td>
-          <td><input name="matkat" type="text" class="form-control" numeric-integer-only="" select-on-click
-                     ng-model="rivi.matkat"></td>
-          <td><input name="asiakashinta" type="text" class="form-control" ng-currency="" numeric-only=""
+        <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">
+          <td ng-show="kaupunkilippu">
+            <form-group-compact label="Lipputyyppi">
+              <select name="lipputyyppi" ng-model="rivi.lipputyyppitunnus" ng-disabled="isReadonly()"
+                      placeholder="Lipputyyppi">
+                <option value="30">30 päivän kausikortti</option>
+                <option value="VL">Vuosilippu</option>
+                <option value="SL">Sarjalippu (max. 3kk)</option>
+                <option value="KL">Kaupunkilippu</option>
+                <option value="NL">Nuorisolippu</option>
+                <option value="M">Muut (kunnan tukemat)</option>
+              </select>
+            </form-group-compact>
+          </td>
+          <td ng-hide="kaupunkilippu">
+            <form-group-compact label="Seutulippualue">
+              <input name="seutulippualue" type="text" noenter required ng-minlength="2" select-on-click
+                     ng-model="rivi.seutulippualue" ng-disabled="isReadonly()"
+                     placeholder="Seutulippualue">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Myynti">
+              <input name="myynti" type="text" class="form-control" numeric-integer-only="" select-on-click
+                     ng-model="rivi.myynti" ng-disabled="isReadonly()"
+                     placeholder="Myynti">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Matkat">
+              <input name="matkat" type="number" numeric-integer-only="" select-on-click
+                     ng-model="rivi.matkat" ng-disabled="isReadonly()"
+                     placeholder="Matkat">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Asiakashinta">
+              <input name="asiakashinta" type="text" class="form-control"
+                     ng-currency="" numeric-only=""
                      noenter
                      select-on-click
-                     ng-model="rivi.asiakashinta"></td>
-          <td><input name="keskipituus" type="text" class="form-control" numeric-km-only="" ng-currency=""
+                     ng-model="rivi.asiakashinta" ng-disabled="isReadonly()"
+                     placeholder="Asiakashinta">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Keskipituus">
+              <input name="keskipituus" type="text" class="form-control" numeric-km-only="" ng-currency=""
                      currency-symbol="km"
                      noenter
                      select-on-click
-                     ng-model="rivi.keskipituus"></td>
-          <td><input name="lipputulot" type="text" class="form-control" ng-currency="" numeric-only=""
+                     ng-model="rivi.keskipituus" ng-disabled="isReadonly()"
+                     placeholder="Keskipituus">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Lipputulot">
+              <input name="lipputulot" type="text" class="form-control" ng-currency="" numeric-only=""
                      noenter
                      select-on-click
-                     ng-model="rivi.lipputulot"></td>
-          <td><input name="rahoitus" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+                     ng-model="rivi.lipputulot" ng-disabled="isReadonly()"
+                     placeholder="Lipputulot">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Rahoitus">
+              <input name="rahoitus" type="text" class="form-control" ng-currency="" numeric-only="" noenter
                      select-on-click
-                     ng-model="rivi.rahoitus"></td>
+                     ng-model="rivi.rahoitus" ng-disabled="isReadonly()"
+                     placeholder="Rahoitus">
+            </form-group-compact>
+          </td>
           <td><a href="" ng-click="poistaSuorite($index)"><span
             class="glyphicon glyphicon-remove-sign"></span>Poista</a>
           </td>

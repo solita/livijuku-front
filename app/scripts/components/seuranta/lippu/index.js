@@ -11,9 +11,8 @@ function lippuController($scope) {
 
   $scope.lisaaSuorite = function () {
     var uusi = {
-      lipputyyppitunnus: $scope.lipputyyppi,
+      lipputyyppitunnus: $scope.kaupunkilippu ? $scope.lipputyyppi : 'SE',
       numero: $scope.suoritteet.length + 1,
-
       myynti: 0,
       matkat: 0,
       asiakashinta: 0.0,
@@ -57,11 +56,11 @@ function lippuController($scope) {
   $scope.nimiErrorMessage = function(input) {
     return input.$error.required ? 'Nimi on pakollinen tieto.' :
            input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' : '';
-  }
+  };
 
   $scope.kokonaislukuErrorMessage = function(input) {
     return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
-  }
+  };
 
   $scope.ajokilometritErrorMessage = pakollinnenErrorMessage("Ajokilometrit");
   $scope.lipputuloErrorMessage = pakollinnenErrorMessage("Lipputulo");
@@ -74,7 +73,7 @@ module.exports = function () {
     scope: {
       suoritteet: '=suoritteet',
       isReadonly: '&isReadonly',
-      kaupunkilippu: '@kaupunkilippu'
+      kaupunkilippu: '=kaupunkilippu'
     },
     template: require('./index.html'),
     replace: true,

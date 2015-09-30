@@ -254,6 +254,7 @@ angular
   .directive('jukuSeurantalomakeSeutulippu', require('components/seurantalomakeSeutulippu'))
   .directive('jukuSeurantalomakeKaupunkiliput', require('components/seurantalomakeKaupunkiliput'))
   .directive('jukuSeurantaLiikenne', require('components/seuranta/liikenne'))
+  .directive('jukuSeurantaLippu', require('components/seuranta/lippu'))
   .directive('jukuSeurantaForms', directive.template(require('views/hakemus/seuranta-forms.html')))
   .directive('jukuUploadHakuohjeButton', directive.template(require('views/kasittelija/hakuohje-upload-button.html')))
   .directive('jukuDeleteKayttajaLink', directive.template(require('views/yhteinen/delete-kayttaja-link.html')))
