@@ -14,7 +14,7 @@
         </div>
       </accordion-heading>
       <div class="panel-body">
-        <juku-seuranta-liikenne suoritteet="psaLiikenneSuoritteet" tyyppi="PSA" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
+        <juku-seuranta-liikenne suoritteet="psaLiikenneSuoritteet" tyyppi="PSA" suoritetyypit="suoritetyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
       </div>
     </accordion-group>
     <accordion-group is-open="isOpenPAL">
@@ -28,7 +28,7 @@
         </div>
       </accordion-heading>
       <div class="panel-body">
-        <juku-seuranta-liikenne suoritteet="palLiikenneSuoritteet" tyyppi="PAL" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
+        <juku-seuranta-liikenne suoritteet="palLiikenneSuoritteet" tyyppi="PAL" suoritetyypit="suoritetyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
       </div>
     </accordion-group>
     <accordion-group is-open="isOpenKAU">
@@ -42,7 +42,7 @@
         </div>
       </accordion-heading>
       <div class="panel-body">
-        <juku-seuranta-lippu suoritteet="kaupunkilippuSuoritteet" kaupunkilippu="true" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
+        <juku-seuranta-lippu suoritteet="kaupunkilippuSuoritteet" kaupunkilippu="true" lipputyypit="lipputyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
       </div>
     </accordion-group>
     <accordion-group is-open="isOpenSEU">
@@ -56,7 +56,7 @@
         </div>
       </accordion-heading>
       <div class="panel-body">
-        <juku-seuranta-lippu suoritteet="seutulippuSuoritteet" kaupunkilippu="false" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
+        <juku-seuranta-lippu suoritteet="seutulippuSuoritteet" kaupunkilippu="false" lipputyypit="lipputyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
       </div>
     </accordion-group>
   </accordion>

@@ -9,27 +9,6 @@ module.exports = function() {
 
         <p>Liitä hakemukseesi seuraavat tiedot:</p>
 
-        <h5>Seurantalomakkeet:</h5>
-
-        <p>Lataa seurantalomake: <a href="resources/JUKU_valtionavustusten_seurantalomake_2015.xlsx" target="_blank">Valtionavustuksen
-          seurantalomake</a>
-        </p>
-        <section>
-          <ul>
-            <li>
-              Täytä lomakkeeseen tiedot PSA-liikenteestä ja hintavelvoitteiden korvaamisesta (Linja-, sopimus- tai
-              yhteenvetotasolla).
-            </li>
-            <li>
-              Huomaa, että valtionavustuksen seurantalomakeessa on neljä välilehteä: Paikallisliikenne,
-              palveluliikenne,
-              kaupunkilippu ja seutulippu.
-            </li>
-            <li>
-              Toimivaltaisen viranomaisen ja seurantatietojen ajankohdan voit valita lomakkeen alasvetovalikoista.
-            </li>
-          </ul>
-        </section>
         <h5>Kustannusten todentaminen:</h5>
 
         <p>

@@ -99,6 +99,8 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
         return {};
       }
     }),
+    suoritetyypit: ifMaksatushakemus(hakemus => LiikenneSuoriteService.suoritetyypit(), []),
+    lipputyypit: ifMaksatushakemus(hakemus => LippuSuoriteService.lipputyypit(), []),
     psaLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PSA")),
     palLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PAL")),
     kaupunkilippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, function (suorite) {

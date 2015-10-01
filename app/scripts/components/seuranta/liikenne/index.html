@@ -7,44 +7,44 @@
         <th>
           <div tooltip="Linja-autojen lukumäärä" tooltip-placement="top"
                tooltip-append-to-body="true">Linja-autot
-               <span class="glyphicon glyphicon-question-sign"></span>
+            <span class="glyphicon glyphicon-question-sign"></span>
           </div>
         </th>
         <th>
           <div tooltip="Taksien lukumäärä" tooltip-placement="top"
                tooltip-append-to-body="true">Taksit
-               <span class="glyphicon glyphicon-question-sign"></span>
+            <span class="glyphicon glyphicon-question-sign"></span>
           </div>
         </th>
         <th>
           <div tooltip="Paikallisliikenteen ajokilometrit"
                tooltip-append-to-body="true">Ajokilometrit
-               <span class="glyphicon glyphicon-question-sign"></span>
+            <span class="glyphicon glyphicon-question-sign"></span>
           </div>
         </th>
         <th>
           <div tooltip="Paikallisliikenteen matkustajamäärä" tooltip-placement="top"
                tooltip-append-to-body="true">Matkustaja-määrä
-               <span class="glyphicon glyphicon-question-sign"></span>
+            <span class="glyphicon glyphicon-question-sign"></span>
           </div>
         </th>
         <th>
           <div tooltip="Saadut matkalipputulot" tooltip-placement="top"
                tooltip-append-to-body="true">Lipputulo
-               <span class="glyphicon glyphicon-question-sign"></span>
+            <span class="glyphicon glyphicon-question-sign"></span>
           </div>
         </th>
         <th>
           <div tooltip="Kaupungin liikennöitsijöille maksama hinta, sisältää valtionavun"
                tooltip-placement="top"
                tooltip-append-to-body="true">Netto&shy;hinta
-               <span class="glyphicon glyphicon-question-sign"></span>
+            <span class="glyphicon glyphicon-question-sign"></span>
           </div>
         </th>
         <th>
           <div tooltip="Lipputulo + nettohinta" tooltip-placement="top"
                tooltip-append-to-body="true">Brutto&shy;hinta
-               <span class="glyphicon glyphicon-question-sign"></span>
+            <span class="glyphicon glyphicon-question-sign"></span>
           </div>
         </th>
         <th ng-hide="isReadonly()">Toiminnot</th>
@@ -71,10 +71,10 @@
           <td>
             <form-group-compact label="Suoritetyyppi">
 
-              <select name="suoritetyyppi" ng-model="rivi.suoritetyyppitunnus" ng-disabled="isReadonly()" placeholder="Suoritetyyppi">
-                <option value="LS">Linjasuorite</option>
-                <option value="SS">Sopimussuorite</option>
-                <option value="KS">Kokonaissuorite</option>
+              <select name="suoritetyyppi" ng-model="rivi.suoritetyyppitunnus" ng-disabled="isReadonly()"
+                      placeholder="Suoritetyyppi" required>
+                <option value="" selected disabled>Valitse suoritetyyppi</option>
+                <option ng-repeat="tyyppi in suoritetyypit" value="{{tyyppi.tunnus}}">{{tyyppi.nimi}}
               </select>
 
             </form-group-compact>
@@ -110,34 +110,34 @@
           <td>
             <form-group-compact label="Ajokilometrit" errormessage="ajokilometritErrorMessage">
               <input name="ajokilometrit" type="text" class="form-control" numeric-km-only="" ng-currency=""
-                       ng-readonly="isReadonly()" required
-                       currency-symbol="km" noenter
-                       select-on-click
-                       ng-model="rivi.ajokilometrit">
+                     ng-readonly="isReadonly()" required
+                     currency-symbol="km" noenter
+                     select-on-click
+                     ng-model="rivi.ajokilometrit">
             </form-group-compact>
           </td>
           <td>
             <form-group-compact label="Matkustajamäärä" errormessage="kokonaislukuErrorMessage">
               <input name="matkustajamaara" type="number" class="form-control" numeric-integer-only="" noenter
-                       ng-readonly="isReadonly()"
-                       select-on-click
-                       ng-model="rivi.matkustajamaara">
+                     ng-readonly="isReadonly()"
+                     select-on-click
+                     ng-model="rivi.matkustajamaara">
             </form-group-compact>
           </td>
           <td>
             <form-group-compact label="Lipputulo" errormessage="lipputuloErrorMessage">
               <input name="lipputulo" type="text" class="form-control" ng-currency="" numeric-only="" noenter
-                       ng-readonly="isReadonly()" required
-                       select-on-click
-                       ng-model="rivi.lipputulo">
+                     ng-readonly="isReadonly()" required
+                     select-on-click
+                     ng-model="rivi.lipputulo">
             </form-group-compact>
           </td>
           <td>
             <form-group-compact label="Nettohinta" errormessage="nettohintaErrorMessage">
               <input name="nettohinta" type="text" class="form-control" ng-currency="" numeric-only="" noenter
-                       ng-readonly="isReadonly()" required
-                       select-on-click
-                       ng-model="rivi.nettohinta">
+                     ng-readonly="isReadonly()" required
+                     select-on-click
+                     ng-model="rivi.nettohinta">
             </form-group-compact>
           </td>
           <td>{{laskeBruttohinta($index) | currency}}</td>

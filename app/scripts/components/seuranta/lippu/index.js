@@ -2,8 +2,8 @@
 var _ = require('lodash');
 
 function pakollinnenErrorMessage(nimi) {
-  return function(input) {
-    return input.$error.required ? nimi +' on pakollinen tieto.' : '';
+  return function (input) {
+    return input.$error.required ? nimi + ' on pakollinen tieto.' : '';
   }
 }
 
@@ -11,16 +11,15 @@ function lippuController($scope) {
 
   $scope.lisaaSuorite = function () {
     var uusi = {
-      lipputyyppitunnus: $scope.kaupunkilippu ? $scope.lipputyyppi : 'SE',
+      lipputyyppitunnus: $scope.kaupunkilippu ? '' : 'SE',
+      seutulippualue: '',
       numero: $scope.suoritteet.length + 1,
       myynti: 0,
       matkat: 0,
       asiakashinta: 0.0,
       keskipituus: 0.0,
-      matkustajamaarat: 0,
-      lipputulot: 0,
-      rahoitus: 0
-
+      lipputulo: 0,
+      julkinenrahoitus: 0
     };
     $scope.suoritteet.push(uusi);
   };
@@ -30,41 +29,42 @@ function lippuController($scope) {
   };
 
   $scope.myyntiSumma = function () {
-    return _.sum($scope.kaupunkilippudata, 'myynti');
+    return _.sum($scope.suoritteet, 'myynti');
   };
 
   $scope.matkatSumma = function () {
-    return _.sum($scope.kaupunkilippudata, 'matkat');
+    return _.sum($scope.suoritteet, 'matkat');
   };
 
   $scope.asiakashintaSumma = function () {
-    return _.sum($scope.kaupunkilippudata, 'asiakashinta');
+    return _.sum($scope.suoritteet, 'asiakashinta');
   };
 
   $scope.keskipituusSumma = function () {
-    return _.sum($scope.kaupunkilippudata, 'keskipituus');
+    return _.sum($scope.suoritteet, 'keskipituus');
   };
 
   $scope.lipputuloSumma = function () {
-    return _.sum($scope.kaupunkilippudata, 'lipputulot');
+    return _.sum($scope.suoritteet, 'lipputulo');
   };
 
   $scope.rahoitusSumma = function () {
-    return _.sum($scope.kaupunkilippudata, 'rahoitus');
+    return _.sum($scope.suoritteet, 'julkinenrahoitus');
   };
 
-  $scope.nimiErrorMessage = function(input) {
-    return input.$error.required ? 'Nimi on pakollinen tieto.' :
-           input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' : '';
+  $scope.seutulippualueErrorMessage = function (input) {
+    return input.$error.required ? 'Seutulippualue on pakollinen tieto.' :
+      input.$error.minlength ? 'Seutulippualue pituus pitää olla vähintään 2 merkkiä.' : '';
   };
 
-  $scope.kokonaislukuErrorMessage = function(input) {
+  $scope.kokonaislukuErrorMessage = function (input) {
     return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
   };
 
-  $scope.ajokilometritErrorMessage = pakollinnenErrorMessage("Ajokilometrit");
-  $scope.lipputuloErrorMessage = pakollinnenErrorMessage("Lipputulo");
-  $scope.nettohintaErrorMessage = pakollinnenErrorMessage("Nettohinta");
+  $scope.keskipituusErrorMessage = pakollinnenErrorMessage("Matkojen keskipituus");
+  $scope.asiakashintaErrorMessage = pakollinnenErrorMessage("Asiakashinta");
+  $scope.lipputulotErrorMessage = pakollinnenErrorMessage("Lipputulot yhteensä");
+  $scope.rahoitusErrorMessage = pakollinnenErrorMessage("Rahoitus yhteensä");
 }
 
 module.exports = function () {
@@ -72,6 +72,7 @@ module.exports = function () {
     restrict: 'E',
     scope: {
       suoritteet: '=suoritteet',
+      lipputyypit: '=lipputyypit',
       isReadonly: '&isReadonly',
       kaupunkilippu: '=kaupunkilippu'
     },

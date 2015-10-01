@@ -12,9 +12,8 @@ function liikenneController($scope) {
   $scope.lisaaSuorite = function () {
     var uusi = {
       liikennetyyppitunnus: $scope.liikennetyyppi,
+      suoritetyyppitunnus: '',
       numero: $scope.suoritteet.length + 1,
-
-      suoritetyyppitunnus: 'LS',
       nimi: '',
       linjaautot: 0,
       taksit: 0,
@@ -51,7 +50,7 @@ function liikenneController($scope) {
   };
 
   $scope.matkustajatSumma = function () {
-    return _.sum($scope.suoritteet, 'matkustajamaarat');
+    return _.sum($scope.suoritteet, 'matkustajamaara');
   };
 
   $scope.nettohintaSumma = function () {
@@ -65,11 +64,11 @@ function liikenneController($scope) {
   $scope.nimiErrorMessage = function(input) {
     return input.$error.required ? 'Nimi on pakollinen tieto.' :
            input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' : '';
-  }
+  };
 
   $scope.kokonaislukuErrorMessage = function(input) {
     return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
-  }
+  };
 
   $scope.ajokilometritErrorMessage = pakollinnenErrorMessage("Ajokilometrit");
   $scope.lipputuloErrorMessage = pakollinnenErrorMessage("Lipputulo");
@@ -81,6 +80,7 @@ module.exports = function () {
     restrict: 'E',
     scope: {
       suoritteet: '=suoritteet',
+      suoritetyypit: '=suoritetyypit',
       isReadonly: '&isReadonly',
       liikennetyyppi: '@tyyppi'
     },
