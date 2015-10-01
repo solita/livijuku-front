@@ -120,7 +120,7 @@ function handleError(err) {
 gulp.task('templates', function () {
   var resources = gulp.src(paths.inject.resources, {read: false});
   var pipeline = gulp.src(paths.templates.source)
-    .pipe(inject(resources, {ignorePath: 'dist', removeTags: true}))
+    .pipe(inject(resources, {ignorePath: 'dist', removeTags: true, addRootSlash: false}))
     .pipe(gulp.dest(paths.templates.destination));
 
   return pipeline;
