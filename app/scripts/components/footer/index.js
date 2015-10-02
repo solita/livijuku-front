@@ -3,7 +3,7 @@
 function footerController($scope, ConfigService) {
   ConfigService.hae().then(function (response) {
     $scope.environmentName = response.environmentName;
-  }, $scope.environmentName = '');
+  });
 }
 
 

@@ -5,7 +5,7 @@ function sidebarController($scope, ConfigService) {
 
   ConfigService.hae().then(function (response) {
     $scope.logoutUrl = response.logoutUrl;
-  }, $scope.logoutUrl = '#/');
+  });
 }
 
 sidebarController.$inject = ['$scope', 'ConfigService'];
