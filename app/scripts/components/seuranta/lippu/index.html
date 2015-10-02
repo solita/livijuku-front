@@ -1,4 +1,4 @@
-<form name="{{lippuluokka + 'lippusuoritteet'}}">
+<form name="{{kaupunkilippu ? 'kaupunki' : 'seutu' + '-lippusuoritteet'}}">
   <div class="table-responsive">
     <table class="table table-hover table-condensed">
       <tr>
@@ -30,7 +30,7 @@
         <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">
           <td ng-show="kaupunkilippu">
             <form-group-compact label="Lipputyyppi">
-              <select name="lipputyyppi" ng-model="rivi.lipputyyppitunnus" ng-disabled="isReadonly()"
+              <select id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lipputyyppi'}}" name="lipputyyppi" ng-model="rivi.lipputyyppitunnus" ng-disabled="isReadonly()"
                       placeholder="Lipputyyppi" required>
                 <option value="" selected disabled>Valitse lipputyyppi</option>
                 <option ng-repeat="tyyppi in lipputyypit" value="{{tyyppi.tunnus}}">{{tyyppi.nimi}}
@@ -40,28 +40,28 @@
           </td>
           <td ng-hide="kaupunkilippu">
             <form-group-compact label="Seutulippualue" errormessage="seutulippualueErrorMessage">
-              <input name="seutulippualue" type="text" noenter ng-minlength="2" select-on-click
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-seutulippualue'}}" name="seutulippualue" type="text" noenter ng-minlength="2" select-on-click
                      ng-model="rivi.seutulippualue" ng-disabled="isReadonly()"
                      placeholder="Seutulippualue" required>
             </form-group-compact>
           </td>
           <td>
             <form-group-compact label="Myynti" errormessage="kokonaislukuErrorMessage">
-              <input name="myynti" type="number" numeric-integer-only="" select-on-click
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-myynti'}}" name="myynti" type="number" numeric-integer-only="" select-on-click
                      ng-model="rivi.myynti" ng-disabled="isReadonly()"
                      placeholder="Myynti">
             </form-group-compact>
           </td>
           <td>
             <form-group-compact label="Matkat" errormessage="kokonaislukuErrorMessage">
-              <input name="matkat" type="number" numeric-integer-only="" select-on-click
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-matkat'}}" name="matkat" type="number" numeric-integer-only="" select-on-click
                      ng-model="rivi.matkat" ng-disabled="isReadonly()"
                      placeholder="Matkat">
             </form-group-compact>
           </td>
           <td>
             <form-group-compact label="Asiakashinta" errormessage="asiakashintaErrorMessage">
-              <input name="asiakashinta" type="text" class="form-control"
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-asiakashinta'}}" name="asiakashinta" type="text" class="form-control"
                      ng-currency="" numeric-only=""
                      noenter
                      select-on-click
@@ -71,7 +71,7 @@
           </td>
           <td>
             <form-group-compact label="Keskipituus" errormessage="keskipituusErrorMessage">
-              <input name="keskipituus" type="text" class="form-control" numeric-km-only="" ng-currency=""
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-keskipituus'}}" name="keskipituus" type="text" class="form-control" numeric-km-only="" ng-currency=""
                      currency-symbol="km"
                      noenter
                      select-on-click
@@ -81,7 +81,7 @@
           </td>
           <td>
             <form-group-compact label="Lipputulot" errormessage="lipputulotErrorMessage">
-              <input name="lipputulot" type="text" class="form-control" ng-currency="" numeric-only=""
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lipputulot'}}" name="lipputulot" type="text" class="form-control" ng-currency="" numeric-only=""
                      noenter
                      select-on-click
                      ng-model="rivi.lipputulo" ng-disabled="isReadonly()"
@@ -90,7 +90,7 @@
           </td>
           <td>
             <form-group-compact label="Rahoitus" errormessage="rahoitusErrorMessage">
-              <input name="rahoitus" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-rahoitus'}}" name="rahoitus" type="text" class="form-control" ng-currency="" numeric-only="" noenter
                      select-on-click
                      ng-model="rivi.julkinenrahoitus" ng-disabled="isReadonly()"
                      placeholder="Rahoitus" required>
@@ -102,7 +102,7 @@
         </tr>
       </tbody>
     </table>
-    <button ng-hide="isReadonly()" class="btn btn-primary" ng-click="lisaaSuorite()">Lisää rivi</button>
+    <button ng-hide="isReadonly()" class="btn btn-primary" ng-click="lisaaSuorite()">Lisää uusi rivi</button>
   </div>
 </form>
 

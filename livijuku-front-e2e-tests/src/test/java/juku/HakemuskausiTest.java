@@ -210,6 +210,9 @@ public class HakemuskausiTest extends TestBase {
 
         // Täydennä maksatushakemus
         syotaRahasummat(Hakemus.rahakentat(), "400,00", "1000,00");
+
+        // Täytetään seurantatiedot
+        syotaSeurantatiedot();
         lahetaHakemus();
 
         // Assetoi hakijana tila Täydennetty.
@@ -331,6 +334,14 @@ public class HakemuskausiTest extends TestBase {
             rahakentat.get(i).sendKeys(avustus);
             rahakentat.get(i + 1).clear();
             rahakentat.get(i + 1).sendKeys(oma);
+        }
+    }
+
+    private void syotaSeurantatiedot() {
+        // Avaa accordionit
+        List<WebElement> seurantaAccordionList = findElementsByXPath("//a[@class='accordion-toggle']");
+        for (WebElement seurantaAccordion : seurantaAccordionList){
+            seurantaAccordion.click();
         }
     }
 
