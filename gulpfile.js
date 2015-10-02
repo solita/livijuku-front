@@ -14,7 +14,6 @@ var path = require('path');
 var pkg = require('./package.json');
 var replace = require('gulp-replace');
 var rev = require('gulp-rev');
-var rimraf = require('rimraf');
 var stylus = require('gulp-stylus');
 var uglify = require('gulp-uglify');
 var watchify = require('watchify');
@@ -24,7 +23,6 @@ var sourcemaps = require('gulp-sourcemaps');
 var source = require('vinyl-source-stream');
 var streamify = require('gulp-streamify');
 var inject = require('gulp-inject');
-var runSequence = require('run-sequence');
 
 var paths = {
   styles: {
@@ -117,7 +115,7 @@ function handleError(err) {
   return this.emit('end');
 };
 
-gulp.task('templates', function () {
+gulp.task('templates', ['styles', 'scripts'], function () {
   var resources = gulp.src(paths.inject.resources, {read: false});
   var pipeline = gulp.src(paths.templates.source)
     .pipe(inject(resources, {ignorePath: 'dist', removeTags: true, addRootSlash: false}))
@@ -261,11 +259,5 @@ gulp.task('watch', ['scripts'], function () {
   }).emit('update');
 });
 
-gulp.task('build', function () {
-  rimraf.sync('./dist');
-  runSequence(['styles', 'assets', 'copy', 'scripts'], 'templates');
-});
-
-gulp.task('default', function () {
-  runSequence(['styles', 'assets', 'copy'], 'templates', ['watch', 'server'])
-});
+gulp.task('build', ['styles', 'assets', 'scripts', 'templates']);
+gulp.task('default', ['styles', 'assets', 'templates', 'watch', 'server']);
