@@ -13,7 +13,7 @@ function dropdownController($scope, ConfigService) {
 
   ConfigService.hae().then(function (response) {
     $scope.logoutUrl = response.logoutUrl;
-  }, $scope.logoutUrl = '#/');
+  });
 }
 
 
