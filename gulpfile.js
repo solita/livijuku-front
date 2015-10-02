@@ -36,7 +36,7 @@ var paths = {
     filename: 'scripts.js'
   },
   templates: {
-    source: './app/index.html',
+    source: './app/*.html',
     watch: './app/*.html',
     destination: './dist/',
     revision: './dist/**/*.html'
