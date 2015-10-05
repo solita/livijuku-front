@@ -4,8 +4,8 @@ var angular = require("angular");
 var _ = require("lodash");
 
 function assertInputIsDefined(input, element) {
-  var message = "Input or select element is not found inside form-group component.";
   if (!input) {
+    var message = "Input or select element is not found inside form-group component.";
     console.log(message, element);
     throw({message: message, element: element});
   }
@@ -32,7 +32,7 @@ export function formGroupCompact() {
         scope.feedbackSupport = true;
       }
 
-      assertInputIsDefined(input);
+      assertInputIsDefined(input, element[0]);
 
       input.classList.add("form-control");
 
