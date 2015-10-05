@@ -19,6 +19,13 @@ var directive = require('utils/directive');
  */
 window.jQuery = require('jquery');
 
+/**
+ * Alustava xsrf-token arvo, jota käytetään ensimmäiseen backend-pyyntöön.
+ * Ensimmäisessä pyynnössä backend antaa vastauksena tietoturvallisen satunnaisluvun.
+ * CRSF-hyökkäys esto perustuu double submit cookie -malliin.
+ */
+document.cookie = "XSRF-TOKEN=unsecure-" + Math.random();
+
 require('angular-toastr');
 require('angular-resource');
 require('angular-loading-bar');
