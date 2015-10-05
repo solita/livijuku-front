@@ -3,6 +3,14 @@
 var angular = require("angular");
 var _ = require("lodash");
 
+function assertInputIsDefined(input, element) {
+  var message = "Input or select element is not found inside form-group component.";
+  if (!input) {
+    console.log(message, element);
+    throw({message: message, element: element});
+  }
+}
+
 export function formGroupCompact() {
   return {
     restrict: "E",
@@ -19,12 +27,13 @@ export function formGroupCompact() {
       var input = element[0].getElementsByTagName("input")[0];
       if (!input) {
         input = element[0].getElementsByTagName("select")[0];
+        scope.feedbackSupport = false;
+      } else {
+        scope.feedbackSupport = true;
       }
-      if (!input) {
-        console.log("Input or select element is not found inside form-group", element);
-        throw("Input or select element is not found inside form-group: " + element);
-      }
-      //input.setAttribute("name", scope.name());
+
+      assertInputIsDefined(input);
+
       input.classList.add("form-control");
 
       scope.name = input.getAttribute("name");
