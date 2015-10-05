@@ -50,7 +50,7 @@
         <th ng-hide="isReadonly()">Toiminnot</th>
       </tr>
       </thead>
-      <tfoot>
+      <tfoot ng-if="suoritteet.length > 0">
         <tr>
           <td>
             <span class="yhteensa">Yhteensä:</span>
@@ -67,6 +67,11 @@
         </tr>
       </tfoot>
       <tbody>
+        <tr ng-if="suoritteet.length === 0">
+          <td colspan="10" class="text-info">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Yhtään liikennesuoritetta ei ole lisätty. Tämä taulukko on tyhjä.
+          </td>
+        </tr>
         <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">
           <td>
             <form-group-compact label="Suoritetyyppi">
