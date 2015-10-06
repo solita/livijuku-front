@@ -81,7 +81,9 @@
   },
   "browserify": {
     "transform": [
-      "babelify",
+      ["babelify", {
+        "optional": ["utility.inlineEnvironmentVariables"]
+      }],
       "stringify"
     ]
   }
