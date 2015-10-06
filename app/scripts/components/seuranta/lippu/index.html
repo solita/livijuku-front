@@ -96,13 +96,13 @@
                      placeholder="Rahoitus" required>
             </form-group-compact>
           </td>
-          <td><a href="" ng-click="poistaSuorite($index)"><span
+          <td><a id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-poistasuorite'}}" href="" ng-click="poistaSuorite($index)"><span
             class="glyphicon glyphicon-remove-sign"></span>Poista</a>
           </td>
         </tr>
       </tbody>
     </table>
-    <button id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lisaarivi'}}" ng-hide="isReadonly()" class="btn btn-primary" ng-click="lisaaSuorite()">Lisää uusi rivi</button>
+    <button id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lisaasuorite'}}" ng-hide="isReadonly()" class="btn btn-primary" ng-click="lisaaSuorite()">Lisää uusi rivi</button>
   </div>
 </form>
 

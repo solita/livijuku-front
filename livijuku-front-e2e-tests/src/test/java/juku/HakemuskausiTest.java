@@ -211,8 +211,10 @@ public class HakemuskausiTest extends TestBase {
         // Täydennä maksatushakemus
         syotaRahasummat(Hakemus.rahakentat(), "400,00", "1000,00");
 
-        // Täytetään seurantatiedot
+        // Täydennä seurantatiedot
         syotaSeurantatiedot();
+
+        // Lähetetä hakemus
         lahetaHakemus();
 
         // Assetoi hakijana tila Täydennetty.
@@ -330,10 +332,8 @@ public class HakemuskausiTest extends TestBase {
 
     private void syotaRahasummat(List<WebElement> rahakentat, String avustus, String oma) {
         for (int i = 0; i < rahakentat.size(); i += 2) {
-            rahakentat.get(i).click();
             rahakentat.get(i).clear();
             rahakentat.get(i).sendKeys(avustus);
-            rahakentat.get(i + 1).click();
             rahakentat.get(i + 1).clear();
             rahakentat.get(i + 1).sendKeys(oma);
         }
@@ -342,7 +342,10 @@ public class HakemuskausiTest extends TestBase {
     private void uusiLiikennesuorite(String prefix, int suoritetyyppi, String nimi,
                                      String linjaautot, String taksit, String ajokilometrit,
                                      String matkustajamaara, String lipputulo, String nettohinta) {
-        findElementByXPath(String.format("//button[@id='%s-lisaarivi']", prefix)).click();
+        // Luodaan rivi ja poistetaan se samantien
+        findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)).click();
+        findElementByXPath(String.format("//a[@id='%s-poistasuorite']", prefix)).click();
+        findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)).click();
         findElementByXPath(String.format("//select[@id='%s-suoritetyyppi']/option[%d]", prefix, suoritetyyppi)).click();
         findElementByXPath(String.format("//input[@id='%s-nimi']", prefix)).clear();
         findElementByXPath(String.format("//input[@id='%s-nimi']", prefix)).sendKeys(nimi);
@@ -363,7 +366,9 @@ public class HakemuskausiTest extends TestBase {
     private void uusiLippusuorite(String prefix, int lipputyyppi, String seutulippualue, String myynti,
                                   String matkat, String asiakashinta, String keskipituus,
                                   String lipputulot, String rahoitus) {
-        findElementByXPath(String.format("//button[@id='%s-lisaarivi']", prefix)).click();
+        findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)).click();
+        findElementByXPath(String.format("//a[@id='%s-poistasuorite']", prefix)).click();
+        findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)).click();
         if (prefix.equals("kaupunki")) {
             findElementByXPath(String.format("//select[@id='%s-lipputyyppi']/option[%d]", prefix, lipputyyppi)).click();
         }

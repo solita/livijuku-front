@@ -25,7 +25,7 @@ function liikenneController($scope) {
     };
     $scope.suoritteet.push(uusi);
   };
-  $scope.poistaPaikallisliikenneRivi = function (indeksi) {
+  $scope.poistaSuorite = function (indeksi) {
     $scope.suoritteet.splice(indeksi, 1);
   };
 
