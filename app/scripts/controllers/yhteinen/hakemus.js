@@ -267,10 +267,10 @@ angular.module('jukufrontApp')
       };
 
       $scope.myonnettyAvustusPerJakso = function () {
-        if ($scope.hakemus.hakemustyyppitunnus === 'MH1') {
+        if ($scope.onMaksatushakemus1()) {
           return ($scope.avustushakemusPaatos.myonnettyavustus / 2);
         }
-        if ($scope.hakemus.hakemustyyppitunnus === 'MH2') {
+        if ($scope.onMaksatushakemus2()) {
           return $scope.avustushakemusPaatos.myonnettyavustus - $scope.maksatushakemus1Paatos.myonnettyavustus;
         }
       };
