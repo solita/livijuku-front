@@ -1,4 +1,4 @@
-<form name="{{liikennetyyppi + '-liikennesuoritteet'}}">
+<ng-form id="{{liikennetyyppi + '-liikennesuoritteet-form'}}" name="suoritteetForm">
   <div class="table-responsive">
     <table class="table table-hover table-condensed">
       <tr>
@@ -155,4 +155,4 @@
 
     <button id="{{liikennetyyppi + '-lisaasuorite'}}" ng-hide="isReadonly()" class="btn btn-primary" ng-click="lisaaSuorite()">Lisää uusi rivi</button>
   </div>
-</form>
+</ng-form>

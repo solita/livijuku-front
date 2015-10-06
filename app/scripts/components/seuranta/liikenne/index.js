@@ -27,6 +27,7 @@ function liikenneController($scope) {
   };
   $scope.poistaSuorite = function (indeksi) {
     $scope.suoritteet.splice(indeksi, 1);
+    $scope.suoritteetForm.$setDirty();
   };
 
   $scope.linjaautotSumma = function () {
