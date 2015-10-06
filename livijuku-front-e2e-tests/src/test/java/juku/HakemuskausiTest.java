@@ -330,19 +330,79 @@ public class HakemuskausiTest extends TestBase {
 
     private void syotaRahasummat(List<WebElement> rahakentat, String avustus, String oma) {
         for (int i = 0; i < rahakentat.size(); i += 2) {
+            rahakentat.get(i).click();
             rahakentat.get(i).clear();
             rahakentat.get(i).sendKeys(avustus);
+            rahakentat.get(i + 1).click();
             rahakentat.get(i + 1).clear();
             rahakentat.get(i + 1).sendKeys(oma);
         }
     }
 
+    private void uusiLiikennesuorite(String prefix, int suoritetyyppi, String nimi,
+                                     String linjaautot, String taksit, String ajokilometrit,
+                                     String matkustajamaara, String lipputulo, String nettohinta) {
+        findElementByXPath(String.format("//button[@id='%s-lisaarivi']", prefix)).click();
+        findElementByXPath(String.format("//select[@id='%s-suoritetyyppi']/option[%d]", prefix, suoritetyyppi)).click();
+        findElementByXPath(String.format("//input[@id='%s-nimi']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-nimi']", prefix)).sendKeys(nimi);
+        findElementByXPath(String.format("//input[@id='%s-linjaautot']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-linjaautot']", prefix)).sendKeys(linjaautot);
+        findElementByXPath(String.format("//input[@id='%s-taksit']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-taksit']", prefix)).sendKeys(taksit);
+        findElementByXPath(String.format("//input[@id='%s-ajokilometrit']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-ajokilometrit']", prefix)).sendKeys(ajokilometrit);
+        findElementByXPath(String.format("//input[@id='%s-matkustajamaara']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-matkustajamaara']", prefix)).sendKeys(matkustajamaara);
+        findElementByXPath(String.format("//input[@id='%s-lipputulo']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-lipputulo']", prefix)).sendKeys(lipputulo);
+        findElementByXPath(String.format("//input[@id='%s-nettohinta']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-nettohinta']", prefix)).sendKeys(nettohinta);
+    }
+
+    private void uusiLippusuorite(String prefix, int lipputyyppi, String seutulippualue, String myynti,
+                                  String matkat, String asiakashinta, String keskipituus,
+                                  String lipputulot, String rahoitus) {
+        findElementByXPath(String.format("//button[@id='%s-lisaarivi']", prefix)).click();
+        if (prefix.equals("kaupunki")) {
+            findElementByXPath(String.format("//select[@id='%s-lipputyyppi']/option[%d]", prefix, lipputyyppi)).click();
+        }
+        if (prefix.equals("seutu")) {
+            findElementByXPath(String.format("//input[@id='%s-seutulippualue']", prefix)).clear();
+            findElementByXPath(String.format("//input[@id='%s-seutulippualue']", prefix)).sendKeys(seutulippualue);
+        }
+        findElementByXPath(String.format("//input[@id='%s-myynti']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-myynti']", prefix)).sendKeys(myynti);
+        findElementByXPath(String.format("//input[@id='%s-matkat']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-matkat']", prefix)).sendKeys(matkat);
+        findElementByXPath(String.format("//input[@id='%s-asiakashinta']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-asiakashinta']", prefix)).sendKeys(asiakashinta);
+        findElementByXPath(String.format("//input[@id='%s-keskipituus']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-keskipituus']", prefix)).sendKeys(keskipituus);
+        findElementByXPath(String.format("//input[@id='%s-lipputulot']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-lipputulot']", prefix)).sendKeys(lipputulot);
+        findElementByXPath(String.format("//input[@id='%s-rahoitus']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-rahoitus']", prefix)).sendKeys(rahoitus);
+    }
+
     private void syotaSeurantatiedot() {
         // Avaa accordionit
         List<WebElement> seurantaAccordionList = findElementsByXPath("//a[@class='accordion-toggle']");
-        for (WebElement seurantaAccordion : seurantaAccordionList){
+        for (WebElement seurantaAccordion : seurantaAccordionList) {
             seurantaAccordion.click();
         }
+
+        // PSA-rivi
+        uusiLiikennesuorite("PSA", 2, "SuoritePSA", "23", "11", "1234,23", "121", "342,45", "102,30");
+
+        // Palveluliikenne
+        uusiLiikennesuorite("PAL", 3, "SuoritePAL", "33", "21", "4100,20", "210", "400,50", "134,10");
+
+        // Kaupunkiliput
+        uusiLippusuorite("kaupunki", 4, "", "111", "222", "123,45", "12,53", "5311,35", "2500,50");
+
+        // Seutulippu
+        uusiLippusuorite("seutu", 0, "Alue1", "111", "222", "123,45", "12,53", "5311,35", "2500,50");
     }
 
     private WebElement checkbox(String text) {

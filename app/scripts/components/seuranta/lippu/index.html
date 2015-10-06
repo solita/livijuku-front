@@ -1,4 +1,4 @@
-<form name="{{kaupunkilippu ? 'kaupunki' : 'seutu' + '-lippusuoritteet'}}">
+<form name="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lippusuoritteet-form'}}">
   <div class="table-responsive">
     <table class="table table-hover table-condensed">
       <tr>
@@ -28,7 +28,7 @@
       </tfoot>
       <tbody>
         <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">
-          <td ng-show="kaupunkilippu">
+          <td ng-if="kaupunkilippu">
             <form-group-compact label="Lipputyyppi">
               <select id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lipputyyppi'}}" name="lipputyyppi" ng-model="rivi.lipputyyppitunnus" ng-disabled="isReadonly()"
                       placeholder="Lipputyyppi" required>
@@ -38,7 +38,7 @@
               </select>
             </form-group-compact>
           </td>
-          <td ng-hide="kaupunkilippu">
+          <td ng-if="!kaupunkilippu">
             <form-group-compact label="Seutulippualue" errormessage="seutulippualueErrorMessage">
               <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-seutulippualue'}}" name="seutulippualue" type="text" noenter ng-minlength="2" select-on-click
                      ng-model="rivi.seutulippualue" ng-disabled="isReadonly()"
@@ -102,7 +102,7 @@
         </tr>
       </tbody>
     </table>
-    <button ng-hide="isReadonly()" class="btn btn-primary" ng-click="lisaaSuorite()">Lisää uusi rivi</button>
+    <button id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lisaarivi'}}" ng-hide="isReadonly()" class="btn btn-primary" ng-click="lisaaSuorite()">Lisää uusi rivi</button>
   </div>
 </form>
 

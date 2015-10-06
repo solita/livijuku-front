@@ -55,6 +55,6 @@ public class Hakemus {
     }
 
     public static List<WebElement> rahakentat() {
-        return findElementsByXPath("//input[@type='text' and %s]", isVisible());
+        return findElementsByXPath("//input[@type='text' and @alvmuunnos and %s]", isVisible());
     }
 }
