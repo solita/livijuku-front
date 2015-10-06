@@ -26,6 +26,7 @@ function lippuController($scope) {
 
   $scope.poistaSuorite = function (indeksi) {
     $scope.suoritteet.splice(indeksi, 1);
+    $scope.suoritteetForm.$setDirty();
   };
 
   $scope.myyntiSumma = function () {

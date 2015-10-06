@@ -1,4 +1,4 @@
-<form name="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lippusuoritteet-form'}}">
+<form id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lippusuoritteet-form'}}" name="suoritteetForm">
   <div class="table-responsive">
     <table class="table table-hover table-condensed">
       <tr>
@@ -12,7 +12,7 @@
         <th>Toiminnot</th>
       </tr>
       </thead>
-      <tfoot>
+      <tfoot ng-if="suoritteet.length > 0">
         <tr>
           <td>
             <span class="yhteensa">Yhteensä:</span>
@@ -27,6 +27,11 @@
         </tr>
       </tfoot>
       <tbody>
+        <tr ng-if="suoritteet.length === 0">
+          <td colspan="10" class="text-info">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Yhtään lippusuoritetta ei ole lisätty. Tämä taulukko on tyhjä.
+          </td>
+        </tr>
         <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">
           <td ng-if="kaupunkilippu">
             <form-group-compact label="Lipputyyppi">
