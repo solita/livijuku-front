@@ -136,10 +136,6 @@ angular
         template: require('views/yhteinen/asetukset.html'),
         controller: 'AsetuksetCtrl'
       })
-      .state('app.yhteinen.seurantalomakedemo', {
-        url: '/seurantalomakedemo',
-        template: require('views/yhteinen/seurantalomakeDemo.html')
-      })
       /*
        * Hakija
        */
@@ -256,10 +252,6 @@ angular
   .directive('jukuConfirmation', require('components/confirmation'))
   .directive('jukuStatisticDropdown', require('components/statisticDropdown'))
   .directive('jukuPaatosTiedot', require('components/paatosTiedot'))
-  .directive('jukuSeurantalomakePaikallisliikenne', require('components/seurantalomakePaikallisliikenne'))
-  .directive('jukuSeurantalomakePalveluliikenne', require('components/seurantalomakePalveluliikenne'))
-  .directive('jukuSeurantalomakeSeutulippu', require('components/seurantalomakeSeutulippu'))
-  .directive('jukuSeurantalomakeKaupunkiliput', require('components/seurantalomakeKaupunkiliput'))
   .directive('jukuSeurantaLiikenne', require('components/seuranta/liikenne'))
   .directive('jukuSeurantaLippu', require('components/seuranta/lippu'))
   .directive('jukuSeurantaForms', directive.template(require('views/hakemus/seuranta-forms.html')))
