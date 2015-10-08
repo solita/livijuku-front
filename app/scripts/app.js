@@ -24,7 +24,7 @@ window.jQuery = require('jquery');
  * Ensimmäisessä pyynnössä backend antaa vastauksena tietoturvallisen satunnaisluvun.
  * CRSF-hyökkäys esto perustuu double submit cookie -malliin.
  */
-document.cookie = "XSRF-TOKEN=unsecure-" + Math.random();
+document.cookie = "XSRF-TOKEN=unsecure-" + Math.random() + "; path=/";
 
 require('angular-toastr');
 require('angular-resource');
