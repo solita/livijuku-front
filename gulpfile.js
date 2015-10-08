@@ -259,5 +259,5 @@ gulp.task('watch', ['scripts'], function () {
   }).emit('update');
 });
 
-gulp.task('build', ['styles', 'assets', 'scripts', 'templates']);
-gulp.task('default', ['styles', 'assets', 'templates', 'watch', 'server']);
+gulp.task('build', ['styles', 'assets', 'copy', 'scripts', 'templates']);
+gulp.task('default', ['styles', 'assets', 'copy', 'templates', 'watch', 'server']);
