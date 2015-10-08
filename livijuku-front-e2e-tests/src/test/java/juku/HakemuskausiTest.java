@@ -58,7 +58,7 @@ public class HakemuskausiTest extends TestBase {
         login(User.KATRI);
         // Ota hakemus käsittelyyn
         Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, Hakemustila.VIREILLA).click();
-        KaikkiHakemukset.ensimmainenTilaindikaattori(Hakemuslaji.AVUSTUS, Hakemustila.VIREILLA).click();
+        WorkAround.click(KaikkiHakemukset.ensimmainenTilaindikaattori(Hakemuslaji.AVUSTUS, Hakemustila.VIREILLA));
 
         Hakemus.tarkistaHakemuksenTila(Hakemuslaji.AVUSTUS, Hakemustila.VIREILLA);
 
@@ -343,8 +343,8 @@ public class HakemuskausiTest extends TestBase {
                                      String linjaautot, String taksit, String ajokilometrit,
                                      String matkustajamaara, String lipputulo, String nettohinta) {
         // Luodaan rivi ja poistetaan se samantien
-        findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)).click();
-        findElementByXPath(String.format("//a[@id='%s-poistasuorite']", prefix)).click();
+        WorkAround.click(findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)));
+        WorkAround.click(findElementByXPath(String.format("//a[@id='%s-poistasuorite']", prefix)));
         findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)).click();
         findElementByXPath(String.format("//select[@id='%s-suoritetyyppi']/option[%d]", prefix, suoritetyyppi)).click();
         findElementByXPath(String.format("//input[@id='%s-nimi']", prefix)).clear();
@@ -366,8 +366,8 @@ public class HakemuskausiTest extends TestBase {
     private void uusiLippusuorite(String prefix, int lipputyyppi, String seutulippualue, String myynti,
                                   String matkat, String asiakashinta, String keskipituus,
                                   String lipputulot, String rahoitus) {
-        findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)).click();
-        findElementByXPath(String.format("//a[@id='%s-poistasuorite']", prefix)).click();
+        WorkAround.click(findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)));
+        WorkAround.click(findElementByXPath(String.format("//a[@id='%s-poistasuorite']", prefix)));
         findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)).click();
         if (prefix.equals("kaupunki")) {
             findElementByXPath(String.format("//select[@id='%s-lipputyyppi']/option[%d]", prefix, lipputyyppi)).click();
@@ -391,10 +391,12 @@ public class HakemuskausiTest extends TestBase {
     }
 
     private void syotaSeurantatiedot() {
+
         // Avaa accordionit
         List<WebElement> seurantaAccordionList = findElementsByXPath("//a[@class='accordion-toggle']");
         for (WebElement seurantaAccordion : seurantaAccordionList) {
-            seurantaAccordion.click();
+            WorkAround.sleep(WorkAround.Delay.MEDIUM);
+            WorkAround.click(seurantaAccordion);
         }
 
         // PSA-rivi
