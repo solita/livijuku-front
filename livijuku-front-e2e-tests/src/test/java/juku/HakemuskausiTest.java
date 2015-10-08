@@ -302,7 +302,7 @@ public class HakemuskausiTest extends TestBase {
         syotaRahasummat(rahakentat, "1000,00", "3000,00");
 
         tarkistaHakemuksenSummakentat();
-        checkbox("Haluan syöttää summat arvonlisäverollisina.").click();
+        WorkAround.click(checkbox("Haluan syöttää summat arvonlisäverollisina."));
         tarkistaHakemuksenSummakentat();
 
         // Lisää allekirjoitusliite
