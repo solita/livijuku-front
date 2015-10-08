@@ -426,11 +426,9 @@ public class HakemuskausiTest extends TestBase {
 
     private void tarkistaHakemuksenSummakentat() {
         //Tarkistetaan hakemuksen valisumma kentat
-        List<WebElement> alvsummat = findElementsByXPath("//div[@class='col-md-4 ng-binding']");
-
-        assertThat(alvsummat.get(0).getText(), is(equalTo("Haettava valtionavustus: 3 000,00 €")));
-        assertThat(alvsummat.get(3).getText(), is(equalTo("Haettava valtionavustus: 4 000,00 €")));
-        assertThat(alvsummat.get(6).getText(), is(equalTo("Haettava valtionavustus: 5 000,00 €")));
+        assertThat(findElementByXPath("//div[@id='test-PSA:n mukaisen liikenteen hankinta']").getText(), is(equalTo("Haettava valtionavustus: 3 000,00 €")));
+        assertThat(findElementByXPath("//div[@id='test-Hintavelvoitteiden korvaaminen']").getText(), is(equalTo("Haettava valtionavustus: 4 000,00 €")));
+        assertThat(findElementByXPath("//div[@id='test-Liikenteen suunnittelu ja kehittämishankkeet']").getText(), is(equalTo("Haettava valtionavustus: 5 000,00 €")));
 
         // Tarkistetaan hakemuksen yhteensa kentta
         List<WebElement> h4s = findElementsByXPath("//h4[@class='ng-binding']");
