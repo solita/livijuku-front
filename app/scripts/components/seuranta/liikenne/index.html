@@ -69,17 +69,21 @@
       <tbody>
         <tr ng-if="suoritteet.length === 0">
           <td colspan="10" class="text-info">
-            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Yhtään liikennesuoritetta ei ole lisätty. Tämä taulukko on tyhjä.
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Yhtään liikennesuoritetta ei ole
+            lisätty. Tämä taulukko on tyhjä.
           </td>
         </tr>
         <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">
           <td>
-            <form-group-compact label="Suoritetyyppi">
+            <form-group-compact label="Suoritetyyppi" errormessage="suoritetyyppiErrorMessage">
 
-              <select id="{{liikennetyyppi + '-suoritetyyppi'}}" name="suoritetyyppi" ng-model="rivi.suoritetyyppitunnus" ng-disabled="isReadonly()"
+              <select id="{{liikennetyyppi + '-suoritetyyppi'}}" name="suoritetyyppi"
+                      ng-model="rivi.suoritetyyppitunnus" ng-disabled="isReadonly()"
                       placeholder="Suoritetyyppi" required>
                 <option value="" selected disabled>Valitse suoritetyyppi</option>
-                <option ng-repeat="tyyppi in suoritetyypit" value="{{tyyppi.tunnus}}">{{tyyppi.nimi}}
+                <option ng-repeat="tyyppi in suoritetyypit" value="{{tyyppi.tunnus}}"
+                        ng-disabled="tyyppi.tunnus=='KS' && suoritteet.length>1">{{tyyppi.nimi}}
+                </option>
               </select>
 
             </form-group-compact>
@@ -114,7 +118,8 @@
           </td>
           <td>
             <form-group-compact label="Ajokilometrit" errormessage="ajokilometritErrorMessage">
-              <input id="{{liikennetyyppi + '-ajokilometrit'}}" name="ajokilometrit" type="text" class="form-control" numeric-km-only="" ng-currency=""
+              <input id="{{liikennetyyppi + '-ajokilometrit'}}" name="ajokilometrit" type="text" class="form-control"
+                     numeric-km-only="" ng-currency=""
                      ng-readonly="isReadonly()" required
                      currency-symbol="km" noenter
                      select-on-click
@@ -123,7 +128,8 @@
           </td>
           <td>
             <form-group-compact label="Matkustajamäärä" errormessage="kokonaislukuErrorMessage">
-              <input id="{{liikennetyyppi + '-matkustajamaara'}}" name="matkustajamaara" type="number" class="form-control" numeric-integer-only="" noenter
+              <input id="{{liikennetyyppi + '-matkustajamaara'}}" name="matkustajamaara" type="number"
+                     class="form-control" numeric-integer-only="" noenter
                      ng-readonly="isReadonly()"
                      select-on-click
                      ng-model="rivi.matkustajamaara">
@@ -131,7 +137,8 @@
           </td>
           <td>
             <form-group-compact label="Lipputulo" errormessage="lipputuloErrorMessage">
-              <input id="{{liikennetyyppi + '-lipputulo'}}" name="lipputulo" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+              <input id="{{liikennetyyppi + '-lipputulo'}}" name="lipputulo" type="text" class="form-control"
+                     ng-currency="" numeric-only="" noenter
                      ng-readonly="isReadonly()" required
                      select-on-click
                      ng-model="rivi.lipputulo">
@@ -139,20 +146,24 @@
           </td>
           <td>
             <form-group-compact label="Nettohinta" errormessage="nettohintaErrorMessage">
-              <input id="{{liikennetyyppi + '-nettohinta'}}" name="nettohinta" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+              <input id="{{liikennetyyppi + '-nettohinta'}}" name="nettohinta" type="text" class="form-control"
+                     ng-currency="" numeric-only="" noenter
                      ng-readonly="isReadonly()" required
                      select-on-click
                      ng-model="rivi.nettohinta">
             </form-group-compact>
           </td>
           <td>{{laskeBruttohinta($index) | currency}}</td>
-          <td><a id="{{liikennetyyppi + '-poistasuorite'}}" href="" ng-click="poistaSuorite($index)" ng-hide="isReadonly()"><span
+          <td><a id="{{liikennetyyppi + '-poistasuorite'}}" href="" ng-click="poistaSuorite($index)"
+                 ng-hide="isReadonly()"><span
             class="glyphicon glyphicon-remove-sign"></span> Poista</a>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <button id="{{liikennetyyppi + '-lisaasuorite'}}" ng-hide="isReadonly()" class="btn btn-primary" ng-click="lisaaSuorite()">Lisää uusi rivi</button>
+    <button id="{{liikennetyyppi + '-lisaasuorite'}}" ng-hide="isReadonly()" class="btn btn-primary"
+            ng-click="lisaaSuorite()" ng-disabled="isKokonaissuorite()">Lisää uusi rivi
+    </button>
   </div>
 </ng-form>

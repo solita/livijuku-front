@@ -58,6 +58,11 @@ function liikenneController($scope) {
     return _.sum($scope.suoritteet, 'nettohinta');
   };
 
+  $scope.isKokonaissuorite = function(){
+    if ($scope.suoritteet === undefined || $scope.suoritteet.length==0) return false;
+    return $scope.suoritteet[0].suoritetyyppitunnus == 'KS';
+  };
+
   $scope.laskeBruttohinta = function (i) {
     return $scope.suoritteet[i].lipputulo + $scope.suoritteet[i].nettohinta;
   };
@@ -69,6 +74,10 @@ function liikenneController($scope) {
 
   $scope.kokonaislukuErrorMessage = function(input) {
     return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
+  };
+
+  $scope.suoritetyyppiErrorMessage = function(input) {
+    return input.$error ? 'Syötä tarvittavat linja- ja sopimussuoritteet tai kokonaissuorite.' : ''
   };
 
   $scope.ajokilometritErrorMessage = pakollinnenErrorMessage("Ajokilometrit");
