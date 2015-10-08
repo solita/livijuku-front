@@ -7,7 +7,7 @@
     <div class="avustusluokka__summa">
       <h4>Yhteensä (ALV {{kohde.avustuskohteet[0].alv}}%):</h4>
       <div class="row">
-        <div id="test-{{name}}" class="col-md-4">
+        <div id="test-{{kohde.tunnus}}" class="col-md-4">
           Haettava valtionavustus: {{ kokonaisHaettavaAvustus(kohde.avustuskohteet) | currency }}
         </div>
         <div class="col-md-4">
