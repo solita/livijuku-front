@@ -22,7 +22,7 @@ function isMaksatushakemus(hakemus) {
 
 loadInitialData.$inject = [
   'CommonService', '$stateParams', 'AvustuskohdeService', 'LiikenneSuoriteService',
-  'LippuSuoriteService','HakemusService', 'KayttajaService', 'PaatosService', 'StatusService'];
+  'LippuSuoriteService', 'HakemusService', 'KayttajaService', 'PaatosService', 'StatusService'];
 
 function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuoriteService, LippuSuoriteService, HakemusService, KayttajaService, PaatosService, StatusService) {
   function haeAvustuskohteet(hakemus) {
@@ -88,8 +88,8 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
       }
     })),
     avustushakemusPaatos: ifMaksatushakemus((hakemus) => {
-        const id = haeHakemus('AH0', hakemus).id;
-        return PaatosService.hae(id);
+      const id = haeHakemus('AH0', hakemus).id;
+      return PaatosService.hae(id);
     }, {}),
     maksatushakemus1Paatos: hakemusPromise.then((hakemus) => {
       if (hakemus.hakemustyyppitunnus === 'MH2') {
@@ -104,7 +104,7 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
     psaLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PSA")),
     palLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PAL")),
     kaupunkilippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, function (suorite) {
-      return suorite.lipputyyppitunnus !=="SE";
+      return suorite.lipputyyppitunnus !== "SE";
     })),
     seutulippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, 'lipputyyppitunnus', "SE"))
   }).then(_.identity, StatusService.errorHandler);
@@ -163,10 +163,6 @@ angular.module('jukufrontApp')
         $state.go('app.hakemus', {
           id: hakemus.id
         });
-      };
-
-      $scope.canEdit = function canEdit() {
-        return $scope.hakemusKeskenerainen() && $scope.isHakija($scope.user);
       };
 
       $scope.getHakija = function getHakija(hakemus) {

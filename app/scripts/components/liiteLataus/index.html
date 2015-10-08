@@ -3,7 +3,7 @@
     <h2 class="panel-title">Liitteet</h2>
   </div>
   <div class="panel-body">
-    <div ng-show="(hakemusKeskenerainen() && sallittu('modify-oma-hakemus'))">
+    <div ng-show="hakemusTallentaminenEnabled()">
       <div class="col-md-12">
         <div ngf-drop="uploadFiles($files)" class="drop-box"
              ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
@@ -18,10 +18,9 @@
       </div>
     </div>
     <div class="col-md-12">
-      <div ng-show="liitteet.length > 0" class="response">
-
-        <juku-file-details ng-repeat="liite in liitteet">
-          <div ng-show="hakemusKeskenerainen()">
+      <div ng-show="liitteetOlemassa()">
+        <div ng-show="liitteet.length > 0" class="response">
+          <juku-file-details ng-repeat="liite in liitteet">
             <div ng-show="liite.liitenumero !== editoitavaLiite">
               <juku-icon-link ng-show="isPdf(liite.nimipaate)"
                               href="{{getLiitePdf(hakemusid,liite.liitenumero)}}"
@@ -39,7 +38,7 @@
 
               <juku-file-actions>
                 <juku-icon-link
-                  ng-show="sallittu('modify-oma-hakemus')"
+                  ng-show="hakemusTallentaminenEnabled()"
                   href=""
                   title="Muuta liitenimi"
                   ng-click="asetaEditTilaan(liite.liitenumero)"
@@ -48,7 +47,7 @@
                 </juku-icon-link>
 
                 <juku-icon-link
-                  ng-show="sallittu('modify-oma-hakemus')"
+                  ng-show="hakemusTallentaminenEnabled()"
                   href=""
                   title="Poista liite"
                   ng-click="poistaLiite(liite.liitenumero)"
@@ -71,7 +70,7 @@
                 <juku-file-actions>
                   <juku-icon-link
                     icon="ok-circle"
-                    ng-show="sallittu('modify-oma-hakemus')"
+                    ng-show="hakemusTallentaminenEnabled()"
                     href=""
                     title="Tallenna liitenimi"
                     ng-click="paivitaLiiteNimi(liite.liitenumero,liite.nimiteksti, liite.nimipaate, liiteRiviForm.$valid)">
@@ -80,6 +79,7 @@
 
                   <juku-icon-link
                     icon="ban-circle"
+                    ng-show="hakemusTallentaminenEnabled()"
                     href=""
                     title="Palaa katselutilaan tallentamatta"
                     ng-click="palaaTallentamattaLiite()">
@@ -88,7 +88,7 @@
 
                   <juku-icon-link
                     icon="remove-sign"
-                    ng-show="sallittu('modify-oma-hakemus')"
+                    ng-show="hakemusTallentaminenEnabled()"
                     href=""
                     title="Poista liite"
                     ng-click="poistaLiite(liite.liitenumero)">
@@ -101,28 +101,16 @@
                 </p>
               </ng-form>
             </div>
+          </juku-file-details>
+          <div ng-show="hakemusTallentaminenEnabled()" class="alert alert-info">
+            Hakemuksen liitteiden yhteiskoko voi olla suurimmillaan
+            <strong>{{formatFileSize(liitteidenMaksimiKoko)}}</strong>. Olet liittänyt liitteitä <strong>{{formatFileSize(liitteidenKoko)}}</strong>,
+            voit vielä liittää liitteitä <strong>{{formatFileSize(liitteitaLadattavissa())}}</strong>.
           </div>
-          <div ng-hide="hakemusKeskenerainen() && sallittu('modify-oma-hakemus')">
-            <juku-icon-link ng-show="isPdf(liite.nimipaate)"
-                            href="{{getLiitePdf(hakemusid,liite.liitenumero)}}"
-                            target="_blank"
-                            icon="file">
-              {{liite.nimiteksti}}.{{liite.nimipaate}}
-            </juku-icon-link>
-            <juku-icon-link ng-hide="isPdf(liite.nimipaate)"
-                            href="api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}"
-                            target="_blank"
-                            icon="file">
-              {{liite.nimiteksti}}.{{liite.nimipaate}}
-            </juku-icon-link>
-            <span>{{formatFileSize(liite.bytesize)}}</span>
-          </div>
-        </juku-file-details>
-        <div ng-show="hakemusKeskenerainen() && sallittu('modify-oma-hakemus')" class="alert alert-info">
-          Hakemuksen liitteiden yhteiskoko voi olla suurimmillaan
-          <strong>{{formatFileSize(liitteidenMaksimiKoko)}}</strong>. Olet liittänyt liitteitä <strong>{{formatFileSize(liitteidenKoko)}}</strong>,
-          voit vielä liittää liitteitä <strong>{{formatFileSize(liitteitaLadattavissa())}}</strong>.
         </div>
+      </div>
+      <div ng-hide="liitteetOlemassa()">
+        <p>Ei liitteitä.</p>
       </div>
     </div>
   </div>

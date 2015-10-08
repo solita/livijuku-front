@@ -233,7 +233,6 @@ angular
   .directive('jukuOhjeAvustushakemus', require('components/ohje/avustushakemus'))
   .directive('jukuOhjeMaksatushakemus', require('components/ohje/maksatushakemus'))
   .directive('jukuLiiteLataus', require('components/liiteLataus'))
-  .directive('jukuLiiteTarkistaminen', require('components/liiteTarkistaminen'))
   .directive('jukuUserDropdown', require('components/userDropdown'))
   .directive('jukuLinkNext', require('components/navigationLink').next)
   .directive('jukuLinkPrev', require('components/navigationLink').prev)

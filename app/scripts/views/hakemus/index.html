@@ -163,7 +163,7 @@
         <div class="col-md-12">
           <div class="form-group">
             <juku-checkbox ng-model="alv">
-              Haluan {{ canEdit() ? "syöttää summat" : "katsoa arvoja" }} arvonlisäverollisina.
+              Haluan {{ hakemusTallentaminenEnabled() ? "syöttää summat" : "katsoa arvoja" }} arvonlisäverollisina.
             </juku-checkbox>
           </div>
         </div>
@@ -208,33 +208,19 @@
 
     <juku-form-section>
 
-      <!-- Hakija (oma hakemus) -->
-      <div ng-show="(isHakija(user) && isOmaHakemus(user)) && hakemus.contentvisible">
-        <juku-form-section ng-show="onAvustushakemus()">
-          <juku-ohje-avustushakemus></juku-ohje-avustushakemus>
-        </juku-form-section>
 
-        <juku-form-section ng-show="onMaksatushakemus1() || onMaksatushakemus2()">
-          <juku-ohje-maksatushakemus></juku-ohje-maksatushakemus>
-        </juku-form-section>
+      <juku-form-section ng-show="onAvustushakemus()">
+        <juku-ohje-avustushakemus></juku-ohje-avustushakemus>
+      </juku-form-section>
 
-        <juku-form-section>
-          <juku-liite-lataus></juku-liite-lataus>
-        </juku-form-section>
-      </div>
+      <juku-form-section ng-show="onMaksatushakemus1() || onMaksatushakemus2()">
+        <juku-ohje-maksatushakemus></juku-ohje-maksatushakemus>
+      </juku-form-section>
 
-      <!-- Käsittelijä ja Hakija (toisen organisaation hakemus) -->
-      <div ng-show="(!isHakija(user) || (isHakija(user) && !isOmaHakemus(user))) && hakemus.contentvisible">
-        <div ng-show="onAvustushakemus()">
-          <h3>LISÄTIETOJA AVUSTUSTEN KOHTEISTA</h3>
-        </div>
+      <juku-form-section>
+        <juku-liite-lataus></juku-liite-lataus>
+      </juku-form-section>
 
-        <div ng-hide="onAvustushakemus()">
-          <h3>KULUTOSITTEET AJALLE {{ajankohta}}{{hakemus.vuosi}}</h3>
-        </div>
-
-        <juku-liite-tarkistaminen></juku-liite-tarkistaminen>
-      </div>
 
       <h3>
         HAKEMUKSEN PÄIVÄMÄÄRÄ JA HAKIJA
