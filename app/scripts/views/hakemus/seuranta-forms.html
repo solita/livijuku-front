@@ -13,7 +13,7 @@
                 }"></i><span>Paikallisliikenne tai muu PSA:n mukainen liikenne</span></div>
         </div>
       </accordion-heading>
-      <div class="panel-body">
+      <div>
         <juku-seuranta-liikenne suoritteet="psaLiikenneSuoritteet" tyyppi="PSA" suoritetyypit="suoritetyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
       </div>
     </accordion-group>
@@ -27,7 +27,7 @@
                 }"></i><span>Palveluliikenne</span></div>
         </div>
       </accordion-heading>
-      <div class="panel-body">
+      <div>
         <juku-seuranta-liikenne suoritteet="palLiikenneSuoritteet" tyyppi="PAL" suoritetyypit="suoritetyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
       </div>
     </accordion-group>
@@ -41,7 +41,7 @@
                 }"></i><span>Kaupunkiliput</span></div>
         </div>
       </accordion-heading>
-      <div class="panel-body">
+      <div>
         <juku-seuranta-lippu suoritteet="kaupunkilippuSuoritteet" kaupunkilippu="true" lipputyypit="lipputyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
       </div>
     </accordion-group>
@@ -55,7 +55,7 @@
                 }"></i><span>Seutulippu</span></div>
         </div>
       </accordion-heading>
-      <div class="panel-body">
+      <div>
         <juku-seuranta-lippu suoritteet="seutulippuSuoritteet" kaupunkilippu="false" lipputyypit="lipputyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
       </div>
     </accordion-group>
