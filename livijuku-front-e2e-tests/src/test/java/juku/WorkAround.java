@@ -47,4 +47,13 @@ public class WorkAround {
         element.click();
     }
 
+    public static void hideMainMenu() {
+        String hideScript = "jQuery($x(\"//*[contains(@class, 'header')]\")[0]).hide()";
+        TestBase.driver.executeScript(hideScript);
+    }
+
+    public static void showMainMenu() {
+        String hideScript = "jQuery($x(\"//*[contains(@class, 'header')]\")[0]).show()";
+        TestBase.driver.executeScript(hideScript);
+    }
 }
