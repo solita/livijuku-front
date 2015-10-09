@@ -4,121 +4,148 @@
   </div>
   <div ng-show="sallittu('kasittely-hakemus')">
 
-    <h2>Valtionavustuspäätös vuodelle {{avustushakemus.vuosi}} </br> <small>{{hakija}}</small></h2>
+    <h2>Valtionavustuspäätös vuodelle {{avustushakemus.vuosi}} </br>
+      <small>{{hakija}}</small>
+    </h2>
 
-    <h3>HAKEMUSTIEDOT</h3>
+    <juku-form-section>
+      <h3>HAKEMUSTIEDOT</h3>
 
-    <div class="row">
-      <div class="col-md-4">
-        <label>Hakija</label>
+      <div class="row">
+        <div class="col-md-4">
+          <label>Hakija</label>
 
-        <p>{{hakija}}</p>
+          <p>{{hakija}}</p>
 
-        <p><span class="glyphicon glyphicon-user" aria-hidden="true" ng-hide="avustushakemus.lahettaja === null"></span> {{avustushakemus.lahettaja}}</p>
+          <p><span class="glyphicon glyphicon-user" aria-hidden="true"
+                   ng-hide="avustushakemus.lahettaja === null"></span>
+            {{avustushakemus.lahettaja}}</p>
+        </div>
+        <div class="col-md-4">
+          <label>Päivämäärä</label>
+
+          <p>{{avustushakemus.lahetysaika | date:'dd.MM.yyyy'}}</p>
+        </div>
+        <div class="col-md-4">
+          <label>Diaarinumero</label>
+
+          <p><a href="{{haeHakemusPdf()}}" target="_blank"><span
+            class="glyphicon glyphicon-file"></span>{{avustushakemus.diaarinumero}}</a></p>
+        </div>
       </div>
-      <div class="col-md-4">
-        <label>Päivämäärä</label>
+      <div class="row">
+        <div class="col-md-4">
+          <label>Haettu avustus</label>
 
-        <p>{{avustushakemus.lahetysaika | date:'dd.MM.yyyy'}}</p>
+          <p>{{haettuavustus| currency:"&euro;"}}</p>
+        </div>
+        <div class="col-md-4">
+          <label>Hakemuksen tila</label>
+
+          <p>
+            <hakemus-label tila="{{avustushakemus.hakemustilatunnus}}"/>
+          </p>
+        </div>
       </div>
-      <div class="col-md-4">
-        <label>Diaarinumero</label>
+    </juku-form-section>
+    <juku-form-section>
+      <h3>PÄÄTÖS</h3>
 
-        <p><a href="{{haeHakemusPdf()}}" target="_blank"><span
-          class="glyphicon glyphicon-file"></span>{{avustushakemus.diaarinumero}}</a></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        <label>Haettu avustus</label>
+      <div class="row">
+        <div class="col-md-4">
+          <label>Myönnetty avustus</label>
 
-        <p>{{haettuavustus| currency:"&euro;"}}</p>
-      </div>
-      <div class="col-md-4">
-        <label>Hakemuksen tila</label>
-        <p>
-          <hakemus-label tila="{{avustushakemus.hakemustilatunnus}}"/>
-        </p>
-      </div>
-    </div>
+          <p>{{avustus| currency:"&euro;"}}</p>
+        </div>
 
+        <div class="col-md-4">
+          <label>Päivämäärä</label>
 
-    <h3>PÄÄTÖS</h3>
-
-    <div class="row">
-      <div class="col-md-4">
-        <label>Myönnetty avustus</label>
-        <p>{{avustus| currency:"&euro;"}}</p>
+          <p>{{paatos.voimaantuloaika ? paatos.voimaantuloaika : "Päätöstä ei ole annettu" | date:'dd.MM.yyyy'}}</p>
+        </div>
       </div>
 
-      <div class="col-md-4">
-        <label>Päivämäärä</label>
-        <p>{{paatos.voimaantuloaika ? paatos.voimaantuloaika : "Päätöstä ei ole annettu" | date:'dd.MM.yyyy'}}</p>
-      </div>
-    </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label>Esittelijä</label>
 
-    <div class="row">
-      <div class="col-md-4">
-        <label>Esittelijä</label>
-        <p>{{avustushakemus.kasittelijanimi ? avustushakemus.kasittelijanimi : "Ei tiedossa"}}</p>
+          <p>{{avustushakemus.kasittelijanimi ? avustushakemus.kasittelijanimi : "Ei tiedossa"}}</p>
+        </div>
+
+        <div class="col-md-4">
+          <label>Päätöksentekijä</label>
+
+          <p>{{paatos.paattajanimi ? paatos.paattajanimi : "Ei tiedossa"}}</p>
+        </div>
       </div>
 
-      <div class="col-md-4">
-        <label>Päätöksentekijä</label>
-        <p>{{paatos.paattajanimi ? paatos.paattajanimi : "Ei tiedossa"}}</p>
-      </div>
-    </div>
+    </juku-form-section>
+    <juku-form-section>
+      <form name="paatosForm" juku-poistumisvaroitus="{{hakemusTarkastettu()}}">
+        <div class="form-group">
+          <label>Päätösteksti</label>
 
-    <form name="paatosForm" juku-poistumisvaroitus="{{hakemusTarkastettu()}}">
-      <div class="form-group">
-        <label>Päätösteksti</label>
-        <div ng-show="hakemusTarkastettu()">
+          <juku-form-row>Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle toimivaltaisena
+            viranomaisena
+            valtionavustuksena enintään {{avustus| currency:"euroa"}} (sis. alv) joukkoliikenteen osoitetusta
+            talousarvion
+            momentin 31.30.63.11 määrärahasta käytettäväksi hakemuksessa esitettyihin kohteisiin.
+          </juku-form-row>
+          <juku-form-row>
+            <div ng-show="hakemusTarkastettu()">
           <textarea id="paatosteksti" name="paatosteksti" class="animate msd-elastic: \n;"
-                    ng-model="paatos.selite"></textarea>
+                    ng-model="paatos.selite"
+                    placeholder="Kirjoita tähän kohtaan tarvittaessa päätöstä tarkentavia perusteita."></textarea>
+
+            </div>
+            <div ng-hide="hakemusTarkastettu()">
+              <p>{{paatos.selite ? paatos.selite : ""}}</p>
+            </div>
+          </juku-form-row>
+          <juku-form-row>Avustusta ei myönnetä haetun suuruisena määrärahan suuruuden vuoksi. Lopullisessa maksatuksessa
+            valtionavustus maksetaan myönnetyn suuruisena, mikäli valtionavustuksen määrä ja avustuksen käyttö -kohtien
+            ehdot täyttyvät.
+          </juku-form-row>
         </div>
-        <div ng-hide="hakemusTarkastettu()">
-          <p>{{paatos.selite ? paatos.selite : "Ei määritelty"}}</p>
-        </div>
-      </div>
-    </form>
+      </form>
+    </juku-form-section>
 
-    <br>
+    <juku-form-section>
+      <juku-controls>
 
-    <juku-controls>
+        <juku-controls-buttons>
+          <button juku-varmistusdialogi varmistusotsake="Päätöksen hyväksyminen"
+                  varmistusteksti="Oletko varma, että haluat hyväksyä päätöksen? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
+                  operaatio="tallennaPaatos(2)" class="pull-right btn btn-success disabled-button-tooltip"
+                  ng-disabled="(!hakemusTarkastettu() || !sallittu('hyvaksy-paatos'))">Tallenna ja hyväksy päätös
 
-      <juku-controls-buttons>
-        <button juku-varmistusdialogi varmistusotsake="Päätöksen hyväksyminen"
-                varmistusteksti="Oletko varma, että haluat hyväksyä päätöksen? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
-                operaatio="tallennaPaatos(2)" class="pull-right btn btn-success disabled-button-tooltip"
-                ng-disabled="(!hakemusTarkastettu() || !sallittu('hyvaksy-paatos'))">Tallenna ja hyväksy päätös
+            <div tooltip="Päätöksenteko vaatii päätöksentekijä-tason käyttöoikeudet."
+                 class="disabled-button-tooltip-text"
+                 ng-if="(hakemusTarkastettu() && !sallittu('hyvaksy-paatos'))"></div>
+            <div tooltip="Päätöksen voi hyväksyä vain kun hakemus on tarkastettu tilassa."
+                 class="disabled-button-tooltip-text"
+                 ng-if="!hakemusTarkastettu()"></div>
+          </button>
 
-                <div tooltip="Päätöksenteko vaatii päätöksentekijä-tason käyttöoikeudet."
-                     class="disabled-button-tooltip-text"
-                     ng-if="(hakemusTarkastettu() && !sallittu('hyvaksy-paatos'))"></div>
-                <div tooltip="Päätöksen voi hyväksyä vain kun hakemus on tarkastettu tilassa."
-                     class="disabled-button-tooltip-text"
-                     ng-if="!hakemusTarkastettu()"></div>
-        </button>
+          <button data-ng-click="naytaPaatos()" ng-disabled="!hasPaatos() && !hakemusTarkastettu()"
+                  class="pull-right btn btn-primary">{{hakemusTarkastettu() ? "Tallenna ja esikatsele päätös" : "Näytä päätös"}}
+          </button>
 
-        <button data-ng-click="naytaPaatos()" ng-disabled="!hasPaatos() && !hakemusTarkastettu()"
-                class="pull-right btn btn-primary">{{hakemusTarkastettu() ? "Tallenna ja esikatsele päätös" : "Näytä päätös"}}
-        </button>
-
-        <button data-ng-click="tallennaPaatos(0)" class="pull-right btn btn-primary disabled-button-tooltip"
-                ng-disabled="!hakemusTarkastettu()">Tallenna tiedot
+          <button data-ng-click="tallennaPaatos(0)" class="pull-right btn btn-primary disabled-button-tooltip"
+                  ng-disabled="!hakemusTarkastettu()">Tallenna tiedot
 
 
-
-                <div tooltip="Päätöksen tiedot voi tallentaa vain kun hakemus on tarkastettu tilassa."
-                     class="disabled-button-tooltip-text"
-                     ng-if="!hakemusTarkastettu()"></div>
-        </button>
-      </juku-controls-buttons>
-    </juku-controls>
+            <div tooltip="Päätöksen tiedot voi tallentaa vain kun hakemus on tarkastettu tilassa."
+                 class="disabled-button-tooltip-text"
+                 ng-if="!hakemusTarkastettu()"></div>
+          </button>
+        </juku-controls-buttons>
+      </juku-controls>
+    </juku-form-section>
 
     <juku-navigation-links>
       <juku-link-prev ui-sref="app.kasittelija.suunnittelu({vuosi: vuosi, tyyppi: tyyppi, lajitunnus: lajitunnus})">
-          Palaa suunnittelunäkymään
+        Palaa suunnittelunäkymään
       </juku-link-prev>
     </juku-navigation-links>
   </div>
