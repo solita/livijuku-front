@@ -1,54 +1,12 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1>PSA bruttosopimusliikenteen tunnusluvut</h1>
+  <juku-form-row>
+    <h2>PSA bruttosopimusliikenteen tunnusluvut</h2>
+  </juku-form-row>
+  <juku-form-row>
+    <h3>Liikenteen kysynnän tunnusluvut</h3>
+  </juku-form-row>
+  <juku-form-row>
+    <juku-tunnusluvut-kysynta></juku-tunnusluvut-kysynta>
+  </juku-form-row>
 
-      <p>Tälle välilehdelle syötetään bruttosopimuksilla hankitun liikenteen tunnusluvut.
-        On tärkeää, että pyritte vastaamaan mahdollisimman hyvin vaalean vihreisiin kenttiin (esimerkiksi vuositason
-        tieto).</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <h2>Liikenteen kysynnän tunnusluvut</h2>
-
-      <p>Mikäli kysyntätietoa ei saada viranomaisen maksujärjestelmästä (esim. Waltti), pyydetään tieto
-        liikennöitsijältä. Jos liikennöitsijäkään ei pysty toimittamaan tarkkaa tietoa, voidaan laskea otos sopivalta
-        keskimääräiseltä
-        ajankohdalta ja muodostetaan siitä keskimääräinen arki/la/su sekä kuukausi.
-        Täytettävän solun oikealla puolella ilmenee täytettävän luvun yksikkö.
-
-        Jos haluatte kommentoida täyttämiänne lukuja, sitä varten on varattu tilaa jokaisen välilehden J-sarakkeesta.
-        Taulukon muut solut on suojattu.
-
-        On tärkeää, että pyritte vastaamaan mahdollisimman hyvin vaalean vihreisiin kenttiin. </p>
-
-    </div>
-  </div>
-  <div class="row alert alert-warning">
-    <p>Tällä hetkellä numerokenttien (esim. nousut) editointi ei toimi kunnolla Firefox:ssa, ui-grid komponentin
-      päivitystä
-      odotellaan.</p>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <h3>Nousijat keskimääräisenä talven arkipäivänä / lauantaina / sunnuntaina</h3>
-
-      <div id="lks_grid1" ui-grid="lks_grid1" ui-grid-edit ui-grid-cellnav class="grid"></div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <h3>Nousijat kuukausittain</h3>
-
-      <div id="lks_grid2" ui-grid="lks_grid2" ui-grid-edit ui-grid-cellnav class="grid"></div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <h3>Bruttoliikenteen tarjouskilpailut</h3>
-      <button id="uusiRivi" ng-click="uusiRivi()">Lisää rivi</button>
-      <div id="lks_grid3" ui-grid="lks_grid3" ui-grid-edit ui-grid-cellnav class="grid"></div>
-    </div>
-  </div>
 </div>
