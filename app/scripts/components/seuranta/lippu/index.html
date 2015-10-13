@@ -29,44 +29,49 @@
       <tbody>
         <tr ng-if="suoritteet.length === 0">
           <td colspan="10" class="text-info">
-            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Yhtään lippusuoritetta ei ole lisätty. Tämä taulukko on tyhjä.
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Yhtään lippusuoritetta ei ole
+            lisätty. Tämä taulukko on tyhjä.
           </td>
         </tr>
         <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">
           <td ng-if="kaupunkilippu">
             <form-group-compact label="Lipputyyppi">
-              <select id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lipputyyppi'}}" name="lipputyyppi" ng-model="rivi.lipputyyppitunnus" ng-disabled="isReadonly()"
-                      placeholder="Lipputyyppi" required>
+              <select id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lipputyyppi'}}" name="lipputyyppi"
+                      ng-model="rivi.lipputyyppitunnus" ng-disabled="isReadonly()"
+                      placeholder="Lipputyyppi" ng-options="tyyppi.tunnus as tyyppi.nimi for tyyppi in lipputyypit" required>
                 <option value="" selected disabled>Valitse lipputyyppi</option>
-                <option ng-repeat="tyyppi in lipputyypit" value="{{tyyppi.tunnus}}">{{tyyppi.nimi}}
                 </option>
               </select>
             </form-group-compact>
           </td>
           <td ng-if="!kaupunkilippu">
             <form-group-compact label="Seutulippualue" errormessage="seutulippualueErrorMessage">
-              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-seutulippualue'}}" name="seutulippualue" type="text" noenter ng-minlength="2" select-on-click
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-seutulippualue'}}" name="seutulippualue"
+                     type="text" noenter ng-minlength="2" select-on-click
                      ng-model="rivi.seutulippualue" ng-disabled="isReadonly()"
                      placeholder="Seutulippualue" required>
             </form-group-compact>
           </td>
           <td>
             <form-group-compact label="Myynti" errormessage="kokonaislukuErrorMessage">
-              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-myynti'}}" name="myynti" type="number" numeric-integer-only="" select-on-click
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-myynti'}}" name="myynti" type="number"
+                     numeric-integer-only="" select-on-click
                      ng-model="rivi.myynti" ng-disabled="isReadonly()"
                      placeholder="Myynti">
             </form-group-compact>
           </td>
           <td>
             <form-group-compact label="Matkat" errormessage="kokonaislukuErrorMessage">
-              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-matkat'}}" name="matkat" type="number" numeric-integer-only="" select-on-click
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-matkat'}}" name="matkat" type="number"
+                     numeric-integer-only="" select-on-click
                      ng-model="rivi.matkat" ng-disabled="isReadonly()"
                      placeholder="Matkat">
             </form-group-compact>
           </td>
           <td>
             <form-group-compact label="Asiakashinta" errormessage="asiakashintaErrorMessage">
-              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-asiakashinta'}}" name="asiakashinta" type="text" class="form-control"
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-asiakashinta'}}" name="asiakashinta" type="text"
+                     class="form-control"
                      ng-currency="" numeric-only=""
                      noenter
                      select-on-click
@@ -76,7 +81,8 @@
           </td>
           <td>
             <form-group-compact label="Keskipituus" errormessage="keskipituusErrorMessage">
-              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-keskipituus'}}" name="keskipituus" type="text" class="form-control" numeric-km-only="" ng-currency=""
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-keskipituus'}}" name="keskipituus" type="text"
+                     class="form-control" numeric-km-only="" ng-currency=""
                      currency-symbol="km"
                      noenter
                      select-on-click
@@ -86,7 +92,8 @@
           </td>
           <td>
             <form-group-compact label="Lipputulot" errormessage="lipputulotErrorMessage">
-              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lipputulot'}}" name="lipputulot" type="text" class="form-control" ng-currency="" numeric-only=""
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lipputulot'}}" name="lipputulot" type="text"
+                     class="form-control" ng-currency="" numeric-only=""
                      noenter
                      select-on-click
                      ng-model="rivi.lipputulo" ng-disabled="isReadonly()"
@@ -95,19 +102,23 @@
           </td>
           <td>
             <form-group-compact label="Rahoitus" errormessage="rahoitusErrorMessage">
-              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-rahoitus'}}" name="rahoitus" type="text" class="form-control" ng-currency="" numeric-only="" noenter
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-rahoitus'}}" name="rahoitus" type="text"
+                     class="form-control" ng-currency="" numeric-only="" noenter
                      select-on-click
                      ng-model="rivi.julkinenrahoitus" ng-disabled="isReadonly()"
                      placeholder="Rahoitus" required>
             </form-group-compact>
           </td>
-          <td><a id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-poistasuorite'}}" href="" ng-click="poistaSuorite($index)"><span
+          <td><a id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-poistasuorite'}}" href=""
+                 ng-click="poistaSuorite($index)"><span
             class="glyphicon glyphicon-remove-sign"></span>Poista</a>
           </td>
         </tr>
       </tbody>
     </table>
-    <button id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lisaasuorite'}}" ng-hide="isReadonly()" class="btn btn-primary" ng-click="lisaaSuorite()">Lisää uusi rivi</button>
+    <button id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lisaasuorite'}}" ng-hide="isReadonly()"
+            class="btn btn-primary" ng-click="lisaaSuorite()">Lisää uusi rivi
+    </button>
   </div>
 </form>
 

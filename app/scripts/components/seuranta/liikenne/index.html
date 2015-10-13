@@ -79,10 +79,9 @@
 
               <select id="{{liikennetyyppi + '-suoritetyyppi'}}" name="suoritetyyppi"
                       ng-model="rivi.suoritetyyppitunnus" ng-disabled="isReadonly()"
-                      placeholder="Suoritetyyppi" required>
+                      placeholder="Suoritetyyppi"
+                      ng-options="tyyppi.tunnus as tyyppi.nimi disable when (tyyppi.tunnus=='KS' && suoritteet.length>1) for tyyppi in suoritetyypit" required>
                 <option value="" selected disabled>Valitse suoritetyyppi</option>
-                <option ng-repeat="tyyppi in suoritetyypit" value="{{tyyppi.tunnus}}"
-                        ng-disabled="tyyppi.tunnus=='KS' && suoritteet.length>1">{{tyyppi.nimi}}
                 </option>
               </select>
 
