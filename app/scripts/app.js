@@ -252,6 +252,7 @@ angular
   .directive('jukuStatisticDropdown', require('components/statisticDropdown'))
   .directive('jukuPaatosTiedot', require('components/paatosTiedot'))
   .directive('jukuTunnusluvutKysynta', require('components/tunnusluvut/kysynta'))
+  .directive('jukuTunnusluvutTarjonta', require('components/tunnusluvut/tarjonta'))
   .directive('jukuSeurantaLiikenne', require('components/seuranta/liikenne'))
   .directive('jukuSeurantaLippu', require('components/seuranta/lippu'))
   .directive('jukuSeurantaForms', directive.template(require('views/hakemus/seuranta-forms.html')))

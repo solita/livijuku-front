@@ -11,17 +11,17 @@ function kysyntaController($scope) {
 
   $scope.tunnusluvut_talvi = [
     {
-      "selite": "Arkipäivän keskimääräinen nousumäärä (syyskuu-toukokuu arkipäivien keskiarvo)",
+      "selite": "Arkipäivät",
       "nousumaara": 0,
       "kommentit": ""
     },
     {
-      "selite": "Lauantain keskimääräinen nousumäärä (syyskuu-toukokuu lauantaiden keskiarvo)",
+      "selite": "Lauantai",
       "nousumaara": 0,
       "kommentit": ""
     },
     {
-      "selite": "Sunnuntain keskimääräinen nousumäärä (syyskuu-toukokuu sunnuntaiden keskiarvo)",
+      "selite": "Sunnuntai",
       "nousumaara": 0,
       "kommentit": ""
     }
