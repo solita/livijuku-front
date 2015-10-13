@@ -11,7 +11,7 @@
           <p ng-show="dropAvailable">Raahaa liite tähän tai</p>
 
           <p ng-hide="dropAvailable">Tiedoston raahaaminen ei ole mahdollista tällä selain-versiolla</p>
-          <button class="btn btn-primary" ngf-select ngf-change="uploadFiles($files)">Valitse
+          <button class="btn btn-primary" ngf-select ngf-multiple="true" ngf-change="uploadFiles($files)">Valitse
             tiedosto
           </button>
         </div>
