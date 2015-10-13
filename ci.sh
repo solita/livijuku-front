@@ -41,9 +41,9 @@ createDb() {
     cd $WORK/upstream/upstream/juku-db/target
     ## Kannan tyhjennys heittää virhettä. Sallitaan se.
     set +e
-    java -jar juku-db.jar clear-db
+    java -jar -Duser.timezone=EET juku-db.jar clear-db
     set -e
-    java -jar juku-db.jar update-db
+    java -jar -Duser.timezone=EET juku-db.jar update-db
 
     echo "DB created"
   )
