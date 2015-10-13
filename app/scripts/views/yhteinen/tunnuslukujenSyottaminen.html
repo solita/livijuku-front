@@ -1,4 +1,12 @@
 <div class="container">
+  <juku-tabs>
+    <juku-tab
+      ng-repeat="tyyppi in tunnuslukutyypit"
+      selected="isTabSelected(tyyppi)"
+      ng-click="toApplication(tyyppi)">
+      {{ tyyppi }}
+    </juku-tab>
+  </juku-tabs>
   <juku-form-row>
     <h2>PSA bruttosopimusliikenteen tunnusluvut</h2>
   </juku-form-row>

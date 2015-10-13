@@ -37,13 +37,11 @@ require('angular-animate');
 require('angular-ui-router');
 require('ng-currency');
 require('angular-bootstrap-show-errors');
-require('angular-ui-grid/ui-grid.min.js');
 require('angular-ui-validate');
 require('angular-i18n/angular-locale_fi-fi');
 require('d3/d3.js');
 require('angular-nvd3/lib/nv.d3.js');
 require('angular-nvd3');
-require('angular-xeditable/dist/js/xeditable');
 
 angular
   .module('jukufrontApp', [
@@ -79,11 +77,7 @@ angular
     'ng-currency',
     'ui.bootstrap.showErrors',
     'ui.validate',
-    'ui.grid',
-    'ui.grid.edit',
-    'ui.grid.cellNav',
-    'nvd3',
-    'xeditable'
+    'nvd3'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
