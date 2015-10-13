@@ -44,6 +44,8 @@ createDb() {
     java -jar juku-db.jar clear-db
     set -e
     java -jar juku-db.jar update-db
+
+    echo "DB created"
   )
 }
 
