@@ -107,7 +107,7 @@ cd "$WORK/upstream/juku-backend/target"
 createBackendPropertiesFile $DB_CREATE_ID juku.properties
 
 # Käynnistä backend palvelin.
-java -jar juku.jar >"$WORK/backend.out" 2>&1 &
+java -jar -Duser.timezone=EET juku.jar >"$WORK/backend.out" 2>&1 &
 BACKEND_PID=$!
 
 # Odota, kunnes backend vastaa.
