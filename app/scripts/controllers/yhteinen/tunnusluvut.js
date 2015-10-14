@@ -8,6 +8,6 @@ angular.module('jukufrontApp')
     $scope.tunnuslukutyypit =  ['Taustatiedot ja yl. tunnusluvut', 'PSA_Brutto', 'PSA_KOS', 'Siirtymäajan liikenne', 'ME'];
 
     $scope.isTabSelected = function isTabSelected(tyyppi) {
-      return 'PSA_Brutto' === tyyppi;
+      return 'PSAB' === tyyppi;
     };
   }]);

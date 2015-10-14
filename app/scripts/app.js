@@ -59,6 +59,7 @@ angular
     'services.common',
     'services.config',
     'filters.toApplicantName',
+    'filters.toStatisticName',
     'filters.toClass',
     'filters.stateNameIncludes',
     'filters.toApplicationName',
@@ -201,7 +202,8 @@ angular
     $rootScope.constants = {
       hakemustyypit: ['AH0', 'MH1', 'MH2'],
       hakemuksenTilat: hakemuksenTilat.getAll(),
-      hakijaTyypit: ['KS1', 'KS2', 'ELY']
+      hakijaTyypit: ['KS1', 'KS2', 'ELY'],
+      tunnuslukuTyypit: ['TTYT','PSAB','PSAK','SL','ME']
     };
 
     $rootScope.$on('$stateChangeError', () => {
@@ -293,3 +295,4 @@ require('./filters/toApplicantName');
 require('./filters/toClass');
 require('./filters/stateNameIncludes');
 require('./filters/toApplicationName');
+require('./filters/toStatisticName');
