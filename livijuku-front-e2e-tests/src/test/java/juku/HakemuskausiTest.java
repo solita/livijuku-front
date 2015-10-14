@@ -521,6 +521,7 @@ public class HakemuskausiTest extends TestBase {
                 "Muu hanke 1 240 e\n" +
                 "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 41 700 euroa.\n" +
                 "Lähettäjä: <hakijan nimi, joka on lähettänyt hakemuksen>\n" +
+                "Liitteet\n" +
                 "Liikennevirasto - esikatselu - hakemus on keskeneräinen\n" +
                 "1 (1)\n";
 
