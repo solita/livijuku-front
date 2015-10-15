@@ -1,5 +1,5 @@
 <ng-form id="{{tyyppi + '-liikenteenkysynta-form'}}" name="kysyntaForm" class="kysynta">
-  <juku-form-row>
+  <juku-form-row ng-if="tyyppi==='PSAB' || tyyppi==='PSAK'">
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <tr>
@@ -102,7 +102,7 @@
       </table>
     </div>
   </juku-form-row>
-  <juku-form-row>
+  <juku-form-row ng-if="tyyppi==='PSAB' || tyyppi==='PSAK'">
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <tr>
@@ -146,11 +146,14 @@
       </table>
     </div>
   </juku-form-row>
-  <juku-form-row>
+  <juku-form-row ng-if="tyyppi==='PSAB' || tyyppi==='SL' || tyyppi==='PSAK'">
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <tr>
-          <th class="col-md-4 ekarivi">Maksettu liikennöintikorvaus kuukausittain</th>
+          <th ng-if="tyyppi==='PSAB'" class="col-md-4 ekarivi">Maksettu liikennöintikorvaus kuukausittain</th>
+          <th ng-if="tyyppi==='SL'" class="col-md-4 ekarivi">Maksettu liikennöintikorvaus ja lipputuki kuukausittain
+          </th>
+          <th ng-if="tyyppi==='PSAK'" class="col-md-4 ekarivi">Maksettu liikennöinnin sopimuskorvaus kuukausittain</th>
           <th class="col-md-2 ekarivi">€/kk ilman ALV</th>
           <th class="col-md-4 ekarivi">Vapaat kommentit</th>
         </tr>
@@ -192,7 +195,53 @@
       </table>
     </div>
   </juku-form-row>
-  <juku-form-row>
+  <juku-form-row ng-if="tyyppi==='PSAK' || tyyppi==='ME'">
+    <div class="table-responsive">
+      <table class="table table-hover table-condensed">
+        <tr>
+          <th ng-if="tyyppi==='PSAK'" class="col-md-4 ekarivi">Maksettu liikennöinnin nousukorvaus kuukausittain</th>
+          <th ng-if="tyyppi==='ME'" class="col-md-4 ekarivi">Maksettu asiakashinnan nousukorvaus kuukausittain</th>
+          <th class="col-md-2 ekarivi">€/kk ilman ALV</th>
+          <th class="col-md-4 ekarivi">Vapaat kommentit</th>
+        </tr>
+        </thead>
+        <tfoot ng-if="tunnusluvut.length > 0">
+          <tr>
+            <td>
+              <span class="yhteensa">Yhteensä:</span>
+            </td>
+            <td>{{nousukorvausSumma() | currency : '€/vuosi' : 2}}</td>
+            <td></td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr ng-repeat="rivi in nousukorvaukset track by $index" ng-form="">
+            <th>{{rivi.kuukausi}}</th>
+            <td>
+              <form-group-compact label="Nousukorvaus">
+                <input id="{{tyyppi + '-nousukorvaus-'+$index}}" name="nousukorvaus" type="text"
+                       numeric-only="" ng-currency=""
+                       currency-symbol="€" noenter
+                       select-on-click
+                       ng-model="rivi.nousukorvaus">
+              </form-group-compact>
+            </td>
+            <td>
+              <form-group-compact label="Kommentit">
+                <input id="{{tyyppi +'-'+rivi.kuukausi+'-nousukorvaus-kommentit'}}"
+                       name="nousukorvaus-kommentit"
+                       type="text"
+                       noenter
+                       select-on-click
+                       ng-model="rivi.kommentit">
+              </form-group-compact>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </juku-form-row>
+  <juku-form-row ng-if="tyyppi==='PSAB' || tyyppi==='PSAK'">
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <tr>
@@ -262,11 +311,57 @@
       </table>
     </div>
   </juku-form-row>
-  <juku-form-row>
+  <juku-form-row ng-if="tyyppi==='SL'">
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <tr>
-          <th class="col-md-3 ekarivi">Brutoliikenteen tarjouskilpailut</th>
+          <th class="col-md-4 ekarivi">Lipputulot kuukausittain</th>
+          <th class="col-md-2 ekarivi">Lipputulo<br>(€/kk ilman ALV)</th>
+          <th class="col-md-4 ekarivi">Vapaat kommentit</th>
+        </tr>
+        </thead>
+        <tfoot ng-if="tunnusluvut.length > 0">
+          <tr>
+            <td>
+              <span class="yhteensa">Yhteensä:</span>
+            </td>
+            <td>{{lipputuloSumma() | currency : '€/vuosi' : 2}}</td>
+            <td></td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr ng-repeat="rivi in lipputulot track by $index" ng-form="">
+            <th>{{rivi.kuukausi}}</th>
+            <td>
+              <form-group-compact label="Lipputulo" errormessage="lipputuloErrorMessage">
+                <input id="{{tyyppi + '-lipputulo-sl'+$index}}" name="lipputulo" type="text"
+                       numeric-only="" ng-currency=""
+                       required
+                       currency-symbol="€" noenter
+                       select-on-click
+                       ng-model="rivi.lipputulo">
+              </form-group-compact>
+            </td>
+            <td>
+              <form-group-compact label="Kommentit">
+                <input id="{{tyyppi +'-lipputulot-kommentit-sl'+$index}}" name="lipputulot-kommentit"
+                       type="text"
+                       noenter
+                       select-on-click
+                       ng-model="rivi.kommentit">
+              </form-group-compact>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </juku-form-row>
+  <juku-form-row ng-if="tyyppi==='PSAB' || tyyppi==='PSAK'">
+    <div class="table-responsive">
+      <table class="table table-hover table-condensed">
+        <tr>
+          <th ng-if="tyyppi==='PSAB'" class="col-md-3 ekarivi">Brutoliikenteen tarjouskilpailut</th>
+          <th ng-if="tyyppi==='PSAK'" class="col-md-3 ekarivi">Käyttöoikeussopimusliikenteen tarjouskilpailut</th>
           <th class="col-md-1 ekarivi">Saatujen tarjousten määrä</th>
           <th class="col-md-1 ekarivi">Voittaneen tarjouksen hinta</th>
           <th class="col-md-1 ekarivi">Toiseksi tulleen tarjouksen hinta</th>
@@ -311,7 +406,8 @@
             </td>
             <td>
               <form-group-compact label="ddd" errormessage="toiseksitulleenhintaErrorMessage">
-                <input id="{{tyyppi + '-tarjouskohteet-toiseksitullut-'+$index}}" name="toiseksitulleenhinta" type="text"
+                <input id="{{tyyppi + '-tarjouskohteet-toiseksitullut-'+$index}}" name="toiseksitulleenhinta"
+                       type="text"
                        class="form-control"
                        ng-currency="" numeric-only=""
                        noenter
@@ -329,7 +425,7 @@
                        ng-model="rivi.kommentit">
               </form-group-compact>
             </td>
-             <td><a id="{{tyyppi +'-tarjouskohteet-poista-'+$index}}" href=""
+            <td><a id="{{tyyppi +'-tarjouskohteet-poista-'+$index}}" href=""
                    ng-click="poistaTarjouskohde($index)"><span
               class="glyphicon glyphicon-remove-sign"></span>Poista</a>
             </td>

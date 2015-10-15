@@ -4,24 +4,10 @@
       <juku-tab
         ng-repeat="tyyppi in constants.tunnuslukuTyypit"
         selected="isTabSelected(tyyppi)"
-        ng-click="toApplication(tyyppi)">
+        ng-click="toTab(tyyppi)">
         {{ tyyppi | toStatisticName }}
       </juku-tab>
     </juku-tabs>
   </juku-navigation>
-  <juku-form-row>
-    <h2>PSA bruttosopimusliikenteen tunnusluvut</h2>
-  </juku-form-row>
-  <juku-form-row>
-    <h3>Liikenteen kysynnän tunnusluvut</h3>
-  </juku-form-row>
-  <juku-form-row>
-    <juku-tunnusluvut-kysynta></juku-tunnusluvut-kysynta>
-  </juku-form-row>
-  <juku-form-row>
-    <h3>Tarjotun liikenteen tunnusluvut</h3>
-  </juku-form-row>
-  <juku-form-row>
-    <juku-tunnusluvut-tarjonta></juku-tunnusluvut-tarjonta>
-  </juku-form-row>
+  <div ui-view></div>
 </div>

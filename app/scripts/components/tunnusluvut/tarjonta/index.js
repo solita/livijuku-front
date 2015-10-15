@@ -225,12 +225,76 @@ function tarjontaController($scope) {
     }
   ];
 
+  $scope.nousukorvaukset = [
+    {
+      "kuukausi": "Tammikuu",
+      "nousukorvaus": 0,
+      "kommentit": ""
+    },
+    {
+      "kuukausi": "Helmikuu",
+      "nousukorvaus": 0,
+      "kommentit": ""
+    },
+    {
+      "kuukausi": "Maaliskuu",
+      "nousukorvaus": 0,
+      "kommentit": ""
+    },
+    {
+      "kuukausi": "Huhtikuu",
+      "nousukorvaus": 0,
+      "kommentit": ""
+    },
+    {
+      "kuukausi": "Toukokuu",
+      "nousukorvaus": 0,
+      "kommentit": ""
+    },
+    {
+      "kuukausi": "Kesäkuu",
+      "nousukorvaus": 0,
+      "kommentit": ""
+    },
+    {
+      "kuukausi": "Heinäkuu",
+      "nousukorvaus": 0,
+      "kommentit": ""
+    },
+    {
+      "kuukausi": "Elokuu",
+      "nousukorvaus": 0,
+      "kommentit": ""
+    },
+    {
+      "kuukausi": "Syyskuu",
+      "nousukorvaus": 0,
+      "kommentit": ""
+    },
+    {
+      "kuukausi": "Lokakuu",
+      "nousukorvaus": 0,
+      "kommentit": ""
+    },
+    {
+      "kuukausi": "Marraskuu",
+      "nousukorvaus": 0,
+      "kommentit": ""
+    },
+    {
+      "kuukausi": "Joulukuu",
+      "nousukorvaus": 0,
+      "kommentit": ""
+    }
+  ];
+
   $scope.lipputulot = [
     {
       "kuukausi": "Tammikuu",
       "kertalippu": 0,
       "arvolippu": 0,
       "kausilippu": 0,
+      "lipputulo": 0,
       "kommentit": ""
     },
     {
@@ -238,6 +302,7 @@ function tarjontaController($scope) {
       "kertalippu": 0,
       "arvolippu": 0,
       "kausilippu": 0,
+      "lipputulo": 0,
       "kommentit": ""
     },
     {
@@ -245,6 +310,7 @@ function tarjontaController($scope) {
       "kertalippu": 0,
       "arvolippu": 0,
       "kausilippu": 0,
+      "lipputulo": 0,
       "kommentit": ""
     },
     {
@@ -252,6 +318,7 @@ function tarjontaController($scope) {
       "kertalippu": 0,
       "arvolippu": 0,
       "kausilippu": 0,
+      "lipputulo": 0,
       "kommentit": ""
     },
     {
@@ -259,6 +326,7 @@ function tarjontaController($scope) {
       "kertalippu": 0,
       "arvolippu": 0,
       "kausilippu": 0,
+      "lipputulo": 0,
       "kommentit": ""
     },
     {
@@ -266,6 +334,7 @@ function tarjontaController($scope) {
       "kertalippu": 0,
       "arvolippu": 0,
       "kausilippu": 0,
+      "lipputulo": 0,
       "kommentit": ""
     },
     {
@@ -273,6 +342,7 @@ function tarjontaController($scope) {
       "kertalippu": 0,
       "arvolippu": 0,
       "kausilippu": 0,
+      "lipputulo": 0,
       "kommentit": ""
     },
     {
@@ -280,6 +350,7 @@ function tarjontaController($scope) {
       "kertalippu": 0,
       "arvolippu": 0,
       "kausilippu": 0,
+      "lipputulo": 0,
       "kommentit": ""
     },
     {
@@ -287,6 +358,7 @@ function tarjontaController($scope) {
       "kertalippu": 0,
       "arvolippu": 0,
       "kausilippu": 0,
+      "lipputulo": 0,
       "kommentit": ""
     },
     {
@@ -294,6 +366,7 @@ function tarjontaController($scope) {
       "kertalippu": 0,
       "arvolippu": 0,
       "kausilippu": 0,
+      "lipputulo": 0,
       "kommentit": ""
     },
     {
@@ -301,6 +374,7 @@ function tarjontaController($scope) {
       "kertalippu": 0,
       "arvolippu": 0,
       "kausilippu": 0,
+      "lipputulo": 0,
       "kommentit": ""
     },
     {
@@ -308,6 +382,7 @@ function tarjontaController($scope) {
       "kertalippu": 0,
       "arvolippu": 0,
       "kausilippu": 0,
+      "lipputulo": 0,
       "kommentit": ""
     }
   ];
@@ -327,6 +402,14 @@ function tarjontaController($scope) {
 
   $scope.kausiliputSumma = function () {
     return _.sum($scope.lipputulot, 'kausilippu');
+  };
+
+  $scope.lipputuloSumma = function () {
+    return _.sum($scope.lipputulot, 'lipputulo');
+  };
+
+  $scope.nousukorvausSumma = function () {
+    return _.sum($scope.nousukorvaukset, 'nousukorvaus');
   };
 
   $scope.kaikkilipputulotSumma = function () {
@@ -354,6 +437,11 @@ function tarjontaController($scope) {
       input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' : '';
   };
 
+  $scope.kertalippuErrorMessage = pakollinenErrorMessage("Kertalippu (€/kk ilman ALV)");
+  $scope.arvolippuErrorMessage = pakollinenErrorMessage("Arvolippu (€/kk ilman ALV)");
+  $scope.kausilippuErrorMessage = pakollinenErrorMessage("Kausilippu (€/kk ilman ALV)");
+  $scope.liikennointikorvausErrorMessage = pakollinenErrorMessage("Maksettu liikennöinnin sopimuskorvaus (€/kk ilman ALV)");
+  $scope.lipputuloErrorMessage = pakollinenErrorMessage("Lipputulo (€/kk ilman ALV)");
   $scope.linjakilometritErrorMessage = pakollinenErrorMessage("Linjakilometrit (linja-km/päivä)");
   $scope.voittajanhintaErrorMessage = pakollinenErrorMessage("Voittaneen tarjouksen hinta");
   $scope.toiseksitulleenhintaErrorMessage = pakollinenErrorMessage("Toiseksi tulleen tarjouksen hinta");

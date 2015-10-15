@@ -151,6 +151,32 @@ angular
       .state('app.hakija.tunnusluku.syottaminen', {
         url: '/syottaminen',
         template: require('views/yhteinen/tunnuslukujenSyottaminen.html'),
+        controller: 'HakijaTunnusluvutCtrl',
+        redirectTo: 'app.hakija.tunnusluku.syottaminen.TTYT'
+      })
+      .state('app.hakija.tunnusluku.syottaminen.TTYT', {
+        url: '/ttyt',
+        template: require('views/yhteinen/tunnuslukujenSyottaminen-ttyt.html'),
+        controller: 'HakijaTunnusluvutCtrl'
+      })
+      .state('app.hakija.tunnusluku.syottaminen.PSAB', {
+        url: '/psab',
+        template: require('views/yhteinen/tunnuslukujenSyottaminen-psab.html'),
+        controller: 'HakijaTunnusluvutCtrl'
+      })
+      .state('app.hakija.tunnusluku.syottaminen.PSAK', {
+        url: '/psak',
+        template: require('views/yhteinen/tunnuslukujenSyottaminen-psak.html'),
+        controller: 'HakijaTunnusluvutCtrl'
+      })
+      .state('app.hakija.tunnusluku.syottaminen.SL', {
+        url: '/sl',
+        template: require('views/yhteinen/tunnuslukujenSyottaminen-sl.html'),
+        controller: 'HakijaTunnusluvutCtrl'
+      })
+      .state('app.hakija.tunnusluku.syottaminen.ME', {
+        url: '/me',
+        template: require('views/yhteinen/tunnuslukujenSyottaminen-me.html'),
         controller: 'HakijaTunnusluvutCtrl'
       })
       .state('app.hakija.tunnusluku.raportit', {
@@ -205,6 +231,13 @@ angular
       hakijaTyypit: ['KS1', 'KS2', 'ELY'],
       tunnuslukuTyypit: ['TTYT','PSAB','PSAK','SL','ME']
     };
+
+    $rootScope.$on('$stateChangeStart', function(evt, to, params) {
+      if (to.redirectTo) {
+        evt.preventDefault();
+        $state.go(to.redirectTo, params)
+      }
+    });
 
     $rootScope.$on('$stateChangeError', () => {
       $state.go('redirect');
