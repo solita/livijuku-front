@@ -2,5 +2,83 @@
   <juku-form-row>
     <h2>Alueen taustatiedot ja yleiset tunnusluvut</h2>
   </juku-form-row>
-  <h4>Ei vielä toteutettu</h4>
- </div>
+  <juku-form-row>
+    <h3>Alueen taustatiedot</h3>
+  </juku-form-row>
+  <ng-form id="taustatiedot-form" name="taustatiedotForm" class="kysynta">
+    <juku-form-row>
+      <div class="table-responsive">
+        <table class="table table-hover table-condensed">
+          <tr>
+            <th class="col-md-3 ekarivi">Viranomaisen tiedot</th>
+            <th class="col-md-4 ekarivi"></th>
+            <th class="col-md-5 ekarivi">Vapaat kommentit</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Joukkoliikenteen lippualue</th>
+              <td>
+                <form-group-compact label="Lippualue">
+                  <input id="taustatiedot-lippualue" name="lippualue" type="text"
+                         required
+                         noenter
+                         select-on-click
+                         ng-model="taustatiedot.lippualue">
+                </form-group-compact>
+              </td>
+              <td>
+                <form-group-compact label="Kommentit">
+                  <input id="taustatiedot-lippualue-k" name="lippualue-k" type="text"
+                         noenter
+                         select-on-click
+                         ng-model="taustatiedot.lippualueKommentit">
+                </form-group-compact>
+              </td>
+            </tr>
+            <tr>
+              <th>Toimivaltainen viranomainen</th>
+              <td>
+                <form-group-compact label="Viranomainen">
+                  <input id="taustatiedot-viranomainen" name="viranomainen" type="text"
+                         required
+                         noenter
+                         select-on-click
+                         ng-model="taustatiedot.viranomainen">
+                </form-group-compact>
+              </td>
+              <td>
+                <form-group-compact label="Kommentit">
+                  <input id="taustatiedot-viranomainen-k" name="viranomainen-k" type="text"
+                         noenter
+                         select-on-click
+                         ng-model="taustatiedot.viranomainenKommentit">
+                </form-group-compact>
+              </td>
+            </tr>
+            <tr>
+              <th>Kuntaviranomainen</th>
+              <td>
+                <form-group-compact label="Kuntaviranomainen">
+                  <input id="taustatiedot-kuntaviranomainen" name="kuntaviranomainen" type="text"
+                         required
+                         noenter
+                         select-on-click
+                         ng-model="taustatiedot.kuntaviranomainen">
+                </form-group-compact>
+              </td>
+              <td>
+                <form-group-compact label="Kommentit">
+                  <input id="taustatiedot-kuntaviranomainen-k" name="kuntaviranomainen-k" type="text"
+                         noenter
+                         select-on-click
+                         ng-model="taustatiedot.kuntaviranomainenKommentit">
+                </form-group-compact>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </juku-form-row>
+  </ng-form>
+</div>
