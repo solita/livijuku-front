@@ -49,7 +49,7 @@
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <tr>
-          <th class="col-md-4 ekarivi">Kuukausikohtainen tarjonta</th>
+          <th class="col-md-4 ekarivi">Linjakilometrit ja vuorotarjonta</th>
           <th class="col-md-2 ekarivi">Linjakilometrit<br>(linja-km/kk)</th>
           <th class="col-md-2 ekarivi">Vuorotarjonta<br>(lähtöä/kk)</th>
           <th class="col-md-4 ekarivi">Vapaat kommentit</th>
@@ -150,10 +150,9 @@
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <tr>
-          <th ng-if="tyyppi==='PSAB'" class="col-md-4 ekarivi">Maksettu liikennöintikorvaus kuukausittain</th>
-          <th ng-if="tyyppi==='SL'" class="col-md-4 ekarivi">Maksettu liikennöintikorvaus ja lipputuki kuukausittain
-          </th>
-          <th ng-if="tyyppi==='PSAK'" class="col-md-4 ekarivi">Maksettu liikennöinnin sopimuskorvaus kuukausittain</th>
+          <th ng-if="tyyppi==='PSAB'" class="col-md-4 ekarivi">Maksettu liikennöintikorvaus</th>
+          <th ng-if="tyyppi==='SL'" class="col-md-4 ekarivi">Maksettu liikennöintikorvaus ja lipputuki</th>
+          <th ng-if="tyyppi==='PSAK'" class="col-md-4 ekarivi">Maksettu liikennöinnin sopimuskorvaus</th>
           <th class="col-md-2 ekarivi">€/kk ilman ALV</th>
           <th class="col-md-4 ekarivi">Vapaat kommentit</th>
         </tr>
@@ -199,8 +198,8 @@
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <tr>
-          <th ng-if="tyyppi==='PSAK'" class="col-md-4 ekarivi">Maksettu liikennöinnin nousukorvaus kuukausittain</th>
-          <th ng-if="tyyppi==='ME'" class="col-md-4 ekarivi">Maksettu asiakashinnan nousukorvaus kuukausittain</th>
+          <th ng-if="tyyppi==='PSAK'" class="col-md-4 ekarivi">Maksettu liikennöinnin nousukorvaus</th>
+          <th ng-if="tyyppi==='ME'" class="col-md-4 ekarivi">Maksettu asiakashinnan nousukorvaus</th>
           <th class="col-md-2 ekarivi">€/kk ilman ALV</th>
           <th class="col-md-4 ekarivi">Vapaat kommentit</th>
         </tr>
@@ -245,7 +244,7 @@
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <tr>
-          <th class="col-md-3 ekarivi">Lipputulot kuukausittain</th>
+          <th class="col-md-3 ekarivi">Lipputulot</th>
           <th class="col-md-2 ekarivi">Kertalippu<br>(€/kk ilman ALV)</th>
           <th class="col-md-2 ekarivi">Arvolippu<br>(€/kk ilman ALV)</th>
           <th class="col-md-2 ekarivi">Kausilippu<br>(€/kk ilman ALV)</th>
@@ -315,7 +314,7 @@
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <tr>
-          <th class="col-md-4 ekarivi">Lipputulot kuukausittain</th>
+          <th class="col-md-4 ekarivi">Lipputulot</th>
           <th class="col-md-2 ekarivi">Lipputulo<br>(€/kk ilman ALV)</th>
           <th class="col-md-4 ekarivi">Vapaat kommentit</th>
         </tr>
@@ -394,7 +393,7 @@
               </form-group-compact>
             </td>
             <td>
-              <form-group-compact label="ddd" errormessage="voittajanhintaErrorMessage">
+              <form-group-compact label="Voittajan hinta" errormessage="voittajanhintaErrorMessage">
                 <input id="{{tyyppi + '-tarjouskohteet-voittaja-'+$index}}" name="voittajanhinta" type="text"
                        class="form-control"
                        ng-currency="" numeric-only=""
@@ -405,7 +404,7 @@
               </form-group-compact>
             </td>
             <td>
-              <form-group-compact label="ddd" errormessage="toiseksitulleenhintaErrorMessage">
+              <form-group-compact label="Toiseksi tulleen hinta" errormessage="toiseksitulleenhintaErrorMessage">
                 <input id="{{tyyppi + '-tarjouskohteet-toiseksitullut-'+$index}}" name="toiseksitulleenhinta"
                        type="text"
                        class="form-control"
