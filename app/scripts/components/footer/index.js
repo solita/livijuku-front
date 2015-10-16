@@ -16,16 +16,18 @@ module.exports = function () {
     template: `
       <div class="footer navbar">
         <div class="container">
-          <div class="col-xs-8">
-            <img src="images/juku_logo.svg" class="logo">
-            <span>${__VERSION__}</span>
+          <img src="images/juku_logo.svg" class="logo footer__logo">
+
+          <div>
+            <span class="footer__version">${__VERSION__}</span>
+            <span class="footer__environment">
+              {{environmentName}}
+            </span>
           </div>
-          <div class="col-xs-2">
-            {{environmentName}}
-          </div>
-          <div class="col-xs-2 footer__domain">
+
+          <span class="footer__domain">
             Liikennevirasto
-          </div>
+          </span>
         </div>
       </div>
     `,
