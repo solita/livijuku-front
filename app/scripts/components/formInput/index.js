@@ -34,7 +34,7 @@ export function formGroupCompact() {
 
       assertInputIsDefined(input, element[0]);
 
-      input.classList.add("form-control");
+      angular.element(input).addClass("form-control");
 
       scope.name = input.getAttribute("name");
       scope.input = function() {
