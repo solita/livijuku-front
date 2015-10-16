@@ -12,7 +12,7 @@ angular.module('jukufrontApp')
         // angular-bootstrap listens 'focus' events and calls $scope.$apply
         // which causes an exception without a timeout
         setTimeout(function() {
-          var invalidinput = $(element).find('input.ng-invalid')[0];
+          var invalidinput = $(element).find('input.ng-invalid, select.ng-invalid')[0];
           if (invalidinput) {
             invalidinput.focus();
           } else {
