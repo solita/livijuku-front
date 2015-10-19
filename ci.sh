@@ -33,6 +33,7 @@ fetchUpstreamArtifacts () {
 createDb() {
   local DB_CREATE_ID=$1
   (
+    echo "create DB: $DB_CREATE_ID"
     curl -sS ${DB_HTTP_USER_SERVICE}/juku/juku_users.testing.create_users?username=${DB_CREATE_ID}
 
     export DB_URL=letto.solita.fi:1521/ldev.solita.fi
