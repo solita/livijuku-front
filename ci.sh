@@ -10,7 +10,7 @@ DEBUG_REDIRECT=${DEBUG_REDIRECT:-/dev/null}
 DB_HTTP_USER_SERVICE=${DB_HTTP_USER_SERVICE:-http://juku:juku@letto.solita.fi:50000}
 
 if [ ! -z "$JENKINS_DB_ID" ]; then
-  DB_CREATE_ID=${JENKINS_DB_ID}_${JOB_NAME}
+  DB_CREATE_ID=${JENKINS_DB_ID}_${JOB_NAME//-/_}
 else
   DB_CREATE_ID=${USER}_front
 fi
