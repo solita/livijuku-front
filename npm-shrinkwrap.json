@@ -1,0 +1,121 @@
+{
+  "name": "livijukufrontApp",
+  "version": "1.2.0",
+  "dependencies": {
+    "angular": {
+      "version": "1.4.7",
+      "from": "angular@>=1.4.3 <1.5.0",
+      "resolved": "https://registry.npmjs.org/angular/-/angular-1.4.7.tgz"
+    },
+    "angular-animate": {
+      "version": "1.4.7",
+      "from": "angular-animate@>=1.4.3 <1.5.0",
+      "resolved": "https://registry.npmjs.org/angular-animate/-/angular-animate-1.4.7.tgz"
+    },
+    "angular-bootstrap-show-errors": {
+      "version": "2.3.0",
+      "from": "angular-bootstrap-show-errors@>=2.3.0 <2.4.0",
+      "resolved": "https://registry.npmjs.org/angular-bootstrap-show-errors/-/angular-bootstrap-show-errors-2.3.0.tgz"
+    },
+    "angular-elastic": {
+      "version": "2.5.0",
+      "from": "angular-elastic@>=2.5.0 <3.0.0",
+      "resolved": "https://registry.npmjs.org/angular-elastic/-/angular-elastic-2.5.0.tgz"
+    },
+    "angular-i18n": {
+      "version": "1.4.7",
+      "from": "angular-i18n@>=1.4.3 <1.5.0",
+      "resolved": "https://registry.npmjs.org/angular-i18n/-/angular-i18n-1.4.7.tgz"
+    },
+    "angular-loading-bar": {
+      "version": "0.8.0",
+      "from": "angular-loading-bar@>=0.8.0 <0.9.0",
+      "resolved": "https://registry.npmjs.org/angular-loading-bar/-/angular-loading-bar-0.8.0.tgz"
+    },
+    "angular-nvd3": {
+      "version": "1.0.2",
+      "from": "angular-nvd3@>=1.0.0-beta <2.0.0",
+      "resolved": "https://registry.npmjs.org/angular-nvd3/-/angular-nvd3-1.0.2.tgz"
+    },
+    "angular-resource": {
+      "version": "1.4.7",
+      "from": "angular-resource@>=1.4.3 <1.5.0",
+      "resolved": "https://registry.npmjs.org/angular-resource/-/angular-resource-1.4.7.tgz"
+    },
+    "angular-route": {
+      "version": "1.4.7",
+      "from": "angular-route@>=1.4.3 <1.5.0",
+      "resolved": "https://registry.npmjs.org/angular-route/-/angular-route-1.4.7.tgz"
+    },
+    "angular-smart-table": {
+      "version": "2.1.4",
+      "from": "angular-smart-table@>=2.1.1 <3.0.0",
+      "resolved": "https://registry.npmjs.org/angular-smart-table/-/angular-smart-table-2.1.4.tgz"
+    },
+    "angular-toastr": {
+      "version": "1.4.1",
+      "from": "angular-toastr@>=1.4.1 <1.5.0",
+      "resolved": "https://registry.npmjs.org/angular-toastr/-/angular-toastr-1.4.1.tgz"
+    },
+    "angular-ui-bootstrap": {
+      "version": "0.13.4",
+      "from": "angular-ui-bootstrap@>=0.13.4 <0.14.0",
+      "resolved": "https://registry.npmjs.org/angular-ui-bootstrap/-/angular-ui-bootstrap-0.13.4.tgz"
+    },
+    "angular-ui-router": {
+      "version": "0.2.15",
+      "from": "angular-ui-router@>=0.2.15 <0.3.0",
+      "resolved": "https://registry.npmjs.org/angular-ui-router/-/angular-ui-router-0.2.15.tgz"
+    },
+    "angular-ui-validate": {
+      "version": "1.0.0",
+      "from": "angular-ui-validate@1.0.0",
+      "resolved": "https://registry.npmjs.org/angular-ui-validate/-/angular-ui-validate-1.0.0.tgz"
+    },
+    "bluebird": {
+      "version": "2.10.2",
+      "from": "bluebird@>=2.9.34 <3.0.0",
+      "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-2.10.2.tgz"
+    },
+    "bootstrap": {
+      "version": "3.3.5",
+      "from": "bootstrap@>=3.3.4 <3.4.0",
+      "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-3.3.5.tgz"
+    },
+    "d3": {
+      "version": "3.5.6",
+      "from": "d3@>=3.5.6 <4.0.0",
+      "resolved": "https://registry.npmjs.org/d3/-/d3-3.5.6.tgz"
+    },
+    "es5-shim": {
+      "version": "4.1.14",
+      "from": "es5-shim@>=4.1.1 <4.2.0",
+      "resolved": "https://registry.npmjs.org/es5-shim/-/es5-shim-4.1.14.tgz"
+    },
+    "jquery": {
+      "version": "2.1.4",
+      "from": "jquery@>=2.1.4 <3.0.0",
+      "resolved": "https://registry.npmjs.org/jquery/-/jquery-2.1.4.tgz"
+    },
+    "json3": {
+      "version": "3.3.2",
+      "from": "json3@>=3.3.1 <3.4.0",
+      "resolved": "https://registry.npmjs.org/json3/-/json3-3.3.2.tgz"
+    },
+    "lodash": {
+      "version": "3.10.1",
+      "from": "lodash@>=3.10.1 <4.0.0",
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
+    },
+    "ng-currency": {
+      "version": "0.8.7",
+      "from": "solita/ng-currency#v0.8.x",
+      "resolved": "git://github.com/solita/ng-currency.git#5946b2333a33d793cc60cba0a641cabdb4350243"
+    },
+    "ng-file-upload": {
+      "version": "7.3.9",
+      "from": "ng-file-upload@>=7.3.4 <8.0.0",
+      "resolved": "https://registry.npmjs.org/ng-file-upload/-/ng-file-upload-7.3.9.tgz"
+    }
+  }
+}
