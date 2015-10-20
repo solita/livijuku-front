@@ -1,16 +1,25 @@
 <div class="container">
+  <juku-navigation>
+    <juku-tabs>
+      <juku-tab
+        ng-repeat="tyyppi in tyypit"
+        selected="isTabSelected(tyyppi)"
+        ng-click="toTab(tyyppi)">
+        {{ tyyppi | toApplicantName }}
+      </juku-tab>
+    </juku-tabs>
+  </juku-navigation>
   <div class="row">
-    <div class="col-md-12">
-      <h1>Tunnuslukuraportit</h1>
-      <p>Tämä on tunnuslukuraporttinäkymä, jossa ei vielä toistaiseksi ole mitään toiminnallisuutta.</p>
-      <nvd3 options='nvd3options1' data='nvd3data1'></nvd3>
-    </div>
+    <h1>Joukkoliikenteen valtionavustushakemukset ja päätökset</h1>
+    <nvd3 options='haettuMyonnettyYhteensaOptions' data='haettuMyonnettyYhteensaArvot' api="haettuMyonnettyYhteensaApi"></nvd3>
   </div>
   <div class="row">
-    <div class="col-md-12">
-      <h1>ELY-KESKUKSIEN MÄÄRÄRAHATARVE</h1>
-      <h2>Haetut valtionavustukset yhteensä</h2>
-      <nvd3 options="nvd3options2" data="nvd3data2"></nvd3>
-        </div>
+    <nvd3 options='haettuMyonnettyOptions' data='haettuMyonnettyArvot' api="haettuMyonnettyApi"></nvd3>
+  </div>
+  <div class="row">
+    <h1>ELY-KESKUKSIEN MÄÄRÄRAHATARVE</h1>
+
+    <h2>Haetut valtionavustukset yhteensä</h2>
+    <nvd3 options="nvd3options2" data="nvd3data2"></nvd3>
   </div>
 </div>
