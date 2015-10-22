@@ -7,7 +7,7 @@
          ng-if="hasViewNonLiviUserPermission">
     <thead>
     <tr>
-      <th st-sort="etunimi">Nimi</th>
+      <th st-sort="etunimi" st-sort-default="true">Nimi</th>
       <th st-sort="organisaationimi">Organisaatio</th>
       <th st-sort="roolit">Roolit</th>
       <th st-sort="sahkoposti">Sähköposti</th>
@@ -34,7 +34,7 @@
          st-safe-src=liikenneviraston_henkilot>
     <thead>
     <tr>
-      <th st-sort="etunimi">Nimi</th>
+      <th st-sort="etunimi" st-sort-default="true">Nimi</th>
       <th st-sort="roolit">Roolit</th>
       <th st-sort="sahkoposti">Sähköposti</th>
       <th ng-if="hasDeleteKayttajaPermission">Toiminnot</th>
