@@ -120,7 +120,11 @@
         </juku-icon-link>
       </juku-form-row>
 
-      <!-- Hakija -->
+      <juku-form-row
+        ng-show="!avustushakemusPaatosOlemassa() && isMaksatushakemus && haettuSummaYliMyonnetyn()"
+        class="alert alert-danger">
+        <strong>Virhe! </strong> Avustusta ei voi hakea maksuun, koska avustushakemuksella ei ole päätöstä.
+      </juku-form-row>
       <juku-form-row
         ng-show="avustushakemusPaatosOlemassa() && onMaksatushakemus1() && haettuSummaYliMyonnetyn()"
         class="alert alert-danger">
