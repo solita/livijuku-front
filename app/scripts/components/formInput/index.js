@@ -40,6 +40,24 @@ export function formGroupCompact() {
       scope.input = function() {
         return form[scope.name];
       }
+
+      var formGroupClasses = function() {
+        var input = form[scope.name];
+        var classes = {
+          'has-feedback': input.$invalid && input.$touched && scope.feedbackSupport,
+          'has-error': input.$invalid && input.$touched,
+          'has-warning': input.$invalid && !input.$touched,
+          'has-success': input.$valid && input.$dirty
+        }
+
+        var activeClasses = _.filter(_.keys(classes), key => classes[key]);
+        activeClasses.push("form-group");
+        return activeClasses.join(" ");
+      }
+
+      var body = (element.children())[0];
+      scope.$watch(formGroupClasses, function(v) { body.className = v; })
+
       scope.tooltipText = function() {
         var errorFn = scope.errormessage();
         if (errorFn) {

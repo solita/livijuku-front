@@ -1,6 +1,4 @@
-<div class="form-group" ng-class="{'has-feedback': input().$invalid && feedbackSupport,
-                                   'has-error': input().$invalid,
-                                   'has-success': input().$valid && input().$dirty}"
+<div class="form-group"
      tooltip="{{tooltipText()}}"
      tooltip-placement="top"
      tooltip-enable="input().$invalid">
@@ -9,7 +7,7 @@
 
   <ng-transclude></ng-transclude>
 
-  <span ng-show="input().$invalid && feedbackSupport"
+  <span ng-show="input().$invalid && input().$touched && feedbackSupport"
         class="glyphicon glyphicon-warning-sign form-control-feedback"
         aria-hidden="true"></span>
 </div>
