@@ -5,7 +5,7 @@ var pdf = require('utils/pdfurl');
 var hakemus = require('utils/hakemus');
 var _ = require('lodash');
 
-import {toISOString} from 'utils/time';
+import {toISOString,toUTCTimestamp} from 'utils/time';
 
 angular.module('jukufrontApp')
   .controller('KasittelijaHakemuskaudenHallintaCtrl', [
@@ -20,6 +20,12 @@ angular.module('jukufrontApp')
       function haeHakemuskaudet() {
         // TODO - korvaa kun backend palauttaa uuden resurssin
         HakemuskausiService.haeSummary().then((hakemuskaudet) => {
+          _.forOwn(hakemuskaudet, function (hakemuskausi, key) {
+            _.forOwn(hakemuskausi.hakemukset, function (hakemustyyppi, key) {
+              hakemustyyppi.hakuaika.alkupvm = toUTCTimestamp(hakemustyyppi.hakuaika.alkupvm);
+              hakemustyyppi.hakuaika.loppupvm = toUTCTimestamp (hakemustyyppi.hakuaika.loppupvm);
+            });
+          });
           $scope.avoimetHakemuskaudet = _.filter(hakemuskaudet, function (hakemuskausi) {
             return (hakemuskausi.tilatunnus === "0" || hakemuskausi.tilatunnus === "A");
           });
@@ -62,12 +68,13 @@ angular.module('jukufrontApp')
           $rootScope.sallittu('modify-hakemuskausi');
       };
 
-      $scope.tallennaHakuajat = function tallennaHakuajat(vuosi, hakemus, {alkupvm, loppupvm}) {
+      $scope.tallennaHakuajat = function tallennaHakuajat(vuosi, hakemus) {
+
         var hakuajat = [
           {
             hakemustyyppitunnus: hakemus.hakemustyyppitunnus,
-            alkupvm: toISOString(new Date(alkupvm)),
-            loppupvm: toISOString(new Date(loppupvm))
+            alkupvm: toISOString(hakemus.hakuaika.alkupvm),
+            loppupvm: toISOString(hakemus.hakuaika.loppupvm)
           }
         ];
 

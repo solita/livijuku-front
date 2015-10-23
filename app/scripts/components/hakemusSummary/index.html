@@ -30,23 +30,21 @@
 
     <div ng-show="editing" ng-form="hakuaikaForm">
 
-      <div ng-show="editing"
-           class="input-group hakuajat_input juku-datepicker"
+      <div class="input-group hakuajat_input juku-datepicker"
            tooltip="Alkamispäivämäärän tulee olla ennen loppumispäivämäärää."
            tooltip-trigger="mouseover"
            id="{{ 'test-alkupvm-datepicker-' + testIdIndex }}"
-           tooltip-enable="$index === 0 && $parent.hakuaikaForm.$error.validDateOrder"
-           ng-repeat="input in inputs">
+           tooltip-enable="hakuaikaForm.$error.validDateOrder">
 
-        <input name="{{input}}"
+        <input name="alkupvm"
                type="text"
                class="form-control"
                datepicker-popup="d.M.yyyy"
-               ng-model="values[input]"
+               ng-model="hakemus.hakuaika.alkupvm"
                datepicker-options="{{dateOptions}}"
-               is-open="calendarOpen[input]"
+               is-open="alkupvmOpen"
                ng-required="true"
-               ui-validate="{validDateOrder: 'validDateOrder($value, $index)'}"
+               ui-validate="{validDateOrder: 'validDateOrder($value, hakemus.hakuaika.loppupvm, false)'}"
                ui-validate-watch=" 'changeFlag' "
                show-button-bar="false" noenter readonly/>
 
@@ -55,13 +53,39 @@
             type="button"
             class="btn btn-default hakuajat_calendar"
             id="{{ 'test-alkupvm-datepicker-button-' + testIdIndex }}"
-            ng-click="toggleCalendar($event, input)">
+            ng-click="toggleCalendarAlkupvm($event)">
             <i class="glyphicon glyphicon-calendar"></i>
           </button>
         </span>
       </div>
 
-      <div class="hakemus-summary__warning" ng-if="inPast(values.loppupvm)">
+      <div class="input-group hakuajat_input juku-datepicker"
+           id="{{ 'test-loppupvm-datepicker-' + testIdIndex }}">
+
+        <input name="loppupvm"
+               type="text"
+               class="form-control"
+               datepicker-popup="d.M.yyyy"
+               ng-model="hakemus.hakuaika.loppupvm"
+               datepicker-options="{{dateOptions}}"
+               is-open="loppupvmOpen"
+               ng-required="true"
+               ui-validate="{validDateOrder: 'validDateOrder(hakemus.hakuaika.alkupvm, $value, true)'}"
+               ui-validate-watch="hakemus.hakuaika.alkupvm"
+               show-button-bar="false" noenter readonly/>
+
+        <span class="input-group-btn">
+          <button
+            type="button"
+            class="btn btn-default hakuajat_calendar"
+            id="{{ 'test-loppupvm-datepicker-button-' + testIdIndex }}"
+            ng-click="toggleCalendarLoppupvm($event)">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </button>
+        </span>
+      </div>
+
+      <div class="hakemus-summary__warning" ng-if="inPast(hakemus.hakuaika.loppupvm)">
         Huomaa, että loppumispäivämäärä on menneisyydessä
       </div>
 
