@@ -11,7 +11,7 @@
             <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" numeric-only="" noenter select-on-click
                    alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
                    ng-readonly="isReadonly()" class="form-control"
-                   tooltip="{{haeTooltip('haettavaavustus')}}"
+                   tooltip="{{haeTooltip('haettavaavustus',alv,kohde.alv)}}"
                    tooltip-trigger="focus"
                    tooltip-placement="top"
                    ng-model="kohde.haettavaavustus"
@@ -34,7 +34,7 @@
           <div class="input-group">
             <input name="{{getName('omarahoitus')}}" type="text"  ng-currency="" numeric-only="" noenter select-on-click
                    alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
-                   class="form-control" tooltip="{{haeTooltip('omarahoitus')}}"
+                   class="form-control" tooltip="{{haeTooltip('omarahoitus',alv,kohde.alv)}}"
                    tooltip-trigger="focus"
                    tooltip-placement="top"
                    ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
