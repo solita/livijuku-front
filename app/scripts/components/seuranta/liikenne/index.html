@@ -106,11 +106,11 @@
             </form-group-compact>
           </td>
           <td>
-            <form-group-compact label="Taksit" errormessage="kokonaislukuErrorMessage">
+            <form-group-compact label="Taksit" errormessage="taksitErrorMessage">
               <input id="{{liikennetyyppi + '-taksit'}}" name="taksit"
                      ng-model="rivi.taksit"
                      placeholder="Taksit" noenter
-                     type="number" numeric-integer-only="" select-on-click
+                     type="text" required integer-only select-on-click
                      ng-readonly="isReadonly()">
             </form-group-compact>
           </td>
@@ -125,11 +125,12 @@
             </form-group-compact>
           </td>
           <td>
-            <form-group-compact label="Matkustajamäärä" errormessage="kokonaislukuErrorMessage">
-              <input id="{{liikennetyyppi + '-matkustajamaara'}}" name="matkustajamaara" type="number"
-                     class="form-control" numeric-integer-only="" noenter
+            <form-group-compact label="Matkustajamäärä" errormessage="matkustajamaaraErrorMessage">
+              <input id="{{liikennetyyppi + '-matkustajamaara'}}" name="matkustajamaara"
+                     placeholder="Matkustajamäärä"
+                     type="text" required integer-only
                      ng-readonly="isReadonly()"
-                     select-on-click
+                     noenter select-on-click
                      ng-model="rivi.matkustajamaara">
             </form-group-compact>
           </td>

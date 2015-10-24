@@ -86,6 +86,7 @@ function liikenneController($scope) {
 
   $scope.linjaautotErrorMessage = pakollinnenErrorMessage("Linja-autojen lukumäärä");
   $scope.taksitErrorMessage = pakollinnenErrorMessage("Taksien lukumäärä");
+  $scope.matkustajamaaraErrorMessage = pakollinnenErrorMessage("Matkustajien lukumäärä");
 }
 
 module.exports = function () {
