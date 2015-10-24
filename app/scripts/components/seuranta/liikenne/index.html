@@ -97,11 +97,11 @@
             </form-group-compact>
           </td>
           <td>
-            <form-group-compact label="Linja-autot" errormessage="kokonaislukuErrorMessage">
+            <form-group-compact label="Linja-autot" errormessage="linjaautotErrorMessage">
               <input id="{{liikennetyyppi + '-linjaautot'}}" name="linjaautot"
                      ng-model="rivi.linjaautot"
                      placeholder="Linja-autot" noenter
-                     type="number" numeric-integer-only="" select-on-click
+                     type="text" required integer-only select-on-click
                      ng-readonly="isReadonly()">
             </form-group-compact>
           </td>

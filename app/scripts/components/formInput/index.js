@@ -69,3 +69,28 @@ export function formGroupCompact() {
     }
   }
 }
+
+export function integerParser() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, modelCtrl) {
+      if(!modelCtrl) {
+        return;
+      }
+
+      modelCtrl.$parsers.unshift(function (inputValue) {
+        if (inputValue) {
+          var transformedInput = inputValue.replace(/[^\d]/g, '');
+          if (transformedInput !== inputValue) {
+            modelCtrl.$setViewValue(transformedInput);
+            modelCtrl.$render();
+          }
+          if (transformedInput !== '') {
+            return parseInt(transformedInput);
+          }
+        }
+        return null;
+      });
+    }
+  }
+}
