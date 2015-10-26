@@ -51,12 +51,21 @@ export function formGroupCompact() {
         }
 
         var activeClasses = _.filter(_.keys(classes), key => classes[key]);
-        activeClasses.push("form-group");
         return activeClasses.join(" ");
       }
 
-      var body = (element.children())[0];
-      scope.$watch(formGroupClasses, function(v) { body.className = v; })
+      /*
+       * ng-class direktiivi ei toimi oikein vaan nopealla syötteellä
+       * joku virheluokista saattaa jäädä päälle.
+       *
+       * Tämän ongelman takia bootstrapin validaatiotilaluokkien
+       * asettaminen tehdään tässä käsin.
+       */
+      var body = element.children();
+      scope.$watch(formGroupClasses, function(v) {
+        body.removeClass('has-feedback has-error has-warning has-success');
+        body.addClass(v);
+      });
 
       scope.tooltipText = function() {
         var errorFn = scope.errormessage();
@@ -70,13 +79,20 @@ export function formGroupCompact() {
   }
 }
 
+function assertModelCtrlIsDefined(modelCtrl, element) {
+  if (!modelCtrl) {
+    var message = "Input model controller is not found.";
+    console.log(message, element);
+    throw({message: message, element: element});
+  }
+}
+
 export function integerParser() {
   return {
     require: 'ngModel',
     link: function(scope, element, attrs, modelCtrl) {
-      if(!modelCtrl) {
-        return;
-      }
+
+      assertModelCtrlIsDefined(modelCtrl, element);
 
       modelCtrl.$parsers.unshift(function (inputValue) {
         if (inputValue) {

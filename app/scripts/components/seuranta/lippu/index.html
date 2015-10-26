@@ -52,17 +52,17 @@
             </form-group-compact>
           </td>
           <td>
-            <form-group-compact label="Myynti" errormessage="kokonaislukuErrorMessage">
-              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-myynti'}}" name="myynti" type="number"
-                     numeric-integer-only="" select-on-click
+            <form-group-compact label="Myynti" errormessage="myyntiErrorMessage">
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-myynti'}}" name="myynti" type="text"
+                     required integer-only select-on-click
                      ng-model="rivi.myynti" ng-disabled="isReadonly()"
                      placeholder="Myynti">
             </form-group-compact>
           </td>
           <td>
-            <form-group-compact label="Matkat" errormessage="kokonaislukuErrorMessage">
-              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-matkat'}}" name="matkat" type="number"
-                     numeric-integer-only="" select-on-click
+            <form-group-compact label="Matkat" errormessage="matkatErrorMessage">
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-matkat'}}" name="matkat" type="text"
+                     required integer-only select-on-click
                      ng-model="rivi.matkat" ng-disabled="isReadonly()"
                      placeholder="Matkat">
             </form-group-compact>

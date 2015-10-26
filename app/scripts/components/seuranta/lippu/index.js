@@ -62,6 +62,9 @@ function lippuController($scope) {
     return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
   };
 
+  $scope.myyntiErrorMessage = pakollinnenErrorMessage("Myyntien lukumäärä");
+  $scope.matkatErrorMessage = pakollinnenErrorMessage("Matkojen lukumäärä");
+
   $scope.keskipituusErrorMessage = pakollinnenErrorMessage("Matkojen keskipituus");
   $scope.asiakashintaErrorMessage = pakollinnenErrorMessage("Asiakashinta");
   $scope.lipputulotErrorMessage = pakollinnenErrorMessage("Lipputulot yhteensä");
