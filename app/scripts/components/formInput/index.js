@@ -79,13 +79,20 @@ export function formGroupCompact() {
   }
 }
 
+function assertModelCtrlIsDefined(modelCtrl, element) {
+  if (!modelCtrl) {
+    var message = "Input model controller is not found.";
+    console.log(message, element);
+    throw({message: message, element: element});
+  }
+}
+
 export function integerParser() {
   return {
     require: 'ngModel',
     link: function(scope, element, attrs, modelCtrl) {
-      if(!modelCtrl) {
-        return;
-      }
+
+      assertModelCtrlIsDefined(modelCtrl, element);
 
       modelCtrl.$parsers.unshift(function (inputValue) {
         if (inputValue) {
