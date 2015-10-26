@@ -2,6 +2,7 @@
 var _ = require('lodash');
 var hakemus = require('utils/hakemus');
 var tilat = require('utils/hakemuksenTilat');
+import {getUTCDateTimestamp,convertDateToUTC} from 'utils/time';
 
 module.exports = function () {
   return {
@@ -19,7 +20,8 @@ module.exports = function () {
       $scope.hakemuksenTilat = _.filter(tilat.getAll(), (tila) => ['0', 'M'].indexOf(tila.id) === -1);
       $scope.utils = hakemus;
       $scope.editing = false;
-      $scope.calendarOpen = {};
+      $scope.alkupvmOpen = false;
+      $scope.loppupvmOpen = false;
       $scope.dateOptions = {
         formatYear: 'yyyy',
         startingDay: 1,
@@ -30,47 +32,33 @@ module.exports = function () {
         return $scope.hakemuskaudenTila === 'S';
       };
 
-      $scope.inputs = ['alkupvm', 'loppupvm'];
-
-      $scope.changeFlag = false;
-
-      const alkupvm = new Date($scope.hakemus.hakuaika.alkupvm);
-      const loppupvm = new Date($scope.hakemus.hakuaika.loppupvm);
-      $scope.values = {alkupvm, loppupvm};
-
       $scope.toggleEditMode = function toggleEditMode() {
         $scope.editing = !$scope.editing;
       };
 
-      $scope.toggleCalendar = function toggleCalendar(ev, field) {
+      $scope.changeFlag = false;
 
-        for (let fieldName in $scope.calendarOpen) {
-          if (fieldName !== field) {
-            $scope.calendarOpen[fieldName] = false;
-          }
-        }
-
-        $scope.calendarOpen[field] = !$scope.calendarOpen[field];
+      $scope.toggleCalendarAlkupvm = function toggleCalendarAlkupvm(ev) {
+        $scope.alkupvmOpen = !$scope.alkupvmOpen;
+      };
+      $scope.toggleCalendarLoppupvm = function toggleCalendarLoppupvm(ev) {
+        $scope.loppupvmOpen = !$scope.loppupvmOpen;
       };
 
       $scope.inPast = function (value) {
-        return value < new Date();
+        if (typeof value === 'undefined') return;
+        return convertDateToUTC(value) < getUTCDateTimestamp();
       };
 
-      $scope.validDateOrder = function (value, index) {
+      $scope.validDateOrder = function (before, after, changeTrigger) {
         // changeFlag is used to trigger also alkupvm validation when loppupvm is changed
-        if ((typeof(value) === 'string') || (index === 1 && $scope.changeFlag)) return true;
-        $scope.changeFlag = false;
-        if (index === 0) {
-          return value < $scope.values.loppupvm;
-        } else {
-          $scope.changeFlag = true;
-          return value > $scope.values.alkupvm;
-        }
+        if (typeof before !== 'object' || typeof after !== 'object') return true;
+        $scope.changeFlag = changeTrigger;
+        return convertDateToUTC(before) < convertDateToUTC(after);
       };
 
       $scope.save = function onSave() {
-        $scope.onSave({values: $scope.values});
+        $scope.onSave();
       };
 
       $scope.stopPropagation = function stopPropagation(ev) {

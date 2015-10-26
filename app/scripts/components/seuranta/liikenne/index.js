@@ -83,6 +83,10 @@ function liikenneController($scope) {
   $scope.ajokilometritErrorMessage = pakollinnenErrorMessage("Ajokilometrit");
   $scope.lipputuloErrorMessage = pakollinnenErrorMessage("Lipputulo");
   $scope.nettohintaErrorMessage = pakollinnenErrorMessage("Nettohinta");
+
+  $scope.linjaautotErrorMessage = pakollinnenErrorMessage("Linja-autojen lukumäärä");
+  $scope.taksitErrorMessage = pakollinnenErrorMessage("Taksien lukumäärä");
+  $scope.matkustajamaaraErrorMessage = pakollinnenErrorMessage("Matkustajien lukumäärä");
 }
 
 module.exports = function () {

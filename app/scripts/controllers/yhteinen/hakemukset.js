@@ -20,7 +20,7 @@ angular.module('jukufrontApp')
 
       this.displayed = [];
       this.tyyppi = $stateParams.tyyppi;
-      this.hakemuskaudet = [];
+      //this.hakemuskaudet = [];
 
       this.sallittu = function (oikeus) {
         if (typeof $rootScope.user !== 'undefined') {

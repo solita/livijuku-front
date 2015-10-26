@@ -251,7 +251,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.hasPaatos = function (hakemustilatunnus) {
-        return hakemustilatunnus === 'P' || hakemustilatunnus === 'M';
+        return ($scope.paatos && $scope.paatos.voimaantuloaika);
       };
 
       $scope.maksatushakemus1PaatosOlemassa = function () {

@@ -14,6 +14,15 @@ module.exports = function () {
     },
     controller: ['$scope', '$rootScope', 'AvustuskohdeService', 'AuthService', '$sce', function ($scope, $rootScope, AvustuskohdeService, AuthService, $sce) {
 
+      function arvo_teksti(arvo, alvmukana, prosentti) {
+        if (typeof arvo === 'undefined') return;
+        if (alvmukana) {
+          return arvo.toFixed(2).toString().replace('.', ',') + ' € (sis. alv)';
+        } else {
+          return (arvo / (1 + (prosentti / 100))).toFixed(2).toString().replace('.', ',') + ' € (alv 0%)';
+        }
+      }
+
       $scope.avustusprosentti = AvustuskohdeService.avustusprosentti($scope.vuosi, $scope.kohde.avustuskohdeluokkatunnus, $scope.kohde.avustuskohdelajitunnus);
 
       $scope.euroSyoteNumeroksi = function (arvo) {
@@ -24,22 +33,22 @@ module.exports = function () {
         return $scope.kohde.avustuskohdeluokkatunnus + '-' + $scope.kohde.avustuskohdelajitunnus + '-' + key;
       };
 
-      $scope.haeTooltip = function (syotekentta) {
+      $scope.haeTooltip = function (syotekentta, alvmukana, alvprosentti) {
         var tooltip = '';
         if ($scope.hakemustyyppi !== 'AH0') {
           if (syotekentta === 'haettavaavustus') {
-            tooltip = 'Avustushakemuksessa haettu avustus:\t\t' + $scope.vertailuarvot().avustushakemusHaettavaAvustus.toString().replace('.', ',') + ' € (sis. alv)';
+            tooltip = 'Avustushakemuksessa haettu avustus:' + arvo_teksti($scope.vertailuarvot().avustushakemusHaettavaAvustus, alvmukana, alvprosentti);
           }
           else if (syotekentta === 'omarahoitus') {
-            tooltip = 'Avustushakemuksessa omarahoitus:\t' + $scope.vertailuarvot().avustushakemusOmaRahoitus.toString().replace('.', ',') + ' € (sis. alv)';
+            tooltip = 'Avustushakemuksessa omarahoitus:' + arvo_teksti($scope.vertailuarvot().avustushakemusOmaRahoitus, alvmukana, alvprosentti);
           }
         }
         if ($scope.hakemustyyppi === 'MH2') {
           if (syotekentta === 'haettavaavustus') {
-            tooltip = tooltip + '\n' + 'Maksatushakemuksessa haettu avustus:\t' + $scope.vertailuarvot().maksatushakemusHaettavaAvustus.toString().replace('.', ',') + ' € (sis. alv)';
+            tooltip = tooltip + '\n' + 'Maksatushakemuksessa haettu avustus:' + arvo_teksti($scope.vertailuarvot().maksatushakemusHaettavaAvustus, alvmukana, alvprosentti);
           }
           else if (syotekentta === 'omarahoitus') {
-            tooltip = tooltip + '\n' + 'Maksatushakemuksessa omarahoitus:\t' + $scope.vertailuarvot().maksatushakemusOmaRahoitus.toString().replace('.', ',') + ' € (sis. alv)';
+            tooltip = tooltip + '\n' + 'Maksatushakemuksessa omarahoitus:' + arvo_teksti($scope.vertailuarvot().maksatushakemusOmaRahoitus, alvmukana, alvprosentti);
           }
         }
         return tooltip;
@@ -107,7 +116,9 @@ module.exports = function () {
         }
       };
 
-    }],
+    }
+
+    ],
     template: require('./index.html')
   };
 };

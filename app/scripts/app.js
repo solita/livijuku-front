@@ -131,6 +131,10 @@ angular
         template: require('views/yhteinen/asetukset.html'),
         controller: 'AsetuksetCtrl'
       })
+      .state('app.yhteinen.asiakastuki', {
+        url: '/asiakastuki',
+        template: require('views/yhteinen/asiakastuki.html')
+      })
       /*
        * Hakija
        */
@@ -288,7 +292,8 @@ angular
   .directive('jukuUploadHakuohjeButton', directive.template(require('views/kasittelija/hakuohje-upload-button.html')))
   .directive('jukuDeleteKayttajaLink', directive.template(require('views/yhteinen/delete-kayttaja-link.html')))
   .directive('bindModel', directive.bindModel)
-  .directive('formGroupCompact', require("components/formInput").formGroupCompact);
+  .directive('formGroupCompact', require("components/formInput").formGroupCompact)
+  .directive('integerOnly', require("components/formInput").integerParser);
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
