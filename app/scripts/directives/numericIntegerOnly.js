@@ -4,6 +4,10 @@
 var angular = require('angular');
 var c = require('utils/core');
 
+/*
+ * Deprecated - Älä käytä tätä enään
+ * Tämän sijaan käytetään direktiiviä numeric-only ja text-inputtyyppiä (type="text")
+ */
 angular.module('jukufrontApp')
 .directive('numericIntegerOnly', function(){
   return {
