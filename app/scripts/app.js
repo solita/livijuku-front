@@ -131,6 +131,10 @@ angular
         template: require('views/yhteinen/asetukset.html'),
         controller: 'AsetuksetCtrl'
       })
+      .state('app.yhteinen.asiakastuki', {
+        url: '/asiakastuki',
+        template: require('views/yhteinen/asiakastuki.html')
+      })
       /*
        * Hakija
        */

@@ -51,6 +51,9 @@
     <li><a ui-sref-active="is-active" ui-sref="app.yhteinen.kayttajatiedot">
       JUKUn käyttäjät
     </a></li>
+    <li ng-hide="sallittu(user, 'view-hakemuskausi')"><a ui-sref-active="is-active" ui-sref="app.yhteinen.asiakastuki">
+      Asiakastuki
+    </a></li>
     <li>
       <a class="navbartxt" href="{{logoutUrl}}">
         Kirjaudu ulos
