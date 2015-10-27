@@ -69,7 +69,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.tallennaHakuajat = function tallennaHakuajat(vuosi, hakemus) {
-
+        StatusService.tyhjenna();
         var hakuajat = [
           {
             hakemustyyppitunnus: hakemus.hakemustyyppitunnus,
@@ -90,6 +90,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.kaynnistaHakemuskausi = function kaynnistaHakemuskausi(vuosi) {
+        StatusService.tyhjenna();
         HakemuskausiService.luoUusi(vuosi)
           .then(function (/* hakemuskausi */) {
             haeHakemuskaudet();
@@ -98,6 +99,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.suljeHakemuskausi = function suljeHakemuskausi(vuosi) {
+        StatusService.tyhjenna();
         HakemuskausiService.sulje(vuosi)
           .then(function (/* sulje hakemuskausi */) {
             haeHakemuskaudet();
@@ -110,6 +112,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.upload = function (tiedostot, hakemuskausi) {
+        StatusService.tyhjenna();
         const {vuosi} = hakemuskausi;
         if (tiedostot && tiedostot.length > 0) {
           if (!tiedostotyyppiPdf(tiedostot[0].type)) {
