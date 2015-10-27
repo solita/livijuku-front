@@ -519,7 +519,7 @@ public class HakemuskausiTest extends TestBase {
                 "Matkakeskuksen suunnittelu ja kehittäminen 1 240 e\n" +
                 "Raitiotien suunnittelu 1 240 e\n" +
                 "Muu hanke 1 240 e\n" +
-                "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 41 700 euroa.\n" +
+                "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 41 700 euroa. Kaikki luvut sisältävät arvonlisäveron.\n" +
                 "Lähettäjä: <hakijan nimi, joka on lähettänyt hakemuksen>\n" +
                 "Liitteet\n" +
                 "Liikennevirasto - esikatselu - hakemus on keskeneräinen\n" +
