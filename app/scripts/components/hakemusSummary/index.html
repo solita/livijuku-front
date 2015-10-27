@@ -17,18 +17,24 @@
     </li>
   </ul>
   <div class="hakemus-summary__hakuajat" ng-click="stopPropagation($event)">
-    <p>Hakuaika:</p>
-
-    <div ng-hide="editing">
-      <a ng-hide="hakemuskausiSuljettu()" href="#" ng-click="toggleEditMode($event)"
-         id="{{ 'test-muokkaa-hakuaikoja-' + testIdIndex }}">
-        <i class="glyphicon glyphicon-pencil hakemus-summary__edit"></i>
-      </a>
+    <div ng-show="hakemuskausiSuljettu()">
+      <p>Hakuaika:</p>
       {{hakemus.hakuaika.alkupvm | date:'d.M.yyyy'}} -
       {{hakemus.hakuaika.loppupvm | date:'d.M.yyyy'}}
     </div>
 
+    <div ng-hide="editing">
+      <a ng-hide="hakemuskausiSuljettu()" href="#" ng-click="toggleEditMode($event)"
+         id="{{ 'test-muokkaa-hakuaikoja-' + testIdIndex }}">
+        <p>Hakuaika:</p>
+        <i class="glyphicon glyphicon-pencil hakemus-summary__edit"></i>
+        {{hakemus.hakuaika.alkupvm | date:'d.M.yyyy'}} -
+        {{hakemus.hakuaika.loppupvm | date:'d.M.yyyy'}}
+      </a>
+    </div>
+
     <div ng-show="editing" ng-form="hakuaikaForm">
+      <p>Hakuaika:</p>
 
       <div class="input-group hakuajat_input juku-datepicker"
            tooltip="Alkamispäivämäärän tulee olla ennen loppumispäivämäärää."
