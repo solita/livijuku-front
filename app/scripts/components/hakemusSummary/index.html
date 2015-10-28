@@ -24,7 +24,7 @@
     </div>
 
     <div ng-if="!hakemuskausiSuljettu()">
-      <div ng-hide="editing">
+      <div ng-if="!editing">
         <a href="#" ng-click="toggleEditMode($event)"
            id="{{ 'test-muokkaa-hakuaikoja-' + testIdIndex }}">
           <p>Hakuaika:</p>
@@ -34,7 +34,7 @@
         </a>
       </div>
 
-      <div class="hakemus-summary__hakuaika_edit" ng-show="editing" ng-form="hakuaikaForm">
+      <div class="hakemus-summary__hakuaika_edit" ng-if="editing" ng-form="hakuaikaForm">
         <a href="#" ng-click="toggleEditMode($event)"><i
           class="glyphicon glyphicon-remove"></i></a>
 
