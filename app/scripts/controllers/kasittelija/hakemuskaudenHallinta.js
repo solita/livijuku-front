@@ -35,7 +35,7 @@ angular.module('jukufrontApp')
           $scope.suljetutHakemuskaudet = _.filter(hakemuskaudet, function (hakemuskausi) {
             return hakemuskausi.tilatunnus === "S";
           });
-        })
+        }, StatusService.errorHandler)
       }
 
       function tiedostotyyppiPdf(tiedostotyyppi) {
