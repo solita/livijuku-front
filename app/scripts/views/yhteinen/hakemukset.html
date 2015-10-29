@@ -5,7 +5,7 @@
 
   <div ng-show="hakemukset.hakemuskaudet.length > 0">
 
-    <juku-navigation>
+    <div class="navigation">
       <juku-tabs>
         <juku-tab
           ng-repeat="tyyppi in constants.hakemustyypit"
@@ -16,7 +16,7 @@
             ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')"/>
         </juku-tab>
       </juku-tabs>
-    </juku-navigation>
+    </div>
 
     <accordion id="kaikki-hakemukset" close-others="false">
         <accordion-group is-open="hakemukset.yearsOpen[hakemuskausi.vuosi]" ng-repeat="hakemuskausi in hakemukset.hakemuskaudet">
