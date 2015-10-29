@@ -20,8 +20,10 @@ module.exports = function () {
       $scope.hakemuksenTilat = _.filter(tilat.getAll(), (tila) => ['0', 'M'].indexOf(tila.id) === -1);
       $scope.utils = hakemus;
       $scope.editing = false;
-      $scope.alkupvmOpen = false;
-      $scope.loppupvmOpen = false;
+      $scope.status = {
+        alkupvmOpen: false,
+        loppupvmOpen: false
+      };
       $scope.dateOptions = {
         formatYear: 'yyyy',
         startingDay: 1,
@@ -38,11 +40,17 @@ module.exports = function () {
 
       $scope.changeFlag = false;
 
+      $scope.cancelEdit = function cancelEdit(){
+        $scope.status.alkupvmOpen = false;
+        $scope.status.loppupvmOpen = false;
+        $scope.editing = false;
+      };
+
       $scope.toggleCalendarAlkupvm = function toggleCalendarAlkupvm(ev) {
-        $scope.alkupvmOpen = !$scope.alkupvmOpen;
+        $scope.status.alkupvmOpen = !$scope.status.alkupvmOpen;
       };
       $scope.toggleCalendarLoppupvm = function toggleCalendarLoppupvm(ev) {
-        $scope.loppupvmOpen = !$scope.loppupvmOpen;
+        $scope.status.loppupvmOpen = !$scope.status.loppupvmOpen;
       };
 
       $scope.inPast = function (value) {
