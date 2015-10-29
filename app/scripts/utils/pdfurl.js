@@ -2,10 +2,10 @@
 
 module.exports = {
   getHakemusPdfUrl: function (id) {
-    return 'pdf/web/viewer.html?file=../../api/hakemus/' + id + '/pdf';
+    return 'pdf/web/viewer.html?file=../../api/hakemus/' + id + '/juku-hakemus.pdf';
   },
   getPaatosPdfUrl: function (id) {
-    return 'pdf/web/viewer.html?file=../../api/hakemus/' + id + '/paatos/pdf';
+    return 'pdf/web/viewer.html?file=../../api/hakemus/' + id + '/paatos/juku-paatos.pdf';
   },
   getHakuohjePdfUrl: function (vuosi) {
     return 'pdf/web/viewer.html?file=../../api/hakemuskausi/' + vuosi + '/hakuohje';
