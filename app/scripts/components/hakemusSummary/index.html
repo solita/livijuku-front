@@ -35,7 +35,7 @@
       </div>
 
       <div class="hakemus-summary__hakuaika_edit" ng-if="editing" ng-form="hakuaikaForm">
-        <a href="#" ng-click="toggleEditMode($event)"><i
+        <a href="#" ng-click="cancelEdit()"><i
           class="glyphicon glyphicon-remove"></i></a>
 
         <p>Hakuaika:</p>
@@ -52,7 +52,7 @@
                  datepicker-popup="d.M.yyyy"
                  ng-model="hakemus.hakuaika.alkupvm"
                  datepicker-options="{{dateOptions}}"
-                 is-open="alkupvmOpen"
+                 is-open="status.alkupvmOpen"
                  ng-required="true"
                  ui-validate="{validDateOrder: 'validDateOrder($value, hakemus.hakuaika.loppupvm, false)'}"
                  ui-validate-watch=" 'changeFlag' "
@@ -78,7 +78,7 @@
                  datepicker-popup="d.M.yyyy"
                  ng-model="hakemus.hakuaika.loppupvm"
                  datepicker-options="{{dateOptions}}"
-                 is-open="loppupvmOpen"
+                 is-open="status.loppupvmOpen"
                  ng-required="true"
                  ui-validate="{validDateOrder: 'validDateOrder(hakemus.hakuaika.alkupvm, $value, true)'}"
                  ui-validate-watch="hakemus.hakuaika.alkupvm"
