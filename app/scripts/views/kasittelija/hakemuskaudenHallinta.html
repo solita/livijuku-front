@@ -24,13 +24,13 @@
           </button>
         </p>
       </div>
-      <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit">
+      <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit track by $index">
         <hakemuskausi-panel class="hakemuskausi-panel_auki"
           inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
           title="{{tyyppitunnus | toApplicationName}}"
           ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
           <hakemus-summary
-            test-id-index="$index"
+            kausi-id="$index"
             hakemuskauden-tila="hakemuskausi.tilatunnus"
             hakemus="utils.haeHakemus(hakemuskausi, tyyppitunnus)"
             on-save="tallennaHakuajat(hakemuskausi.vuosi, utils.haeHakemus(hakemuskausi, tyyppitunnus), values)">
@@ -67,13 +67,13 @@
           </button>
         </p>
       </div>
-      <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit">
+      <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit track by $index">
         <hakemuskausi-panel class="hakemuskausi-panel_auki"
           inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
           title="{{tyyppitunnus | toApplicationName}}"
           ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
           <hakemus-summary
-            test-ids="$index === 0"
+            kausi-id="$index"
             hakemuskauden-tila="hakemuskausi.tilatunnus"
             hakemus="utils.haeHakemus(hakemuskausi, tyyppitunnus)"
             on-save="tallennaHakuajat(hakemuskausi.vuosi, utils.haeHakemus(hakemuskausi, tyyppitunnus))">
@@ -97,13 +97,13 @@
           </a>
         </p>
       </div>
-      <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit">
+      <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit track by $index">
         <hakemuskausi-panel class="hakemuskausi-panel_suljettu"
           inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
           title="{{tyyppitunnus | toApplicationName}}"
           ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
           <hakemus-summary
-            test-ids="$index === 0"
+            kausi-id="$index"
             hakemuskauden-tila="hakemuskausi.tilatunnus"
             hakemus="utils.haeHakemus(hakemuskausi, tyyppitunnus)"
             on-save="tallennaHakuajat(hakemuskausi.vuosi, utils.haeHakemus(hakemuskausi, tyyppitunnus), values)">

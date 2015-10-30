@@ -9,9 +9,10 @@ module.exports = function () {
     scope: {
       hakemus: '=hakemus',
       hakemuskaudenTila: '=hakemuskaudenTila',
-      testIdIndex: '=',
+      kausiId: '=',
       onSave: '&',
-      onEdit: '&'
+      onEdit: '&',
+      editActive: '='
     },
     restrict: 'E',
     replace: true,
@@ -34,8 +35,9 @@ module.exports = function () {
         return $scope.hakemuskaudenTila === 'S';
       };
 
-      $scope.toggleEditMode = function toggleEditMode() {
-        $scope.editing = !$scope.editing;
+      $scope.setEditMode = function setEditMode() {
+        $scope.backupHakuaika =  _.assign({},$scope.hakemus.hakuaika);
+        $scope.editing = true;
       };
 
       $scope.changeFlag = false;
@@ -44,6 +46,7 @@ module.exports = function () {
         $scope.status.alkupvmOpen = false;
         $scope.status.loppupvmOpen = false;
         $scope.editing = false;
+        $scope.hakemus.hakuaika = $scope.backupHakuaika;
       };
 
       $scope.toggleCalendarAlkupvm = function toggleCalendarAlkupvm(ev) {
@@ -67,6 +70,7 @@ module.exports = function () {
 
       $scope.save = function onSave() {
         $scope.onSave();
+        $scope.editing = false;
       };
 
       $scope.stopPropagation = function stopPropagation(ev) {
