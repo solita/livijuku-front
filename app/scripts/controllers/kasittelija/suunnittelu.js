@@ -4,7 +4,7 @@ var _ = require('lodash');
 var angular = require('angular');
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$stateParams', 'HakemuskausiService', 'HakemusService', 'SuunnitteluService', 'StatusService', function ($rootScope, $scope, $stateParams, HakemuskausiService, HakemusService, SuunnitteluService, StatusService) {
+  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$stateParams', 'HakemuskausiService', 'HakemusService', 'SuunnitteluService', 'StatusService','$state', function ($rootScope, $scope, $stateParams, HakemuskausiService, HakemusService, SuunnitteluService, StatusService,$state) {
 
     $scope.lajitunnus = $stateParams.lajitunnus;
     $scope.tyyppi = $stateParams.tyyppi;
@@ -108,6 +108,12 @@ angular.module('jukufrontApp')
         return (myonnettavaAvustus >= 0 && myonnettavaAvustus <= haettuAvustus);
       }
       return true;
+    };
+
+    $scope.siirryHakemukseen = function siirryHakemukseen(hakemus) {
+      $state.go('app.hakemus', {
+        id: hakemus.hakemusId
+      });
     };
 
     $scope.paivitaAvustus = function (avustus, hakemusid) {
