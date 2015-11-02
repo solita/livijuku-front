@@ -1,4 +1,4 @@
-<ng-form id="{{tyyppi + '-liikenteenkysynta-form'}}" name="kysyntaForm" class="kysynta">
+<ng-form id="{{tyyppi + '-liikenteentarjonta-form'}}" name="tarjontaForm" class="kysynta">
   <juku-form-row ng-if="tyyppi==='PSAB' || tyyppi==='PSAK'">
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
@@ -10,7 +10,7 @@
         </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="tunnuslukutalvi in tunnusluvut_talvi track by $index" ng-form="">
+          <tr ng-repeat="tunnuslukutalvi in tunnusluvut_talvi track by $index" ng-form>
             <th>{{tunnuslukutalvi.selite}}</th>
             <td>
               <form-group-compact label="Linjakilometrit" errormessage="linjakilometritErrorMessage">
@@ -66,7 +66,7 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr ng-repeat="tunnusluku in tunnusluvut track by $index" ng-form="">
+          <tr ng-repeat="tunnusluku in tunnusluvut track by $index" ng-form>
             <th>{{tunnusluku.kuukausi}}</th>
             <td>
               <form-group-compact label="Linjakilometrit" errormessage="linjakilometritErrorMessage">
@@ -90,7 +90,7 @@
             </td>
             <td>
               <form-group-compact label="Kommentit">
-                <input id="{{tyyppi +'-'+tunnusluku.kuukausi+'-kommentit'}}" name="{{tunnusluku.kuukausi}}-kommentit"
+                <input id="{{tyyppi +'-'+tunnusluku.kuukausi+'-kommentit'}}" name="vuorotarjonta-kommentit"
                        type="text"
                        noenter
                        select-on-click
@@ -121,7 +121,7 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr ng-repeat="rivi in kalusto track by $index" ng-form="">
+          <tr ng-repeat="rivi in kalusto track by $index" ng-form>
             <th>{{rivi.selite}}</th>
             <td>
               <form-group-compact label="Linja-autojen lukumäärä" errormessage="kokonaislukuErrorMessage">
@@ -134,7 +134,7 @@
             </td>
             <td>
               <form-group-compact label="Kommentit">
-                <input id="{{tyyppi +'-kalusto-kommentit'+$index}}" name="{{tunnusluku.kuukausi}}-kommentit"
+                <input id="{{tyyppi +'-kalusto-kommentit'+$index}}" name="kalusto-kommentit"
                        type="text"
                        noenter
                        select-on-click
@@ -167,7 +167,7 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr ng-repeat="rivi in jarjestamiskustannukset track by $index" ng-form="">
+          <tr ng-repeat="rivi in jarjestamiskustannukset track by $index" ng-form>
             <th>{{rivi.kuukausi}}</th>
             <td>
               <form-group-compact label="Maksetty liikennöintikorvaus" errormessage="liikennointikorvausErrorMessage">
@@ -214,7 +214,7 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr ng-repeat="rivi in nousukorvaukset track by $index" ng-form="">
+          <tr ng-repeat="rivi in nousukorvaukset track by $index" ng-form>
             <th>{{rivi.kuukausi}}</th>
             <td>
               <form-group-compact label="Nousukorvaus">
@@ -264,7 +264,7 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr ng-repeat="rivi in lipputulot track by $index" ng-form="">
+          <tr ng-repeat="rivi in lipputulot track by $index" ng-form>
             <th>{{rivi.kuukausi}}</th>
             <td>
               <form-group-compact label="Kertalippu" errormessage="kertalippuErrorMessage">
@@ -329,7 +329,7 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr ng-repeat="rivi in lipputulot track by $index" ng-form="">
+          <tr ng-repeat="rivi in lipputulot track by $index" ng-form>
             <th>{{rivi.kuukausi}}</th>
             <td>
               <form-group-compact label="Lipputulo" errormessage="lipputuloErrorMessage">
