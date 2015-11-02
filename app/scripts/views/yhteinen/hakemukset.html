@@ -18,9 +18,9 @@
       </juku-tabs>
     </div>
 
-    <accordion id="kaikki-hakemukset" close-others="false">
-        <accordion-group is-open="hakemukset.yearsOpen[hakemuskausi.vuosi]" ng-repeat="hakemuskausi in hakemukset.hakemuskaudet">
-          <accordion-heading>
+    <uib-accordion id="kaikki-hakemukset" close-others="false">
+        <uib-accordion-group is-open="hakemukset.yearsOpen[hakemuskausi.vuosi]" ng-repeat="hakemuskausi in hakemukset.hakemuskaudet">
+          <uib-accordion-heading>
               <i class="pull-left glyphicon"
                  ng-class="{
                   'glyphicon-triangle-bottom': hakemukset.yearsOpen[hakemuskausi.vuosi],
@@ -38,7 +38,7 @@
               <span ng-show="hakemukset.tyyppi === 'MH2'">
                 JOUKKOLIIKENTEEN MAKSATUSHAKEMUKSET AJALTA 1.7-31.12.{{hakemuskausi.vuosi}}
               </span>
-          </accordion-heading>
+          </uib-accordion-heading>
           <div class="row" ng-repeat="hakijatyyppi in constants.hakijaTyypit">
             <div ng-if="hakemukset.hakemukset[hakemuskausi.vuosi][hakijatyyppi].length > 0">
               <h4>{{hakijatyyppi | toApplicantName}}</h4>
@@ -92,7 +92,7 @@
               </div>
             </div>
           </div>
-        </accordion-group>
-    </accordion>
+        </uib-accordion-group>
+    </uib-accordion>
   </div>
 </div>

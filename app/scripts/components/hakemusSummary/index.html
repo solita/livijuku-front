@@ -41,7 +41,7 @@
         <p>Hakuaika:</p>
 
         <div class="input-group hakuajat_input juku-datepicker"
-             tooltip="Alkamispäivämäärän tulee olla ennen loppumispäivämäärää."
+             uib-tooltip="Alkamispäivämäärän tulee olla ennen loppumispäivämäärää."
              tooltip-trigger="mouseover"
              id="{{ 'test-alkupvm-datepicker-' + kausiId }}"
              tooltip-enable="hakuaikaForm.$error.validDateOrder">
@@ -49,7 +49,7 @@
           <input name="alkupvm"
                  type="text"
                  class="form-control"
-                 datepicker-popup="d.M.yyyy"
+                 uib-datepicker-popup="d.M.yyyy"
                  ng-model="hakemus.hakuaika.alkupvm"
                  datepicker-options="{{dateOptions}}"
                  is-open="status.alkupvmOpen"
@@ -75,7 +75,7 @@
           <input name="loppupvm"
                  type="text"
                  class="form-control"
-                 datepicker-popup="d.M.yyyy"
+                 uib-datepicker-popup="d.M.yyyy"
                  ng-model="hakemus.hakuaika.loppupvm"
                  datepicker-options="{{dateOptions}}"
                  is-open="status.loppupvmOpen"

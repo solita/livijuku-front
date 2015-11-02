@@ -119,10 +119,10 @@
                   operaatio="tallennaPaatos(2)" class="pull-right btn btn-success disabled-button-tooltip"
                   ng-disabled="(!hakemusTarkastettu() || !sallittu('hyvaksy-paatos'))">Tallenna ja hyväksy päätös
 
-            <div tooltip="Päätöksenteko vaatii päätöksentekijä-tason käyttöoikeudet."
+            <div uib-tooltip="Päätöksenteko vaatii päätöksentekijä-tason käyttöoikeudet."
                  class="disabled-button-tooltip-text"
                  ng-if="(hakemusTarkastettu() && !sallittu('hyvaksy-paatos'))"></div>
-            <div tooltip="Päätöksen voi hyväksyä vain kun hakemus on tarkastettu tilassa."
+            <div uib-tooltip="Päätöksen voi hyväksyä vain kun hakemus on tarkastettu tilassa."
                  class="disabled-button-tooltip-text"
                  ng-if="!hakemusTarkastettu()"></div>
           </button>
@@ -135,7 +135,7 @@
                   ng-disabled="!hakemusTarkastettu()">Tallenna tiedot
 
 
-            <div tooltip="Päätöksen tiedot voi tallentaa vain kun hakemus on tarkastettu tilassa."
+            <div uib-tooltip="Päätöksen tiedot voi tallentaa vain kun hakemus on tarkastettu tilassa."
                  class="disabled-button-tooltip-text"
                  ng-if="!hakemusTarkastettu()"></div>
           </button>

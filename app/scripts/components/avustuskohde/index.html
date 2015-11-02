@@ -11,11 +11,11 @@
             <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" numeric-only="" noenter select-on-click
                    alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
                    ng-readonly="isReadonly()" class="form-control"
-                   tooltip="{{haeTooltip('haettavaavustus',alv,kohde.alv)}}"
+                   uib-tooltip="{{haeTooltip('haettavaavustus',alv,kohde.alv)}}"
                    tooltip-trigger="focus"
                    tooltip-placement="top"
                    ng-model="kohde.haettavaavustus"
-                   ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo(kohde.haettavaavustus)', sallittuArvoHaettavamaksatus: 'sallittuMaksatusArvo(kohde.haettavaavustus)'}"/>
+                   ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo($value)', sallittuArvoHaettavamaksatus: 'sallittuMaksatusArvo($value)'}"/>
             <span ng-hide="isReadonly()" class="input-group-addon">alv {{ alv ? kohde.alv : 0 }}%</span>
           </div>
 
@@ -34,11 +34,11 @@
           <div class="input-group">
             <input name="{{getName('omarahoitus')}}" type="text"  ng-currency="" numeric-only="" noenter select-on-click
                    alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
-                   class="form-control" tooltip="{{haeTooltip('omarahoitus',alv,kohde.alv)}}"
+                   class="form-control" uib-tooltip="{{haeTooltip('omarahoitus',alv,kohde.alv)}}"
                    tooltip-trigger="focus"
                    tooltip-placement="top"
                    ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
-                   ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava(kohde.omarahoitus,kohde.haettavaavustus)',sallittuArvoOmarahoitus: 'sallittuArvo(kohde.omarahoitus)'}"
+                   ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kohde.haettavaavustus)',sallittuArvoOmarahoitus: 'sallittuArvo($value)'}"
                    ui-validate-watch=" 'kohde.haettavaavustus' "/>
             <span ng-hide="isReadonly()" class="input-group-addon">alv {{ alv ? kohde.alv : 0 }}%</span>
           </div>

@@ -1,18 +1,18 @@
 'use strict';
 
-function ModalInstanceCtrl($scope, $modalInstance) {
+function ModalInstanceCtrl($scope, $uibModalInstance) {
   $scope.ok = function () {
-    $modalInstance.close($scope.taydennysselite);
+    $uibModalInstance.close($scope.taydennysselite);
   };
 
   $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
+    $uibModalInstance.dismiss('cancel');
   };
 }
 
-ModalInstanceCtrl.$inject = ['$scope', '$modalInstance'];
+ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance'];
 
-module.exports = function ($modal, HakemusService, StatusService, $state) {
+module.exports = function ($uibModal, HakemusService, StatusService, $state) {
   return {
     restrict: 'A',
     replace: true,
@@ -22,7 +22,7 @@ module.exports = function ($modal, HakemusService, StatusService, $state) {
     },
     link: function (scope, element, attrs) {
       element.bind('click', function () {
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
           scope: scope,
           template: require('./index.html'),
           controller: ModalInstanceCtrl
@@ -44,4 +44,4 @@ module.exports = function ($modal, HakemusService, StatusService, $state) {
   };
 };
 
-module.exports.$inject = ['$modal', 'HakemusService', 'StatusService', '$state'];
+module.exports.$inject = ['$uibModal', 'HakemusService', 'StatusService', '$state'];

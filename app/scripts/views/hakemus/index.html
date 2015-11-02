@@ -269,7 +269,7 @@
             data-ng-click="tallennaHakemus(lisatoiminto.EI)"
             class="btn btn-primary disabled-button-tooltip">Tallenna tiedot
 
-            <div tooltip="{{tallentaminenDisabledTooltip()}}" tooltip-placement="bottom"
+            <div uib-tooltip="{{tallentaminenDisabledTooltip()}}" tooltip-placement="bottom"
                  class="disabled-button-tooltip-text"
                  ng-if="!hakemusTallentaminenEnabled()"></div>
           </button>
@@ -288,7 +288,7 @@
             class="btn btn-success disabled-button-tooltip"
             ng-disabled="!hakemusLahettaminenEnabled()">Tallenna ja lähetä hakemus
 
-            <div tooltip="{{lahetysDisabledTooltip()}}"
+            <div uib-tooltip="{{lahetysDisabledTooltip()}}"
                  class="disabled-button-tooltip-text"
                  ng-if="!hakemusLahettaminenEnabled()"></div>
           </button>

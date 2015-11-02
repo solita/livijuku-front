@@ -115,12 +115,12 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
           console.log('Upload filename:' + tiedostot[i].name + ' size:' + tiedostot[i].size + ' file:', tiedostot[i]);
           Upload.upload({
             url: 'api/hakemus/' + $scope.hakemusid + '/liite',
-            file: {'liite': tiedostot[i]},
+            data: {'liite': tiedostot[i]},
             method: 'POST'
           }).then(function (response) {
             StatusService.ok(
-              `Liitteen lataus: ${response.config.file.liite.name} onnistui.`,
-              `Liitteen lataus: ${response.config.file.liite.name} onnistui.`
+              `Liitteen lataus: ${response.config.data.liite.name} onnistui.`,
+              `Liitteen lataus: ${response.config.data.liite.name} onnistui.`
             );
             $scope.haeLiitteetLaskeKoko();
           }, StatusService.errorHandlerWithMessage(

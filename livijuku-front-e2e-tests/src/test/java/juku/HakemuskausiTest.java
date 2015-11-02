@@ -290,7 +290,7 @@ public class HakemuskausiTest extends TestBase {
         //Tarkistetaan, että tyhjästä kentästä tulee virheilmoitus
         rahakentat.get(0).clear();
         rahakentat.get(1).click();
-        tarkistaInputKentanTila("ng-invalid-omarahoitus-riittava");
+        tarkistaInputKentanTila("ng-invalid-sallittu-arvo-haettavaavustus");
 
         // Tarkistetaan, että tulee virheilmoitus kun omarahoitusosuus on alle 50%
         rahakentat.get(0).clear();

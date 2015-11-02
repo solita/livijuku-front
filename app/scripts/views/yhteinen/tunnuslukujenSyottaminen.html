@@ -2,7 +2,7 @@
   <ng-form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm">
     <juku-form-row>
       <div class="col-md-4">
-        <input type="text" ng-model="selectedOrganisaatio" typeahead="kunta for kunta in kunnat | filter:$viewValue"
+        <input type="text" ng-model="selectedOrganisaatio" uib-typeahead="kunta for kunta in kunnat | filter:$viewValue"
                class="form-control" placeholder="Valitse kunta tai kuntayhtymä">
       </div>
       <div class="col-md-2">

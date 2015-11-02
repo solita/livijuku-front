@@ -78,7 +78,7 @@
                 <input id="avustus_{{hakemus.hakemusId}}" name="avustus_{{hakemus.hakemusId}}" type="text" min="-0.0001"
                        ng-currency="" numeric-only="" class="form-control"
                        ng-model="hakemus.myonnettavaAvustus"
-                       ui-validate="{sallittuAvustus: 'sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)'}"
+                       ui-validate="{sallittuAvustus: 'sallittuAvustus($modelValue,hakemus.haettuAvustus, hakemus.hakemuksenTila)'}"
                        ng-focus="asetaVanhaArvo(hakemus.myonnettavaAvustus)"
                        ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)" select-on-click/>
                 <span

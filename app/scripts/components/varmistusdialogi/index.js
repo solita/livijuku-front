@@ -1,18 +1,18 @@
 'use strict';
 
-function ModalInstanceCtrl($scope, $modalInstance) {
+function ModalInstanceCtrl($scope, $uibModalInstance) {
   $scope.ok = function () {
-    $modalInstance.close();
+    $uibModalInstance.close();
   };
 
   $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
+    $uibModalInstance.dismiss('cancel');
   };
 }
 
-ModalInstanceCtrl.$inject =  ['$scope', '$modalInstance'];
+ModalInstanceCtrl.$inject =  ['$scope', '$uibModalInstance'];
 
-module.exports = function ($modal) {
+module.exports = function ($uibModal) {
   return {
     restrict: 'A',
     replace: true,
@@ -23,7 +23,7 @@ module.exports = function ($modal) {
     },
     link: function (scope, element, attrs) {
       element.bind('click', function () {
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
           scope: scope,
           template: require('./index.html'),
           controller: ModalInstanceCtrl
@@ -40,4 +40,4 @@ module.exports = function ($modal) {
   };
 };
 
-module.exports.$inject = ['$modal'];
+module.exports.$inject = ['$uibModal'];

@@ -1,18 +1,18 @@
 'use strict';
 
-function ModalInstanceCtrl($scope, $modalInstance) {
+function ModalInstanceCtrl($scope, $uibModalInstance) {
   $scope.poistu = function () {
-    $modalInstance.close();
+    $uibModalInstance.close();
   };
 
   $scope.palaa = function () {
-    $modalInstance.dismiss('cancel');
+    $uibModalInstance.dismiss('cancel');
   };
 }
 
-ModalInstanceCtrl.$inject = ['$scope', '$modalInstance'];
+ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance'];
 
-module.exports = function ($modal, $state) {
+module.exports = function ($uibModal, $state) {
   return {
     require: '^form',
     link: function (scope, elem, attrs, form) {
@@ -30,7 +30,7 @@ module.exports = function ($modal, $state) {
 
         event.preventDefault();
 
-        var modalInstance = $modal.open({
+        var modalInstance = $uibModal.open({
           animation: false,
           template: require('./index.html'),
           controller: ModalInstanceCtrl
@@ -55,4 +55,4 @@ module.exports = function ($modal, $state) {
   };
 };
 
-module.exports.$inject = ['$modal', '$state'];
+module.exports.$inject = ['$uibModal', '$state'];
