@@ -5,7 +5,7 @@
 
   <div ng-show="hakemukset.hakemuskaudet.length > 0">
 
-    <juku-navigation>
+    <div class="navigation">
       <juku-tabs>
         <juku-tab
           ng-repeat="tyyppi in constants.hakemustyypit"
@@ -16,17 +16,15 @@
             ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')"/>
         </juku-tab>
       </juku-tabs>
-    </juku-navigation>
+    </div>
 
-    <accordion close-others="false">
-      <div ng-repeat="hakemuskausi in hakemukset.hakemuskaudet">
-        <accordion-group is-open="hakemukset.yearsOpen[hakemuskausi.vuosi]">
+    <accordion id="kaikki-hakemukset" close-others="false">
+        <accordion-group is-open="hakemukset.yearsOpen[hakemuskausi.vuosi]" ng-repeat="hakemuskausi in hakemukset.hakemuskaudet">
           <accordion-heading>
-            <h4>
               <i class="pull-left glyphicon"
                  ng-class="{
-                  'glyphicon-chevron-down': hakemukset.yearsOpen[hakemuskausi.vuosi],
-                  'glyphicon-chevron-right': !hakemukset.yearsOpen[hakemuskausi.vuosi]
+                  'glyphicon-triangle-bottom': hakemukset.yearsOpen[hakemuskausi.vuosi],
+                  'glyphicon-triangle-right': !hakemukset.yearsOpen[hakemuskausi.vuosi]
                   }"></i>
 
               <span ng-show="hakemukset.tyyppi === 'AH0'">
@@ -40,7 +38,6 @@
               <span ng-show="hakemukset.tyyppi === 'MH2'">
                 JOUKKOLIIKENTEEN MAKSATUSHAKEMUKSET AJALTA 1.7-31.12.{{hakemuskausi.vuosi}}
               </span>
-            </h4>
           </accordion-heading>
           <div class="row" ng-repeat="hakijatyyppi in constants.hakijaTyypit">
             <div ng-if="hakemukset.hakemukset[hakemuskausi.vuosi][hakijatyyppi].length > 0">
@@ -96,7 +93,6 @@
             </div>
           </div>
         </accordion-group>
-      </div>
     </accordion>
   </div>
 </div>

@@ -13,7 +13,6 @@ angular.module('jukufrontApp')
     function ($rootScope, $scope, $state, $log, HakemuskausiService, StatusService, Upload) {
 
       $scope.utils = hakemus;
-      $scope.editing = true;
       $scope.avoimetHakemuskaudet = [];
       $scope.suljetutHakemuskaudet = [];
 
@@ -35,7 +34,7 @@ angular.module('jukufrontApp')
           $scope.suljetutHakemuskaudet = _.filter(hakemuskaudet, function (hakemuskausi) {
             return hakemuskausi.tilatunnus === "S";
           });
-        })
+        }, StatusService.errorHandler)
       }
 
       function tiedostotyyppiPdf(tiedostotyyppi) {
@@ -85,7 +84,7 @@ angular.module('jukufrontApp')
             `Hakuaikojen: tallennus vuodelle ${vuosi} onnistui.`
           );
 
-          haeHakemuskaudet();
+         // haeHakemuskaudet();
         }, StatusService.errorHandler);
       };
 

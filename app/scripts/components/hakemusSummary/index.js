@@ -9,9 +9,10 @@ module.exports = function () {
     scope: {
       hakemus: '=hakemus',
       hakemuskaudenTila: '=hakemuskaudenTila',
-      testIdIndex: '=',
+      kausiId: '=',
       onSave: '&',
-      onEdit: '&'
+      onEdit: '&',
+      editActive: '='
     },
     restrict: 'E',
     replace: true,
@@ -20,8 +21,10 @@ module.exports = function () {
       $scope.hakemuksenTilat = _.filter(tilat.getAll(), (tila) => ['0', 'M'].indexOf(tila.id) === -1);
       $scope.utils = hakemus;
       $scope.editing = false;
-      $scope.alkupvmOpen = false;
-      $scope.loppupvmOpen = false;
+      $scope.status = {
+        alkupvmOpen: false,
+        loppupvmOpen: false
+      };
       $scope.dateOptions = {
         formatYear: 'yyyy',
         startingDay: 1,
@@ -32,17 +35,25 @@ module.exports = function () {
         return $scope.hakemuskaudenTila === 'S';
       };
 
-      $scope.toggleEditMode = function toggleEditMode() {
-        $scope.editing = !$scope.editing;
+      $scope.setEditMode = function setEditMode() {
+        $scope.backupHakuaika =  _.assign({},$scope.hakemus.hakuaika);
+        $scope.editing = true;
       };
 
       $scope.changeFlag = false;
 
+      $scope.cancelEdit = function cancelEdit(){
+        $scope.status.alkupvmOpen = false;
+        $scope.status.loppupvmOpen = false;
+        $scope.editing = false;
+        $scope.hakemus.hakuaika = $scope.backupHakuaika;
+      };
+
       $scope.toggleCalendarAlkupvm = function toggleCalendarAlkupvm(ev) {
-        $scope.alkupvmOpen = !$scope.alkupvmOpen;
+        $scope.status.alkupvmOpen = !$scope.status.alkupvmOpen;
       };
       $scope.toggleCalendarLoppupvm = function toggleCalendarLoppupvm(ev) {
-        $scope.loppupvmOpen = !$scope.loppupvmOpen;
+        $scope.status.loppupvmOpen = !$scope.status.loppupvmOpen;
       };
 
       $scope.inPast = function (value) {
@@ -59,6 +70,7 @@ module.exports = function () {
 
       $scope.save = function onSave() {
         $scope.onSave();
+        $scope.editing = false;
       };
 
       $scope.stopPropagation = function stopPropagation(ev) {

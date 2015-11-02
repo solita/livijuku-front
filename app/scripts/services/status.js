@@ -10,10 +10,13 @@ var errorTitles = {
   403: "Käyttöoikeusvirhe",
   409: "Käyttöliittymän tiedot vanhentuneet",
   500: "Järjestelmävirhe",
+  503: "Huoltokatko",
   arkistointi: "Asiahallintavirhe"
 };
 
 var errorMessages = {
+  400: "Käyttöliittymä lähetti virheellisen muotoisen komennon taustapalveluun. ",
+
   404: ["Palvelimelta pyydettyä resurssia ei ole olemassa.",
         "Käyttöliittymän tiedot eivät ole ajantasalla tai käyttämäsi linkki on vanhentunut.",
         "Kokeile päivittää käyttöliittymän tiedot. "].join(" "),
@@ -22,21 +25,31 @@ var errorMessages = {
         "Käyttöliittymän tiedot eivät ole ajantasalla.",
         "Kokeile päivittää käyttöliittymän tiedot. "].join(" "),
 
+  503: ["Juku-järjestelmän taustapalvelua päivitetään. Järjestelmä on väliaikaisesti pois käytöstä.",
+        "Yritä myöhemmin uudestaan. "].join(" "),
+
   arkistointi: ["Tapahtuman arkistointi asiahallintajärjestelmään epäonnistui.",
-                "Voit kokeilla toimintoa vähän ajan kuluttua uudestaan. "].join(" ")
+                "Voit kokeilla toimintoa vähän ajan kuluttua uudestaan. "].join(" "),
+
+  'response-validation-error': "Juku-järjestelmän taustapalvelu lähetti virheellisen muotoisen vastauksen. "
 };
 
-function resolveDetailErrorMessage(data) {
+function isPlainText(contentType) {
+  return _.startsWith(contentType, 'text/plain');
+}
+
+function resolveDetailErrorMessage(data, contentType) {
   if (c.isNullOrUndefined(data)) {
     return "";
   } else if (data.message) {
     return data.message;
   } else if (data.errors) {
-    return "Käyttöliittymä lähetti virheellisen muotoisen komennon palvelimelle - tekninen kuvaus virheestä: " + JSON.stringify(data.errors);
+    return "<h5>Tekninen kuvaus viestin muotovirheestä:</h5> <pre class='bg-warning'><code>" +
+      _.escape(JSON.stringify(data.errors)) + "</code></pre>";
   } else if (_.isString(data)) {
-    return data;
+    return isPlainText(contentType) ? _.escape(data) : "";
   } else {
-    JSON.stringify(data);
+    return _.escape(JSON.stringify(data));
   }
 }
 
@@ -74,8 +87,9 @@ angular.module('services.status', ['toastr'])
         var type = _.get(response, "data.type");
         var title = c.coalesce(errorTitles[type], errorTitles[status], "Virhe");
         var intro = c.coalesce(defaultMessage, errorMessages[type], errorMessages[status], "");
+        var contentType = response.headers('content-type');
 
-        var message = resolveDetailErrorMessage(response.data);
+        var message = resolveDetailErrorMessage(response.data, contentType);
 
         toastr.error(intro + message, title, {closeButton: true, timeOut: 0, extendedTimeOut: 0});
 
