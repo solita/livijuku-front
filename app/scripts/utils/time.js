@@ -9,8 +9,7 @@ export function toUTCTimestamp(date_string) {
 }
 
 export function convertDateToUTC(d) {
-  // TODO datepicker fix, should be removed when datepicker works ok
-  return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()+1, 0, 0, 0);
+  return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 0, 0, 0);
 }
 
 export function getUTCDateTimestamp() {

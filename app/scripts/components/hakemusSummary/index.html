@@ -54,8 +54,9 @@
                  datepicker-options="{{dateOptions}}"
                  is-open="status.alkupvmOpen"
                  ng-required="true"
-                 ui-validate="{validDateOrder: 'validDateOrder($value, hakemus.hakuaika.loppupvm, false)'}"
-                 ui-validate-watch=" 'changeFlag' "
+                 ng-model-options="{ allowInvalid: true }"
+                 ui-validate="{validDateOrder: 'validDateOrder()'}"
+                 ui-validate-watch="'hakemus.hakuaika.loppupvm'"
                  show-button-bar="false" noenter readonly/>
 
           <span class="input-group-btn">
@@ -80,8 +81,6 @@
                  datepicker-options="{{dateOptions}}"
                  is-open="status.loppupvmOpen"
                  ng-required="true"
-                 ui-validate="{validDateOrder: 'validDateOrder(hakemus.hakuaika.alkupvm, $value, true)'}"
-                 ui-validate-watch="hakemus.hakuaika.alkupvm"
                  show-button-bar="false" noenter readonly/>
 
           <span class="input-group-btn">

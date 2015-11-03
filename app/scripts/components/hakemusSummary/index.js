@@ -61,11 +61,8 @@ module.exports = function () {
         return convertDateToUTC(value) < getUTCDateTimestamp();
       };
 
-      $scope.validDateOrder = function (before, after, changeTrigger) {
-        // changeFlag is used to trigger also alkupvm validation when loppupvm is changed
-        if (typeof before !== 'object' || typeof after !== 'object') return true;
-        $scope.changeFlag = changeTrigger;
-        return convertDateToUTC(before) < convertDateToUTC(after);
+      $scope.validDateOrder = function () {
+        return $scope.hakemus.hakuaika.alkupvm < $scope.hakemus.hakuaika.loppupvm;
       };
 
       $scope.save = function onSave() {
