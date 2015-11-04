@@ -42,16 +42,18 @@
                   href=""
                   title="Muuta liitenimi"
                   ng-click="asetaEditTilaan(liite.liitenumero)"
+                  icon-first="true"
                   icon="pencil">
                   Nimeä uudelleen
                 </juku-icon-link>
 
                 <juku-icon-link
+                  icon="remove"
+                  icon-first="true"
                   ng-show="hakemusTallentaminenEnabled()"
                   href=""
                   title="Poista liite"
-                  ng-click="poistaLiite(liite.liitenumero)"
-                  icon="remove-sign">
+                  ng-click="poistaLiite(liite.liitenumero)">
                   Poista
                 </juku-icon-link>
               </juku-file-actions>
@@ -69,7 +71,8 @@
 
                 <juku-file-actions>
                   <juku-icon-link
-                    icon="ok-circle"
+                    icon="ok"
+                    icon-first="true"
                     ng-show="hakemusTallentaminenEnabled()"
                     href=""
                     title="Tallenna liitenimi"
@@ -79,6 +82,7 @@
 
                   <juku-icon-link
                     icon="ban-circle"
+                    icon-first="true"
                     ng-show="hakemusTallentaminenEnabled()"
                     href=""
                     title="Palaa katselutilaan tallentamatta"
@@ -87,7 +91,8 @@
                   </juku-icon-link>
 
                   <juku-icon-link
-                    icon="remove-sign"
+                    icon="remove"
+                    icon-first="true"
                     ng-show="hakemusTallentaminenEnabled()"
                     href=""
                     title="Poista liite"
