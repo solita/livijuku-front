@@ -1,0 +1,85 @@
+<ng-form id="maararahatarpeet-form" name="maararahatarpeetForm" class="maararahatarpeet">
+  <juku-form-row>
+    <div class="col-md-6">
+      <label>Siirtymäajan sopimukset</label>
+      <input name="siirtymaajansopimukset" type="text" ng-currency="" numeric-only="" class="form-control"
+             ng-model="siirtymaajansopimukset" placeholder="Siirtymäajan sopimukset" select-on-click/>
+    </div>
+    <div class="col-md-6">
+      <label>Joukkoliikennetuki kunnille</label>
+      <input name="joukkoliikennetuki" type="text" ng-currency="" numeric-only="" class="form-control"
+             ng-model="joukkoliikennetuki" placeholder="Joukkoliikennetuki kunnille" select-on-click/>
+    </div>
+  </juku-form-row>
+  <hr>
+  <juku-form-row>
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-hover table-condensed">
+          <thead>
+            <tr>
+              <th class="col-md-3 ekarivi">Määrärahatarve</th>
+              <th class="ekarivi">Sidotut</th>
+              <th class="ekarivi">Uudet</th>
+              <th class="ekarivi">Tulot</th>
+              <th class="col-md-4 ekarivi">Kommentit</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <td colspan="5" uib-tooltip="Menot yhteensä (Siirtymäajan sopimukset + Joukkoliikennetuki + Sidotut + Uudet - Tulot)" tooltip-placement="top"
+                  tooltip-append-to-body="true" >Yhteensä:  {{yhteensa() | currency}}</td>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr ng-repeat="maararahatarve in maararahatarpeet track by $index" ng-form>
+              <th>{{maararahatarve.maararahatarve}}</th>
+              <td>
+                <form-group-compact label="Sidotut">
+                  <input id="{{maararahatarve.maararahatarve + '-sidotut'}}" name="sidotut" type="text"
+                         class="form-control" ng-currency="" numeric-only=""
+                         noenter
+                         select-on-click
+                         ng-model="maararahatarve.sidotut" ng-disabled="isReadonly()"
+                         placeholder="Sidotut" uib-tooltip="{{maararahatarve.sidotuttooltip}}" tooltip-placement="top"
+                         tooltip-append-to-body="true">
+                </form-group-compact>
+              </td>
+              <td>
+                <form-group-compact label="Uudet">
+                  <input id="{{maararahatarve.maararahatarve + '-uudet'}}" name="uudet" type="text"
+                         class="form-control" ng-currency="" numeric-only=""
+                         noenter
+                         select-on-click
+                         ng-model="maararahatarve.uudet" ng-disabled="isReadonly()"
+                         placeholder="Uudet" uib-tooltip="{{maararahatarve.uudettooltip}}" tooltip-placement="top"
+                         tooltip-append-to-body="true">
+                </form-group-compact>
+              </td>
+              <td>
+                <form-group-compact label="Uudet">
+                  <input id="{{maararahatarve.maararahatarve + '-tulot'}}" name="tulot" type="text"
+                         class="form-control" ng-currency="" numeric-only=""
+                         noenter
+                         select-on-click
+                         ng-model="maararahatarve.tulot" ng-disabled="isReadonly()"
+                         placeholder="Tulot" uib-tooltip="{{maararahatarve.tulottooltip}}" tooltip-placement="top"
+                         tooltip-append-to-body="true">
+                </form-group-compact>
+              </td>
+              <td>
+                <form-group-compact label="Kommentit">
+                  <input id="{{maararahatarve.maararahatarve +'-kommentit'}}" name="kommentit" type="text"
+                         noenter
+                         select-on-click
+                         ng-model="maararahatarve.kommentit"
+                         placeholder="Kommentit">
+                </form-group-compact>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </juku-form-row>
+</ng-form>

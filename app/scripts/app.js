@@ -141,11 +141,6 @@ angular
 
       .state('app.hakija', root('/h'))
       .state('app.hakija.hakemukset', root('/hakemukset'))
-      .state('app.hakija.hakemukset.elyhakemus', {
-        url: '/elyhakemus/:vuosi/:id',
-        template: require('views/hakija/elyhakemus.html'),
-        controller: 'ElyHakemusCtrl'
-      })
       .state('app.hakija.hakemukset.omat', restrictRoute(isHakija, {
         url: '/',
         template: require('views/hakija/hakemukset.html'),
@@ -288,6 +283,8 @@ angular
   .directive('jukuTunnusluvutTarjonta', require('components/tunnusluvut/tarjonta'))
   .directive('jukuSeurantaLiikenne', require('components/seuranta/liikenne'))
   .directive('jukuSeurantaLippu', require('components/seuranta/lippu'))
+  .directive('jukuElyForms', directive.template(require('views/hakemus/ely-forms.html')))
+  .directive('jukuElyMaararahatarpeet', require('components/ely/maararahatarpeet'))
   .directive('jukuSeurantaForms', directive.template(require('views/hakemus/seuranta-forms.html')))
   .directive('jukuUploadHakuohjeButton', directive.template(require('views/kasittelija/hakuohje-upload-button.html')))
   .directive('jukuDeleteKayttajaLink', directive.template(require('views/yhteinen/delete-kayttaja-link.html')))
@@ -302,7 +299,6 @@ require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/asetukset');
 require('./controllers/yhteinen/hakemukset');
 require('./controllers/yhteinen/hakemus');
-require('./controllers/yhteinen/elyhakemus');
 require('./controllers/yhteinen/kayttajatiedot');
 require('./controllers/yhteinen/paanaytto');
 require('./controllers/yhteinen/tunnusluvut');
