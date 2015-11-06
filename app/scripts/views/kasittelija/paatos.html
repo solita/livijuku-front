@@ -83,14 +83,7 @@
     <juku-form-section>
       <form name="paatosForm" juku-poistumisvaroitus="{{hakemusTarkastettu()}}">
         <div class="form-group">
-          <label>Päätösteksti</label>
-
-          <juku-form-row>Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle toimivaltaisena
-            viranomaisena
-            valtionavustuksena enintään {{avustus| currency:"euroa"}} (sis. alv) joukkoliikenteen osoitetusta
-            talousarvion
-            momentin 31.30.63.11 määrärahasta käytettäväksi hakemuksessa esitettyihin kohteisiin.
-          </juku-form-row>
+          <label>Lisätietoa päätöskappaleeseen</label>
           <juku-form-row>
             <div ng-show="hakemusTarkastettu()">
           <textarea id="paatosteksti" name="paatosteksti" class="animate msd-elastic: \n;"
@@ -101,10 +94,6 @@
             <div ng-hide="hakemusTarkastettu()">
               <p>{{paatos.selite ? paatos.selite : ""}}</p>
             </div>
-          </juku-form-row>
-          <juku-form-row>Avustusta ei myönnetä haetun suuruisena määrärahan suuruuden vuoksi. Lopullisessa maksatuksessa
-            valtionavustus maksetaan myönnetyn suuruisena, mikäli valtionavustuksen määrä ja avustuksen käyttö -kohtien
-            ehdot täyttyvät.
           </juku-form-row>
         </div>
       </form>
