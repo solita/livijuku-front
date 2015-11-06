@@ -3,12 +3,14 @@
     <div class="col-md-6">
       <label>Siirtymäajan sopimukset</label>
       <input name="siirtymaajansopimukset" type="text" ng-currency="" numeric-only="" class="form-control"
-             ng-model="siirtymaajansopimukset" placeholder="Siirtymäajan sopimukset" select-on-click/>
+             ng-model="siirtymaajansopimukset" placeholder="Siirtymäajan sopimukset" uib-tooltip="Siirtymäajan sopimusten määrärahatarve" tooltip-placement="top"
+             tooltip-append-to-body="true" select-on-click/>
     </div>
     <div class="col-md-6">
       <label>Joukkoliikennetuki kunnille</label>
       <input name="joukkoliikennetuki" type="text" ng-currency="" numeric-only="" class="form-control"
-             ng-model="joukkoliikennetuki" placeholder="Joukkoliikennetuki kunnille" select-on-click/>
+             ng-model="joukkoliikennetuki" placeholder="Joukkoliikennetuki kunnille" uib-tooltip="ELYn kunnille myöntämä joukkoliikennetuki" tooltip-placement="top"
+             tooltip-append-to-body="true" select-on-click/>
     </div>
   </juku-form-row>
   <hr>

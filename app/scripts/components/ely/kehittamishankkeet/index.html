@@ -1,0 +1,76 @@
+<ng-form id="kehittamishankkeet-form" name="kehittamishankkeetForm" class="kehittamishankkeet">
+  <juku-form-row>
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-hover table-condensed">
+          <thead>
+            <tr>
+              <th class="col-md-4 ekarivi" uib-tooltip="Kehittämishankkeiden (jatkuvat/uudet) erittely hankkeittain"
+                  tooltip-placement="top" tooltip-append-to-body="true">Kehittämishankkeen(jatkuvat/uudet) nimi
+              </th>
+              <th class="col-md-2 ekarivi">Arvo</th>
+              <th class="col-md-5 ekarivi"
+                  uib-tooltip="Kehittämishankkeen ajanjakso (vuodet eli onko hanke jatkuva vai uusi), lyhyt perustelu hankkeelle"
+                  tooltip-placement="top" tooltip-append-to-body="true">Lisätiedot
+              </th>
+              <th class="col-md-1 ekarivi" ng-hide="isReadonly() || kehittamishankkeet.length === 0">Toiminnot</th>
+            </tr>
+          </thead>
+          <tfoot ng-if="kehittamishankkeet.length > 0">
+            <tr>
+              <td colspan="4">Kehittämishankkeet yhteensä: {{yhteensa() | currency}}
+              </td>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr ng-if="kehittamishankkeet.length === 0">
+              <td colspan="4" class="text-info">
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Yhtään kehittämishanketta ei ole
+                lisätty. Tämä taulukko on tyhjä.
+              </td>
+            </tr>
+            <tr ng-repeat="kehittamishanke in kehittamishankkeet track by $index" ng-form>
+              <td>
+                <form-group-compact label="Nimi" errormessage="nimiErrorMessage">
+                  <input id="{{'nimi-'+$index}}" name="nimi" type="text"
+                         noenter ng-minlength="2"
+                         select-on-click
+                         ng-model="kehittamishanke.nimi"
+
+                         placeholder="Nimi" required>
+                </form-group-compact>
+              </td>
+              <td>
+                <form-group-compact label="Arvo">
+                  <input id="{{'arvo-'+$index}}" name="arvo" type="text"
+                         class="form-control" ng-currency="" numeric-only=""
+                         noenter
+                         select-on-click
+                         ng-model="kehittamishanke.arvo" ng-disabled="isReadonly()"
+                         placeholder="Arvo" uib-tooltip="{{maararahatarve.sidotuttooltip}}" tooltip-placement="top"
+                         tooltip-append-to-body="true">
+                </form-group-compact>
+              </td>
+              <td>
+                <form-group-compact label="Kommentit">
+                  <input id="{{'lisatiedot-'+$index}}" name="lisatiedot" type="text"
+                         noenter
+                         select-on-click
+                         ng-model="kehittamishanke.lisatiedot"
+                         placeholder="Lisatiedot">
+                </form-group-compact>
+              </td>
+              <td><a id="{{'poistakehittamishanke-'+$index}}" href="" ng-click="poistaKehittamishanke($index)"
+                     ng-hide="isReadonly()"><span
+                class="glyphicon glyphicon-remove-sign"></span> Poista</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button id="lisaakehittamishanke" ng-hide="isReadonly()" class="btn btn-primary"
+                ng-click="lisaaKehittamishanke()">Lisää uusi rivi
+        </button>
+      </div>
+    </div>
+  </juku-form-row>
+</ng-form>
