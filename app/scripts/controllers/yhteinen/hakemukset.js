@@ -65,14 +65,6 @@ angular.module('jukufrontApp')
       };
 
       this.siirryHakemukseen = function siirryHakemukseen(hakemus, hakemuskausi, hakijatyyppi) {
-        if (hakijatyyppi === 'ELY') {
-          $state.go('app.hakija.hakemukset.elyhakemus', {
-            vuosi: hakemuskausi.vuosi,
-            id: this.hakemustyypinId('AH0', hakemus, hakemuskausi.hakemukset)
-          });
-          return;
-        }
-
         $state.go('app.hakemus', {
           id: hakemus.id
         });

@@ -225,7 +225,7 @@ angular
   }])
   .run(['$rootScope', '$state', function ($rootScope, $state) {
     $rootScope.constants = {
-      hakemustyypit: ['AH0', 'MH1', 'MH2'],
+      hakemustyypit: ['AH0', 'MH1', 'MH2', 'ELY'],
       hakemuksenTilat: hakemuksenTilat.getAll(),
       hakijaTyypit: ['KS1', 'KS2', 'ELY'],
       tunnuslukuTyypit: ['TTYT','PSAB','PSAK','SL','ME']

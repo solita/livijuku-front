@@ -38,6 +38,10 @@
               <span ng-show="hakemukset.tyyppi === 'MH2'">
                 JOUKKOLIIKENTEEN MAKSATUSHAKEMUKSET AJALTA 1.7-31.12.{{hakemuskausi.vuosi}}
               </span>
+
+              <span ng-show="hakemukset.tyyppi === 'ELY'">
+                ELINKEINO, LIIKENNE JA YMPÄRISTÖKESKUSTEN HAKEMUKSET {{hakemuskausi.vuosi}}
+              </span>
           </uib-accordion-heading>
           <div class="row" ng-repeat="hakijatyyppi in constants.hakijaTyypit">
             <div ng-if="hakemukset.hakemukset[hakemuskausi.vuosi][hakijatyyppi].length > 0">
