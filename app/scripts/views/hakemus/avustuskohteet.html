@@ -1,0 +1,57 @@
+<juku-form-section ng-show="hakemus.contentvisible">
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3 ng-switch on="hakemus.hakemustyyppitunnus">
+        <span ng-switch-when='AH0'>
+          VALTIONAVUSTUKSEN KOHDE JA HAETTAVA VALTIONAVUSTUKSEN MÄÄRÄ
+        </span>
+        <span ng-switch-default>
+          HAETTAVAT MAKSATUKSET AJALLE {{ajankohta}}{{hakemus.vuosi}}
+        </span>
+      </h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <juku-checkbox ng-model="alv">
+          Haluan {{ hakemusTallentaminenEnabled() ? "syöttää summat" : "katsoa arvoja" }} arvonlisäverollisina.
+        </juku-checkbox>
+      </div>
+    </div>
+  </div>
+
+  <juku-avustusluokka-panel luokka="avustuskohdeluokka"
+                            name="{{avustuskohdeLuokat[avustuskohdeluokka.tunnus].nimi}}"
+                            hakemus="hakemus"
+                            kohde="avustuskohdeluokka"
+                            ng-repeat="avustuskohdeluokka in avustuskohdeluokat">
+
+    <juku-avustuskohde vuosi="hakemus.vuosi"
+                       vertailuarvot="haeVertailuarvot(avustuskohde.avustuskohdeluokkatunnus,avustuskohde.avustuskohdelajitunnus)"
+                       hakemustyyppi="hakemus.hakemustyyppitunnus"
+                       kohde="avustuskohde"
+                       alv="alv"
+                       hakemus="hakemus"
+                       name="{{avustuskohdeLuokat[avustuskohde.avustuskohdeluokkatunnus].avustuskohdelajit[avustuskohde.avustuskohdelajitunnus].nimi}}"
+                       ng-repeat="avustuskohde in avustuskohdeluokka.avustuskohteet"/>
+
+  </juku-avustusluokka-panel>
+
+  <div class="row">
+    <div class="col-md-9">
+      <h4>
+        {{ hakemus.hakemustyyppitunnus === 'AH0' ?
+        'HAETTAVA VALTIONAVUSTUS YHTEENSÄ:' :
+        'HAETTAVAT MAKSATUKSET YHTEENSÄ:'
+        }}
+      </h4>
+    </div>
+    <div class="col-md-3">
+      <div class="pull-right">
+        <h4>{{sumHaettavaAvustus() | currency:"&euro;"}} (sis. alv)</h4>
+      </div>
+    </div>
+  </div>
+</juku-form-section>

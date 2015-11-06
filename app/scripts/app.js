@@ -284,6 +284,7 @@ angular
   .directive('jukuSeurantaLiikenne', require('components/seuranta/liikenne'))
   .directive('jukuSeurantaLippu', require('components/seuranta/lippu'))
   .directive('jukuElyForms', directive.template(require('views/hakemus/ely-forms.html')))
+  .directive('jukuAvustuskohteet', directive.template(require('views/hakemus/avustuskohteet.html')))
   .directive('jukuElyMaararahatarpeet', require('components/ely/maararahatarpeet'))
   .directive('jukuElyKehittamishankkeet', require('components/ely/kehittamishankkeet'))
   .directive('jukuSeurantaForms', directive.template(require('views/hakemus/seuranta-forms.html')))

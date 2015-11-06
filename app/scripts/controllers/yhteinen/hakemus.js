@@ -297,6 +297,8 @@ angular.module('jukufrontApp')
 
       $scope.isMaksatushakemus = isMaksatushakemus($scope.hakemus);
 
+      $scope.isELYhakemus = $scope.hakemus.hakemustyyppitunnus === 'ELY';
+
       $scope.avustushakemusPaatosOlemassa = function () {
         return $scope.avustushakemusPaatos && $scope.avustushakemusPaatos.voimaantuloaika;
       };
