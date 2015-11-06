@@ -59,7 +59,11 @@
                  ng-model="jaettavaraha" ng-class="{'varoitusvari':myonnettyLiikaa()}" disabled/>
         </div>
       </juku-form-row>
-
+      <div ng-show="myonnettyLiikaa()" class="row alert alert-warning">
+        <p>
+          Myönnettävien avustusten yhteenlaskettu summa on suurempi kuin vuodelle myönnetty määräraha.
+        </p>
+      </div>
       <h3>Hakemukset</h3>
 
       <juku-form-row>
@@ -142,11 +146,6 @@
         </table>
       </juku-form-row>
     </form>
-    <div ng-show="myonnettyLiikaa()" class="row alert alert-warning">
-      <p>
-        Myönnettävien avustusten yhteenlaskettu summa on suurempi kuin vuodelle myönnetty määräraha.
-      </p>
-    </div>
   </div>
   <div class="row">
     <div class="col-md-12">
