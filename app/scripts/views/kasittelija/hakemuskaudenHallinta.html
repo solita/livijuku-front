@@ -1,29 +1,10 @@
 <div class="container">
-  <div ng-repeat="hakemuskausi in avoimetHakemuskaudet | orderBy: 'vuosi': true">
-    <div class="row uusihakemuskausi">
-      <div class="col-md-3 text-center">
-        <p class="hakemuskausi-vuosi">
-          {{hakemuskausi.vuosi}}
-        </p>
+  <div ng-repeat="hakemuskausi in avoimetHakemuskaudet | orderBy: 'vuosi': true" class="well uusihakemuskausi">
+    <h2 class="hakemuskausi-otsikko">Hakemuskausi {{hakemuskausi.vuosi}}
+      <small uib-tooltip="Avaamaton (ei käynnistetty) hakemuskausi näkyy hakijoille vasta sen jälkeen kun se on käynnistetty.">Avaamaton</small>
+    </h2>
 
-        <p ng-show="hakuohjeLadattu(hakemuskausi)">
-          <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">
-            Hakuohje
-          </a>
-        </p>
-
-        <p>
-          <juku-upload-hakuohje-button></juku-upload-hakuohje-button>
-        </p>
-        <p>
-          <button
-            ng-disabled="!voiKaynnistaa(hakemuskausi)"
-            ng-click="kaynnistaHakemuskausi(hakemuskausi.vuosi)"
-            class="btn btn-success btn-lg">
-            Käynnistä hakemuskausi
-          </button>
-        </p>
-      </div>
+    <div class="row">
       <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit track by $index">
         <hakemuskausi-panel class="hakemuskausi-panel_auki"
           inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
@@ -38,35 +19,28 @@
         </hakemuskausi-panel>
       </div>
     </div>
+
+    <juku-hakuohje></juku-hakuohje>
+
+    <div class="row">
+      <div class="col-md-12">
+        <button
+          ng-disabled="!voiKaynnistaa(hakemuskausi)"
+          ng-click="kaynnistaHakemuskausi(hakemuskausi.vuosi)"
+          class="btn btn-success btn-lg pull-right">
+          Käynnistä hakemuskausi
+        </button>
+      </div>
+    </div>
   </div>
 
   <h3>KÄYNNISSÄ OLEVAT HAKEMUSKAUDET</h3>
 
-  <div ng-repeat="hakemuskausi in kaynnistetytHakemuskaudet | orderBy: 'vuosi': true">
-    <div class="row well">
-      <div class="col-md-3 text-center">
-        <p class="hakemuskausi-vuosi">
-          {{hakemuskausi.vuosi}}
-        </p>
+  <div ng-repeat="hakemuskausi in kaynnistetytHakemuskaudet | orderBy: 'vuosi': true" class="well">
 
-        <p>
-          <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">
-            Hakuohje
-          </a>
-        </p>
-        <p>
-          <juku-upload-hakuohje-button></juku-upload-hakuohje-button>
-        </p>
-        <p>
-          <button
-            class="btn btn-primary btn-lg"
-            juku-varmistusdialogi varmistusotsake="Hakemuskauden päättäminen"
-            varmistusteksti="Oletko varma, että haluat päättää käynnissäolevan hakemuskauden? Hakemuksiin ja hakemuskauden tietoihin ei ole mahdollista tehdä mitään muutoksia kauden päättämisen jälkeen."
-            operaatio="suljeHakemuskausi(hakemuskausi.vuosi)">
-            Päätä hakemuskausi
-          </button>
-        </p>
-      </div>
+    <h2 class="hakemuskausi-otsikko">Hakemuskausi {{hakemuskausi.vuosi}}</h2>
+
+    <div class="row">
       <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit track by $index">
         <hakemuskausi-panel class="hakemuskausi-panel_auki"
           inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
@@ -81,22 +55,28 @@
         </hakemuskausi-panel>
       </div>
     </div>
-  </div>
-  <h3>PÄÄTETYT HAKEMUSKAUDET</h3>
 
-  <div ng-repeat="hakemuskausi in suljetutHakemuskaudet | orderBy: 'vuosi': true">
-    <div class="row well">
-      <div class="col-md-3 text-center">
-        <p class="hakemuskausi-vuosi">
-          {{hakemuskausi.vuosi}}
-        </p>
+    <juku-hakuohje></juku-hakuohje>
 
-        <p>
-          <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">
-            Hakuohje
-          </a>
-        </p>
+    <div class="row">
+      <div class="col-md-12">
+      <button
+        class="btn btn-primary btn-lg pull-right"
+        juku-varmistusdialogi varmistusotsake="Hakemuskauden päättäminen"
+        varmistusteksti="Oletko varma, että haluat päättää käynnissäolevan hakemuskauden? Hakemuksiin ja hakemuskauden tietoihin ei ole mahdollista tehdä mitään muutoksia kauden päättämisen jälkeen."
+        operaatio="suljeHakemuskausi(hakemuskausi.vuosi)">
+        Päätä hakemuskausi
+      </button>
       </div>
+    </div>
+  </div>
+
+  <h3>SULJETUT HAKEMUSKAUDET</h3>
+
+  <div ng-repeat="hakemuskausi in suljetutHakemuskaudet | orderBy: 'vuosi': true" class="well">
+    <h2 class="hakemuskausi-otsikko">Hakemuskausi {{hakemuskausi.vuosi}} <small>Suljettu</small></h2>
+
+    <div class="row">
       <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit track by $index">
         <hakemuskausi-panel class="hakemuskausi-panel_suljettu"
           inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
@@ -111,5 +91,11 @@
         </hakemuskausi-panel>
       </div>
     </div>
+
+    <p>
+      <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">
+        Hakuohje suurille ja keskisuurille kaupunkiseuduille
+      </a>
+    </p>
   </div>
 </div>

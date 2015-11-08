@@ -1,0 +1,8 @@
+<p>
+  <span ng-if="!hakuohjeLadattu(hakemuskausi)" class="text-muted">
+    Hakuohje suurille ja keskisuurille kaupunkiseuduille
+  </span>
+  <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" ng-if="hakuohjeLadattu(hakemuskausi)" target="_blank">
+    Hakuohje suurille ja keskisuurille kaupunkiseuduille</a>&nbsp;
+  <juku-upload-hakuohje-button></juku-upload-hakuohje-button>
+</p>
