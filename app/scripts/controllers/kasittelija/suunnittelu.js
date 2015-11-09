@@ -4,7 +4,7 @@ var _ = require('lodash');
 var angular = require('angular');
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$stateParams', 'HakemuskausiService', 'HakemusService', 'SuunnitteluService', 'StatusService', '$state', function ($rootScope, $scope, $stateParams, HakemuskausiService, HakemusService, SuunnitteluService, StatusService, $state) {
+  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$stateParams', 'HakemuskausiService', 'HakemusService', 'SuunnitteluService', 'StatusService', '$state', '$q', 'OrganisaatioService', function ($rootScope, $scope, $stateParams, HakemuskausiService, HakemusService, SuunnitteluService, StatusService, $state, $q, OrganisaatioService) {
 
     $scope.lajitunnus = $stateParams.lajitunnus;
     $scope.tyyppi = $stateParams.tyyppi;
@@ -27,16 +27,19 @@ angular.module('jukufrontApp')
     }
 
     function haeSuunnitteluData() {
-      SuunnitteluService.hae($scope.vuosi, $scope.tyyppi)
-        .then(function (response) {
-          var data = response.data;
+      $q.all([
+        SuunnitteluService.hae($scope.vuosi, $scope.tyyppi),
+        OrganisaatioService.hae()
+      ])
+        .then(([suunnittelu, organisaatiot]) => {
+          var suunnitteludata = suunnittelu.data;
           var hakemuksetSuunnitteluTmp = [];
           var organisaatiolajitunnus = "";
           $scope.haettuAvustusSum = 0;
           $scope.myonnettavaAvustusSum = 0;
           $scope.muutosSum = 0;
-          _(angular.fromJson(data)).forEach(function (hakemus) {
-              organisaatiolajitunnus = _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).lajitunnus;
+          suunnitteludata.forEach(function (hakemus) {
+              organisaatiolajitunnus = _.find(organisaatiot, {'id': hakemus.organisaatioid}).lajitunnus;
               if (organisaatiolajitunnus == $scope.lajitunnus) {
                 var muutos = 0;
                 if (hakemus.hakemustilatunnus === 'T' || hakemus.hakemustilatunnus === 'P') {
@@ -55,7 +58,7 @@ angular.module('jukufrontApp')
                 });
               }
             }
-          ).value();
+          );
           $scope.hakemuksetSuunnittelu = _.sortBy(hakemuksetSuunnitteluTmp, 'hakija');
         }, StatusService.errorHandler);
     }
