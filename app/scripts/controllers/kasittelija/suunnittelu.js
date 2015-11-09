@@ -4,7 +4,7 @@ var _ = require('lodash');
 var angular = require('angular');
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$stateParams', 'HakemuskausiService', 'HakemusService', 'SuunnitteluService', 'StatusService','$state', function ($rootScope, $scope, $stateParams, HakemuskausiService, HakemusService, SuunnitteluService, StatusService,$state) {
+  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$stateParams', 'HakemuskausiService', 'HakemusService', 'SuunnitteluService', 'StatusService', '$state', '$q', 'OrganisaatioService', function ($rootScope, $scope, $stateParams, HakemuskausiService, HakemusService, SuunnitteluService, StatusService, $state, $q, OrganisaatioService) {
 
     $scope.lajitunnus = $stateParams.lajitunnus;
     $scope.tyyppi = $stateParams.tyyppi;
@@ -27,16 +27,19 @@ angular.module('jukufrontApp')
     }
 
     function haeSuunnitteluData() {
-      SuunnitteluService.hae($scope.vuosi, $scope.tyyppi)
-        .then(function (response) {
-          var data = response.data;
+      $q.all([
+        SuunnitteluService.hae($scope.vuosi, $scope.tyyppi),
+        OrganisaatioService.hae()
+      ])
+        .then(([suunnittelu, organisaatiot]) => {
+          var suunnitteludata = suunnittelu.data;
           var hakemuksetSuunnitteluTmp = [];
           var organisaatiolajitunnus = "";
           $scope.haettuAvustusSum = 0;
           $scope.myonnettavaAvustusSum = 0;
           $scope.muutosSum = 0;
-          _(angular.fromJson(data)).forEach(function (hakemus) {
-              organisaatiolajitunnus = _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).lajitunnus;
+          suunnitteludata.forEach(function (hakemus) {
+              organisaatiolajitunnus = _.find(organisaatiot, {'id': hakemus.organisaatioid}).lajitunnus;
               if (organisaatiolajitunnus == $scope.lajitunnus) {
                 var muutos = 0;
                 if (hakemus.hakemustilatunnus === 'T' || hakemus.hakemustilatunnus === 'P') {
@@ -47,7 +50,7 @@ angular.module('jukufrontApp')
                 }
                 hakemuksetSuunnitteluTmp.push({
                   'hakemusId': hakemus.id,
-                  'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
+                  'hakija': _.find(organisaatiot, {'id': hakemus.organisaatioid}).nimi,
                   'hakemuksenTila': hakemus.hakemustilatunnus,
                   'haettuAvustus': hakemus['haettu-avustus'],
                   'muutos': muutos,
@@ -55,7 +58,7 @@ angular.module('jukufrontApp')
                 });
               }
             }
-          ).value();
+          );
           $scope.hakemuksetSuunnittelu = _.sortBy(hakemuksetSuunnitteluTmp, 'hakija');
         }, StatusService.errorHandler);
     }
@@ -64,8 +67,27 @@ angular.module('jukufrontApp')
       $scope.vanhaArvo = arvo;
     };
 
+    $scope.euroSyoteNumeroksi = function (arvo) {
+      return parseFloat(arvo.replace(/[^0-9,-]/g, '').replace(',', '.'));
+    };
+
+    $scope.sallittuArvo = function (value) {
+      if (typeof value === 'undefined') {
+        return false;
+      } else if (typeof value === 'string') {
+        var floatarvo;
+        floatarvo = $scope.euroSyoteNumeroksi(value);
+        return (floatarvo >= 0 && floatarvo <= 999999999.99);
+      } else if (typeof value === 'number') {
+        return (value >= 0 && value <= 999999999.99);
+      }
+      return true;
+    };
+
     function safe(f) {
-      return function(hakemus) { return (hakemus !== undefined) && (hakemus !== null) ? f(hakemus) : false; };
+      return function (hakemus) {
+        return (hakemus !== undefined) && (hakemus !== null) ? f(hakemus) : false;
+      };
     }
 
     $scope.hakemusKeskenerainen = safe(function (hakemus) {
@@ -84,8 +106,8 @@ angular.module('jukufrontApp')
       return hakemus.hakemuksenTila != 'T';
     });
 
-    $scope.myonnettyLiikaa = function(){
-      return $scope.jaettavaraha<$scope.myonnettavaAvustusSum;
+    $scope.myonnettyLiikaa = function () {
+      return $scope.jaettavaraha < $scope.myonnettavaAvustusSum;
     };
 
     $scope.onAvustushakemus = function () {
@@ -132,30 +154,37 @@ angular.module('jukufrontApp')
     };
 
     $scope.paivitaKokonaismaararaha = function (arvo) {
-      var muuttunut = false;
-      if (arvo == 'maararaha') {
-        if (isNaN($scope.maararaha)) {
-          haeMaararahat();
-        } else {
-          muuttunut = $scope.maararaha != $scope.vanhaArvo;
-        }
-      }
-      if (arvo == 'ylijaama') {
-        if (isNaN($scope.ylijaama)) {
-          haeMaararahat();
-        } else {
-          muuttunut = $scope.ylijaama != $scope.vanhaArvo;
-        }
-      }
-      if (muuttunut) {
-        var maararahadata = {
-          'maararaha': $scope.maararaha,
-          'ylijaama': $scope.ylijaama
-        };
-        HakemuskausiService.paivitaMaararaha($scope.vuosi, $scope.lajitunnus, maararahadata)
-          .then(function () {
+      StatusService.tyhjenna();
+      $scope.$broadcast('show-errors-check-validity');
+      if ($scope.suunnitteluForm.$valid) {
+        var muuttunut = false;
+        if (arvo == 'maararaha') {
+          if (isNaN($scope.maararaha)) {
             haeMaararahat();
-          }, StatusService.errorHandler);
+          } else {
+            muuttunut = $scope.maararaha != $scope.vanhaArvo;
+          }
+        }
+        if (arvo == 'ylijaama') {
+          if (isNaN($scope.ylijaama)) {
+            haeMaararahat();
+          } else {
+            muuttunut = $scope.ylijaama != $scope.vanhaArvo;
+          }
+        }
+        if (muuttunut) {
+          var maararahadata = {
+            'maararaha': $scope.maararaha,
+            'ylijaama': $scope.ylijaama
+          };
+          HakemuskausiService.paivitaMaararaha($scope.vuosi, $scope.lajitunnus, maararahadata)
+            .then(function () {
+              haeMaararahat();
+            }, StatusService.errorHandler);
+        }
+      } else {
+        StatusService.virhe('HakemuskausiService.paivitaMaararaha()', 'Korjaa lomakkeen virheet.');
+        return;
       }
     };
 

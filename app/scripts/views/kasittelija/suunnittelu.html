@@ -6,7 +6,8 @@
 
     <juku-form-row>
       <h2 ng-show="onAvustushakemus()">
-        Suunnittelunäkymä - avustushakemukset {{vuosi}} <br/> <small> {{ lajitunnus | toApplicantName }} </small>
+        Suunnittelunäkymä - avustushakemukset {{vuosi}} <br/>
+        <small> {{ lajitunnus | toApplicantName }}</small>
       </h2>
 
       <h2 ng-show="onMaksatushakemus1()">
@@ -23,75 +24,96 @@
     <form name="suunnitteluForm">
       <juku-form-row>
         <div class="col-md-4">
-          <label>Määräraha vuosi {{vuosi}}</label>
-          <input name="maararaha" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
-                 ng-focus="asetaVanhaArvo(maararaha)"
-                 ng-model="maararaha"
-                 ng-blur="paivitaKokonaismaararaha('maararaha')" select-on-click/>
+          <div class="form-group" show-errors="{showSuccess: true}">
+            <label>Määräraha vuosi {{vuosi}}</label>
+
+            <input name="maararaha" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
+                   ng-focus="asetaVanhaArvo(maararaha)"
+                   ng-model="maararaha"
+                   ng-blur="paivitaKokonaismaararaha('maararaha')"
+                   ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                   select-on-click/>
+            <span ng-hide="sallittuArvo(maararaha)"
+                  class="help-block ng-invalid-sallittu-arvo">
+              Arvon tulee olla välillä 0 - 999 999 999,99 € (sis. ALV).
+            </span>
+          </div>
         </div>
         <div class="col-md-4">
-          <label>Siirtomääräraha vuodelta {{vuosi-1}}</label>
-          <input name="ylijaama" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
-                 ng-focus="asetaVanhaArvo(ylijaama)"
-                 ng-model="ylijaama"
-                 ng-blur="paivitaKokonaismaararaha('ylijaama')" select-on-click/>
+          <div class="form-group" show-errors="{showSuccess: true}">
+            <label>Siirtomääräraha vuodelta {{vuosi-1}}</label>
+            <input name="ylijaama" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
+                   ng-focus="asetaVanhaArvo(ylijaama)"
+                   ng-model="ylijaama"
+                   ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                   ng-blur="paivitaKokonaismaararaha('ylijaama')" select-on-click/>
+            <span ng-hide="sallittuArvo(ylijaama)"
+                  class="help-block ng-invalid-sallittu-arvo">
+              Arvon tulee olla välillä 0 - 999 999 999,99 € (sis. ALV).
+            </span>
+          </div>
         </div>
         <div class="col-md-4">
           <label>YHTEENSÄ</label>
           <input type="text" min="-0.0001" ng-currency="" class="form-control"
-                 ng-model="jaettavaraha"  ng-class="{'varoitusvari':myonnettyLiikaa()}" disabled/>
+                 ng-model="jaettavaraha" ng-class="{'varoitusvari':myonnettyLiikaa()}" disabled/>
         </div>
       </juku-form-row>
-
+      <div ng-show="myonnettyLiikaa()" class="row alert alert-warning">
+        <p>
+          Myönnettävien avustusten yhteenlaskettu summa on suurempi kuin vuodelle myönnetty määräraha.
+        </p>
+      </div>
       <h3>Hakemukset</h3>
 
       <juku-form-row>
         <table st-table="hakemuksetSuunnittelu" class="table table-hover table-condensed">
           <thead>
-          <tr>
-            <th>Hakija</th>
-            <th>Tila</th>
-            <th>Haettu avustus</th>
-            <th>Muutos</th>
-            <th>Myönnettävä avustus</th>
-            <th><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></th>
-          </tr>
+            <tr>
+              <th>Hakija</th>
+              <th>Tila</th>
+              <th>Haettu avustus</th>
+              <th>Muutos</th>
+              <th>Myönnettävä avustus</th>
+              <th><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></th>
+            </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="hakemus in hakemuksetSuunnittelu">
-            <td ng-click="siirryHakemukseen(hakemus)">{{hakemus.hakija}}</td>
-            <td ng-click="siirryHakemukseen(hakemus)">
-              <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
-            </td>
-            <td ng-click="siirryHakemukseen(hakemus)">
-              <div ng-hide="hakemusKeskenerainen(hakemus)">{{hakemus.haettuAvustus|currency:"&euro;"}}</div>
-              <div ng-show="hakemusKeskenerainen(hakemus)">Ei tiedossa</div>
-            </td>
-            <td ng-click="siirryHakemukseen(hakemus)">
-              <div ng-hide="hakemusKeskenerainen(hakemus)">{{hakemus.muutos|currency:"&euro;"}}</div>
-            </td>
-            <td>
-              <div ng-show="hakemusPaatetty(hakemus)">
-                {{hakemus.myonnettavaAvustus|currency:"&euro;"}}
-              </div>
-              <div ng-hide="hakemusPaatetty(hakemus) || hakemusKeskenerainen(hakemus)" class="form-group" show-errors="{showSuccess: true}">
-                <input id="avustus_{{hakemus.hakemusId}}" name="avustus_{{hakemus.hakemusId}}" type="text" min="-0.0001"
-                       ng-currency="" numeric-only="" class="form-control"
-                       ng-model="hakemus.myonnettavaAvustus"
-                       ui-validate="{sallittuAvustus: 'sallittuAvustus($modelValue,hakemus.haettuAvustus, hakemus.hakemuksenTila)'}"
-                       ng-focus="asetaVanhaArvo(hakemus.myonnettavaAvustus)"
-                       ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)" select-on-click/>
-                <span
-                  ng-hide="sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
-                  class="help-block ng-invalid-sallittu-avustus">Myönnettävän avustuksen<br>tulee olla
-                  positiivinen<br>arvo ja suurimmillaan <br>haetun avustuksen suuruinen</span>
-              </div>
-            </td>
-            <td>
-
-              <juku-link-next
-                ng-show="hakemusTarkastettu(hakemus) && sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
-                ui-sref="app.kasittelija.paatos({
+            <tr ng-repeat="hakemus in hakemuksetSuunnittelu">
+              <td ng-click="siirryHakemukseen(hakemus)">{{hakemus.hakija}}</td>
+              <td ng-click="siirryHakemukseen(hakemus)">
+                <hakemus-label tila="{{hakemus.hakemuksenTila}}"></hakemus-label>
+              </td>
+              <td ng-click="siirryHakemukseen(hakemus)">
+                <div ng-hide="hakemusKeskenerainen(hakemus)">{{hakemus.haettuAvustus|currency:"&euro;"}}</div>
+                <div ng-show="hakemusKeskenerainen(hakemus)">Ei tiedossa</div>
+              </td>
+              <td ng-click="siirryHakemukseen(hakemus)">
+                <div ng-hide="hakemusKeskenerainen(hakemus)">{{hakemus.muutos|currency:"&euro;"}}</div>
+              </td>
+              <td>
+                <div ng-show="hakemusPaatetty(hakemus)">
+                  {{hakemus.myonnettavaAvustus|currency:"&euro;"}}
+                </div>
+                <div ng-hide="hakemusPaatetty(hakemus) || hakemusKeskenerainen(hakemus)" class="form-group"
+                     show-errors="{showSuccess: true}">
+                  <input id="avustus_{{hakemus.hakemusId}}" name="avustus_{{hakemus.hakemusId}}" type="text"
+                         min="-0.0001"
+                         ng-currency="" numeric-only="" class="form-control"
+                         ng-model="hakemus.myonnettavaAvustus"
+                         ui-validate="{sallittuAvustus: 'sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)'}"
+                         ng-focus="asetaVanhaArvo(hakemus.myonnettavaAvustus)"
+                         ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)" select-on-click/>
+                  <span
+                    ng-hide="sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
+                    class="help-block ng-invalid-sallittu-avustus">Myönnettävän avustuksen<br>tulee olla
+                    positiivinen<br>arvo ja suurimmillaan <br>haetun avustuksen suuruinen</span>
+                </div>
+              </td>
+              <td>
+                <juku-link-next
+                  ng-show="hakemusTarkastettu(hakemus) && sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
+                  ui-sref="app.kasittelija.paatos({
                   hakemusid: hakemus.hakemusId,
                   haettuavustus: hakemus.haettuAvustus,
                   avustus: hakemus.myonnettavaAvustus,
@@ -99,35 +121,32 @@
                   tyyppi: tyyppi,
                   lajitunnus: lajitunnus
                 })">
-
-                <span ng-show="hakemusPaatetty(hakemus)">
-                  Päätökseen
-                </span>
-
-                <span ng-hide="hakemusPaatetty(hakemus)">
+                  <span ng-show="hakemusPaatetty(hakemus)">
+                    Päätökseen
+                  </span>
+                  <span ng-hide="hakemusPaatetty(hakemus)">
+                    Päätöksentekoon
+                  </span>
+                </juku-link-next>
+                <a ng-show="!sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
+                   class="icon-link a-disabled">
                   Päätöksentekoon
-                </span>
-
-              </juku-link-next>
-            </td>
-          </tr>
-          <tr>
-            <td>Yhteensä</td>
-            <td></td>
-            <td>{{haettuAvustusSum|currency:"&euro;"}}</td>
-            <td>{{muutosSum|currency:"&euro;"}}</td>
-            <td ng-class="{'varoitusvari':myonnettyLiikaa()}">{{myonnettavaAvustusSum|currency:"&euro;"}}</td>
-            <td></td>
-          </tr>
+                  <span class="glyphicon glyphicon-arrow-right"></span>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>Yhteensä</td>
+              <td></td>
+              <td>{{haettuAvustusSum|currency:"&euro;"}}</td>
+              <td>{{muutosSum|currency:"&euro;"}}</td>
+              <td ng-class="{'varoitusvari':myonnettyLiikaa()}">{{myonnettavaAvustusSum|currency:"&euro;"}}</td>
+              <td></td>
+            </tr>
           </tbody>
         </table>
       </juku-form-row>
     </form>
-    <div ng-show="myonnettyLiikaa()" class="row alert alert-warning">
-      <p>
-        Myönnettävien avustusten yhteenlaskettu summa on suurempi kuin vuodelle myönnetty määräraha.
-      </p>
-    </div>
   </div>
   <div class="row">
     <div class="col-md-12">
