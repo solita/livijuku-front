@@ -50,7 +50,7 @@ angular.module('jukufrontApp')
                 }
                 hakemuksetSuunnitteluTmp.push({
                   'hakemusId': hakemus.id,
-                  'hakija': _.find($rootScope.organisaatiot, {'id': hakemus.organisaatioid}).nimi,
+                  'hakija': _.find(organisaatiot, {'id': hakemus.organisaatioid}).nimi,
                   'hakemuksenTila': hakemus.hakemustilatunnus,
                   'haettuAvustus': hakemus['haettu-avustus'],
                   'muutos': muutos,
