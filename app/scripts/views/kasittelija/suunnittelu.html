@@ -111,7 +111,6 @@
                 </div>
               </td>
               <td>
-
                 <juku-link-next
                   ng-show="hakemusTarkastettu(hakemus) && sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
                   ui-sref="app.kasittelija.paatos({
@@ -122,16 +121,18 @@
                   tyyppi: tyyppi,
                   lajitunnus: lajitunnus
                 })">
-
                   <span ng-show="hakemusPaatetty(hakemus)">
                     Päätökseen
                   </span>
-
                   <span ng-hide="hakemusPaatetty(hakemus)">
                     Päätöksentekoon
                   </span>
-
                 </juku-link-next>
+                <a ng-show="!sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
+                   class="icon-link a-disabled">
+                  Päätöksentekoon
+                  <span class="glyphicon glyphicon-arrow-right"></span>
+                </a>
               </td>
             </tr>
             <tr>
