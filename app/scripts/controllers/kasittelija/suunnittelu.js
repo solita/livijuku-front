@@ -98,6 +98,10 @@ angular.module('jukufrontApp')
       return _.contains(['P', 'S'], hakemus.hakemuksenTila);
     });
 
+    $scope.hakemusVireilla = safe(function (hakemus) {
+      return _.contains(['V', 'TV'], hakemus.hakemuksenTila);
+    });
+
     $scope.hakemusTarkastettu = safe(function (hakemus) {
       return _.contains(['T', 'P', 'S'], hakemus.hakemuksenTila);
     });
