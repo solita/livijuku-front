@@ -29,6 +29,7 @@
 
             <input name="maararaha" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
                    ng-focus="asetaVanhaArvo(maararaha)"
+                   ng-model-options="{ allowInvalid: true }"
                    ng-model="maararaha"
                    ng-blur="paivitaKokonaismaararaha('maararaha')"
                    ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
@@ -44,6 +45,7 @@
             <label>Siirtomääräraha vuodelta {{vuosi-1}}</label>
             <input name="ylijaama" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
                    ng-focus="asetaVanhaArvo(ylijaama)"
+                   ng-model-options="{ allowInvalid: true }"
                    ng-model="ylijaama"
                    ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                    ng-blur="paivitaKokonaismaararaha('ylijaama')" select-on-click/>
