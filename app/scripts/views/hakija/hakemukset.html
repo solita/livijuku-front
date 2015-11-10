@@ -18,11 +18,11 @@
             <br>
           </div>
 
-          <div class="col-md-3 text-center" ng-repeat="tyyppi in constants.hakemustyypit">
+          <div class="col-md-3 text-center" ng-repeat="hakemus in hakemuskausi.hakemukset">
             <hakemus-laatikko
-              ng-click="valitseHakemus(utils.haeHakemus(hakemuskausi, tyyppi))"
-              title="{{ tyyppi | toApplicationName }}"
-              hakemus="utils.haeHakemus(hakemuskausi, tyyppi)">
+              ng-click="valitseHakemus(utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus))"
+              title="{{ hakemus.hakemustyyppitunnus | toApplicationName }}"
+              hakemus="utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus)">
             </hakemus-laatikko>
           </div>
         </div>
@@ -42,11 +42,11 @@
             <br>
           </div>
 
-          <div class="col-md-3 text-center" ng-repeat="tyyppi in constants.hakemustyypit">
+          <div class="col-md-3 text-center" ng-repeat="hakemus in hakemuskausi.hakemukset">
             <hakemus-laatikko
-              ng-click="valitseHakemus(utils.haeHakemus(hakemuskausi, tyyppi))"
-              title="{{ tyyppi | toApplicationName }}"
-              hakemus="utils.haeHakemus(hakemuskausi, tyyppi)">
+              ng-click="valitseHakemus(utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus))"
+              title="{{ hakemus.hakemustyyppitunnus | toApplicationName }}"
+              hakemus="utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus)">
             </hakemus-laatikko>
           </div>
         </div>
