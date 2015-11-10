@@ -95,7 +95,7 @@
                 <div ng-show="hakemusPaatetty(hakemus)">
                   {{hakemus.myonnettavaAvustus|currency:"&euro;"}}
                 </div>
-                <div ng-hide="hakemusPaatetty(hakemus) || hakemusKeskenerainen(hakemus)" class="form-group"
+                <div ng-hide="hakemusPaatetty(hakemus) || hakemusKeskenerainen(hakemus) || hakemusVireilla(hakemus)" class="form-group"
                      show-errors="{showSuccess: true}">
                   <input id="avustus_{{hakemus.hakemusId}}" name="avustus_{{hakemus.hakemusId}}" type="text"
                          min="-0.0001"
@@ -112,7 +112,7 @@
               </td>
               <td>
                 <juku-link-next
-                  ng-show="hakemusTarkastettu(hakemus) && sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
+                  ng-if="hakemusTarkastettu(hakemus) && sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
                   ui-sref="app.kasittelija.paatos({
                   hakemusid: hakemus.hakemusId,
                   haettuavustus: hakemus.haettuAvustus,
@@ -128,7 +128,7 @@
                     Päätöksentekoon
                   </span>
                 </juku-link-next>
-                <a ng-show="!sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
+                <a ng-if="hakemusTarkastettu(hakemus) && !sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
                    class="icon-link a-disabled">
                   Päätöksentekoon
                   <span class="glyphicon glyphicon-arrow-right"></span>

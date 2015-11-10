@@ -106,6 +106,10 @@ angular.module('jukufrontApp')
       return hakemus.hakemuksenTila != 'T';
     });
 
+    $scope.hakemusVireilla = safe(function (hakemus) {
+      return _.contains(['V', 'TV'], hakemus.hakemuksenTila);
+    });
+
     $scope.myonnettyLiikaa = function () {
       return $scope.jaettavaraha < $scope.myonnettavaAvustusSum;
     };
