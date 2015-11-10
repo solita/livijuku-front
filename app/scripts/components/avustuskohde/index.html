@@ -14,6 +14,7 @@
                    uib-tooltip="{{haeTooltip('haettavaavustus',alv,kohde.alv)}}"
                    tooltip-trigger="focus"
                    tooltip-placement="top"
+                   ng-model-options="{ allowInvalid: true }"
                    ng-model="kohde.haettavaavustus"
                    ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo($value)', sallittuArvoHaettavamaksatus: 'sallittuMaksatusArvo($value)'}"/>
             <span ng-hide="isReadonly()" class="input-group-addon">alv {{ alv ? kohde.alv : 0 }}%</span>
@@ -37,6 +38,7 @@
                    class="form-control" uib-tooltip="{{haeTooltip('omarahoitus',alv,kohde.alv)}}"
                    tooltip-trigger="focus"
                    tooltip-placement="top"
+                   ng-model-options="{ allowInvalid: true }"
                    ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
                    ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kohde.haettavaavustus)',sallittuArvoOmarahoitus: 'sallittuArvo($value)'}"
                    ui-validate-watch=" 'kohde.haettavaavustus' "/>

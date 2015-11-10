@@ -101,6 +101,7 @@
                          min="-0.0001"
                          ng-currency="" numeric-only="" class="form-control"
                          ng-model="hakemus.myonnettavaAvustus"
+                         ng-model-options="{ allowInvalid: true }"
                          ui-validate="{sallittuAvustus: 'sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)'}"
                          ng-focus="asetaVanhaArvo(hakemus.myonnettavaAvustus)"
                          ng-blur="paivitaAvustus(hakemus.myonnettavaAvustus,hakemus.hakemusId)" select-on-click/>
