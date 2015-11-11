@@ -16,15 +16,19 @@ function haeHakemus(tyyppi, hakemus) {
   });
 }
 
+function isElyhakemus(hakemus) {
+  return _.contains(['ELY'], hakemus.hakemustyyppitunnus)
+}
+
 function isMaksatushakemus(hakemus) {
   return _.contains(['MH1', 'MH2'], hakemus.hakemustyyppitunnus)
 }
 
 loadInitialData.$inject = [
   'CommonService', '$stateParams', 'AvustuskohdeService', 'LiikenneSuoriteService',
-  'LippuSuoriteService', 'HakemusService', 'KayttajaService', 'PaatosService', 'StatusService'];
+  'LippuSuoriteService', 'HakemusService', 'KayttajaService', 'PaatosService', 'StatusService','ElyHakemusService'];
 
-function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuoriteService, LippuSuoriteService, HakemusService, KayttajaService, PaatosService, StatusService) {
+function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuoriteService, LippuSuoriteService, HakemusService, KayttajaService, PaatosService, StatusService, ElyHakemusService) {
   function haeAvustuskohteet(hakemus) {
     return AvustuskohdeService.hae(hakemus.id).then((data) => {
       return _.map(
@@ -59,8 +63,19 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
     });
   }
 
+  function ifElyhakemus(then, defaultvalue) {
+    return hakemusPromise.then((hakemus) => {
+      if (isElyhakemus(hakemus)) {
+        return then(hakemus);
+      } else {
+        return defaultvalue;
+      }
+    });
+  }
+
   var liikenneSuoritteet = ifMaksatushakemus(hakemus => LiikenneSuoriteService.hae(hakemus.id), []);
   var lippuSuoritteet = ifMaksatushakemus(hakemus => LippuSuoriteService.hae(hakemus.id), []);
+
 
   return Promise.props({
     hakemus: hakemusPromise,
@@ -101,6 +116,8 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
     }),
     suoritetyypit: ifMaksatushakemus(hakemus => LiikenneSuoriteService.suoritetyypit(), []),
     lipputyypit: ifMaksatushakemus(hakemus => LippuSuoriteService.lipputyypit(), []),
+    maararahatarvetyypit: ifElyhakemus(hakemus => ElyHakemusService.haeMaararahatarvetyypit(), []),
+    maararahaTarpeet : ifElyhakemus(hakemus => ElyHakemusService.haeMaararahatarpeet(hakemus.id),[]),
     psaLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PSA")),
     palLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PAL")),
     kaupunkilippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, function (suorite) {

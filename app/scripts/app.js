@@ -49,6 +49,7 @@ angular
     'services.avustuskohde',
     'services.seuranta',
     'services.hakemus',
+    'services.elyhakemus',
     'services.hakemuskausi',
     'services.kayttaja',
     'services.liite',
@@ -320,6 +321,7 @@ require('./services/seuranta');
 require('./services/common');
 require('./services/config');
 require('./services/hakemus');
+require('./services/elyhakemus');
 require('./services/hakemuskausi');
 require('./services/kayttaja');
 require('./services/liite');

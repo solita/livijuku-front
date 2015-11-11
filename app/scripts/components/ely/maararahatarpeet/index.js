@@ -52,6 +52,8 @@ module.exports = function () {
     restrict: 'E',
     scope: {
       vuosi: '=vuosi',
+      maararahatarpeet: '=maararahatarpeet',
+      maararahatarvetyypit: '=maararahatarvetyypit',
       isReadonly: '&isReadonly'
     },
     template: require('./index.html'),
