@@ -33,7 +33,7 @@
              ('app.hakemus' | isState) && !isOwnApplication()
             | toClass:'is-active'
           }}" ng-show="sallittu(user, 'view-hakemus')">
-          <a class="header__link" ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'AH0'})">
+          <a class="header__link" ui-sref="app.yhteinen.hakemukset.list({tyyppi: getType()})">
             Kaikki hakemukset
           </a>
         </li>
