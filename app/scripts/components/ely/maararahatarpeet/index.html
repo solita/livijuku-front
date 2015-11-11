@@ -1,15 +1,17 @@
-<ng-form id="maararahatarpeet-form" name="maararahatarpeetForm" class="maararahatarpeet">
+<ng-form id="maararahatarpeet-form" name="maararahatarpeetForm">
   <juku-form-row>
     <div class="col-md-6">
       <label>Siirtymäajan sopimukset</label>
       <input name="siirtymaajansopimukset" type="text" ng-currency="" numeric-only="" class="form-control"
-             ng-model="siirtymaajansopimukset" placeholder="Siirtymäajan sopimukset" uib-tooltip="Siirtymäajan sopimusten määrärahatarve" tooltip-placement="top"
+             ng-model="siirtymaajansopimukset" placeholder="Siirtymäajan sopimukset"
+             uib-tooltip="Siirtymäajan sopimusten määrärahatarve" tooltip-placement="top"
              tooltip-append-to-body="true" select-on-click/>
     </div>
     <div class="col-md-6">
       <label>Joukkoliikennetuki kunnille</label>
       <input name="joukkoliikennetuki" type="text" ng-currency="" numeric-only="" class="form-control"
-             ng-model="joukkoliikennetuki" placeholder="Joukkoliikennetuki kunnille" uib-tooltip="ELYn kunnille myöntämä joukkoliikennetuki" tooltip-placement="top"
+             ng-model="joukkoliikennetuki" placeholder="Joukkoliikennetuki kunnille"
+             uib-tooltip="ELYn kunnille myöntämä joukkoliikennetuki" tooltip-placement="top"
              tooltip-append-to-body="true" select-on-click/>
     </div>
   </juku-form-row>
@@ -27,12 +29,6 @@
               <th class="col-md-4 ekarivi">Kommentit</th>
             </tr>
           </thead>
-          <tfoot>
-            <tr>
-              <td colspan="5" uib-tooltip="Menot yhteensä (Siirtymäajan sopimukset + Joukkoliikennetuki + Sidotut + Uudet - Tulot)" tooltip-placement="top"
-                  tooltip-append-to-body="true" >Yhteensä:  {{yhteensa() | currency}}</td>
-            </tr>
-          </tfoot>
           <tbody>
             <tr ng-repeat="maararahatarve in maararahatarpeet track by $index" ng-form>
               <td>{{maararahatarve.maararahatarve}}</td>
@@ -82,6 +78,13 @@
           </tbody>
         </table>
       </div>
+    </div>
+  </juku-form-row>
+  <juku-form-row>
+    <div class="col-md-3">
+      <p><b>Menot yhteesä:</b> <span uib-tooltip="Siirtymäajan sopimukset + Joukkoliikennetuki + Sidotut + Uudet - Tulot"
+        tooltip-placement="top"
+        tooltip-append-to-body="true">{{yhteensa() | currency}}</span></p>
     </div>
   </juku-form-row>
 </ng-form>
