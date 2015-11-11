@@ -192,7 +192,8 @@ gulp.task('server', function () {
       'oam-groups',
       'oam-user-first-name',
       'oam-user-last-name',
-      'oam-user-organization'
+      'oam-user-organization',
+      'oam-user-department'
     ];
 
     cookieKeys.forEach(function (key) {
