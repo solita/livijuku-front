@@ -26,52 +26,53 @@
               <th class="ekarivi">Sidotut</th>
               <th class="ekarivi">Uudet</th>
               <th class="ekarivi">Tulot</th>
-              <th class="col-md-4 ekarivi">Kommentit</th>
+              <th class="col-md-4 ekarivi">Kuvaus</th>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat="maararahatarve in maararahatarpeet track by $index" ng-form>
-              <td>{{maararahatarve.maararahatarve}}</td>
+              <td>{{haeNimi(maararahatarve.maararahatarvetyyppitunnus)}}</td>
               <td>
                 <form-group-compact label="Sidotut">
-                  <input id="{{maararahatarve.maararahatarve + '-sidotut'}}" name="sidotut" type="text"
+                  <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-sidotut'}}" name="sidotut" type="text"
                          class="form-control" ng-currency="" numeric-only=""
                          noenter
                          select-on-click
                          ng-model="maararahatarve.sidotut" ng-disabled="isReadonly()"
-                         placeholder="Sidotut" uib-tooltip="{{maararahatarve.sidotuttooltip}}" tooltip-placement="top"
-                         tooltip-append-to-body="true">
+                         ng-init="maararahatarve.sidotut = maararahatarve.sidotut || 0"
+                         placeholder="Sidotut">
                 </form-group-compact>
               </td>
               <td>
                 <form-group-compact label="Uudet">
-                  <input id="{{maararahatarve.maararahatarve + '-uudet'}}" name="uudet" type="text"
+                  <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-uudet'}}" name="uudet" type="text"
                          class="form-control" ng-currency="" numeric-only=""
                          noenter
                          select-on-click
                          ng-model="maararahatarve.uudet" ng-disabled="isReadonly()"
-                         placeholder="Uudet" uib-tooltip="{{maararahatarve.uudettooltip}}" tooltip-placement="top"
-                         tooltip-append-to-body="true">
+                         ng-init="maararahatarve.uudet = maararahatarve.uudet || 0"
+                         placeholder="Uudet">
                 </form-group-compact>
               </td>
               <td>
                 <form-group-compact label="Uudet">
-                  <input id="{{maararahatarve.maararahatarve + '-tulot'}}" name="tulot" type="text"
+                  <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-tulot'}}" name="tulot" type="text"
                          class="form-control" ng-currency="" numeric-only=""
                          noenter
                          select-on-click
                          ng-model="maararahatarve.tulot" ng-disabled="isReadonly()"
-                         placeholder="Tulot" uib-tooltip="{{maararahatarve.tulottooltip}}" tooltip-placement="top"
-                         tooltip-append-to-body="true">
+                         ng-init="maararahatarve.tulot = maararahatarve.tulot || 0"
+                         placeholder="Tulot">
                 </form-group-compact>
               </td>
               <td>
-                <form-group-compact label="Kommentit">
-                  <input id="{{maararahatarve.maararahatarve +'-kommentit'}}" name="kommentit" type="text"
+                <form-group-compact label="Kuvaus">
+                  <input id="{{maararahatarve.maararahatarvetyyppitunnus +'-kuvaus'}}" name="kuvaus" type="text"
                          noenter
                          select-on-click
-                         ng-model="maararahatarve.kommentit"
-                         placeholder="Kommentit">
+                         ng-model="maararahatarve.kuvaus"
+                         ng-disabled="isReadonly()"
+                         placeholder="Kuvaus">
                 </form-group-compact>
               </td>
             </tr>

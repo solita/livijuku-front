@@ -7,15 +7,22 @@ function pakollinenErrorMessage(nimi) {
   }
 }
 
+function haeMaksimiNumero(taulukko) {
+  var m = _.max(taulukko, 'numero');
+  if (m == '-Infinity') return 0;
+  return m.numero+1;
+}
+
 function kehittamishankkeetController($scope) {
 
-  $scope.kehittamishankkeet = [];
+  $scope.kehittamishankkeet2 = [];
 
   $scope.lisaaKehittamishanke = function () {
     var uusi = {
+      "numero": haeMaksimiNumero($scope.kehittamishankkeet),
       "nimi": "Kehittämishanke",
       "arvo": 0,
-      "lisatiedot": ""
+      "kuvaus": ""
     };
     $scope.kehittamishankkeet.push(uusi);
   };
@@ -25,8 +32,8 @@ function kehittamishankkeetController($scope) {
     $scope.kehittamishankkeetForm.$setDirty();
   };
 
-  $scope.yhteensa = function (){
-      return _.sum($scope.kehittamishankkeet, 'arvo');
+  $scope.yhteensa = function () {
+    return _.sum($scope.kehittamishankkeet, 'arvo');
   };
 
   $scope.nimiErrorMessage = pakollinenErrorMessage("Nimi");
@@ -36,6 +43,7 @@ module.exports = function () {
   return {
     restrict: 'E',
     scope: {
+      kehittamishankkeet: '=kehittamishankkeet',
       isReadonly: '&isReadonly'
     },
     template: require('./index.html'),

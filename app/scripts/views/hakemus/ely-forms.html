@@ -1,7 +1,7 @@
 <juku-form-section>
       <h3>MÄÄRÄRAHATARPEET</h3>
-  <juku-ely-maararahatarpeet vuosi="hakemus.vuosi" maararahatarpeet="maararahaTarpeet" maararahatarvetyypit="maararahatarvetyypit"></juku-ely-maararahatarpeet>
+  <juku-ely-maararahatarpeet vuosi="hakemus.vuosi" maararahatarpeet="maararahaTarpeet" maararahatarvetyypit="maararahatarvetyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-ely-maararahatarpeet>
 
       <h3>KEHITTÄMISHANKKEIDEN ERITTELY HANKKEITTAIN</h3>
-  <juku-ely-kehittamishankkeet kehittamishankkeet=""></juku-ely-kehittamishankkeet>
+  <juku-ely-kehittamishankkeet kehittamishankkeet="kehittamishankkeet" is-readonly="!hakemusTallentaminenEnabled()"></juku-ely-kehittamishankkeet>
 </juku-form-section>

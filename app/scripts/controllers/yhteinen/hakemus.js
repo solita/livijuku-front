@@ -26,7 +26,7 @@ function isMaksatushakemus(hakemus) {
 
 loadInitialData.$inject = [
   'CommonService', '$stateParams', 'AvustuskohdeService', 'LiikenneSuoriteService',
-  'LippuSuoriteService', 'HakemusService', 'KayttajaService', 'PaatosService', 'StatusService','ElyHakemusService'];
+  'LippuSuoriteService', 'HakemusService', 'KayttajaService', 'PaatosService', 'StatusService', 'ElyHakemusService'];
 
 function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuoriteService, LippuSuoriteService, HakemusService, KayttajaService, PaatosService, StatusService, ElyHakemusService) {
   function haeAvustuskohteet(hakemus) {
@@ -116,8 +116,9 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
     }),
     suoritetyypit: ifMaksatushakemus(hakemus => LiikenneSuoriteService.suoritetyypit(), []),
     lipputyypit: ifMaksatushakemus(hakemus => LippuSuoriteService.lipputyypit(), []),
+    kehittamishankkeet: ifElyhakemus(hakemus => ElyHakemusService.haeKehityshankkeet(hakemus.id), []),
     maararahatarvetyypit: ifElyhakemus(hakemus => ElyHakemusService.haeMaararahatarvetyypit(), []),
-    maararahaTarpeet : ifElyhakemus(hakemus => ElyHakemusService.haeMaararahatarpeet(hakemus.id),[]),
+    maararahaTarpeet: ifElyhakemus(hakemus => ElyHakemusService.haeMaararahatarpeet(hakemus.id), []),
     psaLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PSA")),
     palLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PAL")),
     kaupunkilippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, function (suorite) {
@@ -130,8 +131,8 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
 module.exports.loadInitialData = loadInitialData;
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$state', '$stateParams',
-    'PaatosService', 'HakemusService', 'AvustuskohdeService', 'LiikenneSuoriteService', 'LippuSuoriteService', 'StatusService', 'CommonService', '$window', 'initials',
-    function ($rootScope, $scope, $state, $stateParams, PaatosService, HakemusService, AvustuskohdeService, LiikenneSuoriteService, LippuSuoriteService, StatusService, common, $window, initials) {
+    'PaatosService', 'HakemusService', 'AvustuskohdeService', 'LiikenneSuoriteService', 'LippuSuoriteService', 'StatusService', 'CommonService', '$window', 'initials', 'ElyHakemusService',
+    function ($rootScope, $scope, $state, $stateParams, PaatosService, HakemusService, AvustuskohdeService, LiikenneSuoriteService, LippuSuoriteService, StatusService, common, $window, initials, ElyHakemusService) {
 
       _.extend($scope, initials);
 
@@ -312,9 +313,13 @@ angular.module('jukufrontApp')
         return $scope.hakemus.hakemustyyppitunnus === 'MH2';
       };
 
+      $scope.onElyhakemus = function () {
+        return $scope.hakemus.hakemustyyppitunnus === 'ELY';
+      };
+
       $scope.isMaksatushakemus = isMaksatushakemus($scope.hakemus);
 
-      $scope.isELYhakemus = $scope.hakemus.hakemustyyppitunnus === 'ELY';
+      $scope.isELYhakemus = isElyhakemus($scope.hakemus);
 
       $scope.avustushakemusPaatosOlemassa = function () {
         return $scope.avustushakemusPaatos && $scope.avustushakemusPaatos.voimaantuloaika;
@@ -343,9 +348,9 @@ angular.module('jukufrontApp')
       };
 
       function validiHakemus() {
-        return ($scope.hakemusForm.$valid && $scope.onAvustushakemus()) ||
+        return (($scope.hakemusForm.$valid && ($scope.onAvustushakemus() || $scope.onElyhakemus())) ||
           (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) &&
-          $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn());
+          $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn()));
       }
 
       $scope.hakemusTallentaminenEnabled = function () {
@@ -392,6 +397,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.tallennaHakemus = function (lisa_toiminto) {
+        var tallennusPromise = [];
         StatusService.tyhjenna();
         $scope.$broadcast('show-errors-check-validity');
 
@@ -404,20 +410,25 @@ angular.module('jukufrontApp')
         if (lisa_toiminto === $scope.lisatoiminto.ESIKATSELU) {
           var ikkuna = $window.open('about:blank', '_blank');
         }
-        var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
-          return l.avustuskohteet;
-        }));
 
-        avustuskohteet = _.map(avustuskohteet, function (kohde) {
-          return _.omit(kohde, 'alv');
-        });
+        if (isElyhakemus($scope.hakemus)) {
+          tallennusPromise.push(ElyHakemusService.tallennaMaararahatarpeet($scope.hakemus.id, $scope.maararahaTarpeet));
+        } else {
+          var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
+            return l.avustuskohteet;
+          }));
 
-        var tallennusPromise = [AvustuskohdeService.tallenna(avustuskohteet)];
-        if (isMaksatushakemus($scope.hakemus)) {
-          tallennusPromise.push(LiikenneSuoriteService.tallenna(
-            $scope.hakemus.id, $scope.psaLiikenneSuoritteet.concat($scope.palLiikenneSuoritteet)));
-          tallennusPromise.push(LippuSuoriteService.tallenna(
-            $scope.hakemus.id, $scope.kaupunkilippuSuoritteet.concat($scope.seutulippuSuoritteet)));
+          avustuskohteet = _.map(avustuskohteet, function (kohde) {
+            return _.omit(kohde, 'alv');
+          });
+
+          tallennusPromise.push([AvustuskohdeService.tallenna(avustuskohteet)]);
+          if (isMaksatushakemus($scope.hakemus)) {
+            tallennusPromise.push(LiikenneSuoriteService.tallenna(
+              $scope.hakemus.id, $scope.psaLiikenneSuoritteet.concat($scope.palLiikenneSuoritteet)));
+            tallennusPromise.push(LippuSuoriteService.tallenna(
+              $scope.hakemus.id, $scope.kaupunkilippuSuoritteet.concat($scope.seutulippuSuoritteet)));
+          }
         }
 
         Promise.all(tallennusPromise)
