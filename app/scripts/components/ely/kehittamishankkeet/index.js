@@ -9,7 +9,7 @@ function pakollinenErrorMessage(nimi) {
 
 function haeMaksimiNumero(taulukko) {
   var m = _.max(taulukko, 'numero');
-  if (m == '-Infinity') return 0;
+  if (m === -Infinity) return 0;
   return m.numero+1;
 }
 
