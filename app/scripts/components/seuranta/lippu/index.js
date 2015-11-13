@@ -7,13 +7,19 @@ function pakollinnenErrorMessage(nimi) {
   }
 }
 
+function haeMaksimiNumero(taulukko) {
+  if (taulukko.length === 0) return 0;
+  return _.max(taulukko, 'numero').numero + 1;
+}
+
+
 function lippuController($scope) {
 
   $scope.lisaaSuorite = function () {
     var uusi = {
       lipputyyppitunnus: $scope.kaupunkilippu ? '' : 'SE',
       seutulippualue: '',
-      numero: $scope.suoritteet.length + 1,
+      numero: haeMaksimiNumero($scope.suoritteet),
       myynti: 0,
       matkat: 0,
       asiakashinta: 0.0,

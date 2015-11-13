@@ -7,13 +7,18 @@ function pakollinnenErrorMessage(nimi) {
   }
 }
 
+function haeMaksimiNumero(taulukko) {
+  if (taulukko.length === 0) return 0;
+  return _.max(taulukko, 'numero').numero + 1;
+}
+
 function liikenneController($scope) {
 
   $scope.lisaaSuorite = function () {
     var uusi = {
       liikennetyyppitunnus: $scope.liikennetyyppi,
       suoritetyyppitunnus: '',
-      numero: $scope.suoritteet.length + 1,
+      numero: haeMaksimiNumero($scope.suoritteet),
       nimi: '',
       linjaautot: 0,
       taksit: 0,
