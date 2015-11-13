@@ -363,8 +363,10 @@ angular.module('jukufrontApp')
           return "Käyttäjällä ei ole oikeutta lähettää hakemuksia";
         } else if (!$scope.isOmaHakemus($scope.user)) {
           return "Vain hakijaorganisaation edustajilla on oikeus lähettää hakemus.";
-        } else if (!$scope.allekirjoitusliitetty || !$scope.liitteetOlemassa()) {
+        } else if (!$scope.liitteetOlemassa()) {
           return "Allekirjoitusoikeusdokumenttia ei ole liitetty";
+        } else if (!$scope.allekirjoitusliitetty && $scope.liitteetOlemassa()) {
+          return "Olethan merkinnyt \"Olen liittänyt hakemukseen tarvittavat lisätiedot mukaan lukien liitteen allekirjoitusoikeudesta.\"-kohdan valituksi?";
         } else if (!$scope.edellinenHakemusPaatetty()) {
           return "Edeltävää hakemusta ei ole päätetty."
         } else {
