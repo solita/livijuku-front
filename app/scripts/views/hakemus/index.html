@@ -203,7 +203,7 @@
 
       <!-- Hakija -->
       <juku-confirmation
-        ng-show="isHakija(user) && isOmaHakemus(user) && hakemusKeskenerainen()"
+        ng-show="!isELYhakemus && isHakija(user) && isOmaHakemus(user) && hakemusKeskenerainen()"
         ng-model="allekirjoitusliitetty"
         ng-disabled="!hakemusKeskenerainen() || !liitteetOlemassa()">
         Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen allekirjoitusoikeudesta.

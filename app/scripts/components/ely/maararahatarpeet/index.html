@@ -82,10 +82,11 @@
     </div>
   </juku-form-row>
   <juku-form-row>
-    <div class="col-md-3">
-      <p><b>Menot yhteesä:</b> <span uib-tooltip="Siirtymäajan sopimukset + Joukkoliikennetuki + Sidotut + Uudet - Tulot"
-        tooltip-placement="top"
-        tooltip-append-to-body="true">{{yhteensa() | currency}}</span></p>
+    <div class="col-md-12">
+      <h4>MENOT YHTEENSÄ: <span uib-tooltip="Siirtymäajan sopimukset + Joukkoliikennetuki + Sidotut + Uudet - Tulot"
+                                tooltip-placement="top"
+                                tooltip-append-to-body="true">{{yhteensa() | currency}}</span></h4>
     </div>
   </juku-form-row>
+  <juku-form-row></juku-form-row>
 </ng-form>

@@ -326,7 +326,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.edellinenHakemusPaatetty = function () {
-        if ($scope.onAvustushakemus()) {
+        if ($scope.onAvustushakemus() || $scope.onElyhakemus()) {
           return true;
         }
         return $scope.avustushakemusPaatosOlemassa();
@@ -373,8 +373,9 @@ angular.module('jukufrontApp')
 
       $scope.hakemusLahettaminenEnabled = function () {
         return $scope.hakemusKeskenerainen() &&
-          $scope.allekirjoitusliitetty &&
-          $scope.liitteetOlemassa() &&
+          ($scope.onElyhakemus() || (($scope.onAvustushakemus() || $scope.onMaksatushakemus1() ||
+          $scope.onMaksatushakemus2()) && $scope.allekirjoitusliitetty &&
+          $scope.liitteetOlemassa())) &&
           $scope.edellinenHakemusPaatetty() &&
           $scope.sallittu('allekirjoita-oma-hakemus') &&
           $scope.isOmaHakemus($scope.user);
@@ -387,7 +388,7 @@ angular.module('jukufrontApp')
           return "Käyttäjällä ei ole oikeutta lähettää hakemuksia";
         } else if (!$scope.isOmaHakemus($scope.user)) {
           return "Vain hakijaorganisaation edustajilla on oikeus lähettää hakemus.";
-        } else if (!$scope.allekirjoitusliitetty || !$scope.liitteetOlemassa()) {
+        } else if (($scope.onAvustushakemus() || $scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) && (!$scope.allekirjoitusliitetty || !$scope.liitteetOlemassa())) {
           return "Allekirjoitusoikeusdokumenttia ei ole liitetty";
         } else if (!$scope.edellinenHakemusPaatetty()) {
           return "Edeltävää hakemusta ei ole päätetty."
