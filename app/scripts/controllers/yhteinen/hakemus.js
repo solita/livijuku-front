@@ -349,8 +349,8 @@ angular.module('jukufrontApp')
 
       function validiHakemus() {
         return (($scope.hakemusForm.$valid && ($scope.onAvustushakemus() || $scope.onElyhakemus())) ||
-          (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) &&
-          $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn()));
+        (($scope.onMaksatushakemus1() || $scope.onMaksatushakemus2()) &&
+        $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn()));
       }
 
       $scope.hakemusTallentaminenEnabled = function () {
@@ -413,6 +413,7 @@ angular.module('jukufrontApp')
 
         if (isElyhakemus($scope.hakemus)) {
           tallennusPromise.push(ElyHakemusService.tallennaMaararahatarpeet($scope.hakemus.id, $scope.maararahaTarpeet));
+          tallennusPromise.push(ElyHakemusService.tallennaKehityshankkeet($scope.hakemus.id, $scope.kehittamishankkeet));
         } else {
           var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
             return l.avustuskohteet;

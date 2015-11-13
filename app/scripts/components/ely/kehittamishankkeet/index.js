@@ -8,9 +8,8 @@ function pakollinenErrorMessage(nimi) {
 }
 
 function haeMaksimiNumero(taulukko) {
-  var m = _.max(taulukko, 'numero');
-  if (m === -Infinity) return 0;
-  return m.numero+1;
+  if (taulukko.length === 0) return 0;
+  return _.max(taulukko, 'numero').numero + 1;
 }
 
 function kehittamishankkeetController($scope) {
