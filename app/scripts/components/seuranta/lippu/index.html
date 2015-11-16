@@ -9,7 +9,7 @@
         <th>Lipuilla tehtyjen matkojen keskipituus</th>
         <th>Lipputulot yhteensä</th>
         <th>Valtion ja kuntien rahoitus yhteensä</th>
-        <th>Toiminnot</th>
+        <th ng-hide="isReadonly()">Toiminnot</th>
       </tr>
       </thead>
       <tfoot ng-if="suoritteet.length > 0">
@@ -108,7 +108,7 @@
                      placeholder="Rahoitus" required>
             </form-group-compact>
           </td>
-          <td><a id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-poistasuorite'}}" href=""
+          <td ng-hide="isReadonly()"><a id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-poistasuorite'}}" href=""
                  ng-click="poistaSuorite($index)"><span
             class="glyphicon glyphicon-remove-sign"></span> Poista</a>
           </td>
