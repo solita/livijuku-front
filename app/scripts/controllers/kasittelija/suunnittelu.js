@@ -10,6 +10,7 @@ angular.module('jukufrontApp')
     $scope.tyyppi = $stateParams.tyyppi;
     $scope.vanhaArvo = 0;
     $scope.vuosi = $stateParams.vuosi;
+    $scope.kaikkiTarkastettu = false;
 
     function haeMaararahat() {
       HakemuskausiService.haeMaararaha($scope.vuosi, $scope.lajitunnus)
@@ -35,6 +36,7 @@ angular.module('jukufrontApp')
           var suunnitteludata = suunnittelu.data;
           var hakemuksetSuunnitteluTmp = [];
           var organisaatiolajitunnus = "";
+          var tarkastettuLkm = 0;
           $scope.haettuAvustusSum = 0;
           $scope.myonnettavaAvustusSum = 0;
           $scope.muutosSum = 0;
@@ -57,8 +59,10 @@ angular.module('jukufrontApp')
                   'myonnettavaAvustus': hakemus['myonnettava-avustus']
                 });
               }
+              if (hakemus.hakemustilatunnus === 'T') tarkastettuLkm = tarkastettuLkm + 1;
             }
           );
+          $scope.kaikkiTarkastettu = (tarkastettuLkm === suunnitteludata.length);
           $scope.hakemuksetSuunnittelu = _.sortBy(hakemuksetSuunnitteluTmp, 'hakija');
         }, StatusService.errorHandler);
     }
@@ -128,6 +132,10 @@ angular.module('jukufrontApp')
 
     $scope.onMaksatushakemus2 = function () {
       return $scope.tyyppi == 'MH2';
+    };
+
+    $scope.onElyhakemus = function () {
+      return $scope.tyyppi == 'ELY';
     };
 
     $scope.sallittuAvustus = function (myonnettavaAvustus, haettuAvustus, tila) {
