@@ -11,7 +11,8 @@ var errorTitles = {
   409: "Käyttöliittymän tiedot vanhentuneet",
   500: "Järjestelmävirhe",
   503: "Huoltokatko",
-  arkistointi: "Asiahallintavirhe"
+  arkistointi: "Asiahallintavirhe",
+  '-1': "Yhteysvirhe"
 };
 
 var errorMessages = {
@@ -31,7 +32,13 @@ var errorMessages = {
   arkistointi: ["Tapahtuman arkistointi asiahallintajärjestelmään epäonnistui.",
                 "Voit kokeilla toimintoa vähän ajan kuluttua uudestaan. "].join(" "),
 
-  'response-validation-error': "Juku-järjestelmän taustapalvelu lähetti virheellisen muotoisen vastauksen. "
+  'response-validation-error': "Juku-järjestelmän taustapalvelu lähetti virheellisen muotoisen vastauksen. ",
+
+  '-1': ["Taustapalveluun ei saada yhteyttä. Tämä voi johtua siitä että istuntosi on päättynyt ",
+         "tai tietoliikenneyhteys taustapalveluun on katkennut. Kokeile päivittää selain esim. F5-painikkeella. ",
+         "Huomioi että päivitys tuhoaa tallentamattomat muutokset. ",
+         "Voit tehdä sisäänkirjautumisen myös toisessa välilehdessä, ",
+         "jos sinulla on tallentamattomia muutoksia tässä välilehdessä. "].join(" ")
 };
 
 function isPlainText(contentType) {
@@ -94,9 +101,9 @@ angular.module('services.status', ['toastr'])
         toastr.error(intro + message, title, {closeButton: true, timeOut: 0, extendedTimeOut: 0});
 
         if (response.config) {
-          console.log(title, response.config.method, response.config.url, response);
+          console.log(title, status, response.config.method, response.config.url, response);
         } else {
-          console.log(title, response);
+          console.log(title, status, response);
         }
 
         return Promise.reject(response);
