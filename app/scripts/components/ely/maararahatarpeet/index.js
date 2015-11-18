@@ -26,6 +26,7 @@ module.exports = function () {
     restrict: 'E',
     scope: {
       vuosi: '=vuosi',
+      perustiedot: '=perustiedot',
       maararahatarpeet: '=maararahatarpeet',
       maararahatarvetyypit: '=maararahatarvetyypit',
       isReadonly: '&isReadonly'

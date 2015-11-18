@@ -415,6 +415,7 @@ angular.module('jukufrontApp')
         }
 
         if (isElyhakemus($scope.hakemus)) {
+          tallennusPromise.push(ElyHakemusService.tallennaElyPerustiedot($scope.hakemus.id, $scope.hakemus.ely));
           tallennusPromise.push(ElyHakemusService.tallennaMaararahatarpeet($scope.hakemus.id, $scope.maararahaTarpeet));
           tallennusPromise.push(ElyHakemusService.tallennaKehityshankkeet($scope.hakemus.id, $scope.kehittamishankkeet));
         } else {

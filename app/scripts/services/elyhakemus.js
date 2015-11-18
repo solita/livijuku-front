@@ -22,6 +22,9 @@ angular.module('services.elyhakemus', [])
       },
       tallennaKehityshankkeet: function (hakemusid, kehityshankkeet) {
         return $http.put('api/hakemus/' + hakemusid + '/kehityshankkeet',kehityshankkeet);
+      },
+      tallennaElyPerustiedot: function (hakemusid, perustiedot) {
+        return $http.put('api/hakemus/' + hakemusid + '/ely',perustiedot);
       }
     };
   }]);

@@ -2,15 +2,15 @@
   <juku-form-row>
     <div class="col-md-6">
       <label>Siirtymäajan sopimukset</label>
-      <input name="siirtymaajansopimukset" type="text" ng-currency="" numeric-only="" class="form-control"
-             ng-model="siirtymaajansopimukset" placeholder="Siirtymäajan sopimukset"
+      <input name="siirtymaaikasopimukset" type="text" ng-currency="" numeric-only="" class="form-control"
+             ng-model="perustiedot.siirtymaaikasopimukset" ng-disabled="isReadonly()" placeholder="Siirtymäajan sopimukset"
              uib-tooltip="Siirtymäajan sopimusten määrärahatarve" tooltip-placement="top"
              tooltip-append-to-body="true" select-on-click/>
     </div>
     <div class="col-md-6">
       <label>Joukkoliikennetuki kunnille</label>
-      <input name="joukkoliikennetuki" type="text" ng-currency="" numeric-only="" class="form-control"
-             ng-model="joukkoliikennetuki" placeholder="Joukkoliikennetuki kunnille"
+      <input name="joukkoliikennetukikunnat" type="text" ng-currency="" numeric-only="" class="form-control"
+             ng-model="perustiedot.joukkoliikennetukikunnat" ng-disabled="isReadonly()" placeholder="Joukkoliikennetuki kunnille"
              uib-tooltip="ELYn kunnille myöntämä joukkoliikennetuki" tooltip-placement="top"
              tooltip-append-to-body="true" select-on-click/>
     </div>

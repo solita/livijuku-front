@@ -36,7 +36,7 @@
                          noenter ng-minlength="2"
                          select-on-click
                          ng-model="kehittamishanke.nimi"
-
+                         ng-disabled="isReadonly()"
                          placeholder="Nimi" required>
                 </form-group-compact>
               </td>
@@ -56,12 +56,13 @@
                   <input id="{{'lisatiedot-'+$index}}" name="lisatiedot" type="text"
                          noenter
                          select-on-click
+                         ng-disabled="isReadonly()"
                          ng-model="kehittamishanke.kuvaus"
                          placeholder="Kuvaus">
                 </form-group-compact>
               </td>
-              <td><a id="{{'poistakehittamishanke-'+$index}}" href="" ng-click="poistaKehittamishanke($index)"
-                     ng-hide="isReadonly()"><span
+              <td ng-hide="isReadonly()"><a id="{{'poistakehittamishanke-'+$index}}" href=""
+                                            ng-click="poistaKehittamishanke($index)"><span
                 class="glyphicon glyphicon-remove-sign"></span> Poista</a>
               </td>
             </tr>
