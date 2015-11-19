@@ -3,7 +3,7 @@
 var jsdom = require('jsdom').jsdom;
 
 global.document = jsdom('<html><head><script></script></head><body></body></html>');
-global.window = global.document.parentWindow;
+global.window = global.document.defaultView;
 
 global.window.mocha = require('mocha');
 global.window.beforeEach = beforeEach;
