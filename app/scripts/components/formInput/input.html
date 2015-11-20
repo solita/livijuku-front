@@ -1,0 +1,11 @@
+<div class="form-group">
+
+  <label for="{{name}}">{{label}}</label>
+
+  <ng-transclude></ng-transclude>
+
+  <span ng-show="input().$invalid && input().$touched && feedbackSupport"
+        class="glyphicon glyphicon-warning-sign form-control-feedback"
+        aria-hidden="true"></span>
+  <p class="help-block ng-invalid" ng-show="input().$invalid && input().$touched">{{tooltipText()}}</p>
+</div>

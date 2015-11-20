@@ -1,22 +1,20 @@
 <ng-form id="maararahatarpeet-form" name="maararahatarpeetForm">
   <juku-form-row>
     <div class="col-md-6">
-      <form-group-compact label="Siirtymäajan sopimukset" errormessage="sasopimuksetErrorMessage">
-        <label>Siirtymäajan sopimukset</label>
+      <form-group label="Siirtymäajan sopimukset" errormessage="sasopimuksetErrorMessage">
         <input name="siirtymaaikasopimukset" type="text" ng-currency="" numeric-only="" class="form-control"
                ng-model="perustiedot.siirtymaaikasopimukset" ng-disabled="isReadonly()"
                placeholder="Siirtymäajan sopimukset"
                required select-on-click/>
-      </form-group-compact>
+      </form-group>
     </div>
     <div class="col-md-6">
-      <form-group-compact label="Joukkoliikennetuki kunnille" errormessage="jltkunnilleErrorMessage">
-        <label>Joukkoliikennetuki kunnille</label>
+      <form-group label="Joukkoliikennetuki kunnille" errormessage="jltkunnilleErrorMessage">
         <input name="joukkoliikennetukikunnat" type="text" ng-currency="" numeric-only="" class="form-control"
                ng-model="perustiedot.joukkoliikennetukikunnat" ng-disabled="isReadonly()"
                placeholder="Joukkoliikennetuki kunnille"
                required select-on-click/>
-      </form-group-compact>
+      </form-group>
     </div>
   </juku-form-row>
   <hr>

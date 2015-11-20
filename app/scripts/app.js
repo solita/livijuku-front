@@ -294,6 +294,7 @@ angular
   .directive('jukuDeleteKayttajaLink', directive.template(require('views/yhteinen/delete-kayttaja-link.html')))
   .directive('bindModel', directive.bindModel)
   .directive('formGroupCompact', require("components/formInput").formGroupCompact)
+  .directive('formGroup', require("components/formInput").formGroup)
   .directive('integerOnly', require("components/formInput").integerParser);
 
 require('./controllers/hakija/hakemukset');
