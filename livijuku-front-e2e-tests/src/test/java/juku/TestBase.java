@@ -61,7 +61,8 @@ public class TestBase {
     public enum Hakemuslaji {
         AVUSTUS("Avustushakemus"),
         MAKSATUS1("1. maksatushakemus"),
-        MAKSATUS2("2. maksatushakemus");
+        MAKSATUS2("2. maksatushakemus"),
+        ELY("ELY hakemus");
 
         private final String otsikko;
 
@@ -100,18 +101,21 @@ public class TestBase {
     }
 
     public enum User {
-        HARRI("juku_hakija", "juku_hakija", "helsingin ka"),
-        KATRI("juku_kasittelija", "juku_kasittelija", "liikennevirasto"),
-        PAIVI("juku_paatoksentekija", "juku_paatoksentekija", "liikennevirasto");
+        HARRI("juku_hakija", "juku_hakija", "helsingin ka", ""),
+        KATRI("juku_kasittelija", "juku_kasittelija", "liikennevirasto", ""),
+        PAIVI("juku_paatoksentekija", "juku_paatoksentekija", "liikennevirasto", ""),
+        ELLU("juku_hakija_epo","juku_hakija","ELY","10");
 
         private final String login;
         private final String group;
         private final String organization;
+        private final String department;
 
-        User(String login, String group, String organization) {
+        User(String login, String group, String organization, String department) {
             this.login = login;
             this.group = group;
             this.organization = organization;
+            this.department = department;
         }
 
         public String getLogin() {
@@ -124,6 +128,10 @@ public class TestBase {
 
         public String getOrganization() {
             return organization;
+        }
+
+        public String getDepartment() {
+            return department;
         }
     }
 
@@ -188,7 +196,7 @@ public class TestBase {
     }
 
     protected void asetaAlkupaivat0101() {
-        for (int i = 0; i<3; i++) {
+        for (int i = 0; i < 4; i++) {
             WebElement muokkaaAikoja = findElementByCssSelector("#test-muokkaa-hakuaikoja-" + i);
             muokkaaAikoja.click();
 
@@ -293,7 +301,7 @@ public class TestBase {
 
     @AfterMethod
     public void tear_down(ITestResult result) {
-        if( ! result.isSuccess() ) {
+        if (!result.isSuccess()) {
             String filenamePart = "FAILED-" + result.getMethod().getTestClass().getName() + "." + result.getMethod().getMethodName();
             takeScreenshot(filenamePart);
         }
@@ -423,6 +431,7 @@ public class TestBase {
         driver.executeScript("document.cookie='oam-remote-user=" + user.getLogin() + "';"
                 + "document.cookie='oam-user-organization=" + user.getOrganization() + "';"
                 + "document.cookie='oam-groups=" + user.getGroup() + "';"
+                + "document.cookie='oam-user-department=" + user.getDepartment() + "';"
                 + "console.log('Cookies:', document.cookie);");
     }
 

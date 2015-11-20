@@ -2,16 +2,20 @@
   <juku-form-row>
     <div class="col-md-6">
       <form-group label="Siirtymäajan sopimukset" errormessage="sasopimuksetErrorMessage">
-        <input name="siirtymaaikasopimukset" type="text" ng-currency="" numeric-only="" class="form-control"
-               ng-model="perustiedot.siirtymaaikasopimukset" ng-disabled="isReadonly()"
+        <input id="siirtymaaikasopimukset" name="siirtymaaikasopimukset" type="text" ng-currency="" numeric-only="" class="form-control"
+               ng-model="hakemus.ely.siirtymaaikasopimukset"
+               ng-init="hakemus.ely.siirtymaaikasopimukset = hakemus.ely.siirtymaaikasopimukset || 0"
+               ng-disabled="isReadonly()"
                placeholder="Siirtymäajan sopimukset"
                required select-on-click/>
       </form-group>
     </div>
     <div class="col-md-6">
       <form-group label="Joukkoliikennetuki kunnille" errormessage="jltkunnilleErrorMessage">
-        <input name="joukkoliikennetukikunnat" type="text" ng-currency="" numeric-only="" class="form-control"
-               ng-model="perustiedot.joukkoliikennetukikunnat" ng-disabled="isReadonly()"
+        <input id="joukkoliikennetukikunnat" name="joukkoliikennetukikunnat" type="text" ng-currency="" numeric-only="" class="form-control"
+               ng-model="hakemus.ely.joukkoliikennetukikunnat"
+               ng-init="hakemus.ely.joukkoliikennetukikunnat = hakemus.ely.joukkoliikennetukikunnat || 0"
+               ng-disabled="isReadonly()"
                placeholder="Joukkoliikennetuki kunnille"
                required select-on-click/>
       </form-group>

@@ -9,9 +9,6 @@ function pakollinenErrorMessage(nimi) {
 
 function maararahatarpeetController($scope) {
 
-  $scope.siirtymaajansopimukset = 0;
-  $scope.joukkoliikennetuki = 0;
-
   $scope.haeNimi = function(tunnus){
     return _.find($scope.maararahatarvetyypit, {'tunnus': tunnus}).nimi;
   };
@@ -29,7 +26,7 @@ module.exports = function () {
     restrict: 'E',
     scope: {
       vuosi: '=vuosi',
-      perustiedot: '=perustiedot',
+      hakemus: '=hakemus',
       maararahatarpeet: '=maararahatarpeet',
       maararahatarvetyypit: '=maararahatarvetyypit',
       isReadonly: '&isReadonly'

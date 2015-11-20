@@ -541,6 +541,141 @@ public class HakemuskausiTest extends TestBase {
         // TODO Assertoi liitteen tiedot sivulta.
     }
 
+    @Test
+    public void elyhakemus() throws IOException, URISyntaxException {
+
+        /************************************************************
+         * Elyhakemus
+         */
+
+        login(User.ELLU);
+
+        // Varmista, että kausi on avoinna TODO: Korjaa tämä.
+        //    WebElement eiHakemuksia = findElementByXPath("//p[%s]", containsText("Ei hakemuksia, koska hakemuskautta ei ole vielä avattu."));
+        //    assertThat(eiHakemuksia, is(notNullValue()));
+
+        // Assertoi tila keskeneräinen ja avaa hakemus
+        // TODO Assertoi hakijana myös hakemuksen tila ja bread crumbs.
+        OmatHakemukset.hakemuksenTila(Hakemuslaji.ELY, Hakemustila.KESKENERAINEN).click();
+
+        // Lisää allekirjoitusliite
+        lisaaAllekirjoitusLiite();
+
+        // Tallenna hakemus
+        Hakemus.tallennaHakemus().click();
+
+        // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
+        WorkAround.click(Hakemus.palaaOmiinHakemuksiin());
+        OmatHakemukset.hakemuksenTila(Hakemuslaji.ELY, Hakemustila.KESKENERAINEN).click();
+
+        // Lähetä hakemus
+        //lahetaHakemus();
+
+        // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
+        //OmatHakemukset.hakemuksenTila(Hakemuslaji.ELY, Hakemustila.VIREILLA);
+
+        // Kirjaa sisään käsittelijä
+        //login(User.KATRI);
+        // Ota hakemus käsittelyyn
+        //Hakemuskaudet.tilaindikaattori(Hakemuslaji.ELY, Hakemustila.VIREILLA).click();
+        //WorkAround.click(KaikkiHakemukset.ensimmainenTilaindikaattori(Hakemuslaji.ELY, Hakemustila.VIREILLA));
+/*
+        Hakemus.tarkistaHakemuksenTila(Hakemuslaji.ELY, Hakemustila.VIREILLA);
+
+        // Palauta hakemus täydennettäväksi
+        button("Palauta täydennettäväksi").click();
+        // TODO Lisää selite täydennyspyynnölle
+        okOlenVarma().click();
+
+        //Assertoi käsittelijänä tila Täydennettävänä
+        spanWithHakemustila(Hakemustila.TAYDENNETTAVANA);
+        // Kirjaa sisään hakija
+        login(User.HARRI);
+        // Assertoi tila täydennettävänä
+        // Avaa hakemus
+        spanWithHakemustila(Hakemustila.TAYDENNETTAVANA).click();
+
+        Hakemus.tarkistaHakemuksenTila(Hakemuslaji.AVUSTUS, Hakemustila.TAYDENNETTAVANA);
+
+        // Lisätään avustussummat
+        syotaRahasummat(Hakemus.rahakentat(), "1000,00", "3000,00");
+
+        // Täydennä hakemus
+        lahetaHakemus();
+
+        // Assetoi hakijana tila Täydennetty.
+        spanWithHakemustila(Hakemustila.TAYDENNETTY);
+
+        // Kirjaa sisään käsittelijä
+        login(User.KATRI);
+
+        // Tarkasta hakemus
+        Hakemuskaudet.tilaindikaattori(
+                Hakemuslaji.AVUSTUS, Hakemustila.TAYDENNETTY).click();
+        KaikkiHakemukset.ensimmainenTilaindikaattori(
+                Hakemuslaji.AVUSTUS, Hakemustila.TAYDENNETTY).click();
+
+        Hakemus.tarkistaHakemuksenTila(Hakemuslaji.AVUSTUS, Hakemustila.TAYDENNETTY);
+
+        button("Merkitse tarkastetuksi").click();
+        okOlenVarma().click();
+
+        // Assertoi käsittelijänä tila Tarkastettu
+        spanWithHakemustila(Hakemustila.TARKASTETTU);
+
+        // Kirjaa sisään hakija
+        login(User.HARRI);
+        // Assertoi hakijana tila tarkastettu
+        OmatHakemukset.hakemuksenTila(Hakemuslaji.AVUSTUS, Hakemustila.TARKASTETTU);
+
+        // Kirjaa sisään käsittelijä
+        login(User.KATRI);
+        // Päätä hakemus
+        Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, Hakemustila.TARKASTETTU).click();
+        KaikkiHakemukset.suunnitteluJaPaatoksenteko(0).click();
+
+        // Myönnetään 13 900 €
+        WebElement hslMyonnettavaAvustus = Suunnittelu.hslMyonnettavaAvustus();
+        hslMyonnettavaAvustus.clear();
+        hslMyonnettavaAvustus.sendKeys("13900,00");
+
+        Suunnittelu.paatoksentekoon().click();
+        spanWithHakemustila(Hakemustila.TARKASTETTU);
+        findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
+        button("Tallenna tiedot").click();
+        waitForAngularRequestsToFinish(driver);
+
+        // Kirjaa sisään päättäjä
+        login(User.PAIVI);
+        Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, Hakemustila.TARKASTETTU).click();
+        KaikkiHakemukset.suunnitteluJaPaatoksenteko(0).click();
+        Suunnittelu.paatoksentekoon().click();
+        button("Tallenna ja hyväksy päätös").click();
+        okOlenVarma().click();
+        waitForAngularRequestsToFinish(driver);
+
+        // Kirjaa sisään hakija
+        login(User.HARRI);
+        // Assertoi tila päätetty
+        spanWithHakemustila(Hakemustila.PAATETTY).click();
+
+        // Tarkista päätös pdf
+        String paatosHref = findElementByLinkText("Avaa päätös (PDF)").getAttribute("href");
+        String actual = httpGetPdfText(paatosHref, User.HARRI);
+
+        String expectedText = " suurten kaupunkiseutujen joukkoliikenteen \n"
+                + "valtionavustusta 13 900 euroa.";
+        assertThat(String.format("Päätös PDF sisältää tekstin %s", expectedText),
+                containsNormalized(actual, expectedText));
+        String expectedText2 = "Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle \n"
+                + "toimivaltaisena viranomaisena valtionavustuksena enintään 13 900 euroa (sis. alv)";
+        assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText2),
+                containsNormalized(actual, expectedText2));
+
+*/
+    }
+
+
     private boolean containsNormalized(String actual, String expected) {
         String a = actual.replaceAll("\\s+", " ");
         String b = expected.replaceAll("\\s+", " ");
