@@ -14,7 +14,7 @@ function maararahatarpeetController($scope) {
   };
 
   $scope.yhteensa = function () {
-    return $scope.siirtymaajansopimukset + $scope.joukkoliikennetuki + _.sum($scope.maararahatarpeet, 'sidotut') + _.sum($scope.maararahatarpeet, 'uudet') - _.sum($scope.maararahatarpeet, 'tulot');
+    return $scope.hakemus.ely.siirtymaaikasopimukset + $scope.hakemus.ely.joukkoliikennetukikunnat + _.sum($scope.maararahatarpeet, 'sidotut') + _.sum($scope.maararahatarpeet, 'uudet') - _.sum($scope.maararahatarpeet, 'tulot');
   };
 
   $scope.sasopimuksetErrorMessage = pakollinenErrorMessage("Siirtymäajan sopimukset");

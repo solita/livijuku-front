@@ -390,6 +390,38 @@ public class HakemuskausiTest extends TestBase {
         findElementByXPath(String.format("//input[@id='%s-rahoitus']", prefix)).sendKeys(rahoitus);
     }
 
+    private void elyPerustiedot(String siirtymaaikasopimukset, String joukkoliikennetukikunnat) {
+        findElementByXPath("//input[@id='siirtymaaikasopimukset']").clear();
+        findElementByXPath("//input[@id='siirtymaaikasopimukset']").sendKeys(siirtymaaikasopimukset);
+        findElementByXPath("//input[@id='joukkoliikennetukikunnat']").clear();
+        findElementByXPath("//input[@id='joukkoliikennetukikunnat']").sendKeys(joukkoliikennetukikunnat);
+    }
+
+    private void uusiKehittamishanke(String nimi, String arvo, String kuvaus, int index) {
+        // Luodaan rivi ja poistetaan se samantien
+        WorkAround.click(findElementByXPath("//button[@id='lisaakehittamishanke']"));
+        WorkAround.click(findElementByXPath(String.format("//a[@id='poistakehittamishanke-%d']",index)));
+        WorkAround.click(findElementByXPath("//button[@id='lisaakehittamishanke']"));
+        findElementByXPath(String.format("//input[@id='nimi-%d']", index)).clear();
+        findElementByXPath(String.format("//input[@id='nimi-%d']", index)).sendKeys(nimi);
+        findElementByXPath(String.format("//input[@id='arvo-%d']", index)).clear();
+        findElementByXPath(String.format("//input[@id='arvo-%d']", index)).sendKeys(arvo);
+        findElementByXPath(String.format("//input[@id='kuvaus-%d']", index)).clear();
+        findElementByXPath(String.format("//input[@id='kuvaus-%d']", index)).sendKeys(kuvaus);
+    }
+
+    private void uusiMaararahatarve(String prefix, String sidotut, String uudet, String tulot, String kuvaus) {
+        findElementByXPath(String.format("//input[@id='%s-sidotut']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-sidotut']", prefix)).sendKeys(sidotut);
+        findElementByXPath(String.format("//input[@id='%s-uudet']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-uudet']", prefix)).sendKeys(uudet);
+        findElementByXPath(String.format("//input[@id='%s-tulot']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-tulot']", prefix)).sendKeys(tulot);
+        findElementByXPath(String.format("//input[@id='%s-kuvaus']", prefix)).clear();
+        findElementByXPath(String.format("//input[@id='%s-kuvaus']", prefix)).sendKeys(kuvaus);
+    }
+
+
     private void syotaSeurantatiedot() {
 
         // Avaa accordionit
@@ -567,6 +599,31 @@ public class HakemuskausiTest extends TestBase {
         // Käydään hakemuksen päänäkymässä ja takaisin hakemukseen, jotta liitteet päivittyvät
         WorkAround.click(Hakemus.palaaOmiinHakemuksiin());
         OmatHakemukset.hakemuksenTila(Hakemuslaji.ELY, Hakemustila.KESKENERAINEN).click();
+
+        // Täytetään kenttiin arvot
+
+        // Perustiedot
+        elyPerustiedot("15000", "20000");
+
+        // Määrärahatarve
+        uusiMaararahatarve("BS","1000","2000","3000","Bruttosopimus kuvaus");
+        uusiMaararahatarve("KK1","4000","5000","10000","Käyttösopimuskorvaukset (alueellinen) kuvaus");
+        uusiMaararahatarve("KK2","3000","2000","7000","Käyttösopimuskorvaukset (reitti) kuvaus");
+
+        // Tarkistetaan hakemuksen menot yhteensä kenttä
+        WebElement menotYhteensa = findElementByXPath("//span[@id='menotyhteensa']");
+        assertThat(menotYhteensa.getText(), is(equalTo("32 000,00 €")));
+
+        // Kehittämishankkeet
+        uusiKehittamishanke("Kehittämishanke1", "123433", "Kehittämishanke 1 kuvaus", 0);
+        uusiKehittamishanke("Kehittämishanke2", "111222", "Kehittämishanke 2 kuvaus", 1);
+
+        // Tarkistetaan hakemuksen kehittämishankkeet yhteensä kenttä
+        WebElement kehittamishankkeetYhteensa = findElementByXPath("//span[@id='kehittamishankkeetyhteensa']");
+        assertThat(kehittamishankkeetYhteensa.getText(), is(equalTo("234 655,00 €")));
+
+        // Tallenna hakemus
+        Hakemus.tallennaHakemus().click();
 
         // Lähetä hakemus
         //lahetaHakemus();

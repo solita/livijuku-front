@@ -18,7 +18,8 @@
           </thead>
           <tfoot ng-if="kehittamishankkeet.length > 0">
             <tr>
-              <td colspan="4">Kehittämishankkeet yhteensä: {{yhteensa() | currency}}
+              <td colspan="4">Kehittämishankkeet yhteensä: <span id="kehittamishankkeetyhteensa">{{yhteensa() |
+                currency}}</span>
               </td>
             </tr>
           </tfoot>
@@ -53,7 +54,7 @@
               </td>
               <td>
                 <form-group-compact label="Kuvaus">
-                  <input id="{{'lisatiedot-'+$index}}" name="lisatiedot" type="text"
+                  <input id="{{'kuvaus-'+$index}}" name="kuvaus" type="text"
                          noenter
                          select-on-click
                          ng-disabled="isReadonly()"

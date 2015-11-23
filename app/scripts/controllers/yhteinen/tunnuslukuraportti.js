@@ -201,6 +201,7 @@ angular.module('jukufrontApp')
           values: vuosiValues
         });
       }
+      console.log('PALUUARVOT:',paluuArvot);
       return paluuArvot;
     };
 
