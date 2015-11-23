@@ -1,9 +1,10 @@
 'use strict';
 var _ = require('lodash');
 
-function pakollinenErrorMessage(nimi) {
+function errorMessage(nimi) {
   return function (input) {
-    return input.$error.required ? nimi + ' on pakollinen tieto.' : '';
+    return input.$error.required ? nimi + ' on pakollinen tieto.' :
+      input.$error.sallittuArvo ? 'Arvon tulee olla välillä 0 - 999 999 999,99 €.' : '';
   }
 }
 
@@ -31,11 +32,25 @@ function kehittamishankkeetController($scope) {
     $scope.kehittamishankkeetForm.$setDirty();
   };
 
+  $scope.sallittuArvo = function (value) {
+    if (typeof value === 'undefined') {
+      return false;
+    } else if (typeof value === 'string') {
+      var floatarvo;
+      floatarvo = $scope.euroSyoteNumeroksi(value);
+      return (floatarvo >= 0 && floatarvo <= 999999999.99);
+    } else if (typeof value === 'number') {
+      return (value >= 0 && value <= 999999999.99);
+    }
+    return true;
+  };
+
   $scope.yhteensa = function () {
     return _.sum($scope.kehittamishankkeet, 'arvo');
   };
 
-  $scope.nimiErrorMessage = pakollinenErrorMessage("Nimi");
+  $scope.arvoalueErrorMessage = errorMessage("");
+  $scope.nimiErrorMessage = errorMessage("Nimi");
 }
 
 module.exports = function () {

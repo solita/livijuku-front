@@ -7,6 +7,7 @@
                ng-init="hakemus.ely.siirtymaaikasopimukset = hakemus.ely.siirtymaaikasopimukset || 0"
                ng-disabled="isReadonly()"
                placeholder="Siirtymäajan sopimukset"
+               ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                required select-on-click/>
       </form-group>
     </div>
@@ -17,6 +18,7 @@
                ng-init="hakemus.ely.joukkoliikennetukikunnat = hakemus.ely.joukkoliikennetukikunnat || 0"
                ng-disabled="isReadonly()"
                placeholder="Joukkoliikennetuki kunnille"
+               ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                required select-on-click/>
       </form-group>
     </div>
@@ -39,35 +41,38 @@
             <tr ng-repeat="maararahatarve in maararahatarpeet track by $index" ng-form>
               <td>{{haeNimi(maararahatarve.maararahatarvetyyppitunnus)}}</td>
               <td>
-                <form-group-compact label="Sidotut">
+                <form-group-compact label="Sidotut" errormessage="arvoalueErrorMessage">
                   <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-sidotut'}}" name="sidotut" type="text"
                          class="form-control" ng-currency="" numeric-only=""
                          noenter
                          select-on-click
                          ng-model="maararahatarve.sidotut" ng-disabled="isReadonly()"
                          ng-init="maararahatarve.sidotut = maararahatarve.sidotut || 0"
+                         ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                          placeholder="Sidotut">
                 </form-group-compact>
               </td>
               <td>
-                <form-group-compact label="Uudet">
+                <form-group-compact label="Uudet" errormessage="arvoalueErrorMessage">
                   <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-uudet'}}" name="uudet" type="text"
                          class="form-control" ng-currency="" numeric-only=""
                          noenter
                          select-on-click
                          ng-model="maararahatarve.uudet" ng-disabled="isReadonly()"
                          ng-init="maararahatarve.uudet = maararahatarve.uudet || 0"
+                         ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                          placeholder="Uudet">
                 </form-group-compact>
               </td>
               <td>
-                <form-group-compact label="Uudet">
+                <form-group-compact label="Uudet" errormessage="arvoalueErrorMessage">
                   <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-tulot'}}" name="tulot" type="text"
                          class="form-control" ng-currency="" numeric-only=""
                          noenter
                          select-on-click
                          ng-model="maararahatarve.tulot" ng-disabled="isReadonly()"
                          ng-init="maararahatarve.tulot = maararahatarve.tulot || 0"
+                         ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                          placeholder="Tulot">
                 </form-group-compact>
               </td>

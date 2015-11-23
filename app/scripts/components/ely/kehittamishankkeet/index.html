@@ -42,12 +42,13 @@
                 </form-group-compact>
               </td>
               <td>
-                <form-group-compact label="Arvo">
+                <form-group-compact label="Arvo" errormessage="arvoalueErrorMessage">
                   <input id="{{'arvo-'+$index}}" name="arvo" type="text"
                          class="form-control" ng-currency="" numeric-only=""
                          noenter
                          select-on-click
                          ng-model="kehittamishanke.arvo" ng-disabled="isReadonly()"
+                         ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                          placeholder="Arvo" uib-tooltip="{{maararahatarve.sidotuttooltip}}" tooltip-placement="top"
                          tooltip-append-to-body="true">
                 </form-group-compact>
