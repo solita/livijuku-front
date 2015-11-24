@@ -119,12 +119,12 @@
       </juku-form-row>
 
       <juku-form-row
-        ng-show="!avustushakemusPaatosOlemassa() && isMaksatushakemus && haettuSummaYliMyonnetyn()"
+        ng-if="!avustushakemusPaatosOlemassa() && isMaksatushakemus && haettuSummaYliMyonnetyn()"
         class="alert alert-danger">
         <strong>Virhe! </strong> Avustusta ei voi hakea maksuun, koska avustushakemuksella ei ole päätöstä.
       </juku-form-row>
       <juku-form-row
-        ng-show="avustushakemusPaatosOlemassa() && onMaksatushakemus1() && haettuSummaYliMyonnetyn()"
+        ng-if="avustushakemusPaatosOlemassa() && onMaksatushakemus1() && haettuSummaYliMyonnetyn()"
         class="alert alert-danger">
         <strong>Virhe! </strong>Haettu avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}}) ylittää ensimmäisellä
         maksatushakemuksella haettavan suurimman mahdollisen avustussumman ({{myonnettyAvustusPerJakso() | currency:"&euro;"
@@ -134,7 +134,7 @@
         ({{myonnettyAvustusPerVuosi() | currency:"&euro;"}} - alkuvuoden hakemuksen perusteella maksettu avustus).
       </juku-form-row>
       <juku-form-row
-        ng-show="avustushakemusPaatosOlemassa() && onMaksatushakemus2() && haettuSummaYliMyonnetyn()"
+        ng-if="avustushakemusPaatosOlemassa() && onMaksatushakemus2() && haettuSummaYliMyonnetyn()"
         class="alert alert-danger">
         <strong>Virhe! </strong>Toisen maksatushakemuksen haettava avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}})
         ei saa ylittää koko vuodelle {{hakemus.vuosi}} myönnettyä summaa ({{myonnettyAvustusPerVuosi() | currency:"&euro;"}}
