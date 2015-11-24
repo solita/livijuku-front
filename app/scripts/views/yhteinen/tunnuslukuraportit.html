@@ -10,14 +10,26 @@
     </juku-tabs>
   </juku-navigation>
   <div class="row">
-    <h2>Joukkoliikenteen valtionavustushakemukset ja päätökset</h2>
+    <h2>Joukkoliikenteen valtionavustushakemukset ja päätökset
+      <button type="button" class="btn btn-info" ng-csv="exportCsv(haettuMyonnettyYhteensaData())" filename="test.csv"
+              csv-label="true" field-separator=";">CSV Export
+      </button>
+    </h2>
     <nvd3 options='haettuMyonnettyYhteensaOptions' data='haettuMyonnettyYhteensaData'
           api="haettuMyonnettyYhteensaApi"></nvd3>
   </div>
   <div class="row">
-    <h2 ng-show="isMyonnettyAktiivinen()">Myönnetyt jaoteltuna</h2>
+    <h2 ng-show="isMyonnettyAktiivinen()">Myönnetyt jaoteltuna
+      <button type="button" class="btn btn-info" ng-csv="exportCsv(haettuMyonnettyData())" filename="test.csv"
+              csv-label="true" field-separator=";">CSV Export
+      </button>
+    </h2>
 
-    <h2 ng-hide="isMyonnettyAktiivinen()">Haetut jaoteltuna</h2>
+    <h2 ng-hide="isMyonnettyAktiivinen()">Haetut jaoteltuna
+      <button type="button" class="btn btn-info" ng-csv="exportCsv(haettuMyonnettyData())" filename="test.csv"
+              csv-label="true" field-separator=";">CSV Export
+      </button>
+    </h2>
     <nvd3 options='haettuMyonnettyOptions' data='haettuMyonnettyData' api="haettuMyonnettyApi"></nvd3>
   </div>
   <div class="row">
@@ -28,8 +40,11 @@
     </div>
     <div class="col-md-4">
       <h3>{{aktiivinenOrganisaatio}} (vuosi {{aktiivinenOrganisaatioVuosi}})</h3>
+
       <p><b>Haettu yhteensä:</b> {{aktiivinenOrganisaatioVuosiHaettu |currency}}</p>
+
       <p><b>Asukkaat:</b> {{aktiivinenOrganisaatioAsukkaat}}</p>
+
       <p><b>Haettu per asukas:</b> {{haettuPerAsukas() |currency}}</p>
     </div>
   </div>

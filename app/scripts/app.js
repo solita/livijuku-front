@@ -42,6 +42,8 @@ require('angular-i18n/angular-locale_fi-fi');
 require('d3/d3.js');
 require('angular-nvd3/lib/nv.d3.js');
 require('angular-nvd3');
+require('angular-sanitize');
+require('ng-csv');
 
 angular
   .module('jukufrontApp', [
@@ -79,7 +81,9 @@ angular
     'ng-currency',
     'ui.bootstrap.showErrors',
     'ui.validate',
-    'nvd3'
+    'nvd3',
+    'ngSanitize',
+    'ngCsv'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 

@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var angular = require('angular');
+var $ = require('jquery');
 
 angular.module('jukufrontApp')
   .controller('TunnuslukuraporttiCtrl', ['$scope', function ($scope) {
@@ -94,9 +95,22 @@ angular.module('jukufrontApp')
       $scope.organisaationTiedotApi.refresh();
     };
 
+    $scope.exportCsv = function (data){
+      var tulos = [];
+      for (var y in data) {
+        var rivi = {};
+        rivi['Selite'] = data[y].key;
+        for (var arvo in data[y].values){
+          rivi[data[y].values[arvo].x] = data[y].values[arvo].y;
+        }
+        tulos.push(rivi);
+      }
+      return tulos;
+    };
+
     $scope.haettuPerAsukas = function () {
       return $scope.aktiivinenOrganisaatioVuosiHaettu / $scope.aktiivinenOrganisaatioAsukkaat;
-    }
+    };
 
     $scope.haettuMyonnettyYhteensaOptions = {
       chart: {
@@ -201,7 +215,7 @@ angular.module('jukufrontApp')
           values: vuosiValues
         });
       }
-      console.log('PALUUARVOT:',paluuArvot);
+     // console.log('PALUUARVOT:', paluuArvot);
       return paluuArvot;
     };
 
@@ -226,9 +240,9 @@ angular.module('jukufrontApp')
             left: 0
           }
         },
-        valueFormat: function(d){
-            return d3.format('.03f')(d / 1000000) + " M€";
-          }
+        valueFormat: function (d) {
+          return d3.format('.03f')(d / 1000000) + " M€";
+        }
       }
     };
 
