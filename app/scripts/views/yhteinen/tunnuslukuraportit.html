@@ -11,8 +11,9 @@
   </juku-navigation>
   <div class="row">
     <h2>Joukkoliikenteen valtionavustushakemukset ja päätökset
-      <button type="button" class="btn btn-info" ng-csv="exportCsv(haettuMyonnettyYhteensaData())" filename="test.csv"
-              csv-label="true" field-separator=";">CSV Export
+      <button type="button" class="btn btn-info" ng-csv="exportCsvMultibar(haettuMyonnettyYhteensaData())"
+              filename="Joukkoliikenteen_valtionavustushakemukset_ja_päätökset.csv"
+              csv-label="true" field-separator=";" add-bom="true">CSV Export
       </button>
     </h2>
     <nvd3 options='haettuMyonnettyYhteensaOptions' data='haettuMyonnettyYhteensaData'
@@ -20,20 +21,27 @@
   </div>
   <div class="row">
     <h2 ng-show="isMyonnettyAktiivinen()">Myönnetyt jaoteltuna
-      <button type="button" class="btn btn-info" ng-csv="exportCsv(haettuMyonnettyData())" filename="test.csv"
-              csv-label="true" field-separator=";">CSV Export
+      <button type="button" class="btn btn-info" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
+              filename="Myönnetyt_jaoteltuna.csv"
+              csv-label="true" field-separator=";" add-bom="true">CSV Export
       </button>
     </h2>
 
     <h2 ng-hide="isMyonnettyAktiivinen()">Haetut jaoteltuna
-      <button type="button" class="btn btn-info" ng-csv="exportCsv(haettuMyonnettyData())" filename="test.csv"
-              csv-label="true" field-separator=";">CSV Export
+      <button type="button" class="btn btn-info" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
+              filename="Haetut_jaoteltuna.csv"
+              csv-label="true" field-separator=";" add-bom="true">CSV Export
       </button>
     </h2>
     <nvd3 options='haettuMyonnettyOptions' data='haettuMyonnettyData' api="haettuMyonnettyApi"></nvd3>
   </div>
   <div class="row">
-    <h2>Hakijaorganisaation tarkemmat tiedot</h2>
+    <h2>Hakijaorganisaation tarkemmat tiedot
+      <button type="button" class="btn btn-info" ng-csv="exportCsvPieChart(organisaationTiedotData())"
+              filename="Hakijaorganisaation_{{aktiivinenOrganisaatio}}_tarkemmat_tiedot_{{aktiivinenOrganisaatioVuosi}}.csv"
+              csv-label="true" field-separator=";" add-bom="true">CSV Export
+      </button>
+    </h2>
 
     <div class="col-md-8">
       <nvd3 options="organisaationTiedotOptions" data="organisaationTiedotData" api="organisaationTiedotApi"></nvd3>

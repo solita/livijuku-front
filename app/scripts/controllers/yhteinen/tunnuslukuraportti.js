@@ -95,14 +95,25 @@ angular.module('jukufrontApp')
       $scope.organisaationTiedotApi.refresh();
     };
 
-    $scope.exportCsv = function (data){
+    $scope.exportCsvMultibar = function (data) {
       var tulos = [];
-      for (var y in data) {
+      for (var i in data) {
         var rivi = {};
-        rivi['Selite'] = data[y].key;
-        for (var arvo in data[y].values){
-          rivi[data[y].values[arvo].x] = data[y].values[arvo].y;
+        rivi['\ '] = data[i].key;
+        for (var arvo in data[i].values) {
+          rivi[' ' + data[i].values[arvo].x] = data[i].values[arvo].y;
         }
+        tulos.push(rivi);
+      }
+      return tulos;
+    };
+
+    $scope.exportCsvPieChart = function (data) {
+      var tulos = [];
+      for (var i in data) {
+        var rivi = {};
+        rivi['\ '] = data[i].x;
+        rivi[' €'] = data[i].y;
         tulos.push(rivi);
       }
       return tulos;
@@ -215,7 +226,7 @@ angular.module('jukufrontApp')
           values: vuosiValues
         });
       }
-     // console.log('PALUUARVOT:', paluuArvot);
+      // console.log('PALUUARVOT:', paluuArvot);
       return paluuArvot;
     };
 
