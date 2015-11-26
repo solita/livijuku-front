@@ -4,6 +4,7 @@
       <juku-tab
         ng-repeat="tyyppi in tyypit"
         selected="isTabSelected(tyyppi)"
+        ely="isEly(tyyppi)"
         ng-click="toTab(tyyppi)">
         {{ tyyppi | toApplicantName }}
       </juku-tab>

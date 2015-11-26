@@ -4,10 +4,11 @@ module.exports = function () {
     replace: true,
     transclude: true,
     scope: {
-      selected: '&'
+      selected: '&',
+      ely: '&'
     },
     template: `
-      <a ui-sref-active="is-selected" ng-class="selected() ? 'tab is-selected' : 'tab'">
+      <a ui-sref-active="is-selected" ng-class="{'tab is-selected':(selected()&&!ely()),'tab':(!selected()&&!ely()),'tab is-selected is-ely':(selected()&&ely()),'tab is-ely':(!selected()&&ely())}">
         <ng-transclude />
       </div>
     `

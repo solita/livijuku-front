@@ -16,7 +16,8 @@ angular.module('jukufrontApp')
     'OrganisaatioService',
     '$q',
     '$state',
-    function ($rootScope, HakemuskausiService, $stateParams, StatusService, OrganisaatioService, $q, $state) {
+    '$scope',
+    function ($rootScope, HakemuskausiService, $stateParams, StatusService, OrganisaatioService, $q, $state,$scope) {
 
       this.displayed = [];
       this.tyyppi = $stateParams.tyyppi;
@@ -53,6 +54,10 @@ angular.module('jukufrontApp')
         }, 0);
       };
 
+      $scope.isEly = function isEly(tyyppi) {
+        return tyyppi === 'ELY';
+      };
+
       this.hakemustyypinId = function hakemustyypinId(tyyppi, hakemus, hakemukset) {
         if (hakemus.hakemustyyppitunnus === tyyppi) {
           return hakemus.id;
@@ -71,9 +76,9 @@ angular.module('jukufrontApp')
       };
 
       $q.all([
-        HakemuskausiService.hae(),
-        OrganisaatioService.hae()
-      ])
+          HakemuskausiService.hae(),
+          OrganisaatioService.hae()
+        ])
         .then(([hakemuskaudet, organisaatiot]) => {
           this.organisaatiot = organisaatiot;
 

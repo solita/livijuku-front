@@ -80,6 +80,10 @@ angular.module('jukufrontApp')
       return $scope.aktiivinenTyyppi === tyyppi;
     };
 
+    $scope.isEly = function isEly(tyyppi) {
+      return tyyppi === 'ELY';
+    };
+
     $scope.isMyonnettyAktiivinen = function () {
       return $scope.aktiivinenOsajoukko === data.MYONNETTY;
     };
