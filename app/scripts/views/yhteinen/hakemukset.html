@@ -11,7 +11,7 @@
           ng-repeat="tyyppi in constants.hakemustyypit"
           ely="isEly(tyyppi)"
           ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppi})">
-          {{ tyyppi | toApplicationName }}
+          {{ tyyppi | toApplicationNamePlural }}
           <juku-badge
             number="hakemukset.hakemuksiaYhteensa(tyyppi, hakemuskaudet)"
             ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')"/>

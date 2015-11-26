@@ -14,10 +14,10 @@
     <juku-link-prev ng-show="isHakija(user) && !isOmaHakemus(user)" ng-click="backToList()">
       Palaa hakemusten päänäkymään
     </juku-link-prev>
-
     <juku-tabs>
       <juku-tab
         ng-repeat="tyyppi in constants.hakemustyypit"
+        ng-if="hakemustyyppiSaatavilla(tyyppi)"
         selected="isTabSelected(tyyppi)"
         ng-click="toApplication(tyyppi)">
         {{ tyyppi | toApplicationName }}

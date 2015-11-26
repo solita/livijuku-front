@@ -66,6 +66,7 @@ angular
     'filters.toClass',
     'filters.stateNameIncludes',
     'filters.toApplicationName',
+    'filters.toApplicationNamePlural',
     'filters.erotteleRoolit',
     'ngResource',
     'angular-loading-bar',
@@ -339,4 +340,5 @@ require('./filters/toApplicantName');
 require('./filters/toClass');
 require('./filters/stateNameIncludes');
 require('./filters/toApplicationName');
+require('./filters/toApplicationNamePlural');
 require('./filters/toStatisticName');

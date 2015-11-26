@@ -272,6 +272,10 @@ angular.module('jukufrontApp')
         return ($scope.paatos && $scope.paatos.voimaantuloaika);
       };
 
+      $scope.hakemustyyppiSaatavilla = function (tyyppi){
+        return $scope.hakemus.hakemustyyppitunnus===tyyppi || _.some($scope.hakemus['other-hakemukset'], {hakemustyyppitunnus: tyyppi});
+      };
+
       $scope.maksatushakemus1PaatosOlemassa = function () {
         return ($scope.maksatushakemus1Paatos && $scope.maksatushakemus1Paatos.voimaantuloaika);
       };
