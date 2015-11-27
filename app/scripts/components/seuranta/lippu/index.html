@@ -55,6 +55,7 @@
             <form-group-compact label="Myynti" errormessage="myyntiErrorMessage">
               <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-myynti'}}" name="myynti" type="text"
                      required integer-only select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                      ng-model="rivi.myynti" ng-disabled="isReadonly()"
                      placeholder="Myynti">
             </form-group-compact>
@@ -63,6 +64,7 @@
             <form-group-compact label="Matkat" errormessage="matkatErrorMessage">
               <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-matkat'}}" name="matkat" type="text"
                      required integer-only select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                      ng-model="rivi.matkat" ng-disabled="isReadonly()"
                      placeholder="Matkat">
             </form-group-compact>
@@ -74,6 +76,7 @@
                      ng-currency="" numeric-only=""
                      noenter
                      select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                      ng-model="rivi.asiakashinta" ng-disabled="isReadonly()"
                      placeholder="Asiakashinta" required>
             </form-group-compact>
@@ -85,6 +88,7 @@
                      currency-symbol="km"
                      noenter
                      select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                      ng-model="rivi.keskipituus" ng-disabled="isReadonly()"
                      placeholder="Keskipituus" required>
             </form-group-compact>
@@ -95,6 +99,7 @@
                      class="form-control" ng-currency="" numeric-only=""
                      noenter
                      select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                      ng-model="rivi.lipputulo" ng-disabled="isReadonly()"
                      placeholder="Lipputulot" required>
             </form-group-compact>
@@ -104,6 +109,7 @@
               <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-rahoitus'}}" name="rahoitus" type="text"
                      class="form-control" ng-currency="" numeric-only="" noenter
                      select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                      ng-model="rivi.julkinenrahoitus" ng-disabled="isReadonly()"
                      placeholder="Rahoitus" required>
             </form-group-compact>

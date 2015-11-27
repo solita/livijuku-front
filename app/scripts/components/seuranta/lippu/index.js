@@ -1,9 +1,10 @@
 'use strict';
 var _ = require('lodash');
 
-function pakollinnenErrorMessage(nimi) {
+function errorMessage(nimi) {
   return function (input) {
-    return input.$error.required ? nimi + ' on pakollinen tieto.' : '';
+    return input.$error.required ? nimi + ' on pakollinen tieto.' :
+      input.$error.sallittuArvo ? 'Arvon tulee olla välillä 0 - 999 999 999' : '';
   }
 }
 
@@ -14,6 +15,19 @@ function haeMaksimiNumero(taulukko) {
 
 
 function lippuController($scope) {
+
+  $scope.sallittuArvo = function (value) {
+    if (typeof value === 'undefined') {
+      return false;
+    } else if (typeof value === 'string') {
+      var floatarvo;
+      floatarvo = $scope.euroSyoteNumeroksi(value);
+      return (floatarvo >= 0 && floatarvo <= 999999999);
+    } else if (typeof value === 'number') {
+      return (value >= 0 && value <= 999999999);
+    }
+    return true;
+  };
 
   $scope.lisaaSuorite = function () {
     var uusi = {
@@ -64,17 +78,13 @@ function lippuController($scope) {
       input.$error.minlength ? 'Seutulippualue pituus pitää olla vähintään 2 merkkiä.' : '';
   };
 
-  $scope.kokonaislukuErrorMessage = function (input) {
-    return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
-  };
+  $scope.myyntiErrorMessage = errorMessage("Myyntien lukumäärä");
+  $scope.matkatErrorMessage = errorMessage("Matkojen lukumäärä");
 
-  $scope.myyntiErrorMessage = pakollinnenErrorMessage("Myyntien lukumäärä");
-  $scope.matkatErrorMessage = pakollinnenErrorMessage("Matkojen lukumäärä");
-
-  $scope.keskipituusErrorMessage = pakollinnenErrorMessage("Matkojen keskipituus");
-  $scope.asiakashintaErrorMessage = pakollinnenErrorMessage("Asiakashinta");
-  $scope.lipputulotErrorMessage = pakollinnenErrorMessage("Lipputulot yhteensä");
-  $scope.rahoitusErrorMessage = pakollinnenErrorMessage("Rahoitus yhteensä");
+  $scope.keskipituusErrorMessage = errorMessage("Matkojen keskipituus");
+  $scope.asiakashintaErrorMessage = errorMessage("Asiakashinta");
+  $scope.lipputulotErrorMessage = errorMessage("Lipputulot yhteensä");
+  $scope.rahoitusErrorMessage = errorMessage("Rahoitus yhteensä");
 }
 
 module.exports = function () {

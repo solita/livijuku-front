@@ -1,9 +1,10 @@
 'use strict';
 var _ = require('lodash');
 
-function pakollinnenErrorMessage(nimi) {
+function errorMessage(nimi) {
   return function(input) {
-    return input.$error.required ? nimi +' on pakollinen tieto.' : '';
+    return input.$error.required ? nimi + ' on pakollinen tieto.' :
+      input.$error.sallittuArvo ? 'Arvon tulee olla välillä 0 - 999 999 999' : '';
   }
 }
 
@@ -13,6 +14,19 @@ function haeMaksimiNumero(taulukko) {
 }
 
 function liikenneController($scope) {
+
+  $scope.sallittuArvo = function (value) {
+    if (typeof value === 'undefined') {
+      return false;
+    } else if (typeof value === 'string') {
+      var floatarvo;
+      floatarvo = $scope.euroSyoteNumeroksi(value);
+      return (floatarvo >= 0 && floatarvo <= 999999999);
+    } else if (typeof value === 'number') {
+      return (value >= 0 && value <= 999999999);
+    }
+    return true;
+  };
 
   $scope.lisaaSuorite = function () {
     var uusi = {
@@ -30,6 +44,7 @@ function liikenneController($scope) {
     };
     $scope.suoritteet.push(uusi);
   };
+
   $scope.poistaSuorite = function (indeksi) {
     $scope.suoritteet.splice(indeksi, 1);
     $scope.suoritteetForm.$setDirty();
@@ -77,21 +92,17 @@ function liikenneController($scope) {
            input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' : '';
   };
 
-  $scope.kokonaislukuErrorMessage = function(input) {
-    return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
-  };
-
   $scope.suoritetyyppiErrorMessage = function(input) {
     return input.$error ? 'Syötä tarvittavat linja- ja sopimussuoritteet tai kokonaissuorite.' : ''
   };
 
-  $scope.ajokilometritErrorMessage = pakollinnenErrorMessage("Ajokilometrit");
-  $scope.lipputuloErrorMessage = pakollinnenErrorMessage("Lipputulo");
-  $scope.nettohintaErrorMessage = pakollinnenErrorMessage("Nettohinta");
+  $scope.ajokilometritErrorMessage = errorMessage("Ajokilometrit");
+  $scope.lipputuloErrorMessage = errorMessage("Lipputulo");
+  $scope.nettohintaErrorMessage = errorMessage("Nettohinta");
 
-  $scope.linjaautotErrorMessage = pakollinnenErrorMessage("Linja-autojen lukumäärä");
-  $scope.taksitErrorMessage = pakollinnenErrorMessage("Taksien lukumäärä");
-  $scope.matkustajamaaraErrorMessage = pakollinnenErrorMessage("Matkustajien lukumäärä");
+  $scope.linjaautotErrorMessage = errorMessage("Linja-autojen lukumäärä");
+  $scope.taksitErrorMessage = errorMessage("Taksien lukumäärä");
+  $scope.matkustajamaaraErrorMessage = errorMessage("Matkustajien lukumäärä");
 }
 
 module.exports = function () {
