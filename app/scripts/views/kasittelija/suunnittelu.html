@@ -19,7 +19,7 @@
       </h2>
 
       <h2 ng-show="onElyhakemus()">
-        Suunnittelu- ja päätöksenteko - Ely-hakemukset 1.1-31.12.{{vuosi}}
+        Suunnittelu- ja päätöksenteko - Ely-hakemukset {{vuosi}}
       </h2>
     </juku-form-row>
 
@@ -81,7 +81,7 @@
               <th>Haettu avustus</th>
               <th>Muutos</th>
               <th>Myönnettävä avustus</th>
-              <th ng-if="!onElyhakemus()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></th>
+              <th><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></th>
             </tr>
           </thead>
           <tbody>
@@ -118,9 +118,9 @@
                     positiivinen<br>arvo ja suurimmillaan <br>haetun avustuksen suuruinen</span>
                 </div>
               </td>
-              <td ng-if="!onElyhakemus()">
+              <td>
                 <juku-link-next
-                  ng-if="hakemusTarkastettu(hakemus) && sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
+                  ng-if="!onElyhakemus() && hakemusTarkastettu(hakemus) && sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
                   ui-sref="app.kasittelija.paatos({
                   hakemusid: hakemus.hakemusId,
                   haettuavustus: hakemus.haettuAvustus,
@@ -137,9 +137,13 @@
                   </span>
                 </juku-link-next>
                 <a
-                  ng-if="hakemusTarkastettu(hakemus) && !sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
+                  ng-if="!onElyhakemus() && hakemusTarkastettu(hakemus) && !sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
                   class="icon-link a-disabled">
                   Päätöksentekoon
+                  <span class="glyphicon glyphicon-arrow-right"></span>
+                </a>
+                <a ng-if="onElyhakemus() && !(hakemusKeskenerainen(hakemus) || hakemusVireilla(hakemus))" data-ng-click="naytaPaatos(hakemus.hakemusId)">{{hakemusTarkastettu(hakemus) ? "Esikatsele päätös" :
+                  "Näytä päätös"}}
                   <span class="glyphicon glyphicon-arrow-right"></span>
                 </a>
               </td>
@@ -150,7 +154,7 @@
               <td>{{haettuAvustusSum|currency:"&euro;"}}</td>
               <td>{{muutosSum|currency:"&euro;"}}</td>
               <td ng-class="{'varoitusvari':myonnettyLiikaa()}">{{myonnettavaAvustusSum|currency:"&euro;"}}</td>
-              <td ng-if="!onElyhakemus()"></td>
+              <td></td>
             </tr>
           </tbody>
         </table>
@@ -183,15 +187,15 @@
       <div class="row">
         <div class="col-md-8">
           <label>Lisätietoa päätöskappaleeseen</label>
-            <div ng-hide="hakemusPaatetty()">
+          <div ng-hide="hakemusPaatetty()">
           <textarea id="paatosteksti" name="paatosteksti" class="animate msd-elastic: \n;"
                     ng-model="paatos.selite"
                     placeholder="Kirjoita tähän kohtaan tarvittaessa päätöstä tarkentavia perusteita."></textarea>
 
-            </div>
-            <div ng-show="hakemusPaatetty()">
-              <p>{{paatos.selite ? paatos.selite : ""}}</p>
-            </div>
+          </div>
+          <div ng-show="hakemusPaatetty()">
+            <p>{{paatos.selite ? paatos.selite : ""}}</p>
+          </div>
         </div>
       </div>
     </juku-form-section>
@@ -210,10 +214,6 @@
             <div uib-tooltip="Päätöksen voi hyväksyä vain kun kaikki hakemukset ovat tarkastettu tilassa."
                  class="disabled-button-tooltip-text"
                  ng-if="!kaikkiTarkastettu"></div>
-          </button>
-
-          <button data-ng-click="naytaPaatos()" ng-disabled="!hasPaatos()"
-                  class="pull-right btn btn-primary">{{kaikkiTarkastettu ? "Tallenna ja esikatsele päätös" : "Näytä päätös"}}
           </button>
 
           <button data-ng-click="tallennaPaatos(0)" class="pull-right btn btn-primary disabled-button-tooltip">Tallenna

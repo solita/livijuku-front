@@ -2,9 +2,10 @@
 
 var _ = require('lodash');
 var angular = require('angular');
+var pdf = require('utils/pdfurl');
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$stateParams', 'HakemuskausiService', 'HakemusService', 'SuunnitteluService', 'StatusService', '$state', '$q', 'OrganisaatioService', function ($rootScope, $scope, $stateParams, HakemuskausiService, HakemusService, SuunnitteluService, StatusService, $state, $q, OrganisaatioService) {
+  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$stateParams', 'HakemuskausiService', 'HakemusService', 'SuunnitteluService', 'StatusService', '$state', '$q', 'OrganisaatioService', '$window', function ($rootScope, $scope, $stateParams, HakemuskausiService, HakemusService, SuunnitteluService, StatusService, $state, $q, OrganisaatioService, $window) {
 
     $scope.lajitunnus = $stateParams.lajitunnus;
     $scope.tyyppi = $stateParams.tyyppi;
@@ -29,9 +30,9 @@ angular.module('jukufrontApp')
 
     function haeSuunnitteluData() {
       $q.all([
-        SuunnitteluService.hae($scope.vuosi, $scope.tyyppi),
-        OrganisaatioService.hae()
-      ])
+          SuunnitteluService.hae($scope.vuosi, $scope.tyyppi),
+          OrganisaatioService.hae()
+        ])
         .then(([suunnittelu, organisaatiot]) => {
           var suunnitteludata = suunnittelu.data;
           var hakemuksetSuunnitteluTmp = [];
@@ -152,6 +153,17 @@ angular.module('jukufrontApp')
       $state.go('app.hakemus', {
         id: hakemus.hakemusId
       });
+    };
+
+    $scope.naytaPaatos = function (hakemusid) {
+      $window.open(pdf.getPaatosPdfUrl(hakemusid));
+      /*
+       if ($scope.hakemusTarkastettu()) {
+       $scope.tallennaPaatos(1);
+       } else {
+       $window.open(pdf.getPaatosPdfUrl($scope.hakemusid));
+       }
+       */
     };
 
     $scope.paivitaAvustus = function (avustus, hakemusid) {
