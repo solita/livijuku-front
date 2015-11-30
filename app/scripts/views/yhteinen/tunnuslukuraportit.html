@@ -11,39 +11,49 @@
     </juku-tabs>
   </juku-navigation>
   <div class="row">
-    <h2>Joukkoliikenteen valtionavustushakemukset ja päätökset
-      <button type="button" class="btn btn-info" ng-csv="exportCsvMultibar(haettuMyonnettyYhteensaData())"
-              filename="Joukkoliikenteen_valtionavustushakemukset_ja_päätökset.csv"
-              csv-label="true" field-separator=";" add-bom="true">CSV Export
-      </button>
-    </h2>
+    <div class="col-md-10">
+      <h2>Joukkoliikenteen valtionavustushakemukset ja päätökset</h2>
+    </div>
+    <div class="col-md-2 lataacsv">
+      <a ng-csv="exportCsvMultibar(haettuMyonnettyYhteensaData())"
+         filename="Joukkoliikenteen_valtionavustushakemukset_ja_päätökset.csv"
+         csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+      </a>
+    </div>
+  </div>
+  <div class="row">
     <nvd3 options='haettuMyonnettyYhteensaOptions' data='haettuMyonnettyYhteensaData'
           api="haettuMyonnettyYhteensaApi"></nvd3>
   </div>
   <div class="row">
-    <h2 ng-show="isMyonnettyAktiivinen()">Myönnetyt jaoteltuna
-      <button type="button" class="btn btn-info" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
-              filename="Myönnetyt_jaoteltuna.csv"
-              csv-label="true" field-separator=";" add-bom="true">CSV Export
-      </button>
-    </h2>
-
-    <h2 ng-hide="isMyonnettyAktiivinen()">Haetut jaoteltuna
-      <button type="button" class="btn btn-info" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
-              filename="Haetut_jaoteltuna.csv"
-              csv-label="true" field-separator=";" add-bom="true">CSV Export
-      </button>
-    </h2>
+    <div class="col-md-10">
+      <h2 ng-show="isMyonnettyAktiivinen()">Myönnetyt jaoteltuna</h2>
+      <h2 ng-hide="isMyonnettyAktiivinen()">Haetut jaoteltuna</h2>
+    </div>
+    <div class="col-md-2 lataacsv">
+      <a ng-show="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
+         filename="Myönnetyt_jaoteltuna.csv"
+         csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+      </a>
+      <a ng-hide="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
+         filename="Haetut_jaoteltuna.csv"
+         csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+      </a>
+    </div>
     <nvd3 options='haettuMyonnettyOptions' data='haettuMyonnettyData' api="haettuMyonnettyApi"></nvd3>
   </div>
   <div class="row">
-    <h2>Hakijaorganisaation tarkemmat tiedot
-      <button type="button" class="btn btn-info" ng-csv="exportCsvPieChart(organisaationTiedotData())"
-              filename="Hakijaorganisaation_{{aktiivinenOrganisaatio}}_tarkemmat_tiedot_{{aktiivinenOrganisaatioVuosi}}.csv"
-              csv-label="true" field-separator=";" add-bom="true">CSV Export
-      </button>
-    </h2>
-
+    <div class="col-md-10">
+      <h2>Hakijaorganisaation tarkemmat tiedot</h2>
+    </div>
+    <div class="col-md-2 lataacsv">
+      <a ng-csv="exportCsvPieChart(organisaationTiedotData())"
+         filename="Hakijaorganisaation_{{aktiivinenOrganisaatio}}_tarkemmat_tiedot_{{aktiivinenOrganisaatioVuosi}}.csv"
+         csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+      </a>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-md-8">
       <nvd3 options="organisaationTiedotOptions" data="organisaationTiedotData" api="organisaationTiedotApi"></nvd3>
     </div>
