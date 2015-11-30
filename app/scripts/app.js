@@ -41,7 +41,7 @@ require('angular-ui-validate');
 require('angular-i18n/angular-locale_fi-fi');
 require('d3/d3.js');
 require('nvd3/build/nv.d3.js');
-require('angular-nvd3');
+require('angular-nvd3/dist/angular-nvd3.js');
 require('angular-sanitize');
 require('ng-csv');
 

@@ -132,10 +132,10 @@ angular.module('jukufrontApp')
         multibar: {
           dispatch: {
             elementClick: function (e) {
-              if ((e.seriesIndex === 0) && $scope.isMyonnettyAktiivinen()) {
+              if ((e.data.series === 0) && $scope.isMyonnettyAktiivinen()) {
                 $scope.aktiivinenOsajoukko = data.HAETTU;
                 $scope.haettuMyonnettyApi.refresh();
-              } else if ((e.seriesIndex === 1) && !$scope.isMyonnettyAktiivinen()) {
+              } else if ((e.data.series === 1) && !$scope.isMyonnettyAktiivinen()) {
                 $scope.aktiivinenOsajoukko = data.MYONNETTY;
                 $scope.haettuMyonnettyApi.refresh();
               }
@@ -188,9 +188,9 @@ angular.module('jukufrontApp')
         multibar: {
           dispatch: {
             elementClick: function (e) {
-              $scope.aktiivinenOrganisaatio = e.series.key;
-              $scope.aktiivinenOrganisaatioVuosi = e.point.x;
-              $scope.aktiivinenOrganisaatioVuosiHaettu = e.point.y;
+              $scope.aktiivinenOrganisaatio = e.data.key;
+              $scope.aktiivinenOrganisaatioVuosi = e.data.x;
+              $scope.aktiivinenOrganisaatioVuosiHaettu = e.data.y;
               $scope.aktiivinenOrganisaatioAsukkaat = _.find($scope.avustusData, {'tyyppi': $scope.aktiivinenTyyppi}).organisaatiotAsukkaat[0];
               $scope.organisaationTiedotApi.refresh();
               $scope.$apply();
@@ -230,7 +230,6 @@ angular.module('jukufrontApp')
           values: vuosiValues
         });
       }
-      // console.log('PALUUARVOT:', paluuArvot);
       return paluuArvot;
     };
 
