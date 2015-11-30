@@ -1,6 +1,6 @@
 {
   "name": "livijukufrontApp",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "dependencies": {
     "angular": "~1.4.3",
     "angular-animate": "~1.4.3",
