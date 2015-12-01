@@ -415,8 +415,10 @@ public class HakemuskausiTest extends TestBase {
         findElementByXPath(String.format("//input[@id='%s-sidotut']", prefix)).sendKeys(sidotut);
         findElementByXPath(String.format("//input[@id='%s-uudet']", prefix)).clear();
         findElementByXPath(String.format("//input[@id='%s-uudet']", prefix)).sendKeys(uudet);
-        findElementByXPath(String.format("//input[@id='%s-tulot']", prefix)).clear();
-        findElementByXPath(String.format("//input[@id='%s-tulot']", prefix)).sendKeys(tulot);
+        if (tulot != null) {
+            findElementByXPath(String.format("//input[@id='%s-tulot']", prefix)).clear();
+            findElementByXPath(String.format("//input[@id='%s-tulot']", prefix)).sendKeys(tulot);
+        }
         findElementByXPath(String.format("//input[@id='%s-kuvaus']", prefix)).clear();
         findElementByXPath(String.format("//input[@id='%s-kuvaus']", prefix)).sendKeys(kuvaus);
     }
@@ -611,12 +613,12 @@ public class HakemuskausiTest extends TestBase {
 
         // Määrärahatarve
         uusiMaararahatarve("BS", "1000", "2000", "3000", "Bruttosopimus kuvaus");
-        uusiMaararahatarve("KK1", "4000", "5000", "10000", "Käyttösopimuskorvaukset (alueellinen) kuvaus");
-        uusiMaararahatarve("KK2", "3000", "2000", "7000", "Käyttösopimuskorvaukset (reitti) kuvaus");
+        uusiMaararahatarve("KK1", "4000", "5000", null, "Käyttösopimuskorvaukset (alueellinen) kuvaus");
+        uusiMaararahatarve("KK2", "3000", "2000", null, "Käyttösopimuskorvaukset (reitti) kuvaus");
 
         // Tarkistetaan hakemuksen menot yhteensä kenttä
         WebElement menotYhteensa = findElementByXPath("//span[@id='menotyhteensa']");
-        assertThat(menotYhteensa.getText(), is(equalTo("32 000,00 €")));
+        assertThat(menotYhteensa.getText(), is(equalTo("14 000,00 €")));
 
         // Kehittämishankkeet
         uusiKehittamishanke("Kehittämishanke1", "123433", "Kehittämishanke 1 kuvaus", 0);

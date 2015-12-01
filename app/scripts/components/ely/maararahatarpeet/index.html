@@ -47,7 +47,6 @@
                          noenter
                          select-on-click
                          ng-model="maararahatarve.sidotut" ng-disabled="isReadonly()"
-                         ng-init="maararahatarve.sidotut = maararahatarve.sidotut || 0"
                          ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                          placeholder="Sidotut">
                 </form-group-compact>
@@ -59,19 +58,17 @@
                          noenter
                          select-on-click
                          ng-model="maararahatarve.uudet" ng-disabled="isReadonly()"
-                         ng-init="maararahatarve.uudet = maararahatarve.uudet || 0"
                          ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                          placeholder="Uudet">
                 </form-group-compact>
               </td>
               <td>
-                <form-group-compact label="Uudet" errormessage="arvoalueErrorMessage">
+                <form-group-compact ng-if="maararahatarve.hasOwnProperty('tulot')" label="Uudet" errormessage="arvoalueErrorMessage">
                   <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-tulot'}}" name="tulot" type="text"
                          class="form-control" ng-currency="" numeric-only=""
                          noenter
                          select-on-click
                          ng-model="maararahatarve.tulot" ng-disabled="isReadonly()"
-                         ng-init="maararahatarve.tulot = maararahatarve.tulot || 0"
                          ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                          placeholder="Tulot">
                 </form-group-compact>
