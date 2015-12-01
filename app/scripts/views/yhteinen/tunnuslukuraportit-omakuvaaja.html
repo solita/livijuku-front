@@ -1,0 +1,16 @@
+<div class="container">
+  <juku-navigation>
+    <juku-tabs>
+      <juku-tab
+        ng-repeat="tyyppi in tyypit"
+        selected="isTabSelected(tyyppi)"
+        ely="isEly(tyyppi)"
+        ng-click="toTab(tyyppi)">
+        {{ tyyppi | toApplicantName }}
+      </juku-tab>
+    </juku-tabs>
+  </juku-navigation>
+  <div class="row">
+    <h2>Oma kuvaaja tunnusluvuista</h2>
+  </div>
+</div>

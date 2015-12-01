@@ -184,9 +184,19 @@ angular
         template: require('views/yhteinen/tunnuslukujenSyottaminen-me.html'),
         controller: 'HakijaTunnusluvutCtrl'
       })
-      .state('app.hakija.tunnusluku.raportit', {
+      .state('app.hakija.tunnusluku.valtionavustuskuvaajat', {
         url: '/raportit',
-        template: require('views/yhteinen/tunnuslukuraportit.html'),
+        template: require('views/yhteinen/tunnuslukuraportit-valtionavustuskuvaajat.html'),
+        controller: 'TunnuslukuraporttiCtrl'
+      })
+      .state('app.hakija.tunnusluku.tunnuslukukuvaajat', {
+        url: '/raportit',
+        template: require('views/yhteinen/tunnuslukuraportit-tunnuslukukuvaajat.html'),
+        controller: 'TunnuslukuraporttiCtrl'
+      })
+      .state('app.hakija.tunnusluku.omakuvaaja', {
+        url: '/raportit',
+        template: require('views/yhteinen/tunnuslukuraportit-omakuvaaja.html'),
         controller: 'TunnuslukuraporttiCtrl'
       })
 

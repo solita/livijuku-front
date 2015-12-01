@@ -28,6 +28,13 @@ angular.module('jukufrontApp')
           "2012": [913990, 5553495, 1751951, 1457016],
           "2013": [1314775, 5821548, 2538098, 2377717],
           "2014": [1751255, 6096802, 2805226, 2069717]
+        },
+        "tyytyvaisyys": {
+          "2010": [75.4, 77.0, 77.3, 80.1],
+          "2011": [77.2, 80.3, 78.0, 82.4],
+          "2012": [83.4, 88.3, 73.5, 86.3],
+          "2013": [90.2, 85.6, 77.4, 71.4],
+          "2014": [85.3, 91.2, 83.4, 78.3]
         }
       }, {
         "tyyppi": "KS2",
@@ -46,6 +53,13 @@ angular.module('jukufrontApp')
           "2012": [1073901, 457208, 1115100, 702635, 500230, 1152741, 1228289, 558468, 997200, 350000],
           "2013": [985000, 515000, 1238000, 775000, 555000, 1249100, 1380000, 662160, 1162000, 395000],
           "2014": [985000, 515000, 1238000, 775000, 555000, 1249100, 1380000, 662160, 1162000, 395000]
+        },
+        "tyytyvaisyys": {
+          "2010": [65.4, 76.3, 44.6, 76.2, 78.3, 55.3, 75.3, 89.4, 77.3, 73.6],
+          "2011": [64.5, 77.2, 49.3, 79.1, 79.9, 62.7, 73.9, 82.5, 72.3, 74.2],
+          "2012": [67.2, 79.1, 57.1, 73.7, 73.1, 67.3, 75.8, 87.3, 75.2, 76.7],
+          "2013": [68.6, 87.5, 52.3, 79.2, 75.3, 62.1, 75.0, 83.4, 79.1, 74.6],
+          "2014": [62.6, 86.5, 62.2, 84.7, 78.2, 69.5, 71.3, 86.3, 84.2, 77.9]
         }
       }, {
         "tyyppi": "ELY",
@@ -64,6 +78,13 @@ angular.module('jukufrontApp')
           "2012": [4209000, 8250000, 4803000, 6303000, 3507000, 3457000, 3003000, 3324000, 3141000],
           "2013": [4100000, 6900000, 2800000, 4600000, 3450000, 1450000, 1900000, 3350000, 2200000],
           "2014": [3879000, 6695000, 2586000, 5095000, 3192000, 3065000, 1684000, 3138000, 1985000]
+        },
+        "tyytyvaisyys": {
+          "2010": [56.3, 66.6, 62.3, 74.2, 79.4, 75.6, 76.3, 77.4, 80.2],
+          "2011": [56.3, 65.9, 63.6, 77.3, 86.1, 79.1, 74.8, 71.4, 87.1],
+          "2012": [52.8, 69.3, 67.2, 78.1, 81.2, 83.4, 78.2, 76.3, 88.8],
+          "2013": [56.1, 74.1, 70.1, 79.9, 82.5, 86.3, 79.1, 79.2, 89.9],
+          "2014": [57.6, 77.3, 74.3, 83.5, 87.2, 89.1, 83.4, 88.2, 84.2]
         }
       }
     ];
@@ -94,9 +115,10 @@ angular.module('jukufrontApp')
       $scope.aktiivinenOrganisaatioVuosi = 2010;
       $scope.aktiivinenOrganisaatioVuosiHaettu = _.find($scope.avustusData, {'tyyppi': $scope.aktiivinenTyyppi}).haetut["2010"][0];
       $scope.aktiivinenOrganisaatioAsukkaat = _.find($scope.avustusData, {'tyyppi': $scope.aktiivinenTyyppi}).organisaatiotAsukkaat[0];
-      $scope.haettuMyonnettyYhteensaApi.refresh();
-      $scope.haettuMyonnettyApi.refresh();
-      $scope.organisaationTiedotApi.refresh();
+      if ($scope.haettuMyonnettyYhteensaApi !== undefined) $scope.haettuMyonnettyYhteensaApi.refresh();
+      if ($scope.haettuMyonnettyApi !== undefined) $scope.haettuMyonnettyApi.refresh();
+      if ($scope.organisaationTiedotApi !== undefined) $scope.organisaationTiedotApi.refresh();
+      if ($scope.tyytyvaisyysApi !== undefined) $scope.tyytyvaisyysApi.refresh();
     };
 
     $scope.exportCsvMultibar = function (data) {
@@ -223,6 +245,44 @@ angular.module('jukufrontApp')
           vuosiValues.push({
             x: vuosi,
             y: _.result(dataPerTyyppi, $scope.aktiivinenOsajoukko)[vuosi][i]
+          });
+        }
+        paluuArvot.push({
+          key: _.result(dataPerTyyppi, 'organisaatiot')[i],
+          values: vuosiValues
+        });
+      }
+      return paluuArvot;
+    };
+
+    $scope.tyytyvaisyysOptions = {
+      chart: {
+        type: 'multiBarChart',
+        height: 450,
+        stacked: false,
+        x: function (d) {
+          return d.x;
+        },
+        y: function (d) {
+          return d.y;
+        },
+        yAxis: {
+          tickFormat: function (d) {
+            return d + " %";
+          }
+        }
+      }
+    };
+
+    $scope.tyytyvaisyysData = function () {
+      var paluuArvot = [];
+      var dataPerTyyppi = _.find($scope.avustusData, {'tyyppi': $scope.aktiivinenTyyppi});
+      for (var i = 0; i < _.result(dataPerTyyppi, 'organisaatiot').length; i++) {
+        var vuosiValues = [];
+        for (var vuosi in _.result(dataPerTyyppi, $scope.aktiivinenOsajoukko)) {
+          vuosiValues.push({
+            x: vuosi,
+            y: _.result(dataPerTyyppi, 'tyytyvaisyys')[vuosi][i]
           });
         }
         paluuArvot.push({

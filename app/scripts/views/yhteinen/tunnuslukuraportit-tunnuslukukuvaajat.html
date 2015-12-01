@@ -1,0 +1,28 @@
+<div class="container">
+  <juku-navigation>
+    <juku-tabs>
+      <juku-tab
+        ng-repeat="tyyppi in tyypit"
+        selected="isTabSelected(tyyppi)"
+        ely="isEly(tyyppi)"
+        ng-click="toTab(tyyppi)">
+        {{ tyyppi | toApplicantName }}
+      </juku-tab>
+    </juku-tabs>
+  </juku-navigation>
+  <div class="row">
+    <div class="col-md-10">
+      <h2>Tyytyväisyys joukkoliikenteeseen</h2>
+    </div>
+    <div class="col-md-2 lataacsv">
+      <a ng-csv="exportCsvMultibar(tyytyvaisyysData())"
+         filename="Tyytyväisyys_joukkoliikenteeseen.csv"
+         csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData'
+          api="tyytyvaisyysApi"></nvd3>
+  </div>
+</div>
