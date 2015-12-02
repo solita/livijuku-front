@@ -618,7 +618,7 @@ public class HakemuskausiTest extends TestBase {
 
         // Tarkistetaan hakemuksen menot yhteensä kenttä
         WebElement menotYhteensa = findElementByXPath("//span[@id='menotyhteensa']");
-        assertThat(menotYhteensa.getText(), is(equalTo("14 000,00 €")));
+        assertThat(menotYhteensa.getText(), is(equalTo("49 000,00 €")));
 
         // Kehittämishankkeet
         uusiKehittamishanke("Kehittämishanke1", "123433", "Kehittämishanke 1 kuvaus", 0);
