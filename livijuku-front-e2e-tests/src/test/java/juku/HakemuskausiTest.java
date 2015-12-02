@@ -628,6 +628,10 @@ public class HakemuskausiTest extends TestBase {
         WebElement kehittamishankkeetYhteensa = findElementByXPath("//span[@id='kehittamishankkeetyhteensa']");
         assertThat(kehittamishankkeetYhteensa.getText(), is(equalTo("234 655,00 €")));
 
+        // Tarkistetaan hakemuksen kokonaissumma-kenttä
+        WebElement elyhakemusYhteensa = findElementByXPath("//h4[@id='sumHaettavaElyAvustus']");
+        assertThat(elyhakemusYhteensa.getText(), is(equalTo("269 655,00 € (sis. alv)")));
+
         // Tallenna hakemus
         Hakemus.tallennaHakemus().click();
 
@@ -663,9 +667,6 @@ public class HakemuskausiTest extends TestBase {
         spanWithHakemustila(Hakemustila.TAYDENNETTAVANA).click();
 
         Hakemus.tarkistaHakemuksenTila(Hakemuslaji.ELY, Hakemustila.TAYDENNETTAVANA);
-
-        // Lisätään avustussummat
-        //syotaRahasummat(Hakemus.rahakentat(), "1000,00", "3000,00");
 
         // Täydennä hakemus
         lahetaHakemus();

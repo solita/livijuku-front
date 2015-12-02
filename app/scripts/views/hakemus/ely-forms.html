@@ -7,4 +7,14 @@
   <h3>KEHITTÄMISHANKKEIDEN ERITTELY HANKKEITTAIN</h3>
   <juku-ely-kehittamishankkeet kehittamishankkeet="kehittamishankkeet"
                                is-readonly="!hakemusTallentaminenEnabled()"></juku-ely-kehittamishankkeet>
+  <div class="row">
+    <div class="col-md-9">
+      <h4>HAETTAVA VALTIONAVUSTUS YHTEENSÄ:</h4>
+    </div>
+    <div class="col-md-3">
+      <div class="pull-right">
+        <h4 id="sumHaettavaElyAvustus">{{sumHaettavaElyAvustus() | currency:"&euro;"}} (sis. alv)</h4>
+      </div>
+    </div>
+  </div>
 </juku-form-section>
