@@ -13,7 +13,7 @@
           ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppi})">
           {{ tyyppi | toApplicationNamePlural }}
           <juku-badge
-            number="hakemukset.hakemuksiaYhteensa(tyyppi, hakemuskaudet)"
+            number="hakemukset.hakemuksiaYhteensa(tyyppi, hakemukset.hakemuskaudet)"
             ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')"/>
         </juku-tab>
       </juku-tabs>
