@@ -19,7 +19,8 @@ module.exports = function ($uibModal) {
     scope: {
       operaatio: "&",
       varmistusotsake: "@",
-      varmistusteksti: "@"
+      varmistusteksti: "@",
+      varmistusteksti2: "@"
     },
     link: function (scope, element, attrs) {
       element.bind('click', function () {

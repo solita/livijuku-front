@@ -4,52 +4,88 @@
   </div>
   <div class="panel-body">
     <div ng-show="hakemusTallentaminenEnabled()">
-      <div class="col-md-12">
-        <div ngf-drop="uploadFiles($files)" class="drop-box"
-             ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
-             ngf-multiple="true" ngf-allow-dir="false" ngf-drop-available="dropAvailable">
-          <p ng-show="dropAvailable">Raahaa liite tähän tai</p>
+      <p>Hakemukseen täytyy lisätä vähintään yksi liite (allekirjoitusoikeuslomake) ennen hakemuksen lähettämistä. Järjestelmä ei tarkasta liitteiden sisältöä.</p>
+      <div ngf-drop="uploadFiles($files)" class="drop-box"
+           ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+           ngf-multiple="true" ngf-allow-dir="false" ngf-drop-available="dropAvailable">
+        <p ng-show="dropAvailable">Raahaa liite tähän tai</p>
 
-          <p ng-hide="dropAvailable">Tiedoston raahaaminen ei ole mahdollista tällä selain-versiolla</p>
-          <button class="btn btn-primary" ngf-select ngf-multiple="true" ngf-change="uploadFiles($files)">Valitse
-            tiedosto
-          </button>
-        </div>
+        <p ng-hide="dropAvailable">Tiedoston raahaaminen ei ole mahdollista tällä selain-versiolla</p>
+        <button class="btn btn-primary" ngf-select ngf-multiple="true" ngf-change="uploadFiles($files)">Valitse
+          tiedosto
+        </button>
       </div>
     </div>
-    <div class="col-md-12">
-      <div ng-show="liitteetOlemassa()">
-        <div ng-show="liitteet.length > 0" class="response">
-          <juku-file-details ng-repeat="liite in liitteet">
-            <div ng-show="liite.liitenumero !== editoitavaLiite">
-              <juku-icon-link ng-show="isPdf(liite.nimipaate)"
-                              href="{{getLiitePdf(hakemusid,liite.liitenumero)}}"
-                              target="_blank"
-                              icon="file">
-                {{liite.nimiteksti}}.{{liite.nimipaate}}
+    <div ng-show="liitteetOlemassa()">
+      <div ng-show="liitteet.length > 0" class="response">
+        <juku-file-details ng-repeat="liite in liitteet">
+          <div ng-show="liite.liitenumero !== editoitavaLiite">
+            <juku-icon-link ng-show="isPdf(liite.nimipaate)"
+                            href="{{getLiitePdf(hakemusid,liite.liitenumero)}}"
+                            target="_blank"
+                            icon="file">
+              {{liite.nimiteksti}}.{{liite.nimipaate}}
+            </juku-icon-link>
+            <juku-icon-link ng-hide="isPdf(liite.nimipaate)"
+                            href="api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}"
+                            target="_blank"
+                            icon="file">
+              {{liite.nimiteksti}}.{{liite.nimipaate}}
+            </juku-icon-link>
+            <span>{{formatFileSize(liite.bytesize)}}</span>
+
+            <juku-file-actions>
+              <juku-icon-link
+                ng-show="hakemusTallentaminenEnabled()"
+                href=""
+                title="Muuta liitenimi"
+                ng-click="asetaEditTilaan(liite.liitenumero)"
+                icon="pencil">
+                Nimeä uudelleen
               </juku-icon-link>
-              <juku-icon-link ng-hide="isPdf(liite.nimipaate)"
-                              href="api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}"
-                              target="_blank"
-                              icon="file">
-                {{liite.nimiteksti}}.{{liite.nimipaate}}
+
+              <juku-icon-link
+                ng-show="hakemusTallentaminenEnabled()"
+                href=""
+                title="Poista liite"
+                ng-click="poistaLiite(liite.liitenumero)"
+                icon="remove-sign">
+                Poista
               </juku-icon-link>
+            </juku-file-actions>
+          </div>
+
+          <div ng-show="liite.liitenumero === editoitavaLiite">
+            <ng-form name="liiteRiviForm">
+              <span class="glyphicon glyphicon-file"></span>
+              <input name="liitenimi" type="text" class="input400" noenter
+                     ng-model="liite.nimiteksti"
+                     ng-focus="asetaLiitenimi(liite.nimiteksti)"
+                     ui-validate="{tyhja: 'liiteNimiOk($value)' }"/>
+              <span>.{{liite.nimipaate}}</span>
               <span>{{formatFileSize(liite.bytesize)}}</span>
 
               <juku-file-actions>
                 <juku-icon-link
+                  icon="ok-circle"
                   ng-show="hakemusTallentaminenEnabled()"
                   href=""
-                  title="Muuta liitenimi"
-                  ng-click="asetaEditTilaan(liite.liitenumero)"
-                  icon-first="true"
-                  icon="pencil">
-                  Nimeä uudelleen
+                  title="Tallenna liitenimi"
+                  ng-click="paivitaLiiteNimi(liite.liitenumero,liite.nimiteksti, liite.nimipaate, liiteRiviForm.$valid)">
+                  Tallenna
                 </juku-icon-link>
 
                 <juku-icon-link
-                  icon="remove"
-                  icon-first="true"
+                  icon="ban-circle"
+                  ng-show="hakemusTallentaminenEnabled()"
+                  href=""
+                  title="Palaa katselutilaan tallentamatta"
+                  ng-click="palaaTallentamattaLiite()">
+                  Peruuta
+                </juku-icon-link>
+
+                <juku-icon-link
+                  icon="remove-sign"
                   ng-show="hakemusTallentaminenEnabled()"
                   href=""
                   title="Poista liite"
@@ -57,66 +93,22 @@
                   Poista
                 </juku-icon-link>
               </juku-file-actions>
-            </div>
-
-            <div ng-show="liite.liitenumero === editoitavaLiite">
-              <ng-form name="liiteRiviForm">
-                <span class="glyphicon glyphicon-file"></span>
-                <input name="liitenimi" type="text" class="input400" noenter
-                       ng-model="liite.nimiteksti"
-                       ng-focus="asetaLiitenimi(liite.nimiteksti)"
-                       ui-validate="{tyhja: 'liiteNimiOk($value)' }"/>
-                <span>.{{liite.nimipaate}}</span>
-                <span>{{formatFileSize(liite.bytesize)}}</span>
-
-                <juku-file-actions>
-                  <juku-icon-link
-                    icon="ok"
-                    icon-first="true"
-                    ng-show="hakemusTallentaminenEnabled()"
-                    href=""
-                    title="Tallenna liitenimi"
-                    ng-click="paivitaLiiteNimi(liite.liitenumero,liite.nimiteksti, liite.nimipaate, liiteRiviForm.$valid)">
-                    Tallenna
-                  </juku-icon-link>
-
-                  <juku-icon-link
-                    icon="ban-circle"
-                    icon-first="true"
-                    ng-show="hakemusTallentaminenEnabled()"
-                    href=""
-                    title="Palaa katselutilaan tallentamatta"
-                    ng-click="palaaTallentamattaLiite()">
-                    Peruuta
-                  </juku-icon-link>
-
-                  <juku-icon-link
-                    icon="remove"
-                    icon-first="true"
-                    ng-show="hakemusTallentaminenEnabled()"
-                    href=""
-                    title="Poista liite"
-                    ng-click="poistaLiite(liite.liitenumero)">
-                    Poista
-                  </juku-icon-link>
-                </juku-file-actions>
-                <p ng-show="liiteRiviForm.liitenimi.$error.tyhja && !liiteRiviForm.liitenimi.$pristine"
-                   class="help-block ng-invalid-tyhja">
-                  Liitenimi ei saa olla tyhjä.
-                </p>
-              </ng-form>
-            </div>
-          </juku-file-details>
-          <div ng-show="hakemusTallentaminenEnabled()" class="alert alert-info">
-            Hakemuksen liitteiden yhteiskoko voi olla suurimmillaan
-            <strong>{{formatFileSize(liitteidenMaksimiKoko)}}</strong>. Olet liittänyt liitteitä <strong>{{formatFileSize(liitteidenKoko)}}</strong>,
-            voit vielä liittää liitteitä <strong>{{formatFileSize(liitteitaLadattavissa())}}</strong>.
+              <p ng-show="liiteRiviForm.liitenimi.$error.tyhja && !liiteRiviForm.liitenimi.$pristine"
+                 class="help-block ng-invalid-tyhja">
+                Liitenimi ei saa olla tyhjä.
+              </p>
+            </ng-form>
           </div>
+        </juku-file-details>
+        <div ng-show="hakemusTallentaminenEnabled()" class="alert alert-info">
+          Hakemuksen liitteiden yhteiskoko voi olla suurimmillaan
+          <strong>{{formatFileSize(liitteidenMaksimiKoko)}}</strong>. Olet liittänyt liitteitä <strong>{{formatFileSize(liitteidenKoko)}}</strong>,
+          voit vielä liittää liitteitä <strong>{{formatFileSize(liitteitaLadattavissa())}}</strong>.
         </div>
       </div>
-      <div ng-hide="liitteetOlemassa()">
-        <p>Ei liitteitä.</p>
-      </div>
+    </div>
+    <div ng-hide="liitteetOlemassa()">
+      <p>Ei liitteitä.</p>
     </div>
   </div>
 </div>
