@@ -12,8 +12,6 @@ angular.module('jukufrontApp')
       $scope.kayttajatunnus = kayttaja.tunnus;
       $scope.sahkoposti = kayttaja.sahkoposti;
       $scope.sahkopostiviestit = kayttaja.sahkopostiviestit;
-      if (typeof $rootScope.organisaatiot === 'undefined') return;
-      $scope.organisaatio = _.find($rootScope.organisaatiot, {'id': kayttaja.organisaatioid}).nimi;
     }
 
     function haeKayttajatiedot() {

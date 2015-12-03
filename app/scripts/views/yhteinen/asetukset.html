@@ -13,7 +13,7 @@
           <div class="col-md-4">
             <h5>Organisaatio</h5>
 
-            <p>{{organisaatio}}</p>
+            <p>{{$root.userOrganisaatio}}</p>
           </div>
           <div class="col-md-4">
             <h5>Roolit</h5>
@@ -33,6 +33,11 @@
             <h5>Sähköposti</h5>
 
             <p>{{sahkoposti}}</p>
+          </div>
+          <div class="col-md-4">
+            <h5>Pankkitilinumero</h5>
+
+            <p>{{$root.userPankkitilinumero}}</p>
           </div>
         </div>
       </juku-form-row>

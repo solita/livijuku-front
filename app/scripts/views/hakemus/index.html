@@ -47,8 +47,16 @@
       <h3>PERUSTIEDOT</h3>
 
       <juku-form-row>
-        <h5>Hakija</h5>
-        {{getHakija(hakemus)}}
+        <div class="row">
+          <div class="col-md-6">
+            <h5>Hakija</h5>
+            {{getHakija(hakemus)}}
+          </div>
+          <div class="col-md-6" ng-if="onMaksatushakemus1() || onMaksatushakemus2()" >
+            <h5>Tilinumero</h5>
+            {{hakemus.tilinumero}}
+          </div>
+        </div>
       </juku-form-row>
       <juku-form-row>
         <h5>Hakemuksen tila</h5>
