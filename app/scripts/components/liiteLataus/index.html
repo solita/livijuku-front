@@ -4,6 +4,7 @@
   </div>
   <div class="panel-body">
     <div ng-show="hakemusTallentaminenEnabled()">
+      <p>Hakemukseen täytyy lisätä vähintään yksi liite (allekirjoitusoikeuslomake) ennen hakemuksen lähettämistä. Järjestelmä ei tarkasta liitteiden sisältöä.</p>
       <div ngf-drop="uploadFiles($files)" class="drop-box"
            ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
            ngf-multiple="true" ngf-allow-dir="false" ngf-drop-available="dropAvailable">
