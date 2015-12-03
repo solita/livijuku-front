@@ -1,6 +1,7 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 angular.module('services.seuranta', [])
 
@@ -23,7 +24,7 @@ angular.module('services.seuranta', [])
         return $http.get('api/hakemus/' + hakemusid + '/lippusuoritteet').then(res => res.data);
       },
       lipputyypit: function () {
-        return $http.get('api/lipputyypit').then(res => res.data);
+        return $http.get('api/lipputyypit').then(res => _.reject(res.data, 'tunnus', "SE"));
       },
       tallenna: function (hakemusid, suoritteet) {
         return $http.put('api/hakemus/' + hakemusid + '/lippusuoritteet', suoritteet);
