@@ -5,7 +5,13 @@ var angular = require('angular');
 var pdf = require('utils/pdfurl');
 
 angular.module('jukufrontApp')
-  .controller('KasittelijaSuunnitteluCtrl', ['$rootScope', '$scope', '$stateParams', 'HakemuskausiService', 'HakemusService', 'SuunnitteluService', 'StatusService', '$state', '$q', 'OrganisaatioService', '$window', function ($rootScope, $scope, $stateParams, HakemuskausiService, HakemusService, SuunnitteluService, StatusService, $state, $q, OrganisaatioService, $window) {
+  .controller('KasittelijaSuunnitteluCtrl',
+    ['$rootScope', '$scope', '$stateParams', '$state', '$q', '$window',
+     'HakemuskausiService', 'HakemusService', 'SuunnitteluService',
+     'StatusService', 'PaatosService', 'OrganisaatioService',
+     function ($rootScope, $scope, $stateParams, $state, $q, $window,
+               HakemuskausiService, HakemusService, SuunnitteluService,
+               StatusService, PaatosService, OrganisaatioService) {
 
     $scope.lajitunnus = $stateParams.lajitunnus;
     $scope.tyyppi = $stateParams.tyyppi;
@@ -215,6 +221,19 @@ angular.module('jukufrontApp')
         return;
       }
     };
+
+    $scope.tallennaPaatokset = function() {
+      var selite = _.get($scope, 'paatos.selite', '');
+      var paatokset = _.map($scope.hakemuksetSuunnittelu,
+        hakemus => ({hakemusid: hakemus.hakemusId,
+                     paattajanimi: '',
+                     myonnettyavustus: hakemus.myonnettavaAvustus,
+                     selite: selite}));
+
+      PaatosService.tallennaPaatokset(paatokset).then(
+        () => StatusService.ok('', 'Ely hakemusten päätökset on päivitetty'),
+        StatusService.errorHandler);
+    }
 
     haeMaararahat();
     haeSuunnitteluData();

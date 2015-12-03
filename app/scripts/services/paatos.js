@@ -24,6 +24,9 @@ angular.module('services.paatos', [])
           data: paatosdata
         };
         return $http(req);
+      },
+      tallennaPaatokset: function (paatokset) {
+        return $http.put('api/paatokset', paatokset);
       }
     };
   }]);
