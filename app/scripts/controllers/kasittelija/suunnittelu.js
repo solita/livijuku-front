@@ -267,7 +267,7 @@ angular.module('jukufrontApp')
       haeElyPaatos();
     }
 
-    $scope.isPaatosTallentaminenEnabled = function() {
+    $scope.isTallennaPaatosEnabled = function() {
       return $scope.sallittu('kasittely-hakemus') &&
              core.isNullOrUndefined($scope.paatos.voimaantuloaika);
     }
