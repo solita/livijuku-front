@@ -371,7 +371,7 @@ angular.module('jukufrontApp')
         var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
           return l.avustuskohteet;
         }));
-        return _.sum(avustuskohteet, 'haettavaavustus');
+        return _.sum(avustuskohteet, 'haettavaavustus').toFixed(2);
       };
 
       $scope.sumHaettavaElyAvustus = function () {
