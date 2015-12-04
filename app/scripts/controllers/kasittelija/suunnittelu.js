@@ -287,7 +287,7 @@ angular.module('jukufrontApp')
           { hakemusid: hakemus.hakemusId,
             paattajanimi: '',
             myonnettyavustus: hakemus.myonnettavaAvustus,
-            selite: $scope.paatos.selite }).then(() => ikkuna.location.href = pdf.getHakemusPdfUrl(hakemus.hakemusId));
+            selite: $scope.paatos.selite }).then(() => ikkuna.location.href = pdf.getPaatosPdfUrl(hakemus.hakemusId));
 
       } else {
         $window.open(pdf.getPaatosPdfUrl(hakemus.hakemusId));

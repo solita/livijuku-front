@@ -184,13 +184,13 @@
       <div class="row">
         <div class="col-md-8">
           <label>Lisätietoa päätöskappaleeseen</label>
-          <div ng-hide="hakemusPaatetty()">
+          <div ng-if="isTallennaPaatosEnabled()">
           <textarea id="paatosteksti" name="paatosteksti" class="animate msd-elastic: \n;"
                     ng-model="paatos.selite"
                     placeholder="Kirjoita tähän kohtaan tarvittaessa päätöstä tarkentavia perusteita."></textarea>
 
           </div>
-          <div ng-show="hakemusPaatetty()">
+          <div ng-show="!isTallennaPaatosEnabled()">
             <p>{{paatos.selite ? paatos.selite : ""}}</p>
           </div>
         </div>
