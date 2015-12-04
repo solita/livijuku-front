@@ -45,16 +45,21 @@
 
     <juku-form-section>
       <h3>PERUSTIEDOT</h3>
-
       <juku-form-row>
         <div class="row">
           <div class="col-md-6">
             <h5>Hakija</h5>
             {{getHakija(hakemus)}}
           </div>
-          <div class="col-md-6" ng-if="onMaksatushakemus1() || onMaksatushakemus2()" >
-            <h5>Tilinumero</h5>
-            {{hakemus.tilinumero}}
+          <div class="col-md-3" ng-if="onMaksatushakemus1() || onMaksatushakemus2()">
+            <form-group label="Pankkitilinumero" errormessage="pankkitilinumeroErrorMessage">
+              <input id="pankkitilinumero" name="pankkitilinumero" type="text" class="form-control"
+                     ng-model="hakemus.tilinumero"
+                     ng-readonly="isReadonly()"
+                     placeholder="Pankkitilinumero"
+                     ui-validate="{sallittuIban: 'sallittuIban($value)'}"
+                     required select-on-click/>
+            </form-group>
           </div>
         </div>
       </juku-form-row>

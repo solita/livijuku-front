@@ -5,6 +5,7 @@ var angular = require('angular');
 var pdf = require('utils/pdfurl');
 var hasPermission = require('utils/hasPermission');
 var Promise = require('bluebird');
+var IBAN = require('iban');
 
 function haeHakemus(tyyppi, hakemus) {
   if (hakemus.hakemustyyppitunnus === tyyppi) {
@@ -22,6 +23,13 @@ function isElyhakemus(hakemus) {
 
 function isMaksatushakemus(hakemus) {
   return _.contains(['MH1', 'MH2'], hakemus.hakemustyyppitunnus)
+}
+
+function errorMessage(nimi) {
+  return function (input) {
+    return input.$error.required ? nimi + ' on pakollinen tieto.' :
+      input.$error.sallittuIban ? 'Pankkitilinumero on annettava IBAN-muotoisena.' : '';
+  }
 }
 
 loadInitialData.$inject = [
@@ -131,8 +139,8 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
 module.exports.loadInitialData = loadInitialData;
 angular.module('jukufrontApp')
   .controller('HakemusCtrl', ['$rootScope', '$scope', '$state', '$stateParams',
-    'PaatosService', 'HakemusService', 'AvustuskohdeService', 'LiikenneSuoriteService', 'LippuSuoriteService', 'StatusService', 'CommonService', '$window', 'initials', 'ElyHakemusService',
-    function ($rootScope, $scope, $state, $stateParams, PaatosService, HakemusService, AvustuskohdeService, LiikenneSuoriteService, LippuSuoriteService, StatusService, common, $window, initials, ElyHakemusService) {
+    'PaatosService', 'HakemusService', 'AvustuskohdeService', 'LiikenneSuoriteService', 'LippuSuoriteService', 'StatusService', 'CommonService', '$window', 'initials', 'ElyHakemusService', 'AuthService',
+    function ($rootScope, $scope, $state, $stateParams, PaatosService, HakemusService, AvustuskohdeService, LiikenneSuoriteService, LippuSuoriteService, StatusService, common, $window, initials, ElyHakemusService, AuthService) {
 
       _.extend($scope, initials);
 
@@ -272,8 +280,17 @@ angular.module('jukufrontApp')
         return ($scope.paatos && $scope.paatos.voimaantuloaika);
       };
 
-      $scope.hakemustyyppiSaatavilla = function (tyyppi){
-        return $scope.hakemus.hakemustyyppitunnus===tyyppi || _.some($scope.hakemus['other-hakemukset'], {hakemustyyppitunnus: tyyppi});
+      $scope.hakemustyyppiSaatavilla = function (tyyppi) {
+        return $scope.hakemus.hakemustyyppitunnus === tyyppi || _.some($scope.hakemus['other-hakemukset'], {hakemustyyppitunnus: tyyppi});
+      };
+
+      $scope.isReadonly = function () {
+        // TODO: LIVIJUKU-229 Toisten hakijoiden hakemusten syötekentät pitää muuttaa vain luku -tilaan
+        // TODO: Poista muokkaus vireillä olevalta, jne. hakemuslomakkeelta.
+        if (typeof $scope.hakemus === 'undefined') {
+          return false;
+        }
+        return !AuthService.hakijaSaaMuokataHakemusta($scope.hakemus);
       };
 
       $scope.maksatushakemus1PaatosOlemassa = function () {
@@ -321,6 +338,12 @@ angular.module('jukufrontApp')
         return $scope.hakemus.hakemustyyppitunnus === 'ELY';
       };
 
+      $scope.sallittuIban = function (tilinumero) {
+        return IBAN.isValid(tilinumero);
+      };
+
+      $scope.pankkitilinumeroErrorMessage = errorMessage("Pankkitilinumero");
+
       $scope.isMaksatushakemus = isMaksatushakemus($scope.hakemus);
 
       $scope.isELYhakemus = isElyhakemus($scope.hakemus);
@@ -353,7 +376,8 @@ angular.module('jukufrontApp')
 
       $scope.sumHaettavaElyAvustus = function () {
         var maararahatarpeetSum = $scope.hakemus.ely.siirtymaaikasopimukset + $scope.hakemus.ely.joukkoliikennetukikunnat + _.sum($scope.maararahatarpeet, 'sidotut') + _.sum($scope.maararahatarpeet, 'uudet') - _.sum($scope.maararahatarpeet, 'tulot');
-        var kehittamishankkeetSum = _.sum($scope.kehittamishankkeet, 'arvo');;
+        var kehittamishankkeetSum = _.sum($scope.kehittamishankkeet, 'arvo');
+        ;
         return (maararahatarpeetSum + kehittamishankkeetSum);
       };
 
@@ -439,6 +463,7 @@ angular.module('jukufrontApp')
 
           tallennusPromise.push([AvustuskohdeService.tallenna(avustuskohteet)]);
           if (isMaksatushakemus($scope.hakemus)) {
+            tallennusPromise.push(HakemusService.paivitaTilinumero($scope.hakemus.id, $scope.hakemus.tilinumero));
             tallennusPromise.push(LiikenneSuoriteService.tallenna(
               $scope.hakemus.id, $scope.psaLiikenneSuoritteet.concat($scope.palLiikenneSuoritteet)));
             tallennusPromise.push(LippuSuoriteService.tallenna(
