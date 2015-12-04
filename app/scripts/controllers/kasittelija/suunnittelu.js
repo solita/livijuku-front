@@ -19,6 +19,11 @@ angular.module('jukufrontApp')
     $scope.vuosi = $stateParams.vuosi;
     $scope.kaikkiTarkastettu = false;
 
+    function haeElyPaatos() {
+      PaatosService.haeElyPaatos($scope.vuosi).then(
+        paatos => $scope.paatos = paatos);
+    }
+
     function haeMaararahat() {
       HakemuskausiService.haeMaararaha($scope.vuosi, $scope.lajitunnus)
         .then(function (response) {
@@ -222,7 +227,7 @@ angular.module('jukufrontApp')
       }
     };
 
-    $scope.tallennaPaatokset = function() {
+    function tallennaPaatokset() {
       var selite = _.get($scope, 'paatos.selite', '');
       var paatokset = _.map($scope.hakemuksetSuunnittelu,
         hakemus => ({hakemusid: hakemus.hakemusId,
@@ -235,6 +240,28 @@ angular.module('jukufrontApp')
         StatusService.errorHandler);
     }
 
+    $scope.tallennaElyPaatokset = function() {
+      if (!$scope.suunnitteluForm.$valid) {
+        StatusService.virhe('tallennaPaatokset', 'Korjaa suunnittelulomakkeen virheet ennen tallentamista.');
+        return;
+      }
+      tallennaPaatokset();
+    }
+
+    $scope.hyvaksyElyPaatokset = function() {
+      if (!$scope.suunnitteluForm.$valid) {
+        StatusService.virhe('hyvaksyPaatokset', 'Korjaa suunnittelulomakkeen virheet ennen tallentamista.');
+        return;
+      }
+      tallennaPaatokset();
+      PaatosService.hyvaksyElyPaatokset($scope.vuosi).then(
+        () => StatusService.ok('', 'Ely hakemusten päätökset on hyväksytty'),
+        StatusService.errorHandler);
+    }
+
     haeMaararahat();
     haeSuunnitteluData();
+    if ($scope.onElyhakemus()) {
+      haeElyPaatos();
+    }
   }]);

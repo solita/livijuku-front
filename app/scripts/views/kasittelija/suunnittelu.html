@@ -164,18 +164,13 @@
       <h3>PÄÄTÖS</h3>
 
       <div class="row">
-        <div class="col-md-3">
-          <label>Esittelijä</label>
 
-          <p>{{avustushakemus.kasittelijanimi ? avustushakemus.kasittelijanimi : "Ei tiedossa"}}</p>
-        </div>
-
-        <div class="col-md-3">
+        <div class="col-md-6">
           <label>Päätöksentekijä</label>
 
           <p>{{paatos.paattajanimi ? paatos.paattajanimi : "Ei tiedossa"}}</p>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
           <label>Päivämäärä</label>
 
           <p>{{paatos.voimaantuloaika ? paatos.voimaantuloaika : "Päätöstä ei ole annettu" | date:'dd.MM.yyyy'}}</p>
@@ -204,9 +199,10 @@
 
         <juku-controls-buttons>
           <button juku-varmistusdialogi varmistusotsake="Päätöksen hyväksyminen"
-                  varmistusteksti="Oletko varma, että haluat hyväksyä päätöksen? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
-                  operaatio="tallennaPaatos(2)" class="pull-right btn btn-success disabled-button-tooltip"
-                  ng-disabled="(!kaikkiTarkastettu || !sallittu('hyvaksy-paatos'))">Tallenna ja hyväksy päätös
+                  varmistusteksti="Oletko varma, että haluat hyväksyä kaikkien ELY-hakemusten päätökset? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
+                  operaatio="hyvaksyElyPaatokset()"
+                  class="pull-right btn btn-success disabled-button-tooltip"
+                  ng-disabled="(!kaikkiTarkastettu || !sallittu('hyvaksy-paatos'))">Tallenna ja hyväksy päätökset
 
             <div uib-tooltip="Päätöksenteko vaatii päätöksentekijä-tason käyttöoikeudet."
                  class="disabled-button-tooltip-text"
@@ -216,8 +212,8 @@
                  ng-if="!kaikkiTarkastettu"></div>
           </button>
 
-          <button data-ng-click="tallennaPaatokset()" class="pull-right btn btn-primary disabled-button-tooltip">Tallenna
-            tiedot
+          <button data-ng-click="tallennaElyPaatokset()" class="pull-right btn btn-primary disabled-button-tooltip">Tallenna
+            päätösten tiedot
           </button>
         </juku-controls-buttons>
       </juku-controls>
