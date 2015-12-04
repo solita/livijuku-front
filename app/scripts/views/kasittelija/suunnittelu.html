@@ -142,10 +142,12 @@
                   Päätöksentekoon
                   <span class="glyphicon glyphicon-arrow-right"></span>
                 </a>
-                <a ng-if="isElyhakemus() && !(hakemusKeskenerainen(hakemus) || hakemusVireilla(hakemus))" data-ng-click="naytaPaatos(hakemus.hakemusId)">{{hakemusTarkastettu(hakemus) ? "Esikatsele päätös" :
-                  "Näytä päätös"}}
+
+                <a ng-if="isElyhakemus() && !(hakemusKeskenerainen(hakemus) || hakemusVireilla(hakemus))"
+                   data-ng-click="naytaPaatos(hakemus)">{{naytaPaatosTitle()}}
                   <span class="glyphicon glyphicon-arrow-right"></span>
                 </a>
+
               </td>
             </tr>
             <tr>

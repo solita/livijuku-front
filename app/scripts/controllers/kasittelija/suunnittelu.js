@@ -167,17 +167,6 @@ angular.module('jukufrontApp')
       });
     };
 
-    $scope.naytaPaatos = function (hakemusid) {
-      $window.open(pdf.getPaatosPdfUrl(hakemusid));
-      /*
-       if ($scope.hakemusTarkastettu()) {
-       $scope.tallennaPaatos(1);
-       } else {
-       $window.open(pdf.getPaatosPdfUrl($scope.hakemusid));
-       }
-       */
-    };
-
     $scope.paivitaAvustus = function (avustus, hakemusid) {
       $scope.$broadcast('show-errors-check-validity');
       if ($scope.suunnitteluForm.$valid) {
@@ -228,7 +217,7 @@ angular.module('jukufrontApp')
       }
     };
 
-    function tallennaPaatokset() {
+    function tallennaElyPaatokset() {
       var selite = _.get($scope, 'paatos.selite', '');
       var paatokset = _.map($scope.hakemuksetSuunnittelu,
         hakemus => ({hakemusid: hakemus.hakemusId,
@@ -243,22 +232,18 @@ angular.module('jukufrontApp')
 
     $scope.tallennaElyPaatokset = function() {
       if (!$scope.suunnitteluForm.$valid) {
-        StatusService.virhe('tallennaPaatokset', 'Korjaa suunnittelulomakkeen virheet ennen tallentamista.');
+        StatusService.virhe('tallennaElyPaatokset', 'Korjaa suunnittelulomakkeen virheet ennen tallentamista.');
         return;
       }
-      tallennaPaatokset();
+      tallennaElyPaatokset();
     }
-
-
-
-
 
     $scope.hyvaksyElyPaatokset = function() {
       if (!$scope.suunnitteluForm.$valid) {
         StatusService.virhe('hyvaksyPaatokset', 'Korjaa suunnittelulomakkeen virheet ennen tallentamista.');
         return;
       }
-      tallennaPaatokset().then(() =>
+      tallennaElyPaatokset().then(() =>
         PaatosService.hyvaksyElyPaatokset($scope.vuosi).then(
           () => StatusService.ok('', 'Ely hakemusten päätökset on hyväksytty'),
           StatusService.errorHandler));
@@ -293,6 +278,29 @@ angular.module('jukufrontApp')
         return "Päätökset on jo hyväksytty.";
       };
     }
+
+    $scope.naytaPaatos = function (hakemus) {
+      if ($scope.isTallennaPaatosEnabled()) {
+        var ikkuna = $window.open('about:blank', '_blank');
+
+        PaatosService.tallenna(hakemus.hakemusId,
+          { hakemusid: hakemus.hakemusId,
+            paattajanimi: '',
+            myonnettyavustus: hakemus.myonnettavaAvustus,
+            selite: $scope.paatos.selite }).then(() => ikkuna.location.href = pdf.getHakemusPdfUrl(hakemus.hakemusId));
+
+      } else {
+        $window.open(pdf.getPaatosPdfUrl(hakemus.hakemusId));
+      }
+    };
+
+    $scope.naytaPaatosTitle = function () {
+      if ($scope.isTallennaPaatosEnabled()) {
+        return "Tallenna ja esikatsele päätös";
+      } else {
+        return "Näytä päätös";
+      }
+    };
 
     haeMaararahat();
     haeSuunnitteluData();
