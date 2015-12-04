@@ -171,6 +171,9 @@ public class HakemuskausiTest extends TestBase {
         login(User.HARRI);
         // Avaa maksatushakemus
         OmatHakemukset.hakemuksenTila(hakemuslaji, Hakemustila.KESKENERAINEN).click();
+
+        // Lisää pankkitilinumero
+        syotaTilinumero("FI4250001510000023");
         // Lisää allekirjoitusliite
         lisaaAllekirjoitusLiite();
         // Lähetä maksatushakemus
@@ -444,6 +447,11 @@ public class HakemuskausiTest extends TestBase {
 
         // Seutulippu
         uusiLippusuorite("seutu", 0, "Alue1", "111", "222", "123,45", "12,53", "5311,35", "2500,50");
+    }
+
+    private void syotaTilinumero(String tilinumero) {
+        findElementByXPath("//input[@id='pankkitilinumero']").clear();
+        findElementByXPath("//input[@id='pankkitilinumero']").sendKeys(tilinumero);
     }
 
     private WebElement checkbox(String text) {

@@ -44,6 +44,7 @@ require('nvd3/build/nv.d3.js');
 require('angular-nvd3/dist/angular-nvd3.js');
 require('angular-sanitize');
 require('ng-csv');
+require('iban/iban.js');
 
 angular
   .module('jukufrontApp', [

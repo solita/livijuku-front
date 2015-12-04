@@ -20,6 +20,19 @@ angular.module('services.hakemus', [])
       },
       taydennyspyynto: function (hakemusid, selite) {
         return $http.post('api/hakemus/' + hakemusid +'/taydennyspyynto', {selite: (selite ? selite : null)});
+      },
+      paivitaTilinumero: function (hakemusid,tilinumero) {
+        var req = {
+          method: 'PUT',
+          url: 'api/hakemus/' + hakemusid + '/tilinumero',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: {
+            'tilinumero': tilinumero
+          }
+        };
+        return $http(req);
       }
     };
   }]);
