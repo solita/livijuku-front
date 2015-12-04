@@ -5,20 +5,20 @@
   <div ng-show="sallittu('kasittely-hakemus')">
 
     <juku-form-row>
-      <h2 ng-show="onAvustushakemus()">
+      <h2 ng-show="isAvustushakemus()">
         Suunnittelunäkymä - avustushakemukset {{vuosi}} <br/>
         <small> {{ lajitunnus | toApplicantName }}</small>
       </h2>
 
-      <h2 ng-show="onMaksatushakemus1()">
+      <h2 ng-show="isMaksatushakemus1()">
         Suunnittelunäkymä - maksatushakemukset 1.1-30.6.{{vuosi}}
       </h2>
 
-      <h2 ng-show="onMaksatushakemus2()">
+      <h2 ng-show="isMaksatushakemus2()">
         Suunnittelunäkymä - maksatushakemukset 1.7-31.12.{{vuosi}}
       </h2>
 
-      <h2 ng-show="onElyhakemus()">
+      <h2 ng-show="isElyhakemus()">
         Suunnittelu- ja päätöksenteko - Ely-hakemukset {{vuosi}}
       </h2>
     </juku-form-row>
@@ -120,7 +120,7 @@
               </td>
               <td>
                 <juku-link-next
-                  ng-if="!onElyhakemus() && hakemusTarkastettu(hakemus) && sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
+                  ng-if="!isElyhakemus() && hakemusTarkastettu(hakemus) && sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
                   ui-sref="app.kasittelija.paatos({
                   hakemusid: hakemus.hakemusId,
                   haettuavustus: hakemus.haettuAvustus,
@@ -137,12 +137,12 @@
                   </span>
                 </juku-link-next>
                 <a
-                  ng-if="!onElyhakemus() && hakemusTarkastettu(hakemus) && !sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
+                  ng-if="!isElyhakemus() && hakemusTarkastettu(hakemus) && !sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)"
                   class="icon-link a-disabled">
                   Päätöksentekoon
                   <span class="glyphicon glyphicon-arrow-right"></span>
                 </a>
-                <a ng-if="onElyhakemus() && !(hakemusKeskenerainen(hakemus) || hakemusVireilla(hakemus))" data-ng-click="naytaPaatos(hakemus.hakemusId)">{{hakemusTarkastettu(hakemus) ? "Esikatsele päätös" :
+                <a ng-if="isElyhakemus() && !(hakemusKeskenerainen(hakemus) || hakemusVireilla(hakemus))" data-ng-click="naytaPaatos(hakemus.hakemusId)">{{hakemusTarkastettu(hakemus) ? "Esikatsele päätös" :
                   "Näytä päätös"}}
                   <span class="glyphicon glyphicon-arrow-right"></span>
                 </a>
@@ -160,7 +160,7 @@
         </table>
       </juku-form-row>
     </form>
-    <juku-form-section ng-if="onElyhakemus()">
+    <juku-form-section ng-if="isElyhakemus()">
       <h3>PÄÄTÖS</h3>
 
       <div class="row">
@@ -178,7 +178,7 @@
       </div>
 
     </juku-form-section>
-    <juku-form-section ng-if="onElyhakemus()">
+    <juku-form-section ng-if="isElyhakemus()">
       <div class="row">
         <div class="col-md-8">
           <label>Lisätietoa päätöskappaleeseen</label>
@@ -194,7 +194,7 @@
         </div>
       </div>
     </juku-form-section>
-    <juku-form-section ng-if="onElyhakemus()">
+    <juku-form-section ng-if="isElyhakemus()">
       <juku-controls>
 
         <juku-controls-buttons>

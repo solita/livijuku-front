@@ -135,19 +135,19 @@ angular.module('jukufrontApp')
       return $scope.jaettavaraha < $scope.myonnettavaAvustusSum;
     };
 
-    $scope.onAvustushakemus = function () {
+    $scope.isAvustushakemus = function () {
       return $scope.tyyppi == 'AH0';
     };
 
-    $scope.onMaksatushakemus1 = function () {
+    $scope.isMaksatushakemus1 = function () {
       return $scope.tyyppi == 'MH1';
     };
 
-    $scope.onMaksatushakemus2 = function () {
+    $scope.isMaksatushakemus2 = function () {
       return $scope.tyyppi == 'MH2';
     };
 
-    $scope.onElyhakemus = function () {
+    $scope.isElyhakemus = function () {
       return $scope.tyyppi == 'ELY';
     };
 
@@ -296,7 +296,7 @@ angular.module('jukufrontApp')
 
     haeMaararahat();
     haeSuunnitteluData();
-    if ($scope.onElyhakemus()) {
+    if ($scope.isElyhakemus()) {
       haeElyPaatos();
     }
   }]);
