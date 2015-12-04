@@ -95,7 +95,7 @@
                 <div ng-show="hakemusKeskenerainen(hakemus)">Ei tiedossa</div>
               </td>
               <td ng-click="siirryHakemukseen(hakemus)">
-                <div ng-hide="hakemusKeskenerainen(hakemus)">{{hakemus.muutos|currency:"&euro;"}}</div>
+                <div ng-hide="hakemusKeskenerainen(hakemus)">{{muutos(hakemus)|currency:"&euro;"}}</div>
               </td>
               <td>
                 <div ng-show="hakemusPaatetty(hakemus)">

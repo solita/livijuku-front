@@ -19,6 +19,7 @@ angular.module('jukufrontApp')
     $scope.vanhaArvo = 0;
     $scope.vuosi = $stateParams.vuosi;
     $scope.kaikkiTarkastettu = false;
+    $scope.paatos = {};
 
     function haeElyPaatos() {
       PaatosService.haeElyPaatos($scope.vuosi).then(paatos => $scope.paatos = paatos,
@@ -40,43 +41,35 @@ angular.module('jukufrontApp')
         }, StatusService.errorHandler);
     }
 
+    $scope.muutos = function(hakemus) {
+      return hakemus.myonnettavaAvustus - hakemus.haettuAvustus;
+    };
+
     function haeSuunnitteluData() {
       $q.all([
           SuunnitteluService.hae($scope.vuosi, $scope.tyyppi),
           OrganisaatioService.hae()
         ])
         .then(([suunnittelu, organisaatiot]) => {
-          var suunnitteludata = suunnittelu.data;
-          var hakemuksetSuunnitteluTmp = [];
-          var organisaatiolajitunnus = "";
-          var tarkastettuLkm = 0;
-          $scope.haettuAvustusSum = 0;
-          $scope.myonnettavaAvustusSum = 0;
-          $scope.muutosSum = 0;
-          suunnitteludata.forEach(function (hakemus) {
-              organisaatiolajitunnus = _.find(organisaatiot, {'id': hakemus.organisaatioid}).lajitunnus;
-              if (organisaatiolajitunnus == $scope.lajitunnus) {
-                var muutos = 0;
-                if (hakemus.hakemustilatunnus === 'T' || hakemus.hakemustilatunnus === 'P') {
-                  $scope.haettuAvustusSum = $scope.haettuAvustusSum + hakemus['haettu-avustus'];
-                  $scope.myonnettavaAvustusSum = $scope.myonnettavaAvustusSum + hakemus['myonnettava-avustus'];
-                  muutos = hakemus['myonnettava-avustus'] - hakemus['haettu-avustus'];
-                  $scope.muutosSum = $scope.muutosSum + muutos;
-                }
-                hakemuksetSuunnitteluTmp.push({
-                  'hakemusId': hakemus.id,
-                  'hakija': _.find(organisaatiot, {'id': hakemus.organisaatioid}).nimi,
-                  'hakemuksenTila': hakemus.hakemustilatunnus,
-                  'haettuAvustus': hakemus['haettu-avustus'],
-                  'muutos': muutos,
-                  'myonnettavaAvustus': hakemus['myonnettava-avustus']
-                });
-              }
-              if (hakemus.hakemustilatunnus === 'T') tarkastettuLkm = tarkastettuLkm + 1;
-            }
-          );
-          $scope.kaikkiTarkastettu = (tarkastettuLkm === suunnitteludata.length);
-          $scope.hakemuksetSuunnittelu = _.sortBy(hakemuksetSuunnitteluTmp, 'hakija');
+
+          var hakemukset = _.filter(
+            _.map(suunnittelu.data, hakemus => {
+              var organisaatio = _.find(organisaatiot, {'id': hakemus.organisaatioid});
+              return {
+                    hakemusId: hakemus.id,
+                    organisaatiolajitunnus: organisaatio.lajitunnus,
+                    hakija: organisaatio.nimi,
+                    hakemuksenTila: hakemus.hakemustilatunnus,
+                    haettuAvustus: hakemus['haettu-avustus'],
+                    myonnettavaAvustus: hakemus['myonnettava-avustus']
+              }}), 'organisaatiolajitunnus', $scope.lajitunnus);
+
+          $scope.kaikkiTarkastettu = _.all(hakemukset, 'hakemuksenTila', 'T');
+          $scope.haettuAvustusSum = _.sum(hakemukset, 'haettuAvustus');
+          $scope.haettuAvustusSum = _.sum(hakemukset, 'myonnettavaAvustus');
+          $scope.muutosSum = _.sum(hakemukset, $scope.muutos);
+
+          $scope.hakemuksetSuunnittelu = _.sortBy(hakemukset, 'hakija');
         }, StatusService.errorHandler);
     }
 
