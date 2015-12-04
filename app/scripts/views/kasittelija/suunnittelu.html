@@ -202,21 +202,18 @@
                   varmistusteksti="Oletko varma, että haluat hyväksyä kaikkien ELY-hakemusten päätökset? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
                   operaatio="hyvaksyElyPaatokset()"
                   class="pull-right btn btn-success disabled-button-tooltip"
-                  ng-disabled="(!kaikkiTarkastettu || !sallittu('hyvaksy-paatos'))">Tallenna ja hyväksy päätökset
+                  ng-disabled="!isHyvaksyPaatosEnabled()">Tallenna ja hyväksy päätökset
 
-            <div uib-tooltip="Päätöksenteko vaatii päätöksentekijä-tason käyttöoikeudet."
+            <div uib-tooltip="{{hyvaksyPaatosDisabledTooltip()}}"
                  class="disabled-button-tooltip-text"
-                 ng-if="(kaikkiTarkastettu && !sallittu('hyvaksy-paatos'))"></div>
-            <div uib-tooltip="Päätöksen voi hyväksyä vain kun kaikki hakemukset ovat tarkastettu tilassa."
-                 class="disabled-button-tooltip-text"
-                 ng-if="!kaikkiTarkastettu"></div>
+                 ng-if="!isHyvaksyPaatosEnabled()"></div>
           </button>
 
           <button data-ng-click="tallennaElyPaatokset()"
-                  ng-disabled="!isPaatosTallentaminenEnabled()"
+                  ng-disabled="!isTallennaPaatosEnabled()"
                   class="pull-right btn btn-primary disabled-button-tooltip">Tallenna
             päätösten tiedot
-            <div uib-tooltip="{{paatosTallentaminenDisabledTooltip()}}"
+            <div uib-tooltip="{{tallennaPaatosDisabledTooltip()}}"
                  class="disabled-button-tooltip-text"
                  ng-if="!isPaatosTallentaminenEnabled()"></div>
           </button>

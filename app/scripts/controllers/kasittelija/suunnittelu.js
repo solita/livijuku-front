@@ -249,18 +249,9 @@ angular.module('jukufrontApp')
       tallennaPaatokset();
     }
 
-    $scope.isPaatosTallentaminenEnabled = function() {
-      return $scope.sallittu('kasittely-hakemus') &&
-             core.isNullOrUndefined($scope.paatos.voimaantuloaika);
-    }
 
-    $scope.paatosTallentaminenDisabledTooltip = function () {
-      if (!$scope.sallittu('kasittely-hakemus')) {
-        return "Käyttäjällä ei ole oikeutta muokata päätöksi.";
-      } else if (core.isDefinedNotNull($scope.paatos.voimaantuloaika)) {
-        return "Hyväksyttyjen päätösten tietoja ei voi muuttaa.";
-      };
-    }
+
+
 
     $scope.hyvaksyElyPaatokset = function() {
       if (!$scope.suunnitteluForm.$valid) {
@@ -274,6 +265,33 @@ angular.module('jukufrontApp')
 
       haeSuunnitteluData();
       haeElyPaatos();
+    }
+
+    $scope.isPaatosTallentaminenEnabled = function() {
+      return $scope.sallittu('kasittely-hakemus') &&
+             core.isNullOrUndefined($scope.paatos.voimaantuloaika);
+    }
+
+    $scope.isHyvaksyPaatosEnabled = function() {
+      return $scope.sallittu('hyvaksy-paatos') &&
+             core.isNullOrUndefined($scope.paatos.voimaantuloaika) &&
+             $scope.kaikkiTarkastettu;
+    }
+
+    $scope.tallennaPaatosDisabledTooltip = function () {
+      if (!$scope.sallittu('kasittely-hakemus')) {
+        return "Käyttäjällä ei ole oikeutta muokata päätöksi.";
+      } else if (core.isDefinedNotNull($scope.paatos.voimaantuloaika)) {
+        return "Hyväksyttyjen päätösten tietoja ei voi muuttaa.";
+      };
+    }
+
+    $scope.hyvaksyPaatosDisabledTooltip = function () {
+      if (!$scope.sallittu('hyvaksy-paatos')) {
+        return "Käyttäjällä ei ole oikeutta hyväksyä päätöstä.";
+      } else if (core.isDefinedNotNull($scope.paatos.voimaantuloaika)) {
+        return "Päätökset on jo hyväksytty.";
+      };
     }
 
     haeMaararahat();
