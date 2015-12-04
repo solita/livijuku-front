@@ -212,8 +212,13 @@
                  ng-if="!kaikkiTarkastettu"></div>
           </button>
 
-          <button data-ng-click="tallennaElyPaatokset()" class="pull-right btn btn-primary disabled-button-tooltip">Tallenna
+          <button data-ng-click="tallennaElyPaatokset()"
+                  ng-disabled="!isPaatosTallentaminenEnabled()"
+                  class="pull-right btn btn-primary disabled-button-tooltip">Tallenna
             päätösten tiedot
+            <div uib-tooltip="{{paatosTallentaminenDisabledTooltip()}}"
+                 class="disabled-button-tooltip-text"
+                 ng-if="!isPaatosTallentaminenEnabled()"></div>
           </button>
         </juku-controls-buttons>
       </juku-controls>

@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var core = require('utils/core');
 var angular = require('angular');
 var pdf = require('utils/pdfurl');
 
@@ -20,8 +21,8 @@ angular.module('jukufrontApp')
     $scope.kaikkiTarkastettu = false;
 
     function haeElyPaatos() {
-      PaatosService.haeElyPaatos($scope.vuosi).then(
-        paatos => $scope.paatos = paatos);
+      PaatosService.haeElyPaatos($scope.vuosi).then(paatos => $scope.paatos = paatos,
+                                                    StatusService.errorHandler);
     }
 
     function haeMaararahat() {
@@ -235,7 +236,7 @@ angular.module('jukufrontApp')
                      myonnettyavustus: hakemus.myonnettavaAvustus,
                      selite: selite}));
 
-      PaatosService.tallennaPaatokset(paatokset).then(
+      return PaatosService.tallennaPaatokset(paatokset).then(
         () => StatusService.ok('', 'Ely hakemusten päätökset on päivitetty'),
         StatusService.errorHandler);
     }
@@ -248,15 +249,31 @@ angular.module('jukufrontApp')
       tallennaPaatokset();
     }
 
+    $scope.isPaatosTallentaminenEnabled = function() {
+      return $scope.sallittu('kasittely-hakemus') &&
+             core.isNullOrUndefined($scope.paatos.voimaantuloaika);
+    }
+
+    $scope.paatosTallentaminenDisabledTooltip = function () {
+      if (!$scope.sallittu('kasittely-hakemus')) {
+        return "Käyttäjällä ei ole oikeutta muokata päätöksi.";
+      } else if (core.isDefinedNotNull($scope.paatos.voimaantuloaika)) {
+        return "Hyväksyttyjen päätösten tietoja ei voi muuttaa.";
+      };
+    }
+
     $scope.hyvaksyElyPaatokset = function() {
       if (!$scope.suunnitteluForm.$valid) {
         StatusService.virhe('hyvaksyPaatokset', 'Korjaa suunnittelulomakkeen virheet ennen tallentamista.');
         return;
       }
-      tallennaPaatokset();
-      PaatosService.hyvaksyElyPaatokset($scope.vuosi).then(
-        () => StatusService.ok('', 'Ely hakemusten päätökset on hyväksytty'),
-        StatusService.errorHandler);
+      tallennaPaatokset().then(() =>
+        PaatosService.hyvaksyElyPaatokset($scope.vuosi).then(
+          () => StatusService.ok('', 'Ely hakemusten päätökset on hyväksytty'),
+          StatusService.errorHandler));
+
+      haeSuunnitteluData();
+      haeElyPaatos();
     }
 
     haeMaararahat();
