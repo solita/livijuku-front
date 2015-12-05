@@ -238,11 +238,14 @@ angular.module('jukufrontApp')
       }
       tallennaElyPaatokset().then(() =>
         PaatosService.hyvaksyElyPaatokset($scope.vuosi).then(
-          () => StatusService.ok('', 'Ely hakemusten päätökset on hyväksytty'),
+          () => {
+            StatusService.ok('', 'Ely hakemusten päätökset on hyväksytty');
+            haeSuunnitteluData();
+            haeElyPaatos();
+          },
           StatusService.errorHandler));
 
-      haeSuunnitteluData();
-      haeElyPaatos();
+
     }
 
     $scope.isTallennaPaatosEnabled = function() {
