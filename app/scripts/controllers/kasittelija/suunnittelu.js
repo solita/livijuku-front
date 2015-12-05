@@ -30,7 +30,7 @@ angular.module('jukufrontApp')
       HakemuskausiService.haeMaararaha($scope.vuosi, $scope.lajitunnus)
         .then(function (response) {
           var data = response.data;
-          if (data != null) {
+          if (data !== null) {
             $scope.maararaha = data.maararaha;
             $scope.ylijaama = data.ylijaama;
           } else {
@@ -62,7 +62,8 @@ angular.module('jukufrontApp')
                     hakemuksenTila: hakemus.hakemustilatunnus,
                     haettuAvustus: hakemus['haettu-avustus'],
                     myonnettavaAvustus: hakemus['myonnettava-avustus']
-              }}), 'organisaatiolajitunnus', $scope.lajitunnus);
+              };
+            }), 'organisaatiolajitunnus', $scope.lajitunnus);
 
           $scope.kaikkiTarkastettu = _.all(hakemukset, 'hakemuksenTila', 'T');
           $scope.haettuAvustusSum = _.sum(hakemukset, 'haettuAvustus');
@@ -101,7 +102,7 @@ angular.module('jukufrontApp')
     }
 
     $scope.hakemusKeskenerainen = safe(function (hakemus) {
-      return _.contains(['0', 'K', 'T0'], hakemus.hakemuksenTila)
+      return _.contains(['0', 'K', 'T0'], hakemus.hakemuksenTila);
     });
 
     $scope.hakemusPaatetty = safe(function (hakemus) {
@@ -117,7 +118,7 @@ angular.module('jukufrontApp')
     });
 
     $scope.hakemusTarkastamatta = safe(function (hakemus) {
-      return hakemus.hakemuksenTila != 'T';
+      return hakemus.hakemuksenTila !== 'T';
     });
 
     $scope.hakemusVireilla = safe(function (hakemus) {
@@ -129,24 +130,25 @@ angular.module('jukufrontApp')
     };
 
     $scope.isAvustushakemus = function () {
-      return $scope.tyyppi == 'AH0';
+      return $scope.tyyppi === 'AH0';
     };
 
     $scope.isMaksatushakemus1 = function () {
-      return $scope.tyyppi == 'MH1';
+      return $scope.tyyppi === 'MH1';
     };
 
     $scope.isMaksatushakemus2 = function () {
-      return $scope.tyyppi == 'MH2';
+      return $scope.tyyppi === 'MH2';
     };
 
     $scope.isElyhakemus = function () {
-      return $scope.tyyppi == 'ELY';
+      return $scope.tyyppi === 'ELY';
     };
 
     $scope.sallittuAvustus = function (myonnettavaAvustus, haettuAvustus, tila) {
-      if (tila == 'K' || tila == 'T0') return true;
-      if (typeof myonnettavaAvustus === 'undefined') {
+      if (tila === 'K' || tila === 'T0') {
+        return true;
+      } else if (typeof myonnettavaAvustus === 'undefined') {
         return false;
       } else if (typeof myonnettavaAvustus === 'number') {
         return (myonnettavaAvustus >= 0 && myonnettavaAvustus <= haettuAvustus);
@@ -165,7 +167,7 @@ angular.module('jukufrontApp')
       if ($scope.suunnitteluForm.$valid) {
         if (isNaN(avustus)) {
           haeSuunnitteluData();
-        } else if (avustus != $scope.vanhaArvo) {
+        } else if (avustus !== $scope.vanhaArvo) {
           SuunnitteluService.suunniteltuAvustus(avustus, hakemusid)
             .then(function () {
               StatusService.ok('SuunnitteluService.suunniteltuAvustus(' + avustus + ',' + hakemusid + ')', 'Myönnettävä avustus:' + avustus + ' € päivitetty.');
@@ -180,18 +182,18 @@ angular.module('jukufrontApp')
       $scope.$broadcast('show-errors-check-validity');
       if ($scope.suunnitteluForm.$valid) {
         var muuttunut = false;
-        if (arvo == 'maararaha') {
+        if (arvo === 'maararaha') {
           if (isNaN($scope.maararaha)) {
             haeMaararahat();
           } else {
-            muuttunut = $scope.maararaha != $scope.vanhaArvo;
+            muuttunut = $scope.maararaha !== $scope.vanhaArvo;
           }
         }
-        if (arvo == 'ylijaama') {
+        if (arvo === 'ylijaama') {
           if (isNaN($scope.ylijaama)) {
             haeMaararahat();
           } else {
-            muuttunut = $scope.ylijaama != $scope.vanhaArvo;
+            muuttunut = $scope.ylijaama !== $scope.vanhaArvo;
           }
         }
         if (muuttunut) {
@@ -230,7 +232,7 @@ angular.module('jukufrontApp')
         return;
       }
       tallennaElyPaatokset();
-    }
+    };
 
     $scope.hyvaksyElyPaatokset = function() {
       if (!$scope.suunnitteluForm.$valid) {
@@ -247,34 +249,34 @@ angular.module('jukufrontApp')
           StatusService.errorHandler));
 
 
-    }
+    };
 
     $scope.isTallennaPaatosEnabled = function() {
       return $scope.sallittu('kasittely-hakemus') &&
              core.isNullOrUndefined($scope.paatos.voimaantuloaika);
-    }
+    };
 
     $scope.isHyvaksyPaatosEnabled = function() {
       return $scope.sallittu('hyvaksy-paatos') &&
              core.isNullOrUndefined($scope.paatos.voimaantuloaika) &&
              $scope.kaikkiTarkastettu;
-    }
+    };
 
     $scope.tallennaPaatosDisabledTooltip = function () {
       if (!$scope.sallittu('kasittely-hakemus')) {
-        return "Käyttäjällä ei ole oikeutta muokata päätöksi.";
+        return 'Käyttäjällä ei ole oikeutta muokata päätöksi.';
       } else if (core.isDefinedNotNull($scope.paatos.voimaantuloaika)) {
-        return "Hyväksyttyjen päätösten tietoja ei voi muuttaa.";
-      };
-    }
+        return 'Hyväksyttyjen päätösten tietoja ei voi muuttaa.';
+      }
+    };
 
     $scope.hyvaksyPaatosDisabledTooltip = function () {
       if (!$scope.sallittu('hyvaksy-paatos')) {
-        return "Käyttäjällä ei ole oikeutta hyväksyä päätöstä.";
+        return 'Käyttäjällä ei ole oikeutta hyväksyä päätöstä.';
       } else if (core.isDefinedNotNull($scope.paatos.voimaantuloaika)) {
-        return "Päätökset on jo hyväksytty.";
-      };
-    }
+        return 'Päätökset on jo hyväksytty.';
+      }
+    };
 
     $scope.naytaPaatos = function (hakemus) {
       if ($scope.isTallennaPaatosEnabled()) {
@@ -293,9 +295,9 @@ angular.module('jukufrontApp')
 
     $scope.naytaPaatosTitle = function () {
       if ($scope.isTallennaPaatosEnabled()) {
-        return "Tallenna ja esikatsele päätös";
+        return 'Tallenna ja esikatsele päätös';
       } else {
-        return "Näytä päätös";
+        return 'Näytä päätös';
       }
     };
 
