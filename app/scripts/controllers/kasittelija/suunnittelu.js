@@ -201,6 +201,7 @@ angular.module('jukufrontApp')
           };
           HakemuskausiService.paivitaMaararaha($scope.vuosi, $scope.lajitunnus, maararahadata)
             .then(function () {
+              StatusService.ok('paivitaMaararaha', 'Kauden ' + $scope.vuosi + ' määrärahat on päivitetty.');
               haeMaararahat();
             }, StatusService.errorHandler);
         }
