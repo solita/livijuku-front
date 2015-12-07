@@ -11,9 +11,6 @@
             <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" numeric-only="" noenter select-on-click
                    alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
                    ng-readonly="isReadonly()" class="form-control"
-                   uib-tooltip="{{haeTooltip('haettavaavustus',alv,kohde.alv)}}"
-                   tooltip-trigger="focus"
-                   tooltip-placement="top"
                    ng-model-options="{ allowInvalid: true }"
                    ng-model="kohde.haettavaavustus"
                    ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo($value)'}"/>
@@ -32,9 +29,7 @@
           <div class="input-group">
             <input name="{{getName('omarahoitus')}}" type="text"  ng-currency="" numeric-only="" noenter select-on-click
                    alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
-                   class="form-control" uib-tooltip="{{haeTooltip('omarahoitus',alv,kohde.alv)}}"
-                   tooltip-trigger="focus"
-                   tooltip-placement="top"
+                   class="form-control"
                    ng-model-options="{ allowInvalid: true }"
                    ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
                    ui-validate="{omarahoitusRiittava: 'omarahoitusRiittava($value,kohde.haettavaavustus)',sallittuArvoOmarahoitus: 'sallittuArvo($value)'}"
