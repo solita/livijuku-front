@@ -67,7 +67,7 @@ angular.module('jukufrontApp')
 
           $scope.kaikkiTarkastettu = _.all(hakemukset, 'hakemuksenTila', 'T');
           $scope.haettuAvustusSum = _.sum(hakemukset, 'haettuAvustus');
-          $scope.haettuAvustusSum = _.sum(hakemukset, 'myonnettavaAvustus');
+          $scope.myonnettavaAvustusSum = _.sum(hakemukset, 'myonnettavaAvustus');
           $scope.muutosSum = _.sum(hakemukset, $scope.muutos);
 
           $scope.hakemuksetSuunnittelu = _.sortBy(hakemukset, 'hakija');
