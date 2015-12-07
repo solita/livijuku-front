@@ -16,15 +16,12 @@
                    tooltip-placement="top"
                    ng-model-options="{ allowInvalid: true }"
                    ng-model="kohde.haettavaavustus"
-                   ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo($value)', sallittuArvoHaettavamaksatus: 'sallittuMaksatusArvo($value)'}"/>
+                   ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo($value)'}"/>
             <span ng-hide="isReadonly()" class="input-group-addon">alv {{ alv ? kohde.alv : 0 }}%</span>
           </div>
 
           <p class="help-block ng-invalid-sallittu-arvo-haettavaavustus">
             Arvon tulee olla välillä 0 - 999 999 999,99 € (sis. ALV).
-          </p>
-          <p class="help-block ng-invalid-sallittu-arvo-haettavamaksatus">
-            Arvo ei saa olla suurempi kuin avustushakemuksessa.
           </p>
         </div>
       </div>
