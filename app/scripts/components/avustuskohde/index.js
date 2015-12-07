@@ -14,15 +14,6 @@ module.exports = function () {
     },
     controller: ['$scope', '$rootScope', 'AvustuskohdeService', 'AuthService', '$sce', function ($scope, $rootScope, AvustuskohdeService, AuthService, $sce) {
 
-      function arvo_teksti(arvo, alvmukana, prosentti) {
-        if (typeof arvo === 'undefined') return;
-        if (alvmukana) {
-          return arvo.toFixed(2).toString().replace('.', ',') + ' € (sis. alv)';
-        } else {
-          return (arvo / (1 + (prosentti / 100))).toFixed(2).toString().replace('.', ',') + ' € (alv 0%)';
-        }
-      }
-
       $scope.avustusprosentti = AvustuskohdeService.avustusprosentti($scope.vuosi, $scope.kohde.avustuskohdeluokkatunnus, $scope.kohde.avustuskohdelajitunnus);
 
       $scope.euroSyoteNumeroksi = function (arvo) {
@@ -31,27 +22,6 @@ module.exports = function () {
 
       $scope.getName = function (key) {
         return $scope.kohde.avustuskohdeluokkatunnus + '-' + $scope.kohde.avustuskohdelajitunnus + '-' + key;
-      };
-
-      $scope.haeTooltip = function (syotekentta, alvmukana, alvprosentti) {
-        var tooltip = '';
-        if ($scope.hakemustyyppi !== 'AH0') {
-          if (syotekentta === 'haettavaavustus') {
-            tooltip = 'Avustushakemuksessa haettu avustus:' + arvo_teksti($scope.vertailuarvot().avustushakemusHaettavaAvustus, alvmukana, alvprosentti);
-          }
-          else if (syotekentta === 'omarahoitus') {
-            tooltip = 'Avustushakemuksessa omarahoitus:' + arvo_teksti($scope.vertailuarvot().avustushakemusOmaRahoitus, alvmukana, alvprosentti);
-          }
-        }
-        if ($scope.hakemustyyppi === 'MH2') {
-          if (syotekentta === 'haettavaavustus') {
-            tooltip = tooltip + '\n' + 'Maksatushakemuksessa haettu avustus:' + arvo_teksti($scope.vertailuarvot().maksatushakemusHaettavaAvustus, alvmukana, alvprosentti);
-          }
-          else if (syotekentta === 'omarahoitus') {
-            tooltip = tooltip + '\n' + 'Maksatushakemuksessa omarahoitus:' + arvo_teksti($scope.vertailuarvot().maksatushakemusOmaRahoitus, alvmukana, alvprosentti);
-          }
-        }
-        return tooltip;
       };
 
       $scope.isReadonly = function () {
