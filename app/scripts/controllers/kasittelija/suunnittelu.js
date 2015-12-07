@@ -217,7 +217,6 @@ angular.module('jukufrontApp')
       var selite = _.get($scope, 'paatos.selite', '');
       var paatokset = _.map($scope.hakemuksetSuunnittelu,
         hakemus => ({hakemusid: hakemus.hakemusId,
-                     paattajanimi: '',
                      myonnettyavustus: hakemus.myonnettavaAvustus,
                      selite: selite}));
 
@@ -284,7 +283,6 @@ angular.module('jukufrontApp')
 
         PaatosService.tallenna(hakemus.hakemusId,
           { hakemusid: hakemus.hakemusId,
-            paattajanimi: '',
             myonnettyavustus: hakemus.myonnettavaAvustus,
             selite: $scope.paatos.selite }).then(() => ikkuna.location.href = pdf.getPaatosPdfUrl(hakemus.hakemusId));
 

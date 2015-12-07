@@ -20,7 +20,6 @@ angular.module('jukufrontApp')
           if (data == null) {
             $scope.paatos = {
               myonnettyavustus: 0,
-              paattajanimi: "",
               selite: ""
             };
           } else {
@@ -73,16 +72,10 @@ angular.module('jukufrontApp')
         StatusService.virhe('PaatosService.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
         return;
       }
-      if ($rootScope.sallittu('hyvaksy-paatos')) {
-        $scope.paatos.paattajanimi = $rootScope.user.etunimi + ' ' + $rootScope.user.sukunimi;
-      } else {
-        $scope.paatos.paattajanimi = '';
-      }
       if (lisatoiminto === 1) var ikkuna = $window.open('about:blank', '_blank');
       var paatosdata = {
         "hakemusid": parseInt($scope.hakemusid),
         "myonnettyavustus": parseFloat($scope.avustus),
-        "paattajanimi": $scope.paatos.paattajanimi,
         "selite": $scope.paatos.selite
       };
       PaatosService.tallenna($scope.hakemusid, paatosdata)
