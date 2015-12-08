@@ -30,6 +30,7 @@ angular.module('jukufrontApp')
         user: userPromise,
         userOrganisaatio: userPromise.then(user => OrganisaatioService.findById(user.organisaatioid)).then(org => org.nimi),
         userPankkitilinumero: userPromise.then(user => OrganisaatioService.findById(user.organisaatioid)).then(org => org.pankkitilinumero),
+        userLajitunnus: userPromise.then(user => OrganisaatioService.findById(user.organisaatioid)).then(org => org.lajitunnus),
         avustuskohdeLuokat: avustusKohdeService.luokittelu().then(convertAvustuskohdeluokittelu)
       });
 

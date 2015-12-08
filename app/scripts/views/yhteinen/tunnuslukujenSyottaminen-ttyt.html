@@ -5,83 +5,15 @@
     </juku-form-row>
     <juku-form-row>
       <h3>Alueen taustatiedot</h3>
-    </juku-form-row>
-    <juku-form-row>
-      <div class="table-responsive">
-        <table class="table table-hover table-condensed">
-          <tr>
-            <th colspan="2" class="col-md-8 ekarivi">Viranomaisen tiedot</th>
-            <th class="col-md-4 ekarivi">Vapaat kommentit</th>
-          </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>Joukkoliikenteen lippualue</th>
-              <td>
-                <form-group-compact label="Lippualue">
-                  <input id="taustatiedot-lippualue" name="lippualue" type="text"
-                         required
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.lippualue">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-lippualue-k" name="lippualue-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.lippualueKommentit">
-                </form-group-compact>
-              </td>
-            </tr>
-            <tr>
-              <th>Toimivaltainen viranomainen</th>
-              <td>
-                <form-group-compact label="Viranomainen">
-                  <input id="taustatiedot-viranomainen" name="viranomainen" type="text"
-                         required
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.viranomainen">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-viranomainen-k" name="viranomainen-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.viranomainenKommentit">
-                </form-group-compact>
-              </td>
-            </tr>
-            <tr>
-              <th>Kuntaviranomainen</th>
-              <td>
-                <form-group-compact label="Kuntaviranomainen">
-                  <select id="taustatiedot-kuntaviranomainen" name="kuntaviranomainen"
-                          ng-model="taustatiedot.kuntaviranomainen" ng-disabled="isReadonly()"
-                          placeholder="Kuntaviranomainen" required>
-                    <option value="" selected disabled>Valitse kuntaviranomainen</option>
-                    <option value="1">Pieni</option>
-                    <option value="2">Keskisuuri</option>
-                    <option value="3">Suuri</option>
-                    <option value="4">Lippualue (ELY)</option>
-                    <option value="5">Muu liikenne (ELY)</option>
-                  </select>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-kuntaviranomainen-k" name="kuntaviranomainen-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kuntaviranomainenKommentit">
-                </form-group-compact>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Organisaatio</h5>
+          {{$root.userOrganisaatio}}
+        </div>
+        <div class="col-md-6">
+          <h5>TVV</h5>
+          {{$root.userLajitunnus | toApplicantName}}
+        </div>
       </div>
     </juku-form-row>
     <juku-form-row>
