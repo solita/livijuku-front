@@ -104,7 +104,16 @@ public class TestBase {
         HARRI("juku_hakija", "juku_hakija", "helsingin ka", ""),
         KATRI("juku_kasittelija", "juku_kasittelija", "liikennevirasto", ""),
         PAIVI("juku_paatoksentekija", "juku_paatoksentekija", "liikennevirasto", ""),
-        ELLU("juku_hakija_epo","juku_hakija","ELY","10");
+        ELY1("juku_hakija_uus","juku_hakija","ELY","1"),
+        ELY2("juku_hakija_var","juku_hakija","ELY","2"),
+        ELY3("juku_hakija_kaa","juku_hakija","ELY","3"),
+        ELY4("juku_hakija_pir","juku_hakija","ELY","4"),
+        ELY8("juku_hakija_psa","juku_hakija","ELY","8"),
+        ELY9("juku_hakija_ksu","juku_hakija","ELY","9"),
+        ELY10("juku_hakija_epo","juku_hakija","ELY","10"),
+        ELY12("juku_hakija_ppo","juku_hakija","ELY","12"),
+        ELY14("juku_hakija_lap","juku_hakija","ELY","14");
+
 
         private final String login;
         private final String group;

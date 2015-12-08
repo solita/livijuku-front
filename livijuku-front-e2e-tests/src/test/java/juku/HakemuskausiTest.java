@@ -529,6 +529,49 @@ public class HakemuskausiTest extends TestBase {
         waitForAngularRequestsToFinish(driver);
     }
 
+    private void lahetaDummyElyHakemus(User user) throws IOException, URISyntaxException {
+
+        /************************************************************
+         * Elyhakemus
+         */
+
+        login(user);
+
+        OmatHakemukset.hakemuksenTila(Hakemuslaji.ELY, Hakemustila.KESKENERAINEN).click();
+
+        // Täytetään kenttiin arvot
+
+        // Perustiedot
+        elyPerustiedot("10000", "20000");
+
+        // Lisää allekirjoitusliite
+        lisaaAllekirjoitusLiite();
+
+        // Tallenna hakemus
+        Hakemus.tallennaHakemus().click();
+
+
+        // Lähetä hakemus
+        lahetaHakemus();
+
+        // Assertoi hakijana tila vireillä (find failaa, jos ei löydä)
+        OmatHakemukset.hakemuksenTila(Hakemuslaji.ELY, Hakemustila.VIREILLA);
+
+        // Kirjaa sisään käsittelijä
+        login(User.KATRI);
+        // Ota hakemus käsittelyyn
+        Hakemuskaudet.tilaindikaattori(Hakemuslaji.ELY, Hakemustila.VIREILLA).click();
+        WorkAround.click(KaikkiHakemukset.ensimmainenTilaindikaattori(Hakemuslaji.ELY, Hakemustila.VIREILLA));
+
+        Hakemus.tarkistaHakemuksenTila(Hakemuslaji.ELY, Hakemustila.VIREILLA);
+
+        button("Merkitse tarkastetuksi").click();
+        okOlenVarma().click();
+
+        // Assertoi käsittelijänä tila Tarkastettu
+        spanWithHakemustila(Hakemustila.TARKASTETTU);
+    }
+
     @Test
     public void hakijaVoiEsikatsellaAvustushakemustaLIVIJUKU_128() throws IOException {
         login(User.HARRI);
@@ -594,7 +637,7 @@ public class HakemuskausiTest extends TestBase {
          * Elyhakemus
          */
 
-        login(User.ELLU);
+        login(User.ELY10);
 
         // Varmista, että kausi on avoinna TODO: Korjaa tämä.
         //    WebElement eiHakemuksia = findElementByXPath("//p[%s]", containsText("Ei hakemuksia, koska hakemuskautta ei ole vielä avattu."));
@@ -669,7 +712,7 @@ public class HakemuskausiTest extends TestBase {
         //Assertoi käsittelijänä tila Täydennettävänä
         spanWithHakemustila(Hakemustila.TAYDENNETTAVANA);
         // Kirjaa sisään hakija
-        login(User.ELLU);
+        login(User.ELY10);
         // Assertoi tila täydennettävänä
         // Avaa hakemus
         spanWithHakemustila(Hakemustila.TAYDENNETTAVANA).click();
@@ -699,40 +742,46 @@ public class HakemuskausiTest extends TestBase {
         // Assertoi käsittelijänä tila Tarkastettu
         spanWithHakemustila(Hakemustila.TARKASTETTU);
 
+        // Lähetä muiden ELY-organisaatioiden (dummy)hakemukset
+        User[] userData = {User.ELY1, User.ELY2, User.ELY3, User.ELY4, User.ELY8, User.ELY9, User.ELY12, User.ELY14};
+        for (User u : userData) {
+            lahetaDummyElyHakemus(u);
+        }
+
+
         // Kirjaa sisään hakija
-        login(User.ELLU);
+        login(User.ELY10);
         // Assertoi hakijana tila tarkastettu
         OmatHakemukset.hakemuksenTila(Hakemuslaji.ELY, Hakemustila.TARKASTETTU);
 
-/*
+
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Päätä hakemus
         Hakemuskaudet.tilaindikaattori(Hakemuslaji.ELY, Hakemustila.TARKASTETTU).click();
         KaikkiHakemukset.suunnitteluJaPaatoksenteko(0).click();
 
-        // Myönnetään 13 900 €
-        WebElement hslMyonnettavaAvustus = Suunnittelu.hslMyonnettavaAvustus();
-        hslMyonnettavaAvustus.clear();
-        hslMyonnettavaAvustus.sendKeys("13900,00");
+        // Myönnetään 200000 €
+        WebElement epoMyonnettavaAvustus = Suunnittelu.hslMyonnettavaAvustus();
+        epoMyonnettavaAvustus.clear();
+        epoMyonnettavaAvustus.sendKeys("200000,00");
 
-        Suunnittelu.paatoksentekoon().click();
-        spanWithHakemustila(Hakemustila.TARKASTETTU);
-        findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
-        button("Tallenna tiedot").click();
+        findElementByXPath("//textarea[@id='paatosteksti']").sendKeys("Päätöstekstiä");
+        button("Tallenna päätösten tiedot").click();
         waitForAngularRequestsToFinish(driver);
 
         // Kirjaa sisään päättäjä
         login(User.PAIVI);
-        Hakemuskaudet.tilaindikaattori(Hakemuslaji.AVUSTUS, Hakemustila.TARKASTETTU).click();
+        Hakemuskaudet.tilaindikaattori(Hakemuslaji.ELY, Hakemustila.TARKASTETTU).click();
         KaikkiHakemukset.suunnitteluJaPaatoksenteko(0).click();
-        Suunnittelu.paatoksentekoon().click();
-        button("Tallenna ja hyväksy päätös").click();
+        button("Tallenna ja hyväksy päätökset").click();
         okOlenVarma().click();
         waitForAngularRequestsToFinish(driver);
 
+        /*
         // Kirjaa sisään hakija
-        login(User.HARRI);
+        login(User.ELY10);
+
         // Assertoi tila päätetty
         spanWithHakemustila(Hakemustila.PAATETTY).click();
 
