@@ -638,7 +638,7 @@ public class HakemuskausiTest extends TestBase {
 
         // Tarkistetaan hakemuksen kokonaissumma-kenttä
         WebElement elyhakemusYhteensa = findElementByXPath("//h4[@id='sumHaettavaElyAvustus']");
-        assertThat(elyhakemusYhteensa.getText(), is(equalTo("269 655,00 € (sis. alv)")));
+        assertThat(elyhakemusYhteensa.getText(), is(equalTo("283 655,00 € (sis. alv)")));
 
         // Tallenna hakemus
         Hakemus.tallennaHakemus().click();
