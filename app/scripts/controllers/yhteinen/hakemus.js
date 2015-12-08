@@ -126,7 +126,7 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
     lipputyypit: ifMaksatushakemus(hakemus => LippuSuoriteService.lipputyypit(), []),
     kehittamishankkeet: ifElyhakemus(hakemus => ElyHakemusService.haeKehityshankkeet(hakemus.id), []),
     maararahatarvetyypit: ifElyhakemus(hakemus => ElyHakemusService.haeMaararahatarvetyypit(), []),
-    maararahaTarpeet: ifElyhakemus(hakemus => ElyHakemusService.haeMaararahatarpeet(hakemus.id), []),
+    maararahatarpeet: ifElyhakemus(hakemus => ElyHakemusService.haeMaararahatarpeet(hakemus.id), []),
     psaLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PSA")),
     palLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PAL")),
     kaupunkilippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, function (suorite) {
@@ -377,7 +377,6 @@ angular.module('jukufrontApp')
       $scope.sumHaettavaElyAvustus = function () {
         var maararahatarpeetSum = $scope.hakemus.ely.siirtymaaikasopimukset + $scope.hakemus.ely.joukkoliikennetukikunnat + _.sum($scope.maararahatarpeet, 'sidotut') + _.sum($scope.maararahatarpeet, 'uudet') - _.sum($scope.maararahatarpeet, 'tulot');
         var kehittamishankkeetSum = _.sum($scope.kehittamishankkeet, 'arvo');
-        ;
         return (maararahatarpeetSum + kehittamishankkeetSum);
       };
 
@@ -450,7 +449,7 @@ angular.module('jukufrontApp')
 
         if (isElyhakemus($scope.hakemus)) {
           tallennusPromise.push(ElyHakemusService.tallennaElyPerustiedot($scope.hakemus.id, $scope.hakemus.ely));
-          tallennusPromise.push(ElyHakemusService.tallennaMaararahatarpeet($scope.hakemus.id, $scope.maararahaTarpeet));
+          tallennusPromise.push(ElyHakemusService.tallennaMaararahatarpeet($scope.hakemus.id, $scope.maararahatarpeet));
           tallennusPromise.push(ElyHakemusService.tallennaKehityshankkeet($scope.hakemus.id, $scope.kehittamishankkeet));
         } else {
           var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
