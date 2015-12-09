@@ -28,7 +28,7 @@ function isMaksatushakemus(hakemus) {
 function errorMessage(nimi) {
   return function (input) {
     return input.$error.required ? nimi + ' on pakollinen tieto.' :
-      input.$error.sallittuIban ? 'Pankkitilinumero on annettava IBAN-muotoisena.' : '';
+      input.$error.sallittuIban ? 'Tilinumero on annettava IBAN-muotoisena.' : '';
   }
 }
 
@@ -342,7 +342,7 @@ angular.module('jukufrontApp')
         return IBAN.isValid(tilinumero);
       };
 
-      $scope.pankkitilinumeroErrorMessage = errorMessage("Pankkitilinumero");
+      $scope.pankkitilinumeroErrorMessage = errorMessage("Tilinumero");
 
       $scope.isMaksatushakemus = isMaksatushakemus($scope.hakemus);
 

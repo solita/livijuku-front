@@ -7,7 +7,7 @@ const types = {
   AH0: 'Avustushakemukset',
   MH1: '1. maksatushakemukset',
   MH2: '2. maksatushakemukset',
-  ELY: 'ELY hakemukset'
+  ELY: 'ELY-hakemukset'
 };
 
 angular.module('filters.toApplicationNamePlural', [])

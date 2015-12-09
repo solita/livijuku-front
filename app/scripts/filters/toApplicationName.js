@@ -7,7 +7,7 @@ const types = {
   AH0: 'Avustushakemus',
   MH1: '1. maksatushakemus',
   MH2: '2. maksatushakemus',
-  ELY: 'ELY hakemus'
+  ELY: 'ELY-hakemus'
 };
 
 angular.module('filters.toApplicationName', [])

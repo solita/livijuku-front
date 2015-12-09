@@ -52,11 +52,11 @@
             {{getHakija(hakemus)}}
           </div>
           <div class="col-md-3" ng-if="onMaksatushakemus1() || onMaksatushakemus2()">
-            <form-group label="Pankkitilinumero" errormessage="pankkitilinumeroErrorMessage">
+            <form-group label="IBAN-tilinumero" errormessage="pankkitilinumeroErrorMessage">
               <input id="pankkitilinumero" name="pankkitilinumero" type="text" class="form-control"
                      ng-model="hakemus.tilinumero"
                      ng-readonly="isReadonly()"
-                     placeholder="Pankkitilinumero"
+                     placeholder="IBAN-tilinumero"
                      ui-validate="{sallittuIban: 'sallittuIban($value)'}"
                      required select-on-click/>
             </form-group>
