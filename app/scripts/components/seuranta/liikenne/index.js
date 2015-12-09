@@ -92,10 +92,6 @@ function liikenneController($scope) {
            input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' : '';
   };
 
-  $scope.suoritetyyppiErrorMessage = function(input) {
-    return input.$error ? 'Syötä tarvittavat linja- ja sopimussuoritteet tai kokonaissuorite.' : ''
-  };
-
   $scope.ajokilometritErrorMessage = errorMessage("Ajokilometrit");
   $scope.lipputuloErrorMessage = errorMessage("Lipputulo");
   $scope.nettohintaErrorMessage = errorMessage("Nettohinta");

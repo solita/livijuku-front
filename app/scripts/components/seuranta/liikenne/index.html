@@ -2,8 +2,19 @@
   <div class="table-responsive">
     <table class="table table-hover table-condensed">
       <tr>
-        <th class="col-md-2">Suoritetyyppi</th>
-        <th class="col-md-2">Suoritteen nimi</th>
+        <th class="col-md-2">
+          <div uib-tooltip="Valitse suorite linja-, sopimus-, tai kokonaistasolla." tooltip-placement="top"
+               tooltip-append-to-body="true">
+            Suoritetyyppi&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+        </th>
+        <th class="col-md-2">
+          <div
+            uib-tooltip="Kirjoita suoritteen nimi, esimerkiksi linjan numero, sopimuksen nimi tai sopimuskokonaisuus."
+            tooltip-placement="top"
+            tooltip-append-to-body="true">
+            Suoritteen nimi&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+          </div>
+        </th>
         <th>
           <div uib-tooltip="Linja-autojen lukumäärä" tooltip-placement="top"
                tooltip-append-to-body="true">
@@ -75,12 +86,13 @@
         </tr>
         <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">
           <td>
-            <form-group-compact label="Suoritetyyppi" errormessage="suoritetyyppiErrorMessage">
+            <form-group-compact label="Suoritetyyppi" errormessage="">
 
               <select id="{{liikennetyyppi + '-suoritetyyppi'}}" name="suoritetyyppi"
                       ng-model="rivi.suoritetyyppitunnus" ng-disabled="isReadonly()"
                       placeholder="Suoritetyyppi"
-                      ng-options="tyyppi.tunnus as tyyppi.nimi disable when (tyyppi.tunnus=='KS' && suoritteet.length>1) for tyyppi in suoritetyypit" required>
+                      ng-options="tyyppi.tunnus as tyyppi.nimi disable when (tyyppi.tunnus=='KS' && suoritteet.length>1) for tyyppi in suoritetyypit"
+                      required>
                 <option value="" selected disabled>Valitse suoritetyyppi</option>
               </select>
 
