@@ -62,7 +62,7 @@ public class TestBase {
         AVUSTUS("Avustushakemus"),
         MAKSATUS1("1. maksatushakemus"),
         MAKSATUS2("2. maksatushakemus"),
-        ELY("ELY hakemus");
+        ELY("ELY-hakemus");
 
         private final String otsikko;
 
