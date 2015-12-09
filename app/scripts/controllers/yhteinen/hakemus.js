@@ -63,7 +63,7 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
 
   function ifMaksatushakemus(then, defaultvalue) {
     return hakemusPromise.then((hakemus) => {
-      if (isMaksatushakemus(hakemus)) {
+      if (isMaksatushakemus(hakemus) && hakemus.contentvisible) {
         return then(hakemus);
       } else {
         return defaultvalue;
@@ -73,7 +73,7 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
 
   function ifElyhakemus(then, defaultvalue) {
     return hakemusPromise.then((hakemus) => {
-      if (isElyhakemus(hakemus)) {
+      if (isElyhakemus(hakemus) && hakemus.contentvisible) {
         return then(hakemus);
       } else {
         return defaultvalue;
