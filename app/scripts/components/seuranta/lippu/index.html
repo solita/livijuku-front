@@ -46,7 +46,7 @@
           <td ng-if="!kaupunkilippu">
             <form-group-compact label="Seutulippualue" errormessage="seutulippualueErrorMessage">
               <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-seutulippualue'}}" name="seutulippualue"
-                     type="text" noenter ng-minlength="2" select-on-click
+                     type="text" noenter ng-minlength="2" ng-maxlength="200" select-on-click
                      ng-model="rivi.seutulippualue" ng-disabled="isReadonly()"
                      placeholder="Seutulippualue" required>
             </form-group-compact>

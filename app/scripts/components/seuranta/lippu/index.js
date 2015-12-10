@@ -75,7 +75,8 @@ function lippuController($scope) {
 
   $scope.seutulippualueErrorMessage = function (input) {
     return input.$error.required ? 'Seutulippualue on pakollinen tieto.' :
-      input.$error.minlength ? 'Seutulippualue pituus pitää olla vähintään 2 merkkiä.' : '';
+      input.$error.minlength ? 'Seutulippualue-kentän pituus pitää olla vähintään 2 merkkiä.' :
+        input.$error.maxlength ? 'Seutulippualue-kentän pituus saa olla enintään 200 merkkiä.' : '';
   };
 
   $scope.myyntiErrorMessage = errorMessage("Myyntien lukumäärä");

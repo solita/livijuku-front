@@ -101,7 +101,7 @@
           <td>
             <form-group-compact label="Nimi" errormessage="nimiErrorMessage">
               <input id="{{liikennetyyppi + '-nimi'}}" name="nimi"
-                     type="text" noenter required ng-minlength="2"
+                     type="text" noenter required ng-minlength="2" ng-maxlength="200"
                      placeholder="Nimi"
                      select-on-click
                      ng-readonly="isReadonly()"

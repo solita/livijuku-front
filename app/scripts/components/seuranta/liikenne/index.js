@@ -2,7 +2,7 @@
 var _ = require('lodash');
 
 function errorMessage(nimi) {
-  return function(input) {
+  return function (input) {
     return input.$error.required ? nimi + ' on pakollinen tieto.' :
       input.$error.sallittuArvo ? 'Arvon tulee olla välillä 0 - 999 999 999' : '';
   }
@@ -78,8 +78,8 @@ function liikenneController($scope) {
     return _.sum($scope.suoritteet, 'nettohinta');
   };
 
-  $scope.isKokonaissuorite = function(){
-    if ($scope.suoritteet === undefined || $scope.suoritteet.length==0) return false;
+  $scope.isKokonaissuorite = function () {
+    if ($scope.suoritteet === undefined || $scope.suoritteet.length == 0) return false;
     return $scope.suoritteet[0].suoritetyyppitunnus == 'KS';
   };
 
@@ -87,9 +87,10 @@ function liikenneController($scope) {
     return $scope.suoritteet[i].lipputulo + $scope.suoritteet[i].nettohinta;
   };
 
-  $scope.nimiErrorMessage = function(input) {
+  $scope.nimiErrorMessage = function (input) {
     return input.$error.required ? 'Nimi on pakollinen tieto.' :
-           input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' : '';
+      input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' :
+        input.$error.maxlength ? 'Nimen pituus saa olla enintään 200 merkkiä.' : '';
   };
 
   $scope.ajokilometritErrorMessage = errorMessage("Ajokilometrit");
