@@ -20,7 +20,7 @@ function kehittamishankkeetController($scope) {
   $scope.lisaaKehittamishanke = function () {
     var uusi = {
       "numero": haeMaksimiNumero($scope.kehittamishankkeet),
-      "nimi": "Kehittämishanke",
+      "nimi": "",
       "arvo": 0,
       "kuvaus": ""
     };
