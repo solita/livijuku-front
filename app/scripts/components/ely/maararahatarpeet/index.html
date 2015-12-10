@@ -74,10 +74,11 @@
                 </form-group-compact>
               </td>
               <td>
-                <form-group-compact label="Kuvaus">
+                <form-group-compact label="Kuvaus" errormessage="kuvausErrorMessage">
                   <input id="{{maararahatarve.maararahatarvetyyppitunnus +'-kuvaus'}}" name="kuvaus" type="text"
                          noenter
                          select-on-click
+                         ng-maxlength="2000"
                          ng-model="maararahatarve.kuvaus"
                          ng-disabled="isReadonly()"
                          placeholder="Kuvaus">

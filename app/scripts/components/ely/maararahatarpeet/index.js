@@ -34,6 +34,15 @@ function maararahatarpeetController($scope) {
   $scope.sasopimuksetErrorMessage = errorMessage("Siirtymäajan sopimukset");
   $scope.jltkunnilleErrorMessage = errorMessage("Joukkoliikennetuki kunnille");
   $scope.arvoalueErrorMessage = errorMessage("");
+
+  $scope.nimiErrorMessage = function(input) {
+    return input.$error.required ? 'Nimi on pakollinen tiedto.' :
+      input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' :
+      input.$error.maxlength ? 'Nimen pituus saa olla enintään 200 merkkiä.' : '';
+  };
+  $scope.kuvausErrorMessage = function(input) {
+    return input.$error.maxlength ? 'Kuvauksen pituus saa olla enintään 2000 merkkiä.' : '';
+  };
 }
 
 module.exports = function () {

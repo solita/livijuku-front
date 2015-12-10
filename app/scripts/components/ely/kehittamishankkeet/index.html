@@ -34,7 +34,7 @@
               <td>
                 <form-group-compact label="Nimi" errormessage="nimiErrorMessage">
                   <input id="{{'nimi-'+$index}}" name="nimi" type="text"
-                         noenter ng-minlength="2"
+                         noenter ng-minlength="2" ng-maxlength="200"
                          select-on-click
                          ng-model="kehittamishanke.nimi"
                          ng-disabled="isReadonly()"
@@ -54,10 +54,11 @@
                 </form-group-compact>
               </td>
               <td>
-                <form-group-compact label="Kuvaus">
+                <form-group-compact label="Kuvaus" errormessage="kuvausErrorMessage">
                   <input id="{{'kuvaus-'+$index}}" name="kuvaus" type="text"
                          noenter
                          select-on-click
+                         ng-maxlength="200"
                          ng-disabled="isReadonly()"
                          ng-model="kehittamishanke.kuvaus"
                          placeholder="Kuvaus">

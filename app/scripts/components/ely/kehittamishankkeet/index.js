@@ -50,7 +50,14 @@ function kehittamishankkeetController($scope) {
   };
 
   $scope.arvoalueErrorMessage = errorMessage("");
-  $scope.nimiErrorMessage = errorMessage("Nimi");
+  $scope.nimiErrorMessage = function(input) {
+    return input.$error.required ? 'Nimi on pakollinen tieto.' :
+      input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' :
+        input.$error.maxlength ? 'Nimen pituus saa olla enintään 200 merkkiä.' : '';
+  };
+  $scope.kuvausErrorMessage = function(input) {
+    return input.$error.maxlength ? 'Kuvauksen pituus saa olla enintään 200 merkkiä.' : '';
+  };
 }
 
 module.exports = function () {
