@@ -761,6 +761,12 @@ public class HakemuskausiTest extends TestBase {
         Hakemuskaudet.tilaindikaattori(Hakemuslaji.ELY, Hakemustila.TARKASTETTU).click();
         KaikkiHakemukset.suunnitteluJaPaatoksenteko(0).click();
 
+        // Asetetaan määrärahat
+        findElementByXPath("//input[@id='maararaha']").clear();
+        findElementByXPath("//input[@id='maararaha']").sendKeys("1000000");
+        findElementByXPath("//input[@id='ylijaama']").clear();
+        findElementByXPath("//input[@id='ylijaama']").sendKeys("333000");
+
         // Myönnetään 200000 €
         WebElement epoMyonnettavaAvustus = Suunnittelu.hslMyonnettavaAvustus();
         epoMyonnettavaAvustus.clear();
@@ -770,6 +776,12 @@ public class HakemuskausiTest extends TestBase {
         button("Tallenna päätösten tiedot").click();
         waitForAngularRequestsToFinish(driver);
 
+        // Tarkistetaan summat
+        WebElement avustuksetYhteensa = findElementByXPath("//td[@id='haettuavustussumma']");
+        assertThat(avustuksetYhteensa.getText(), is(equalTo("523 655,00 €")));
+        WebElement muutosYhteensa = findElementByXPath("//td[@id='haettumuutossumma']");
+        assertThat(muutosYhteensa.getText(), is(equalTo("-323 655,00 €")));
+
         // Kirjaa sisään päättäjä
         login(User.PAIVI);
         Hakemuskaudet.tilaindikaattori(Hakemuslaji.ELY, Hakemustila.TARKASTETTU).click();
@@ -778,13 +790,13 @@ public class HakemuskausiTest extends TestBase {
         okOlenVarma().click();
         waitForAngularRequestsToFinish(driver);
 
-        /*
+
         // Kirjaa sisään hakija
         login(User.ELY10);
 
         // Assertoi tila päätetty
         spanWithHakemustila(Hakemustila.PAATETTY).click();
-
+/*
         // Tarkista päätös pdf
         String paatosHref = findElementByLinkText("Avaa päätös (PDF)").getAttribute("href");
         String actual = httpGetPdfText(paatosHref, User.HARRI);
@@ -797,7 +809,7 @@ public class HakemuskausiTest extends TestBase {
                 + "toimivaltaisena viranomaisena valtionavustuksena enintään 13 900 euroa (sis. alv)";
         assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText2),
                 containsNormalized(actual, expectedText2));
-*/
+                */
     }
 
 

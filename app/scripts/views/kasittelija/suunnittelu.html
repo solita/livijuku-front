@@ -31,7 +31,7 @@
           <div class="form-group" show-errors="{showSuccess: true}">
             <label>Määräraha vuosi {{vuosi}}</label>
 
-            <input name="maararaha" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
+            <input id="maararaha" name="maararaha" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
                    ng-focus="asetaVanhaArvo(maararaha)"
                    ng-model-options="{ allowInvalid: true }"
                    ng-model="maararaha"
@@ -47,7 +47,7 @@
         <div class="col-md-4">
           <div class="form-group" show-errors="{showSuccess: true}">
             <label>Siirtomääräraha vuodelta {{vuosi-1}}</label>
-            <input name="ylijaama" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
+            <input id="ylijaama" name="ylijaama" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
                    ng-focus="asetaVanhaArvo(ylijaama)"
                    ng-model-options="{ allowInvalid: true }"
                    ng-model="ylijaama"
@@ -153,8 +153,8 @@
             <tr>
               <td>Yhteensä</td>
               <td></td>
-              <td>{{haettuAvustusSum|currency:"&euro;"}}</td>
-              <td>{{muutosSum|currency:"&euro;"}}</td>
+              <td id="haettuavustussumma">{{haettuAvustusSum|currency:"&euro;"}}</td>
+              <td id="haettumuutossumma">{{muutosSum|currency:"&euro;"}}</td>
               <td ng-class="{'varoitusvari':myonnettyLiikaa()}">{{myonnettavaAvustusSum|currency:"&euro;"}}</td>
               <td></td>
             </tr>
