@@ -457,10 +457,10 @@ angular.module('jukufrontApp')
           }));
 
           avustuskohteet = _.map(avustuskohteet, function (kohde) {
-            return _.omit(kohde, 'alv');
+            return _.omit(kohde, ['alv', 'includealv']);
           });
 
-          tallennusPromise.push([AvustuskohdeService.tallenna(avustuskohteet)]);
+          tallennusPromise.push(AvustuskohdeService.tallenna(avustuskohteet));
           if (isMaksatushakemus($scope.hakemus)) {
             tallennusPromise.push(HakemusService.paivitaTilinumero($scope.hakemus.id, $scope.hakemus.tilinumero));
             tallennusPromise.push(LiikenneSuoriteService.tallenna(
