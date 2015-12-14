@@ -8,7 +8,8 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Haettava valtionavustus</label>
           <div class="input-group">
-            <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" numeric-only="" noenter select-on-click
+            <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" numeric-only="" noenter
+                   select-on-click
                    alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
                    ng-readonly="isReadonly()" class="form-control"
                    ng-model-options="{ allowInvalid: true }"
@@ -27,7 +28,7 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Kunnan oma rahoitusosuus</label>
           <div class="input-group">
-            <input name="{{getName('omarahoitus')}}" type="text"  ng-currency="" numeric-only="" noenter select-on-click
+            <input name="{{getName('omarahoitus')}}" type="text" ng-currency="" numeric-only="" noenter select-on-click
                    alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
                    class="form-control"
                    ng-model-options="{ allowInvalid: true }"
@@ -37,7 +38,8 @@
             <span ng-hide="isReadonly()" class="input-group-addon">alv {{ alv ? kohde.alv : 0 }}%</span>
           </div>
 
-          <p class="help-block ng-invalid-sallittu-arvo-omarahoitus">Arvon tulee olla välillä 0 - 999 999 999,99 € (sis. ALV).</p>
+          <p class="help-block ng-invalid-sallittu-arvo-omarahoitus">Arvon tulee olla välillä 0 - 999 999 999,99 € (sis.
+            ALV).</p>
 
           <p class="help-block ng-invalid-omarahoitus-riittava">Oma rahoitusosuus tulee olla vähintään
             {{100-avustusprosentti}}% kokonaiskuluista.</p>
@@ -47,8 +49,10 @@
       <div class="col-md-4">
         <label>Yhteensä</label>
 
-        <p class="form-control-static" ng-show="alv">{{(kohde.haettavaavustus + kohde.omarahoitus) | currency:"&euro;"}} alv {{kohde.alv}} %</p>
-        <p class="form-control-static" ng-hide="alv">{{((kohde.haettavaavustus + kohde.omarahoitus)/(1+(kohde.alv/100)))| currency:"&euro;"}} alv 0 %</p>
+        <p class="form-control-static" ng-show="alv">{{((kohde.haettavaavustus + kohde.omarahoitus)*(1 + (kohde.alv / 100))).toFixed(2) | currency:"&euro;"}}
+          alv {{kohde.alv}} %</p>
+        <p class="form-control-static" ng-hide="alv">{{(kohde.haettavaavustus + kohde.omarahoitus)| currency:"&euro;"}}
+          alv 0 %</p>
       </div>
     </juku-form-row>
     <juku-form-row ng-show="hakemustyyppi!='AH0' && vertailuarvot().avustushakemusHaettavaAvustus==0">

@@ -5,7 +5,8 @@
   <div class="panel-body">
     <div ng-transclude></div>
     <div class="avustusluokka__summa">
-      <h4>Yhteensä (ALV {{kohde.avustuskohteet[0].alv}}%):</h4>
+      <h4 ng-if="kohde.avustuskohteet[0].includealv">Yhteensä (ALV {{kohde.avustuskohteet[0].alv}}%):</h4>
+      <h4 ng-if="!kohde.avustuskohteet[0].includealv">Yhteensä (ALV 0%):</h4>
       <div class="row">
         <div id="test-{{kohde.tunnus}}" class="col-md-4">
           Haettava valtionavustus: {{ kokonaisHaettavaAvustus(kohde.avustuskohteet) | currency }}

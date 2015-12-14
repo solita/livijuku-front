@@ -20,20 +20,20 @@ angular.module('jukufrontApp')
             return ngModel.$render();
           }
         });
-         ngModel.$parsers.push(function toModel(input){
-           if (alvmukana){
-             return input;
-           } else {
-             return (1+prosentti/100)*input;
-           }
-         });
-         ngModel.$formatters.push(function toView(input){
-           if (alvmukana){
-             return input;
-           } else {
-             return input/(1+(prosentti/100));
-           }
-         });
+        ngModel.$parsers.push(function toModel(input){
+          if (alvmukana){
+            return input/(1+(prosentti/100));
+          } else {
+            return input;
+          }
+        });
+        ngModel.$formatters.push(function toView(input){
+          if (alvmukana){
+            return (1+prosentti/100)*input;
+          } else {
+            return input;
+          }
+        });
       }
     }
   });
