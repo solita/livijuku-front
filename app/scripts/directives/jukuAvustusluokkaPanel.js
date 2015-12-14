@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var angular = require('angular');
+var h = require('utils/hakemus');
 
 angular.module('jukufrontApp')
   .directive('jukuAvustusluokkaPanel', function () {
@@ -18,17 +19,11 @@ angular.module('jukufrontApp')
       controller: ['$scope', function ($scope) {
 
         $scope.kokonaisOmarahoitus = function (kohteet) {
-          return _.sum(kohteet, function (kohde) {
-            if (kohde.includealv) return (kohde.omarahoitus * (1 + (kohde.alv / 100))).toFixed(2);
-            else return kohde.omarahoitus;
-          });
+          return _.sum(kohteet, _.partial(h.avustuskohdeRahamaara, 'omarahoitus'));
         };
 
         $scope.kokonaisHaettavaAvustus = function (kohteet) {
-          return _.sum(kohteet, function (kohde) {
-            if (kohde.includealv) return (kohde.haettavaavustus * (1 + (kohde.alv / 100))).toFixed(2);
-            else return kohde.haettavaavustus;
-          });
+          return _.sum(kohteet, _.partial(h.avustuskohdeRahamaara, 'haettavaavustus'));
         };
 
       }]

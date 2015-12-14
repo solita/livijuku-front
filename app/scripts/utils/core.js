@@ -6,15 +6,23 @@
 
 var _ = require("lodash");
 
- export function second(array) {
-    return array[1];
- }
+export function second(array) {
+  return array[1];
+}
 
 /**
  * String is blank if it is only whitespace, null or undefined.
  */
 export function isBlank(string) {
-    return (isNullOrUndefined(string) || /^\s*$/.test(string));
+  return (isNullOrUndefined(string) || /^\s*$/.test(string));
+}
+
+/**
+ * Round value to two decimals
+ */
+
+export function roundTwoDecimals(number) {
+  return Math.round(number*100)/100;
 }
 
 /**
@@ -28,15 +36,15 @@ export function isBlank(string) {
  * - http://stackoverflow.com/questions/27509/detecting-an-undefined-object-property
  */
 export function isDefinedNotNull(value) {
-    return (value != null);
+  return (value != null);
 }
 
 export function isNullOrUndefined(value) {
-    return (value == null);
+  return (value == null);
 }
 
 var findFirstDefinedValue = _.partialRight(_.find, isDefinedNotNull);
 
 export function coalesce() {
-    return findFirstDefinedValue(arguments)
+  return findFirstDefinedValue(arguments)
 }

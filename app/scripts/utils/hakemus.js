@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var c = require('utils/core');
 
 export function hakemusSuljettu(hakemus) {
   return (hakemus.hakemustilat === undefined) ?
@@ -26,4 +27,9 @@ export function hakemuksiaYhteensa(hakemus) {
 export function hakemuksiaTilassa(hakemus, tila) {
   var hakemusTilassa = _.findWhere(hakemus.hakemustilat, {hakemustilatunnus: tila});
   return hakemusTilassa ? hakemusTilassa.count : 0;
+}
+
+export function avustuskohdeRahamaara(property, kohde) {
+  if (kohde.includealv) return c.roundTwoDecimals(kohde[property] * (1 + (kohde.alv / 100)));
+  else return c.roundTwoDecimals(kohde[property]);
 }

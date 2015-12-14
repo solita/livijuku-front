@@ -2,6 +2,8 @@
 
 var _ = require('lodash');
 var angular = require('angular');
+var c = require('utils/core');
+var h = require('utils/hakemus');
 var pdf = require('utils/pdfurl');
 var hasPermission = require('utils/hasPermission');
 var Promise = require('bluebird');
@@ -371,7 +373,7 @@ angular.module('jukufrontApp')
         var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
           return l.avustuskohteet;
         }));
-        return _.sum(avustuskohteet, 'haettavaavustus').toFixed(2);
+        return _.sum(avustuskohteet, _.partial(h.avustuskohdeRahamaara, 'haettavaavustus'));
       };
 
       $scope.sumHaettavaElyAvustus = function () {

@@ -49,9 +49,9 @@
       <div class="col-md-4">
         <label>Yhteensä</label>
 
-        <p class="form-control-static" ng-show="alv">{{((kohde.haettavaavustus + kohde.omarahoitus)*(1 + (kohde.alv / 100))).toFixed(2) | currency:"&euro;"}}
+        <p class="form-control-static" ng-show="alv">{{yhteensa(kohde,alv) | currency:"&euro;"}}
           alv {{kohde.alv}} %</p>
-        <p class="form-control-static" ng-hide="alv">{{(kohde.haettavaavustus + kohde.omarahoitus)| currency:"&euro;"}}
+        <p class="form-control-static" ng-hide="alv">{{yhteensa(kohde,alv) | currency:"&euro;"}}
           alv 0 %</p>
       </div>
     </juku-form-row>

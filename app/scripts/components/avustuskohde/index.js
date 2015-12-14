@@ -1,4 +1,5 @@
 'use strict';
+var c = require('utils/core');
 
 module.exports = function () {
   return {
@@ -66,6 +67,12 @@ module.exports = function () {
           return (value >= 0 && value <= 999999999.99);
         }
         return true;
+      };
+
+      $scope.yhteensa = function (kohde, alv) {
+        var alvPros = 0;
+        if (alv) alvPros = kohde.alv;
+          return c.roundTwoDecimals((kohde.haettavaavustus + kohde.omarahoitus)*(1 + (alvPros / 100)));
       };
 
     }
