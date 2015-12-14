@@ -85,7 +85,7 @@
 
       <juku-form-row ng-if="avustushakemusPaatosOlemassa() && isMaksatushakemus">
         <h5>MYÖNNETTY AVUSTUS VUODELLE {{hakemus.vuosi}}</h5>
-        {{myonnettyAvustusPerVuosi() | currency:"&euro;"}} (sis. ALV)
+        {{myonnettyAvustusPerVuosi() | currency:"&euro;"}} &nbsp;
         <juku-icon-link
           href="{{haeAvustushakemusPaatosPdf()}}"
           title="Avaa päätös"
@@ -97,7 +97,7 @@
 
       <juku-form-row ng-if="avustushakemusPaatosOlemassa() && onMaksatushakemus1()">
         <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{hakemus.vuosi}}</h5>
-        {{myonnettyAvustusPerJakso() | currency:"&euro;"}} (sis. ALV)
+        {{myonnettyAvustusPerJakso() | currency:"&euro;"}} &nbsp;
         <juku-icon-link
           href="{{haePaatosPdf()}}"
           ng-show="hasPaatos(hakemus.hakemustilatunnus)"
@@ -109,7 +109,7 @@
       </juku-form-row>
       <juku-form-row ng-if="maksatushakemus1PaatosOlemassa() && onMaksatushakemus2()">
         <h5>MYÖNNETTY AVUSTUS 1. MAKSATUSHAKEMUKSEN PERUSTEELLA</h5>
-        {{maksatushakemus1PaatosMaksettu() | currency:"&euro;"}} (sis. ALV)
+        {{maksatushakemus1PaatosMaksettu() | currency:"&euro;"}} &nbsp;
         <juku-icon-link
           href="{{haeMaksatushakemus1PaatosPdf()}}"
           title="Avaa päätös"
@@ -120,7 +120,7 @@
       </juku-form-row>
       <juku-form-row ng-if="maksatushakemus1PaatosOlemassa() && onMaksatushakemus2()">
         <h5>MYÖNNETTY AVUSTUS 2. MAKSATUSHAKEMUKSEN PERUSTEELLA</h5>
-        {{myonnettyAvustusPerJakso() | currency:"&euro;"}} (sis. ALV)
+        {{myonnettyAvustusPerJakso() | currency:"&euro;"}} &nbsp;
         <juku-icon-link
           href="{{haePaatosPdf()}}"
           ng-show="hasPaatos(hakemus.hakemustilatunnus)"
