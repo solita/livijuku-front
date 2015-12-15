@@ -77,10 +77,13 @@
         ng-show="hakemusTaydennettavana() && taydennyspyyntoSeliteOlemassa()"
         class="alert alert-warning">
         <strong>
-          Täydennyspyyntöviesti käsittelijältä, määräpäivä: {{hakemus.taydennyspyynto.maarapvm |
-          date:'dd.MM.yyyy'}}!
+          Täydennyspyyntöviesti käsittelijältä:
         </strong><br/>
         {{hakemus.taydennyspyynto.selite}}
+        <br/><br/>
+        <strong>
+          Määräpäivä täydennykselle: {{hakemus.taydennyspyynto.maarapvm | date:'dd.MM.yyyy'}}.
+        </strong>
       </juku-form-row>
 
       <juku-form-row ng-if="avustushakemusPaatosOlemassa() && isMaksatushakemus">
