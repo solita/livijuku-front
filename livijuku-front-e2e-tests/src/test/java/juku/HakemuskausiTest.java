@@ -117,7 +117,7 @@ public class HakemuskausiTest extends TestBase {
         // Myönnetään 13 900 €
         WebElement hslMyonnettavaAvustus = Suunnittelu.hslMyonnettavaAvustus();
         hslMyonnettavaAvustus.clear();
-        hslMyonnettavaAvustus.sendKeys("13900,00");
+        hslMyonnettavaAvustus.sendKeys("12400,00");
 
         Suunnittelu.paatoksentekoon().click();
         spanWithHakemustila(Hakemustila.TARKASTETTU);
@@ -144,11 +144,11 @@ public class HakemuskausiTest extends TestBase {
         String actual = httpGetPdfText(paatosHref, User.HARRI);
 
         String expectedText = " suurten kaupunkiseutujen joukkoliikenteen \n"
-                + "valtionavustusta 13 900 euroa.";
+                + "valtionavustusta 12 400 euroa.";
         assertThat(String.format("Päätös PDF sisältää tekstin %s", expectedText),
                 containsNormalized(actual, expectedText));
         String expectedText2 = "Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle \n"
-                + "toimivaltaisena viranomaisena valtionavustuksena enintään 13 900 euroa (sis. alv)";
+                + "toimivaltaisena viranomaisena valtionavustuksena enintään 12 400 euroa (sis. alv)";
         assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText2),
                 containsNormalized(actual, expectedText2));
 
@@ -249,10 +249,10 @@ public class HakemuskausiTest extends TestBase {
         Hakemuskaudet.tilaindikaattori(hakemuslaji, Hakemustila.TARKASTETTU).click();
         KaikkiHakemukset.suunnitteluJaPaatoksenteko(0).click();
 
-        // Myönnetään 5 560 €
+        // Myönnetään 4960 €
         WebElement hslMyonnettavaAvustus = Suunnittelu.hslMyonnettavaAvustus();
         hslMyonnettavaAvustus.clear();
-        hslMyonnettavaAvustus.sendKeys("5560,00");
+        hslMyonnettavaAvustus.sendKeys("4960,00");
 
         Suunnittelu.paatoksentekoon().click();
         spanWithHakemustila(Hakemustila.TARKASTETTU);
