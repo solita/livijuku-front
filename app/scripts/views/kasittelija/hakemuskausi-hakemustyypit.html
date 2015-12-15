@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-3" ng-repeat="hakemus in hakemustyypit(hakemuskausi) track by $index">
+    <hakemuskausi-panel class="{{hakemuskausiPanelClass(hakemus)}}"
+      inactive="!utils.hakemusKaynnissa(hakemus)"
+      title="{{hakemus.hakemustyyppitunnus | toApplicationName}}"
+      ui-sref="app.yhteinen.hakemukset.list({tyyppi: hakemus.hakemustyyppitunnus})">
+      <hakemus-summary
+        kausi-id="$index"
+        hakemuskauden-tila="hakemuskausi.tilatunnus"
+        hakemus="hakemus"
+        on-save="tallennaHakuajat(hakemuskausi.vuosi, hakemus)">
+      </hakemus-summary>
+    </hakemuskausi-panel>
+  </div>
+</div>
