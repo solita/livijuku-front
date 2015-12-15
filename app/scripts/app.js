@@ -307,6 +307,7 @@ angular
   .directive('jukuSeurantaForms', directive.template(require('views/hakemus/seuranta-forms.html')))
   .directive('jukuUploadHakuohjeButton', directive.template(require('views/kasittelija/hakuohje-upload-button.html')))
   .directive('jukuHakuohje', directive.template(require('views/kasittelija/hakuohje-hallinta.html')))
+  .directive('jukuHakemuskausiTyypit', directive.template(require('views/kasittelija/hakemuskausi-hakemustyypit.html')))
   .directive('jukuDeleteKayttajaLink', directive.template(require('views/yhteinen/delete-kayttaja-link.html')))
   .directive('bindModel', directive.bindModel)
   .directive('formGroupCompact', require("components/formInput").formGroupCompact)

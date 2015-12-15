@@ -17,7 +17,6 @@ angular.module('jukufrontApp')
       $scope.suljetutHakemuskaudet = [];
 
       function haeHakemuskaudet() {
-        // TODO - korvaa kun backend palauttaa uuden resurssin
         HakemuskausiService.haeSummary().then((hakemuskaudet) => {
           _.forOwn(hakemuskaudet, function (hakemuskausi, key) {
             _.forOwn(hakemuskausi.hakemukset, function (hakemustyyppi, key) {
@@ -67,6 +66,16 @@ angular.module('jukufrontApp')
           $rootScope.sallittu('modify-hakemuskausi');
       };
 
+      $scope.hakemuskausiPanelClass = function(hakemusyhteenveto) {
+        return hakemus.hakemusSuljettu(hakemusyhteenveto) ? 'hakemuskausi-panel_suljettu' : 'hakemuskausi-panel_auki';
+      };
+
+      var sortOrder = ['AH0', 'MH1', 'MH2', 'ELY'];
+
+      $scope.hakemustyypit = function(hakemuskausi) {
+        return _.sortBy(hakemuskausi.hakemukset, hakemus => _.findIndex(sortOrder, hakemus.hakemustyyppitunnus));
+      }
+
       $scope.tallennaHakuajat = function tallennaHakuajat(vuosi, hakemus) {
         StatusService.tyhjenna();
         var hakuajat = [
@@ -84,7 +93,6 @@ angular.module('jukufrontApp')
             `Hakuaikojen: tallennus vuodelle ${vuosi} onnistui.`
           );
 
-         // haeHakemuskaudet();
         }, StatusService.errorHandler);
       };
 

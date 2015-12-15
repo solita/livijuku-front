@@ -4,21 +4,7 @@
       <small uib-tooltip="Avaamaton (ei käynnistetty) hakemuskausi näkyy hakijoille vasta sen jälkeen kun se on käynnistetty.">Avaamaton</small>
     </h2>
 
-    <div class="row">
-      <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit track by $index">
-        <hakemuskausi-panel class="hakemuskausi-panel_auki"
-          inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
-          title="{{tyyppitunnus | toApplicationName}}"
-          ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
-          <hakemus-summary
-            kausi-id="$index"
-            hakemuskauden-tila="hakemuskausi.tilatunnus"
-            hakemus="utils.haeHakemus(hakemuskausi, tyyppitunnus)"
-            on-save="tallennaHakuajat(hakemuskausi.vuosi, utils.haeHakemus(hakemuskausi, tyyppitunnus), values)">
-          </hakemus-summary>
-        </hakemuskausi-panel>
-      </div>
-    </div>
+    <juku-hakemuskausi-tyypit></juku-hakemuskausi-tyypit>
 
     <juku-hakuohje></juku-hakuohje>
 
@@ -40,21 +26,7 @@
 
     <h2 class="hakemuskausi-otsikko">Hakemuskausi {{hakemuskausi.vuosi}}</h2>
 
-    <div class="row">
-      <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit track by $index">
-        <hakemuskausi-panel class="hakemuskausi-panel_auki"
-          inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
-          title="{{tyyppitunnus | toApplicationName}}"
-          ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
-          <hakemus-summary
-            kausi-id="$index"
-            hakemuskauden-tila="hakemuskausi.tilatunnus"
-            hakemus="utils.haeHakemus(hakemuskausi, tyyppitunnus)"
-            on-save="tallennaHakuajat(hakemuskausi.vuosi, utils.haeHakemus(hakemuskausi, tyyppitunnus))">
-          </hakemus-summary>
-        </hakemuskausi-panel>
-      </div>
-    </div>
+    <juku-hakemuskausi-tyypit></juku-hakemuskausi-tyypit>
 
     <juku-hakuohje></juku-hakuohje>
 
@@ -76,21 +48,7 @@
   <div ng-repeat="hakemuskausi in suljetutHakemuskaudet | orderBy: 'vuosi': true" class="well">
     <h2 class="hakemuskausi-otsikko">Hakemuskausi {{hakemuskausi.vuosi}} <small>Suljettu</small></h2>
 
-    <div class="row">
-      <div class="col-md-3" ng-repeat="tyyppitunnus in constants.hakemustyypit track by $index">
-        <hakemuskausi-panel class="hakemuskausi-panel_suljettu"
-          inactive="!utils.hakemusKaynnissa(utils.haeHakemus(hakemuskausi, tyyppitunnus))"
-          title="{{tyyppitunnus | toApplicationName}}"
-          ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppitunnus})">
-          <hakemus-summary
-            kausi-id="$index"
-            hakemuskauden-tila="hakemuskausi.tilatunnus"
-            hakemus="utils.haeHakemus(hakemuskausi, tyyppitunnus)"
-            on-save="tallennaHakuajat(hakemuskausi.vuosi, utils.haeHakemus(hakemuskausi, tyyppitunnus), values)">
-          </hakemus-summary>
-        </hakemuskausi-panel>
-      </div>
-    </div>
+    <juku-hakemuskausi-tyypit></juku-hakemuskausi-tyypit>
 
     <p>
       <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">
