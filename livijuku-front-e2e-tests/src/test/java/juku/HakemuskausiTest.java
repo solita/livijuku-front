@@ -592,23 +592,24 @@ public class HakemuskausiTest extends TestBase {
 
         String expected = "Hakija: Helsingin seudun liikenne\n" +
                 "Hakija hakee vuonna 2016 suurten kaupunkiseutujen joukkoliikenteen \n" +
-                "valtionavustusta 13 900 euroa. Haettu avustus jakautuu seuraavasti:\n" +
-                "PSA:n mukaisen liikenteen hankinta\n" +
-                "Paikallisliikenne 1 100 e\n" +
-                "Integroitupalvelulinja 1 100 e\n" +
-                "Muu PSA:n mukaisen liikenteen järjestäminen 1 100 e\n" +
-                "Hintavelvoitteiden korvaaminen\n" +
+                "valtionavustusta 12 400 euroa. Haettu avustus jakautuu seuraavasti:\n" +
+                "PSA:n mukaisen liikenteen hankinta (alv 0%)\n" +
+                "Paikallisliikenne 1 000 e\n" +
+                "Integroitupalvelulinja 1 000 e\n" +
+                "Muu PSA:n mukaisen liikenteen järjestäminen 1 000 e\n" +
+                "Hintavelvoitteiden korvaaminen (alv 10%)\n" +
                 "Seutulippu 1 100 e\n" +
                 "Kaupunkilippu tai kuntalippu 1 100 e\n" +
                 "Liityntälippu 1 100 e\n" +
                 "Työmatkalippu 1 100 e\n" +
-                "Liikenteen suunnittelu ja kehittämishankkeet\n" +
-                "Informaatio ja maksujärjestelmien kehittäminen 1 240 e\n" +
-                "Matkapalvelukeskuksen suunnittelu ja kehittäminen 1 240 e\n" +
-                "Matkakeskuksen suunnittelu ja kehittäminen 1 240 e\n" +
-                "Raitiotien suunnittelu 1 240 e\n" +
-                "Muu hanke 1 240 e\n" +
-                "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 41 700 euroa. Kaikki luvut sisältävät arvonlisäveron.\n" +
+                "Liikenteen suunnittelu ja kehittämishankkeet (alv 0%)\n" +
+                "Informaatio ja maksujärjestelmien kehittäminen 1 000 e\n" +
+                "Matkapalvelukeskuksen suunnittelu ja kehittäminen 1 000 e\n" +
+                "Matkakeskuksen suunnittelu ja kehittäminen 1 000 e\n" +
+                "Raitiotien suunnittelu 1 000 e\n" +
+                "Muu hanke 1 000 e\n" +
+                "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 37 200 euroa. Kaikki \n" +
+                "luvut sisältävät arvonlisäveron.\n" +
                 "Lähettäjä: <hakijan nimi, joka on lähettänyt hakemuksen>\n" +
                 "Liitteet\n" +
                 "Liikennevirasto - esikatselu - hakemus on keskeneräinen\n" +
