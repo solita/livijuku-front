@@ -429,6 +429,12 @@ public class HakemuskausiTest extends TestBase {
 
     private void syotaSeurantatiedot() {
 
+        /*
+         * This is a working for accordion open problem in firefox browsers.
+         */
+        WebElement heading = findElementByXPath("//h3[text()='SEURANTATIEDOT']");
+        WorkAround.click(heading);
+
         // Avaa accordionit
         List<WebElement> seurantaAccordionList = findElementsByXPath("//a[@class='accordion-toggle']");
         for (WebElement seurantaAccordion : seurantaAccordionList) {

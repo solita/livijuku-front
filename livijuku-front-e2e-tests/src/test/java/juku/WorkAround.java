@@ -35,7 +35,7 @@ public class WorkAround {
     public static void scrollIntoView(WebElement element) {
         //driver.executeScript("arguments[0].scrollIntoView(true);", element);
         int elementPosition = element.getLocation().getY();
-        String js = String.format("window.scroll(0, %s)", elementPosition - 55);
+        String js = String.format("window.scroll(0, %s)", elementPosition - 60);
         TestBase.driver.executeScript(js);
     }
 
