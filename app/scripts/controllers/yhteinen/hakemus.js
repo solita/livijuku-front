@@ -171,6 +171,7 @@ angular.module('jukufrontApp')
       $scope.allekirjoitusliitetty = false;
       $scope.hakemusid = parseInt($stateParams.id, 10);
       $scope.alv = false;
+      $rootScope.hakemusOrganisaatio = $scope.hakemus.organisaatioid;
 
       $scope.backToList = function backToList() {
         if ($scope.isHakija($scope.user) && $scope.isOmaHakemus($scope.user)) {

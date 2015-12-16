@@ -1,24 +1,13 @@
 'use strict';
 var _ = require('lodash');
 
-function headerController($scope, $rootScope, $stateParams, $filter, KayttajaService, HakemusService) {
+function headerController($scope, $rootScope, $stateParams, $filter, KayttajaService) {
   $scope.sallittu = require('utils/hasPermission');
   $rootScope.isCollapsed = false;
 
   $scope.user = null;
-  $scope.hakemus = null;
   KayttajaService.hae().then((user) => {
     $scope.user = user;
-  });
-
-  $rootScope.$on('$stateChangeSuccess', (event, newState) => {
-    if (newState.name === 'app.hakemus') {
-      HakemusService.hae($stateParams.id)
-        .then((hakemus) => {
-          $scope.hakemus = hakemus;
-        });
-    }
-    $scope.hakemus = null;
   });
 
   $scope.toggleCollapse = function () {
@@ -26,10 +15,10 @@ function headerController($scope, $rootScope, $stateParams, $filter, KayttajaSer
   };
 
   $scope.isOwnApplication = function () {
-    if (!($scope.user && $scope.hakemus)) {
+    if (!($scope.user && $rootScope.hakemusOrganisaatio)) {
       return false;
     }
-    return $scope.hakemus.organisaatioid === $scope.user.organisaatioid;
+    return $rootScope.hakemusOrganisaatio === $scope.user.organisaatioid;
   };
 
   $scope.getType = function () {
