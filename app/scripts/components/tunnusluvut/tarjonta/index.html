@@ -359,7 +359,7 @@
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <tr>
-          <th ng-if="tyyppi==='PSAB'" class="col-md-3 ekarivi">Brutoliikenteen tarjouskilpailut</th>
+          <th ng-if="tyyppi==='PSAB'" class="col-md-3 ekarivi">Bruttoliikenteen tarjouskilpailut</th>
           <th ng-if="tyyppi==='PSAK'" class="col-md-3 ekarivi">Käyttöoikeussopimusliikenteen tarjouskilpailut</th>
           <th class="col-md-1 ekarivi">Saatujen tarjousten määrä</th>
           <th class="col-md-1 ekarivi">Voittaneen tarjouksen hinta</th>
@@ -371,8 +371,8 @@
         <tbody>
           <tr ng-if="tarjouskohteet.length === 0">
             <td colspan="10" class="text-info">
-              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Yhtään tarjouskohdetta ei ole
-              lisätty. Tämä taulukko on tyhjä.
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Tämä taulukko on tyhjä, koska
+              yhtään tarjouskohdetta ei ole lisätty.
             </td>
           </tr>
           <tr ng-repeat="rivi in tarjouskohteet track by $index" ng-form="tarjouskohteetForm">

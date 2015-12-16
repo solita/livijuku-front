@@ -26,8 +26,7 @@
           <tbody>
             <tr ng-if="kehittamishankkeet.length === 0">
               <td colspan="4" class="text-info">
-                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Yhtään kehittämishanketta ei ole
-                lisätty. Tämä taulukko on tyhjä.
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Tämä taulukko on tyhjä, koska yhtään kehittämishanketta ei ole lisätty.
               </td>
             </tr>
             <tr ng-repeat="kehittamishanke in kehittamishankkeet track by $index" ng-form>

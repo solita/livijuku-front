@@ -80,8 +80,8 @@
       <tbody>
         <tr ng-if="suoritteet.length === 0">
           <td colspan="10" class="text-info">
-            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Yhtään liikennesuoritetta ei ole
-            lisätty. Tämä taulukko on tyhjä.
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Tämä taulukko on tyhjä, koska yhtään
+            liikennesuoritetta ei ole lisätty.
           </td>
         </tr>
         <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">

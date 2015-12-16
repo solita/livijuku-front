@@ -29,8 +29,8 @@
       <tbody>
         <tr ng-if="suoritteet.length === 0">
           <td colspan="10" class="text-info">
-            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Yhtään lippusuoritetta ei ole
-            lisätty. Tämä taulukko on tyhjä.
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Tämä taulukko on tyhjä, koska yhtään
+            lippusuoritetta ei ole lisätty.
           </td>
         </tr>
         <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">
@@ -38,7 +38,8 @@
             <form-group-compact label="Lipputyyppi">
               <select id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lipputyyppi'}}" name="lipputyyppi"
                       ng-model="rivi.lipputyyppitunnus" ng-disabled="isReadonly()"
-                      placeholder="Lipputyyppi" ng-options="tyyppi.tunnus as tyyppi.nimi for tyyppi in lipputyypit" required>
+                      placeholder="Lipputyyppi" ng-options="tyyppi.tunnus as tyyppi.nimi for tyyppi in lipputyypit"
+                      required>
                 <option value="" selected disabled>Valitse lipputyyppi</option>
               </select>
             </form-group-compact>
@@ -115,7 +116,7 @@
             </form-group-compact>
           </td>
           <td ng-hide="isReadonly()"><a id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-poistasuorite'}}" href=""
-                 ng-click="poistaSuorite($index)"><span
+                                        ng-click="poistaSuorite($index)"><span
             class="glyphicon glyphicon-remove-sign"></span> Poista</a>
           </td>
         </tr>
