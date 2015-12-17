@@ -36,6 +36,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -44,6 +45,7 @@ import org.testng.annotations.BeforeSuite;
 
 import com.paulhammant.ngwebdriver.AngularModelAccessor;
 import com.paulhammant.ngwebdriver.ByAngular;
+import org.testng.asserts.Assertion;
 
 public class TestBase {
 
@@ -476,6 +478,15 @@ public class TestBase {
     public static WebElement findElementByXPath(String xpath, Object... n) {
         waitForAngularRequestsToFinish(driver);
         return driver.findElementByXPath(String.format(xpath, n));
+    }
+
+    public static WebElement getElementByXPath(String xpath, Object... n) {
+        List<WebElement> elements = findElementsByXPath(xpath, n);
+
+        Assert.assertFalse(elements.isEmpty(), "Yhtään haluttua elementtiä: " + xpath + " ei löytynyt" );
+        Assert.assertEquals(elements.size(), 1, "Ehtojen mukaisia " + xpath + " elementtejä löytyi enemmän kuin yksi.");
+
+        return elements.get(0);
     }
 
     public static String getScopeVariableValue(WebElement we, String variableName) {
