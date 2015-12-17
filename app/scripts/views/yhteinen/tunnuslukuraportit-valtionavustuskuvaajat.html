@@ -20,7 +20,7 @@
     <div class="col-md-2 lataacsv">
       <a ng-csv="exportCsvMultibar(haettuMyonnettyYhteensaData())"
          filename="Joukkoliikenteen_valtionavustushakemukset_ja_päätökset.csv"
-         csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
       </a>
     </div>
   </div>
@@ -36,38 +36,26 @@
     <div class="col-md-2 lataacsv">
       <a ng-show="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
          filename="Myönnetyt_jaoteltuna.csv"
-         csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
       </a>
       <a ng-hide="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
          filename="Haetut_jaoteltuna.csv"
-         csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
       </a>
     </div>
     <nvd3 options='haettuMyonnettyOptions' data='haettuMyonnettyData' api="haettuMyonnettyApi"></nvd3>
   </div>
+
   <div class="row">
     <div class="col-md-10">
-      <h2>Hakijaorganisaation tarkemmat tiedot</h2>
+      <h2>Myönnetty avustus/asukas</h2>
     </div>
     <div class="col-md-2 lataacsv">
-      <a ng-csv="exportCsvPieChart(organisaationTiedotData())"
-         filename="Hakijaorganisaation_{{aktiivinenOrganisaatio}}_tarkemmat_tiedot_{{aktiivinenOrganisaatioVuosi}}.csv"
-         csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+      <a ng-csv="exportCsvMultibar(myonnettyPerAsukasData())"
+         filename="Myönnetty_asukas.csv"
+         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
       </a>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-8">
-      <nvd3 options="organisaationTiedotOptions" data="organisaationTiedotData" api="organisaationTiedotApi"></nvd3>
-    </div>
-    <div class="col-md-4">
-      <h3>{{aktiivinenOrganisaatio}} (vuosi {{aktiivinenOrganisaatioVuosi}})</h3>
-
-      <p><b>Haettu yhteensä:</b> {{aktiivinenOrganisaatioVuosiHaettu |currency}}</p>
-
-      <p><b>Asukkaat:</b> {{aktiivinenOrganisaatioAsukkaat}}</p>
-
-      <p><b>Haettu per asukas:</b> {{haettuPerAsukas() |currency}}</p>
-    </div>
+    <nvd3 options='myonnettyPerAsukasOptions' data='myonnettyPerAsukasData' api="myonnettyPerAsukasApi"></nvd3>
   </div>
 </div>
