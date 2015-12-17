@@ -597,7 +597,7 @@ public class HakemuskausiTest extends TestBase {
         String actual = httpGetPdfText(pdfUrl, User.HARRI);
 
         String expected = "Hakija: Helsingin seudun liikenne\n" +
-                "Hakija hakee vuonna 2016 suurten kaupunkiseutujen joukkoliikenteen \n" +
+                "Hakija hakee vuonna 2017 suurten kaupunkiseutujen joukkoliikenteen \n" +
                 "valtionavustusta 12 400 euroa. Haettu avustus jakautuu seuraavasti:\n" +
                 "PSA:n mukaisen liikenteen hankinta (alv 0%)\n" +
                 "Paikallisliikenne 1 000 e\n" +
