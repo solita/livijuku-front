@@ -159,6 +159,7 @@ angular.module('jukufrontApp')
       $scope.aktiivinenOrganisaatioAsukkaat = _.find($scope.avustusData, {'tyyppi': $scope.aktiivinenTyyppi}).organisaatiotAsukkaat[0];
       if ($scope.haettuMyonnettyYhteensaApi !== undefined) $scope.haettuMyonnettyYhteensaApi.refresh();
       if ($scope.haettuMyonnettyApi !== undefined) $scope.haettuMyonnettyApi.refresh();
+      if ($scope.myonnettyPerAsukasApi !== undefined) $scope.myonnettyPerAsukasApi.refresh();
       if ($scope.organisaationTiedotApi !== undefined) $scope.organisaationTiedotApi.refresh();
       if ($scope.tyytyvaisyysApi !== undefined) $scope.tyytyvaisyysApi.refresh();
       if ($scope.psaMatkustajatApi !== undefined) $scope.psaMatkustajatApi.refresh();
@@ -171,7 +172,7 @@ angular.module('jukufrontApp')
         var rivi = {};
         rivi['\ '] = data[i].key;
         for (var arvo in data[i].values) {
-          rivi[' ' + data[i].values[arvo].x] = data[i].values[arvo].y;
+          rivi[' ' + data[i].values[arvo].x] = Math.round(data[i].values[arvo].y*1000)/1000;
         }
         tulos.push(rivi);
       }
@@ -201,9 +202,11 @@ angular.module('jukufrontApp')
               if ((e.data.series === 0) && $scope.isMyonnettyAktiivinen()) {
                 $scope.aktiivinenOsajoukko = data.HAETTU;
                 $scope.haettuMyonnettyApi.refresh();
+                $scope.myonnettyPerAsukasApi.refresh();
               } else if ((e.data.series === 1) && !$scope.isMyonnettyAktiivinen()) {
                 $scope.aktiivinenOsajoukko = data.MYONNETTY;
                 $scope.haettuMyonnettyApi.refresh();
+                $scope.myonnettyPerAsukasApi.refresh();
               }
               $scope.$apply();
             }
@@ -275,6 +278,45 @@ angular.module('jukufrontApp')
         yAxis: {
           tickFormat: function (d) {
             return d3.format('.03f')(d / 1000000) + " M€";
+          }
+        }
+      }
+    };
+
+    $scope.myonnettyPerAsukasData = function () {
+      var paluuArvot = [];
+      var dataPerTyyppi = _.find($scope.avustusData, {'tyyppi': $scope.aktiivinenTyyppi});
+      for (var i = 0; i < _.result(dataPerTyyppi, 'organisaatiot').length; i++) {
+        var vuosiValues = [];
+        for (var vuosi in _.result(dataPerTyyppi, data.MYONNETTY)) {
+          vuosiValues.push({
+            x: vuosi,
+            y: (_.result(dataPerTyyppi, data.MYONNETTY)[vuosi][i]/$scope.aktiivinenOrganisaatioAsukkaat)
+          });
+        }
+        paluuArvot.push({
+          key: _.result(dataPerTyyppi, 'organisaatiot')[i],
+          values: vuosiValues
+        });
+      }
+      return paluuArvot;
+    };
+
+    $scope.myonnettyPerAsukasOptions = {
+      chart: {
+        type: 'multiBarChart',
+        height: 450,
+        stacked: false,
+        showControls: false,
+        x: function (d) {
+          return d.x;
+        },
+        y: function (d) {
+          return d.y;
+        },
+        yAxis: {
+          tickFormat: function (d) {
+            return d3.format('.02f')(d) + " €";
           }
         }
       }
@@ -411,52 +453,6 @@ angular.module('jukufrontApp')
         });
       }
       return paluuArvot;
-    };
-
-    $scope.organisaationTiedotOptions = {
-      chart: {
-        type: 'pieChart',
-        height: 450,
-        x: function (d) {
-          return d.x;
-        },
-        y: function (d) {
-          return d.y;
-        },
-        showLabels: true,
-        transitionDuration: 500,
-        labelThreshold: 0.01,
-        legend: {
-          margin: {
-            top: 5,
-            right: 35,
-            bottom: 5,
-            left: 0
-          }
-        },
-        valueFormat: function (d) {
-          return d3.format('.03f')(d / 1000000) + " M€";
-        }
-      }
-    };
-
-    $scope.organisaationTiedotData = function () {
-      var haettu_1 = $scope.aktiivinenOrganisaatioVuosiHaettu / (Math.floor(Math.random() * 6) + 2  );
-      var haettu_2 = ($scope.aktiivinenOrganisaatioVuosiHaettu - haettu_1) / (Math.floor(Math.random() * 3) + 1);
-      var haettu_3 = $scope.aktiivinenOrganisaatioVuosiHaettu - haettu_1 - haettu_2;
-      return [{
-        x: "PSA:n mukaisen liikenteen hankinta",
-        y: haettu_1
-      },
-        {
-          x: "Hintavelvoitteiden korvaaminen",
-          y: haettu_2
-        },
-        {
-          x: "Liikenteen suunnittelu ja kehittämishankkeet",
-          y: haettu_3
-        }
-      ];
     };
   }]);
 
