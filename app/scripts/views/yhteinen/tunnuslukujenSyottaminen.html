@@ -5,7 +5,8 @@
   <ng-form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm">
     <juku-form-row>
       <div class="col-md-4">
-        <select id="organisaatio" ng-model="selectedOrganisaatio" ng-disabled="isReadonly()" placeholder="Valitse toimivaltainen viranomainen" class="form-control" required>
+        <select id="organisaatio" ng-model="selectedOrganisaatio" ng-disabled="isReadonly()"
+                placeholder="Valitse toimivaltainen viranomainen" class="form-control" required>
           <option value="" selected disabled>Valitse toimivaltainen viranomainen</option>
           <option ng-repeat="kunta in kunnat()" value="{{kunta.id}}">{{kunta.nimi}}</option>
         </select>

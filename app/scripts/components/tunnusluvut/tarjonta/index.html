@@ -11,7 +11,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="tunnuslukutalvi in tunnusluvut_talvi track by $index" ng-form>
-            <th>{{tunnuslukutalvi.selite}}</th>
+            <td><b>{{tunnuslukutalvi.selite}}</b></td>
             <td>
               <form-group-compact label="Linjakilometrit" errormessage="linjakilometritErrorMessage">
                 <input id="{{tyyppi + '-linjakilometrit-talvi-'+$index}}" name="linjakilometrit" type="text"
@@ -67,7 +67,7 @@
         </tfoot>
         <tbody>
           <tr ng-repeat="tunnusluku in tunnusluvut track by $index" ng-form>
-            <th>{{tunnusluku.kuukausi}}</th>
+            <td><b>{{tunnusluku.kuukausi}}</b></td>
             <td>
               <form-group-compact label="Linjakilometrit" errormessage="linjakilometritErrorMessage">
                 <input id="{{tyyppi + '-linjakilometrit-'+$index}}" name="linjakilometrit" type="text"
@@ -122,7 +122,7 @@
         </tfoot>
         <tbody>
           <tr ng-repeat="rivi in kalusto track by $index" ng-form>
-            <th>{{rivi.selite}}</th>
+            <td><b>{{rivi.selite}}</b></td>
             <td>
               <form-group-compact label="Linja-autojen lukumäärä" errormessage="kokonaislukuErrorMessage">
                 <input id="{{tyyppi + '-linjaautot-'+$index}}" name="linjaautot" type="number" numeric-integer-only=""
@@ -168,7 +168,7 @@
         </tfoot>
         <tbody>
           <tr ng-repeat="rivi in jarjestamiskustannukset track by $index" ng-form>
-            <th>{{rivi.kuukausi}}</th>
+            <td><b>{{rivi.kuukausi}}</b></td>
             <td>
               <form-group-compact label="Maksetty liikennöintikorvaus" errormessage="liikennointikorvausErrorMessage">
                 <input id="{{tyyppi + '-liikennointikorvaus-'+$index}}" name="liikennointikorvaus" type="text"
@@ -215,7 +215,7 @@
         </tfoot>
         <tbody>
           <tr ng-repeat="rivi in nousukorvaukset track by $index" ng-form>
-            <th>{{rivi.kuukausi}}</th>
+            <td><b>{{rivi.kuukausi}}</b></td>
             <td>
               <form-group-compact label="Nousukorvaus">
                 <input id="{{tyyppi + '-nousukorvaus-'+$index}}" name="nousukorvaus" type="text"

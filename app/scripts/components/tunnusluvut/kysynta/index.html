@@ -10,7 +10,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="tunnuslukutalvi in tunnusluvut_talvi track by $index" ng-form>
-            <th>{{tunnuslukutalvi.selite}}</th>
+            <td><b>{{tunnuslukutalvi.selite}}</b></td>
             <td>
               <form-group-compact label="Nousumäärä" errormessage="nousumaaraErrorMessage">
                 <input id="{{tyyppi + '-nousumaara-'+$index}}" name="nousumaara" type="text"
@@ -54,7 +54,7 @@
         </tfoot>
         <tbody>
           <tr ng-repeat="tunnusluku in tunnusluvut" ng-form>
-            <th>{{tunnusluku.kuukausi}}</th>
+            <td><b>{{tunnusluku.kuukausi}}</b></td>
             <td>
               <form-group-compact label="Nousua" errormessage="kokonaislukuErrorMessage">
                 <input id="{{tyyppi + '-nousua-'+tunnusluku.kuukausi}}" name="nousua"

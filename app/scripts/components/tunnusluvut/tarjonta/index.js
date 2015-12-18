@@ -25,7 +25,7 @@ function tarjontaController($scope) {
 
   $scope.poistaTarjouskohde = function (indeksi) {
     $scope.tarjouskohteet.splice(indeksi, 1);
-    $scope.tarjouskohteetForm.$setDirty();
+    if ($scope.tarjouskohteetForm !== undefined) $scope.tarjouskohteetForm.$setDirty();
   };
 
   $scope.kalusto = [
