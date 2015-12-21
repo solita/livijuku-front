@@ -45,7 +45,6 @@ import org.testng.annotations.BeforeSuite;
 
 import com.paulhammant.ngwebdriver.AngularModelAccessor;
 import com.paulhammant.ngwebdriver.ByAngular;
-import org.testng.asserts.Assertion;
 
 public class TestBase {
 
@@ -159,6 +158,10 @@ public class TestBase {
             drv = new ChromeDriver();
         } else {
             FirefoxProfile fp = new FirefoxProfile();
+
+            // Korjaa OS X ja Ubuntu focus ongelmia
+            fp.setPreference("focusmanager.testmode", true);
+
             // Poistettu käytöstä, kun aiheutti välillä kahden selaimen aukeamisen yhden sijaan
             //fp.setPreference("webdriver.load.strategy", "unstable"); // As of 2.19. from 2.9 - 2.18 use 'fast'
             drv = new FirefoxDriver(fp);
