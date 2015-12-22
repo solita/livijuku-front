@@ -86,11 +86,32 @@
         </strong>
       </juku-form-row>
 
-      <juku-form-row ng-if="avustushakemusPaatosOlemassa() && isMaksatushakemus">
+      <juku-form-row ng-if="isMaksatushakemus">
         <h5>MYÖNNETTY AVUSTUS VUODELLE {{hakemus.vuosi}}</h5>
-        {{myonnettyAvustusPerVuosi() | currency:"&euro;"}} &nbsp;
+        <span ng-if="avustushakemusPaatosOlemassa()">
+          {{myonnettyAvustusAH0() | currency:"&euro;"}} &nbsp;
+          <juku-icon-link
+            href="{{haeAvustushakemusPaatosPdf()}}"
+            title="Avaa päätös"
+            target="_blank"
+            icon="file">
+            Avaa päätös (PDF)
+          </juku-icon-link>
+        </span>
+        <span ng-if="!avustushakemusPaatosOlemassa()">Avustushakemuksella ei ole vielä päätöstä</span>
+      </juku-form-row>
+
+      <juku-form-row ng-if="isMaksatushakemus && !maksatushakemus1PaatosOlemassa()">
+        <h5>HAETTAVISSA OLEVA AVUSTUS AJALLE 1.1.-30.6.{{hakemus.vuosi}}</h5>
+        <span ng-if="avustushakemusPaatosOlemassa()">{{haettavaAvustusMH1() | currency:"&euro;"}}</span>
+        <span ng-if="!avustushakemusPaatosOlemassa()">Avustushakemuksella ei ole vielä päätöstä</span>
+      </juku-form-row>
+
+      <juku-form-row ng-if="isMaksatushakemus && maksatushakemus1PaatosOlemassa()">
+        <h5>MAKSETAAN AJALTA 1.1.-30.6.{{hakemus.vuosi}}</h5>
+        {{maksatushakemus1Paatos.myonnettyavustus | currency:"&euro;"}} &nbsp;
         <juku-icon-link
-          href="{{haeAvustushakemusPaatosPdf()}}"
+          href="{{haeMaksatushakemus1PaatosPdf()}}"
           title="Avaa päätös"
           target="_blank"
           icon="file">
@@ -98,7 +119,25 @@
         </juku-icon-link>
       </juku-form-row>
 
-      <juku-form-row ng-if="avustushakemusPaatosOlemassa() && onMaksatushakemus1()">
+      <juku-form-row ng-if="onMaksatushakemus2() && !hasPaatos()">
+        <h5>HAETTAVISSA OLEVA AVUSTUS AJALLE 1.7. - 31.12.{{hakemus.vuosi}}</h5>
+        <span ng-if="avustushakemusPaatosOlemassa()">{{haettavaAvustusMH2() | currency:"&euro;"}}</span>
+        <span ng-if="!avustushakemusPaatosOlemassa()">Avustushakemuksella ei ole vielä päätöstä</span>
+      </juku-form-row>
+
+      <juku-form-row ng-if="onMaksatushakemus2() && hasPaatos()">
+        <h5>MAKSETAAN AJALTA 1.1.-30.6.{{hakemus.vuosi}}</h5>
+        {{maksatushakemus1Paatos.myonnettyavustus | currency:"&euro;"}} &nbsp;
+        <juku-icon-link
+          href="{{haePaatosPdf()}}"
+          title="Avaa päätös"
+          target="_blank"
+          icon="file">
+          Avaa päätös (PDF)
+        </juku-icon-link>
+      </juku-form-row>
+
+      <!--juku-form-row ng-if="avustushakemusPaatosOlemassa() && onMaksatushakemus1()">
         <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{hakemus.vuosi}}</h5>
         {{myonnettyAvustusPerJakso() | currency:"&euro;"}} &nbsp;
         <juku-icon-link
@@ -132,7 +171,7 @@
           icon="file">
           Avaa päätös (PDF)
         </juku-icon-link>
-      </juku-form-row>
+      </juku-form-row-->
 
       <juku-form-row
         ng-if="!avustushakemusPaatosOlemassa() && isMaksatushakemus && haettuSummaYliMyonnetyn()"
@@ -143,17 +182,17 @@
         ng-if="avustushakemusPaatosOlemassa() && onMaksatushakemus1() && haettuSummaYliMyonnetyn()"
         class="alert alert-danger">
         <strong>Virhe! </strong>Haettu avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}}) ylittää ensimmäisellä
-        maksatushakemuksella haettavan suurimman mahdollisen avustussumman ({{myonnettyAvustusPerJakso() | currency:"&euro;"
+        maksatushakemuksella haettavan suurimman mahdollisen avustussumman ({{haettavaAvustusMH1() | currency:"&euro;"
         }}). Voit hakea ensimmäisellä maksatushakemuksella enintään 50% vuodelle {{hakemus.vuosi}} myönnetystä
-        avustuksesta ({{myonnettyAvustusPerVuosi() | currency:"&euro;"}}). Toisen maksatushakemuksen
+        avustuksesta ({{myonnettyAvustusAH0() | currency:"&euro;"}}). Toisen maksatushakemuksen
         haettava avustussumma ei saa ylittää koko vuodelle {{hakemus.vuosi}} myönnettyä summaa
-        ({{myonnettyAvustusPerVuosi() | currency:"&euro;"}} - alkuvuoden hakemuksen perusteella maksettu avustus).
+        ({{myonnettyAvustusAH0() | currency:"&euro;"}} - alkuvuoden hakemuksen perusteella maksettu avustus).
       </juku-form-row>
       <juku-form-row
         ng-if="avustushakemusPaatosOlemassa() && onMaksatushakemus2() && haettuSummaYliMyonnetyn()"
         class="alert alert-danger">
         <strong>Virhe! </strong>Toisen maksatushakemuksen haettava avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}})
-        ei saa ylittää koko vuodelle {{hakemus.vuosi}} myönnettyä summaa ({{myonnettyAvustusPerVuosi() | currency:"&euro;"}}
+        ei saa ylittää koko vuodelle {{hakemus.vuosi}} myönnettyä summaa ({{myonnettyAvustusAH0() | currency:"&euro;"}}
         - alkuvuoden hakemuksen perusteella maksettu avustus).
       </juku-form-row>
       <juku-form-row

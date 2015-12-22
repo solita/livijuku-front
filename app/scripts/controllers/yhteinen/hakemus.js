@@ -86,11 +86,12 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
   var liikenneSuoritteet = ifMaksatushakemus(hakemus => LiikenneSuoriteService.hae(hakemus.id), []);
   var lippuSuoritteet = ifMaksatushakemus(hakemus => LippuSuoriteService.hae(hakemus.id), []);
 
+  var paatos = PaatosService.hae(hakemusId);
 
   return Promise.props({
     hakemus: hakemusPromise,
     user: KayttajaService.hae(),
-    paatos: PaatosService.hae(hakemusId),
+    paatos: paatos,
     avustuskohdeluokat: hakemusPromise.then(isContentVisible(haeAvustuskohteet)),
     avustushakemusArvot: hakemusPromise.then(isContentVisible((hakemus) => {
       if (_.contains(['MH1', 'MH2'], (hakemus.hakemustyyppitunnus))) {
@@ -120,6 +121,8 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
       if (hakemus.hakemustyyppitunnus === 'MH2') {
         const id = haeHakemus('MH1', hakemus).id;
         return PaatosService.hae(id);
+      } else if (hakemus.hakemustyyppitunnus === 'MH1') {
+        return paatos;
       } else {
         return {};
       }
@@ -264,7 +267,7 @@ angular.module('jukufrontApp')
       };
 
       $scope.haettuSummaYliMyonnetyn = function () {
-        return $scope.sumHaettavaAvustus() > $scope.myonnettyAvustusPerJakso();
+        return $scope.sumHaettavaAvustus() > $scope.haettavaAvustusMH();
       };
 
       $scope.hakemusKeskenerainen = function () {
@@ -296,24 +299,33 @@ angular.module('jukufrontApp')
         return !AuthService.hakijaSaaMuokataHakemusta($scope.hakemus);
       };
 
+      $scope.avustushakemusPaatosOlemassa = function () {
+        return $scope.avustushakemusPaatos && $scope.avustushakemusPaatos.voimaantuloaika;
+      };
+
       $scope.maksatushakemus1PaatosOlemassa = function () {
-        return ($scope.maksatushakemus1Paatos && $scope.maksatushakemus1Paatos.voimaantuloaika);
+        return $scope.maksatushakemus1Paatos && $scope.maksatushakemus1Paatos.voimaantuloaika;
       };
 
-      $scope.maksatushakemus1PaatosMaksettu = function () {
-        return $scope.maksatushakemus1Paatos.myonnettyavustus;
+      $scope.haettavaAvustusMH1 = function () {
+        return $scope.avustushakemusPaatos.myonnettyavustus / 2;
       };
 
-      $scope.myonnettyAvustusPerJakso = function () {
+      $scope.haettavaAvustusMH2 = function () {
+        return $scope.maksatushakemus1PaatosOlemassa() ?
+          $scope.avustushakemusPaatos.myonnettyavustus - $scope.maksatushakemus1Paatos.myonnettyavustus :
+          $scope.avustushakemusPaatos.myonnettyavustus / 2;
+      };
+
+      $scope.haettavaAvustusMH = function () {
         if ($scope.onMaksatushakemus1()) {
-          return ($scope.avustushakemusPaatos.myonnettyavustus / 2);
-        }
-        if ($scope.onMaksatushakemus2()) {
-          return $scope.avustushakemusPaatos.myonnettyavustus - $scope.maksatushakemus1Paatos.myonnettyavustus;
+          return $scope.haettavaAvustusMH1();
+        } else if ($scope.onMaksatushakemus2()) {
+          return $scope.haettavaAvustusMH2();
         }
       };
 
-      $scope.myonnettyAvustusPerVuosi = function () {
+      $scope.myonnettyAvustusAH0 = function () {
         return $scope.avustushakemusPaatos.myonnettyavustus;
       };
 
@@ -350,10 +362,6 @@ angular.module('jukufrontApp')
       $scope.isMaksatushakemus = isMaksatushakemus($scope.hakemus);
 
       $scope.isELYhakemus = isElyhakemus($scope.hakemus);
-
-      $scope.avustushakemusPaatosOlemassa = function () {
-        return $scope.avustushakemusPaatos && $scope.avustushakemusPaatos.voimaantuloaika;
-      };
 
       $scope.edellinenHakemusPaatetty = function () {
         if ($scope.onAvustushakemus() || $scope.onElyhakemus()) {
