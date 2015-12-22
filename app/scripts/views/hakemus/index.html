@@ -51,7 +51,7 @@
             <h5>Hakija</h5>
             {{getHakija(hakemus)}}
           </div>
-          <div class="col-md-3" ng-if="onMaksatushakemus1() || onMaksatushakemus2()">
+          <div class="col-md-3" ng-if="isMaksatushakemus1() || isMaksatushakemus2()">
             <form-group label="IBAN-tilinumero" errormessage="pankkitilinumeroErrorMessage">
               <input id="pankkitilinumero" name="pankkitilinumero" type="text" class="form-control"
                      ng-model="hakemus.tilinumero"
@@ -119,13 +119,13 @@
         </juku-icon-link>
       </juku-form-row>
 
-      <juku-form-row ng-if="onMaksatushakemus2() && !hasPaatos()">
+      <juku-form-row ng-if="isMaksatushakemus2() && !hasPaatos()">
         <h5>HAETTAVISSA OLEVA AVUSTUS AJALLE 1.7. - 31.12.{{hakemus.vuosi}}</h5>
         <span ng-if="avustushakemusPaatosOlemassa()">{{haettavaAvustusMH2() | currency:"&euro;"}}</span>
         <span ng-if="!avustushakemusPaatosOlemassa()">Avustushakemuksella ei ole vielä päätöstä</span>
       </juku-form-row>
 
-      <juku-form-row ng-if="onMaksatushakemus2() && hasPaatos()">
+      <juku-form-row ng-if="isMaksatushakemus2() && hasPaatos()">
         <h5>MAKSETAAN AJALTA 1.1.-30.6.{{hakemus.vuosi}}</h5>
         {{maksatushakemus1Paatos.myonnettyavustus | currency:"&euro;"}} &nbsp;
         <juku-icon-link
@@ -137,7 +137,7 @@
         </juku-icon-link>
       </juku-form-row>
 
-      <!--juku-form-row ng-if="avustushakemusPaatosOlemassa() && onMaksatushakemus1()">
+      <!--juku-form-row ng-if="avustushakemusPaatosOlemassa() && isMaksatushakemus1()">
         <h5>MYÖNNETTY AVUSTUS AJALLE {{ajankohta}}{{hakemus.vuosi}}</h5>
         {{myonnettyAvustusPerJakso() | currency:"&euro;"}} &nbsp;
         <juku-icon-link
@@ -149,7 +149,7 @@
           Avaa päätös (PDF)
         </juku-icon-link>
       </juku-form-row>
-      <juku-form-row ng-if="maksatushakemus1PaatosOlemassa() && onMaksatushakemus2()">
+      <juku-form-row ng-if="maksatushakemus1PaatosOlemassa() && isMaksatushakemus2()">
         <h5>MYÖNNETTY AVUSTUS 1. MAKSATUSHAKEMUKSEN PERUSTEELLA</h5>
         {{maksatushakemus1PaatosMaksettu() | currency:"&euro;"}} &nbsp;
         <juku-icon-link
@@ -160,7 +160,7 @@
           Avaa päätös (PDF)
         </juku-icon-link>
       </juku-form-row>
-      <juku-form-row ng-if="maksatushakemus1PaatosOlemassa() && onMaksatushakemus2()">
+      <juku-form-row ng-if="maksatushakemus1PaatosOlemassa() && isMaksatushakemus2()">
         <h5>MYÖNNETTY AVUSTUS 2. MAKSATUSHAKEMUKSEN PERUSTEELLA</h5>
         {{myonnettyAvustusPerJakso() | currency:"&euro;"}} &nbsp;
         <juku-icon-link
@@ -179,7 +179,7 @@
         <strong>Virhe! </strong> Avustusta ei voi hakea maksuun, koska avustushakemuksella ei ole päätöstä.
       </juku-form-row>
       <juku-form-row
-        ng-if="avustushakemusPaatosOlemassa() && onMaksatushakemus1() && haettuSummaYliMyonnetyn()"
+        ng-if="avustushakemusPaatosOlemassa() && isMaksatushakemus1() && haettuSummaYliMyonnetyn()"
         class="alert alert-danger">
         <strong>Virhe! </strong>Haettu avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}}) ylittää ensimmäisellä
         maksatushakemuksella haettavan suurimman mahdollisen avustussumman ({{haettavaAvustusMH1() | currency:"&euro;"
@@ -189,7 +189,7 @@
         ({{myonnettyAvustusAH0() | currency:"&euro;"}} - alkuvuoden hakemuksen perusteella maksettu avustus).
       </juku-form-row>
       <juku-form-row
-        ng-if="avustushakemusPaatosOlemassa() && onMaksatushakemus2() && haettuSummaYliMyonnetyn()"
+        ng-if="avustushakemusPaatosOlemassa() && isMaksatushakemus2() && haettuSummaYliMyonnetyn()"
         class="alert alert-danger">
         <strong>Virhe! </strong>Toisen maksatushakemuksen haettava avustussumma ({{sumHaettavaAvustus() | currency:"&euro;"}})
         ei saa ylittää koko vuodelle {{hakemus.vuosi}} myönnettyä summaa ({{myonnettyAvustusAH0() | currency:"&euro;"}}
@@ -214,11 +214,11 @@
     <juku-form-section>
 
 
-      <juku-form-section ng-show="onAvustushakemus()">
+      <juku-form-section ng-show="isAvustushakemus()">
         <juku-ohje-avustushakemus></juku-ohje-avustushakemus>
       </juku-form-section>
 
-      <juku-form-section ng-show="onMaksatushakemus1() || onMaksatushakemus2()">
+      <juku-form-section ng-show="isMaksatushakemus1() || isMaksatushakemus2()">
         <juku-ohje-maksatushakemus></juku-ohje-maksatushakemus>
       </juku-form-section>
 
