@@ -18,26 +18,29 @@ angular.module('services.hakemuskausi', [])
           .then(res => res.data);
       },
       haeHakuohje: function (vuosi) {
-        return $http.get('api/hakemuskausi/'+vuosi+'/hakuohje');
+        return $http.get('api/hakemuskausi/' + vuosi + '/hakuohje');
+      },
+      haeElyHakuohje: function (vuosi) {
+        return $http.get('api/hakemuskausi/' + vuosi + '/elyhakuohje');
       },
       haeMaararaha: function (vuosi, organisaatiolajitunnus) {
-        return $http.get('api/maararaha/'+vuosi+'/'+organisaatiolajitunnus);
+        return $http.get('api/maararaha/' + vuosi + '/' + organisaatiolajitunnus);
       },
-      luoUusi: function(vuosi) {
+      luoUusi: function (vuosi) {
         return $http.post('api/hakemuskausi/' + vuosi)
           .then(res => res.data);
       },
-      saveHakuajat: function(vuosi, hakuajat) {
+      saveHakuajat: function (vuosi, hakuajat) {
         return $http.put('api/hakemuskausi/' + vuosi + '/hakuajat', hakuajat)
           .then(res => res.data);
       },
-      sulje: function(vuosi) {
+      sulje: function (vuosi) {
         return $http.post('api/hakemuskausi/' + vuosi + '/sulje');
       },
       paivitaMaararaha: function (vuosi, organisaatiolajitunnus, maararahadata) {
         var req = {
           method: 'PUT',
-          url: 'api/maararaha/'+vuosi+'/'+organisaatiolajitunnus,
+          url: 'api/maararaha/' + vuosi + '/' + organisaatiolajitunnus,
           headers: {
             'Content-Type': 'application/json'
           },

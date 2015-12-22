@@ -21,7 +21,7 @@ angular.module('jukufrontApp')
           _.forOwn(hakemuskaudet, function (hakemuskausi, key) {
             _.forOwn(hakemuskausi.hakemukset, function (hakemustyyppi, key) {
               hakemustyyppi.hakuaika.alkupvm = toUTCTimestamp(hakemustyyppi.hakuaika.alkupvm);
-              hakemustyyppi.hakuaika.loppupvm = toUTCTimestamp (hakemustyyppi.hakuaika.loppupvm);
+              hakemustyyppi.hakuaika.loppupvm = toUTCTimestamp(hakemustyyppi.hakuaika.loppupvm);
             });
           });
           $scope.avoimetHakemuskaudet = _.filter(hakemuskaudet, function (hakemuskausi) {
@@ -66,15 +66,15 @@ angular.module('jukufrontApp')
           $rootScope.sallittu('modify-hakemuskausi');
       };
 
-      $scope.hakemuskausiPanelClass = function(hakemusyhteenveto) {
+      $scope.hakemuskausiPanelClass = function (hakemusyhteenveto) {
         return hakemus.hakemusSuljettu(hakemusyhteenveto) ? 'hakemuskausi-panel_suljettu' : 'hakemuskausi-panel_auki';
       };
 
       var sortOrder = ['AH0', 'MH1', 'MH2', 'ELY'];
 
-      $scope.hakemustyypit = function(hakemuskausi) {
+      $scope.hakemustyypit = function (hakemuskausi) {
         return _.sortBy(hakemuskausi.hakemukset, hakemus => _.findIndex(sortOrder, hakemus.hakemustyyppitunnus));
-      }
+      };
 
       $scope.tallennaHakuajat = function tallennaHakuajat(vuosi, hakemus) {
         StatusService.tyhjenna();
@@ -118,7 +118,19 @@ angular.module('jukufrontApp')
         return pdf.getHakuohjePdfUrl(vuosi);
       };
 
-      $scope.upload = function (tiedostot, hakemuskausi) {
+      $scope.getElyHakuohjePdf = function (vuosi) {
+        return pdf.getElyHakuohjePdfUrl(vuosi);
+      };
+
+      $scope.uploadElyHakuohje = function (tiedostot, hakemuskausi) {
+        $scope.upload(tiedostot, hakemuskausi, 'elyhakuohje');
+      };
+
+      $scope.uploadHakuohje = function (tiedostot, hakemuskausi) {
+        $scope.upload(tiedostot, hakemuskausi, 'hakuohje');
+      };
+
+      $scope.upload = function (tiedostot, hakemuskausi, hakuohjeteksti) {
         StatusService.tyhjenna();
         const {vuosi} = hakemuskausi;
         if (tiedostot && tiedostot.length > 0) {
@@ -127,7 +139,7 @@ angular.module('jukufrontApp')
             return;
           }
           Upload.upload({
-            url: 'api/hakemuskausi/' + vuosi + '/hakuohje',
+            url: 'api/hakemuskausi/' + vuosi + '/' + hakuohjeteksti,
             data: {hakuohje: tiedostot[0]},
             method: 'PUT'
           }).then(function (response) {

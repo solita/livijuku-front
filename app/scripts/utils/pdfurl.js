@@ -10,6 +10,9 @@ module.exports = {
   getHakuohjePdfUrl: function (vuosi) {
     return 'pdf/web/viewer.html?file=../../api/hakemuskausi/' + vuosi + '/hakuohje';
   },
+  getElyHakuohjePdfUrl: function (vuosi) {
+    return 'pdf/web/viewer.html?file=../../api/hakemuskausi/' + vuosi + '/elyhakuohje';
+  },
   getLiitePdfUrl: function (hakemusid, liitenumero) {
     return 'pdf/web/viewer.html?file=../../api/hakemus/' + hakemusid + '/liite/' + liitenumero;
   }
