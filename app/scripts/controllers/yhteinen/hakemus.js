@@ -23,10 +23,6 @@ function isELYhakemus(hakemus) {
   return hakemus.hakemustyyppitunnus === 'ELY';
 }
 
-function isMaksatushakemus(hakemus) {
-  return _.contains(['MH1', 'MH2'], hakemus.hakemustyyppitunnus)
-}
-
 function errorMessage(nimi) {
   return function (input) {
     return input.$error.required ? nimi + ' on pakollinen tieto.' :
@@ -65,7 +61,7 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
 
   function ifMaksatushakemus(then, defaultvalue) {
     return hakemusPromise.then((hakemus) => {
-      if (isMaksatushakemus(hakemus) && hakemus.contentvisible) {
+      if (h.isMaksatushakemus(hakemus.hakemustyyppitunnus) && hakemus.contentvisible) {
         return then(hakemus);
       } else {
         return defaultvalue;
@@ -148,6 +144,7 @@ angular.module('jukufrontApp')
     function ($rootScope, $scope, $state, $stateParams, PaatosService, HakemusService, AvustuskohdeService, LiikenneSuoriteService, LippuSuoriteService, StatusService, common, $window, initials, ElyHakemusService, AuthService) {
 
       _.extend($scope, initials);
+      _.extend($scope, h.hakemustyyppiFlags($scope.hakemus.hakemustyyppitunnus));
 
       function bindToScope(key) {
         return (value) => {
@@ -318,9 +315,9 @@ angular.module('jukufrontApp')
       };
 
       $scope.haettavaAvustusMH = function () {
-        if ($scope.isMaksatushakemus1()) {
+        if ($scope.isMaksatushakemus1) {
           return $scope.haettavaAvustusMH1();
-        } else if ($scope.isMaksatushakemus2()) {
+        } else if ($scope.isMaksatushakemus2) {
           return $scope.haettavaAvustusMH2();
         }
       };
@@ -337,30 +334,14 @@ angular.module('jukufrontApp')
         }
       };
 
-      $scope.isAvustushakemus = function () {
-        return $scope.hakemus.hakemustyyppitunnus === 'AH0';
-      };
-
-      $scope.isMaksatushakemus1 = function () {
-        return $scope.hakemus.hakemustyyppitunnus === 'MH1';
-      };
-
-      $scope.isMaksatushakemus2 = function () {
-        return $scope.hakemus.hakemustyyppitunnus === 'MH2';
-      };
-
       $scope.sallittuIban = function (tilinumero) {
         return IBAN.isValid(tilinumero);
       };
 
       $scope.pankkitilinumeroErrorMessage = errorMessage("Tilinumero");
 
-      $scope.isMaksatushakemus = isMaksatushakemus($scope.hakemus);
-
-      $scope.isELYhakemus = isELYhakemus($scope.hakemus);
-
       $scope.edellinenHakemusPaatetty = function () {
-        if ($scope.isAvustushakemus() || $scope.isELYhakemus) {
+        if ($scope.isAvustushakemus || $scope.isELYhakemus) {
           return true;
         }
         return $scope.avustushakemusPaatosOlemassa();
@@ -388,8 +369,8 @@ angular.module('jukufrontApp')
       };
 
       function validiHakemus() {
-        return (($scope.hakemusForm.$valid && ($scope.isAvustushakemus() || $scope.isELYhakemus)) ||
-        (($scope.isMaksatushakemus1() || $scope.isMaksatushakemus2()) &&
+        return (($scope.hakemusForm.$valid && ($scope.isAvustushakemus || $scope.isELYhakemus)) ||
+        (($scope.isMaksatushakemus1 || $scope.isMaksatushakemus2) &&
         $scope.hakemusForm.$valid && !$scope.haettuSummaYliMyonnetyn()));
       }
 
@@ -413,8 +394,8 @@ angular.module('jukufrontApp')
 
       $scope.hakemusLahettaminenEnabled = function () {
         return $scope.hakemusKeskenerainen() &&
-          ($scope.isELYhakemus || (($scope.isAvustushakemus() || $scope.isMaksatushakemus1() ||
-          $scope.isMaksatushakemus2()) && $scope.allekirjoitusliitetty &&
+          ($scope.isELYhakemus || (($scope.isAvustushakemus || $scope.isMaksatushakemus1 ||
+          $scope.isMaksatushakemus2) && $scope.allekirjoitusliitetty &&
           $scope.liitteetOlemassa())) &&
           $scope.edellinenHakemusPaatetty() &&
           $scope.sallittu('allekirjoita-oma-hakemus') &&
@@ -428,9 +409,9 @@ angular.module('jukufrontApp')
           return "Käyttäjällä ei ole oikeutta lähettää hakemuksia";
         } else if (!$scope.isOmaHakemus($scope.user)) {
           return "Vain hakijaorganisaation edustajilla on oikeus lähettää hakemus.";
-        } else if (($scope.isAvustushakemus() || $scope.isMaksatushakemus1() || $scope.isMaksatushakemus2()) && !$scope.liitteetOlemassa()) {
+        } else if (($scope.isAvustushakemus || $scope.isMaksatushakemus1 || $scope.isMaksatushakemus2) && !$scope.liitteetOlemassa()) {
           return "Allekirjoitusoikeusdokumenttia ei ole liitetty";
-        } else if (($scope.isAvustushakemus() || $scope.isMaksatushakemus1() || $scope.isMaksatushakemus2()) && !$scope.allekirjoitusliitetty && $scope.liitteetOlemassa()) {
+        } else if (($scope.isAvustushakemus || $scope.isMaksatushakemus1 || $scope.isMaksatushakemus2) && !$scope.allekirjoitusliitetty && $scope.liitteetOlemassa()) {
           return "Olethan merkinnyt \"Olen liittänyt hakemukseen tarvittavat lisätiedot mukaan lukien liitteen allekirjoitusoikeudesta.\"-kohdan valituksi?";
         } else if (!$scope.edellinenHakemusPaatetty()) {
           return "Edeltävää hakemusta ei ole päätetty."
@@ -468,7 +449,7 @@ angular.module('jukufrontApp')
           });
 
           tallennusPromise.push(AvustuskohdeService.tallenna(avustuskohteet));
-          if (isMaksatushakemus($scope.hakemus)) {
+          if ($scope.isMaksatushakemus) {
             tallennusPromise.push(HakemusService.paivitaTilinumero($scope.hakemus.id, $scope.hakemus.tilinumero));
             tallennusPromise.push(LiikenneSuoriteService.tallenna(
               $scope.hakemus.id, $scope.psaLiikenneSuoritteet.concat($scope.palLiikenneSuoritteet)));

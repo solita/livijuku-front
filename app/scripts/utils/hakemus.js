@@ -33,3 +33,24 @@ export function avustuskohdeRahamaara(property, kohde) {
   if (kohde.includealv) return c.roundTwoDecimals(kohde[property] * (1 + (kohde.alv / 100)));
   else return c.roundTwoDecimals(kohde[property]);
 }
+
+/**
+ * Hakemustyyppiin liittyvät yleiset predikaatit.
+ * Tämä määrittelee hakemustyyppeihin liittyvät vakiopredikaatit, joita käytetään html-templaateissa.
+ *
+ * Nämä liitetään suoraan scopeen esim.
+ * _.extend(scope, hakemustyyppiFlags(hakemustyyppitunnus));
+ */
+export function hakemustyyppiFlags(hakemustyyppitunnus) {
+  return {
+    isAvustushakemus: hakemustyyppitunnus === 'AH0',
+    isMaksatushakemus1: hakemustyyppitunnus === 'MH1',
+    isMaksatushakemus2: hakemustyyppitunnus === 'MH2',
+    isELYhakemus: hakemustyyppitunnus === 'ELY',
+    isMaksatushakemus: isMaksatushakemus(hakemustyyppitunnus)
+  };
+}
+
+export function isMaksatushakemus(hakemustyyppitunnus) {
+  return _.contains(['MH1', 'MH2'], hakemustyyppitunnus)
+}
