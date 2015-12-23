@@ -48,6 +48,10 @@ angular.module('jukufrontApp')
         return Boolean(hakemuskausi.hakuohje_contenttype);
       };
 
+      $scope.elyhakuohjeLadattu = function elyhakuohjeLadattu(hakemuskausi) {
+        return Boolean(hakemuskausi.elyhakuohje_contenttype);
+      };
+
       $scope.hakemuskausiAvoin = function hakemuskausiAvoin(hakemuskausi) {
         return hakemuskausi.tilatunnus === 'A';
       };
@@ -63,6 +67,7 @@ angular.module('jukufrontApp')
       $scope.voiKaynnistaa = function voiKaynnistaa(hakemuskausi) {
         return $scope.hakemuskausiAvoin(hakemuskausi) &&
           $scope.hakuohjeLadattu(hakemuskausi) &&
+          $scope.elyhakuohjeLadattu(hakemuskausi) &&
           $rootScope.sallittu('modify-hakemuskausi');
       };
 
