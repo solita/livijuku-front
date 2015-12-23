@@ -13,7 +13,9 @@
         <div class="row">
           <div class="col-md-3 text-center">
             <h1>{{hakemuskausi.vuosi}}</h1>
-            <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">Hakuohje</a>
+            <a ng-if="!isELYhakija(hakemuskausi)" href="{{getHakuohjePdf(hakemuskausi.vuosi)}}"
+               target="_blank">Hakuohje</a>
+            <a ng-if="isELYhakija(hakemuskausi)" href="{{getElyHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">Hakuohje</a>
             <br>
             <br>
           </div>
