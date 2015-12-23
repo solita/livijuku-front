@@ -193,8 +193,8 @@ public class TestBase {
                 isVisible());
     }
 
-    protected void postHakuohje(File fileToUpload) {
-        WebElement fileInput = findElementByXPath("//input[@type='file']");
+    protected void postHakuohje(File fileToUpload, String xpath) {
+        WebElement fileInput = findElementByXPath(xpath);
         driver.executeScript("angular.element(arguments[0]).css('visibility', 'visible').css('width','').css('height','');", fileInput);
         String hakuohje = fileToUpload.getAbsolutePath();
         fileInput.sendKeys(hakuohje);
@@ -261,7 +261,9 @@ public class TestBase {
     private void avaaKausi() {
         login(User.KATRI);
 
-        postHakuohje(getPathToTestFile("test.pdf").toFile());
+        postHakuohje(getPathToTestFile("test.pdf").toFile(),"//input[@type='file' and @name='hakuohje']");
+        waitForAngularRequestsToFinish(driver);
+        postHakuohje(getPathToTestFile("test.pdf").toFile(),"//input[@type='file' and @name='elyhakuohje']");
 
         boolean kaynnistaNapinTilaEnnen =
                 findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi")).isEnabled();

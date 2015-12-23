@@ -631,7 +631,8 @@ public class HakemuskausiTest extends TestBase {
         //Avaa hakemus
         WorkAround.click(spanWithHakemustila(Hakemustila.KESKENERAINEN));
 
-        postHakuohje(getPathToTestFile("test.pdf").toFile());
+        postHakuohje(getPathToTestFile("test.pdf").toFile(),"//input[@type='file']");
+
 
         // TODO Assertoi liitteen tiedot sivulta.
     }

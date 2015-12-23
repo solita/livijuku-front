@@ -4,8 +4,8 @@
         data-toggle="tooltip"
         data-tooltip-trigger="mouseenter"
         data-tooltip-placement="bottom"
-        uib-tooltip="Voimassaoleva hakuohje (PDF) ELY-keskusten määrärahojen hakemiseen">
+        uib-tooltip="Voimassaoleva hakuohje (PDF) ELY-keskusten määrärahojen hakemiseen v. {{hakemuskausi.vuosi}}">
   <span>
-    {{ elyhakuohjeLadattu(hakemuskausi) ? 'hakemus-tyyppi-ely':' Lataa hakuohje' }}
+    {{ elyhakuohjeLadattu(hakemuskausi) ? 'Korvaa ladattu hakuohje':' Lataa hakuohje' }}
   </span>
 </button>
