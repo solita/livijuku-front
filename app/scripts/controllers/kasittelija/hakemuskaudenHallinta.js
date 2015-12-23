@@ -52,6 +52,10 @@ angular.module('jukufrontApp')
         return Boolean(hakemuskausi.elyhakuohje_contenttype);
       };
 
+      $scope.isELYhakemus = function isELYhakemus(hakemus) {
+        return hakemus.hakemustyyppitunnus === 'ELY';
+      };
+
       $scope.hakemuskausiAvoin = function hakemuskausiAvoin(hakemuskausi) {
         return hakemuskausi.tilatunnus === 'A';
       };

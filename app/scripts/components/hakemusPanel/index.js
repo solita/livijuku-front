@@ -5,11 +5,12 @@ function hakemusPanel(opts = {}) {
     return {
       scope: {
         title: '@',
+        ely: '=',
         inactive: '='
       },
       template: `
         <div ng-class="{'hakemus-panel panel panel-primary ${opts.className || ''}': true, 'not-active': inactive}">
-          <div class="panel-heading">
+          <div ng-class="{'panel-heading': true, 'panel-heading hakemus-tyyppi-ely':ely}">
             <p class="panel-title">{{ title }}</p>
           </div>
           <div class="panel-body" ng-transclude></div>

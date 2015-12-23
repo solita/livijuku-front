@@ -3,6 +3,7 @@
     <hakemuskausi-panel class="{{hakemuskausiPanelClass(hakemus)}}"
       inactive="!utils.hakemusKaynnissa(hakemus)"
       title="{{hakemus.hakemustyyppitunnus | toApplicationName}}"
+      ely="isELYhakemus(hakemus)"
       ui-sref="app.yhteinen.hakemukset.list({tyyppi: hakemus.hakemustyyppitunnus})">
       <hakemus-summary
         kausi-id="$index"

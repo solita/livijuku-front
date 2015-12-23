@@ -8,7 +8,7 @@ module.exports = function () {
       ely: '&'
     },
     template: `
-      <a ui-sref-active="is-selected" ng-class="{'tab is-selected':(selected()&&!ely()),'tab':(!selected()&&!ely()),'tab is-selected is-ely':(selected()&&ely()),'tab is-ely':(!selected()&&ely())}">
+      <a ui-sref-active="is-selected" ng-class="{'tab is-selected':(selected()&&!ely()),'tab':(!selected()&&!ely()),'tab is-ely-selected':(selected()&&ely()),'tab is-ely':(!selected()&&ely())}">
         <ng-transclude />
       </div>
     `

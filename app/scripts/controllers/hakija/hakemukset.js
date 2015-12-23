@@ -26,6 +26,10 @@ angular.module('jukufrontApp')
       return pdf.getHakuohjePdfUrl(vuosi);
     };
 
+    $scope.isELYhakemus = function isELYhakemus(hakemus) {
+      return hakemus.hakemustyyppitunnus === 'ELY';
+    };
+
     $scope.isELYhakija = function (hakemuskausi) {
       return (_.find(hakemuskausi.hakemukset, function (hakemus) {
         return _.contains(['ELY'], hakemus.hakemustyyppitunnus)

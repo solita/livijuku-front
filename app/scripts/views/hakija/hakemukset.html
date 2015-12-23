@@ -24,6 +24,7 @@
             <hakemus-laatikko
               ng-click="valitseHakemus(utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus))"
               title="{{ hakemus.hakemustyyppitunnus | toApplicationName }}"
+              ely="isELYhakemus(hakemus)"
               hakemus="utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus)">
             </hakemus-laatikko>
           </div>
@@ -48,6 +49,7 @@
             <hakemus-laatikko
               ng-click="valitseHakemus(utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus))"
               title="{{ hakemus.hakemustyyppitunnus | toApplicationName }}"
+              ely="isELYhakemus(hakemus)"
               hakemus="utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus)">
             </hakemus-laatikko>
           </div>

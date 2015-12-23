@@ -279,6 +279,10 @@ angular.module('jukufrontApp')
         return ($scope.hakemus.hakemustilatunnus === 'V' || $scope.hakemus.hakemustilatunnus === 'TV');
       };
 
+      $scope.elyTyyppi = function(tyyppi){
+        return tyyppi==='ELY';
+      };
+
       $scope.hasPaatos = function (hakemustilatunnus) {
         return ($scope.paatos && $scope.paatos.voimaantuloaika);
       };
@@ -419,6 +423,7 @@ angular.module('jukufrontApp')
           return ""
         }
       };
+
 
       $scope.tallennaHakemus = function (lisa_toiminto) {
         var tallennusPromise = [];
