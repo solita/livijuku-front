@@ -17,7 +17,7 @@ angular.module('jukufrontApp')
     '$q',
     '$state',
     '$scope',
-    function ($rootScope, HakemuskausiService, $stateParams, StatusService, OrganisaatioService, $q, $state,$scope) {
+    function ($rootScope, HakemuskausiService, $stateParams, StatusService, OrganisaatioService, $q, $state, $scope) {
 
       this.displayed = [];
       this.tyyppi = $stateParams.tyyppi;
@@ -56,6 +56,10 @@ angular.module('jukufrontApp')
 
       $scope.isEly = function isEly(tyyppi) {
         return tyyppi === 'ELY';
+      };
+
+      $scope.isTabSelected = function isTabSelected(tyyppi) {
+        return $scope.hakemukset.tyyppi === tyyppi;
       };
 
       this.hakemustyypinId = function hakemustyypinId(tyyppi, hakemus, hakemukset) {

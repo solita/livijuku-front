@@ -10,6 +10,7 @@
         <juku-tab
           ng-repeat="tyyppi in constants.hakemustyypit"
           ely="isEly(tyyppi)"
+          selected="isTabSelected(tyyppi)"
           ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppi})">
           {{ tyyppi | toApplicationNamePlural }}
           <juku-badge
