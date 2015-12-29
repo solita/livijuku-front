@@ -803,20 +803,20 @@ public class HakemuskausiTest extends TestBase {
 
         // Assertoi tila päätetty
         WorkAround.click(spanWithHakemustila(Hakemustila.PAATETTY));
-/*
+
         // Tarkista päätös pdf
         String paatosHref = findElementByLinkText("Avaa päätös (PDF)").getAttribute("href");
-        String actual = httpGetPdfText(paatosHref, User.HARRI);
+        String actual = httpGetPdfText(paatosHref, User.ELY10);
 
-        String expectedText = " suurten kaupunkiseutujen joukkoliikenteen \n"
-                + "valtionavustusta 13 900 euroa.";
+        String expectedText = " alueellisen joukkoliikenteen kehittämiseen 1 000 000 euron";
         assertThat(String.format("Päätös PDF sisältää tekstin %s", expectedText),
                 containsNormalized(actual, expectedText));
-        String expectedText2 = "Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle \n"
-                + "toimivaltaisena viranomaisena valtionavustuksena enintään 13 900 euroa (sis. alv)";
+        String expectedText2 = "liikenne- ja ympäristökeskuksille yhteensä 200 000 euroa valtion";
         assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText2),
                 containsNormalized(actual, expectedText2));
-                */
+        String expectedText3 = "Etelä-Pohjanmaa 200000 e";
+        assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText3),
+                containsNormalized(actual, expectedText3));
     }
 
 

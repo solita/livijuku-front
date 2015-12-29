@@ -397,6 +397,7 @@ public class TestBase {
         httpGet.addHeader("oam-remote-user", user.getLogin());
         httpGet.addHeader("oam-groups", user.getGroup());
         httpGet.addHeader("oam-user-organization", user.getOrganization());
+        httpGet.addHeader("oam-user-department", user.getDepartment());
 
         System.out.println("************************************");
         try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
