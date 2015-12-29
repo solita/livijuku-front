@@ -19,39 +19,38 @@
     <juku-form-row>
       <div class="table-responsive">
         <table class="table table-hover table-condensed">
-          <tr>
-            <th colspan="2" class="col-md-8 ekarivi">Alueen joukkoliikenteen järjestämisen resurssit ja virkamiestahon
-              henkilöstö
-            </th>
-            <th class="col-md-4 ekarivi">Vapaat kommentit</th>
-          </tr>
-          </thead>
-          <tbody>
+          <thead>
             <tr>
-              <td><b>Suunnittelun ja organisaation henkilöstö</b></td>
-              <td>
+              <th class="col-md-10">Joukkoliikenteen suunnittelun ja organisaation henkilöstö</th>
+              <th class="col-md-2">
                 <form-group-compact label="Henkilöstö">
                   <input id="taustatiedot-henkilosto" name="henkilosto"
                          ng-model="taustatiedot.henkilosto"
-                         placeholder="Henkilöstö (htv)" noenter
+                         class="form-control notbold"
+                         placeholder="henkilötyövuotta" noenter
                          numeric-km-only="" ng-currency=""
                          ng-readonly="isReadonly()" required
                          currency-symbol="" noenter
                          select-on-click>
                 </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-henkilosto-k" name="henkilosto-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.henkilostoKommentit">
-                </form-group-compact>
-              </td>
+              </th>
             </tr>
+          </thead>
+        </table>
+      </div>
+    </juku-form-row>
+    <juku-form-row>
+      <div class="table-responsive">
+        <table class="table table-hover table-condensed">
+          <thead>
             <tr>
-              <td><b>Joukkoliikenteen ulkoistetut kustannukset: asiakaspalvelu</b></td>
-              <td>
+              <th colspan="2">Joukkoliikenteen ulkoistetut kustannukset (€ / vuosi, alv 0)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-md-8">Asiakaspalvelu</td>
+              <td class="col-md-4">
                 <form-group-compact label="Asiakaspalvelu">
                   <input id="taustatiedot-asiakaspalvelu" name="asiakaspalvelu" type="text"
                          class="form-control"
@@ -59,21 +58,13 @@
                          noenter
                          select-on-click
                          ng-model="taustatiedot.asiakaspalvelu" ng-disabled="isReadonly()"
-                         placeholder="Asiakaspalvelu" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-asiakaspalvelu-k" name="asiakaspalvelu-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.asiakaspalveluKommentit">
+                         required>
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td><b>Joukkoliikenteen ulkoistetut kustannukset: konsulttipalvelu</b></td>
-              <td>
+              <td class="col-md-8">Konsulttipalvelu</td>
+              <td class="col-md-4">
                 <form-group-compact label="Konsulttipalvelu">
                   <input id="taustatiedot-konsulttipalvelu" name="konsulttipalvelu" type="text"
                          class="form-control"
@@ -81,21 +72,13 @@
                          noenter
                          select-on-click
                          ng-model="taustatiedot.konsulttipalvelu" ng-disabled="isReadonly()"
-                         placeholder="Konsulttipalvelu" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-konsulttipalvelu-k" name="konsulttipalvelu-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.konsulttipalveluKommentit">
+                         required>
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td><b>Joukkoliikenteen ulkoistetut kustannukset: lipunmyyntipalkkiot</b></td>
-              <td>
+              <td class="col-md-8">Lipunmyyntipalkkiot</td>
+              <td class="col-md-4">
                 <form-group-compact label="Lipunmyyntipalkkiot">
                   <input id="taustatiedot-lipunmyyntipalkkiot" name="lipunmyyntipalkkiot" type="text"
                          class="form-control"
@@ -103,21 +86,13 @@
                          noenter
                          select-on-click
                          ng-model="taustatiedot.lipunmyyntipalkkiot" ng-disabled="isReadonly()"
-                         placeholder="Lipunmyyntipalkkiot" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-lipunmyyntipalkkiot-k" name="lipunmyyntipalkiot-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.lipunmyyntipalkkiotKommentit">
+                         required>
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td><b>Joukkoliikenteen ulkoistetut kustannukset: tieto-/maksujärjestelmät</b></td>
-              <td>
+              <td class="col-md-8">Tieto-/maksujärjestelmät</td>
+              <td class="col-md-4">
                 <form-group-compact label="Tietomaksujärjestelmät">
                   <input id="taustatiedot-tietomaksujarjestelmat" name="tietomaksujarjestelmat" type="text"
                          class="form-control"
@@ -125,21 +100,13 @@
                          noenter
                          select-on-click
                          ng-model="taustatiedot.tietomaksujarjestelmat" ng-disabled="isReadonly()"
-                         placeholder="Tieto-/maksujärjestelmät" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-tietomaksujarjestelmat-k" name="tietomaksujarjestelmat-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.tietomaksujarjestelmatKommentit">
+                         required>
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td><b>Joukkoliikenteen ulkoistetut kustannukset: muut palvelut</b></td>
-              <td>
+              <td class="col-md-8">Muut palvelut</td>
+              <td class="col-md-4">
                 <form-group-compact label="Muutpalvelut">
                   <input id="taustatiedot-muutpalvelut" name="muutpalvelut" type="text"
                          class="form-control"
@@ -147,15 +114,7 @@
                          noenter
                          select-on-click
                          ng-model="taustatiedot.muutpalvelut" ng-disabled="isReadonly()"
-                         placeholder="Muut palvelut" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-muutpalvelut-k" name="muutpalvelut-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.muutpalvelutKommentit">
+                         required>
                 </form-group-compact>
               </td>
             </tr>
@@ -166,49 +125,33 @@
     <juku-form-row>
       <div class="table-responsive">
         <table class="table table-hover table-condensed">
-          <tr>
-            <th colspan="2" class="col-md-8 ekarivi">Alueen perustiedot</th>
-            <th class="col-md-4 ekarivi">Vapaat kommentit</th>
-          </tr>
+          <thead>
+            <tr>
+              <th colspan="2">Alueen perustiedot</th>
+            </tr>
           </thead>
           <tbody>
             <tr>
-              <td><b>Alueen kuntien lukumäärä</b></td>
-              <td>
+              <td class="col-md-8">Alueen kuntien lukumäärä</td>
+              <td class="col-md-4">
                 <form-group-compact label="Kuntien lukumääärä" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-kuntienlkm" name="kuntienlkm"
-                         placeholder="Kuntien lkm" noenter
+                         placeholder="kuntien lkm" noenter
                          type="number" numeric-integer-only="" select-on-click
                          ng-readonly="isReadonly()"
                          ng-model="taustatiedot.kuntienlkm" required>
                 </form-group-compact>
               </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-kuntienlkm-k" name="kuntienlkm-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kuntienlkmKommentit">
-                </form-group-compact>
-              </td>
             </tr>
             <tr>
-              <td><b>Joukkoliikenteen lippujärjestelmän vyöhykkeiden määrä</b></td>
-              <td>
+              <td class="col-md-8">Joukkoliikenteen lippujärjestelmän vyöhykkeiden määrä</td>
+              <td class="col-md-4">
                 <form-group-compact label="Vyöhykkeiden lukumääärä" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-vyohykkeidenlkm" name="vyohykkeidenlkm"
-                         placeholder="Vyöhykkeiden lkm" noenter
+                         placeholder="vyöhykkeiden lkm" noenter
                          type="number" numeric-integer-only="" select-on-click
                          ng-readonly="isReadonly()"
                          ng-model="taustatiedot.vyohykkeidenlkm" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-vyohykkeidenlkm-k" name="vyohykkeidenlkm-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.vyohykkeidenlkmKommentit">
                 </form-group-compact>
               </td>
             </tr>
@@ -219,133 +162,85 @@
     <juku-form-row>
       <div class="table-responsive">
         <table class="table table-hover table-condensed">
-          <tr>
-            <th colspan="2" class="col-md-8 ekarivi">Lippualueen/toimivalta-alueen lisätiedot</th>
-            <th class="col-md-4 ekarivi">Vapaat kommentit</th>
-          </tr>
+          <thead>
+            <tr>
+              <th colspan="2">Toimivalta-alueen lisätiedot</th>
+            </tr>
           </thead>
           <tbody>
             <tr>
-              <td><b>Maapinta-ala, km2</b></td>
-              <td>
+              <td class="col-md-8">Maapinta-ala, km2</td>
+              <td class="col-md-4">
                 <form-group-compact label="Maapinta-ala">
                   <input id="taustatiedot-maapinta-ala" name="maapinta-ala"
                          ng-model="taustatiedot.maapintaala"
-                         placeholder="Maapinta-ala (km2)" noenter
+                         placeholder="km2" noenter
                          numeric-km-only="" ng-currency=""
                          ng-readonly="isReadonly()" required
                          currency-symbol="" noenter
                          select-on-click>
                 </form-group-compact>
               </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-maapinta-ala-k" name="maapinta-ala-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.maapintaalaKommentit">
-                </form-group-compact>
-              </td>
             </tr>
             <tr>
-              <td><b>Asukasmäärä</b></td>
-              <td>
+              <td class="col-md-8">Asukasmäärä</td>
+              <td class="col-md-4">
                 <form-group-compact label="Asukasmäärä" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-asukasmaara" name="asukasmaara"
-                         placeholder="Asukasmäärä" noenter
+                         placeholder="lkm" noenter
                          type="number" numeric-integer-only="" select-on-click
                          ng-readonly="isReadonly()"
                          ng-model="taustatiedot.asukasmaara" required>
                 </form-group-compact>
               </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-asukasmaara-k" name="asukasmaara-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.asukasmaaraKommentit">
-                </form-group-compact>
-              </td>
             </tr>
             <tr>
-              <td><b>Työpaikkamäärä</b></td>
-              <td>
+              <td class="col-md-8">Työpaikkamäärä</td>
+              <td class="col-md-4">
                 <form-group-compact label="Työpaikkamäärä" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-tyopaikkamaara" name="tyopaikkamaara"
-                         placeholder="Työpaikkamäärä" noenter
+                         placeholder="lkm" noenter
                          type="number" numeric-integer-only="" select-on-click
                          ng-readonly="isReadonly()"
                          ng-model="taustatiedot.tyopaikkamaara" required>
                 </form-group-compact>
               </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-tyopaikkamaara-k" name="tyopaikkamaara-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.tyopaikkamaaraKommentit">
-                </form-group-compact>
-              </td>
             </tr>
             <tr>
-              <td><b>Pendelöivien osuus alueella (oman kunnan ulkopuolella työssäkäynti)</b></td>
-              <td>
+              <td class="col-md-8">Pendelöivien osuus alueella (oman kunnan ulkopuolella työssäkäynti)</td>
+              <td class="col-md-4">
                 <form-group-compact label="Pendelöivien osuus">
                   <input id="taustatiedot-pendeloivienosuus" name="pendeloivienosuus"
-                         placeholder="Pendelöivien osuus (%)" noenter
+                         placeholder="%-osuus työssäkäyvistä" noenter
                          type="number" min="0" max="100" numeric-integer-only="" select-on-click
                          ng-readonly="isReadonly()"
                          ng-model="taustatiedot.pendeloivienosuus" required>
                 </form-group-compact>
               </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-pendeloivienosuus-k" name="pendeloivienosuus-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.pendeloivienosuusKommentit">
-                </form-group-compact>
-              </td>
             </tr>
             <tr>
-              <td><b>Henkilöautoliikenteen suorite (jos tiedossa)</b></td>
-              <td>
+              <td class="col-md-8">Henkilöautoliikenteen suorite (jos tiedossa)</td>
+              <td class="col-md-4">
                 <form-group-compact label="Henkilöautoliikenne">
                   <input id="taustatiedot-henkiloautoliikenne" name="henkiloautoliikenne" type="text"
                          numeric-km-only="" ng-currency=""
                          currency-symbol="" noenter
                          select-on-click
-                         placeholder="Henkilöautoliikenne (km/vuosi)"
+                         placeholder="km / vuosi"
                          ng-model="taustatiedot.henkiloautoliikenne">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-henkiloautoliikennne-k" name="henkiloautoliikenne-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.henkiloautoliikenneKommentit">
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td><b>Autoistumisaste</b></td>
-              <td>
+              <td class="col-md-8">Autoistumisaste</td>
+              <td class="col-md-4">
                 <form-group-compact label="Autoistumisaste">
                   <input id="taustatiedot-autoistumisaste" name="autoistumisaste" type="text"
                          numeric-km-only="" ng-currency=""
                          currency-symbol="" noenter
                          select-on-click
-                         placeholder="Autoistumisaste (autoa/1000 asukasta)"
+                         placeholder="autoa / 1000 asukasta"
                          ng-model="taustatiedot.autoistumisaste" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-autoistumisaste-k" name="autoistumisaste-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.autoistumisasteKommentit">
                 </form-group-compact>
               </td>
             </tr>
@@ -359,55 +254,41 @@
     <juku-form-row>
       <div class="table-responsive">
         <table class="table table-hover table-condensed">
-          <tr>
-            <th colspan="2" class="col-md-8 ekarivi">Pysäkki</th>
-            <th class="col-md-4 ekarivi">Vapaat kommentit</th>
-          </tr>
+          <thead>
+            <th class="col-md-10">Toimivalta-alueen pysäkkien lukumäärä tie- ja katuverkolla (pysäkkitietoa tarjoaa mm.
+              <a href="http://www.digiroad.fi/Uusi_DR/pysakki/fi_FI/pysakki/" target="_blank">digiroad</a>)
+            </th>
+            <th class="col-md-2">
+              <form-group-compact label="Pysäkkien lukumääärä" errormessage="kokonaislukuErrorMessage">
+                <input id="taustatiedot-pysakkienlkm" name="pysakkienlkm"
+                       class="form-control notbold"
+                       placeholder="lkm" noenter
+                       type="number" numeric-integer-only="" select-on-click
+                       ng-readonly="isReadonly()"
+                       ng-model="taustatiedot.pysakkienlkm" required>
+              </form-group-compact>
+            </th>
           </thead>
-          <tbody>
-            <tr>
-              <td><b>Pysäkkien lukumäärä voidaan määrittää esimerkiksi digiroad:n avulla. Toimivalta-alueen pysäkkien
-                lukumäärä tie- ja katuverkolla
-              </b></td>
-              <td>
-                <form-group-compact label="Pysäkkien lukumääärä" errormessage="kokonaislukuErrorMessage">
-                  <input id="taustatiedot-pysakkienlkm" name="pysakkienlkm"
-                         placeholder="Pysäkkien lkm" noenter
-                         type="number" numeric-integer-only="" select-on-click
-                         ng-readonly="isReadonly()"
-                         ng-model="taustatiedot.pysakkienlkm" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-pysakkienlkm-k" name="pysakkienlkm-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.pysakkienlkmKommentit">
-                </form-group-compact>
-              </td>
-          </tbody>
         </table>
       </div>
     </juku-form-row>
     <juku-form-row>
       <div class="table-responsive">
         <table class="table table-hover table-condensed">
-          <tr>
-            <th class="col-md-3 ekarivi">Lippuen asiakashinnat</th>
-            <th class="col-md-1 ekarivi">1 vyöhyke</th>
-            <th class="col-md-1 ekarivi">2 vyöhykettä</th>
-            <th class="col-md-1 ekarivi">3 vyöhykettä</th>
-            <th class="col-md-1 ekarivi">4 vyöhykettä</th>
-            <th class="col-md-1 ekarivi">5 vyöhykettä</th>
-            <th class="col-md-1 ekarivi">6 vyöhykettä</th>
-            <th class="col-md-3 ekarivi">Vapaat kommentit</th>
-          </tr>
+          <thead>
+            <tr>
+              <th class="col-md-6">Lippuen asiakashinnat</th>
+              <th class="col-md-1">1 vyöhyke</th>
+              <th class="col-md-1">2 vyöhykettä</th>
+              <th class="col-md-1">3 vyöhykettä</th>
+              <th class="col-md-1">4 vyöhykettä</th>
+              <th class="col-md-1">5 vyöhykettä</th>
+              <th class="col-md-1">6 vyöhykettä</th>
+            </tr>
           </thead>
           <tbody>
             <tr>
-              <td><b>Kertalipun hinta vyöhykkeittäin (aikuinen)(€)
-              </b></td>
+              <td>Kertalipun hinta vyöhykkeittäin (aikuinen)(€)</td>
               <td>
                 <form-group-compact label="Kertalippu vyöhyke 1">
                   <input id="taustatiedot-kertalippuvyohyke-1" name="kertalippuvyohyke1" type="text"
@@ -415,8 +296,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kertalippuvyohyke1" ng-disabled="isReadonly()"
-                         placeholder="1 vyöhyke (€)">
+                         ng-model="taustatiedot.kertalippuvyohyke1" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
               <td>
@@ -426,8 +306,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kertalippuvyohyke2" ng-disabled="isReadonly()"
-                         placeholder="2 vyöhykettä (€)">
+                         ng-model="taustatiedot.kertalippuvyohyke2" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
               <td>
@@ -437,8 +316,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kertalippuvyohyke3" ng-disabled="isReadonly()"
-                         placeholder="3 vyöhykettä (€)">
+                         ng-model="taustatiedot.kertalippuvyohyke3" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
               <td>
@@ -448,8 +326,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kertalippuvyohyke4" ng-disabled="isReadonly()"
-                         placeholder="4 vyöhykettä (€)">
+                         ng-model="taustatiedot.kertalippuvyohyke4" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
               <td>
@@ -459,8 +336,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kertalippuvyohyke5" ng-disabled="isReadonly()"
-                         placeholder="5 vyöhykettä (€)">
+                         ng-model="taustatiedot.kertalippuvyohyke5" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
               <td>
@@ -470,22 +346,12 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kertalippuvyohyke6" ng-disabled="isReadonly()"
-                         placeholder="6 vyöhykettä (€)">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-kertaliput-k" name="kertaliput-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kertaliputKommentit">
+                         ng-model="taustatiedot.kertalippuvyohyke6" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td><b>Kausilipun hinta vyöhykkeittäin (30 päivää, aikuinen)(€)
-              </b></td>
+              <td>Kausilipun hinta vyöhykkeittäin (30 päivää, aikuinen)(€)</td>
               <td>
                 <form-group-compact label="Kausilippu vyöhyke 1">
                   <input id="taustatiedot-kausilippuvyohyke-1" name="kausilippuvyohyke1" type="text"
@@ -493,8 +359,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kausilippuvyohyke1" ng-disabled="isReadonly()"
-                         placeholder="1 vyöhyke (€)">
+                         ng-model="taustatiedot.kausilippuvyohyke1" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
               <td>
@@ -504,8 +369,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kausilippuvyohyke2" ng-disabled="isReadonly()"
-                         placeholder="2 vyöhykettä (€)">
+                         ng-model="taustatiedot.kausilippuvyohyke2" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
               <td>
@@ -515,8 +379,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kausilippuvyohyke3" ng-disabled="isReadonly()"
-                         placeholder="3 vyöhykettä (€)">
+                         ng-model="taustatiedot.kausilippuvyohyke3" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
               <td>
@@ -526,8 +389,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kausilippuvyohyke4" ng-disabled="isReadonly()"
-                         placeholder="4 vyöhykettä (€)">
+                         ng-model="taustatiedot.kausilippuvyohyke4" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
               <td>
@@ -537,8 +399,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kausilippuvyohyke5" ng-disabled="isReadonly()"
-                         placeholder="5 vyöhykettä (€)">
+                         ng-model="taustatiedot.kausilippuvyohyke5" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
               <td>
@@ -548,16 +409,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kausilippuvyohyke6" ng-disabled="isReadonly()"
-                         placeholder="6 vyöhykettä (€)">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-kausiliput-k" name="kausiliput-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kausiliputKommentit">
+                         ng-model="taustatiedot.kausilippuvyohyke6" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
             </tr>
