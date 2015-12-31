@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function() {
+module.exports = function () {
   return {
     template: `
     <div>
@@ -11,8 +11,7 @@ module.exports = function() {
 
         <h5>PSA:n mukaisen liikenteen hankinta:</h5>
 
-        <p>Liitä ostosopimus uusista liikenteistä, josta ilmenee liikenteen
-          aikataulu ja reitti.</p>
+        <p>Liitä ostosopimus uusista liikenteistä, josta ilmenee liikenteen aikataulu ja reitti. Liite voi olla myös yhteenveto PSA:n mukaisen liikenteen kokonai-suudesta. Aikataulut ja reitit voi ilmoittaa www-linkkinä aikataulusivuille.</p>
         <h5>Hintavelvotteiden korvaamien:</h5>
 
         <p>
