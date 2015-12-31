@@ -63,6 +63,10 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
     }
   };
 
+  $scope.liiteNimiPituusOk = function (nimi) {
+    return nimi.length <= 150;
+  };
+
   $scope.liitteitaLadattavissa = function () {
     return ($scope.liitteidenMaksimiKoko - $scope.liitteidenKoko);
   };
@@ -103,7 +107,7 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
           `Liitteen: ${tiedostonimi} nimen päivittäminen epäonnistui.`));
       }
     } else {
-      StatusService.virhe('LiiteService.paivitaNimi()', 'Anna liitteelle nimi ennen tallentamista.');
+      StatusService.virhe('LiiteService.paivitaNimi()', 'Liitteen nimi on virheellinen.');
     }
   };
 

@@ -61,7 +61,7 @@
               <input name="liitenimi" type="text" class="input400" noenter
                      ng-model="liite.nimiteksti"
                      ng-focus="asetaLiitenimi(liite.nimiteksti)"
-                     ui-validate="{tyhja: 'liiteNimiOk($value)' }"/>
+                     ui-validate="{tyhja: 'liiteNimiOk($value)', maxpituus: 'liiteNimiPituusOk($value)' }"/>
               <span>.{{liite.nimipaate}}</span>
               <span>{{formatFileSize(liite.bytesize)}}</span>
 
@@ -96,6 +96,10 @@
               <p ng-show="liiteRiviForm.liitenimi.$error.tyhja && !liiteRiviForm.liitenimi.$pristine"
                  class="help-block ng-invalid-tyhja">
                 Liitenimi ei saa olla tyhjä.
+              </p>
+              <p ng-show="liiteRiviForm.liitenimi.$error.maxpituus && !liiteRiviForm.liitenimi.$pristine"
+                 class="help-block ng-invalid-tyhja">
+                Liitenimen enimmäispituus on 150 merkkiä.
               </p>
             </ng-form>
           </div>
