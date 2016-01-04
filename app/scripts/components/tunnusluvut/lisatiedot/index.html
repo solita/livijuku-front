@@ -1,0 +1,24 @@
+<ng-form id="lisatiedot-form" name="lisatiedot-Form" class="lisatiedot">
+  <juku-form-row>
+    <h3>Lisätiedot</h3>
+  </juku-form-row>
+  <juku-form-row>
+    <div class="table-responsive">
+      <table class="table table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>Kirjoita tähän tarvittaessa tarkennuksia ja vapaita kommentteja liittyen yllä oleviin tietoihin.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-md-12">
+                  <textarea id="lisatiedot" name="lisatiedot" rows="2" class="animate msd-elastic: \n;"
+                            ng-model="lisatiedot" ng-readonly="isReadonly()"></textarea>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </juku-form-row>
+</ng-form>

@@ -1,0 +1,155 @@
+<ng-form id="{{tyyppi + '-liikenteenkysynta-form'}}" name="kysyntaForm" class="kysynta">
+  <juku-form-row ng-if="tyyppi==='PSAB' || tyyppi==='PSAK'">
+    <h3>Liikenteen kysyntä ja tarjonta</h3>
+    <p>Talviliikenteen (syyskuu-toukokuu) keskimääräinen päiväkohtainen kysyntä ja tarjonta.</p>
+    <div class="table-responsive">
+      <table class="table table-hover table-condensed">
+        <thead>
+          <tr>
+            <th class="col-md-3">Viikonpäivä</th>
+            <th class="col-md-3">Nousua/päivä</th>
+            <th class="col-md-3">Linjakilometrit<br>(linja-km/päivä)</th>
+            <th class="col-md-3">Vuorotarjonta<br>(lähtöä/päivä)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="tunnuslukutalvi in tunnusluvut_talvi track by $index" ng-form>
+            <td>{{tunnuslukutalvi.viikonpaiva}}</td>
+            <td>
+              <form-group-compact label="Nousua" errormessage="nousuaErrorMessage">
+                <input id="{{tyyppi + '-nousua-'+$index}}" name="nousua" type="text"
+                       numeric-km-only="" ng-currency=""
+                       required
+                       currency-symbol="" noenter
+                       select-on-click
+                       ng-model="tunnuslukutalvi.nousua">
+              </form-group-compact>
+            </td>
+            <td>
+              <form-group-compact label="Linjakilometrit" errormessage="linjakilometritErrorMessage">
+                <input id="{{tyyppi + '-linjakilometrit-talvi-'+$index}}" name="linjakilometrit" type="text"
+                       numeric-km-only="" ng-currency=""
+                       required
+                       currency-symbol="" noenter
+                       select-on-click
+                       ng-model="tunnuslukutalvi.linjakilometrit">
+              </form-group-compact>
+            </td>
+            <td>
+              <form-group-compact label="Vuorotarjonta" errormessage="vuorotarjontaErrorMessage">
+                <input id="{{tyyppi + '-vuorotarjonta-talvi-'+$index}}" name="vuorotarjonta" type="text"
+                       numeric-km-only="" ng-currency=""
+                       required
+                       currency-symbol="" noenter
+                       select-on-click
+                       ng-model="tunnuslukutalvi.vuorotarjonta">
+              </form-group-compact>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </juku-form-row>
+  <juku-form-row ng-if="tyyppi==='PSAB' || tyyppi==='PSAK' || tyyppi==='SL'">
+    <h3 ng-if="tyyppi==='SL'">Liikenteen kysyntä ja tarjonta</h3>
+    <p>Kuukausikohtainen kysyntä ja tarjonta.</p>
+    <div class="table-responsive">
+      <table class="table table-hover table-condensed">
+        <tr>
+          <th class="col-md-3">Kuukausi</th>
+          <th class="col-md-3">Nousua/kk</th>
+          <th class="col-md-3">Linjakilometrit<br>(linja-km/kk)</th>
+          <th class="col-md-3">Vuorotarjonta<br>(lähtöä/kk)</th>
+        </tr>
+        </thead>
+        <tfoot ng-if="tunnusluvut.length > 0">
+          <td><span class="yhteensa">Yhteensä:</span></td>
+          <td>{{nousuaSumma() | currency : '' : 0}} nousua / vuosi</td>
+          <td>{{linjakilometritSumma() | currency : '' : 0}} linja-km / vuosi</td>
+          <td>{{vuorotarjontaSumma() | currency : '' : 0}} lähtö / vuosi</td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr ng-repeat="tunnusluku in tunnusluvut track by $index" ng-form>
+            <td>{{tunnusluku.kuukausi}}</td>
+            <td>
+              <form-group-compact label="Nousua" errormessage="kokonaislukuErrorMessage">
+                <input id="{{tyyppi + '-nousua-'+tunnusluku.kuukausi}}" name="nousua"
+                       placeholder="Nousua/kuukausi" noenter
+                       type="number" numeric-integer-only="" select-on-click
+                       ng-readonly="isReadonly()"
+                       ng-model="tunnusluku.nousua">
+              </form-group-compact>
+            </td>
+            <td>
+              <form-group-compact label="Linjakilometrit" errormessage="linjakilometritErrorMessage">
+                <input id="{{tyyppi + '-linjakilometrit-'+$index}}" name="linjakilometrit" type="text"
+                       numeric-km-only="" ng-currency=""
+                       required
+                       currency-symbol="" noenter
+                       select-on-click
+                       ng-model="tunnusluku.linjakilometrit">
+              </form-group-compact>
+            </td>
+            <td>
+              <form-group-compact label="Vuorotarjonta" errormessage="kokonaislukuErrorMessage">
+                <input id="{{tyyppi + '-vuorotarjonta-'+$index}}" name="vuorotarjonta" type="number"
+                       numeric-integer-only=""
+                       required
+                       currency-symbol="" noenter
+                       select-on-click
+                       ng-model="tunnusluku.vuorotarjonta">
+              </form-group-compact>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </juku-form-row>
+  <juku-form-row ng-if="tyyppi==='ME'">
+    <h3>Liikenteen tarjonta</h3>
+    <p>Linjakilometrit ja vuorotarjonta kuukausittain.</p>
+    <div class="table-responsive">
+      <table class="table table-hover table-condensed">
+        <tr>
+          <th class="col-md-3">Kuukausi</th>
+          <th class="col-md-3">Linjakilometrit<br>(linja-km/kk)</th>
+          <th class="col-md-3">Vuorotarjonta<br>(lähtöä/kk)</th>
+        </tr>
+        </thead>
+        <tfoot ng-if="tunnusluvut.length > 0">
+          <td><span class="yhteensa">Yhteensä:</span></td>
+          <td>{{linjakilometritSumma() | currency : '' : 0}} linja-km / vuosi</td>
+          <td>{{vuorotarjontaSumma() | currency : '' : 0}} lähtö / vuosi</td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr ng-repeat="tunnusluku in tunnusluvut track by $index" ng-form>
+            <td>{{tunnusluku.kuukausi}}</td>
+
+            <td>
+              <form-group-compact label="Linjakilometrit" errormessage="linjakilometritErrorMessage">
+                <input id="{{'me-linjakilometrit-'+$index}}" name="linjakilometrit" type="text"
+                       numeric-km-only="" ng-currency=""
+                       required
+                       currency-symbol="" noenter
+                       select-on-click
+                       ng-model="tunnusluku.linjakilometrit">
+              </form-group-compact>
+            </td>
+            <td>
+              <form-group-compact label="Vuorotarjonta" errormessage="kokonaislukuErrorMessage">
+                <input id="{{'me-vuorotarjonta-'+$index}}" name="vuorotarjonta" type="number"
+                       numeric-integer-only=""
+                       required
+                       currency-symbol="" noenter
+                       select-on-click
+                       ng-model="tunnusluku.vuorotarjonta">
+              </form-group-compact>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </juku-form-row>
+</ng-form>

@@ -420,16 +420,16 @@
     <juku-form-row>
       <div class="table-responsive">
         <table class="table table-hover table-condensed">
-          <tr>
-            <th colspan="2" class="col-md-8 ekarivi">Viranomaisen saama valtion avustus / rahoitus
-            </th>
-            <th class="col-md-4 ekarivi">Vapaat kommentit</th>
-          </tr>
+          <thead>
+            <tr>
+              <th colspan="2">Viranomaisen saama valtion avustus / rahoitus
+              </th>
+            </tr>
           </thead>
           <tbody>
             <tr>
-              <td><b>Liikenteen ostot, € (siirtymäkaudella)</b></td>
-              <td>
+              <td class="col-md-8">Liikenteen ostot, € (siirtymäkaudella)</td>
+              <td class="col-md-4">
                 <form-group-compact label="Liikenteen ostot">
                   <input id="taustatiedot-liikenteenostot" name="liikenteenostot" type="text"
                          class="form-control"
@@ -437,21 +437,14 @@
                          noenter
                          select-on-click
                          ng-model="taustatiedot.liikenteenostot" ng-disabled="isReadonly()"
-                         placeholder="Liikenteen ostot" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-liikenteenostot-k" name="liikenteenostot-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.liikenteenostotKommentit">
+                         placeholder="€ / vuosi, alv 0" required>
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td><b>Hintojen alentaminen, € (siirtymäkaudella, valtion lippusubventio on poistumassa)</b></td>
-              <td>
+              <td class="col-md-8">Hintojen alentaminen, € (siirtymäkaudella, valtion lippusubventio on poistumassa)
+              </td>
+              <td class="col-md-4">
                 <form-group-compact label="Hintojen alentaminen">
                   <input id="taustatiedot-hintojenalentaminen" name="hintojenalentaminen" type="text"
                          class="form-control"
@@ -459,21 +452,13 @@
                          noenter
                          select-on-click
                          ng-model="taustatiedot.hintojenalentaminen" ng-disabled="isReadonly()"
-                         placeholder="Hintojen alentaminen" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-hintojenalentaminen-k" name="hintojenalentaminen-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.hintojenalentaminenKommentit">
+                         placeholder="€ / vuosi, alv 0" required>
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td><b>Valtion avustus sopimuskorvauksiin, €</b></td>
-              <td>
+              <td class="col-md-8">Valtion avustus sopimuskorvauksiin, €</td>
+              <td class="col-md-4">
                 <form-group-compact label="Sopimuskorvaukset">
                   <input id="taustatiedot-sopimiskorvaukset" name="sopimiskorvaukset" type="text"
                          class="form-control"
@@ -481,21 +466,13 @@
                          noenter
                          select-on-click
                          ng-model="taustatiedot.sopimiskorvaukset" ng-disabled="isReadonly()"
-                         placeholder="Valtion avustus sopimuskorvauksiin" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-sopimiskorvaukset-k" name="sopimiskorvaukset-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.sopimiskorvauksetKommentit">
+                         placeholder="€ / vuosi, alv 0" required>
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td><b>Informaatio ja maksujärjestelmien kehittäminen, €</b></td>
-              <td>
+              <td class="col-md-8">Informaatio ja maksujärjestelmien kehittäminen, €</td>
+              <td class="col-md-4">
                 <form-group-compact label="Informaatio ja maksujärjestelmien kehittäminen">
                   <input id="taustatiedot-infomaksukeh" name="infomaksukeh" type="text"
                          class="form-control"
@@ -503,21 +480,13 @@
                          noenter
                          select-on-click
                          ng-model="taustatiedot.infomaksukeh" ng-disabled="isReadonly()"
-                         placeholder="Informaatio ja maksujärjestelmien kehittäminen" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-infomaksukeh-k" name="infomaksukeh-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.infomaksukehKommentit">
+                         placeholder="€ / vuosi, alv 0" required>
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td><b>Matkakeskusten tai matkapalvelukeskusten kehittäminen, €</b></td>
-              <td>
+              <td class="col-md-8">Matkakeskusten tai matkapalvelukeskusten kehittäminen, €</td>
+              <td class="col-md-4">
                 <form-group-compact label="Matkakeskusten tai matkapalvelukeskusten kehittäminen">
                   <input id="taustatiedot-matkakeskeh" name="matkakeskeh" type="text"
                          class="form-control"
@@ -525,21 +494,13 @@
                          noenter
                          select-on-click
                          ng-model="taustatiedot.matkakeskeh" ng-disabled="isReadonly()"
-                         placeholder="Matkakeskusten tai matkapalvelukeskusten kehittäminen" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-matkakeskeh-k" name="matkakeskeh-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.matkakeskehKommentit">
+                         placeholder="€ / vuosi, alv 0" required>
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td><b>Muu kehittäminen, €</b></td>
-              <td>
+              <td class="col-md-8">Muu kehittäminen, €</td>
+              <td class="col-md-4">
                 <form-group-compact label="Muu kehittäminen">
                   <input id="taustatiedot-muukeh" name="muukeh" type="text"
                          class="form-control"
@@ -547,15 +508,7 @@
                          noenter
                          select-on-click
                          ng-model="taustatiedot.muukeh" ng-disabled="isReadonly()"
-                         placeholder="Muu kehittäminen" required>
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-muukeh-k" name="muukeh-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.muukehKommentit">
+                         placeholder="€ / vuosi, alv 0" required>
                 </form-group-compact>
               </td>
             </tr>
@@ -566,15 +519,15 @@
     <juku-form-row>
       <div class="table-responsive">
         <table class="table table-hover table-condensed">
-          <tr>
-            <th colspan="2" class="col-md-8 ekarivi">Asiakastyytyväisyyys</th>
-            <th class="col-md-4 ekarivi">Vapaat kommentit</th>
-          </tr>
+          <thead>
+            <tr>
+              <th colspan="2">Asiakastyytyväisyyys</th>
+            </tr>
           </thead>
           <tbody>
             <tr>
-              <td><b>Tyytyväisten joukkoliikenteen käyttäjien osuus (%, kokonaisluku)</b></td>
-              <td>
+              <td class="col-md-8">Tyytyväisten joukkoliikenteen käyttäjien prosenttiosuus</td>
+              <td class="col-md-4">
                 <form-group-compact label="Asiakastyytyväisyys">
                   <input id="taustatiedot-asiakastyytyvaisyys" name="asiakastyytyvaisyys"
                          placeholder="Asiakastyytyväisyys (%)" noenter
@@ -583,18 +536,11 @@
                          ng-model="taustatiedot.asiakastyytyvaisyys" required>
                 </form-group-compact>
               </td>
-              <td>
-                <form-group-compact label="Kommentit">
-                  <input id="taustatiedot-asiakastyytyvaisyys-k" name="asiakastyytyvaisyys-k" type="text"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.asiakastyytyvaisyysKommentit">
-                </form-group-compact>
-              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </juku-form-row>
+    <juku-tunnusluvut-lisatiedot lisatiedot="taustatiedot.lisatiedot"></juku-tunnusluvut-lisatiedot>
   </ng-form>
 </div>

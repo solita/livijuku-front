@@ -30,135 +30,32 @@ function tarjontaController($scope) {
 
   $scope.kalusto = [
     {
-      "selite": "Liikennekokonaisuuteen sitoutuneen kaluston määärä, EURO 0",
-      "linjaautot": 0,
-      "kommentit": ""
+      "paastoluokka": "EURO 0",
+      "linjaautot": 0
     },
     {
-      "selite": "Liikennekokonaisuuteen sitoutuneen kaluston määärä, EURO 1",
-      "linjaautot": 0,
-      "kommentit": ""
+      "paastoluokka": "EURO 1",
+      "linjaautot": 0
     },
     {
-      "selite": "Liikennekokonaisuuteen sitoutuneen kaluston määärä, EURO 2",
-      "linjaautot": 0,
-      "kommentit": ""
+      "paastoluokka": "EURO 2",
+      "linjaautot": 0
     },
     {
-      "selite": "Liikennekokonaisuuteen sitoutuneen kaluston määärä, EURO 3",
-      "linjaautot": 0,
-      "kommentit": ""
+      "paastoluokka": "EURO 3",
+      "linjaautot": 0
     },
     {
-      "selite": "Liikennekokonaisuuteen sitoutuneen kaluston määärä, EURO 4",
-      "linjaautot": 0,
-      "kommentit": ""
+      "paastoluokka": "EURO 4",
+      "linjaautot": 0
     },
     {
-      "selite": "Liikennekokonaisuuteen sitoutuneen kaluston määärä, EURO 5 / EEV",
-      "linjaautot": 0,
-      "kommentit": ""
+      "paastoluokka": "EURO 5 / EEV",
+      "linjaautot": 0
     },
     {
-      "selite": "Liikennekokonaisuuteen sitoutuneen kaluston määärä, EURO 6",
-      "linjaautot": 0,
-      "kommentit": ""
-    }
-  ];
-
-  $scope.tunnusluvut_talvi = [
-    {
-      "selite": "Arkivuorokaudet",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "selite": "Lauantai",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "selite": "Sunnuntai",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    }
-  ];
-
-  $scope.tunnusluvut = [
-    {
-      "kuukausi": "Tammikuu",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "kuukausi": "Helmikuu",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "kuukausi": "Maaliskuu",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "kuukausi": "Huhtikuu",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "kuukausi": "Toukokuu",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "kuukausi": "Kesäkuu",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "kuukausi": "Heinäkuu",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "kuukausi": "Elokuu",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "kuukausi": "Syyskuu",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "kuukausi": "Lokakuu",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "kuukausi": "Marraskuu",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
-    },
-    {
-      "kuukausi": "Joulukuu",
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0,
-      "kommentit": ""
+      "paastoluokka": "EURO 6",
+      "linjaautot": 0
     }
   ];
 
@@ -422,14 +319,6 @@ function tarjontaController($scope) {
 
   $scope.linjaautotSumma = function () {
     return _.sum($scope.kalusto, 'linjaautot');
-  };
-
-  $scope.linjakilometritSumma = function () {
-    return _.sum($scope.tunnusluvut, 'linjakilometrit');
-  };
-
-  $scope.vuorotarjontaSumma = function () {
-    return _.sum($scope.tunnusluvut, 'vuorotarjonta');
   };
 
   $scope.kohdeErrorMessage = function (input) {

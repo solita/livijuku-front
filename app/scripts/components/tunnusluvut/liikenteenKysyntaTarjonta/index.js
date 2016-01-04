@@ -7,23 +7,26 @@ function pakollinenErrorMessage(nimi) {
   }
 }
 
-function kysyntaController($scope) {
+function kysyntaTarjontaController($scope) {
 
   $scope.tunnusluvut_talvi = [
     {
-      "selite": "Arkipäivät",
-      "nousumaara": 0,
-      "kommentit": ""
+      "viikonpaiva": "Arkipäivät",
+      "nousua": 0,
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
-      "selite": "Lauantai",
-      "nousumaara": 0,
-      "kommentit": ""
+      "viikonpaiva": "Lauantai",
+      "nousua": 0,
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
-      "selite": "Sunnuntai",
-      "nousumaara": 0,
-      "kommentit": ""
+      "viikonpaiva": "Sunnuntai",
+      "nousua": 0,
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     }
   ];
 
@@ -31,62 +34,74 @@ function kysyntaController($scope) {
     {
       "kuukausi": "Tammikuu",
       "nousua": 0,
-      "kommentit": ""
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
       "kuukausi": "Helmikuu",
       "nousua": 0,
-      "kommentit": ""
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
       "kuukausi": "Maaliskuu",
       "nousua": 0,
-      "kommentit": ""
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
       "kuukausi": "Huhtikuu",
       "nousua": 0,
-      "kommentit": ""
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
       "kuukausi": "Toukokuu",
       "nousua": 0,
-      "kommentit": ""
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
       "kuukausi": "Kesäkuu",
       "nousua": 0,
-      "kommentit": ""
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
       "kuukausi": "Heinäkuu",
-      "nousua": 0.0,
-      "kommentit": ""
+      "nousua": 0,
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
       "kuukausi": "Elokuu",
       "nousua": 0,
-      "kommentit": ""
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
       "kuukausi": "Syyskuu",
       "nousua": 0,
-      "kommentit": ""
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
       "kuukausi": "Lokakuu",
       "nousua": 0,
-      "kommentit": ""
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
       "kuukausi": "Marraskuu",
       "nousua": 0,
-      "kommentit": ""
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     },
     {
       "kuukausi": "Joulukuu",
       "nousua": 0,
-      "kommentit": ""
+      "linjakilometrit": 0,
+      "vuorotarjonta": 0
     }
   ];
 
@@ -99,9 +114,16 @@ function kysyntaController($scope) {
            input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkuukausiiä.' : '';
   };
 
-  $scope.nousumaaraErrorMessage = pakollinenErrorMessage("Nousumäärä");
+  $scope.nousuaErrorMessage = pakollinenErrorMessage("Nousua");
   $scope.kokonaislukuErrorMessage = function(input) {
     return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
+  };
+  $scope.linjakilometritSumma = function () {
+    return _.sum($scope.tunnusluvut, 'linjakilometrit');
+  };
+
+  $scope.vuorotarjontaSumma = function () {
+    return _.sum($scope.tunnusluvut, 'vuorotarjonta');
   };
 }
 
@@ -115,6 +137,6 @@ module.exports = function () {
     },
     template: require('./index.html'),
     replace: true,
-    controller: ['$scope', kysyntaController]
+    controller: ['$scope', kysyntaTarjontaController]
   };
 };
