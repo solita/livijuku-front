@@ -103,13 +103,13 @@
       </juku-form-row>
 
       <juku-form-row ng-if="isMaksatushakemus && !maksatushakemus1PaatosOlemassa()">
-        <h5>HAETTAVISSA OLEVA AVUSTUS AJALLE 1.1.-30.6.{{hakemus.vuosi}}</h5>
+        <h5>HAETTAVISSA OLEVA AVUSTUS AJALLE 1.1. - 30.6.{{hakemus.vuosi}}</h5>
         <span ng-if="avustushakemusPaatosOlemassa()">{{haettavaAvustusMH1() | currency:"&euro;"}}</span>
         <span ng-if="!avustushakemusPaatosOlemassa()">Avustushakemuksella ei ole vielä päätöstä</span>
       </juku-form-row>
 
       <juku-form-row ng-if="isMaksatushakemus && maksatushakemus1PaatosOlemassa()">
-        <h5>MAKSETAAN AJALTA 1.1.-30.6.{{hakemus.vuosi}}</h5>
+        <h5>MAKSETAAN AJALTA 1.1. - 30.6.{{hakemus.vuosi}}</h5>
         {{maksatushakemus1Paatos.myonnettyavustus | currency:"&euro;"}} &nbsp;
         <juku-icon-link
           href="{{haeMaksatushakemus1PaatosPdf()}}"
@@ -127,8 +127,8 @@
       </juku-form-row>
 
       <juku-form-row ng-if="isMaksatushakemus2 && hasPaatos()">
-        <h5>MAKSETAAN AJALTA 1.1.-30.6.{{hakemus.vuosi}}</h5>
-        {{maksatushakemus1Paatos.myonnettyavustus | currency:"&euro;"}} &nbsp;
+        <h5>MAKSETAAN AJALTA 1.7. - 31.12.{{hakemus.vuosi}}</h5>
+        {{paatos.myonnettyavustus | currency:"&euro;"}} &nbsp;
         <juku-icon-link
           href="{{haePaatosPdf()}}"
           title="Avaa päätös"
