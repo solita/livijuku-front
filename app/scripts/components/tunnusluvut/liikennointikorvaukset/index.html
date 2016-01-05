@@ -40,6 +40,9 @@
     <div class="table-responsive">
       <h3 ng-if="tyyppi==='PSAK'">Maksettu liikennöinnin nousukorvaus kuukausittain</h3>
       <h3 ng-if="tyyppi==='ME'">Maksettu asiakashinnan nousukorvaus kuukausittain</h3>
+      <p ng-if="tyyppi==='PSAK'">Tätä ei tarvitse täyttää, jos liikennöitsijä saa pitää lipputulot. Tämä täytetään, jos
+        liikennöitsijälle maksetaan erikseen sovittua nousukorvausta.</p>
+      <p ng-if="tyyppi==='ME'">Asiakashinnan nousukorvaukset markkinaehtoiselle liikenteelle kuukausittain.</p>
       <table class="table table-hover table-condensed">
         <tr>
           <th class="col-md-3">Kuukausi</th>
