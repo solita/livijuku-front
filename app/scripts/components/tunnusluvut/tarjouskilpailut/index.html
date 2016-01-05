@@ -1,0 +1,84 @@
+<ng-form id="tarjouskilpailutForm" name="tarjouskilpailutForm" class="tarjouskilpailut">
+  <juku-form-row ng-if="tyyppi==='PSAB' || tyyppi==='PSAK'">
+    <h3>Tarjouskilpailut</h3>
+    <p ng-if="tyyppi==='PSAB'">Bruttoliikenteen tarjouskilpailut</p>
+    <p ng-if="tyyppi==='PSAK'">Käyttöoikeussopimusliikenteen tarjouskilpailut</p>
+    <div class="table-responsive">
+      <table class="table table-hover table-condensed">
+        <tr>
+          <th class="col-md-4">Kohde</th>
+          <th class="col-md-2">Saatujen tarjousten määrä</th>
+          <th class="col-md-2">Voittaneen tarjouksen hinta</th>
+          <th class="col-md-2">Toiseksi tulleen tarjouksen hinta</th>
+          <th class="col-md-2">Toiminnot</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr ng-if="tarjouskohteet.length === 0">
+            <td colspan="10" class="text-info">
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Tämä taulukko on tyhjä, koska
+              yhtään tarjouskohdetta ei ole lisätty.
+            </td>
+          </tr>
+          <tr ng-repeat="rivi in tarjouskohteet track by $index" ng-form="tarjouskohteetForm">
+            <td>
+              <form-group-compact label="Kohde" errormessage="kohdeErrorMessage">
+                <input id="{{tyyppi + '-tarjouskohteet-'+$index}}" name="kohde" type="text" noenter ng-minlength="2"
+                       select-on-click
+                       ng-model="rivi.kohde" ng-disabled="isReadonly()"
+                       placeholder="Kohde" required>
+              </form-group-compact>
+            </td>
+            <td>
+              <form-group-compact label="Määrä" errormessage="kokonaislukuErrorMessage">
+                <input id="{{tyyppi + '-tarjouskohteet-maara-'+$index}}" name="maara" type="number"
+                       numeric-integer-only="" select-on-click
+                       ng-model="rivi.maara" ng-disabled="isReadonly()"
+                       placeholder="Saatujen tarjousten määrä">
+              </form-group-compact>
+            </td>
+            <td>
+              <form-group-compact label="Voittajan hinta" errormessage="voittajanhintaErrorMessage">
+                <input id="{{tyyppi + '-tarjouskohteet-voittaja-'+$index}}" name="voittajanhinta" type="text"
+                       class="form-control"
+                       ng-currency="" numeric-only=""
+                       noenter
+                       select-on-click
+                       ng-model="rivi.voittajanhinta" ng-disabled="isReadonly()"
+                       placeholder="Voittaneen tarjouksen hinta" required>
+              </form-group-compact>
+            </td>
+            <td>
+              <form-group-compact label="Toiseksi tulleen hinta" errormessage="toiseksitulleenhintaErrorMessage">
+                <input id="{{tyyppi + '-tarjouskohteet-toiseksitullut-'+$index}}" name="toiseksitulleenhinta"
+                       type="text"
+                       class="form-control"
+                       ng-currency="" numeric-only=""
+                       noenter
+                       select-on-click
+                       ng-model="rivi.toiseksitulleenhinta" ng-disabled="isReadonly()"
+                       placeholder="Toiseksi tulleen tarjouksen hinta" required>
+              </form-group-compact>
+            </td>
+            <td>
+              <form-group-compact label="Kommentit">
+                <input id="{{tyyppi +'-tarjouskohteet-kommentit'+$index}}" name="kommentit"
+                       type="text"
+                       noenter
+                       select-on-click
+                       ng-model="rivi.kommentit">
+              </form-group-compact>
+            </td>
+            <td><a id="{{tyyppi +'-tarjouskohteet-poista-'+$index}}" href=""
+                   ng-click="poistaTarjouskohde($index)"><span
+              class="glyphicon glyphicon-remove-sign"></span>Poista</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button id="{{tyyppi +'-tarjouskohteet-lisaa'}}" ng-hide="isReadonly()"
+              class="btn btn-primary" ng-click="lisaaTarjouskohde()">Lisää uusi rivi
+      </button>
+    </div>
+  </juku-form-row>
+</ng-form>
