@@ -172,7 +172,7 @@ angular.module('jukufrontApp')
         var rivi = {};
         rivi['\ '] = data[i].key;
         for (var arvo in data[i].values) {
-          rivi[' ' + data[i].values[arvo].x] = Math.round(data[i].values[arvo].y*1000)/1000;
+          rivi[' ' + data[i].values[arvo].x] = Math.round(data[i].values[arvo].y * 1000) / 1000;
         }
         tulos.push(rivi);
       }
@@ -268,7 +268,7 @@ angular.module('jukufrontApp')
         },
         type: 'multiBarChart',
         height: 450,
-        stacked: true,
+        stacked: false,
         x: function (d) {
           return d.x;
         },
@@ -291,7 +291,7 @@ angular.module('jukufrontApp')
         for (var vuosi in _.result(dataPerTyyppi, data.MYONNETTY)) {
           vuosiValues.push({
             x: vuosi,
-            y: (_.result(dataPerTyyppi, data.MYONNETTY)[vuosi][i]/$scope.aktiivinenOrganisaatioAsukkaat)
+            y: (_.result(dataPerTyyppi, data.MYONNETTY)[vuosi][i] / $scope.aktiivinenOrganisaatioAsukkaat)
           });
         }
         paluuArvot.push({

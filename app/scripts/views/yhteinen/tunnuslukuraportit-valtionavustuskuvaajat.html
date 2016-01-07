@@ -20,7 +20,8 @@
     <div class="col-md-2 lataacsv">
       <a ng-csv="exportCsvMultibar(haettuMyonnettyYhteensaData())"
          filename="Joukkoliikenteen_valtionavustushakemukset_ja_päätökset.csv"
-         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span
+        class="glyphicon glyphicon-save"></span> Lataa CSV
       </a>
     </div>
   </div>
@@ -36,11 +37,13 @@
     <div class="col-md-2 lataacsv">
       <a ng-show="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
          filename="Myönnetyt_jaoteltuna.csv"
-         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span
+        class="glyphicon glyphicon-save"></span> Lataa CSV
       </a>
       <a ng-hide="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
          filename="Haetut_jaoteltuna.csv"
-         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span
+        class="glyphicon glyphicon-save"></span> Lataa CSV
       </a>
     </div>
     <nvd3 options='haettuMyonnettyOptions' data='haettuMyonnettyData' api="haettuMyonnettyApi"></nvd3>
@@ -53,7 +56,8 @@
     <div class="col-md-2 lataacsv">
       <a ng-csv="exportCsvMultibar(myonnettyPerAsukasData())"
          filename="Myönnetty_asukas.csv"
-         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span
+        class="glyphicon glyphicon-save"></span> Lataa CSV
       </a>
     </div>
     <nvd3 options='myonnettyPerAsukasOptions' data='myonnettyPerAsukasData' api="myonnettyPerAsukasApi"></nvd3>

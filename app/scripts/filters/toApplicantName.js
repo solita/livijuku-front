@@ -5,7 +5,7 @@ var angular = require('angular');
 const types = {
   KS1: 'Suuret kaupunkiseudut',
   KS2: 'Keskisuuret kaupunkiseudut',
-  ELY: 'Ely-keskukset',
+  ELY: 'ELY-keskukset',
   LV: 'Liikennevirasto'
 };
 
