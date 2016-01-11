@@ -15,6 +15,10 @@ export function hakemusKaynnissa(hakemus) {
          !hakemusSuljettu(hakemus);
 }
 
+export function hakemusHakuaikaAktiivinen(hakemus) {
+  return (new Date() > new Date(hakemus.hakuaika.alkupvm));
+}
+
 export function haeHakemus(hakemuskausi, tyyppitunnus) {
   return _.findWhere(hakemuskausi.hakemukset, {
     hakemustyyppitunnus: tyyppitunnus

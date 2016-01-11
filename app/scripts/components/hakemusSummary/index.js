@@ -31,6 +31,14 @@ module.exports = function () {
         formatMonth: 'MM'
       };
 
+      $scope.hakemuskausiAvaamaton = function () {
+        return $scope.hakemuskaudenTila === 'A';
+      };
+
+      $scope.hakemuskausiKaynnissa = function () {
+        return $scope.hakemuskaudenTila === 'K';
+      };
+
       $scope.hakemuskausiSuljettu = function () {
         return $scope.hakemuskaudenTila === 'S';
       };
