@@ -113,11 +113,12 @@
     <p>Linjakilometrit ja vuorotarjonta kuukausittain.</p>
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
-        <tr>
-          <th class="col-md-3">Kuukausi</th>
-          <th class="col-md-3">Linjakilometrit<br>(linja-km/kk)</th>
-          <th class="col-md-3">Vuorotarjonta<br>(lähtöä/kk)</th>
-        </tr>
+        <thead>
+          <tr>
+            <th class="col-md-3">Kuukausi</th>
+            <th class="col-md-3">Linjakilometrit<br>(linja-km/kk)</th>
+            <th class="col-md-3">Vuorotarjonta<br>(lähtöä/kk)</th>
+          </tr>
         </thead>
         <tfoot ng-if="tunnusluvut.length > 0">
           <td><span class="yhteensa">Yhteensä:</span></td>
