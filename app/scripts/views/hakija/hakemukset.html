@@ -9,7 +9,7 @@
     <h3>KÄYNNISSÄ OLEVAT HAKEMUSKAUDET</h3>
 
     <div ng-repeat="hakemuskausi in kaynnistetytHakemuskaudet | orderBy: 'vuosi': true">
-      <div class="well">
+      <div ng-if="hasHakemuksia(hakemuskausi)" class="well">
         <div class="row">
           <div class="col-md-3 text-center">
             <h1>{{hakemuskausi.vuosi}}</h1>
@@ -36,7 +36,7 @@
     <h3>PÄÄTETYT HAKEMUSKAUDET</h3>
 
     <div ng-repeat="hakemuskausi in suljetutHakemuskaudet | orderBy: 'vuosi': true">
-      <div class="well">
+      <div ng-if="hasHakemuksia(hakemuskausi)" class="well">
         <div class="row">
           <div class="col-md-3 text-center">
             <h1>{{hakemuskausi.vuosi}}</h1>

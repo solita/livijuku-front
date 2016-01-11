@@ -16,6 +16,10 @@ angular.module('jukufrontApp')
       });
     };
 
+    $scope.hasHakemuksia = function(hakemuskausi){
+        return (hakemuskausi.hakemukset.length>0);
+    };
+
     $scope.haeHakemus = function haeHakemus(hakemuskausi, tyyppi) {
       return _.findWhere(hakemuskausi.hakemukset, {
         hakemustyyppitunnus: tyyppi

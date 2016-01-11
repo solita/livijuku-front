@@ -125,8 +125,7 @@ angular
       .state('app.yhteinen.hakemukset.list', {
         url: '/:tyyppi',
         template: require('views/yhteinen/hakemukset.html'),
-        controller: 'KaikkiHakemuksetCtrl',
-        controllerAs: 'hakemukset'
+        controller: 'KaikkiHakemuksetCtrl'
       })
       .state('app.yhteinen.kayttajatiedot', {
         url: '/kayttajatiedot',

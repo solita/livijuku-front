@@ -3,7 +3,7 @@
     <p>Ei hakemuksia, koska hakemuskautta ei ole vielä avattu.</p>
   </div>
 
-  <div ng-show="hakemukset.hakemuskaudet.length > 0">
+  <div ng-show="hakemukset.hakemukset.length > 0">
 
     <div class="navigation">
       <juku-tabs>
@@ -21,7 +21,7 @@
     </div>
 
     <uib-accordion id="kaikki-hakemukset" close-others="false">
-        <uib-accordion-group is-open="hakemukset.yearsOpen[hakemuskausi.vuosi]" ng-repeat="hakemuskausi in hakemukset.hakemuskaudet">
+        <uib-accordion-group is-open="hakemukset.yearsOpen[hakemuskausi.vuosi]" ng-repeat="hakemuskausi in hakemukset.hakemukset">
           <uib-accordion-heading>
               <i class="pull-left glyphicon"
                  ng-class="{
@@ -45,15 +45,14 @@
                 ELINKEINO, LIIKENNE JA YMPÄRISTÖKESKUSTEN HAKEMUKSET {{hakemuskausi.vuosi}}
               </span>
           </uib-accordion-heading>
-          <div class="row" ng-repeat="hakijatyyppi in constants.hakijaTyypit">
-            <div ng-if="hakemukset.hakemukset[hakemuskausi.vuosi][hakijatyyppi].length > 0">
+          <div class="row" ng-repeat="(hakijatyyppi,hakemusjoukko) in hakemuskausi.hakemuskaudenhakemukset">
               <h4>{{hakijatyyppi | toApplicantName}}</h4>
 
               <div class="row">
                 <div class="col-md-12">
                   <table
                     st-table="displayedCollection"
-                    st-safe-src="hakemukset.hakemukset[hakemuskausi.vuosi][hakijatyyppi]"
+                    st-safe-src="hakemusjoukko"
                     class="table table-hover">
                     <thead>
                     <tr>
@@ -97,7 +96,6 @@
                 </div>
               </div>
             </div>
-          </div>
         </uib-accordion-group>
     </uib-accordion>
   </div>
