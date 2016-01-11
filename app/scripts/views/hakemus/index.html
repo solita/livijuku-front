@@ -190,8 +190,6 @@
       <juku-form-section>
         <juku-liite-lataus></juku-liite-lataus>
       </juku-form-section>
-
-
       <h3>
         HAKEMUKSEN PÄIVÄMÄÄRÄ JA HAKIJA
       </h3>
@@ -220,9 +218,9 @@
 
       <!-- Hakija -->
       <juku-confirmation class="korostus"
-        ng-show="!isELYhakemus && isHakija(user) && isOmaHakemus(user) && hakemusKeskenerainen()"
-        ng-model="allekirjoitusliitetty"
-        ng-disabled="!hakemusKeskenerainen() || !liitteetOlemassa()">
+                         ng-show="!isELYhakemus && isHakija(user) && isOmaHakemus(user) && hakemusKeskenerainen()"
+                         ng-model="allekirjoitusliitetty"
+                         ng-disabled="!hakemusKeskenerainen() || !liitteetOlemassa()">
         Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen allekirjoitusoikeudesta.
       </juku-confirmation>
 
