@@ -172,22 +172,22 @@
     <juku-avustuskohteet ng-if="!isELYhakemus"></juku-avustuskohteet>
 
     <!-- Seurantatiedot -->
-    <juku-seuranta-forms ng-if="isMaksatushakemus"></juku-seuranta-forms>
+    <juku-seuranta-forms ng-if="isMaksatushakemus && hakemus.contentvisible"></juku-seuranta-forms>
 
     <!-- ELY-hakemusten tiedot -->
-    <juku-ely-forms ng-if="isELYhakemus"></juku-ely-forms>
+    <juku-ely-forms ng-if="isELYhakemus && hakemus.contentvisible"></juku-ely-forms>
     <juku-form-section>
 
 
-      <juku-form-section ng-show="isAvustushakemus">
+      <juku-form-section ng-show="isAvustushakemus && hakemus.contentvisible">
         <juku-ohje-avustushakemus></juku-ohje-avustushakemus>
       </juku-form-section>
 
-      <juku-form-section ng-show="isMaksatushakemus">
+      <juku-form-section ng-show="isMaksatushakemus && hakemus.contentvisible">
         <juku-ohje-maksatushakemus></juku-ohje-maksatushakemus>
       </juku-form-section>
 
-      <juku-form-section>
+      <juku-form-section ng-show="hakemus.contentvisible">
         <juku-liite-lataus></juku-liite-lataus>
       </juku-form-section>
       <h3>
