@@ -62,6 +62,7 @@ angular
     'services.paatos',
     'services.common',
     'services.config',
+    'services.tunnusluvut',
     'filters.toApplicantName',
     'filters.toStatisticName',
     'filters.toClass',
@@ -161,33 +162,31 @@ angular
       .state('app.tunnusluku.syottaminen', {
         url: '/syottaminen',
         template: require('views/tunnusluvut/muokkaus.html'),
-        controller: 'HakijaTunnusluvutCtrl',
-        redirectTo: 'app.tunnusluku.syottaminen.TTYT'
+        controller: 'TunnusluvutMuokkausCtrl',
+        redirectTo: 'app.tunnusluku.syottaminen.TTYT',
+        resolve: {
+          tunnusluvut: require('./controllers/yhteinen/tunnusluvut').loadTunnusluvutPromise
+        }
       })
       .state('app.tunnusluku.syottaminen.TTYT', {
         url: '/ttyt',
-        template: require('views/tunnusluvut/muokkaus-ttyt.html'),
-        controller: 'HakijaTunnusluvutCtrl'
+        template: require('views/tunnusluvut/muokkaus-ttyt.html')
       })
       .state('app.tunnusluku.syottaminen.PSAB', {
         url: '/psab',
-        template: require('views/tunnusluvut/muokkaus-psab.html'),
-        controller: 'HakijaTunnusluvutCtrl'
+        template: require('views/tunnusluvut/muokkaus-psab.html')
       })
       .state('app.tunnusluku.syottaminen.PSAK', {
         url: '/psak',
-        template: require('views/tunnusluvut/muokkaus-psak.html'),
-        controller: 'HakijaTunnusluvutCtrl'
+        template: require('views/tunnusluvut/muokkaus-psak.html')
       })
       .state('app.tunnusluku.syottaminen.SL', {
         url: '/sl',
-        template: require('views/tunnusluvut/muokkaus-sl.html'),
-        controller: 'HakijaTunnusluvutCtrl'
+        template: require('views/tunnusluvut/muokkaus-sl.html')
       })
       .state('app.tunnusluku.syottaminen.ME', {
         url: '/me',
-        template: require('views/tunnusluvut/muokkaus-me.html'),
-        controller: 'HakijaTunnusluvutCtrl'
+        template: require('views/tunnusluvut/muokkaus-me.html')
       })
 
       /*
@@ -361,6 +360,7 @@ require('./services/organisaatio');
 require('./services/paatos');
 require('./services/status');
 require('./services/suunnittelu');
+require('./services/tunnusluvut');
 require('./filters/erotteleRoolit');
 require('./filters/toApplicantName');
 require('./filters/toClass');

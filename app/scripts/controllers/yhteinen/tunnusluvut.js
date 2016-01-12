@@ -2,9 +2,17 @@
 
 var _ = require('lodash');
 var angular = require('angular');
+var Promise = require('bluebird');
+
+loadTunnusluvutPromise.$inject = ['$state', 'StatusService', 'TunnuslukuEditService'];
+export function loadTunnusluvutPromise($state, StatusService, TunnuslukuEditService) {
+  return Promise.props({
+    liikennevuosi: Promise.resolve('test') //TunnuslukuEditService.haeKysyntaTarjonta(2016, 1, 'BR')
+  }).then(_.identity, StatusService.errorHandler);
+};
 
 angular.module('jukufrontApp')
-  .controller('HakijaTunnusluvutCtrl', ['$rootScope', '$scope', '$state', function ($rootScope, $scope, $state) {
+  .controller('TunnusluvutMuokkausCtrl', ['$rootScope', '$scope', '$state', function ($rootScope, $scope, $state) {
     $scope.tunnuslukutyypit = ['Taustatiedot ja yl. tunnusluvut', 'PSA_Brutto', 'PSA_KOS', 'Siirtymäajan liikenne', 'ME'];
 
     $scope.vuositayttoaste = Math.floor((Math.random() * 100) + 1);
