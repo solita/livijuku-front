@@ -6,10 +6,10 @@
     <juku-form-row>
       <div class="col-md-4 form-group">
         <label for="organisaatio" class="sr-only">Organisaatio</label>
-        <select id="organisaatio" ng-model="selectedOrganisaatio" ng-disabled="isReadonly()"
+        <select id="organisaatio" ng-model="organisaatio" ng-disabled="isReadonly()"
                 placeholder="Valitse toimivaltainen viranomainen" class="form-control" required>
           <option value="" selected disabled>Valitse toimivaltainen viranomainen</option>
-          <option ng-repeat="kunta in kunnat()" value="{{kunta.id}}">{{kunta.nimi}}</option>
+          <option ng-repeat="organisaatio in organisaatiot()" value="{{organisaatio.id}}">{{organisaatio.nimi}}</option>
         </select>
       </div>
       <div class="col-md-2 form-group">
@@ -36,7 +36,7 @@
         ng-repeat="tyyppi in constants.tunnuslukuTyypit"
         selected="isTabSelected(tyyppi)"
         ng-click="toTab(tyyppi)">
-        {{ tyyppi | toStatisticName }}
+        {{ tunnuslukuTyyppiNimi(tyyppi) }}
       </juku-tab>
     </juku-tabs>
   </juku-navigation>

@@ -172,16 +172,16 @@ angular
         url: '/ttyt',
         template: require('views/tunnusluvut/muokkaus-ttyt.html')
       })
-      .state('app.tunnusluku.syottaminen.PSAB', {
-        url: '/psab',
+      .state('app.tunnusluku.syottaminen.BR', {
+        url: '/br',
         template: require('views/tunnusluvut/muokkaus-psab.html')
       })
-      .state('app.tunnusluku.syottaminen.PSAK', {
-        url: '/psak',
+      .state('app.tunnusluku.syottaminen.KOS', {
+        url: '/kos',
         template: require('views/tunnusluvut/muokkaus-psak.html')
       })
-      .state('app.tunnusluku.syottaminen.SL', {
-        url: '/sl',
+      .state('app.tunnusluku.syottaminen.SA', {
+        url: '/sa',
         template: require('views/tunnusluvut/muokkaus-sl.html')
       })
       .state('app.tunnusluku.syottaminen.ME', {
@@ -253,7 +253,7 @@ angular
       hakemustyypit: ['AH0', 'MH1', 'MH2', 'ELY'],
       hakemuksenTilat: hakemuksenTilat.getAll(),
       hakijaTyypit: ['KS1', 'KS2', 'ELY'],
-      tunnuslukuTyypit: ['TTYT','PSAB','PSAK','SL','ME']
+      tunnuslukuTyypit: ['TTYT','BR','KOS','SA','ME']
     };
 
     $rootScope.$on('$stateChangeStart', function(evt, to, params) {
