@@ -3,8 +3,14 @@
 var _ = require('lodash');
 var angular = require('angular');
 
+function loadTunnusluvutPromise() {
+
+};
+
+loadTunnusluvutPromise.$inject = [];
+
 angular.module('jukufrontApp')
-  .controller('HakijaTunnusluvutCtrl', ['$rootScope', '$scope', '$state', function ($rootScope, $scope, $state) {
+  .controller('TunnusluvutMuokkausCtrl', ['$rootScope', '$scope', '$state', function ($rootScope, $scope, $state) {
     $scope.tunnuslukutyypit = ['Taustatiedot ja yl. tunnusluvut', 'PSA_Brutto', 'PSA_KOS', 'Siirtymäajan liikenne', 'ME'];
 
     $scope.vuositayttoaste = Math.floor((Math.random() * 100) + 1);
