@@ -9,7 +9,7 @@ angular.module('jukufrontApp')
 
     $scope.vuositayttoaste = Math.floor((Math.random() * 100) + 1);
     $scope.isTabSelected = function isTabSelected(tyyppi) {
-      return $state.current.name === 'app.hakija.tunnusluku.syottaminen.' + tyyppi;
+      return $state.current.name === 'app.tunnusluku.syottaminen.' + tyyppi;
     };
 
     $scope.toTab = function toTab(tyyppi) {
