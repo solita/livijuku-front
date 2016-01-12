@@ -278,13 +278,21 @@ angular.module('jukufrontApp')
     };
 
     $scope.naytaPaatos = function (hakemus) {
+      if (!$scope.suunnitteluForm.$valid) {
+        StatusService.virhe('tallennaElyPaatokset', 'Korjaa suunnittelulomakkeen virheet ennen tallentamista.');
+        return;
+      }
       if ($scope.isTallennaPaatosEnabled()) {
         var ikkuna = $window.open('about:blank', '_blank');
 
-        PaatosService.tallenna(hakemus.hakemusId,
-          { hakemusid: hakemus.hakemusId,
+        var selite = _.get($scope, 'paatos.selite', '');
+        var paatokset = _.map($scope.hakemuksetSuunnittelu,
+          hakemus => ({hakemusid: hakemus.hakemusId,
             myonnettyavustus: hakemus.myonnettavaAvustus,
-            selite: $scope.paatos.selite }).then(() => ikkuna.location.href = pdf.getPaatosPdfUrl(hakemus.hakemusId));
+            selite: selite}));
+
+        PaatosService.tallennaPaatokset(paatokset).then(
+          () => ikkuna.location.href = pdf.getPaatosPdfUrl(hakemus.hakemusId));
 
       } else {
         $window.open(pdf.getPaatosPdfUrl(hakemus.hakemusId));
