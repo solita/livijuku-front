@@ -13,12 +13,11 @@ angular.module('jukufrontApp')
     };
 
     $scope.toTab = function toTab(tyyppi) {
-      $state.go('app.hakija.tunnusluku.syottaminen.' + tyyppi);
+      $state.go('app.tunnusluku.syottaminen.' + tyyppi);
     };
 
     $scope.kunnat = function () {
       if ($rootScope.organisaatiot === undefined) return;
       return _.filter($rootScope.organisaatiot, org => _.contains(['KS1', 'ELY'], org.lajitunnus));
     };
-  }
-  ]);
+  }]);
