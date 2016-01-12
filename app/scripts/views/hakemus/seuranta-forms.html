@@ -1,5 +1,7 @@
 <juku-form-section>
   <h3>SEURANTATIEDOT</h3>
+  <p>Täytä seurantatiedot avaamalla alla olevat seurantatieto-osiot kolmiopainikkeista ja lisää sen jälkeen tietoja
+    taulukoihin.</p>
   <uib-accordion close-others="false">
     <uib-accordion-group is-open="isOpenPSA">
       <uib-accordion-heading>
@@ -12,7 +14,8 @@
         </div>
       </uib-accordion-heading>
       <div>
-        <juku-seuranta-liikenne suoritteet="psaLiikenneSuoritteet" tyyppi="PSA" suoritetyypit="suoritetyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
+        <juku-seuranta-liikenne suoritteet="psaLiikenneSuoritteet" tyyppi="PSA" suoritetyypit="suoritetyypit"
+                                is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
       </div>
     </uib-accordion-group>
     <uib-accordion-group is-open="isOpenPAL">
@@ -26,7 +29,8 @@
         </div>
       </uib-accordion-heading>
       <div>
-        <juku-seuranta-liikenne suoritteet="palLiikenneSuoritteet" tyyppi="PAL" suoritetyypit="suoritetyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
+        <juku-seuranta-liikenne suoritteet="palLiikenneSuoritteet" tyyppi="PAL" suoritetyypit="suoritetyypit"
+                                is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
       </div>
     </uib-accordion-group>
     <uib-accordion-group is-open="isOpenKAU">
@@ -40,7 +44,8 @@
         </div>
       </uib-accordion-heading>
       <div>
-        <juku-seuranta-lippu suoritteet="kaupunkilippuSuoritteet" kaupunkilippu="true" lipputyypit="lipputyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
+        <juku-seuranta-lippu suoritteet="kaupunkilippuSuoritteet" kaupunkilippu="true" lipputyypit="lipputyypit"
+                             is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
       </div>
     </uib-accordion-group>
     <uib-accordion-group is-open="isOpenSEU">
@@ -54,7 +59,8 @@
         </div>
       </uib-accordion-heading>
       <div>
-        <juku-seuranta-lippu suoritteet="seutulippuSuoritteet" kaupunkilippu="false" lipputyypit="lipputyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
+        <juku-seuranta-lippu suoritteet="seutulippuSuoritteet" kaupunkilippu="false" lipputyypit="lipputyypit"
+                             is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
       </div>
     </uib-accordion-group>
   </uib-accordion>
