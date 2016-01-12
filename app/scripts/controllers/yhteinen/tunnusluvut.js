@@ -36,7 +36,10 @@ function loadTunnusluvut(vuosi, organisaatioid, tyyppi, scope, StatusService, Tu
 }
 
 angular.module('jukufrontApp')
-  .controller('TunnusluvutMuokkausCtrl', ['$rootScope', '$scope', '$state', function ($rootScope, $scope, $state) {
+  .controller('TunnusluvutMuokkausCtrl',
+    ['$rootScope', '$scope', '$state', 'OrganisaatioService', 'StatusService',
+
+    function ($rootScope, $scope, $state, OrganisaatioService, StatusService) {
 
     $scope.tunnuslukuTyyppiNimi = function(type) {
       return types[type];
@@ -52,9 +55,9 @@ angular.module('jukufrontApp')
       $state.go('app.tunnusluku.syottaminen.' + tyyppi);
     };
 
-    $scope.organisaatiot = function () {
-      if ($rootScope.organisaatiot === undefined) return;
-      return _.filter($rootScope.organisaatiot, org => _.contains(['KS1', 'KS2', 'ELY'], org.lajitunnus));
-    };
-
+    OrganisaatioService.hae().then(
+      organisaatiot => $scope.organisaatiot =
+        _.filter(organisaatiot,
+                 org => _.contains(['KS1', 'KS2', 'ELY'], org.lajitunnus)),
+      StatusService.errorHandler)
   }]);

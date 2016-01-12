@@ -9,7 +9,7 @@
         <select id="organisaatio" ng-model="organisaatio" ng-disabled="isReadonly()"
                 placeholder="Valitse toimivaltainen viranomainen" class="form-control" required>
           <option value="" selected disabled>Valitse toimivaltainen viranomainen</option>
-          <option ng-repeat="organisaatio in organisaatiot()" value="{{organisaatio.id}}">{{organisaatio.nimi}}</option>
+          <option ng-repeat="organisaatio in organisaatiot" value="{{organisaatio.id}}">{{organisaatio.nimi}}</option>
         </select>
       </div>
       <div class="col-md-2 form-group">
