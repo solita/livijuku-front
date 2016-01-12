@@ -160,33 +160,33 @@ angular
       .state('app.tunnusluku', root('/tunnusluvut'))
       .state('app.tunnusluku.syottaminen', {
         url: '/syottaminen',
-        template: require('views/yhteinen/tunnuslukujenSyottaminen.html'),
+        template: require('views/tunnusluvut/muokkaus.html'),
         controller: 'HakijaTunnusluvutCtrl',
         redirectTo: 'app.tunnusluku.syottaminen.TTYT'
       })
       .state('app.tunnusluku.syottaminen.TTYT', {
         url: '/ttyt',
-        template: require('views/yhteinen/tunnuslukujenSyottaminen-ttyt.html'),
+        template: require('views/tunnusluvut/muokkaus-ttyt.html'),
         controller: 'HakijaTunnusluvutCtrl'
       })
       .state('app.tunnusluku.syottaminen.PSAB', {
         url: '/psab',
-        template: require('views/yhteinen/tunnuslukujenSyottaminen-psab.html'),
+        template: require('views/tunnusluvut/muokkaus-psab.html'),
         controller: 'HakijaTunnusluvutCtrl'
       })
       .state('app.tunnusluku.syottaminen.PSAK', {
         url: '/psak',
-        template: require('views/yhteinen/tunnuslukujenSyottaminen-psak.html'),
+        template: require('views/tunnusluvut/muokkaus-psak.html'),
         controller: 'HakijaTunnusluvutCtrl'
       })
       .state('app.tunnusluku.syottaminen.SL', {
         url: '/sl',
-        template: require('views/yhteinen/tunnuslukujenSyottaminen-sl.html'),
+        template: require('views/tunnusluvut/muokkaus-sl.html'),
         controller: 'HakijaTunnusluvutCtrl'
       })
       .state('app.tunnusluku.syottaminen.ME', {
         url: '/me',
-        template: require('views/yhteinen/tunnuslukujenSyottaminen-me.html'),
+        template: require('views/tunnusluvut/muokkaus-me.html'),
         controller: 'HakijaTunnusluvutCtrl'
       })
 
@@ -196,17 +196,17 @@ angular
 
       .state('app.tunnusluku.valtionavustuskuvaajat', {
         url: '/valtionavustuskuvaajat',
-        template: require('views/yhteinen/tunnuslukuraportit-valtionavustuskuvaajat.html'),
+        template: require('views/tunnusluvut/raportit-valtionavustuskuvaajat.html'),
         controller: 'TunnuslukuraporttiCtrl'
       })
       .state('app.tunnusluku.tunnuslukukuvaajat', {
         url: '/tunnuslukukuvaajat',
-        template: require('views/yhteinen/tunnuslukuraportit-tunnuslukukuvaajat.html'),
+        template: require('views/tunnusluvut/raportit-tunnuslukukuvaajat.html'),
         controller: 'TunnuslukuraporttiCtrl'
       })
       .state('app.tunnusluku.omakuvaaja', {
         url: '/omakuvaaja',
-        template: require('views/yhteinen/tunnuslukuraportit-omakuvaaja.html'),
+        template: require('views/tunnusluvut/raportit-omakuvaaja.html'),
         controller: 'TunnuslukuraporttiCtrl'
       })
 
