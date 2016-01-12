@@ -9,16 +9,15 @@ angular.module('jukufrontApp')
 
     $scope.vuositayttoaste = Math.floor((Math.random() * 100) + 1);
     $scope.isTabSelected = function isTabSelected(tyyppi) {
-      return $state.current.name === 'app.hakija.tunnusluku.syottaminen.' + tyyppi;
+      return $state.current.name === 'app.tunnusluku.syottaminen.' + tyyppi;
     };
 
     $scope.toTab = function toTab(tyyppi) {
-      $state.go('app.hakija.tunnusluku.syottaminen.' + tyyppi);
+      $state.go('app.tunnusluku.syottaminen.' + tyyppi);
     };
 
     $scope.kunnat = function () {
       if ($rootScope.organisaatiot === undefined) return;
       return _.filter($rootScope.organisaatiot, org => _.contains(['KS1', 'ELY'], org.lajitunnus));
     };
-  }
-  ]);
+  }]);

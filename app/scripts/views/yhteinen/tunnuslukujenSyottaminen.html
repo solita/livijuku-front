@@ -1,17 +1,19 @@
 <div class="container">
-  <div class="row">
+  <div class="page-header">
     <h1>Tunnuslukujen syöttäminen</h1>
   </div>
-  <ng-form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm">
+  <form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm">
     <juku-form-row>
-      <div class="col-md-4">
+      <div class="col-md-4 form-group">
+        <label for="organisaatio" class="sr-only">Organisaatio</label>
         <select id="organisaatio" ng-model="selectedOrganisaatio" ng-disabled="isReadonly()"
                 placeholder="Valitse toimivaltainen viranomainen" class="form-control" required>
           <option value="" selected disabled>Valitse toimivaltainen viranomainen</option>
           <option ng-repeat="kunta in kunnat()" value="{{kunta.id}}">{{kunta.nimi}}</option>
         </select>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 form-group">
+        <label for="vuosi" class="sr-only">Vuosi</label>
         <select id="vuosi" name="vuosi"
                 ng-model="selectedVuosi" ng-disabled="isReadonly()"
                 placeholder="Valitse vuosi" class="form-control" required>
@@ -23,11 +25,11 @@
         </select>
       </div>
       <div class="col-md-6">
-        <small><em>Koko vuoden tunnuslukujen täyttöaste:</em></small>
+        <small><em>Koko vuoden tallennettujen tunnuslukujen täyttöaste tietokannassa:</em></small>
         <uib-progressbar animate="false" value="vuositayttoaste" type="success"><b>{{vuositayttoaste}}%</b></uib-progressbar>
       </div>
     </juku-form-row>
-  </ng-form>
+  </form>
   <juku-navigation>
     <juku-tabs>
       <juku-tab
@@ -39,4 +41,9 @@
     </juku-tabs>
   </juku-navigation>
   <div ui-view></div>
+  <juku-controls >
+    <juku-controls-buttons>
+      <button class="btn btn-success">Tallenna näytöllä olevat tiedot</button>
+    </juku-controls-buttons>
+  </juku-controls>
 </div>
