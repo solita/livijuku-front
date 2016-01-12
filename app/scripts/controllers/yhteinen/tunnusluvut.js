@@ -2,12 +2,14 @@
 
 var _ = require('lodash');
 var angular = require('angular');
+var Promise = require('bluebird');
 
-function loadTunnusluvutPromise() {
-
+loadTunnusluvutPromise.$inject = ['$state', 'StatusService', 'TunnuslukuEditService'];
+export function loadTunnusluvutPromise($state, StatusService, TunnuslukuEditService) {
+  return Promise.props({
+    liikennevuosi: Promise.resolve('test') //TunnuslukuEditService.haeKysyntaTarjonta(2016, 1, 'BR')
+  }).then(_.identity, StatusService.errorHandler);
 };
-
-loadTunnusluvutPromise.$inject = [];
 
 angular.module('jukufrontApp')
   .controller('TunnusluvutMuokkausCtrl', ['$rootScope', '$scope', '$state', function ($rootScope, $scope, $state) {

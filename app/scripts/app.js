@@ -62,6 +62,7 @@ angular
     'services.paatos',
     'services.common',
     'services.config',
+    'services.tunnusluvut',
     'filters.toApplicantName',
     'filters.toStatisticName',
     'filters.toClass',
@@ -162,10 +163,10 @@ angular
         url: '/syottaminen',
         template: require('views/tunnusluvut/muokkaus.html'),
         controller: 'TunnusluvutMuokkausCtrl',
-        redirectTo: 'app.tunnusluku.syottaminen.TTYT' //,
-        /*resolve: {
+        redirectTo: 'app.tunnusluku.syottaminen.TTYT',
+        resolve: {
           tunnusluvut: require('./controllers/yhteinen/tunnusluvut').loadTunnusluvutPromise
-        }*/
+        }
       })
       .state('app.tunnusluku.syottaminen.TTYT', {
         url: '/ttyt',
@@ -359,6 +360,7 @@ require('./services/organisaatio');
 require('./services/paatos');
 require('./services/status');
 require('./services/suunnittelu');
+require('./services/tunnusluvut');
 require('./filters/erotteleRoolit');
 require('./filters/toApplicantName');
 require('./filters/toClass');

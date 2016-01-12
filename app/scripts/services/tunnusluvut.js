@@ -4,10 +4,10 @@ var angular = require('angular');
 var _ = require('lodash');
 
 function liikennetilastotURL(vuosi, organisaatioid, sopimustyyppitunnus) {
-  return 'api/liikennetilastot/' + vuosi + '/' + organisaatioid  '/' + sopimustyyppitunnus;
+  return 'api/liikennetilastot/' + vuosi + '/' + organisaatioid  + '/' + sopimustyyppitunnus;
 }
 
-angular.module('services.tunnusluku', [])
+angular.module('services.tunnusluvut', [])
 
   .factory('TunnuslukuEditService', ['$http', function ($http) {
     return {
