@@ -37,22 +37,12 @@ var tilat = [
     id: 'P',
     label: 'Päätetty',
     className: 'hakemus-tila-paatetty'
-  },
-  {
-    id: 'M',
-    label: 'Maksettu',
-    className: 'hakemus-tila-maksettu'
   }
 ];
 
 module.exports = {
   getAll: function() {
     return tilat;
-  },
-  getByType: function(tyyppi) {
-    if (tyyppi==='AH0')
-      return _.dropRight(tilat);
-    else return tilat;
   },
   find: function(id) {
     return _.findWhere(tilat, {id: id});
