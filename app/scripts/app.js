@@ -163,10 +163,10 @@ angular
         url: '/syottaminen',
         template: require('views/tunnusluvut/muokkaus.html'),
         controller: 'TunnusluvutMuokkausCtrl',
-        redirectTo: 'app.tunnusluku.syottaminen.TTYT',
-        resolve: {
+        redirectTo: 'app.tunnusluku.syottaminen.TTYT'
+        /*resolve: {
           tunnusluvut: require('./controllers/yhteinen/tunnusluvut').loadTunnusluvutPromise
-        }
+        }*/
       })
       .state('app.tunnusluku.syottaminen.TTYT', {
         url: '/ttyt',

@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var c = require('utils/core');
 var angular = require('angular');
 var Promise = require('bluebird');
 
@@ -52,6 +53,8 @@ angular.module('jukufrontApp')
       return $state.current.tyyppi === tyyppi;
     };
 
+    $scope.tyyppi = () => $state.current.tyyppi;
+
     $scope.toTab = function toTab(tyyppi) {
       $state.go('app.tunnusluku.syottaminen.' + tyyppi);
     };
@@ -62,7 +65,10 @@ angular.module('jukufrontApp')
                  org => _.contains(['KS1', 'KS2', 'ELY'], org.lajitunnus)),
       StatusService.errorHandler);
 
-    $scope.$watchGroup(["vuosi", "organisaatio.id"],
-      (id) => loadTunnusluvut(id[0], id[1], $state.current.tyyppi, $scope, TunnuslukuEditService, StatusService));
+    $scope.$watchGroup(["vuosi", "organisaatioId", "tyyppi()"], (id) => {
+        if (_.all(id, c.isDefinedNotNull)) {
+          loadTunnusluvut(id[0], id[1], id[2], $scope, TunnuslukuEditService, StatusService)}
+        });
+
 
   }]);

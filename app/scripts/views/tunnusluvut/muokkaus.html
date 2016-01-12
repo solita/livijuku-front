@@ -6,7 +6,7 @@
     <juku-form-row>
       <div class="col-md-4 form-group">
         <label for="organisaatio" class="sr-only">Organisaatio</label>
-        <select id="organisaatio" ng-model="organisaatio" ng-disabled="isReadonly()"
+        <select id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
                 placeholder="Valitse toimivaltainen viranomainen" class="form-control" required>
           <option value="" selected disabled>Valitse toimivaltainen viranomainen</option>
           <option ng-repeat="organisaatio in organisaatiot" value="{{organisaatio.id}}">{{organisaatio.nimi}}</option>
@@ -40,10 +40,19 @@
       </juku-tab>
     </juku-tabs>
   </juku-navigation>
-  <form name="tunnusluvut" novalidate><div ui-view></div></form>
-  <juku-controls >
-    <juku-controls-buttons>
-      <button class="btn btn-success">Tallenna näytöllä olevat tiedot</button>
-    </juku-controls-buttons>
-  </juku-controls>
+  <form name="tunnusluvutForm" novalidate ng-show="tunnusluvut">
+    <div ui-view></div>
+    <juku-controls >
+      <juku-controls-buttons>
+        <button class="btn btn-success">Tallenna näytöllä olevat tiedot</button>
+      </juku-controls-buttons>
+    </juku-controls>
+  </form>
+  <br/>
+  <div class="alert alert-info">
+    <p ng-hide="tunnusluvut">
+      <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+      Valitse alue ja vuosiluku
+    </p>
+  </div>
 </div>
