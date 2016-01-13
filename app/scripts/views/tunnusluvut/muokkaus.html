@@ -40,17 +40,17 @@
       </juku-tab>
     </juku-tabs>
   </juku-navigation>
-  <form name="tunnusluvutForm" novalidate ng-show="tunnusluvut">
+  <form name="tunnusluvutForm" novalidate ng-if="tunnusluvut">
     <div ui-view></div>
     <juku-controls >
       <juku-controls-buttons>
-        <button class="btn btn-success">Tallenna näytöllä olevat tiedot</button>
+        <button class="btn btn-success" data-ng-click="tallennaHakemus()">Tallenna näytöllä olevat tiedot</button>
       </juku-controls-buttons>
     </juku-controls>
   </form>
   <br/>
-  <div class="alert alert-info">
-    <p ng-hide="tunnusluvut">
+  <div class="alert alert-info" ng-hide="tunnusluvut">
+    <p>
       <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
       Valitse alue ja vuosiluku
     </p>

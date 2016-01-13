@@ -47,13 +47,17 @@ angular.module('jukufrontApp')
       return types[type];
     }
 
+    function tyyppi() {
+      return $state.current.tyyppi;
+    }
+
     $scope.vuositayttoaste = Math.floor((Math.random() * 100) + 1);
 
     $scope.isTabSelected = function isTabSelected(tyyppi) {
       return $state.current.tyyppi === tyyppi;
     };
 
-    $scope.tyyppi = () => $state.current.tyyppi;
+    $scope.tyyppi = tyyppi;
 
     $scope.toTab = function toTab(tyyppi) {
       $state.go('app.tunnusluku.syottaminen.' + tyyppi);
@@ -71,4 +75,16 @@ angular.module('jukufrontApp')
         });
 
 
+    $scope.tallennaHakemus = function () {
+      var tallennusPromise = [];
+
+      if (isSopimustyyppi(tyyppi())) {
+        tallennusPromise.push(TunnuslukuEditService.tallennaKysyntaTarjonta(
+          $scope.vuosi, $scope.organisaatioId, tyyppi(), $scope.tunnusluvut.liikennevuosi));
+      }
+
+      Promise.all(tallennusPromise).then(
+        function() { StatusService.ok('', 'Tunnuslukujen tallennus onnistui.'); },
+        StatusService.errorHandler);
+    }
   }]);
