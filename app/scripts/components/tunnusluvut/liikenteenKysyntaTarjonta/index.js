@@ -57,14 +57,6 @@ function kysyntaTarjontaController($scope) {
   $scope.vuorotarjontaSumma = function () {
     return _.sum($scope.tunnusluvut, 'vuorotarjonta');
   };
-
-  if (!$scope.tunnusluvut) {
-    $scope.tunnusluvut = _.map(_.range(1,13), kuukausi =>
-      ({kuukausi: kuukausi,
-        nousut: null,
-        lahdot: null,
-        linjakilometrit: null}));
-  }
 }
 
 module.exports = function () {
