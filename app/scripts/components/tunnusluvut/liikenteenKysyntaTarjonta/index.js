@@ -1,6 +1,9 @@
 'use strict';
 var _ = require('lodash');
 
+const kuukaudet = ["Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu",
+                   "Heinäkuu", "Elokuu", "Syyskuu", "Lokakuu", "Marraskuu", "Joulukuu"];
+
 function pakollinenErrorMessage(nimi) {
   return function(input) {
     return input.$error.required ? nimi +' on pakollinen tieto.' : '';
@@ -30,80 +33,9 @@ function kysyntaTarjontaController($scope) {
     }
   ];
 
-  $scope.tunnusluvut= [
-    {
-      "kuukausi": "Tammikuu",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "kuukausi": "Helmikuu",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "kuukausi": "Maaliskuu",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "kuukausi": "Huhtikuu",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "kuukausi": "Toukokuu",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "kuukausi": "Kesäkuu",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "kuukausi": "Heinäkuu",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "kuukausi": "Elokuu",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "kuukausi": "Syyskuu",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "kuukausi": "Lokakuu",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "kuukausi": "Marraskuu",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "kuukausi": "Joulukuu",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    }
-  ];
+  $scope.kuukausiNimi = function(kuukausi) {
+    return kuukaudet[kuukausi - 1];
+  }
 
   $scope.nousuaSumma = function () {
     return _.sum($scope.tunnusluvut, 'nousua');
@@ -125,6 +57,14 @@ function kysyntaTarjontaController($scope) {
   $scope.vuorotarjontaSumma = function () {
     return _.sum($scope.tunnusluvut, 'vuorotarjonta');
   };
+
+  if (!$scope.tunnusluvut) {
+    $scope.tunnusluvut = _.map(_.range(1,13), kuukausi =>
+      ({kuukausi: kuukausi,
+        nousut: null,
+        lahdot: null,
+        linjakilometrit: null}));
+  }
 }
 
 module.exports = function () {

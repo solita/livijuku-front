@@ -73,7 +73,7 @@
         </tfoot>
         <tbody>
           <tr ng-repeat="tunnusluku in tunnusluvut track by $index" ng-form>
-            <td>{{tunnusluku.kuukausi}}</td>
+            <td>{{kuukausiNimi(tunnusluku.kuukausi)}}</td>
             <td>
               <form-group-compact label="Nousua" errormessage="kokonaislukuErrorMessage">
                 <input id="{{tyyppi + '-nousua-'+tunnusluku.kuukausi}}" name="nousua"
