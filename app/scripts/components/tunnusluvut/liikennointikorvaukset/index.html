@@ -1,8 +1,8 @@
 <ng-form id=liikennointikorvauksetForm'}}" name="liikennointikorvauksetForm" class="liikennointikorvaukset">
-  <juku-form-row ng-if="tyyppi==='PSAB' || tyyppi==='SL' || tyyppi==='PSAK'">
-    <h3 ng-if="tyyppi==='PSAB'">Maksetut liikennöintikorvaukset</h3>
+  <juku-form-row ng-if="tyyppi==='BR' || tyyppi==='SL' || tyyppi==='KOS'">
+    <h3 ng-if="tyyppi==='BR'">Maksetut liikennöintikorvaukset</h3>
     <h3 ng-if="tyyppi==='SL'">Maksetut liikennöintikorvaukset ja lipputuet</h3>
-    <h3 ng-if="tyyppi==='PSAK'">Maksetut liikennöinti- ja sopimuskorvaukset</h3>
+    <h3 ng-if="tyyppi==='KOS'">Maksetut liikennöinti- ja sopimuskorvaukset</h3>
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <tr>
@@ -36,11 +36,11 @@
       </table>
     </div>
   </juku-form-row>
-  <juku-form-row ng-if="tyyppi==='PSAK' || tyyppi==='ME'">
+  <juku-form-row ng-if="tyyppi==='KOS' || tyyppi==='ME'">
     <div class="table-responsive">
-      <h3 ng-if="tyyppi==='PSAK'">Maksettu liikennöinnin nousukorvaus kuukausittain</h3>
+      <h3 ng-if="tyyppi==='KOS'">Maksettu liikennöinnin nousukorvaus kuukausittain</h3>
       <h3 ng-if="tyyppi==='ME'">Maksettu asiakashinnan nousukorvaus kuukausittain</h3>
-      <p ng-if="tyyppi==='PSAK'">Tätä ei tarvitse täyttää, jos liikennöitsijä saa pitää lipputulot. Tämä täytetään, jos
+      <p ng-if="tyyppi==='KOS'">Tätä ei tarvitse täyttää, jos liikennöitsijä saa pitää lipputulot. Tämä täytetään, jos
         liikennöitsijälle maksetaan erikseen sovittua nousukorvausta.</p>
       <p ng-if="tyyppi==='ME'">Asiakashinnan nousukorvaukset markkinaehtoiselle liikenteelle kuukausittain.</p>
       <table class="table table-hover table-condensed">

@@ -39,7 +39,7 @@ function kysyntaTarjontaController($scope) {
   }
 
   $scope.nousuaSumma = function () {
-    return _.sum($scope.tunnusluvut, 'nousua');
+    return _.sum($scope.tunnusluvut, 'nousut');
   };
 
    $scope.nimiErrorMessage = function(input) {
@@ -56,10 +56,11 @@ function kysyntaTarjontaController($scope) {
   };
 
   $scope.vuorotarjontaSumma = function () {
-    return _.sum($scope.tunnusluvut, 'vuorotarjonta');
+    return _.sum($scope.tunnusluvut, 'lahdot');
   };
 
   $scope.isPSA = t.isPSA($scope.tyyppi);
+  $scope.isME = $scope.tyyppi === 'ME';
 }
 
 module.exports = function () {

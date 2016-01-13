@@ -5,8 +5,8 @@ var angular = require('angular');
 
 const types = {
   TTYT: 'Taustatiedot ja yl. tunnusluvut',
-  PSAB: 'PSA Brutto',
-  PSAK: 'PSA KOS',
+  BR: 'PSA Brutto',
+  KOS: 'PSA KOS',
   SL: 'Siirtymäajan liikenne',
   ME: 'ME liikenne'
 };
