@@ -83,6 +83,8 @@ angular.module('jukufrontApp')
           $scope.vuosi, $scope.organisaatioId, tyyppi(), $scope.tunnusluvut.liikennevuosi));
       }
 
-      Promise.all(tallennusPromise).then(_.identity, StatusService.errorHandler);
+      Promise.all(tallennusPromise).then(
+        function() { StatusService.ok('', 'Tunnuslukujen tallennus onnistui.'); },
+        StatusService.errorHandler);
     }
   }]);

@@ -86,6 +86,7 @@
             <td>
               <form-group-compact label="Linjakilometrit" errormessage="linjakilometritErrorMessage">
                 <input id="{{tyyppi + '-linjakilometrit-'+$index}}" name="linjakilometrit" type="text"
+                       placeholder="km/kuukausi"
                        numeric-km-only="" ng-currency=""
                        required
                        currency-symbol="" noenter
@@ -96,6 +97,7 @@
             <td>
               <form-group-compact label="Vuorotarjonta" errormessage="kokonaislukuErrorMessage">
                 <input id="{{tyyppi + '-vuorotarjonta-'+$index}}" name="vuorotarjonta" type="number"
+                       placeholder="Lähtöä/kuukausi"
                        numeric-integer-only=""
                        required
                        currency-symbol="" noenter
