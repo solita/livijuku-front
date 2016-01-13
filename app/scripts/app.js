@@ -64,7 +64,6 @@ angular
     'services.config',
     'services.tunnusluvut',
     'filters.toApplicantName',
-    'filters.toStatisticName',
     'filters.toClass',
     'filters.stateNameIncludes',
     'filters.toApplicationName',
