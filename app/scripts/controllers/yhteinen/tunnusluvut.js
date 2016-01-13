@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var c = require('utils/core');
+var t = require('utils/tunnusluvut');
 var angular = require('angular');
 var Promise = require('bluebird');
 
@@ -21,17 +22,9 @@ const types = {
   ME: 'ME liikenne'
 };
 
-function isSopimustyyppi(tunnuslukutyyppi) {
-  return _.contains(['BR','KOS','SA','ME'], tunnuslukutyyppi);
-}
-
-function isPSA(tunnuslukutyyppi) {
-  return _.contains(['BR','KOS'], tunnuslukutyyppi);
-}
-
 function loadTunnusluvut(vuosi, organisaatioid, tyyppi, scope, TunnuslukuEditService, StatusService) {
   Promise.props({
-    liikennevuosi: isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjonta(vuosi, organisaatioid, tyyppi) : undefined
+    liikennevuosi: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjonta(vuosi, organisaatioid, tyyppi) : undefined
   }).then(
     tunnusluvut => scope.$evalAsync(scope => scope.tunnusluvut = tunnusluvut),
     StatusService.errorHandler);
@@ -78,7 +71,7 @@ angular.module('jukufrontApp')
     $scope.tallennaHakemus = function () {
       var tallennusPromise = [];
 
-      if (isSopimustyyppi(tyyppi())) {
+      if (t.isSopimustyyppi(tyyppi())) {
         tallennusPromise.push(TunnuslukuEditService.tallennaKysyntaTarjonta(
           $scope.vuosi, $scope.organisaatioId, tyyppi(), $scope.tunnusluvut.liikennevuosi));
       }

@@ -1,5 +1,6 @@
 'use strict';
 var _ = require('lodash');
+var t = require('utils/tunnusluvut');
 
 const kuukaudet = ["Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu",
                    "Heinäkuu", "Elokuu", "Syyskuu", "Lokakuu", "Marraskuu", "Joulukuu"];
@@ -57,6 +58,8 @@ function kysyntaTarjontaController($scope) {
   $scope.vuorotarjontaSumma = function () {
     return _.sum($scope.tunnusluvut, 'vuorotarjonta');
   };
+
+  $scope.isPSA = t.isPSA($scope.tyyppi);
 }
 
 module.exports = function () {

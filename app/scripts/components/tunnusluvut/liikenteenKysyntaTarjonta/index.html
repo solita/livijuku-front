@@ -78,7 +78,7 @@
               <form-group-compact label="Nousua" errormessage="kokonaislukuErrorMessage">
                 <input id="{{tyyppi + '-nousua-'+tunnusluku.kuukausi}}" name="nousua"
                        placeholder="Nousua/kuukausi" noenter
-                       type="number" numeric-integer-only="" select-on-click
+                       type="number" integer-only select-on-click
                        ng-readonly="isReadonly()"
                        ng-model="tunnusluku.nousut">
               </form-group-compact>
@@ -88,7 +88,6 @@
                 <input id="{{tyyppi + '-linjakilometrit-'+$index}}" name="linjakilometrit" type="text"
                        placeholder="km/kuukausi"
                        numeric-km-only="" ng-currency=""
-                       required
                        currency-symbol="" noenter
                        select-on-click
                        ng-model="tunnusluku.linjakilometrit">
@@ -98,9 +97,7 @@
               <form-group-compact label="Vuorotarjonta" errormessage="kokonaislukuErrorMessage">
                 <input id="{{tyyppi + '-vuorotarjonta-'+$index}}" name="vuorotarjonta" type="number"
                        placeholder="Lähtöä/kuukausi"
-                       numeric-integer-only=""
-                       required
-                       currency-symbol="" noenter
+                       integer-only noenter
                        select-on-click
                        ng-model="tunnusluku.lahdot">
               </form-group-compact>
