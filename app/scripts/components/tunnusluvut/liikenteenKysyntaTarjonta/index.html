@@ -81,7 +81,7 @@
               <form-group-compact label="Nousua" errormessage="kokonaislukuErrorMessage">
                 <input id="{{tyyppi + '-nousua-'+tunnusluku.kuukausi}}" name="nousua"
                        placeholder="Nousua/kuukausi" noenter
-                       type="number" integer-only select-on-click
+                       integer-only select-on-click
                        ng-readonly="isReadonly()"
                        ng-model="tunnusluku.nousut">
               </form-group-compact>
@@ -98,7 +98,7 @@
             </td>
             <td>
               <form-group-compact label="Vuorotarjonta" errormessage="kokonaislukuErrorMessage">
-                <input id="{{tyyppi + '-vuorotarjonta-'+$index}}" name="vuorotarjonta" type="number"
+                <input id="{{tyyppi + '-vuorotarjonta-'+$index}}" name="vuorotarjonta"
                        placeholder="Lähtöä/kuukausi"
                        integer-only noenter
                        select-on-click

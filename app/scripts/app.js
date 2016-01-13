@@ -159,7 +159,7 @@ angular
 
       .state('app.tunnusluku', root('/tunnusluvut'))
       .state('app.tunnusluku.syottaminen', {
-        url: '/syottaminen',
+        url: '/muokkaus/:vuosi/:organisaatioid',
         template: require('views/tunnusluvut/muokkaus.html'),
         controller: 'TunnusluvutMuokkausCtrl',
         redirectTo: 'app.tunnusluku.syottaminen.TTYT'
