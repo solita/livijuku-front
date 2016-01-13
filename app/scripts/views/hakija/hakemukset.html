@@ -1,9 +1,11 @@
 <div class="container">
   <div ng-hide="sallittu('view-oma-hakemus')">
-    <p>Ei omien hakemusten katseluoikeutta.</p>
+    <br>
+    <div class="alert alert-warning"><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> Ei omien hakemusten katseluoikeutta.</div>
   </div>
   <div ng-show="hakemuskaudet.length === 0">
-    <p>Ei hakemuksia, koska hakemuskautta ei ole vielä avattu.</p>
+    <br>
+    <div class="alert alert-info"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Ei hakemuksia, koska hakemuskautta ei ole vielä avattu.</div>
   </div>
   <div ng-show="kaynnistetytHakemuskaudet.length > 0 && sallittu('view-oma-hakemus')">
     <h3>KÄYNNISSÄ OLEVAT HAKEMUSKAUDET</h3>
