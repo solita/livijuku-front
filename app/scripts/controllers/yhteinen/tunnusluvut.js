@@ -1,9 +1,11 @@
 'use strict';
 
 var _ = require('lodash');
+var c = require('utils/core');
 var angular = require('angular');
 var Promise = require('bluebird');
 
+// TODO: tämän voi poistaa jos url:iin ei tule vuotta ja organisaatiota
 loadTunnusluvutPromise.$inject = ['$state', 'StatusService', 'TunnuslukuEditService'];
 export function loadTunnusluvutPromise($state, StatusService, TunnuslukuEditService) {
   return Promise.props({
@@ -27,7 +29,7 @@ function isPSA(tunnuslukutyyppi) {
   return _.contains(['BR','KOS'], tunnuslukutyyppi);
 }
 
-function loadTunnusluvut(vuosi, organisaatioid, tyyppi, scope, StatusService, TunnuslukuEditService) {
+function loadTunnusluvut(vuosi, organisaatioid, tyyppi, scope, TunnuslukuEditService, StatusService) {
   Promise.props({
     liikennevuosi: isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjonta(vuosi, organisaatioid, tyyppi) : undefined
   }).then(
@@ -37,9 +39,9 @@ function loadTunnusluvut(vuosi, organisaatioid, tyyppi, scope, StatusService, Tu
 
 angular.module('jukufrontApp')
   .controller('TunnusluvutMuokkausCtrl',
-    ['$rootScope', '$scope', '$state', 'OrganisaatioService', 'StatusService',
+    ['$scope', '$state', 'OrganisaatioService', 'TunnuslukuEditService', 'StatusService',
 
-    function ($rootScope, $scope, $state, OrganisaatioService, StatusService) {
+    function ($scope, $state, OrganisaatioService, TunnuslukuEditService, StatusService) {
 
     $scope.tunnuslukuTyyppiNimi = function(type) {
       return types[type];
@@ -48,8 +50,10 @@ angular.module('jukufrontApp')
     $scope.vuositayttoaste = Math.floor((Math.random() * 100) + 1);
 
     $scope.isTabSelected = function isTabSelected(tyyppi) {
-      return $state.current.name === 'app.tunnusluku.syottaminen.' + tyyppi;
+      return $state.current.tyyppi === tyyppi;
     };
+
+    $scope.tyyppi = () => $state.current.tyyppi;
 
     $scope.toTab = function toTab(tyyppi) {
       $state.go('app.tunnusluku.syottaminen.' + tyyppi);
@@ -59,5 +63,12 @@ angular.module('jukufrontApp')
       organisaatiot => $scope.organisaatiot =
         _.filter(organisaatiot,
                  org => _.contains(['KS1', 'KS2', 'ELY'], org.lajitunnus)),
-      StatusService.errorHandler)
+      StatusService.errorHandler);
+
+    $scope.$watchGroup(["vuosi", "organisaatioId", "tyyppi()"], (id) => {
+        if (_.all(id, c.isDefinedNotNull)) {
+          loadTunnusluvut(id[0], id[1], id[2], $scope, TunnuslukuEditService, StatusService)}
+        });
+
+
   }]);

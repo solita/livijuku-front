@@ -163,29 +163,34 @@ angular
         url: '/syottaminen',
         template: require('views/tunnusluvut/muokkaus.html'),
         controller: 'TunnusluvutMuokkausCtrl',
-        redirectTo: 'app.tunnusluku.syottaminen.TTYT',
-        resolve: {
+        redirectTo: 'app.tunnusluku.syottaminen.TTYT'
+        /*resolve: {
           tunnusluvut: require('./controllers/yhteinen/tunnusluvut').loadTunnusluvutPromise
-        }
+        }*/
       })
       .state('app.tunnusluku.syottaminen.TTYT', {
         url: '/ttyt',
+        tyyppi: 'TTYT',
         template: require('views/tunnusluvut/muokkaus-ttyt.html')
       })
       .state('app.tunnusluku.syottaminen.BR', {
         url: '/br',
+        tyyppi: 'BR',
         template: require('views/tunnusluvut/muokkaus-psab.html')
       })
       .state('app.tunnusluku.syottaminen.KOS', {
         url: '/kos',
+        tyyppi: 'KOS',
         template: require('views/tunnusluvut/muokkaus-psak.html')
       })
       .state('app.tunnusluku.syottaminen.SA', {
         url: '/sa',
+        tyyppi: 'SA',
         template: require('views/tunnusluvut/muokkaus-sl.html')
       })
       .state('app.tunnusluku.syottaminen.ME', {
         url: '/me',
+        tyyppi: 'ME',
         template: require('views/tunnusluvut/muokkaus-me.html')
       })
 
