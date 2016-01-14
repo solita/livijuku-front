@@ -23,7 +23,7 @@
             <td>{{rivi.paastoluokka}}</td>
             <td>
               <form-group-compact label="Linja-autojen lukumäärä" errormessage="kokonaislukuErrorMessage">
-                <input id="{{tyyppi + '-linjaautot-'+$index}}" name="linjaautot" type="number" numeric-integer-only=""
+                <input id="{{tyyppi + '-linjaautot-'+$index}}" name="linjaautot" type="number" integer-only
                        required
                        currency-symbol="" noenter
                        ng-readonly="isReadonly()"

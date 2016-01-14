@@ -32,7 +32,7 @@
             <td>
               <form-group-compact label="Määrä" errormessage="kokonaislukuErrorMessage">
                 <input id="{{tyyppi + '-tarjouskohteet-maara-'+$index}}" name="maara" type="number"
-                       numeric-integer-only="" select-on-click
+                       integer-only select-on-click
                        ng-model="rivi.maara" ng-disabled="isReadonly()"
                        placeholder="Saatujen tarjousten määrä">
               </form-group-compact>
