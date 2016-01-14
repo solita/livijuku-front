@@ -2,7 +2,7 @@
   <h3>SEURANTATIEDOT</h3>
   <p>Täytä seurantatiedot avaamalla alla olevat seurantatieto-osiot kolmiopainikkeista ja lisää sen jälkeen tietoja
     taulukoihin.</p>
-  <uib-accordion close-others="false">
+  <uib-accordion close-others="false" class="accordionnopadding">
     <uib-accordion-group is-open="isOpenPSA">
       <uib-accordion-heading>
         <div class="panel-heading">
@@ -13,10 +13,8 @@
                 }"></i><span>Paikallisliikenne tai muu PSA:n mukainen liikenne</span></div>
         </div>
       </uib-accordion-heading>
-      <div>
-        <juku-seuranta-liikenne suoritteet="psaLiikenneSuoritteet" tyyppi="PSA" suoritetyypit="suoritetyypit"
-                                is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
-      </div>
+      <juku-seuranta-liikenne suoritteet="psaLiikenneSuoritteet" tyyppi="PSA" suoritetyypit="suoritetyypit"
+                              is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
     </uib-accordion-group>
     <uib-accordion-group is-open="isOpenPAL">
       <uib-accordion-heading>
