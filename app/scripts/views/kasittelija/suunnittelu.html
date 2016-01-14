@@ -31,12 +31,14 @@
           <div class="form-group" show-errors="{showSuccess: true}">
             <label>Määräraha vuosi {{vuosi}}</label>
 
-            <input id="maararaha" name="maararaha" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
+            <input id="maararaha" name="maararaha" type="text" min="-0.0001" ng-currency="" numeric-only=""
+                   class="form-control"
                    ng-focus="asetaVanhaArvo(maararaha)"
                    ng-model-options="{ allowInvalid: true }"
                    ng-model="maararaha"
                    ng-blur="paivitaKokonaismaararaha('maararaha')"
                    ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                   ng-readonly="isMaksatushakemus1() || isMaksatushakemus2()"
                    select-on-click/>
             <span ng-hide="sallittuArvo(maararaha)"
                   class="help-block ng-invalid-sallittu-arvo">
@@ -47,11 +49,13 @@
         <div class="col-md-4">
           <div class="form-group" show-errors="{showSuccess: true}">
             <label>Siirtomääräraha vuodelta {{vuosi-1}}</label>
-            <input id="ylijaama" name="ylijaama" type="text" min="-0.0001" ng-currency="" numeric-only="" class="form-control"
+            <input id="ylijaama" name="ylijaama" type="text" min="-0.0001" ng-currency="" numeric-only=""
+                   class="form-control"
                    ng-focus="asetaVanhaArvo(ylijaama)"
                    ng-model-options="{ allowInvalid: true }"
                    ng-model="ylijaama"
                    ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                   ng-readonly="isMaksatushakemus1() || isMaksatushakemus2()"
                    ng-blur="paivitaKokonaismaararaha('ylijaama')" select-on-click/>
             <span ng-hide="sallittuArvo(ylijaama)"
                   class="help-block ng-invalid-sallittu-arvo">
