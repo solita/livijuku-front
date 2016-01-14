@@ -30,14 +30,19 @@ function loadTunnusluvut(vuosi, organisaatioid, tyyppi, scope, TunnuslukuEditSer
     StatusService.errorHandler);
 }
 
+function integerOrNull(txt) {
+  var number = _.parseInt(txt);
+  return _.isFinite(number) ? txt : null;
+}
+
 angular.module('jukufrontApp')
   .controller('TunnusluvutMuokkausCtrl',
     ['$scope', '$state', 'OrganisaatioService', 'TunnuslukuEditService', 'StatusService',
 
     function ($scope, $state, OrganisaatioService, TunnuslukuEditService, StatusService) {
 
-      $scope.vuosi = $state.params.vuosi;
-      $scope.organisaatioId = $state.params.organisaatioid;
+      $scope.vuosi = integerOrNull($state.params.vuosi);
+      $scope.organisaatioId = integerOrNull($state.params.organisaatioid);
 
       $scope.tunnuslukuTyyppiNimi = function(type) {
         return types[type];

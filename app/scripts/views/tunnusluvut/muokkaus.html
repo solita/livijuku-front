@@ -4,7 +4,7 @@
   </div>
   <form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm">
     <juku-form-row>
-      <div class="col-md-4 form-group">
+      <div class="col-md-4 form-group input-lg">
         <label for="organisaatio" class="sr-only">Organisaatio</label>
         <select id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
                 placeholder="Valitse toimivaltainen viranomainen" class="form-control" required>
@@ -12,7 +12,7 @@
           <option ng-repeat="organisaatio in organisaatiot" value="{{organisaatio.id}}">{{organisaatio.nimi}}</option>
         </select>
       </div>
-      <div class="col-md-2 form-group">
+      <div class="col-md-2 form-group input-lg">
         <label for="vuosi" class="sr-only">Vuosi</label>
         <select id="vuosi" name="vuosi"
                 ng-model="vuosi" ng-disabled="isReadonly()"
@@ -25,8 +25,17 @@
         </select>
       </div>
       <div class="col-md-6">
-        <small><em>Koko vuoden tallennettujen tunnuslukujen täyttöaste tietokannassa:</em></small>
-        <uib-progressbar animate="false" value="vuositayttoaste" type="success"><b>{{vuositayttoaste}}%</b></uib-progressbar>
+
+        <div class="alert alert-info" ng-hide="vuosi && organisaatioId">
+          <p>
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            Valitse alue ja vuosiluku
+          </p>
+        </div>
+        <div ng-if="tunnusluvut">
+          <small><em>Koko vuoden tallennettujen tunnuslukujen täyttöaste tietokannassa:</em></small>
+          <uib-progressbar animate="false" value="vuositayttoaste" type="success"><b>{{vuositayttoaste}}%</b></uib-progressbar>
+        </div>
       </div>
     </juku-form-row>
   </form>
@@ -49,10 +58,4 @@
     </juku-controls>
   </form>
   <br/>
-  <div class="alert alert-info" ng-hide="tunnusluvut">
-    <p>
-      <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-      Valitse alue ja vuosiluku
-    </p>
-  </div>
 </div>
