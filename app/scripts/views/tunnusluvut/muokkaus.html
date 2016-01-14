@@ -4,7 +4,7 @@
   </div>
   <form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm">
     <juku-form-row>
-      <div class="col-md-4 form-group input-lg">
+      <div class="col-md-4 form-group input-lg" ng-show="hasOrganisaatioSelectPermission">
         <label for="organisaatio" class="sr-only">Organisaatio</label>
         <select id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
                 placeholder="Valitse toimivaltainen viranomainen" class="form-control" required>

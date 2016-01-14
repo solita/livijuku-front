@@ -5,6 +5,7 @@ var c = require('utils/core');
 var t = require('utils/tunnusluvut');
 var angular = require('angular');
 var Promise = require('bluebird');
+var hasPermission = require('utils/hasPermission');
 
 // TODO: tämän voi poistaa jos url:iin ei tule vuotta ja organisaatiota
 loadTunnusluvutPromise.$inject = ['$state', 'StatusService', 'TunnuslukuEditService'];
@@ -37,12 +38,24 @@ function integerOrNull(txt) {
 
 angular.module('jukufrontApp')
   .controller('TunnusluvutMuokkausCtrl',
-    ['$scope', '$state', 'OrganisaatioService', 'TunnuslukuEditService', 'StatusService',
+    ['$scope', '$state', 'OrganisaatioService', 'TunnuslukuEditService', 'StatusService', 'KayttajaService',
 
-    function ($scope, $state, OrganisaatioService, TunnuslukuEditService, StatusService) {
+    function ($scope, $state, OrganisaatioService, TunnuslukuEditService, StatusService, KayttajaService) {
 
       $scope.vuosi = integerOrNull($state.params.vuosi);
-      $scope.organisaatioId = integerOrNull($state.params.organisaatioid);
+      $scope.organisaatioId = null;
+
+      $scope.hasOrganisaatioSelectPermission = false;
+      KayttajaService.hae().then(user => {
+        if (hasPermission(user, 'modify-kaikki-tunnusluvut')) {
+          $scope.hasOrganisaatioSelectPermission = true;
+          $scope.organisaatioId = integerOrNull($state.params.organisaatioid);
+        } else if (hasPermission(user, 'modify-omat-tunnusluvut')) {
+          $scope.organisaatioId = user.organisaatioid.toString();
+        } else {
+          StatusService.virhe('', 'Käyttäjällä ei ole käyttöoikeuksia tunnuslukutiedon hallintaan');
+        }
+      });
 
       $scope.tunnuslukuTyyppiNimi = function(type) {
         return types[type];
