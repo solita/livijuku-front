@@ -5,6 +5,8 @@ var t = require('utils/tunnusluvut');
 const kuukaudet = ["Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu",
                    "Heinäkuu", "Elokuu", "Syyskuu", "Lokakuu", "Marraskuu", "Joulukuu"];
 
+const viikonpaivaluokat = {A: "Arkipäivä", LA: 'Lauantai', SU: 'Sunnuntai'};
+
 function pakollinenErrorMessage(nimi) {
   return function(input) {
     return input.$error.required ? nimi +' on pakollinen tieto.' : '';
@@ -13,36 +15,19 @@ function pakollinenErrorMessage(nimi) {
 
 function kysyntaTarjontaController($scope) {
 
-  $scope.tunnusluvut_talvi = [
-    {
-      "viikonpaiva": "Arkipäivät",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "viikonpaiva": "Lauantai",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    },
-    {
-      "viikonpaiva": "Sunnuntai",
-      "nousua": 0,
-      "linjakilometrit": 0,
-      "vuorotarjonta": 0
-    }
-  ];
-
   $scope.kuukausiNimi = function(kuukausi) {
     return kuukaudet[kuukausi - 1];
+  }
+
+  $scope.viikonpaivaluokkaNimi = function(tunnus) {
+    return viikonpaivaluokat[tunnus];
   }
 
   $scope.nousuaSumma = function () {
     return _.sum($scope.tunnusluvut, 'nousut');
   };
 
-   $scope.nimiErrorMessage = function(input) {
+  $scope.nimiErrorMessage = function(input) {
     return input.$error.required ? 'Nimi on pakollinen tieto.' :
            input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkuukausiiä.' : '';
   };
@@ -51,6 +36,7 @@ function kysyntaTarjontaController($scope) {
   $scope.kokonaislukuErrorMessage = function(input) {
     return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
   };
+
   $scope.linjakilometritSumma = function () {
     return _.sum($scope.tunnusluvut, 'linjakilometrit');
   };
@@ -68,6 +54,7 @@ module.exports = function () {
     restrict: 'E',
     scope: {
       tunnusluvut: '=tunnusluvut',
+      liikenneviikko: '=liikenneviikko',
       isReadonly: '&isReadonly',
       tyyppi: '@tyyppi'
     },

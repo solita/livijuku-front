@@ -9,3 +9,5 @@ export function isSopimustyyppi(tunnuslukutyyppi) {
 export function isPSA(tunnuslukutyyppi) {
   return _.contains(['BR','KOS'], tunnuslukutyyppi);
 }
+
+export const viikonpaivaluokat = ['A', 'LA', 'SU'];

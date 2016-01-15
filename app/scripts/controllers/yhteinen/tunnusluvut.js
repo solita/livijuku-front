@@ -25,7 +25,8 @@ const types = {
 
 function loadTunnusluvut(vuosi, organisaatioid, tyyppi, scope, TunnuslukuEditService, StatusService) {
   Promise.props({
-    liikennevuosi: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjonta(vuosi, organisaatioid, tyyppi) : undefined
+    liikennevuosi: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjonta(vuosi, organisaatioid, tyyppi) : undefined,
+    liikenneviikko: t.isPSA(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjontaViikko(vuosi, organisaatioid, tyyppi) : undefined
   }).then(
     tunnusluvut => scope.$evalAsync(scope => scope.tunnusluvut = tunnusluvut),
     StatusService.errorHandler);
@@ -102,9 +103,16 @@ angular.module('jukufrontApp')
       $scope.tallennaHakemus = function () {
         var tallennusPromise = [];
 
+        function pushTallennusPromise(saveFunction, data) {
+          tallennusPromise.push(saveFunction($scope.vuosi, $scope.organisaatioId, tyyppi(), data));
+        }
+
         if (t.isSopimustyyppi(tyyppi())) {
-          tallennusPromise.push(TunnuslukuEditService.tallennaKysyntaTarjonta(
-            $scope.vuosi, $scope.organisaatioId, tyyppi(), $scope.tunnusluvut.liikennevuosi));
+          pushTallennusPromise(TunnuslukuEditService.tallennaKysyntaTarjonta, $scope.tunnusluvut.liikennevuosi);
+        }
+
+        if (t.isPSA(tyyppi())) {
+          pushTallennusPromise(TunnuslukuEditService.tallennaKysyntaTarjontaViikko, $scope.tunnusluvut.liikenneviikko);
         }
 
         Promise.all(tallennusPromise).then(
