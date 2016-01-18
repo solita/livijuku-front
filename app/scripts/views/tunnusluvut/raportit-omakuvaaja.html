@@ -51,5 +51,34 @@
         </p>
       </div>
     </div>
+    <juku-form-row ng-show="hasKuukausitaso()">
+      <h4 class="col-md-4">Haluatko tarkastella kuukausittain?</h4>
+      <div class="col-md-2 form-group input-lg">
+        <label for="vuosi" class="sr-only">Vuosi</label>
+        <select id="vuosi" ng-model="vuosi" ng-disabled="isReadonly()" ng-change="updateVuosi()"
+                placeholder="Valitse tunnusluku" class="form-control" required>
+          <option value="" selected disabled>Valitse vuosi</option>
+          <option ng-repeat="vuosi in vuodet()" value="{{vuosi}}">{{vuosi}}</option>
+        </select>
+      </div>
+      <div ng-if="vuosi">
+        <div class="row">
+          <div class="col-md-10">
+            <h4></h4>
+          </div>
+          <div class="col-md-2 lataacsv">
+            <a ng-csv="exportCsvMultibar(tunnuslukugraafiKk.data())"
+               filename="tunnuslukuKKdata.csv"
+               csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa
+              CSV
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <nvd3 options='tunnuslukugraafiKk.options' data='tunnuslukugraafiKk.data'
+                api="tunnuslukugraafiKk.api"></nvd3>
+        </div>
+      </div>
+    </juku-form-row>
   </form>
 </div>
