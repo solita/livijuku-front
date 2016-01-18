@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tfoot ng-if="lipputulot.length > 0">
-          <tr>
+          <tr class="total">
             <td>
               <span class="yhteensa">Yhteensä:</span>
             </td>
@@ -20,7 +20,7 @@
             <td>{{arvoliputSumma() | currency : '€/vuosi' : 2}}</td>
             <td>{{kausiliputSumma() | currency : '€/vuosi' : 2}}</td>
           </tr>
-          <tr>
+          <tr class="total">
             <td colspan="">
               <span class="yhteensa">Kaikki lipputulot yhteensä:</span>
             </td>

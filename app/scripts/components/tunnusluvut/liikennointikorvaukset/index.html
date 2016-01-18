@@ -1,17 +1,18 @@
-<ng-form id=liikennointikorvauksetForm'}}" name="liikennointikorvauksetForm" class="liikennointikorvaukset">
+<ng-form id="{{tyyppi + '-liikennointikorvaukset-form'}}" name="liikennointikorvauksetForm" class="liikennointikorvaukset">
   <juku-form-row ng-if="tyyppi==='BR' || tyyppi==='SL' || tyyppi==='KOS'">
     <h3 ng-if="tyyppi==='BR'">Maksetut liikennöintikorvaukset</h3>
     <h3 ng-if="tyyppi==='SL'">Maksetut liikennöintikorvaukset ja lipputuet</h3>
     <h3 ng-if="tyyppi==='KOS'">Maksetut liikennöinti- ja sopimuskorvaukset</h3>
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
-        <tr>
-          <th class="col-md-3">Kuukausi</th>
-          <th class="col-md-3">€/kk (alv 0)</th>
-        </tr>
+        <thead>
+          <tr>
+            <th class="col-md-3">Kuukausi</th>
+            <th class="col-md-3">€/kk (alv 0)</th>
+          </tr>
         </thead>
         <tfoot ng-if="jarjestamiskustannukset.length > 0">
-          <tr>
+          <tr class="total">
             <td>
               <span class="yhteensa">Yhteensä:</span>
             </td>
@@ -44,10 +45,11 @@
         liikennöitsijälle maksetaan erikseen sovittua nousukorvausta.</p>
       <p ng-if="tyyppi==='ME'">Asiakashinnan nousukorvaukset markkinaehtoiselle liikenteelle kuukausittain.</p>
       <table class="table table-hover table-condensed">
-        <tr>
-          <th class="col-md-3">Kuukausi</th>
-          <th class="col-md-3">€/kk ilman ALV</th>
-        </tr>
+        <thead>
+          <tr>
+            <th class="col-md-3">Kuukausi</th>
+            <th class="col-md-3">€/kk ilman ALV</th>
+          </tr>
         </thead>
         <tfoot ng-if="nousukorvaukset.length > 0">
           <tr>

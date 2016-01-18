@@ -5,13 +5,14 @@
     <p ng-if="tyyppi==='KOS'">Käyttöoikeussopimusliikenteen tarjouskilpailut</p>
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
-        <tr>
-          <th class="col-md-4">Kohde</th>
-          <th class="col-md-2">Saatujen tarjousten määrä</th>
-          <th class="col-md-2">Voittaneen tarjouksen hinta</th>
-          <th class="col-md-2">Toiseksi tulleen tarjouksen hinta</th>
-          <th class="col-md-2">Toiminnot</th>
-        </tr>
+        <thead>
+          <tr>
+            <th class="col-md-4">Kohde</th>
+            <th class="col-md-2">Saatujen tarjousten määrä</th>
+            <th class="col-md-2">Voittaneen tarjouksen hinta</th>
+            <th class="col-md-2">Toiseksi tulleen tarjouksen hinta</th>
+            <th class="col-md-2">Toiminnot</th>
+          </tr>
         </thead>
         <tbody>
           <tr ng-if="tarjouskohteet.length === 0">
