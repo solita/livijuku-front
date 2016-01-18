@@ -13,16 +13,18 @@ angular.module('jukufrontApp')
       ELY: 'ELY-keskukset'
     };
 
-    const alinayttoluokat = {KK: "KK"};
+    const alinayttoluokat = {KK: "KK", KL: "KL"};
 
     const kuukaudet = ["Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu",
       "Heinäkuu", "Elokuu", "Syyskuu", "Lokakuu", "Marraskuu", "Joulukuu"];
 
+    const kalustoluokat = ["EURO 0", "EURO 1", "EURO 2", "EURO 3", "EURO 4", "EURO 5/EEV", "EURO 6"];
+
     const viikonpaivaluokat = {A: "Arkipäivä", LA: 'Lauantai', SU: 'Sunnuntai'};
 
-    $scope.$watch('fetching', function() {
-      if(!$scope.fetching) {
-        $timeout(function() {
+    $scope.$watch('fetching', function () {
+      if (!$scope.fetching) {
+        $timeout(function () {
           $window.dispatchEvent(new Event('resize'));
           $scope.fetching = true;
         }, 200);
@@ -41,8 +43,16 @@ angular.module('jukufrontApp')
       return $scope.omakuvaajaTyypit[tyyppi];
     };
 
+    $scope.kalustoluokkaNimi = function (luokka){
+      return kalustoluokat[luokka];
+    };
+
     $scope.hasKuukausitaso = function () {
       return $scope.tunnuslukuAlinaytto() === alinayttoluokat.KK;
+    };
+
+    $scope.hasKalustoluokkaTaso = function () {
+      return $scope.tunnuslukuAlinaytto() === alinayttoluokat.KL;
     };
 
     $scope.tunnuslukuAliotsake = function () {
@@ -60,9 +70,14 @@ angular.module('jukufrontApp')
       return ( _.find($scope.tunnusluvut, {"id": $scope.tunnuslukuId})).alinayttootsake;
     };
 
-    $scope.tunnuslukuAlinayttoYksikko = function () {
+    $scope.tunnuslukuAlinayttoYksikkoY = function () {
       if ($scope.tunnusluvut === undefined || $scope.tunnuslukuId === undefined) return;
-      return ( _.find($scope.tunnusluvut, {"id": $scope.tunnuslukuId})).alinayttoyksikko;
+      return ( _.find($scope.tunnusluvut, {"id": $scope.tunnuslukuId})).alinayttoyksikkoY;
+    };
+
+    $scope.tunnuslukuAlinayttoYksikkoX = function () {
+      if ($scope.tunnusluvut === undefined || $scope.tunnuslukuId === undefined) return;
+      return ( _.find($scope.tunnusluvut, {"id": $scope.tunnuslukuId})).alinayttoyksikkoX;
     };
 
     $scope.tunnuslukuNimi = function () {
@@ -89,10 +104,11 @@ angular.module('jukufrontApp')
     };
 
     $scope.updateVuosi = function () {
-      $scope.tunnuslukugraafiKk.options.title.text = $scope.tunnuslukuAlinayttoOtsake();
-      $scope.tunnuslukugraafiKk.options.subtitle.text = 'Vuosi ' + $scope.vuosi;
-      $scope.tunnuslukugraafiKk.options.chart.yAxis.axisLabel = $scope.tunnuslukuAlinayttoYksikko();
-      if ($scope.tunnuslukugraafiKk.api !== undefined) $scope.tunnuslukugraafiKk.api.refresh();
+      $scope.tunnuslukuAligraafi.options.title.text = $scope.tunnuslukuAlinayttoOtsake();
+      $scope.tunnuslukuAligraafi.options.subtitle.text = 'Vuosi ' + $scope.vuosi;
+      $scope.tunnuslukuAligraafi.options.chart.yAxis.axisLabel = $scope.tunnuslukuAlinayttoYksikkoY();
+      $scope.tunnuslukuAligraafi.options.chart.xAxis.axisLabel = $scope.tunnuslukuAlinayttoYksikkoX();
+      if ($scope.tunnuslukuAligraafi.api !== undefined) $scope.tunnuslukuAligraafi.api.refresh();
       $scope.fetching = false;
     };
 
@@ -173,7 +189,8 @@ angular.module('jukufrontApp')
         "yksikko": "nousua / vuosi",
         "alinaytto": "KK",
         "alinayttootsake": "Nousua per kuukausi",
-        "alinayttoyksikko": "nousua / kuukausi"
+        "alinayttoyksikkoX": "Kuukausi",
+        "alinayttoyksikkoY": "nousua / kuukausi"
       },
       {
         "id": "11",
@@ -183,7 +200,8 @@ angular.module('jukufrontApp')
         "yksikko": "linja-km / vuosi",
         "alinaytto": "KK",
         "alinayttootsake": "Linjakilometrit per kuukausi",
-        "alinayttoyksikko": "linja-km / kuukausi"
+        "alinayttoyksikkoX": "Kuukausi",
+        "alinayttoyksikkoY": "linja-km / kuukausi"
       },
       {
         "id": "12",
@@ -193,7 +211,19 @@ angular.module('jukufrontApp')
         "yksikko": "lähtöä / vuosi",
         "alinaytto": "KK",
         "alinayttootsake": "Lähtöä per kuukausi",
-        "alinayttoyksikko": "lähtöä / kuukausi"
+        "alinayttoyksikkoX": "Kuukausi",
+        "alinayttoyksikkoY": "lähtöä / kuukausi"
+      },
+      {
+        "id": "13",
+        "otsake": "Liikenteen kalusto yhteensä",
+        "aliotsake": "Liikennekokonaisuuteen sitoutuneen kaluston määrä",
+        "nimi": "Liikenteen kalusto yhteensä",
+        "yksikko": "linja-autoa",
+        "alinaytto": "KL",
+        "alinayttootsake": "Liikenteen kalusto päästöluokittain",
+        "alinayttoyksikkoX": "Päästöluokka",
+        "alinayttoyksikkoY": "linja-autoa"
       }
     ];
     $scope.tunnuslukuData = [
@@ -243,7 +273,7 @@ angular.module('jukufrontApp')
     ];
 
     $scope.tunnuslukugraafi = {};
-    $scope.tunnuslukugraafiKk = {};
+    $scope.tunnuslukuAligraafi = {};
     $scope.aktiivinenTyyppi = 'KS1';
     $scope.aktiivinenOrganisaatio = _.find($scope.tunnuslukuData, {'tyyppi': $scope.aktiivinenTyyppi}).organisaatiot[0];
     $scope.aktiivinenOrganisaatioVuosi = 2010;
@@ -261,7 +291,7 @@ angular.module('jukufrontApp')
       $scope.aktiivinenOrganisaatio = _.find($scope.tunnuslukuData, {'tyyppi': $scope.aktiivinenTyyppi}).organisaatiot[0];
       $scope.aktiivinenOrganisaatioVuosi = 2010;
       if ($scope.tunnuslukugraafi.api !== undefined) $scope.tunnuslukugraafi.api.refresh();
-      if ($scope.tunnuslukugraafiKk.api !== undefined) $scope.tunnuslukugraafiKk.api.refresh();
+      if ($scope.tunnuslukuAligraafi.api !== undefined) $scope.tunnuslukuAligraafi.api.refresh();
     };
 
     $scope.exportCsvMultibar = function (data) {
@@ -339,13 +369,13 @@ angular.module('jukufrontApp')
       return paluuArvot;
     };
 
-    $scope.tunnuslukugraafiKk.options = {
+    $scope.tunnuslukuAligraafi.options = {
       chart: {
         type: 'multiBarChart',
         height: 450,
         stacked: false,
         reduceXTicks: false,
-      x: function (d) {
+        x: function (d) {
           return d.x;
         },
         y: function (d) {
@@ -359,7 +389,7 @@ angular.module('jukufrontApp')
           axisLabel: ''
         },
         xAxis: {
-          axisLabel: 'Kuukausi'
+          axisLabel: ''
         }
       },
       title: {
@@ -372,20 +402,31 @@ angular.module('jukufrontApp')
       }
     };
 
-    $scope.tunnuslukugraafiKk.data = function () {
+    $scope.tunnuslukuAligraafi.data = function () {
       var paluuArvot = [];
       var dataPerTyyppi = _.find($scope.tunnuslukuData, {'tyyppi': $scope.aktiivinenTyyppi});
       for (var i = 0; i < _.result(dataPerTyyppi, 'organisaatiot').length; i++) {
-        var vuosiValues = [];
-        for (var k = 0; k < kuukaudet.length; k++) {
-          vuosiValues.push({
-            x: $scope.kuukausiNimi(k + 1),
-            y: Math.floor((Math.random() * 10) + 1) * 0.1 * 33
-          });
+        var values = [];
+        if ($scope.hasKuukausitaso()) {
+          for (var k = 0; k < kuukaudet.length; k++) {
+            values.push({
+              x: $scope.kuukausiNimi(k + 1),
+              y: Math.floor((Math.random() * 10) + 1) * 0.1 * 33
+            });
+          }
         }
+        if ($scope.hasKalustoluokkaTaso()){
+          for (var k = 0; k < kalustoluokat.length; k++) {
+            values.push({
+              x: $scope.kalustoluokkaNimi(k),
+              y: Math.floor((Math.random() * 10) + 1) * 0.1 * 33
+            });
+          }
+        }
+
         paluuArvot.push({
           key: _.result(dataPerTyyppi, 'organisaatiot')[i],
-          values: vuosiValues
+          values: values
         });
       }
       return paluuArvot;
