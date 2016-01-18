@@ -2,18 +2,54 @@
   <div class="row">
     <h1>Oma kuvaaja tunnusluvuista</h1>
   </div>
-  <juku-navigation>
-    <juku-tabs>
-      <juku-tab
-        ng-repeat="tyyppi in tyypit"
-        selected="isTabSelected(tyyppi)"
-        ely="isEly(tyyppi)"
-        ng-click="toTab(tyyppi)">
-        {{ tyyppi | toApplicantName }}
-      </juku-tab>
-    </juku-tabs>
-  </juku-navigation>
-  <div class="row">
-    <h2>Kesken, vaatii määrittelyä</h2>
-  </div>
+  <form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm">
+    <juku-form-row>
+      <div class="col-md-6 form-group input-lg">
+        <label for="tunnusluku" class="sr-only">Tunnusluku</label>
+        <select id="tunnusluku" ng-model="tunnuslukuId" ng-disabled="isReadonly()" ng-change="update()"
+                placeholder="Valitse tunnusluku" class="form-control" required>
+          <option value="" selected disabled>Valitse tunnusluku</option>
+          <option ng-repeat="tunnusluku in tunnusluvut" value="{{tunnusluku.id}}">{{tunnusluku.nimi}}</option>
+        </select>
+      </div>
+    </juku-form-row>
+    <juku-navigation>
+      <juku-tabs>
+        <juku-tab
+          ng-repeat="(tyyppi, value) in omakuvaajaTyypit"
+          selected="isTabSelected(tyyppi)"
+          ely="isEly(tyyppi)"
+          ng-click="toTab(tyyppi)">
+          {{ tyypinNimi(tyyppi) }}
+        </juku-tab>
+      </juku-tabs>
+    </juku-navigation>
+    <div ng-if="tunnuslukuId">
+      <div class="row">
+        <div class="col-md-10">
+          <h4></h4>
+        </div>
+        <div class="col-md-2 lataacsv">
+          <a ng-csv="exportCsvMultibar(tunnuslukugraafi.data())"
+             filename="tunnuslukudata.csv"
+             csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa
+            CSV
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <nvd3 options='tunnuslukugraafi.options' data='tunnuslukugraafi.data'
+              api="tunnuslukugraafi.api"></nvd3>
+      </div>
+    </div>
+    <div ng-if="!tunnuslukuId">
+      <br>
+      <div class="alert alert-info">
+        <p>
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+          Valitse tunnusluku
+        </p>
+      </div>
+    </div>
+  </form>
 </div>

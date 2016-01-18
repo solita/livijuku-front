@@ -210,7 +210,7 @@ angular
       .state('app.tunnusluku.omakuvaaja', {
         url: '/omakuvaaja',
         template: require('views/tunnusluvut/raportit-omakuvaaja.html'),
-        controller: 'TunnuslukuraporttiCtrl'
+        controller: 'TunnuslukuraporttiOmakuvaajaCtrl'
       })
 
       /*
@@ -342,6 +342,7 @@ require('./controllers/yhteinen/kayttajatiedot');
 require('./controllers/yhteinen/paanaytto');
 require('./controllers/yhteinen/tunnusluvut');
 require('./controllers/yhteinen/tunnuslukuraportti');
+require('./controllers/yhteinen/tunnuslukuraporttiOmakuvaaja');
 require('./directives/alvmuunnos');
 require('./directives/jukuAvustusluokkaPanel');
 require('./directives/noenter');
