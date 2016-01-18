@@ -65,8 +65,8 @@
             <th class="col-md-3">Vuorotarjonta<br>(lähtöä/kk)</th>
           </tr>
         </thead>
-        <tfoot ng-if="tunnusluvut.length > 0">
-          <tr>
+        <tfoot>
+          <tr class="total">
             <td><span class="yhteensa">Yhteensä:</span></td>
             <td ng-if="!isME">{{nousuaSumma() | currency : '' : 0}} nousua / vuosi</td>
             <td>{{linjakilometritSumma() | currency : '' : 0}} linja-km / vuosi</td>
@@ -74,7 +74,7 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr ng-repeat="tunnusluku in tunnusluvut track by $index" ng-form>
+          <tr ng-repeat="tunnusluku in liikennevuosi track by $index" ng-form>
             <td>{{kuukausiNimi(tunnusluku.kuukausi)}}</td>
             <td ng-if="!isME">
               <form-group-compact label="Nousua" errormessage="kokonaislukuErrorMessage">

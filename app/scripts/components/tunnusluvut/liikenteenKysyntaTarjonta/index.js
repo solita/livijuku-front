@@ -24,7 +24,7 @@ function kysyntaTarjontaController($scope) {
   }
 
   $scope.nousuaSumma = function () {
-    return _.sum($scope.tunnusluvut, 'nousut');
+    return _.sum($scope.liikennevuosi, 'nousut');
   };
 
   $scope.nimiErrorMessage = function(input) {
@@ -38,11 +38,11 @@ function kysyntaTarjontaController($scope) {
   };
 
   $scope.linjakilometritSumma = function () {
-    return _.sum($scope.tunnusluvut, 'linjakilometrit');
+    return _.sum($scope.liikennevuosi, 'linjakilometrit');
   };
 
   $scope.vuorotarjontaSumma = function () {
-    return _.sum($scope.tunnusluvut, 'lahdot');
+    return _.sum($scope.liikennevuosi, 'lahdot');
   };
 
   $scope.isPSA = t.isPSA($scope.tyyppi);
@@ -53,7 +53,7 @@ module.exports = function () {
   return {
     restrict: 'E',
     scope: {
-      tunnusluvut: '=tunnusluvut',
+      liikennevuosi: '=tunnusluvut',
       liikenneviikko: '=liikenneviikko',
       isReadonly: '&isReadonly',
       tyyppi: '@tyyppi'
