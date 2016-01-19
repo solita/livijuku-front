@@ -51,7 +51,7 @@
         </p>
       </div>
     </div>
-    <juku-form-row ng-if="hasKuukausitaso() || hasKalustoluokkaTaso()">
+    <juku-form-row ng-show="hasKuukausitaso() || hasKalustoluokkaTaso()">
       <h4 ng-show="hasKuukausitaso()" class="col-md-4">Haluatko tarkastella kuukausittain?</h4>
       <h4 ng-show="hasKalustoluokkaTaso()" class="col-md-4">Haluatko tarkastella päästöluokittain?</h4>
       <div class="col-md-2 form-group input-lg">

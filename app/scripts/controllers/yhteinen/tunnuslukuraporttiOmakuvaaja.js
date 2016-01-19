@@ -43,7 +43,7 @@ angular.module('jukufrontApp')
       return $scope.omakuvaajaTyypit[tyyppi];
     };
 
-    $scope.kalustoluokkaNimi = function (luokka){
+    $scope.kalustoluokkaNimi = function (luokka) {
       return kalustoluokat[luokka];
     };
 
@@ -415,7 +415,7 @@ angular.module('jukufrontApp')
             });
           }
         }
-        if ($scope.hasKalustoluokkaTaso()){
+        if ($scope.hasKalustoluokkaTaso()) {
           for (var k = 0; k < kalustoluokat.length; k++) {
             values.push({
               x: $scope.kalustoluokkaNimi(k),
