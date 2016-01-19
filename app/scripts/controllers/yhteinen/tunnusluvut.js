@@ -27,7 +27,9 @@ function loadTunnusluvut(vuosi, organisaatioid, tyyppi, scope, TunnuslukuEditSer
   Promise.props({
     liikennevuosi: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjonta(vuosi, organisaatioid, tyyppi) : undefined,
     liikenneviikko: t.isPSA(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjontaViikko(vuosi, organisaatioid, tyyppi) : undefined,
-    kalusto: t.isPSA(tyyppi) ? TunnuslukuEditService.haeKalusto(vuosi, organisaatioid, tyyppi) : undefined
+    kalusto: t.isPSA(tyyppi) ? TunnuslukuEditService.haeKalusto(vuosi, organisaatioid, tyyppi) : undefined,
+    liikennointikorvaus: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeLiikennointikorvaus(vuosi, organisaatioid, tyyppi) : undefined
+
   }).then(
     tunnusluvut => scope.$evalAsync(scope => scope.tunnusluvut = tunnusluvut),
     StatusService.errorHandler);
@@ -112,6 +114,7 @@ angular.module('jukufrontApp')
 
           if (t.isSopimustyyppi(tyyppi())) {
             pushTallennusPromise(TunnuslukuEditService.tallennaKysyntaTarjonta, $scope.tunnusluvut.liikennevuosi);
+            pushTallennusPromise(TunnuslukuEditService.tallennaLiikennointikorvaus, $scope.tunnusluvut.liikennointikorvaus)
           }
 
           if (t.isPSA(tyyppi())) {

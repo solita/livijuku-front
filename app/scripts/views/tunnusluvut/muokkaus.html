@@ -2,7 +2,7 @@
   <div class="page-header">
     <h1>Tunnuslukujen syöttäminen</h1>
   </div>
-  <form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm" juku-poistumisvaroitus>
+  <form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm">
     <juku-form-row>
       <div class="col-md-4 form-group input-lg" ng-show="hasOrganisaatioSelectPermission">
         <label for="organisaatio" class="sr-only">Organisaatio</label>
@@ -49,7 +49,7 @@
       </juku-tab>
     </juku-tabs>
   </juku-navigation>
-  <form name="tunnusluvutForm" novalidate ng-if="tunnusluvut">
+  <form name="tunnusluvutForm" novalidate ng-if="tunnusluvut" juku-poistumisvaroitus>
     <div ui-view></div>
     <juku-controls >
       <juku-controls-buttons>

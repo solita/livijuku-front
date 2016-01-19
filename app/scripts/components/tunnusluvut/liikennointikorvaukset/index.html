@@ -1,68 +1,37 @@
 <ng-form id="{{tyyppi + '-liikennointikorvaukset-form'}}" name="liikennointikorvauksetForm" class="liikennointikorvaukset">
-  <juku-form-row ng-if="tyyppi==='BR' || tyyppi==='SL' || tyyppi==='KOS'">
-    <h3 ng-if="tyyppi==='BR'">Maksetut liikennöintikorvaukset</h3>
-    <h3 ng-if="tyyppi==='SL'">Maksetut liikennöintikorvaukset ja lipputuet</h3>
-    <h3 ng-if="tyyppi==='KOS'">Maksetut liikennöinti- ja sopimuskorvaukset</h3>
+  <juku-form-row>
+    <h3>Maksettu liikennöintikorvaus</h3>
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <thead>
           <tr>
             <th class="col-md-3">Kuukausi</th>
-            <th class="col-md-3">€/kk (alv 0)</th>
+            <th class="col-md-3">Korvaus €/kk (alv 0)</th>
+            <th ng-if="tyyppi==='KOS'" class="col-md-3">Nousukorvaus €/kk (alv 0)</th>
           </tr>
         </thead>
-        <tfoot ng-if="jarjestamiskustannukset.length > 0">
+        <tfoot ng-if="liikennointikorvaus.length > 0">
           <tr class="total">
             <td>
               <span class="yhteensa">Yhteensä:</span>
             </td>
             <td>{{liikennointikorvausSumma() | currency : '€/vuosi' : 2}}</td>
+            <td ng-if="tyyppi==='KOS'">{{nousukorvausSumma() | currency : '€/vuosi' : 2}}</td>
           </tr>
         </tfoot>
         <tbody>
-          <tr ng-repeat="rivi in jarjestamiskustannukset track by $index" ng-form>
-            <td>{{rivi.kuukausi}}</td>
+          <tr ng-repeat="rivi in liikennointikorvaus track by $index" ng-form>
+            <td>{{kuukausiNimi(rivi.kuukausi)}}</td>
             <td>
               <form-group-compact label="Maksetty liikennöintikorvaus" errormessage="liikennointikorvausErrorMessage">
                 <input id="{{tyyppi + '-liikennointikorvaus-'+$index}}" name="liikennointikorvaus" type="text"
                        numeric-only="" ng-currency=""
-                       required
                        currency-symbol="€" noenter
                        select-on-click
-                       ng-model="rivi.maksettuliikennointikorvaus">
+                       ng-model="rivi.korvaus">
               </form-group-compact>
             </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </juku-form-row>
-  <juku-form-row ng-if="tyyppi==='KOS' || tyyppi==='ME'">
-    <div class="table-responsive">
-      <h3 ng-if="tyyppi==='KOS'">Maksettu liikennöinnin nousukorvaus kuukausittain</h3>
-      <h3 ng-if="tyyppi==='ME'">Maksettu asiakashinnan nousukorvaus kuukausittain</h3>
-      <p ng-if="tyyppi==='KOS'">Tätä ei tarvitse täyttää, jos liikennöitsijä saa pitää lipputulot. Tämä täytetään, jos
-        liikennöitsijälle maksetaan erikseen sovittua nousukorvausta.</p>
-      <p ng-if="tyyppi==='ME'">Asiakashinnan nousukorvaukset markkinaehtoiselle liikenteelle kuukausittain.</p>
-      <table class="table table-hover table-condensed">
-        <thead>
-          <tr>
-            <th class="col-md-3">Kuukausi</th>
-            <th class="col-md-3">€/kk ilman ALV</th>
-          </tr>
-        </thead>
-        <tfoot ng-if="nousukorvaukset.length > 0">
-          <tr>
-            <td>
-              <span class="yhteensa">Yhteensä:</span>
-            </td>
-            <td>{{nousukorvausSumma() | currency : '€/vuosi' : 2}}</td>
-          </tr>
-        </tfoot>
-        <tbody>
-          <tr ng-repeat="rivi in nousukorvaukset track by $index" ng-form>
-            <td>{{rivi.kuukausi}}</td>
-            <td>
+            <td ng-if="tyyppi==='KOS'">
               <form-group-compact label="Nousukorvaus">
                 <input id="{{tyyppi + '-nousukorvaus-'+$index}}" name="nousukorvaus" type="text"
                        numeric-only="" ng-currency=""
