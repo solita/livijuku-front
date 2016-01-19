@@ -54,6 +54,6 @@ angular.module('services.tunnusluvut', [])
                         paastoluokkatunnus: tunnus,
                         lukumaara: null
                       }))),
-      tallennaKalusto: createTallennaOperation('kalusto'),
+      tallennaKalusto: createTallennaOperation('kalusto')
     };
   }]);
