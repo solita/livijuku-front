@@ -15,12 +15,12 @@
             <td>
               <span class="yhteensa">Yhteensä:</span>
             </td>
-            <td>{{linjaautotSumma() | currency : 'linja-autoa' : 0}}</td>
+            <td>{{kalustoSumma() | currency : 'linja-autoa' : 0}}</td>
           </tr>
         </tfoot>
         <tbody>
           <tr ng-repeat="rivi in kalusto track by $index" ng-form>
-            <td>{{rivi.paastoluokka}}</td>
+            <td>{{rivi.paastoluokkatunnus}}</td>
             <td>
               <form-group-compact label="Linja-autojen lukumäärä" errormessage="kokonaislukuErrorMessage">
                 <input id="{{tyyppi + '-linjaautot-'+$index}}" name="linjaautot" type="number" integer-only
@@ -28,7 +28,7 @@
                        currency-symbol="" noenter
                        ng-readonly="isReadonly()"
                        select-on-click
-                       ng-model="rivi.linjaautot">
+                       ng-model="rivi.lukumaara">
               </form-group-compact>
             </td>
           </tr>

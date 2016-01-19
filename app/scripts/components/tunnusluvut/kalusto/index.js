@@ -9,39 +9,12 @@ function pakollinenErrorMessage(nimi) {
 
 function kalustoController($scope) {
 
-  $scope.kalusto = [
-    {
-      "paastoluokka": "EURO 0",
-      "linjaautot": 0
-    },
-    {
-      "paastoluokka": "EURO 1",
-      "linjaautot": 0
-    },
-    {
-      "paastoluokka": "EURO 2",
-      "linjaautot": 0
-    },
-    {
-      "paastoluokka": "EURO 3",
-      "linjaautot": 0
-    },
-    {
-      "paastoluokka": "EURO 4",
-      "linjaautot": 0
-    },
-    {
-      "paastoluokka": "EURO 5 / EEV",
-      "linjaautot": 0
-    },
-    {
-      "paastoluokka": "EURO 6",
-      "linjaautot": 0
-    }
-  ];
-
   $scope.kokonaislukuErrorMessage = function (input) {
     return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
+  };
+
+  $scope.kalustoSumma = function () {
+    return _.sum($scope.kalusto, 'lukumaara');
   };
 }
 
@@ -49,7 +22,7 @@ module.exports = function () {
   return {
     restrict: 'E',
     scope: {
-      tunnusluvut: '=tunnusluvut',
+      kalusto: '=kalusto',
       isReadonly: '&isReadonly',
       tyyppi: '@tyyppi'
     },
