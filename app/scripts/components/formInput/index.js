@@ -5,9 +5,19 @@ var _ = require("lodash");
 
 function assertInputIsDefined(input, element) {
   if (!input) {
-    var message = "Input or select element is not found inside form-group component.";
+    var message = "Input, select or textarea element is not found inside form-group component.";
     console.log(message, element);
     throw({message: message, element: element});
+  }
+}
+
+function findInputElement(element) {
+  const inputElements = ['input', 'select', 'textarea'];
+  for (var i = 0; i < inputElements.length; i++) {
+    var input = element.find(inputElements[i]);
+    if (input.length > 0) {
+      return input;
+    }
   }
 }
 
@@ -22,15 +32,11 @@ function formGroupDirective(template) {
     template: template,
     transclude: true,
     link: function(scope, element, attributes, form) {
-      var input = element[0].getElementsByTagName("input")[0];
-      if (!input) {
-        input = element[0].getElementsByTagName("select")[0];
-        scope.feedbackSupport = false;
-      } else {
-        scope.feedbackSupport = true;
-      }
 
+      var input = findInputElement(element)[0];
       assertInputIsDefined(input, element[0]);
+
+      scope.feedbackSupport = (input.tagName.toLowerCase() !== 'select');
 
       angular.element(input).addClass("form-control");
 
