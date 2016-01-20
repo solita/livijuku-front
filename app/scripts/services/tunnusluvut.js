@@ -64,6 +64,17 @@ angular.module('services.tunnusluvut', [])
           korvaus: null,
           nousukorvaus: null
         }))),
-      tallennaLiikennointikorvaus: createTallennaOperation('liikennointikorvaus')
+      tallennaLiikennointikorvaus: createTallennaOperation('liikennointikorvaus'),
+
+      // lipputulo
+      haeLipputulo: createHakuOperation('lipputulo',
+        () => _.map(_.range(1, 13), kuukausi => ({
+          kuukausi: kuukausi,
+          kertalipputulo: null,
+          arvolipputulo: null,
+          kausilipputulo: null,
+          lipputulo: null
+        }))),
+      tallennaLipputulo: createTallennaOperation('lipputulo')
     }
   }]);

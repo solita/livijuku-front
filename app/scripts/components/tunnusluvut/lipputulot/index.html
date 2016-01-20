@@ -1,26 +1,28 @@
 <ng-form id="lipputulotForm" name="lipputulotForm" class="lipputulot">
-  <juku-form-row ng-if="tyyppi==='BR' || tyyppi==='KOS'">
+  <juku-form-row>
     <h3>Lipputulot</h3>
     <div class="table-responsive">
       <table class="table table-hover table-condensed">
         <thead>
           <tr>
             <th class="col-md-3">Kuukausi</th>
-            <th class="col-md-3">Kertalippu<br>(€/kk ilman ALV)</th>
-            <th class="col-md-3">Arvolippu<br>(€/kk ilman ALV)</th>
-            <th class="col-md-3">Kausilippu<br>(€/kk ilman ALV)</th>
+            <th ng-if="tyyppi==='BR' || tyyppi==='KOS'" class="col-md-3">Kertalippu<br>(€/kk ilman ALV)</th>
+            <th ng-if="tyyppi==='BR' || tyyppi==='KOS'" class="col-md-3">Arvolippu<br>(€/kk ilman ALV)</th>
+            <th ng-if="tyyppi==='BR' || tyyppi==='KOS'" class="col-md-3">Kausilippu<br>(€/kk ilman ALV)</th>
+            <th ng-if="tyyppi==='SL'" class="col-md-3">Lipputulo<br>(€/kk ilman ALV)</th>
           </tr>
         </thead>
-        <tfoot ng-if="lipputulot.length > 0">
+        <tfoot ng-if="lipputulo.length > 0">
           <tr class="total">
             <td>
               <span class="yhteensa">Yhteensä:</span>
             </td>
-            <td>{{kertaliputSumma() | currency : '€/vuosi' : 2}}</td>
-            <td>{{arvoliputSumma() | currency : '€/vuosi' : 2}}</td>
-            <td>{{kausiliputSumma() | currency : '€/vuosi' : 2}}</td>
+            <td ng-if="tyyppi==='BR' || tyyppi==='KOS'">{{kertalipputuloSumma() | currency : '€/vuosi' : 2}}</td>
+            <td ng-if="tyyppi==='BR' || tyyppi==='KOS'">{{arvolipputuloSumma() | currency : '€/vuosi' : 2}}</td>
+            <td ng-if="tyyppi==='BR' || tyyppi==='KOS'">{{kausilipputuloSumma() | currency : '€/vuosi' : 2}}</td>
+            <td ng-if="tyyppi==='SL'">{{lipputuloSumma() | currency : '€/vuosi' : 2}}</td>
           </tr>
-          <tr class="total">
+          <tr ng-if="tyyppi==='BR' || tyyppi==='KOS'" class="total">
             <td colspan="">
               <span class="yhteensa">Kaikki lipputulot yhteensä:</span>
             </td>
@@ -28,69 +30,39 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr ng-repeat="rivi in lipputulot track by $index" ng-form>
-            <td>{{rivi.kuukausi}}</td>
-            <td>
-              <form-group-compact label="Kertalippu" errormessage="kertalippuErrorMessage">
+          <tr ng-repeat="rivi in lipputulo track by $index" ng-form>
+            <td>{{kuukausiNimi(rivi.kuukausi)}}</td>
+            <td ng-if="tyyppi==='BR' || tyyppi==='KOS'">
+              <form-group-compact label="Kertalippu">
                 <input id="{{tyyppi + '-kertalippu-'+$index}}" name="kertalippu" type="text"
                        numeric-only="" ng-currency=""
-                       required
                        currency-symbol="€" noenter
                        select-on-click
-                       ng-model="rivi.kertalippu">
+                       ng-model="rivi.kertalipputulo">
               </form-group-compact>
             </td>
-            <td>
-              <form-group-compact label="Arvolippu" errormessage="arvolippuErrorMessage">
+            <td ng-if="tyyppi==='BR' || tyyppi==='KOS'">
+              <form-group-compact label="Arvolippu">
                 <input id="{{tyyppi + '-arvolippu-'+$index}}" name="arvolippu" type="text"
                        numeric-only="" ng-currency=""
-                       required
                        currency-symbol="€" noenter
                        select-on-click
-                       ng-model="rivi.arvolippu">
+                       ng-model="rivi.arvolipputulo">
               </form-group-compact>
             </td>
-            <td>
-              <form-group-compact label="Kausilippu" errormessage="kausilippuErrorMessage">
+            <td ng-if="tyyppi==='BR' || tyyppi==='KOS'">
+              <form-group-compact label="Kausilippu">
                 <input id="{{tyyppi + '-kausilippu-'+$index}}" name="kausilippu" type="text"
                        numeric-only="" ng-currency=""
-                       required
                        currency-symbol="€" noenter
                        select-on-click
-                       ng-model="rivi.kausilippu">
+                       ng-model="rivi.kausilipputulo">
               </form-group-compact>
             </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </juku-form-row>
-  <juku-form-row ng-if="tyyppi==='SL'">
-    <h3>Lipputulot</h3>
-    <p>Lipputulot kuukausittain</p>
-    <div class="table-responsive">
-      <table class="table table-hover table-condensed">
-        <tr>
-          <th class="col-md-3">Kuukausi</th>
-          <th class="col-md-3">Lipputulo<br>(€/kk ilman ALV)</th>
-        </tr>
-        </thead>
-        <tfoot ng-if="lipputulot.length > 0">
-          <tr>
-            <td>
-              <span class="yhteensa">Yhteensä:</span>
-            </td>
-            <td>{{lipputuloSumma() | currency : '€/vuosi' : 2}}</td>
-          </tr>
-        </tfoot>
-        <tbody>
-          <tr ng-repeat="rivi in lipputulot track by $index" ng-form>
-            <th>{{rivi.kuukausi}}</th>
-            <td>
-              <form-group-compact label="Lipputulo" errormessage="lipputuloErrorMessage">
+            <td ng-if="tyyppi==='SL'">
+              <form-group-compact label="Lipputulo">
                 <input id="{{tyyppi + '-lipputulo-sl'+$index}}" name="lipputulo" type="text"
                        numeric-only="" ng-currency=""
-                       required
                        currency-symbol="€" noenter
                        select-on-click
                        ng-model="rivi.lipputulo">
