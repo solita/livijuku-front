@@ -34,7 +34,8 @@
         </div>
         <div ng-if="tunnusluvut">
           <small><em>Koko vuoden tallennettujen tunnuslukujen täyttöaste tietokannassa:</em></small>
-          <uib-progressbar animate="false" value="vuositayttoaste" type="success"><b>{{vuositayttoaste}}%</b></uib-progressbar>
+          <uib-progressbar animate="false" value="vuositayttoaste" type="success"><b>{{vuositayttoaste}}%</b>
+          </uib-progressbar>
         </div>
       </div>
     </juku-form-row>
@@ -49,13 +50,15 @@
       </juku-tab>
     </juku-tabs>
   </juku-navigation>
-  <form name="tunnusluvutForm" novalidate ng-if="tunnusluvut" juku-poistumisvaroitus>
-    <div ui-view></div>
-    <juku-controls >
-      <juku-controls-buttons>
-        <button class="btn btn-success" data-ng-click="tallennaHakemus()">Tallenna näytöllä olevat tiedot</button>
-      </juku-controls-buttons>
-    </juku-controls>
+  <form name="tunnusluvutForm" novalidate juku-poistumisvaroitus>
+    <div ng-if="tunnusluvut">
+      <div ui-view></div>
+      <juku-controls>
+        <juku-controls-buttons>
+          <button class="btn btn-success" data-ng-click="tallennaHakemus()">Tallenna näytöllä olevat tiedot</button>
+        </juku-controls-buttons>
+      </juku-controls>
+    </div>
   </form>
   <br/>
 </div>

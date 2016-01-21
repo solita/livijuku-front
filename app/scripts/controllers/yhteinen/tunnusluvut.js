@@ -134,6 +134,7 @@ angular.module('jukufrontApp')
           Promise.all(tallennusPromise).then(
             function () {
               StatusService.ok('', 'Tunnuslukujen tallennus onnistui.');
+              $scope.tunnusluvutForm.$setPristine();
             },
             StatusService.errorHandler);
         }
