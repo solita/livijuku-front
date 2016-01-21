@@ -29,7 +29,8 @@ function loadTunnusluvut(vuosi, organisaatioid, tyyppi, scope, TunnuslukuEditSer
     liikenneviikko: t.isPSA(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjontaViikko(vuosi, organisaatioid, tyyppi) : undefined,
     kalusto: t.isPSA(tyyppi) ? TunnuslukuEditService.haeKalusto(vuosi, organisaatioid, tyyppi) : undefined,
     liikennointikorvaus: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeLiikennointikorvaus(vuosi, organisaatioid, tyyppi) : undefined,
-    lipputulo: t.isLipputuloSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeLipputulo(vuosi, organisaatioid, tyyppi) : undefined
+    lipputulo: t.isLipputuloSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeLipputulo(vuosi, organisaatioid, tyyppi) : undefined,
+    lippuhinta: t.isSopimustyyppi(tyyppi) ? undefined : TunnuslukuEditService.haeLippuhinta(vuosi, organisaatioid, tyyppi)
 
   }).then(
     tunnusluvut => scope.$evalAsync(scope => scope.tunnusluvut = tunnusluvut),
@@ -119,7 +120,10 @@ angular.module('jukufrontApp')
 
           if (t.isSopimustyyppi(tyyppi())) {
             pushTallennusPromise(TunnuslukuEditService.tallennaKysyntaTarjonta, $scope.tunnusluvut.liikennevuosi);
-            pushTallennusPromise(TunnuslukuEditService.tallennaLiikennointikorvaus, $scope.tunnusluvut.liikennointikorvaus)
+            pushTallennusPromise(TunnuslukuEditService.tallennaLiikennointikorvaus, $scope.tunnusluvut.liikennointikorvaus);
+          } else {
+            // Yleiset tiedot tab
+            tallennusPromise.push(TunnuslukuEditService.tallennaLippuhinta($scope.vuosi, $scope.organisaatioId, $scope.tunnusluvut.lippuhinta));
           }
 
           if (t.isPSA(tyyppi())) {

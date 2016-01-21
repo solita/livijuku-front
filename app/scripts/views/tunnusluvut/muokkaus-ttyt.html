@@ -283,138 +283,33 @@
           <thead>
             <tr>
               <th class="col-md-6">Lippuen asiakashinnat</th>
-              <th class="col-md-1">1 vyöhyke</th>
-              <th class="col-md-1">2 vyöhykettä</th>
-              <th class="col-md-1">3 vyöhykettä</th>
-              <th class="col-md-1">4 vyöhykettä</th>
-              <th class="col-md-1">5 vyöhykettä</th>
-              <th class="col-md-1">6 vyöhykettä</th>
+              <th ng-repeat="vyohyke in tunnusluvut.lippuhinta" class="col-md-1">{{vyohyke.vyohykemaara}} vyöhyke</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Kertalipun hinta vyöhykkeittäin (aikuinen)(€)</td>
-              <td>
-                <form-group-compact label="Kertalippu vyöhyke 1">
-                  <input id="taustatiedot-kertalippuvyohyke-1" name="kertalippuvyohyke1" type="text"
-                         class="form-control"
+              <td ng-repeat="vyohyke in tunnusluvut.lippuhinta" ng-form>
+                <form-group-compact label="Kertalippu vyöhyke {{vyohyke.vyohykemaara}}">
+                  <input id="taustatiedot-kertalippuvyohyke-{{vyohyke.vyohykemaara}}"
+                         name="kertalippuvyohyke" type="text"
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kertalippuvyohyke1" ng-disabled="isReadonly()">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kertalippu vyöhyke 2">
-                  <input id="taustatiedot-kertalippuvyohyke-2" name="kertalippuvyohyke2" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kertalippuvyohyke2" ng-disabled="isReadonly()">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kertalippu vyöhyke 3">
-                  <input id="taustatiedot-kertalippuvyohyke-3" name="kertalippuvyohyke3" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kertalippuvyohyke3" ng-disabled="isReadonly()">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kertalippu vyöhyke 4">
-                  <input id="taustatiedot-kertalippuvyohyke-4" name="kertalippuvyohyke4" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kertalippuvyohyke4" ng-disabled="isReadonly()">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kertalippu vyöhyke 5">
-                  <input id="taustatiedot-kertalippuvyohyke-5" name="kertalippuvyohyke5" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kertalippuvyohyke5" ng-disabled="isReadonly()">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kertalippu vyöhyke 6">
-                  <input id="taustatiedot-kertalippuvyohyke-6" name="kertalippuvyohyke6" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kertalippuvyohyke6" ng-disabled="isReadonly()">
+                         ng-model="vyohyke.kertalippuhinta" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
             </tr>
             <tr>
               <td>Kausilipun hinta vyöhykkeittäin (30 päivää, aikuinen)(€)</td>
-              <td>
-                <form-group-compact label="Kausilippu vyöhyke 1">
-                  <input id="taustatiedot-kausilippuvyohyke-1" name="kausilippuvyohyke1" type="text"
-                         class="form-control"
+              <td ng-repeat="vyohyke in tunnusluvut.lippuhinta" ng-form>
+                <form-group-compact label="Kausilippu vyöhyke {{vyohyke.vyohykemaara}}">
+                  <input id="taustatiedot-kausilippuvyohyke-{{vyohyke.vyohykemaara}}"
+                         name="kausilippuvyohyke" type="text"
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.kausilippuvyohyke1" ng-disabled="isReadonly()">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kausilippu vyöhyke 2">
-                  <input id="taustatiedot-kausilippuvyohyke-2" name="kausilippuvyohyke2" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kausilippuvyohyke2" ng-disabled="isReadonly()">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kausilippu vyöhyke 3">
-                  <input id="taustatiedot-kausilippuvyohyke-3" name="kausilippuvyohyke3" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kausilippuvyohyke3" ng-disabled="isReadonly()">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kausilippu vyöhyke 4">
-                  <input id="taustatiedot-kausilippuvyohyke-4" name="kausilippuvyohyke4" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kausilippuvyohyke4" ng-disabled="isReadonly()">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kausilippu vyöhyke 5">
-                  <input id="taustatiedot-kausilippuvyohyke-5" name="kausilippuvyohyke5" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kausilippuvyohyke5" ng-disabled="isReadonly()">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kausilippu vyöhyke 6">
-                  <input id="taustatiedot-kausilippuvyohyke-6" name="kausilippuvyohyke6" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.kausilippuvyohyke6" ng-disabled="isReadonly()">
+                         ng-model="vyohyke.kausilippuhinta" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
             </tr>

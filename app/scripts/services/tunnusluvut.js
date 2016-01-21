@@ -75,6 +75,22 @@ angular.module('services.tunnusluvut', [])
           kausilipputulo: null,
           lipputulo: null
         }))),
-      tallennaLipputulo: createTallennaOperation('lipputulo')
+      tallennaLipputulo: createTallennaOperation('lipputulo'),
+
+      // lippuhinta
+      haeLippuhinta: function (vuosi, organisaatioid) {
+        return $http.get('api/lippuhinta/' + vuosi + '/' + organisaatioid).then(res =>
+          res.data.length === 0 ?
+            _.map(_.range(1, 7), vyohykemaara => ({
+              vyohykemaara: vyohykemaara,
+              kertalippuhinta: null,
+              kausilippuhinta: null
+            })) :
+            res.data)
+      },
+      tallennaLippuhinta: function (vuosi, organisaatioid, lippuhinta) {
+        return $http.put('api/lippuhinta/' + vuosi + '/' + organisaatioid, lippuhinta);
+      }
     }
-  }]);
+  }])
+;
