@@ -30,11 +30,11 @@
               <th class="col-md-2">
                 <form-group-compact label="Henkilöstö">
                   <input id="taustatiedot-henkilosto" name="henkilosto"
-                         ng-model="taustatiedot.henkilosto"
+                         ng-model="tunnusluvut.alue.henkilosto"
                          class="form-control notbold"
                          placeholder="henkilötyövuotta" noenter
                          numeric-km-only="" ng-currency=""
-                         ng-readonly="isReadonly()" required
+                         ng-readonly="isReadonly()"
                          currency-symbol="" noenter
                          select-on-click>
                 </form-group-compact>
@@ -62,8 +62,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.asiakaspalvelu" ng-disabled="isReadonly()"
-                         required>
+                         ng-model="tunnusluvut.alue.kustannus.asiakaspalvelu" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
             </tr>
@@ -76,8 +75,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.konsulttipalvelu" ng-disabled="isReadonly()"
-                         required>
+                         ng-model="tunnusluvut.alue.kustannus.konsulttipalvelu" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
             </tr>
@@ -90,8 +88,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.lipunmyyntipalkkiot" ng-disabled="isReadonly()"
-                         required>
+                         ng-model="tunnusluvut.alue.kustannus.lipunmyyntipalkkio" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
             </tr>
@@ -104,8 +101,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.tietomaksujarjestelmat" ng-disabled="isReadonly()"
-                         required>
+                         ng-model="tunnusluvut.alue.kustannus.jarjestelmat" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
             </tr>
@@ -118,8 +114,7 @@
                          ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.muutpalvelut" ng-disabled="isReadonly()"
-                         required>
+                         ng-model="tunnusluvut.alue.kustannus.muutpalvelut" ng-disabled="isReadonly()">
                 </form-group-compact>
               </td>
             </tr>
@@ -144,7 +139,7 @@
                          placeholder="kuntien lkm" noenter
                          type="number" integer-only select-on-click
                          ng-readonly="isReadonly()"
-                         ng-model="taustatiedot.kuntienlkm" required>
+                         ng-model="tunnusluvut.alue.kuntamaara">
                 </form-group-compact>
               </td>
             </tr>
@@ -156,7 +151,7 @@
                          placeholder="vyöhykkeiden lkm" noenter
                          type="number" integer-only select-on-click
                          ng-readonly="isReadonly()"
-                         ng-model="taustatiedot.vyohykkeidenlkm" required>
+                         ng-model="tunnusluvut.alue.vyohykemaara">
                 </form-group-compact>
               </td>
             </tr>
@@ -178,10 +173,10 @@
               <td class="col-md-4">
                 <form-group-compact label="Maapinta-ala">
                   <input id="taustatiedot-maapinta-ala" name="maapinta-ala"
-                         ng-model="taustatiedot.maapintaala"
+                         ng-model="tunnusluvut.alue.maapintaala"
                          placeholder="km2" noenter
                          numeric-km-only="" ng-currency=""
-                         ng-readonly="isReadonly()" required
+                         ng-readonly="isReadonly()"
                          currency-symbol="" noenter
                          select-on-click>
                 </form-group-compact>
@@ -195,7 +190,7 @@
                          placeholder="lkm" noenter
                          type="number" integer-only select-on-click
                          ng-readonly="isReadonly()"
-                         ng-model="taustatiedot.asukasmaara" required>
+                         ng-model="tunnusluvut.alue.asukasmaara">
                 </form-group-compact>
               </td>
             </tr>
@@ -207,7 +202,7 @@
                          placeholder="lkm" noenter
                          type="number" integer-only select-on-click
                          ng-readonly="isReadonly()"
-                         ng-model="taustatiedot.tyopaikkamaara" required>
+                         ng-model="tunnusluvut.alue.tyopaikkamaara">
                 </form-group-compact>
               </td>
             </tr>
@@ -219,7 +214,7 @@
                          placeholder="%-osuus työssäkäyvistä" noenter
                          type="number" min="0" max="100" integer-only select-on-click
                          ng-readonly="isReadonly()"
-                         ng-model="taustatiedot.pendeloivienosuus" required>
+                         ng-model="tunnusluvut.alue.pendeloivienosuus">
                 </form-group-compact>
               </td>
             </tr>
@@ -232,7 +227,7 @@
                          currency-symbol="" noenter
                          select-on-click
                          placeholder="km / vuosi"
-                         ng-model="taustatiedot.henkiloautoliikenne">
+                         ng-model="tunnusluvut.alue.henkiloautoliikennesuorite">
                 </form-group-compact>
               </td>
             </tr>
@@ -245,7 +240,7 @@
                          currency-symbol="" noenter
                          select-on-click
                          placeholder="autoa / 1000 asukasta"
-                         ng-model="taustatiedot.autoistumisaste" required>
+                         ng-model="tunnusluvut.alue.autoistumisaste">
                 </form-group-compact>
               </td>
             </tr>
@@ -270,7 +265,7 @@
                        placeholder="lkm" noenter
                        type="number" integer-only select-on-click
                        ng-readonly="isReadonly()"
-                       ng-model="taustatiedot.pysakkienlkm" required>
+                       ng-model="tunnusluvut.alue.pysakkimaara">
               </form-group-compact>
             </th>
           </thead>
@@ -433,7 +428,7 @@
                          placeholder="Asiakastyytyväisyys (%)" noenter
                          type="number" min="0" max="100" integer-only select-on-click
                          ng-readonly="isReadonly()"
-                         ng-model="taustatiedot.asiakastyytyvaisyys" required>
+                         ng-model="tunnusluvut.alue.asiakastyytyvaisyys">
                 </form-group-compact>
               </td>
             </tr>
@@ -441,6 +436,6 @@
         </table>
       </div>
     </juku-form-row>
-    <juku-tunnusluvut-lisatiedot lisatiedot="taustatiedot.lisatiedot"></juku-tunnusluvut-lisatiedot>
+    <juku-tunnusluvut-lisatiedot lisatiedot="tunnusluvut.alue.kommentti"></juku-tunnusluvut-lisatiedot>
   </ng-form>
 </div>

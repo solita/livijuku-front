@@ -90,6 +90,37 @@ angular.module('services.tunnusluvut', [])
       },
       tallennaLippuhinta: function (vuosi, organisaatioid, lippuhinta) {
         return $http.put('api/lippuhinta/' + vuosi + '/' + organisaatioid, lippuhinta);
+      },
+
+      // alue
+      haeAlue: function (vuosi, organisaatioid) {
+        return $http.get('api/alue/' + vuosi + '/' + organisaatioid).then(res =>
+          (res.data === null || res.data.length === 0) ?
+          {
+            asukasmaara: null,
+            kustannus: {
+              asiakaspalvelu: null,
+              konsulttipalvelu: null,
+              lipunmyyntipalkkio: null,
+              jarjestelmat: null,
+              muutpalvelut: null
+            },
+            vyohykemaara: null,
+            pysakkimaara: null,
+            kommentti: null,
+            kuntamaara: null,
+            autoistumisaste: null,
+            pendeloivienosuus: null,
+            tyopaikkamaara: null,
+            henkiloautoliikennesuorite: null,
+            asiakastyytyvaisyys: null,
+            maapintaala: null,
+            henkilosto: null
+          } :
+            res.data)
+      },
+      tallennaAlue: function (vuosi, organisaatioid, alue) {
+        return $http.put('api/alue/' + vuosi + '/' + organisaatioid, alue);
       }
     }
   }])
