@@ -1,5 +1,6 @@
 'use strict';
 var _ = require('lodash');
+var d = require('utils/directive');
 
 function pakollinenErrorMessage(nimi) {
   return function (input) {
@@ -30,6 +31,9 @@ function kalustoController($scope) {
   $scope.kalustoSumma = function () {
     return _.sum($scope.kalusto, 'lukumaara');
   };
+
+  // error messages:
+  $scope.lukumaaraErrorMessage = d.maxlengthNumberErrorMessage("999999999");
 }
 
 module.exports = function () {

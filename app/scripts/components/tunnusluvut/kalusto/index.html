@@ -22,11 +22,12 @@
           <tr ng-repeat="rivi in kalusto track by $index" ng-form>
             <td>{{paastoluokkaNimi(rivi.paastoluokkatunnus)}}</td>
             <td>
-              <form-group-compact label="Linja-autojen lukumäärä" errormessage="kokonaislukuErrorMessage">
-                <input id="{{tyyppi + '-lukumaara-'+$index}}" name="lukumaara" integer-only
-                       currency-symbol="" noenter
+              <form-group-compact label="Linja-autojen lukumäärä" errormessage="lukumaaraErrorMessage">
+                <input id="{{tyyppi + '-lukumaara-'+$index}}" name="lukumaara"
+                       integer-only maxlength="9"
+                       placeholder="Lukumäärä (kpl)"
                        ng-readonly="isReadonly()"
-                       select-on-click
+                       noenter select-on-click
                        ng-model="rivi.lukumaara">
               </form-group-compact>
             </td>
