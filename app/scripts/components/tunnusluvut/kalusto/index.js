@@ -2,12 +2,6 @@
 var _ = require('lodash');
 var d = require('utils/directive');
 
-function pakollinenErrorMessage(nimi) {
-  return function (input) {
-    return input.$error.required ? nimi + ' on pakollinen tieto.' : '';
-  }
-}
-
 function kalustoController($scope) {
 
   const paastoluokat = {
@@ -22,10 +16,6 @@ function kalustoController($scope) {
 
   $scope.paastoluokkaNimi = function (tunnus) {
     return paastoluokat[tunnus];
-  };
-
-  $scope.kokonaislukuErrorMessage = function (input) {
-    return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
   };
 
   $scope.kalustoSumma = function () {
