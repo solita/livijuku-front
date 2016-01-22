@@ -18,30 +18,28 @@
           <tr ng-repeat="tunnuslukutalvi in liikenneviikko track by $index" ng-form>
             <td>{{viikonpaivaluokkaNimi(tunnuslukutalvi.viikonpaivaluokkatunnus)}}</td>
             <td>
-              <form-group-compact label="Nousua" errormessage="nousuaErrorMessage">
-                <input id="{{tyyppi + '-nousua-'+$index}}" name="nousut"
-                       type="text" integer-only
+              <form-group-compact label="Nousua" errormessage="nousutErrorMessage">
+                <input id="{{tyyppi + '-nousua-'+$index}}" name="nousut" type="text"
+                       integer-only maxlength="9"
                        placeholder="Nousua / päivä"
-                       currency-symbol="" noenter
-                       select-on-click
+                       noenter select-on-click
                        ng-model="tunnuslukutalvi.nousut">
               </form-group-compact>
             </td>
             <td>
               <form-group-compact label="Linjakilometrit" errormessage="linjakilometritErrorMessage">
                 <input id="{{tyyppi + '-linjakilometrit-talvi-'+$index}}" name="linjakilometrit"
-                       placeholder="km / päivä"
-                       type="text" numeric-km-only="" ng-currency=""
-                       currency-symbol="" noenter
-                       select-on-click
+                       placeholder="km / päivä" type="text"
+                       numeric-km-only ng-currency="" max="9999999999.99" currency-symbol=""
+                       noenter select-on-click
                        ng-model="tunnuslukutalvi.linjakilometrit">
               </form-group-compact>
             </td>
             <td>
-              <form-group-compact label="Vuorotarjonta" errormessage="vuorotarjontaErrorMessage">
+              <form-group-compact label="Vuorotarjonta" errormessage="lahdotErrorMessage">
                 <input id="{{tyyppi + '-vuorotarjonta-talvi-'+$index}}" name="lahdot"
-                       placeholder="Lähtöä / päivä"
-                       type="text" integer-only
+                       placeholder="Lähtöä / päivä" type="text"
+                       integer-only maxlength="9"
                        noenter select-on-click
                        ng-model="tunnuslukutalvi.lahdot">
               </form-group-compact>
@@ -77,10 +75,11 @@
           <tr ng-repeat="tunnusluku in liikennevuosi track by $index" ng-form>
             <td>{{kuukausiNimi(tunnusluku.kuukausi)}}</td>
             <td ng-if="!isME">
-              <form-group-compact label="Nousua" errormessage="kokonaislukuErrorMessage">
+              <form-group-compact label="Nousua" errormessage="nousutErrorMessage">
                 <input id="{{tyyppi + '-nousua-'+tunnusluku.kuukausi}}" name="nousut"
-                       placeholder="Nousua / kuukausi" noenter
-                       integer-only select-on-click
+                       placeholder="Nousua / kuukausi"
+                       noenter select-on-click
+                       integer-only maxlength="9"
                        ng-readonly="isReadonly()"
                        ng-model="tunnusluku.nousut">
               </form-group-compact>
@@ -89,18 +88,17 @@
               <form-group-compact label="Linjakilometrit" errormessage="linjakilometritErrorMessage">
                 <input id="{{tyyppi + '-linjakilometrit-'+$index}}" name="linjakilometrit" type="text"
                        placeholder="km / kuukausi"
-                       numeric-km-only="" ng-currency=""
-                       currency-symbol="" noenter
-                       select-on-click
+                       numeric-km-only ng-currency="" max="9999999999.99" currency-symbol=""
+                       noenter select-on-click
                        ng-model="tunnusluku.linjakilometrit">
               </form-group-compact>
             </td>
             <td>
-              <form-group-compact label="Vuorotarjonta" errormessage="kokonaislukuErrorMessage">
+              <form-group-compact label="Vuorotarjonta" errormessage="lahdotErrorMessage">
                 <input id="{{tyyppi + '-vuorotarjonta-'+$index}}" name="lahdot"
                        placeholder="Lähtöä / kuukausi"
-                       integer-only noenter
-                       select-on-click
+                       integer-only maxlength="9"
+                       noenter select-on-click
                        ng-model="tunnusluku.lahdot">
               </form-group-compact>
             </td>

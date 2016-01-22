@@ -28,3 +28,25 @@ export function bindModel() {
       scope.inputs[attrs.bindModel] = modelCtrl;
     }
 }};
+
+export function requiredErrorMessage(nimi) {
+  return function (input) {
+    return input.$error.required ? nimi + ' on pakollinen tieto.' : null;
+  }
+}
+
+export function maxErrorMessage(maxvalue) {
+  return function (input) {
+    return input.$error.max ? 'Arvo on liian suuri. Maksimiarvo on ' + maxvalue : null;
+  }
+}
+
+export function maxlengthNumberErrorMessage(maxvalue) {
+  return function (input) {
+    return input.$error.maxlength ? 'Arvo on liian suuri. Maksimiarvo on ' + maxvalue : null;
+  }
+}
+
+export function combineErrorMessages() {
+  return input => _.first(_.map(f => f(input), arguments), c.isDefinedNotNull);
+}

@@ -1,6 +1,7 @@
 'use strict';
 var _ = require('lodash');
 var t = require('utils/tunnusluvut');
+var d = require('utils/directive');
 
 const kuukaudet = ["Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu",
   "Heinäkuu", "Elokuu", "Syyskuu", "Lokakuu", "Marraskuu", "Joulukuu"];
@@ -27,16 +28,6 @@ function kysyntaTarjontaController($scope) {
     return _.sum($scope.liikennevuosi, 'nousut');
   };
 
-  $scope.nimiErrorMessage = function (input) {
-    return input.$error.required ? 'Nimi on pakollinen tieto.' :
-      input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkuukausiiä.' : '';
-  };
-
-  $scope.nousuaErrorMessage = pakollinenErrorMessage("Nousua");
-  $scope.kokonaislukuErrorMessage = function (input) {
-    return input.$error.number ? 'Tähän pitää syöttää kokonaisluku.' : ''
-  };
-
   $scope.linjakilometritSumma = function () {
     return _.sum($scope.liikennevuosi, 'linjakilometrit');
   };
@@ -47,6 +38,11 @@ function kysyntaTarjontaController($scope) {
 
   $scope.isPSA = t.isPSA($scope.tyyppi);
   $scope.isME = $scope.tyyppi === 'ME';
+
+  // error messages:
+  $scope.nousutErrorMessage = d.maxlengthNumberErrorMessage("999999999");
+  $scope.lahdotErrorMessage = d.maxlengthNumberErrorMessage("999999999");
+  $scope.linjakilometritErrorMessage = d.maxErrorMessage("9999999999,99");
 }
 
 module.exports = function () {
