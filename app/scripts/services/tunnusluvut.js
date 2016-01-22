@@ -77,6 +77,16 @@ angular.module('services.tunnusluvut', [])
         }))),
       tallennaLipputulo: createTallennaOperation('lipputulo'),
 
+      // kommentti
+      haeKommentti: function (vuosi, organisaatioid, sopimustyyppitunnus) {
+        return $http.get('api/kommentti/' + vuosi + '/' + organisaatioid + '/' + sopimustyyppitunnus).then(res =>
+          res.data
+        )
+      },
+      tallennaKommentti: function (vuosi, organisaatioid, sopimustyyppitunnus, kommentti) {
+        return $http.put('api/kommentti/' + vuosi + '/' + organisaatioid + '/' + sopimustyyppitunnus, {kommentti: kommentti});
+      },
+
       // lippuhinta
       haeLippuhinta: function (vuosi, organisaatioid) {
         return $http.get('api/lippuhinta/' + vuosi + '/' + organisaatioid).then(res =>
