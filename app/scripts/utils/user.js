@@ -1,12 +1,29 @@
 'use strict';
 
-function isHakija(user) {
-  return user.privileges.indexOf('kasittely-hakemus') === -1;
+var _ = require('lodash');
+var c = require('utils/core');
+
+export function hasPermission(user, permission) {
+  return user ? _.includes(user.privileges, permission) : false;
 }
 
-function isKasittelija(user) {
-  return !isHakija(user);
+export function hasAnyPermission(user, permissions) {
+  if (!user) {
+    return false;
+  }
+  return c.isDefinedNotNull(_.find(permissions, p => _.includes(user.privileges, p)));
 }
 
-module.exports.isHakija = isHakija;
-module.exports.isKasittelija = isKasittelija;
+/**
+ * Hakija on käyttäjä, jolla on jokin oikeus omiin hakemuksiin.
+ */
+export function isHakija(user) {
+  return hasAnyPermission(user, ['view-oma-hakemus', 'modify-oma-hakemus', 'allekirjoita-oma-hakemus']);
+}
+
+/**
+ * Käsittelijä on käyttäjä, jolla on hakemuksen käsittely oikeus.
+ */
+export function isKasittelija(user) {
+  return hasPermission('kasittely-hakemus');
+}
