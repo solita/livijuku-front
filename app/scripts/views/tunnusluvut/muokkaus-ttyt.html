@@ -28,14 +28,14 @@
             <tr>
               <th class="col-md-10">Joukkoliikenteen suunnittelun ja organisaation henkilöstö</th>
               <th class="col-md-2">
-                <form-group-compact label="Henkilöstö">
+                <form-group-compact label="Henkilöstö" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-henkilosto" name="henkilosto"
                          ng-model="tunnusluvut.alue.henkilosto"
                          class="form-control notbold"
                          placeholder="henkilötyövuotta" noenter
-                         numeric-km-only="" ng-currency=""
+                         integer-only maxlength="9"
                          ng-readonly="isReadonly()"
-                         currency-symbol="" noenter
+                         noenter
                          select-on-click>
                 </form-group-compact>
               </th>
@@ -56,10 +56,10 @@
             <tr>
               <td class="col-md-8">Asiakaspalvelu</td>
               <td class="col-md-4">
-                <form-group-compact label="Asiakaspalvelu">
+                <form-group-compact label="Asiakaspalvelu" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-asiakaspalvelu" name="asiakaspalvelu" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
+                         class="form-control" placeholder="Asiakaspalvelu (€)"
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="tunnusluvut.alue.kustannus.asiakaspalvelu" ng-disabled="isReadonly()">
@@ -69,10 +69,10 @@
             <tr>
               <td class="col-md-8">Konsulttipalvelu</td>
               <td class="col-md-4">
-                <form-group-compact label="Konsulttipalvelu">
+                <form-group-compact label="Konsulttipalvelu" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-konsulttipalvelu" name="konsulttipalvelu" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
+                         class="form-control" placeholder="Konsulttipalvelu (€)"
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="tunnusluvut.alue.kustannus.konsulttipalvelu" ng-disabled="isReadonly()">
@@ -82,10 +82,10 @@
             <tr>
               <td class="col-md-8">Lipunmyyntipalkkiot</td>
               <td class="col-md-4">
-                <form-group-compact label="Lipunmyyntipalkkiot">
+                <form-group-compact label="Lipunmyyntipalkkiot" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-lipunmyyntipalkkiot" name="lipunmyyntipalkkiot" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
+                         class="form-control" placeholder="Lipunmyyntipalkkiot (€)"
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="tunnusluvut.alue.kustannus.lipunmyyntipalkkio" ng-disabled="isReadonly()">
@@ -95,10 +95,10 @@
             <tr>
               <td class="col-md-8">Tieto-/maksujärjestelmät</td>
               <td class="col-md-4">
-                <form-group-compact label="Tietomaksujärjestelmät">
+                <form-group-compact label="Tietomaksujärjestelmät" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-tietomaksujarjestelmat" name="tietomaksujarjestelmat" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
+                         class="form-control" placeholder="Tieto-/maksujärjestelmät (€)"
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="tunnusluvut.alue.kustannus.jarjestelmat" ng-disabled="isReadonly()">
@@ -108,10 +108,10 @@
             <tr>
               <td class="col-md-8">Muut palvelut</td>
               <td class="col-md-4">
-                <form-group-compact label="Muutpalvelut">
+                <form-group-compact label="Muutpalvelut" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-muutpalvelut" name="muutpalvelut" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only=""
+                         class="form-control" placeholder="Muut palvelut (€)"
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="tunnusluvut.alue.kustannus.muutpalvelut" ng-disabled="isReadonly()">
@@ -137,7 +137,7 @@
                 <form-group-compact label="Kuntien lukumääärä" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-kuntienlkm" name="kuntienlkm"
                          placeholder="kuntien lkm" noenter
-                         type="number" integer-only select-on-click
+                         integer-only maxlength="9" select-on-click
                          ng-readonly="isReadonly()"
                          ng-model="tunnusluvut.alue.kuntamaara">
                 </form-group-compact>
@@ -149,7 +149,7 @@
                 <form-group-compact label="Vyöhykkeiden lukumääärä" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-vyohykkeidenlkm" name="vyohykkeidenlkm"
                          placeholder="vyöhykkeiden lkm" noenter
-                         type="number" integer-only select-on-click
+                         integer-only maxlength="9" select-on-click
                          ng-readonly="isReadonly()"
                          ng-model="tunnusluvut.alue.vyohykemaara">
                 </form-group-compact>
@@ -171,11 +171,11 @@
             <tr>
               <td class="col-md-8">Maapinta-ala, km2</td>
               <td class="col-md-4">
-                <form-group-compact label="Maapinta-ala">
+                <form-group-compact label="Maapinta-ala" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-maapinta-ala" name="maapinta-ala"
                          ng-model="tunnusluvut.alue.maapintaala"
                          placeholder="km2" noenter
-                         numeric-km-only="" ng-currency=""
+                         numeric-km-only="" ng-currency="" max="9999999999.99"
                          ng-readonly="isReadonly()"
                          currency-symbol="" noenter
                          select-on-click>
@@ -188,7 +188,7 @@
                 <form-group-compact label="Asukasmäärä" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-asukasmaara" name="asukasmaara"
                          placeholder="lkm" noenter
-                         type="number" integer-only select-on-click
+                         integer-only maxlength="9" select-on-click
                          ng-readonly="isReadonly()"
                          ng-model="tunnusluvut.alue.asukasmaara">
                 </form-group-compact>
@@ -200,7 +200,7 @@
                 <form-group-compact label="Työpaikkamäärä" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-tyopaikkamaara" name="tyopaikkamaara"
                          placeholder="lkm" noenter
-                         type="number" integer-only select-on-click
+                         integer-only maxlength="9" select-on-click
                          ng-readonly="isReadonly()"
                          ng-model="tunnusluvut.alue.tyopaikkamaara">
                 </form-group-compact>
@@ -209,10 +209,10 @@
             <tr>
               <td class="col-md-8">Pendelöivien osuus alueella (oman kunnan ulkopuolella työssäkäynti)</td>
               <td class="col-md-4">
-                <form-group-compact label="Pendelöivien osuus">
+                <form-group-compact label="Pendelöivien osuus" errormessage="prosenttiErrorMessage">
                   <input id="taustatiedot-pendeloivienosuus" name="pendeloivienosuus"
                          placeholder="%-osuus työssäkäyvistä" noenter
-                         type="number" min="0" max="100" integer-only select-on-click
+                         max="100" ng-currency currency-symbol="" select-on-click
                          ng-readonly="isReadonly()"
                          ng-model="tunnusluvut.alue.pendeloivienosuus">
                 </form-group-compact>
@@ -221,9 +221,9 @@
             <tr>
               <td class="col-md-8">Henkilöautoliikenteen suorite (jos tiedossa)</td>
               <td class="col-md-4">
-                <form-group-compact label="Henkilöautoliikenne">
+                <form-group-compact label="Henkilöautoliikenne" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-henkiloautoliikenne" name="henkiloautoliikenne" type="text"
-                         numeric-km-only="" ng-currency=""
+                         numeric-km-only="" ng-currency="" max="9999999999.99"
                          currency-symbol="" noenter
                          select-on-click
                          placeholder="km / vuosi"
@@ -234,9 +234,9 @@
             <tr>
               <td class="col-md-8">Autoistumisaste</td>
               <td class="col-md-4">
-                <form-group-compact label="Autoistumisaste">
+                <form-group-compact label="Autoistumisaste" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-autoistumisaste" name="autoistumisaste" type="text"
-                         numeric-km-only="" ng-currency=""
+                         numeric-km-only="" ng-currency="" max="9999999999.99"
                          currency-symbol="" noenter
                          select-on-click
                          placeholder="autoa / 1000 asukasta"
@@ -263,7 +263,7 @@
                 <input id="taustatiedot-pysakkienlkm" name="pysakkienlkm"
                        class="form-control notbold"
                        placeholder="lkm" noenter
-                       type="number" integer-only select-on-click
+                       integer-only maxlength="9" select-on-click
                        ng-readonly="isReadonly()"
                        ng-model="tunnusluvut.alue.pysakkimaara">
               </form-group-compact>
@@ -283,12 +283,12 @@
           </thead>
           <tbody>
             <tr>
-              <td>Kertalipun hinta vyöhykkeittäin (aikuinen)(€)</td>
+              <td>Kertalipun hinta vyöhykkeittäin - aikuinen (€)</td>
               <td ng-repeat="vyohyke in tunnusluvut.lippuhinta" ng-form>
-                <form-group-compact label="Kertalippu vyöhyke {{vyohyke.vyohykemaara}}">
+                <form-group-compact label="Kertalippu vyöhyke {{vyohyke.vyohykemaara}}" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-kertalippuvyohyke-{{vyohyke.vyohykemaara}}"
-                         name="kertalippuvyohyke" type="text"
-                         ng-currency="" numeric-only=""
+                         name="kertalippuvyohyke" type="text" placeholder="€ / kpl"
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="vyohyke.kertalippuhinta" ng-disabled="isReadonly()">
@@ -296,12 +296,12 @@
               </td>
             </tr>
             <tr>
-              <td>Kausilipun hinta vyöhykkeittäin (30 päivää, aikuinen)(€)</td>
+              <td>Kausilipun hinta vyöhykkeittäin - 30 päivää, aikuinen (€)</td>
               <td ng-repeat="vyohyke in tunnusluvut.lippuhinta" ng-form>
-                <form-group-compact label="Kausilippu vyöhyke {{vyohyke.vyohykemaara}}">
+                <form-group-compact label="Kausilippu vyöhyke {{vyohyke.vyohykemaara}}" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-kausilippuvyohyke-{{vyohyke.vyohykemaara}}"
-                         name="kausilippuvyohyke" type="text"
-                         ng-currency="" numeric-only=""
+                         name="kausilippuvyohyke" type="text" placeholder="€ / kpl"
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="vyohyke.kausilippuhinta" ng-disabled="isReadonly()">
@@ -321,18 +321,19 @@
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody><tr><td><i>Tiedot selviävät myöhemmin</i></td></tr></tbody>
+          <tbody ng-if="false">
             <tr>
               <td class="col-md-8">Liikenteen ostot, € (siirtymäkaudella)</td>
               <td class="col-md-4">
-                <form-group-compact label="Liikenteen ostot">
+                <form-group-compact label="Liikenteen ostot" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-liikenteenostot" name="liikenteenostot" type="text"
                          class="form-control"
-                         ng-currency="" numeric-only=""
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="taustatiedot.liikenteenostot" ng-disabled="isReadonly()"
-                         placeholder="€ / vuosi, alv 0" required>
+                         placeholder="€ / vuosi, alv 0">
                 </form-group-compact>
               </td>
             </tr>
@@ -340,70 +341,70 @@
               <td class="col-md-8">Hintojen alentaminen, € (siirtymäkaudella, valtion lippusubventio on poistumassa)
               </td>
               <td class="col-md-4">
-                <form-group-compact label="Hintojen alentaminen">
+                <form-group-compact label="Hintojen alentaminen" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-hintojenalentaminen" name="hintojenalentaminen" type="text"
                          class="form-control"
-                         ng-currency="" numeric-only=""
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="taustatiedot.hintojenalentaminen" ng-disabled="isReadonly()"
-                         placeholder="€ / vuosi, alv 0" required>
+                         placeholder="€ / vuosi, alv 0">
                 </form-group-compact>
               </td>
             </tr>
             <tr>
               <td class="col-md-8">Valtion avustus sopimuskorvauksiin, €</td>
               <td class="col-md-4">
-                <form-group-compact label="Sopimuskorvaukset">
+                <form-group-compact label="Sopimuskorvaukset" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-sopimiskorvaukset" name="sopimiskorvaukset" type="text"
                          class="form-control"
-                         ng-currency="" numeric-only=""
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="taustatiedot.sopimiskorvaukset" ng-disabled="isReadonly()"
-                         placeholder="€ / vuosi, alv 0" required>
+                         placeholder="€ / vuosi, alv 0">
                 </form-group-compact>
               </td>
             </tr>
             <tr>
               <td class="col-md-8">Informaatio ja maksujärjestelmien kehittäminen, €</td>
               <td class="col-md-4">
-                <form-group-compact label="Informaatio ja maksujärjestelmien kehittäminen">
+                <form-group-compact label="Informaatio ja maksujärjestelmien kehittäminen" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-infomaksukeh" name="infomaksukeh" type="text"
                          class="form-control"
-                         ng-currency="" numeric-only=""
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="taustatiedot.infomaksukeh" ng-disabled="isReadonly()"
-                         placeholder="€ / vuosi, alv 0" required>
+                         placeholder="€ / vuosi, alv 0">
                 </form-group-compact>
               </td>
             </tr>
             <tr>
               <td class="col-md-8">Matkakeskusten tai matkapalvelukeskusten kehittäminen, €</td>
               <td class="col-md-4">
-                <form-group-compact label="Matkakeskusten tai matkapalvelukeskusten kehittäminen">
+                <form-group-compact label="Matkakeskusten tai matkapalvelukeskusten kehittäminen" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-matkakeskeh" name="matkakeskeh" type="text"
                          class="form-control"
-                         ng-currency="" numeric-only=""
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="taustatiedot.matkakeskeh" ng-disabled="isReadonly()"
-                         placeholder="€ / vuosi, alv 0" required>
+                         placeholder="€ / vuosi, alv 0">
                 </form-group-compact>
               </td>
             </tr>
             <tr>
               <td class="col-md-8">Muu kehittäminen, €</td>
               <td class="col-md-4">
-                <form-group-compact label="Muu kehittäminen">
+                <form-group-compact label="Muu kehittäminen" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-muukeh" name="muukeh" type="text"
                          class="form-control"
-                         ng-currency="" numeric-only=""
+                         ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
                          ng-model="taustatiedot.muukeh" ng-disabled="isReadonly()"
-                         placeholder="€ / vuosi, alv 0" required>
+                         placeholder="€ / vuosi, alv 0">
                 </form-group-compact>
               </td>
             </tr>
@@ -423,10 +424,10 @@
             <tr>
               <td class="col-md-8">Tyytyväisten joukkoliikenteen käyttäjien prosenttiosuus</td>
               <td class="col-md-4">
-                <form-group-compact label="Asiakastyytyväisyys">
+                <form-group-compact label="Asiakastyytyväisyys" errormessage="prosenttiErrorMessage">
                   <input id="taustatiedot-asiakastyytyvaisyys" name="asiakastyytyvaisyys"
                          placeholder="Asiakastyytyväisyys (%)" noenter
-                         type="number" min="0" max="100" integer-only select-on-click
+                         max="100" select-on-click ng-currency currency-symbol=""
                          ng-readonly="isReadonly()"
                          ng-model="tunnusluvut.alue.asiakastyytyvaisyys">
                 </form-group-compact>

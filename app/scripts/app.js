@@ -185,7 +185,7 @@ angular
       .state('app.tunnusluku.syottaminen.SA', {
         url: '/sa',
         tyyppi: 'SA',
-        template: require('views/tunnusluvut/muokkaus-sl.html')
+        template: require('views/tunnusluvut/muokkaus-sa.html')
       })
       .state('app.tunnusluku.syottaminen.ME', {
         url: '/me',

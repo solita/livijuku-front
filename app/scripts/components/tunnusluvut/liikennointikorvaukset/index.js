@@ -1,5 +1,6 @@
 'use strict';
 var _ = require('lodash');
+var d = require('utils/directive');
 
 function liikennointikorvauksetController($scope) {
 
@@ -17,6 +18,9 @@ function liikennointikorvauksetController($scope) {
   $scope.liikennointikorvausSumma = function () {
     return _.sum($scope.liikennointikorvaus, 'korvaus');
   };
+
+  // error messages:
+  $scope.korvausErrorMessage = d.maxErrorMessage("9999999999,99");
 
 }
 
