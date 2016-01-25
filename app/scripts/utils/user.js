@@ -25,5 +25,5 @@ export function isHakija(user) {
  * Käsittelijä on käyttäjä, jolla on hakemuksen käsittely oikeus.
  */
 export function isKasittelija(user) {
-  return hasPermission('kasittely-hakemus');
+  return hasPermission(user, 'kasittely-hakemus');
 }
