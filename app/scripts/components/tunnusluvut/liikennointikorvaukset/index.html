@@ -1,4 +1,5 @@
-<ng-form id="{{tyyppi + '-liikennointikorvaukset-form'}}" name="liikennointikorvauksetForm" class="liikennointikorvaukset">
+<ng-form id="{{tyyppi + '-liikennointikorvaukset-form'}}" name="liikennointikorvauksetForm"
+         class="liikennointikorvaukset">
   <juku-form-row>
     <h3>Maksettu liikennöintikorvaus</h3>
     <div class="table-responsive">
@@ -23,19 +24,19 @@
           <tr ng-repeat="rivi in liikennointikorvaus track by $index" ng-form>
             <td>{{kuukausiNimi(rivi.kuukausi)}}</td>
             <td>
-              <form-group-compact label="Maksetty liikennöintikorvaus" errormessage="liikennointikorvausErrorMessage">
+              <form-group-compact label="Maksetty liikennöintikorvaus" errormessage="korvausErrorMessage">
                 <input id="{{tyyppi + '-liikennointikorvaus-'+$index}}" name="liikennointikorvaus" type="text"
-                       numeric-only="" ng-currency=""
-                       currency-symbol="€" noenter
+                       numeric-only="" ng-currency="" max="9999999999.99"
+                       currency-symbol="€" noenter placeholder="Korvaus (€)"
                        select-on-click
                        ng-model="rivi.korvaus">
               </form-group-compact>
             </td>
             <td ng-if="tyyppi==='KOS'">
-              <form-group-compact label="Nousukorvaus">
+              <form-group-compact label="Nousukorvaus" errormessage="korvausErrorMessage">
                 <input id="{{tyyppi + '-nousukorvaus-'+$index}}" name="nousukorvaus" type="text"
-                       numeric-only="" ng-currency=""
-                       currency-symbol="€" noenter
+                       numeric-only="" ng-currency="" max="9999999999.99"
+                       currency-symbol="€" noenter placeholder="Nousukorvaus (€)"
                        select-on-click
                        ng-model="rivi.nousukorvaus">
               </form-group-compact>

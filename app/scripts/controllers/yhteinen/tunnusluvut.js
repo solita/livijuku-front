@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var c = require('utils/core');
 var t = require('utils/tunnusluvut');
+var d = require('utils/directive');
 var angular = require('angular');
 var Promise = require('bluebird');
 var hasPermission = require('utils/hasPermission');
@@ -13,7 +14,7 @@ export function loadTunnusluvutPromise($state, StatusService, TunnuslukuEditServ
   return Promise.props({
     liikennevuosi: Promise.resolve('test') //TunnuslukuEditService.haeKysyntaTarjonta(2016, 1, 'BR')
   }).then(_.identity, StatusService.errorHandler);
-};
+}
 
 const types = {
   TTYT: 'Taustatiedot ja yleiset tunnusluvut',
@@ -109,7 +110,15 @@ angular.module('jukufrontApp')
         });
 
 
-        $scope.tallennaHakemus = function () {
+        $scope.tallennaTunnusluvut = function () {
+          StatusService.tyhjenna();
+          $scope.$broadcast('show-errors-check-validity');
+
+          if (!$scope.tunnusluvutForm.$valid) {
+            $scope.$emit('focus-invalid');
+            StatusService.virhe('Tunnusluvut.tallenna()', 'Korjaa lomakkeen virheet ennen tallentamista.');
+            return;
+          }
           var tallennusPromise = [];
 
           function pushTallennusPromise(saveFunction, data) {
@@ -141,7 +150,12 @@ angular.module('jukufrontApp')
               $scope.tunnusluvutForm.$setPristine();
             },
             StatusService.errorHandler);
-        }
+        };
+
+        // error messages:
+        $scope.desimaaliErrorMessage = d.maxErrorMessage("9999999999,99");
+        $scope.prosenttiErrorMessage = d.maxErrorMessage("100,00");
+        $scope.kokonaislukuErrorMessage = d.maxlengthNumberErrorMessage("999999999");
       }
     ]
   );

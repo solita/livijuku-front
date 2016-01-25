@@ -1,5 +1,6 @@
 'use strict';
 var _ = require('lodash');
+var d = require('utils/directive');
 
 function lipputulotController($scope) {
 
@@ -29,6 +30,9 @@ function lipputulotController($scope) {
   $scope.kaikkilipputulotSumma = function () {
     return ($scope.kertalipputuloSumma() + $scope.arvolipputuloSumma() + $scope.kausilipputuloSumma());
   };
+
+  // error messages:
+  $scope.lipputuloErrorMessage = d.maxErrorMessage("9999999999,99");
 
 }
 
