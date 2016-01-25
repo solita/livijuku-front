@@ -6,7 +6,7 @@ var t = require('utils/tunnusluvut');
 var d = require('utils/directive');
 var angular = require('angular');
 var Promise = require('bluebird');
-var hasPermission = require('utils/hasPermission');
+var hasPermission = require('utils/user').hasPermission;
 
 // TODO: tämän voi poistaa jos url:iin ei tule vuotta ja organisaatiota
 loadTunnusluvutPromise.$inject = ['$state', 'StatusService', 'TunnuslukuEditService'];

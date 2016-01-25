@@ -5,7 +5,7 @@ var angular = require('angular');
 var c = require('utils/core');
 var h = require('utils/hakemus');
 var pdf = require('utils/pdfurl');
-var hasPermission = require('utils/hasPermission');
+var hasPermission = require('utils/user').hasPermission;
 var Promise = require('bluebird');
 var IBAN = require('iban');
 

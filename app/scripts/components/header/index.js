@@ -2,7 +2,7 @@
 var _ = require('lodash');
 
 function headerController($scope, $rootScope, $stateParams, $filter, KayttajaService) {
-  $scope.sallittu = require('utils/hasPermission');
+  $scope.sallittu = require('utils/user').hasPermission;
   $rootScope.isCollapsed = false;
 
   $scope.user = null;

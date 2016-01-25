@@ -1,7 +1,7 @@
 'use strict';
 
 function dropdownController($scope, ConfigService) {
-  $scope.sallittu = require('utils/hasPermission');
+  $scope.sallittu = require('utils/user').hasPermission;
   $scope.fullName = function (user) {
     if (!user) {
       return null;
