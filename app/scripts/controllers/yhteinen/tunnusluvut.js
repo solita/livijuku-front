@@ -8,14 +8,6 @@ var angular = require('angular');
 var Promise = require('bluebird');
 var hasPermission = require('utils/user').hasPermission;
 
-// TODO: tämän voi poistaa jos url:iin ei tule vuotta ja organisaatiota
-loadTunnusluvutPromise.$inject = ['$state', 'StatusService', 'TunnuslukuEditService'];
-export function loadTunnusluvutPromise($state, StatusService, TunnuslukuEditService) {
-  return Promise.props({
-    liikennevuosi: Promise.resolve('test') //TunnuslukuEditService.haeKysyntaTarjonta(2016, 1, 'BR')
-  }).then(_.identity, StatusService.errorHandler);
-}
-
 const types = {
   TTYT: 'Taustatiedot ja yleiset tunnusluvut',
   BR: 'PSA Brutto',
