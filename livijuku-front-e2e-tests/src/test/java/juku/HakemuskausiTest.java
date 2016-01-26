@@ -663,6 +663,9 @@ public class HakemuskausiTest extends TestBase {
         // TODO Assertoi hakijana myös hakemuksen tila ja bread crumbs.
         WorkAround.click(OmatHakemukset.hakemuksenTila(Hakemuslaji.ELY, Hakemustila.KESKENERAINEN));
 
+        // Perustiedot
+        elyPerustiedot("15000", "20000", "15000", "20000");
+
         // Lisää allekirjoitusliite
         lisaaAllekirjoitusLiite();
 
