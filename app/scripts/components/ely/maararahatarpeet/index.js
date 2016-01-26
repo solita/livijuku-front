@@ -25,6 +25,7 @@ function maararahatarpeetController($scope) {
   $scope.kehittaminenErrorMessage = errorMessage("Kehittäminen");
 
   $scope.errorMessage = errorMessage("Arvo");
+  $scope.kuvausErrorMessage = d.maxlengthTextErrorMessage("2000");
 }
 
 module.exports = function () {
