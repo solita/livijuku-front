@@ -1,6 +1,4 @@
 <ng-form id="kehittamishankkeet-form" name="kehittamishankkeetForm" class="kehittamishankkeet">
-  <juku-form-row>
-    <div class="col-md-12">
       <div class="table-responsive">
         <table class="table table-hover table-condensed">
           <thead>
@@ -70,10 +68,10 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="kehittamishankkeet-controls">
         <button id="lisaakehittamishanke" ng-hide="isReadonly()" class="btn btn-primary"
                 ng-click="lisaaKehittamishanke()">Lisää uusi rivi
         </button>
       </div>
-    </div>
-  </juku-form-row>
 </ng-form>

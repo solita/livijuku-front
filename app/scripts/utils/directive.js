@@ -48,5 +48,5 @@ export function maxlengthNumberErrorMessage(maxvalue) {
 }
 
 export function combineErrorMessages() {
-  return input => _.first(_.map(f => f(input), arguments), c.isDefinedNotNull);
+  return input => _.find(_.map(arguments, f => f(input)), c.isDefinedNotNull);
 }
