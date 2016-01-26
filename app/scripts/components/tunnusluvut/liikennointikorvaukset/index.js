@@ -25,7 +25,7 @@ function liikennointikorvauksetController($scope) {
 
   // error messages:
   $scope.korvausErrorMessage = d.maxErrorMessage("9999999999,99");
-
+  $scope.nousutErrorMessage = d.maxlengthNumberErrorMessage("999 999 999");
 }
 
 module.exports = function () {
