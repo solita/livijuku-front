@@ -15,7 +15,6 @@
   </juku-navigation>
   <div class="row">
     <div class="col-md-10">
-      <h2>Joukkoliikenteen valtionavustushakemukset ja päätökset</h2>
     </div>
     <div class="col-md-2 lataacsv">
       <a ng-csv="exportCsvMultibar(haettuMyonnettyYhteensaData())"
@@ -31,8 +30,6 @@
   </div>
   <div class="row">
     <div class="col-md-10">
-      <h2 ng-show="isMyonnettyAktiivinen()">Myönnetyt jaoteltuna</h2>
-      <h2 ng-hide="isMyonnettyAktiivinen()">Haetut jaoteltuna</h2>
     </div>
     <div class="col-md-2 lataacsv">
       <a ng-show="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
@@ -51,7 +48,6 @@
 
   <div class="row">
     <div class="col-md-10">
-      <h2>Myönnetty avustus/asukas</h2>
     </div>
     <div class="col-md-2 lataacsv">
       <a ng-csv="exportCsvMultibar(myonnettyPerAsukasData())"

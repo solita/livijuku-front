@@ -10,6 +10,23 @@ angular.module('jukufrontApp')
       MYONNETTY: "myonnetyt",
       HAETTU: "haetut"
     };
+
+    const tyypit = {
+      KS1: 'Suuret kaupunkiseudut',
+      KS2: 'Keskisuuret kaupunkiseudut',
+      KS3: 'Pienet kaupunkiseudut',
+      ELY: 'ELY-keskukset'
+    };
+
+    function aliotsake() {
+      if ($scope.isMyonnettyAktiivinen()) return "Myönnetyt jaoteltuna";
+      else return "Haetut jaoteltuna";
+    }
+
+    function tyypinNimi(tyyppi) {
+      return tyypit[tyyppi];
+    }
+
     $scope.avustusData = [
       {
         "tyyppi": "KS1",
@@ -157,10 +174,13 @@ angular.module('jukufrontApp')
       $scope.aktiivinenOrganisaatioVuosi = 2010;
       $scope.aktiivinenOrganisaatioVuosiHaettu = _.find($scope.avustusData, {'tyyppi': $scope.aktiivinenTyyppi}).haetut["2010"][0];
       $scope.aktiivinenOrganisaatioAsukkaat = _.find($scope.avustusData, {'tyyppi': $scope.aktiivinenTyyppi}).organisaatiotAsukkaat[0];
+      $scope.haettuMyonnettyYhteensaOptions.subtitle.text = tyypinNimi(tyyppi);
+      $scope.haettuMyonnettyOptions.subtitle.text = tyypinNimi(tyyppi);
+      $scope.myonnettyPerAsukasOptions.subtitle.text = tyypinNimi(tyyppi);
+
       if ($scope.haettuMyonnettyYhteensaApi !== undefined) $scope.haettuMyonnettyYhteensaApi.refresh();
       if ($scope.haettuMyonnettyApi !== undefined) $scope.haettuMyonnettyApi.refresh();
       if ($scope.myonnettyPerAsukasApi !== undefined) $scope.myonnettyPerAsukasApi.refresh();
-      if ($scope.organisaationTiedotApi !== undefined) $scope.organisaationTiedotApi.refresh();
       if ($scope.tyytyvaisyysApi !== undefined) $scope.tyytyvaisyysApi.refresh();
       if ($scope.psaMatkustajatApi !== undefined) $scope.psaMatkustajatApi.refresh();
       if ($scope.siirtymaajanMatkustajatApi !== undefined) $scope.siirtymaajanMatkustajatApi.refresh();
@@ -201,10 +221,12 @@ angular.module('jukufrontApp')
             elementClick: function (e) {
               if ((e.data.series === 0) && $scope.isMyonnettyAktiivinen()) {
                 $scope.aktiivinenOsajoukko = data.HAETTU;
+                $scope.haettuMyonnettyOptions.title.text = "Haetut jaoteltuna";
                 $scope.haettuMyonnettyApi.refresh();
                 $scope.myonnettyPerAsukasApi.refresh();
               } else if ((e.data.series === 1) && !$scope.isMyonnettyAktiivinen()) {
                 $scope.aktiivinenOsajoukko = data.MYONNETTY;
+                $scope.haettuMyonnettyOptions.title.text = "Myönnetyt jaoteltuna";
                 $scope.haettuMyonnettyApi.refresh();
                 $scope.myonnettyPerAsukasApi.refresh();
               }
@@ -223,10 +245,22 @@ angular.module('jukufrontApp')
           return d.y;
         },
         yAxis: {
+          axisLabel: '',
           tickFormat: function (d) {
             return d3.format('.03f')(d / 1000000) + " M€";
           }
+        },
+        xAxis: {
+          axisLabel: 'Vuosi'
         }
+      },
+      title: {
+        enable: true,
+        text: 'Joukkoliikenteen valtionavustushakemukset ja päätökset'
+      },
+      subtitle: {
+        enable: true,
+        text: 'Suuret kaupunkiseudut'
       }
     };
 
@@ -261,7 +295,6 @@ angular.module('jukufrontApp')
               $scope.aktiivinenOrganisaatioVuosi = e.data.x;
               $scope.aktiivinenOrganisaatioVuosiHaettu = e.data.y;
               $scope.aktiivinenOrganisaatioAsukkaat = _.find($scope.avustusData, {'tyyppi': $scope.aktiivinenTyyppi}).organisaatiotAsukkaat[0];
-              $scope.organisaationTiedotApi.refresh();
               $scope.$apply();
             }
           }
@@ -276,10 +309,22 @@ angular.module('jukufrontApp')
           return d.y;
         },
         yAxis: {
+          axisLabel: '',
           tickFormat: function (d) {
             return d3.format('.03f')(d / 1000000) + " M€";
           }
+        },
+        xAxis: {
+          axisLabel: 'Vuosi'
         }
+      },
+      title: {
+        enable: true,
+        text: 'Myönnetyt jaoteltuna'
+      },
+      subtitle: {
+        enable: true,
+        text: 'Suuret kaupunkiseudut'
       }
     };
 
@@ -315,10 +360,22 @@ angular.module('jukufrontApp')
           return d.y;
         },
         yAxis: {
+          axisLabel: '',
           tickFormat: function (d) {
             return d3.format('.02f')(d) + " €";
           }
+        },
+        xAxis: {
+          axisLabel: 'Vuosi'
         }
+      },
+      title: {
+        enable: true,
+        text: 'Myönnetty avustus / asukas'
+      },
+      subtitle: {
+        enable: true,
+        text: 'Suuret kaupunkiseudut'
       }
     };
 
@@ -353,10 +410,84 @@ angular.module('jukufrontApp')
           return d.y;
         },
         yAxis: {
+          axisLabel: '',
           tickFormat: function (d) {
             return d + " %";
           }
+        },
+        xAxis: {
+          axisLabel: 'Vuosi'
         }
+      },
+      title: {
+        enable: true,
+        text: 'Tyytyväisyys joukkoliikenteeseen'
+      },
+      subtitle: {
+        enable: true,
+        text: 'Suuret kaupunkiseudut'
+      }
+    };
+
+    $scope.tyytyvaisyysOptions2 = {
+      chart: {
+        type: 'multiBarChart',
+        height: 450,
+        stacked: false,
+        x: function (d) {
+          return d.x;
+        },
+        y: function (d) {
+          return d.y;
+        },
+        yAxis: {
+          axisLabel: '',
+          tickFormat: function (d) {
+            return d + " %";
+          }
+        },
+        xAxis: {
+          axisLabel: 'Vuosi'
+        }
+      },
+      title: {
+        enable: true,
+        text: ''
+      },
+      subtitle: {
+        enable: true,
+        text: ''
+      }
+    };
+
+    $scope.MatkustajatOptions = {
+      chart: {
+        type: 'multiBarChart',
+        height: 450,
+        stacked: false,
+        x: function (d) {
+          return d.x;
+        },
+        y: function (d) {
+          return d.y;
+        },
+        yAxis: {
+          axisLabel: '',
+          tickFormat: function (d) {
+            return d;
+          }
+        },
+        xAxis: {
+          axisLabel: 'Vuosi'
+        }
+      },
+      title: {
+        enable: true,
+        text: 'Matkustajamäärä - Yhteensä'
+      },
+      subtitle: {
+        enable: true,
+        text: 'Suuret kaupunkiseudut'
       }
     };
 
@@ -391,10 +522,22 @@ angular.module('jukufrontApp')
           return d.y;
         },
         yAxis: {
+          axisLabel: '',
           tickFormat: function (d) {
             return d;
           }
+        },
+        xAxis: {
+          axisLabel: 'Vuosi'
         }
+      },
+      title: {
+        enable: true,
+        text: 'Matkustajamäärä - PSA liikenne'
+      },
+      subtitle: {
+        enable: true,
+        text: 'Suuret kaupunkiseudut'
       }
     };
 
@@ -429,10 +572,22 @@ angular.module('jukufrontApp')
           return d.y;
         },
         yAxis: {
+          axisLabel: '',
           tickFormat: function (d) {
             return d;
           }
+        },
+        xAxis: {
+          axisLabel: 'Vuosi'
         }
+      },
+      title: {
+        enable: true,
+        text: 'Matkustajamäärä - Siirtymäajan liikenne'
+      },
+      subtitle: {
+        enable: true,
+        text: 'Suuret kaupunkiseudut'
       }
     };
 
