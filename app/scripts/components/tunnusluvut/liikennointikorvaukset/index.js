@@ -15,6 +15,10 @@ function liikennointikorvauksetController($scope) {
     return _.sum($scope.liikennointikorvaus, 'nousukorvaus');
   };
 
+  $scope.nousutSumma = function () {
+    return _.sum($scope.liikennointikorvaus, 'nousut');
+  };
+
   $scope.liikennointikorvausSumma = function () {
     return _.sum($scope.liikennointikorvaus, 'korvaus');
   };

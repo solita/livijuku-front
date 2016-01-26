@@ -9,6 +9,7 @@
             <th class="col-md-3">Kuukausi</th>
             <th class="col-md-3">Korvaus €/kk (alv 0)</th>
             <th ng-if="tyyppi==='KOS'" class="col-md-3">Nousukorvaus €/kk (alv 0)</th>
+            <th ng-if="tyyppi==='ME'" class="col-md-3">Nousua / kk</th>
           </tr>
         </thead>
         <tfoot ng-if="liikennointikorvaus.length > 0">
@@ -16,8 +17,9 @@
             <td>
               <span class="yhteensa">Yhteensä:</span>
             </td>
-            <td>{{liikennointikorvausSumma() | currency : '€/vuosi' : 2}}</td>
-            <td ng-if="tyyppi==='KOS'">{{nousukorvausSumma() | currency : '€/vuosi' : 2}}</td>
+            <td>{{liikennointikorvausSumma() | currency : '€ / vuosi' : 2}}</td>
+            <td ng-if="tyyppi==='KOS'">{{nousukorvausSumma() | currency : '€ / vuosi' : 2}}</td>
+            <td ng-if="tyyppi==='ME'">{{nousutSumma() | currency : 'nousua / vuosi' : 0}}</td>
           </tr>
         </tfoot>
         <tbody>
@@ -39,6 +41,15 @@
                        currency-symbol="€" noenter placeholder="Nousukorvaus (€)"
                        select-on-click
                        ng-model="rivi.nousukorvaus">
+              </form-group-compact>
+            </td>
+            <td ng-if="tyyppi==='ME'">
+              <form-group-compact label="Nousua / kk" errormessage="korvausErrorMessage">
+                <input id="{{tyyppi + '-nousut-'+$index}}" name="nousut" type="text"
+                       integer-only maxlength="9"
+                       placeholder="Nousua / kk"
+                       select-on-click noenter
+                       ng-model="rivi.nousut">
               </form-group-compact>
             </td>
           </tr>

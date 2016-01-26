@@ -62,7 +62,8 @@ angular.module('services.tunnusluvut', [])
         () => _.map(_.range(1, 13), kuukausi => ({
           kuukausi: kuukausi,
           korvaus: null,
-          nousukorvaus: null
+          nousukorvaus: null,
+          nousut: null
         }))),
       tallennaLiikennointikorvaus: createTallennaOperation('liikennointikorvaus'),
 
