@@ -367,7 +367,10 @@ angular.module('jukufrontApp')
       };
 
       $scope.sumHaettavaElyAvustus = function () {
-        var maararahatarpeetSum = $scope.hakemus.ely.siirtymaaikasopimukset + $scope.hakemus.ely.joukkoliikennetukikunnat + _.sum($scope.maararahatarpeet, 'sidotut') + _.sum($scope.maararahatarpeet, 'uudet') - _.sum($scope.maararahatarpeet, 'tulot');
+        var maararahatarpeetSum =
+          _.sum(_.values($scope.hakemus.ely)) +
+          _.sum($scope.maararahatarpeet, 'sidotut') + _.sum($scope.maararahatarpeet, 'uudet') - _.sum($scope.maararahatarpeet, 'tulot');
+
         var kehittamishankkeetSum = _.sum($scope.kehittamishankkeet, 'arvo');
         return (maararahatarpeetSum + kehittamishankkeetSum);
       };

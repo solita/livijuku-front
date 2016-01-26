@@ -47,6 +47,12 @@ export function maxlengthNumberErrorMessage(maxvalue) {
   }
 }
 
+export function maxlengthTextErrorMessage(maxlength) {
+  return function (input) {
+    return input.$error.maxlength ? 'Teksti on liian pitkä. Maksimipituus on ' + maxvalue : null;
+  }
+}
+
 export function combineErrorMessages() {
-  return input => _.first(_.map(f => f(input), arguments), c.isDefinedNotNull);
+  return input => _.find(_.map(arguments, f => f(input)), c.isDefinedNotNull);
 }
