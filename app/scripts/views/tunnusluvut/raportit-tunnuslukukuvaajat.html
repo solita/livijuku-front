@@ -15,7 +15,6 @@
   </juku-navigation>
   <div class="row">
     <div class="col-md-10">
-      <h2>Tyytyväisyys joukkoliikenteeseen</h2>
     </div>
     <div class="col-md-2 lataacsv">
       <a ng-csv="exportCsvMultibar(tyytyvaisyysData())"
@@ -29,11 +28,7 @@
           api="tyytyvaisyysApi"></nvd3>
   </div>
   <div class="row">
-      <h2>Matkustajamäärä</h2>
-  </div>
-  <div class="row">
     <div class="col-md-10">
-      <h3>Yhteensä</h3>
     </div>
     <div class="col-md-2 lataacsv">
       <a ng-csv="exportCsvMultibar(tyytyvaisyysData())"
@@ -43,12 +38,11 @@
     </div>
   </div>
   <div class="row">
-    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData'
+    <nvd3 options='MatkustajatOptions' data='psaMatkustajatData'
           api="tyytyvaisyysApi2"></nvd3>
   </div>
   <div class="row">
     <div class="col-md-10">
-      <h3>PSA liikenne</h3>
     </div>
     <div class="col-md-2 lataacsv">
       <a ng-csv="exportCsvMultibar(psaMatkustajatData())"
@@ -63,7 +57,6 @@
   </div>
   <div class="row">
     <div class="col-md-10">
-      <h3>Siirtymäajan liikenne</h3>
     </div>
     <div class="col-md-2 lataacsv">
       <a ng-csv="exportCsvMultibar(siirtymaajanMatkustajatData())"
@@ -91,7 +84,7 @@
     </div>
   </div>
   <div class="row">
-    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData'
+    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
           api="tyytyvaisyysApi5"></nvd3>
   </div>
   <div class="row">
@@ -106,7 +99,7 @@
     </div>
   </div>
   <div class="row">
-    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData'
+    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
           api="tyytyvaisyysApi6"></nvd3>
   </div>
   <div class="row">
@@ -121,7 +114,7 @@
     </div>
   </div>
   <div class="row">
-    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData'
+    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
           api="tyytyvaisyysApi7"></nvd3>
   </div>
   <div class="row">
@@ -136,7 +129,7 @@
     </div>
   </div>
   <div class="row">
-    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData'
+    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
           api="tyytyvaisyysApi8"></nvd3>
   </div>
   <div class="row">
@@ -154,7 +147,7 @@
     </div>
   </div>
   <div class="row">
-    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData'
+    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
           api="tyytyvaisyysApi9"></nvd3>
   </div>
   <div class="row">
@@ -169,7 +162,7 @@
     </div>
   </div>
   <div class="row">
-    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData'
+    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
           api="tyytyvaisyysApi10"></nvd3>
   </div>
   <div class="row">
@@ -184,7 +177,7 @@
     </div>
   </div>
   <div class="row">
-    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData'
+    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
           api="tyytyvaisyysApi11"></nvd3>
   </div>
   <div class="row">
@@ -199,7 +192,7 @@
     </div>
   </div>
   <div class="row">
-    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData'
+    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
           api="tyytyvaisyysApi12"></nvd3>
   </div>
   <div class="row">
@@ -214,7 +207,7 @@
     </div>
   </div>
   <div class="row">
-    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData'
+    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
           api="tyytyvaisyysApi13"></nvd3>
   </div>
   <div class="row">
@@ -229,7 +222,7 @@
     </div>
   </div>
   <div class="row">
-    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData'
+    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
           api="tyytyvaisyysApi14"></nvd3>
   </div>
 </div>
