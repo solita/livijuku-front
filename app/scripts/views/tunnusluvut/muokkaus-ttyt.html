@@ -175,7 +175,7 @@
                   <input id="taustatiedot-maapinta-ala" name="maapinta-ala"
                          ng-model="tunnusluvut.alue.maapintaala"
                          placeholder="km2" noenter
-                         numeric-km-only="" ng-currency="" max="9999999999.99"
+                         numeric-only="" ng-currency="" max="9999999999.99"
                          ng-readonly="isReadonly()"
                          currency-symbol="" noenter
                          select-on-click>
@@ -223,7 +223,7 @@
               <td class="col-md-4">
                 <form-group-compact label="Henkilöautoliikenne" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-henkiloautoliikenne" name="henkiloautoliikenne" type="text"
-                         numeric-km-only="" ng-currency="" max="9999999999.99"
+                         numeric-only="" ng-currency="" max="9999999999.99"
                          currency-symbol="" noenter
                          select-on-click
                          placeholder="km / vuosi"
@@ -236,7 +236,7 @@
               <td class="col-md-4">
                 <form-group-compact label="Autoistumisaste" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-autoistumisaste" name="autoistumisaste" type="text"
-                         numeric-km-only="" ng-currency="" max="9999999999.99"
+                         numeric-only="" ng-currency="" max="9999999999.99"
                          currency-symbol="" noenter
                          select-on-click
                          placeholder="autoa / 1000 asukasta"
@@ -427,7 +427,7 @@
                 <form-group-compact label="Asiakastyytyväisyys" errormessage="prosenttiErrorMessage">
                   <input id="taustatiedot-asiakastyytyvaisyys" name="asiakastyytyvaisyys"
                          placeholder="Asiakastyytyväisyys (%)" noenter
-                         max="100" select-on-click ng-currency currency-symbol=""
+                         max="100" select-on-click numeric-only="" ng-currency currency-symbol=""
                          ng-readonly="isReadonly()"
                          ng-model="tunnusluvut.alue.asiakastyytyvaisyys">
                 </form-group-compact>

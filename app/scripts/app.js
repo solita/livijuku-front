@@ -347,7 +347,6 @@ require('./directives/alvmuunnos');
 require('./directives/jukuAvustusluokkaPanel');
 require('./directives/noenter');
 require('./directives/numericOnly');
-require('./directives/numericKmOnly');
 require('./directives/focusToInvalid');
 require('./directives/selectonclick');
 require('./services/auth');
