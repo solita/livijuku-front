@@ -31,6 +31,20 @@
     <div class="col-md-10">
     </div>
     <div class="col-md-2 lataacsv">
+      <a ng-csv="exportCsvMultibar(tuotantokustannusData())"
+         filename="Tuotantokustannus.csv"
+         csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <nvd3 options='tuotantokustannusOptions' data='tuotantokustannusData'
+          api="tuotantokustannusApi"></nvd3>
+  </div>
+  <div class="row">
+    <div class="col-md-10">
+    </div>
+    <div class="col-md-2 lataacsv">
       <a ng-csv="exportCsvMultibar(tyytyvaisyysData())"
          filename="Tyytyväisyys_joukkoliikenteeseen.csv"
          csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV

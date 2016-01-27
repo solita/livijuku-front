@@ -177,6 +177,7 @@ angular.module('jukufrontApp')
       $scope.haettuMyonnettyYhteensaOptions.subtitle.text = tyypinNimi(tyyppi);
       $scope.haettuMyonnettyOptions.subtitle.text = tyypinNimi(tyyppi);
       $scope.myonnettyPerAsukasOptions.subtitle.text = tyypinNimi(tyyppi);
+      $scope.tuotantokustannusOptions.subtitle.text = tyypinNimi(tyyppi);
 
       if ($scope.haettuMyonnettyYhteensaApi !== undefined) $scope.haettuMyonnettyYhteensaApi.refresh();
       if ($scope.haettuMyonnettyApi !== undefined) $scope.haettuMyonnettyApi.refresh();
@@ -184,6 +185,7 @@ angular.module('jukufrontApp')
       if ($scope.tyytyvaisyysApi !== undefined) $scope.tyytyvaisyysApi.refresh();
       if ($scope.psaMatkustajatApi !== undefined) $scope.psaMatkustajatApi.refresh();
       if ($scope.siirtymaajanMatkustajatApi !== undefined) $scope.siirtymaajanMatkustajatApi.refresh();
+      if ($scope.tuotantokustannusApi !== undefined) $scope.tuotantokustannusApi.refresh();
     };
 
     $scope.exportCsvMultibar = function (data) {
@@ -500,6 +502,60 @@ angular.module('jukufrontApp')
           vuosiValues.push({
             x: vuosi,
             y: _.result(dataPerTyyppi, 'tyytyvaisyys')[vuosi][i]
+          });
+        }
+        paluuArvot.push({
+          key: _.result(dataPerTyyppi, 'organisaatiot')[i],
+          values: vuosiValues
+        });
+      }
+      return paluuArvot;
+    };
+
+    $scope.tuotantokustannusOptions = {
+      chart: {
+        type: 'multiBarChart',
+        height: 450,
+        stacked: false,
+        x: function (d) {
+          return d.x;
+        },
+        y: function (d) {
+          return d.y;
+        },
+        yAxis: {
+          axisLabel: '',
+          tickFormat: function (d) {
+            return d;
+          }
+        },
+        xAxis: {
+          axisLabel: 'Vuosi'
+        }
+      },
+      title: {
+        enable: true,
+        text: 'Tuotantokustannukset'
+      },
+      subtitle: {
+        enable: true,
+        text: 'Suuret kaupunkiseudut'
+      },
+      caption: {
+      enable: true,
+        text: 'Tuotantokustannus = (Liikennöintikorvaus - Lipputulot) / Linjakilometrit'
+    }
+    };
+
+    $scope.tuotantokustannusData = function () {
+      var paluuArvot = [];
+      var dataPerTyyppi = _.find($scope.avustusData, {'tyyppi': $scope.aktiivinenTyyppi});
+      for (var i = 0; i < _.result(dataPerTyyppi, 'organisaatiot').length; i++) {
+        var vuosiValues = [];
+        for (var vuosi in _.result(dataPerTyyppi, $scope.aktiivinenOsajoukko)) {
+          vuosiValues.push({
+            x: vuosi,
+            y: _.result(dataPerTyyppi, 'psa-matkustajat')[vuosi][i]
           });
         }
         paluuArvot.push({
