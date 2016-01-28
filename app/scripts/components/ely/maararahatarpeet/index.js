@@ -6,11 +6,18 @@ function errorMessage(nimi) {
   return d.combineErrorMessages(d.requiredErrorMessage(nimi), d.maxErrorMessage("9 999 999 999,99"));
 }
 
+var maararahatarvetyyppiTooltips = {
+  M: "Ennen 1.7.2014 kilpailutettu liikenne tai muu hankintalain nojalla hankittava liikenne.",
+  HK: "LIVIJUKU-714 - TODO: Liisa miettii tähän selitteen!"
+}
+
 function maararahatarpeetController($scope) {
 
   $scope.haeNimi = function (tunnus) {
     return _.find($scope.maararahatarvetyypit, {'tunnus': tunnus}).nimi;
   };
+
+  $scope.maararahatarvetyyppiTooltip = tunnus => maararahatarvetyyppiTooltips[tunnus];
 
   $scope.yhteensa = function () {
     return _.sum(_.values($scope.hakemus.ely)) +
