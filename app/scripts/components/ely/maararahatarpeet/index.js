@@ -19,6 +19,16 @@ function maararahatarpeetController($scope) {
            _.sum($scope.maararahatarpeet, 'tulot');
   };
 
+  // oletusarvot ely-tietoihin:
+  if (!$scope.hakemus.ely) {
+    $scope.hakemus.ely = {
+      kaupunkilipputuki: 0,
+      seutulipputuki: 0,
+      ostot: 0,
+      kehittaminen: 0
+    }
+  }
+
   $scope.kaupunkilipputukiErrorMessage = errorMessage("Kaupunkilipputuki");
   $scope.seutulipputukiErrorMessage = errorMessage("Seutulipputuki");
   $scope.ostotErrorMessage = errorMessage("Liikenteen ostot");
