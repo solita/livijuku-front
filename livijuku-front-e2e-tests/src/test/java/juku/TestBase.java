@@ -29,6 +29,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
@@ -105,15 +106,15 @@ public class TestBase {
         HARRI("juku_hakija", "juku_hakija", "helsingin ka", ""),
         KATRI("juku_kasittelija", "juku_kasittelija", "liikennevirasto", ""),
         PAIVI("juku_paatoksentekija", "juku_paatoksentekija", "liikennevirasto", ""),
-        ELY1("juku_hakija_uus","juku_hakija","ELY","1"),
-        ELY2("juku_hakija_var","juku_hakija","ELY","2"),
-        ELY3("juku_hakija_kaa","juku_hakija","ELY","3"),
-        ELY4("juku_hakija_pir","juku_hakija","ELY","4"),
-        ELY8("juku_hakija_psa","juku_hakija","ELY","8"),
-        ELY9("juku_hakija_ksu","juku_hakija","ELY","9"),
-        ELY10("juku_hakija_epo","juku_hakija","ELY","10"),
-        ELY12("juku_hakija_ppo","juku_hakija","ELY","12"),
-        ELY14("juku_hakija_lap","juku_hakija","ELY","14");
+        ELY1("juku_hakija_uus", "juku_hakija", "ELY", "1"),
+        ELY2("juku_hakija_var", "juku_hakija", "ELY", "2"),
+        ELY3("juku_hakija_kaa", "juku_hakija", "ELY", "3"),
+        ELY4("juku_hakija_pir", "juku_hakija", "ELY", "4"),
+        ELY8("juku_hakija_psa", "juku_hakija", "ELY", "8"),
+        ELY9("juku_hakija_ksu", "juku_hakija", "ELY", "9"),
+        ELY10("juku_hakija_epo", "juku_hakija", "ELY", "10"),
+        ELY12("juku_hakija_ppo", "juku_hakija", "ELY", "12"),
+        ELY14("juku_hakija_lap", "juku_hakija", "ELY", "14");
 
 
         private final String login;
@@ -261,9 +262,9 @@ public class TestBase {
     private void avaaKausi() {
         login(User.KATRI);
 
-        postHakuohje(getPathToTestFile("test.pdf").toFile(),"//input[@type='file' and @name='hakuohje']");
+        postHakuohje(getPathToTestFile("test.pdf").toFile(), "//input[@type='file' and @name='hakuohje']");
         waitForAngularRequestsToFinish(driver);
-        postHakuohje(getPathToTestFile("test.pdf").toFile(),"//input[@type='file' and @name='elyhakuohje']");
+        postHakuohje(getPathToTestFile("test.pdf").toFile(), "//input[@type='file' and @name='elyhakuohje']");
 
         boolean kaynnistaNapinTilaEnnen =
                 findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi")).isEnabled();
@@ -466,6 +467,11 @@ public class TestBase {
         return driver.findElementByCssSelector(css);
     }
 
+    public static WebElement findElementById(String text) {
+        waitForAngularRequestsToFinish(driver);
+        return driver.findElement(By.id(text));
+    }
+
     public static WebElement findElementByLinkText(String text) {
         waitForAngularRequestsToFinish(driver);
         return driver.findElementByLinkText(text);
@@ -489,7 +495,7 @@ public class TestBase {
     public static WebElement getElementByXPath(String xpath, Object... n) {
         List<WebElement> elements = findElementsByXPath(xpath, n);
 
-        Assert.assertFalse(elements.isEmpty(), "Yhtään haluttua elementtiä: " + xpath + " ei löytynyt" );
+        Assert.assertFalse(elements.isEmpty(), "Yhtään haluttua elementtiä: " + xpath + " ei löytynyt");
         Assert.assertEquals(elements.size(), 1, "Ehtojen mukaisia " + xpath + " elementtejä löytyi enemmän kuin yksi.");
 
         return elements.get(0);

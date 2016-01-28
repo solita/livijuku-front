@@ -44,6 +44,7 @@
     <juku-tabs>
       <juku-tab
         ng-repeat="tyyppi in constants.tunnuslukuTyypit"
+        id="{{tyyppi}}"
         selected="isTabSelected(tyyppi)"
         ng-click="toTab(tyyppi)">
         {{ tunnuslukuTyyppiNimi(tyyppi) }}
@@ -55,7 +56,7 @@
       <div ui-view></div>
       <juku-controls>
         <juku-controls-buttons>
-          <button class="btn btn-success" data-ng-click="tallennaTunnusluvut()">Tallenna näytöllä olevat tiedot</button>
+          <button id="tallenna" class="btn btn-success" data-ng-click="tallennaTunnusluvut()">Tallenna näytöllä olevat tiedot</button>
         </juku-controls-buttons>
       </juku-controls>
     </div>
