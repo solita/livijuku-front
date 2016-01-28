@@ -62,7 +62,16 @@
       </thead>
       <tbody>
         <tr ng-repeat="maararahatarve in maararahatarpeet track by $index" ng-form>
-          <td>{{haeNimi(maararahatarve.maararahatarvetyyppitunnus)}}</td>
+          <td>
+            <div uib-tooltip="{{maararahatarvetyyppiTooltip(maararahatarve.maararahatarvetyyppitunnus)}}"
+                 tooltip-enable="maararahatarvetyyppiTooltip(maararahatarve.maararahatarvetyyppitunnus)"
+                 tooltip-placement="top"
+                 tooltip-append-to-body="true">
+            {{haeNimi(maararahatarve.maararahatarvetyyppitunnus)}}&nbsp;<span
+              ng-if="maararahatarvetyyppiTooltip(maararahatarve.maararahatarvetyyppitunnus)"
+              class="text-info small glyphicon glyphicon-question-sign"></span>
+            </div>
+          </td>
           <td>
             <form-group-compact label="Sidotut" errormessage="errorMessage">
               <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-sidotut'}}" name="sidotut" type="text"
