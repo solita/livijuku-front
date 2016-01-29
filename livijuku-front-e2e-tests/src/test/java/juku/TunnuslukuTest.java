@@ -34,7 +34,7 @@ public class TunnuslukuTest extends TestBase {
         findElementById("tunnusluvut").click();
         findElementById("tunnusluvut-syottaminen").click();
         if (!findElementByXPath("//select[@id='vuosi']/option[2]").isSelected()) {
-            findElementByXPath("//select[@id='vuosi']/option[2]").click();
+            WorkAround.click(findElementByXPath("//select[@id='vuosi']/option[2]"));
         }
         findElementById("taustatiedot-henkilosto").click();
         findElementById("taustatiedot-henkilosto").clear();
@@ -123,15 +123,15 @@ public class TunnuslukuTest extends TestBase {
         findElementById("lisatiedot").click();
         findElementById("lisatiedot").clear();
         findElementById("lisatiedot").sendKeys("Lisätietoa");
-        findElementById("tallenna").click();
-        findElementByXPath("//a[@id='BR']").click();
-        findElementById("tallenna").click();
-        findElementByXPath("//a[@id='KOS']").click();
-        findElementById("tallenna").click();
-        findElementByXPath("//a[@id='SA']").click();
-        findElementById("tallenna").click();
-        findElementByXPath("//a[@id='ME']").click();
-        findElementById("tallenna").click();
-        findElementByXPath("//a[@id='TTYT']").click();
+        WorkAround.click(findElementById("tallenna"));
+        WorkAround.click(findElementByXPath("//a[@id='BR']"));
+        WorkAround.click(findElementById("tallenna"));
+        WorkAround.click(findElementByXPath("//a[@id='KOS']"));
+        WorkAround.click(findElementById("tallenna"));
+        WorkAround.click(findElementByXPath("//a[@id='SA']"));
+        WorkAround.click(findElementById("tallenna"));
+        WorkAround.click(findElementByXPath("//a[@id='ME']"));
+        WorkAround.click(findElementById("tallenna"));
+        WorkAround.click(findElementByXPath("//a[@id='TTYT']"));
     }
 }
