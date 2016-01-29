@@ -48,12 +48,12 @@ public class WorkAround {
     }
 
     public static void hideMainMenu() {
-        String hideScript = "jQuery($x(\"//*[contains(@class, 'header')]\")[0]).hide()";
+        String hideScript = "jQuery('#navheader').hide()";
         TestBase.driver.executeScript(hideScript);
     }
 
     public static void showMainMenu() {
-        String hideScript = "jQuery($x(\"//*[contains(@class, 'header')]\")[0]).show()";
+        String hideScript = "jQuery('#navheader').show()";
         TestBase.driver.executeScript(hideScript);
     }
 }

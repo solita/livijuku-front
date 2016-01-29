@@ -1,5 +1,6 @@
 package juku;
 
+import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
 import juku.TestBase;
 import juku.WorkAround;
 import juku.hakija.OmatHakemukset;
@@ -36,6 +37,7 @@ public class TunnuslukuTest extends TestBase {
         if (!findElementByXPath("//select[@id='vuosi']/option[2]").isSelected()) {
             WorkAround.click(findElementByXPath("//select[@id='vuosi']/option[2]"));
         }
+        WorkAround.hideMainMenu();
         findElementById("taustatiedot-henkilosto").click();
         findElementById("taustatiedot-henkilosto").clear();
         findElementById("taustatiedot-henkilosto").sendKeys("1000");
@@ -124,14 +126,23 @@ public class TunnuslukuTest extends TestBase {
         findElementById("lisatiedot").clear();
         findElementById("lisatiedot").sendKeys("Lisätietoa");
         WorkAround.click(findElementById("tallenna"));
+        WorkAround.showMainMenu();
         WorkAround.click(findElementByXPath("//a[@id='BR']"));
+        WorkAround.hideMainMenu();
         WorkAround.click(findElementById("tallenna"));
+        WorkAround.showMainMenu();
         WorkAround.click(findElementByXPath("//a[@id='KOS']"));
+        WorkAround.hideMainMenu();
         WorkAround.click(findElementById("tallenna"));
+        WorkAround.showMainMenu();
         WorkAround.click(findElementByXPath("//a[@id='SA']"));
+        WorkAround.hideMainMenu();
         WorkAround.click(findElementById("tallenna"));
+        WorkAround.showMainMenu();
         WorkAround.click(findElementByXPath("//a[@id='ME']"));
+        WorkAround.hideMainMenu();
         WorkAround.click(findElementById("tallenna"));
+        WorkAround.showMainMenu();
         WorkAround.click(findElementByXPath("//a[@id='TTYT']"));
     }
 }
