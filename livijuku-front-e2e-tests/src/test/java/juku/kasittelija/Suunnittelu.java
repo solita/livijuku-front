@@ -1,10 +1,9 @@
 package juku.kasittelija;
 
-import static juku.TestBase.driver;
-
+import juku.util.ViewBase;
 import org.openqa.selenium.WebElement;
 
-import juku.util.ViewBase;
+import static juku.TestBase.driver;
 
 /**
  * Created by petrisi on 16.9.15.

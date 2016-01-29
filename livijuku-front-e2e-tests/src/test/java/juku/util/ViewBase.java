@@ -1,8 +1,7 @@
 package juku.util;
 
-import org.openqa.selenium.WebElement;
-
 import juku.TestBase;
+import org.openqa.selenium.WebElement;
 
 /**
  * Created by petrisi on 16.9.15.

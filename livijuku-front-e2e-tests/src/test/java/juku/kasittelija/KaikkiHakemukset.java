@@ -1,8 +1,7 @@
 package juku.kasittelija;
 
-import org.openqa.selenium.WebElement;
-
 import juku.TestBase;
+import org.openqa.selenium.WebElement;
 
 /**
  * Created by petrisi on 22.9.15.

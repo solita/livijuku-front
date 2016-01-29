@@ -1,21 +1,16 @@
 package juku.yhteinen;
 
-import static juku.TestBase.containsText;
-import static juku.TestBase.findElementsByXPath;
-import static juku.TestBase.hasClass;
-import static juku.TestBase.isVisible;
+import com.thoughtworks.selenium.SeleneseTestNgHelper;
+import juku.TestBase;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+
+import static juku.TestBase.*;
 import static juku.util.ViewBase.linkInPosition;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.IsEqual.equalTo;
-
-import java.util.List;
-
-import org.openqa.selenium.WebElement;
-
-import com.thoughtworks.selenium.SeleneseTestNgHelper;
-
-import juku.TestBase;
 
 /**
  * Created by petrisi on 16.9.15.

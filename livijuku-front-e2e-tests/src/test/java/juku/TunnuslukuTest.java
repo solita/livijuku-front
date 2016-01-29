@@ -1,25 +1,9 @@
 package juku;
 
-import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
-import juku.TestBase;
-import juku.WorkAround;
-import juku.hakija.OmatHakemukset;
-import juku.kasittelija.Hakemuskaudet;
-import juku.kasittelija.KaikkiHakemukset;
-import juku.kasittelija.Suunnittelu;
-import juku.yhteinen.Hakemus;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.List;
-
-import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 public class TunnuslukuTest extends TestBase {
 
