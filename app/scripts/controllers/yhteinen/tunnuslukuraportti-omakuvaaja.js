@@ -4,7 +4,7 @@ var _ = require('lodash');
 var angular = require('angular');
 var c = require('utils/core');
 
-const kuukaudet = ["Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu",
+const kuukaudet = ["Koko vuosi", "Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu",
                    "Heinäkuu", "Elokuu", "Syyskuu", "Lokakuu", "Marraskuu", "Joulukuu"];
 
 const kalustoluokat = { E0: "EURO 0", E1: "EURO 1", E2: "EURO 2", E3: "EURO 3", E4: "EURO 4", E5: "EURO 5/EEV", E6: "EURO 6" };
@@ -62,15 +62,19 @@ function createMultiBarChart(title, subtitle, xLabel, yLabel) {
   };
 };
 
+function createFilter(id, nimi, values, valueKeyToId = _.identity) {
+  return {id: id, nimi: nimi, values: values, valueKeyToId: valueKeyToId};
+}
+
 const tunnusluvut = [{
     id: "nousut",
     nimi: "Nousut",
     charts: [{
       title: "Nousut vuosittain",
-      groupBy: ["vuosi"],
+      groupBy: ["organisaatioid", "vuosi"],
       filters: [
-        {id: "sopimustyyppitunnus", nimi: "Sopimustyyppi", values: sopimustyypit},
-        {id: "kuukausi", nimi: "Kuukausi", values: kuukaudet}],
+        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
+        createFilter("kuukausi", "Tarkastelujakso", kuukaudet, key => key === 0 ? "ALL" : key)],
       options: createMultiBarChart("Kysyntä", "Nousua / vuosi", "Vuosi", "Nousua / vuosi")}]
   }];
 
@@ -85,10 +89,10 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
   var tunnusluku = $scope.tunnusluku;
   $scope.data = new Array(charts.length);
 
-  function listener(id, organisaatiolaji, filters) {
+  function listener(id, chart, organisaatiolaji, filters) {
     $q.all([RaporttiService.haeTunnuslukuTilasto(tunnusluku.id,
                                                  _.assign( {organisaatiolajitunnus: organisaatiolaji}, filters),
-                                                 tunnusluku.groupBy),
+                                                 chart.groupBy),
             OrganisaatioService.hae()])
       .then(([data, organisaatiot])=> {
               $scope.data[id] = convertToNvd3(data, organisaatiot);
@@ -98,10 +102,10 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
   _.forEach(charts, function(chart, id) {
     const filterPath = 'params.charts[' + id + '].filter';
     $scope.$watchCollection(filterPath,
-      filters => listener(id, $scope.params.organisaatiolaji, filters));
+      filters => listener(id, chart, $scope.params.organisaatiolaji, filters));
 
     $scope.$watch('params.organisaatiolaji',
-      organisaatiolaji => listener(id, organisaatiolaji, _.get($scope.params, filterPath)));
+      organisaatiolaji => listener(id, chart, organisaatiolaji, _.get($scope.params, filterPath)));
   });
 }
 
@@ -122,6 +126,8 @@ angular.module('jukufrontApp')
     $scope.tunnusluku = _.find(tunnusluvut, {id: $state.params.tunnuslukuid});
 
     $scope.organisaatiolajit = organisaatiolajit;
+
+    $scope.params.organisaatiolaji = 'ALL';
 
     $scope.isTabSelected = function isTabSelected(tyyppi) {
       return $scope.params.organisaatiolaji === tyyppi;

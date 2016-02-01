@@ -46,7 +46,7 @@
           <select id="tunnusluku-filter-form-{{filter.id}}" ng-model="params.charts[chartid].filter[filter.id]"
                   placeholder="Valitse tunnusluku" name="tunnuslukuValinta">
             <option value="" selected disabled>Valitse rajoite</option>
-            <option ng-repeat="(id, nimi) in filter.values" value="{{id}}">{{nimi}}</option>
+            <option ng-repeat="(key, nimi) in filter.values" value="{{filter.valueKeyToId(key)}}">{{nimi}}</option>
           </select>
       </form-group>
     </form>
