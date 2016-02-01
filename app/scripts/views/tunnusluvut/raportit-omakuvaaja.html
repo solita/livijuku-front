@@ -1,85 +1,68 @@
 <div class="container">
-  <div class="row">
+
+  <div class="page-header">
     <h1>Oma kuvaaja tunnusluvuista</h1>
   </div>
-  <form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm">
-    <juku-form-row>
-      <div class="col-md-6 form-group input-lg">
-        <label for="tunnusluku" class="sr-only">Tunnusluku</label>
-        <select id="tunnusluku" ng-model="tunnuslukuId" ng-disabled="isReadonly()" ng-change="update()"
-                placeholder="Valitse tunnusluku" class="form-control" required>
+
+  <form id="tunnusluku-valinta-form" name="tunnusluku-valinta-form" class="form-inline tunnusluku-valinta-form">
+    <form-group label="Valitse tarkasteltava tunnusluku">
+        <select id="tunnusluku" ng-model="params.tunnuslukuid"
+                placeholder="Valitse tunnusluku" name="tunnuslukuValinta">
           <option value="" selected disabled>Valitse tunnusluku</option>
           <option ng-repeat="tunnusluku in tunnusluvut" value="{{tunnusluku.id}}">{{tunnusluku.nimi}}</option>
         </select>
-      </div>
-    </juku-form-row>
-    <juku-navigation>
-      <juku-tabs>
-        <juku-tab
-          ng-repeat="(tyyppi, value) in omakuvaajaTyypit"
-          selected="isTabSelected(tyyppi)"
-          ely="isEly(tyyppi)"
-          ng-click="toTab(tyyppi)">
-          {{ tyypinNimi(tyyppi) }}
-        </juku-tab>
-      </juku-tabs>
-    </juku-navigation>
-    <div ng-if="tunnuslukuId">
-      <div class="row">
-        <div class="col-md-10">
-          <h4></h4>
-        </div>
-        <div class="col-md-2 lataacsv">
-          <a ng-csv="exportCsvMultibar(tunnuslukugraafi.data())"
-             filename="tunnuslukudata.csv"
-             csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa
-            CSV
-          </a>
-        </div>
-      </div>
-      <div class="row">
-        <nvd3 options='tunnuslukugraafi.options' data='tunnuslukugraafi.data'
-              api="tunnuslukugraafi.api"></nvd3>
-      </div>
-    </div>
-    <div ng-if="!tunnuslukuId">
-      <br>
-      <div class="alert alert-info">
-        <p>
-          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-          Valitse tunnusluku
-        </p>
-      </div>
-    </div>
-    <juku-form-row ng-show="hasKuukausitaso() || hasKalustoluokkaTaso()">
-      <h4 ng-show="hasKuukausitaso()" class="col-md-4">Haluatko tarkastella kuukausittain?</h4>
-      <h4 ng-show="hasKalustoluokkaTaso()" class="col-md-4">Haluatko tarkastella päästöluokittain?</h4>
-      <div class="col-md-2 form-group input-lg">
-        <label for="vuosi" class="sr-only">Vuosi</label>
-        <select id="vuosi" ng-model="vuosi" ng-disabled="isReadonly()" ng-change="updateVuosi()"
-                placeholder="Valitse tunnusluku" class="form-control" required>
-          <option value="" selected disabled>Valitse vuosi</option>
-          <option ng-repeat="vuosi in vuodet()" value="{{vuosi}}">{{vuosi}}</option>
-        </select>
-      </div>
-      <div ng-if="vuosi">
-        <div class="row">
-          <div class="col-md-10">
-            <h4></h4>
-          </div>
-          <div class="col-md-2 lataacsv">
-            <a ng-csv="exportCsvMultibar(tunnuslukuAligraafi.data())"
-               filename="tunnuslukudata.csv"
-               csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa
-              CSV
-            </a>
-          </div>
-        </div>
-        <div class="row">
-          <nvd3 options='tunnuslukuAligraafi.options' data='tunnuslukuAligraafi.data'
-                api="tunnuslukuAligraafi.api"></nvd3>
-        </div>
-      </div>
-    </juku-form-row>
+    </form-group>
   </form>
+
+  <juku-navigation>
+    <juku-tabs>
+      <juku-tab
+        ng-repeat="(laji, value) in organisaatiolajit"
+        selected="isTabSelected(laji)"
+        ely="isEly(laji)"
+        ng-click="toTab(laji)">
+        {{ value }}
+      </juku-tab>
+    </juku-tabs>
+  </juku-navigation>
+  <br>
+
+  <div ng-if="tunnusluku" ng-repeat="chart in tunnusluku.charts" ng-init="chartid = $index">
+    <div class="row">
+      <div class="col-md-10">
+        <h4>{{chart.title}}</h4>
+      </div>
+      <div class="col-md-2 lataacsv">
+        <a ng-csv="exportCsvMultibar(tunnuslukugraafi.data())"
+           filename="tunnuslukudata.csv"
+           csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa
+          CSV
+        </a>
+      </div>
+    </div>
+
+    <form id="tunnusluku-filter-form" name="tunnusluku-filter-form" class="form-inline">
+      <form-group label="{{filter.nimi}}" ng-repeat="filter in chart.filters">
+          <select id="tunnusluku-filter-form-{{filter.id}}" ng-model="params.charts[chartid].filter[filter.id]"
+                  placeholder="Valitse tunnusluku" name="tunnuslukuValinta">
+            <option value="" selected disabled>Valitse rajoite</option>
+            <option ng-repeat="(id, nimi) in filter.values" value="{{id}}">{{nimi}}</option>
+          </select>
+      </form-group>
+    </form>
+
+    <div class="row">
+      <nvd3 options='chart.options' data='data[chartid]' api="chart.api"></nvd3>
+    </div>
+  </div>
+
+  <div ng-if="!tunnusluku">
+
+    <div class="alert alert-info">
+      <p>
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+        Valitse tunnusluku
+      </p>
+    </div>
+  </div>
 </div>
