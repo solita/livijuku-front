@@ -41,12 +41,15 @@ function formGroupDirective(template) {
       angular.element(input).addClass("form-control");
 
       scope.name = input.getAttribute("name");
-      scope.input = function() {
-        return form[scope.name];
-      };
+
+      function findModelController() {
+        return form[scope.name] || input.controller('ngModel');
+      }
+
+      scope.input = findModelController;
 
       var formGroupClasses = function() {
-        var input = form[scope.name];
+        var input = findModelController();
         var classes = {
           'has-feedback': input.$invalid && input.$touched && scope.feedbackSupport,
           'has-error': input.$invalid && input.$touched,
