@@ -34,12 +34,8 @@ function createMultiBarChart(title, subtitle, xLabel, yLabel) {
       height: 450,
       stacked: false,
       reduceXTicks: false,
-      x: function (d) {
-        return d.x;
-      },
-      y: function (d) {
-        return d.y;
-      },
+      x: d => d.x,
+      y: d => d.y,
       showValues: false,
       valueFormat: function (d) {
         return d3.format('.02f')(d);
@@ -49,6 +45,38 @@ function createMultiBarChart(title, subtitle, xLabel, yLabel) {
       },
       xAxis: {
         axisLabel: xLabel
+      }
+    },
+    title: {
+      enable: true,
+      text: title
+    },
+    subtitle: {
+      enable: true,
+      text: subtitle
+    }
+  };
+};
+
+function createLineChart(title, subtitle, xLabel, yLabel) {
+  return {
+    chart: {
+      type: 'lineWithFocusChart',
+      height: 450,
+      interpolate: "linear",
+      x: d => d.x,
+      y: d => d.y,
+      yAxis: {
+        axisLabel: yLabel
+      },
+      xAxis: {
+        axisLabel: xLabel,
+        tickFormat: d => d3.time.format.utc("%m/%Y") (new Date(d))
+      },
+      xScale: d3.time.scale.utc(),
+      x2Axis: {
+        axisLabel: xLabel,
+        tickFormat: d => d3.time.format.utc("%m/%Y") (new Date(d))
       }
     },
     title: {
@@ -75,7 +103,13 @@ const tunnusluvut = [{
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
         createFilter("kuukausi", "Tarkastelujakso", kuukaudet, key => key === 0 ? "ALL" : key)],
-      options: createMultiBarChart("Kysyntä", "Nousua / vuosi", "Vuosi", "Nousua / vuosi")}]
+      options: createMultiBarChart("Kysyntä", "Nousua / vuosi", "Vuosi", "Nousua / vuosi")
+    }, {
+      title: "Nousujen lukumäärä kuukausitasolla",
+      groupBy: ["organisaatioid", "kuukausi"],
+      filters: [
+        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
+      options: createLineChart("Kysyntä", "Nousua / kuukausi", "Kuukausi", "Nousua / kuukausi")}]
   }];
 
 function convertToNvd3(data, organisaatiot) {
@@ -127,7 +161,7 @@ angular.module('jukufrontApp')
 
     $scope.organisaatiolajit = organisaatiolajit;
 
-    $scope.params.organisaatiolaji = 'ALL';
+    $scope.params.organisaatiolaji = 'KS1';
 
     $scope.isTabSelected = function isTabSelected(tyyppi) {
       return $scope.params.organisaatiolaji === tyyppi;
