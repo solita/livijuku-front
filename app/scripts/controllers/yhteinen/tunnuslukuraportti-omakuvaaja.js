@@ -70,7 +70,7 @@ const tunnusluvut = [{
     id: "nousut",
     nimi: "Nousut",
     charts: [{
-      title: "Nousut vuosittain",
+      title: "Nousujen lukumäärä vuositasolla",
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
