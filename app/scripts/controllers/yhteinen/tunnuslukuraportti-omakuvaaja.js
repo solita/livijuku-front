@@ -132,7 +132,7 @@ const tunnusluvut = [{
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
-        createFilter("kuukausi", "Tarkastelujakso", kuukaudet, key => key === 0 ? "ALL" : key)],
+        createFilter("kuukausi", "Tarkastelujakso", kuukaudet)],
       options: createMultiBarChart("Kysyntä", "Vuosi")
     }, {
       title: "Lähtöjen lukumäärä kuukausitasolla",
