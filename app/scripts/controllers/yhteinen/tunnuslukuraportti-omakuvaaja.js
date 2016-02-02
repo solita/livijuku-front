@@ -12,16 +12,23 @@ const kuukaudet = {
   ALL: "Koko vuosi", 1: "Tammikuu", 2: "Helmikuu", 3: "Maaliskuu", 4: "Huhtikuu", 5: "Toukokuu",
   6: "Kesäkuu", 7: "Heinäkuu", 8: "Elokuu", 9: "Syyskuu", 10: "Lokakuu", 11: "Marraskuu", 12: "Joulukuu",
   $order: ['ALL'].concat(_.range(1,13)),
-  $nimi: nimi
+  $nimi: nimi,
+  $id: "kuukausi"
 };
 
 const paastoluokat = {
   ALL: 'Kaikki', E0: "EURO 0", E1: "EURO 1", E2: "EURO 2", E3: "EURO 3", E4: "EURO 4", E5: "EURO 5/EEV", E6: "EURO 6",
   $order: ['ALL'].concat(_.map(_.range(0,7), i => 'E' + i)),
-  $nimi: nimi
+  $nimi: nimi,
+  $id: "paastoluokkatunnus"
 };
 
-const viikonpaivaluokat = { A: 'Arkipäivä', LA: 'Lauantai', SU: 'Sunnuntai', $order: ['A', 'LA', 'SU'], $nimi: nimi };
+const viikonpaivaluokat = {
+  A: 'Arkipäivä', LA: 'Lauantai', SU: 'Sunnuntai',
+  $order: ['A', 'LA', 'SU'],
+  $nimi: nimi,
+  $id: "viikonpaivaluokkatunnus"
+};
 
 const organisaatiolajit = {
   ALL: 'Kaikki organisaatiot',
@@ -30,7 +37,8 @@ const organisaatiolajit = {
   KS3: 'Pienet kaupunkiseudut',
   ELY: 'ELY-keskukset',
   $order: ['ALL', 'KS1', 'KS2', 'KS3', 'ELY'],
-  $nimi: nimi
+  $nimi: nimi,
+  $id: "organisaatiolajitunnus"
 };
 
 const sopimustyypit = {
@@ -40,12 +48,14 @@ const sopimustyypit = {
   SA:  'Siirtymäajan liikenne',
   ME:  'Markkinaehtoinen liikenne',
   $order: ['ALL', 'BR', 'KOS', 'SA', 'ME'],
-  $nimi: nimi
+  $nimi: nimi,
+  $id: "sopimustyyppitunnus"
 };
 
 const vuodet = {
-  $order: _.range(2013, 2017),
-  $nimi: _.identity
+  $order: _.range(2013, 2017).reverse(),
+  $nimi: _.identity,
+  $id: "vuosi"
 };
 
 function createChart(title, xLabel) {
@@ -106,15 +116,19 @@ function createFilter(id, nimi, values, defaultValue = 'ALL') {
   return {id: id, nimi: nimi, values: values, defaultValue: defaultValue};
 }
 
-function yTitleNousut(title, filter) {
-  return title +
-    (filter.sopimustyyppitunnus && filter.sopimustyyppitunnus !== 'ALL' ?  " (" + sopimustyypit[filter.sopimustyyppitunnus] + ")" : "") + " / " +
-    (filter.kuukausi && filter.kuukausi !== 'ALL' ? kuukaudet[filter.kuukausi] : 'Vuosi');
+function filterInfoText(filter) {
+  function txt(luokka) {
+    var v = filter[luokka.$id];
+    return c.isDefinedNotNull(v) && v !== 'ALL' ? luokka.$nimi(v) : null;
+  }
+
+  var info = _.filter(_.map([sopimustyypit, paastoluokat], txt), c.isDefinedNotNull).join(', ');
+  return info ? ' (' + info + ')' : '';
 }
 
-function yTitleNousutKK(title, filter) {
-  return title +
-    (filter.sopimustyyppitunnus && filter.sopimustyyppitunnus !== 'ALL' ?  " (" + sopimustyypit[filter.sopimustyyppitunnus] + ")" : "") + " / Kuukausi";
+function yTitleTarkastelujakso(title, filter) {
+  return title + filterInfoText(filter) + " / " +
+    (filter.kuukausi && filter.kuukausi !== 'ALL' ? kuukaudet[filter.kuukausi] : 'vuosi');
 }
 
 const tunnusluvut = [{
@@ -122,7 +136,7 @@ const tunnusluvut = [{
     nimi: "Nousut",
     charts: [{
       title: "Nousujen lukumäärä vuosittain tarkasteltuna",
-      yTitle: _.partial(yTitleNousut, "Nousut"),
+      yTitle: _.partial(yTitleTarkastelujakso, "Nousut"),
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
@@ -130,7 +144,7 @@ const tunnusluvut = [{
       options: createMultiBarChart("Kysyntä", "Vuosi")
     }, {
       title: "Nousujen lukumäärä kuukausitasolla",
-      yTitle: _.partial(yTitleNousutKK, "Nousut"),
+      yTitle: filter => "Nousut" + filterInfoText(filter) + " / kuukausi",
       groupBy: ["organisaatioid", "kuukausi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
@@ -140,7 +154,7 @@ const tunnusluvut = [{
     nimi: "Lähdöt",
     charts: [{
       title: "Lähtöjen lukumäärä vuosittain tarkasteltuna",
-      yTitle: _.partial(yTitleNousut, "Lähdöt"),
+      yTitle: _.partial(yTitleTarkastelujakso, "Lähdöt"),
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
@@ -148,7 +162,7 @@ const tunnusluvut = [{
       options: createMultiBarChart("Tarjonta", "Vuosi")
     }, {
       title: "Lähtöjen lukumäärä kuukausitasolla",
-      yTitle: _.partial(yTitleNousutKK, "Lähdöt"),
+      yTitle: filter => "Lähdöt" + filterInfoText(filter) + " / kuukausi",
       groupBy: ["organisaatioid", "kuukausi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
@@ -158,7 +172,7 @@ const tunnusluvut = [{
     nimi: "Linjakilometrit",
     charts: [{
       title: "Linjakilometrien lukumäärä vuosittain tarkasteltuna",
-      yTitle: _.partial(yTitleNousut, "Linjakilometrit"),
+      yTitle: _.partial(yTitleTarkastelujakso, "Linjakilometrit"),
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
@@ -166,7 +180,7 @@ const tunnusluvut = [{
       options: createMultiBarChart("Tarjonta", "Vuosi")
     }, {
       title: "Linjakilometrien lukumäärä kuukausitasolla",
-      yTitle: _.partial(yTitleNousutKK, "Linjakilometrit"),
+      yTitle: filter => "Linjakilometrit" + filterInfoText(filter) + " / kuukausi",
       groupBy: ["organisaatioid", "kuukausi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
@@ -176,15 +190,15 @@ const tunnusluvut = [{
     nimi: "Kalusto",
     charts: [{
       title: "Kaluston lukumäärä vuosittain tarkasteltuna",
-      yTitle: _.partial(yTitleNousut, "Kaluston lukumäärä"),
+      yTitle: filter => "Kaluston lukumäärä" + filterInfoText(filter),
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
-        createFilter("paastoluokka", "Päästöluokka", paastoluokat)],
+        createFilter("paastoluokkatunnus", "Päästöluokka", paastoluokat)],
       options: createMultiBarChart("Kalusto", "Vuosi")
     }, {
-      title: "Kaluston lukumäärä valittuna vuonna",
-      yTitle: _.partial(yTitleNousut, "Kaluston lukumäärä"),
+      title: "Kaluston lukumäärä päästöluokittain",
+      yTitle: filter => "Kaluston lukumäärä" + filterInfoText(filter) + ' vuonna ' + filter.vuosi,
       groupBy: ["organisaatioid", "paastoluokkatunnus"],
       filters: [
         createFilter("vuosi", "Vuosi", vuodet, '2016'),
