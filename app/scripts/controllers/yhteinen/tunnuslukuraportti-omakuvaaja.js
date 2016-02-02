@@ -86,14 +86,14 @@ function createFilter(id, nimi, values, valueKeyToId = _.identity, defaultValue 
   return {id: id, nimi: nimi, values: values, defaultValue: defaultValue, valueKeyToId: valueKeyToId};
 }
 
-function yTitleNousut(filter) {
-  return "Nousut" +
+function yTitleNousut(title, filter) {
+  return title +
     (filter.sopimustyyppitunnus && filter.sopimustyyppitunnus !== 'ALL' ?  " (" + sopimustyypit[filter.sopimustyyppitunnus] + ")" : "") + " / " +
     (filter.kuukausi && filter.kuukausi !== 'ALL' ? kuukaudet[filter.kuukausi] : 'Vuosi');
 }
 
-function yTitleNousutKK(filter) {
-  return "Nousut" +
+function yTitleNousutKK(title, filter) {
+  return title +
     (filter.sopimustyyppitunnus && filter.sopimustyyppitunnus !== 'ALL' ?  " (" + sopimustyypit[filter.sopimustyyppitunnus] + ")" : "") + " / Kuukausi";
 }
 
@@ -102,7 +102,7 @@ const tunnusluvut = [{
     nimi: "Nousut",
     charts: [{
       title: "Nousujen lukumäärä vuosittain tarkasteltuna",
-      yTitle: yTitleNousut,
+      yTitle: _.partial(yTitleNousut, "Nousut"),
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
@@ -110,7 +110,25 @@ const tunnusluvut = [{
       options: createMultiBarChart("Kysyntä", "Vuosi")
     }, {
       title: "Nousujen lukumäärä kuukausitasolla",
-      yTitle: yTitleNousutKK,
+      yTitle: _.partial(yTitleNousutKK, "Nousut"),
+      groupBy: ["organisaatioid", "kuukausi"],
+      filters: [
+        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
+      options: createLineChartKK("Kysyntä")}]
+  }, {
+    id: "lahdot",
+    nimi: "Lähdöt",
+    charts: [{
+      title: "Lähtöjen lukumäärä vuosittain tarkasteltuna",
+      yTitle: _.partial(yTitleNousut, "Lähdöt"),
+      groupBy: ["organisaatioid", "vuosi"],
+      filters: [
+        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
+        createFilter("kuukausi", "Tarkastelujakso", kuukaudet, key => key === 0 ? "ALL" : key)],
+      options: createMultiBarChart("Kysyntä", "Vuosi")
+    }, {
+      title: "Lähtöjen lukumäärä kuukausitasolla",
+      yTitle: _.partial(yTitleNousutKK, "Lähdöt"),
       groupBy: ["organisaatioid", "kuukausi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
@@ -126,6 +144,8 @@ function convertToNvd3(data, organisaatiot) {
 function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService) {
   var charts = $scope.tunnusluku.charts;
   var tunnusluku = $scope.tunnusluku;
+
+  // init chart data and chart params
   $scope.data = new Array(charts.length);
   $scope.params.charts = new Array(charts.length);
 
