@@ -31,7 +31,7 @@
 
     <h3>{{chart.title}}</h3>
 
-    <form id="tunnusluku-filter-form" name="tunnusluku-filter-form" class="form-inline">
+    <form id="tunnusluku-filter-form-{{chartid}}" name="tunnusluku-filter-form" class="form-inline tunnusluku-filter-form">
       <form-group label="{{filter.nimi}}" ng-repeat="filter in chart.filters">
           <select id="tunnusluku-filter-form-{{filter.id}}" ng-model="params.charts[chartid].filter[filter.id]"
                   placeholder="Valitse tunnusluku" name="tunnuslukuValinta">
