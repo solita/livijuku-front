@@ -4,19 +4,26 @@ var _ = require('lodash');
 var angular = require('angular');
 var c = require('utils/core');
 
-const kuukaudet = ["Koko vuosi", "Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu",
-                   "Heinäkuu", "Elokuu", "Syyskuu", "Lokakuu", "Marraskuu", "Joulukuu"];
+const kuukaudet = {
+  ALL: "Koko vuosi", 1: "Tammikuu", 2: "Helmikuu", 3: "Maaliskuu", 4: "Huhtikuu", 5: "Toukokuu",
+  6: "Kesäkuu", 7: "Heinäkuu", 8: "Elokuu", 9: "Syyskuu", 10: "Lokakuu", 11: "Marraskuu", 12: "Joulukuu",
+  $order: ['ALL'].concat(_.range(1,13))
+};
 
-const kalustoluokat = { E0: "EURO 0", E1: "EURO 1", E2: "EURO 2", E3: "EURO 3", E4: "EURO 4", E5: "EURO 5/EEV", E6: "EURO 6" };
+const kalustoluokat = {
+  E0: "EURO 0", E1: "EURO 1", E2: "EURO 2", E3: "EURO 3", E4: "EURO 4", E5: "EURO 5/EEV", E6: "EURO 6",
+  $order: _.map(_.range(0,7), i => 'E' + i)
+};
 
-const viikonpaivaluokat = {A: 'Arkipäivä', LA: 'Lauantai', SU: 'Sunnuntai'};
+const viikonpaivaluokat = { A: 'Arkipäivä', LA: 'Lauantai', SU: 'Sunnuntai', $order: ['A', 'LA', 'SU'] };
 
 const organisaatiolajit = {
   ALL: 'Kaikki organisaatiot',
   KS1: 'Suuret kaupunkiseudut',
   KS2: 'Keskisuuret kaupunkiseudut',
   KS3: 'Pienet kaupunkiseudut',
-  ELY: 'ELY-keskukset'
+  ELY: 'ELY-keskukset',
+  $order: ['ALL', 'KS1', 'KS2', 'KS3', 'ELY']
 };
 
 const sopimustyypit = {
@@ -24,7 +31,8 @@ const sopimustyypit = {
   BR:  'PSA brutto',
   KOS: 'PSA KOS',
   SA:  'Siirtymäajan liikenne',
-  ME:  'Markkinaehtoinen liikenne'
+  ME:  'Markkinaehtoinen liikenne',
+  $order: ['ALL', 'BR', 'KOS', 'SA', 'ME']
 };
 
 function createChart(title, xLabel) {
@@ -82,8 +90,8 @@ function createLineChartKK(title, xLabel) {
   });
 };
 
-function createFilter(id, nimi, values, valueKeyToId = _.identity, defaultValue = 'ALL') {
-  return {id: id, nimi: nimi, values: values, defaultValue: defaultValue, valueKeyToId: valueKeyToId};
+function createFilter(id, nimi, values, defaultValue = 'ALL') {
+  return {id: id, nimi: nimi, values: values, defaultValue: defaultValue};
 }
 
 function yTitleNousut(title, filter) {
@@ -106,7 +114,7 @@ const tunnusluvut = [{
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
-        createFilter("kuukausi", "Tarkastelujakso", kuukaudet, key => key === 0 ? "ALL" : key)],
+        createFilter("kuukausi", "Tarkastelujakso", kuukaudet)],
       options: createMultiBarChart("Kysyntä", "Vuosi")
     }, {
       title: "Nousujen lukumäärä kuukausitasolla",
