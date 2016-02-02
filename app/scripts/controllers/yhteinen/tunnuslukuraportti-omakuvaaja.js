@@ -92,11 +92,16 @@ function yTitleNousut(filter) {
     (filter.kuukausi && filter.kuukausi !== 'ALL' ? kuukaudet[filter.kuukausi] : 'Vuosi');
 }
 
+function yTitleNousutKK(filter) {
+  return "Nousut" +
+    (filter.sopimustyyppitunnus && filter.sopimustyyppitunnus !== 'ALL' ?  " (" + sopimustyypit[filter.sopimustyyppitunnus] + ")" : "") + " / Kuukausi";
+}
+
 const tunnusluvut = [{
     id: "nousut",
     nimi: "Nousut",
     charts: [{
-      title: "Nousujen lukumäärä vuositasolla",
+      title: "Nousujen lukumäärä vuosittain tarkasteltuna",
       yTitle: yTitleNousut,
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
@@ -105,7 +110,7 @@ const tunnusluvut = [{
       options: createMultiBarChart("Kysyntä", "Vuosi")
     }, {
       title: "Nousujen lukumäärä kuukausitasolla",
-      yTitle: yTitleNousut,
+      yTitle: yTitleNousutKK,
       groupBy: ["organisaatioid", "kuukausi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
@@ -146,7 +151,7 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
       filters => listener(id, chart, $scope.params.organisaatiolaji, filters));
 
     $scope.$watch('params.organisaatiolaji',
-      organisaatiolaji => listener(id, chart, organisaatiolaji, _.get($scope.params, filterPath)));
+      organisaatiolaji => listener(id, chart, organisaatiolaji, _.get($scope, filterPath)));
   });
 }
 
