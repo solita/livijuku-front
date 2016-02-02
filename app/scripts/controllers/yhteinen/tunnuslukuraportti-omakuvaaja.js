@@ -7,12 +7,12 @@ var c = require('utils/core');
 const kuukaudet = {
   ALL: "Koko vuosi", 1: "Tammikuu", 2: "Helmikuu", 3: "Maaliskuu", 4: "Huhtikuu", 5: "Toukokuu",
   6: "Kesäkuu", 7: "Heinäkuu", 8: "Elokuu", 9: "Syyskuu", 10: "Lokakuu", 11: "Marraskuu", 12: "Joulukuu",
-  $order: ['ALL'].concat(_.range(1,13))
+  $order: ['ALL'].concat(_.range(1,13).unshift())
 };
 
-const kalustoluokat = {
-  E0: "EURO 0", E1: "EURO 1", E2: "EURO 2", E3: "EURO 3", E4: "EURO 4", E5: "EURO 5/EEV", E6: "EURO 6",
-  $order: _.map(_.range(0,7), i => 'E' + i)
+const paastoluokat = {
+  ALL: 'Kaikki', E0: "EURO 0", E1: "EURO 1", E2: "EURO 2", E3: "EURO 3", E4: "EURO 4", E5: "EURO 5/EEV", E6: "EURO 6",
+  $order: ['ALL'].concat(_.map(_.range(0,7), i => 'E' + i))
 };
 
 const viikonpaivaluokat = { A: 'Arkipäivä', LA: 'Lauantai', SU: 'Sunnuntai', $order: ['A', 'LA', 'SU'] };
@@ -34,6 +34,9 @@ const sopimustyypit = {
   ME:  'Markkinaehtoinen liikenne',
   $order: ['ALL', 'BR', 'KOS', 'SA', 'ME']
 };
+
+const vuodet = _.zipObject(_.zip(_.range(2013, 2017), _.range(2013, 2017)));
+vuodet.$order = _.range(2013, 2017);
 
 function createChart(title, xLabel) {
   return {
@@ -159,6 +162,25 @@ const tunnusluvut = [{
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
       options: createLineChartKK("Tarjonta")}]
+  }, {
+    id: "kalusto",
+    nimi: "Kalusto",
+    charts: [{
+      title: "Kaluston lukumäärä vuosittain tarkasteltuna",
+      yTitle: _.partial(yTitleNousut, "Kaluston lukumäärä"),
+      groupBy: ["organisaatioid", "vuosi"],
+      filters: [
+        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
+        createFilter("paastoluokka", "Päästöluokka", paastoluokat)],
+      options: createMultiBarChart("Kalusto", "Vuosi")
+    }, {
+      title: "Kaluston lukumäärä valittuna vuonna",
+      yTitle: _.partial(yTitleNousut, "Kaluston lukumäärä"),
+      groupBy: ["organisaatioid", "paastoluokkatunnus"],
+      filters: [
+        createFilter("vuosi", "Vuosi", vuodet, '2016'),
+        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
+      options: createMultiBarChart("Kalusto", "Päästöluokka")}]
   }];
 
 function convertToNvd3(data, organisaatiot) {
