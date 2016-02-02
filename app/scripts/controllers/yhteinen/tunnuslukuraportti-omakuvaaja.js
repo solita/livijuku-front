@@ -4,18 +4,24 @@ var _ = require('lodash');
 var angular = require('angular');
 var c = require('utils/core');
 
+function nimi(id) {
+  return this[id];
+}
+
 const kuukaudet = {
   ALL: "Koko vuosi", 1: "Tammikuu", 2: "Helmikuu", 3: "Maaliskuu", 4: "Huhtikuu", 5: "Toukokuu",
   6: "Kesäkuu", 7: "Heinäkuu", 8: "Elokuu", 9: "Syyskuu", 10: "Lokakuu", 11: "Marraskuu", 12: "Joulukuu",
-  $order: ['ALL'].concat(_.range(1,13).unshift())
+  $order: ['ALL'].concat(_.range(1,13)),
+  $nimi: nimi
 };
 
 const paastoluokat = {
   ALL: 'Kaikki', E0: "EURO 0", E1: "EURO 1", E2: "EURO 2", E3: "EURO 3", E4: "EURO 4", E5: "EURO 5/EEV", E6: "EURO 6",
-  $order: ['ALL'].concat(_.map(_.range(0,7), i => 'E' + i))
+  $order: ['ALL'].concat(_.map(_.range(0,7), i => 'E' + i)),
+  $nimi: nimi
 };
 
-const viikonpaivaluokat = { A: 'Arkipäivä', LA: 'Lauantai', SU: 'Sunnuntai', $order: ['A', 'LA', 'SU'] };
+const viikonpaivaluokat = { A: 'Arkipäivä', LA: 'Lauantai', SU: 'Sunnuntai', $order: ['A', 'LA', 'SU'], $nimi: nimi };
 
 const organisaatiolajit = {
   ALL: 'Kaikki organisaatiot',
@@ -23,7 +29,8 @@ const organisaatiolajit = {
   KS2: 'Keskisuuret kaupunkiseudut',
   KS3: 'Pienet kaupunkiseudut',
   ELY: 'ELY-keskukset',
-  $order: ['ALL', 'KS1', 'KS2', 'KS3', 'ELY']
+  $order: ['ALL', 'KS1', 'KS2', 'KS3', 'ELY'],
+  $nimi: nimi
 };
 
 const sopimustyypit = {
@@ -32,11 +39,14 @@ const sopimustyypit = {
   KOS: 'PSA KOS',
   SA:  'Siirtymäajan liikenne',
   ME:  'Markkinaehtoinen liikenne',
-  $order: ['ALL', 'BR', 'KOS', 'SA', 'ME']
+  $order: ['ALL', 'BR', 'KOS', 'SA', 'ME'],
+  $nimi: nimi
 };
 
-const vuodet = _.zipObject(_.zip(_.range(2013, 2017), _.range(2013, 2017)));
-vuodet.$order = _.range(2013, 2017);
+const vuodet = {
+  $order: _.range(2013, 2017),
+  $nimi: _.identity
+};
 
 function createChart(title, xLabel) {
   return {
