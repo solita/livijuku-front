@@ -20,28 +20,21 @@ const organisaatiolajit = {
 };
 
 const sopimustyypit = {
-  ALL: 'Kaikki tyypit',
+  ALL: 'Kaikki sopimustyypit',
   BR:  'PSA brutto',
   KOS: 'PSA KOS',
   SA:  'Siirtymäajan liikenne',
   ME:  'Markkinaehtoinen liikenne'
 };
 
-function createMultiBarChart(title, subtitle, xLabel, yLabel) {
+function createChart(title, xLabel) {
   return {
     chart: {
-      type: 'multiBarChart',
       height: 450,
-      stacked: false,
-      reduceXTicks: false,
       x: d => d.x,
       y: d => d.y,
-      showValues: false,
-      valueFormat: function (d) {
-        return d3.format('.02f')(d);
-      },
       yAxis: {
-        axisLabel: yLabel
+        axisLabel: ''
       },
       xAxis: {
         axisLabel: xLabel
@@ -53,45 +46,50 @@ function createMultiBarChart(title, subtitle, xLabel, yLabel) {
     },
     subtitle: {
       enable: true,
-      text: subtitle
+      text: ''
     }
   };
 };
 
-function createLineChart(title, subtitle, xLabel, yLabel) {
-  return {
+function createMultiBarChart(title, xLabel) {
+  return _.merge(
+    createChart(title, xLabel), {
+    chart: {
+      type: 'multiBarChart',
+      stacked: false,
+      reduceXTicks: false,
+      showValues: false,
+      valueFormat: function (d) {
+        return d3.format('.02f')(d);
+      }
+    }
+  });
+};
+
+function createLineChart(title, xLabel) {
+  return _.merge(
+    createChart(title, xLabel), {
     chart: {
       type: 'lineWithFocusChart',
-      height: 450,
-      interpolate: "linear",
-      x: d => d.x,
-      y: d => d.y,
-      yAxis: {
-        axisLabel: yLabel
-      },
       xAxis: {
-        axisLabel: xLabel,
         tickFormat: d => d3.time.format.utc("%m/%Y") (new Date(d))
       },
       xScale: d3.time.scale.utc(),
       x2Axis: {
-        axisLabel: xLabel,
         tickFormat: d => d3.time.format.utc("%m/%Y") (new Date(d))
       }
-    },
-    title: {
-      enable: true,
-      text: title
-    },
-    subtitle: {
-      enable: true,
-      text: subtitle
     }
-  };
+  });
 };
 
-function createFilter(id, nimi, values, valueKeyToId = _.identity) {
-  return {id: id, nimi: nimi, values: values, valueKeyToId: valueKeyToId};
+function createFilter(id, nimi, values, valueKeyToId = _.identity, defaultValue = 'ALL') {
+  return {id: id, nimi: nimi, values: values, defaultValue: defaultValue, valueKeyToId: valueKeyToId};
+}
+
+function yTitleNousut(filter) {
+  return "Nousut" +
+    (filter.sopimustyyppitunnus && filter.sopimustyyppitunnus !== 'ALL' ?  " (" + sopimustyypit[filter.sopimustyyppitunnus] + ")" : "") + " / " +
+    (filter.kuukausi && filter.kuukausi !== 'ALL' ? kuukaudet[filter.kuukausi] : 'Vuosi');
 }
 
 const tunnusluvut = [{
@@ -99,17 +97,19 @@ const tunnusluvut = [{
     nimi: "Nousut",
     charts: [{
       title: "Nousujen lukumäärä vuositasolla",
+      yTitle: yTitleNousut,
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
         createFilter("kuukausi", "Tarkastelujakso", kuukaudet, key => key === 0 ? "ALL" : key)],
-      options: createMultiBarChart("Kysyntä", "Nousua / vuosi", "Vuosi", "Nousua / vuosi")
+      options: createMultiBarChart("Kysyntä", "Vuosi")
     }, {
       title: "Nousujen lukumäärä kuukausitasolla",
+      yTitle: yTitleNousut,
       groupBy: ["organisaatioid", "kuukausi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
-      options: createLineChart("Kysyntä", "Nousua / kuukausi", "Kuukausi", "Nousua / kuukausi")}]
+      options: createLineChart("Kysyntä", "Kuukausi")}]
   }];
 
 function convertToNvd3(data, organisaatiot) {
@@ -122,8 +122,13 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
   var charts = $scope.tunnusluku.charts;
   var tunnusluku = $scope.tunnusluku;
   $scope.data = new Array(charts.length);
+  $scope.params.charts = new Array(charts.length);
 
   function listener(id, chart, organisaatiolaji, filters) {
+    var ytitle = $scope.tunnusluku.charts[id].yTitle(filters);
+    chart.options.subtitle.text = ytitle;
+    chart.options.chart.yAxis.axisLabel = ytitle;
+
     $q.all([RaporttiService.haeTunnuslukuTilasto(tunnusluku.id,
                                                  _.assign( {organisaatiolajitunnus: organisaatiolaji}, filters),
                                                  chart.groupBy),
@@ -134,6 +139,8 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
   }
 
   _.forEach(charts, function(chart, id) {
+    $scope.params.charts[id] = {filter: {}};
+
     const filterPath = 'params.charts[' + id + '].filter';
     $scope.$watchCollection(filterPath,
       filters => listener(id, chart, $scope.params.organisaatiolaji, filters));
