@@ -69,7 +69,6 @@ function createMultiBarChart(title, xLabel) {
       type: 'multiBarChart',
       stacked: false,
       reduceXTicks: false,
-      showValues: false,
       valueFormat: function (d) {
         return d3.format('.02f')(d);
       }
