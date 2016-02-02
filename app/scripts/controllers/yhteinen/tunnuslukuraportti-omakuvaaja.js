@@ -133,14 +133,32 @@ const tunnusluvut = [{
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
         createFilter("kuukausi", "Tarkastelujakso", kuukaudet)],
-      options: createMultiBarChart("Kysyntä", "Vuosi")
+      options: createMultiBarChart("Tarjonta", "Vuosi")
     }, {
       title: "Lähtöjen lukumäärä kuukausitasolla",
       yTitle: _.partial(yTitleNousutKK, "Lähdöt"),
       groupBy: ["organisaatioid", "kuukausi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
-      options: createLineChartKK("Kysyntä")}]
+      options: createLineChartKK("Tarjonta")}]
+  }, {
+    id: "linjakilometrit",
+    nimi: "Linjakilometrit",
+    charts: [{
+      title: "Linjakilometrien lukumäärä vuosittain tarkasteltuna",
+      yTitle: _.partial(yTitleNousut, "Linjakilometrit"),
+      groupBy: ["organisaatioid", "vuosi"],
+      filters: [
+        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
+        createFilter("kuukausi", "Tarkastelujakso", kuukaudet)],
+      options: createMultiBarChart("Tarjonta", "Vuosi")
+    }, {
+      title: "Linjakilometrien lukumäärä kuukausitasolla",
+      yTitle: _.partial(yTitleNousutKK, "Linjakilometrit"),
+      groupBy: ["organisaatioid", "kuukausi"],
+      filters: [
+        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
+      options: createLineChartKK("Tarjonta")}]
   }];
 
 function convertToNvd3(data, organisaatiot) {
