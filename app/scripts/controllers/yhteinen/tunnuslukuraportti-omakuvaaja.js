@@ -66,9 +66,9 @@ function createMultiBarChart(title, xLabel) {
   });
 };
 
-function createLineChart(title, xLabel) {
+function createLineChartKK(title, xLabel) {
   return _.merge(
-    createChart(title, xLabel), {
+    createChart(title, "Kuukausi"), {
     chart: {
       type: 'lineWithFocusChart',
       xAxis: {
@@ -114,7 +114,7 @@ const tunnusluvut = [{
       groupBy: ["organisaatioid", "kuukausi"],
       filters: [
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
-      options: createLineChart("Kysyntä", "Kuukausi")}]
+      options: createLineChartKK("Kysyntä")}]
   }];
 
 function convertToNvd3(data, organisaatiot) {
