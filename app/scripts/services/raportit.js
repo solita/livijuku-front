@@ -18,6 +18,7 @@ const dimensio2 = {
   kuukausi: _.map(c.cartesianProduct(_.range(2013, 2016), _.range(1, 13)), row => Date.UTC(row[0], (row[1] - 1))),
   paastoluokkatunnus: _.map(_.range(0,7), i => 'E' + i),
   viikonpaivaluokkatunnus: ['A', 'LA', 'SU'],
+  kustannuslajitunnus: ['ALL', 'AP', 'KP', 'LP', 'TM', 'MP'],
   vuosi: _.range(2013, 2016)
 }
 
