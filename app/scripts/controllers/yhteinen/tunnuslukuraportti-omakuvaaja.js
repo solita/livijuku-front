@@ -122,7 +122,7 @@ function filterInfoText(filter) {
     return c.isDefinedNotNull(v) && v !== 'ALL' ? luokka.$nimi(v) : null;
   }
 
-  var info = _.filter(_.map([sopimustyypit, paastoluokat], txt), c.isDefinedNotNull).join(', ');
+  var info = _.filter(_.map([sopimustyypit, paastoluokat, viikonpaivaluokat], txt), c.isDefinedNotNull).join(', ');
   return info ? ' (' + info + ')' : '';
 }
 
