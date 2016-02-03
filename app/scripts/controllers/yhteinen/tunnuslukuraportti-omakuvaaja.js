@@ -37,6 +37,14 @@ const lipputuloluokat = {
   $id: "lipputuloluokkatunnus"
 };
 
+const kustannuslajit = {
+  ALL: 'Kaikki', AP: 'Asiakaspalvelu', KP: 'Konsulttipalvelu',
+  LP: 'Lipunmyyntipalkkiot', TM: 'Tieto-/maksujärjestelmät', MP: 'Muut palvelut',
+  $order: ['ALL', 'AP', 'KP', 'LP', 'TM', 'MP'],
+  $nimi: nimi,
+  $id: "kustannuslajitunnus"
+};
+
 const organisaatiolajit = {
   ALL: 'Kaikki organisaatiot',
   KS1: 'Suuret kaupunkiseudut',
@@ -129,7 +137,7 @@ function filterInfoText(filter) {
     return c.isDefinedNotNull(v) && v !== 'ALL' ? luokka.$nimi(v) : null;
   }
 
-  var info = _.filter(_.map([sopimustyypit, paastoluokat, viikonpaivaluokat], txt), c.isDefinedNotNull).join(', ');
+  var info = _.filter(_.map([sopimustyypit, paastoluokat, viikonpaivaluokat, kustannuslajit], txt), c.isDefinedNotNull).join(', ');
   return info ? ' (' + info + ')' : '';
 }
 
@@ -272,7 +280,7 @@ const tunnusluvut = [{
     nimi: "Lipputulo",
     charts: [{
       title: "Lipputulo vuosittain tarkasteltuna",
-      yTitle: _.partial(yTitleTarkastelujakso, "Lipputulo"),
+      yTitle: _.partial(yTitleTarkastelujakso, "Lipputulo €"),
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
         createFilter("Sopimustyyppi", sopimustyypit),
@@ -306,6 +314,23 @@ const tunnusluvut = [{
         createFilter("Vuosi", vuodet, '2016'),
         createFilter("Sopimustyyppi", sopimustyypit)],
       options: createMultiBarChart("Kalusto", "Päästöluokka")}]
+  }, {
+    id: "kustannukset",
+    nimi: "Kustannukset",
+    charts: [{
+      title: "Kustannukset vuosittain tarkasteltuna",
+      yTitle: filter => "Kustannukset" + filterInfoText(filter) + ' € / vuosi',
+      groupBy: ["organisaatioid", "vuosi"],
+      filters: [
+        createFilter("Kustannuslaji", kustannuslajit)],
+      options: createMultiBarChart("Kustannukset", "Vuosi")
+    }, {
+      title: "Vuoden kustannukset kustannuslajeittain",
+      yTitle: filter => "Kustannukset (€)" + filterInfoText(filter) + ' vuonna ' + filter.vuosi,
+      groupBy: ["organisaatioid", "kustannuslajitunnus"],
+      filters: [
+        createFilter("Vuosi", vuodet, '2016')],
+      options: createMultiBarChart("Kustannukset", "Kustannuslaji")}]
   }];
 
 function convertToNvd3(data, organisaatiot) {
