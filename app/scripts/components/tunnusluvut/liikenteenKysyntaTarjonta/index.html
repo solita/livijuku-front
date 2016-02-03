@@ -19,7 +19,7 @@
             <td>{{viikonpaivaluokkaNimi(tunnuslukutalvi.viikonpaivaluokkatunnus)}}</td>
             <td>
               <form-group-compact label="Nousua" errormessage="nousutErrorMessage">
-                <input id="{{tyyppi + '-nousua-'+$index}}" name="nousut" type="text"
+                <input id="{{tyyppi + '-nousua-talvi-'+$index}}" name="nousut" type="text"
                        integer-only maxlength="9"
                        placeholder="Nousua / päivä"
                        noenter select-on-click
@@ -76,7 +76,7 @@
             <td>{{kuukausiNimi(tunnusluku.kuukausi)}}</td>
             <td ng-if="!isME">
               <form-group-compact label="Nousua" errormessage="nousutErrorMessage">
-                <input id="{{tyyppi + '-nousua-'+tunnusluku.kuukausi}}" name="nousut"
+                <input id="{{tyyppi + '-nousua-'+$index}}" name="nousut"
                        placeholder="Nousua / kuukausi"
                        noenter select-on-click
                        integer-only maxlength="9"
