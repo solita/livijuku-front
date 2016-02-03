@@ -186,6 +186,25 @@ const tunnusluvut = [{
         createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
       options: createLineChartKK("Tarjonta")}]
   }, {
+    id: "nousut-viikko",
+    nimi: "Nousut (päivä)",
+    charts: [{
+      title: "Päivän keskimääräinen nousumäärä (syyskuu-toukokuu päivien keskiarvo) vuosittain tarkasteltuna",
+      yTitle: filter => "Nousut" + filterInfoText(filter) + " / päivä",
+      groupBy: ["organisaatioid", "vuosi"],
+      filters: [
+        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
+        createFilter("viikonpaivaluokkatunnus", "Viikonpäivä", viikonpaivaluokat, 'A')],
+      options: createMultiBarChart("Kysyntä", "Vuosi")
+    }, {
+      title: "Keskimääräinen nousumäärä (syyskuu-toukokuu päivien keskiarvo) viikonpäiväluokittain",
+      yTitle: filter => "Nousut" + filterInfoText(filter) + " / päivä",
+      groupBy: ["organisaatioid", "viikonpaivaluokkatunnus"],
+      filters: [
+        createFilter("vuosi", "Vuosi", vuodet, '2016'),
+        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
+      options: createMultiBarChart("Kysyntä", "Viikonpäiväluokka")}]
+  }, {
     id: "kalusto",
     nimi: "Kalusto",
     charts: [{
