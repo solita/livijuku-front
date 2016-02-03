@@ -30,7 +30,7 @@ angular.module('services.tunnusluvut')
         var laji = where.organisaatiolajitunnus;
         var column2 = dimensio2[groupBy[1]];
 
-        var data = _.map(c.cartesianProduct(_.range(1, 36), column2), row => { row.push(Math.random() * 100); return row });
+        var data = _.map(c.cartesianProduct(_.range(1, 36), column2), row => { row.push(Math.floor(Math.random() * 100)); return row });
 
         return Promise.resolve(laji ? _.filter(data, isOrganisaatiolaji(laji)) : data);
       }

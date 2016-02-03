@@ -112,8 +112,8 @@ function createLineChartKK(title, xLabel) {
   });
 };
 
-function createFilter(id, nimi, values, defaultValue = 'ALL') {
-  return {id: id, nimi: nimi, values: values, defaultValue: defaultValue};
+function createFilter(nimi, values, defaultValue = 'ALL') {
+  return {id: values.$id, nimi: nimi, values: values, defaultValue: defaultValue};
 }
 
 function filterInfoText(filter) {
@@ -139,15 +139,15 @@ const tunnusluvut = [{
       yTitle: _.partial(yTitleTarkastelujakso, "Nousut"),
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
-        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
-        createFilter("kuukausi", "Tarkastelujakso", kuukaudet)],
+        createFilter("Sopimustyyppi", sopimustyypit),
+        createFilter("Tarkastelujakso", kuukaudet)],
       options: createMultiBarChart("Kysyntä", "Vuosi")
     }, {
       title: "Nousujen lukumäärä kuukausitasolla",
       yTitle: filter => "Nousut" + filterInfoText(filter) + " / kuukausi",
       groupBy: ["organisaatioid", "kuukausi"],
       filters: [
-        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
+        createFilter("Sopimustyyppi", sopimustyypit)],
       options: createLineChartKK("Kysyntä")}]
   }, {
     id: "lahdot",
@@ -157,15 +157,15 @@ const tunnusluvut = [{
       yTitle: _.partial(yTitleTarkastelujakso, "Lähdöt"),
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
-        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
-        createFilter("kuukausi", "Tarkastelujakso", kuukaudet)],
+        createFilter("Sopimustyyppi", sopimustyypit),
+        createFilter("Tarkastelujakso", kuukaudet)],
       options: createMultiBarChart("Tarjonta", "Vuosi")
     }, {
       title: "Lähtöjen lukumäärä kuukausitasolla",
       yTitle: filter => "Lähdöt" + filterInfoText(filter) + " / kuukausi",
       groupBy: ["organisaatioid", "kuukausi"],
       filters: [
-        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
+        createFilter("Sopimustyyppi", sopimustyypit)],
       options: createLineChartKK("Tarjonta")}]
   }, {
     id: "linjakilometrit",
@@ -175,15 +175,15 @@ const tunnusluvut = [{
       yTitle: _.partial(yTitleTarkastelujakso, "Linjakilometrit"),
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
-        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
-        createFilter("kuukausi", "Tarkastelujakso", kuukaudet)],
+        createFilter("Sopimustyyppi", sopimustyypit),
+        createFilter("Tarkastelujakso", kuukaudet)],
       options: createMultiBarChart("Tarjonta", "Vuosi")
     }, {
       title: "Linjakilometrien lukumäärä kuukausitasolla",
       yTitle: filter => "Linjakilometrit" + filterInfoText(filter) + " / kuukausi",
       groupBy: ["organisaatioid", "kuukausi"],
       filters: [
-        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
+        createFilter("Sopimustyyppi", sopimustyypit)],
       options: createLineChartKK("Tarjonta")}]
   }, {
     id: "nousut-viikko",
@@ -193,16 +193,16 @@ const tunnusluvut = [{
       yTitle: filter => "Nousut" + filterInfoText(filter) + " / päivä",
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
-        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
-        createFilter("viikonpaivaluokkatunnus", "Viikonpäivä", viikonpaivaluokat, 'A')],
+        createFilter("Sopimustyyppi", sopimustyypit),
+        createFilter("Viikonpäivä", viikonpaivaluokat, 'A')],
       options: createMultiBarChart("Kysyntä", "Vuosi")
     }, {
       title: "Keskimääräinen nousumäärä (syyskuu-toukokuu päivien keskiarvo) viikonpäiväluokittain",
       yTitle: filter => "Nousut" + filterInfoText(filter) + " / päivä",
       groupBy: ["organisaatioid", "viikonpaivaluokkatunnus"],
       filters: [
-        createFilter("vuosi", "Vuosi", vuodet, '2016'),
-        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
+        createFilter("Vuosi", vuodet, '2016'),
+        createFilter("Sopimustyyppi", sopimustyypit)],
       options: createMultiBarChart("Kysyntä", "Viikonpäiväluokka")}]
   }, {
     id: "kalusto",
@@ -212,16 +212,16 @@ const tunnusluvut = [{
       yTitle: filter => "Kaluston lukumäärä" + filterInfoText(filter),
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
-        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit),
-        createFilter("paastoluokkatunnus", "Päästöluokka", paastoluokat)],
+        createFilter("Sopimustyyppi", sopimustyypit),
+        createFilter("Päästöluokka", paastoluokat)],
       options: createMultiBarChart("Kalusto", "Vuosi")
     }, {
       title: "Kaluston lukumäärä päästöluokittain",
       yTitle: filter => "Kaluston lukumäärä" + filterInfoText(filter) + ' vuonna ' + filter.vuosi,
       groupBy: ["organisaatioid", "paastoluokkatunnus"],
       filters: [
-        createFilter("vuosi", "Vuosi", vuodet, '2016'),
-        createFilter("sopimustyyppitunnus", "Sopimustyyppi", sopimustyypit)],
+        createFilter("Vuosi", vuodet, '2016'),
+        createFilter("Sopimustyyppi", sopimustyypit)],
       options: createMultiBarChart("Kalusto", "Päästöluokka")}]
   }];
 
