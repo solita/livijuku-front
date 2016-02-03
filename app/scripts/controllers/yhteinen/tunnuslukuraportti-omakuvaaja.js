@@ -189,7 +189,7 @@ const tunnusluvut = [{
     id: "nousut-viikko",
     nimi: "Nousut (päivä)",
     charts: [{
-      title: "Päivän keskimääräinen nousumäärä (syyskuu-toukokuu päivien keskiarvo) vuosittain tarkasteltuna",
+      title: "Nousijat keskimääräisenä talviliikenteen (syyskuu-toukokuu) arkipäivänä, lauantaina tai sunnuntaina",
       yTitle: filter => "Nousut" + filterInfoText(filter) + " / päivä",
       groupBy: ["organisaatioid", "vuosi"],
       filters: [
@@ -197,13 +197,51 @@ const tunnusluvut = [{
         createFilter("Viikonpäivä", viikonpaivaluokat, 'A')],
       options: createMultiBarChart("Kysyntä", "Vuosi")
     }, {
-      title: "Keskimääräinen nousumäärä (syyskuu-toukokuu päivien keskiarvo) viikonpäiväluokittain",
+      title: "Valitun vuoden talviliikenteen nousijat viikonpäiväluokittain (arkipäivänä/lauantaina/sunnuntaina)",
       yTitle: filter => "Nousut" + filterInfoText(filter) + " / päivä",
       groupBy: ["organisaatioid", "viikonpaivaluokkatunnus"],
       filters: [
         createFilter("Vuosi", vuodet, '2016'),
         createFilter("Sopimustyyppi", sopimustyypit)],
       options: createMultiBarChart("Kysyntä", "Viikonpäiväluokka")}]
+  }, {
+    id: "lahdot-viikko",
+    nimi: "Lähdöt (päivä)",
+    charts: [{
+      title: "Vuorotarjonta keskimääräisenä talviliikenteen (syyskuu-toukokuu) arkipäivänä/lauantaina/sunnuntaina vuosittain",
+      yTitle: filter => "Lähdöt" + filterInfoText(filter) + " / päivä",
+      groupBy: ["organisaatioid", "vuosi"],
+      filters: [
+        createFilter("Sopimustyyppi", sopimustyypit),
+        createFilter("Viikonpäivä", viikonpaivaluokat, 'A')],
+      options: createMultiBarChart("Tarjonta", "Vuosi")
+    }, {
+      title: "Valitun vuoden talviliikenteen vuorotarjonta viikonpäiväluokittain",
+      yTitle: filter => "Lähdöt" + filterInfoText(filter) + " / päivä",
+      groupBy: ["organisaatioid", "viikonpaivaluokkatunnus"],
+      filters: [
+        createFilter("Vuosi", vuodet, '2016'),
+        createFilter("Sopimustyyppi", sopimustyypit)],
+      options: createMultiBarChart("Tarjonta", "Viikonpäiväluokka")}]
+  }, {
+    id: "linjakilometrit-viikko",
+    nimi: "Linjakilometrit (päivä)",
+    charts: [{
+      title: "Linjakilometrit keskimääräisenä talviliikenteen (syyskuu-toukokuu) arkipäivänä/lauantaina/sunnuntaina vuosittain",
+      yTitle: filter => "Linjakilometrit" + filterInfoText(filter) + " / päivä",
+      groupBy: ["organisaatioid", "vuosi"],
+      filters: [
+        createFilter("Sopimustyyppi", sopimustyypit),
+        createFilter("Viikonpäivä", viikonpaivaluokat, 'A')],
+      options: createMultiBarChart("Tarjonta", "Vuosi")
+    }, {
+      title: "Valitun vuoden talviliikenteen linjakilometrit viikonpäiväluokittain (arkipäivänä/lauantaina/sunnuntaina)",
+      yTitle: filter => "Linjakilometrit" + filterInfoText(filter) + " / päivä",
+      groupBy: ["organisaatioid", "viikonpaivaluokkatunnus"],
+      filters: [
+        createFilter("Vuosi", vuodet, '2016'),
+        createFilter("Sopimustyyppi", sopimustyypit)],
+      options: createMultiBarChart("Tarjonta", "Viikonpäiväluokka")}]
   }, {
     id: "kalusto",
     nimi: "Kalusto",
