@@ -243,6 +243,24 @@ const tunnusluvut = [{
         createFilter("Sopimustyyppi", sopimustyypit)],
       options: createMultiBarChart("Tarjonta", "Viikonpäiväluokka")}]
   }, {
+    id: "liikennointikorvaus",
+    nimi: "Liikennöintikorvaus",
+    charts: [{
+      title: "Liikennöintikorvaus vuosittain tarkasteltuna",
+      yTitle: _.partial(yTitleTarkastelujakso, "Liikennöintikorvaus"),
+      groupBy: ["organisaatioid", "vuosi"],
+      filters: [
+        createFilter("Sopimustyyppi", sopimustyypit),
+        createFilter("Tarkastelujakso", kuukaudet)],
+      options: createMultiBarChart("Liikennöintikorvaus", "Vuosi")
+    }, {
+      title: "Liikennöintikorvaus kuukausitasolla",
+      yTitle: filter => "Liikennöintikorvaus" + filterInfoText(filter) + " / kuukausi",
+      groupBy: ["organisaatioid", "kuukausi"],
+      filters: [
+        createFilter("Sopimustyyppi", sopimustyypit)],
+      options: createLineChartKK("Liikennöintikorvaus")}]
+  }, {
     id: "kalusto",
     nimi: "Kalusto",
     charts: [{
