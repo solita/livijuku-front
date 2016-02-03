@@ -30,6 +30,13 @@ const viikonpaivaluokat = {
   $id: "viikonpaivaluokkatunnus"
 };
 
+const lipputuloluokat = {
+  ALL: 'Kaikki', KE: 'Kertalippu', AR: 'Arvolippu', KA: 'Kausilippu',
+  $order: ['ALL', 'KE', 'AR', 'KA'],
+  $nimi: nimi,
+  $id: "lipputuloluokkatunnus"
+};
+
 const organisaatiolajit = {
   ALL: 'Kaikki organisaatiot',
   KS1: 'Suuret kaupunkiseudut',
@@ -260,6 +267,26 @@ const tunnusluvut = [{
       filters: [
         createFilter("Sopimustyyppi", sopimustyypit)],
       options: createLineChartKK("Liikennöintikorvaus")}]
+  }, {
+    id: "lipputulo",
+    nimi: "Lipputulo",
+    charts: [{
+      title: "Lipputulo vuosittain tarkasteltuna",
+      yTitle: _.partial(yTitleTarkastelujakso, "Lipputulo"),
+      groupBy: ["organisaatioid", "vuosi"],
+      filters: [
+        createFilter("Sopimustyyppi", sopimustyypit),
+        createFilter("Lipputyyppi", lipputuloluokat),
+        createFilter("Tarkastelujakso", kuukaudet)],
+      options: createMultiBarChart("Lipputulo", "Vuosi")
+    }, {
+      title: "Lipputulo kuukausitasolla",
+      yTitle: filter => "Lipputulo" + filterInfoText(filter) + " / kuukausi",
+      groupBy: ["organisaatioid", "kuukausi"],
+      filters: [
+        createFilter("Sopimustyyppi", sopimustyypit),
+        createFilter("Lipputyyppi", lipputuloluokat)],
+      options: createLineChartKK("Lipputulo")}]
   }, {
     id: "kalusto",
     nimi: "Kalusto",
