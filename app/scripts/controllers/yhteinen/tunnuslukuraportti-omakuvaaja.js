@@ -37,6 +37,13 @@ const lipputuloluokat = {
   $id: "lipputuloluokkatunnus"
 };
 
+const lippuhintaluokat = {
+  KE: 'Kertalippu', KA: 'Kausilippu',
+  $order: ['KE', 'KA'],
+  $nimi: v => lippuhintaluokat[v],
+  $id: "lippuhintaluokkatunnus"
+};
+
 const kustannuslajit = {
   ALL: 'Kaikki', AP: 'Asiakaspalvelu', KP: 'Konsulttipalvelu',
   LP: 'Lipunmyyntipalkkiot', TM: 'Tieto-/maksujärjestelmät', MP: 'Muut palvelut',
@@ -71,6 +78,12 @@ const vuodet = {
   $order: _.range(2013, 2017).reverse(),
   $nimi: _.identity,
   $id: "vuosi"
+};
+
+const vyohykemaarat = {
+  $order: _.range(1, 7),
+  $nimi: _.identity,
+  $id: "vyohykemaara"
 };
 
 function createChart(title, xLabel) {
@@ -144,6 +157,25 @@ function filterInfoText(filter) {
 function yTitleTarkastelujakso(title, filter) {
   return title + filterInfoText(filter) + " / " +
     (filter.kuukausi && filter.kuukausi !== 'ALL' ? kuukaudet[filter.kuukausi] : 'vuosi');
+}
+
+function group (data, idx, names) {
+  return (idx === (data[0].length - 2)) ?
+    _.map(data, row => ({
+                  name: names[idx](row[idx]),
+                  size: row[idx+1]
+                })) :
+    _.map(_.values(_.groupBy(data, row => row[idx])),
+          rows => ({name: names[idx](rows[0][idx]),
+                    children: group (rows, idx + 1, names)}));
+
+}
+
+function convertToTree(name, names, data, organisaatiot) {
+  return [{
+    name: name,
+    children: group (data, 0, [ id => _.find(organisaatiot, {id: id}).nimi ].concat(names))
+  }];
 }
 
 const tunnusluvut = [{
@@ -331,6 +363,31 @@ const tunnusluvut = [{
       filters: [
         createFilter("Vuosi", vuodet, '2016')],
       options: createMultiBarChart("Kustannukset", "Kustannuslaji")}]
+  }, {
+    id: "lippuhinnat",
+    nimi: "Lippuhinnat",
+    charts: [{
+      title: "Lippuhinnat vuosittain tarkasteltuna",
+      yTitle: filter => "Lippuhinta" + filterInfoText(filter),
+      groupBy: ["organisaatioid", "vuosi"],
+      filters: [
+        createFilter("Lipputyyppi", lippuhintaluokat, 'KE'),
+        createFilter("Vyöhykemäärä", vyohykemaarat, '1')],
+      options: createMultiBarChart("Lippuhinnat", "Vuosi")
+    }, {
+      title: "Vuoden lippuhinnat vyöhykeittäin ja lipputyypeittäin",
+      yTitle: filter => undefined,
+      data: _.partial(convertToTree, "Lippuhinnat", [vyohykemaarat.$nimi, lippuhintaluokat.$nimi]),
+      groupBy: ["organisaatioid", "vyohykemaara", "lippuhintaluokkatunnus"],
+      filters: [createFilter("Vuosi", vuodet, '2016')],
+      options: {
+        chart: {
+          type: 'sunburstChart',
+          height: 450
+          //mode: "size"
+        }
+      }
+    }]
   }];
 
 function convertToNvd3(data, organisaatiot) {
@@ -349,15 +406,23 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
 
   function listener(id, chart, organisaatiolaji, filters) {
     var ytitle = $scope.tunnusluku.charts[id].yTitle(filters);
-    chart.options.subtitle.text = ytitle;
-    chart.options.chart.yAxis.axisLabel = ytitle;
+    if (ytitle) {
+      chart.options.subtitle.text = ytitle;
+      chart.options.chart.yAxis.axisLabel = ytitle;
+    }
+    const conversion = c.coalesce(chart.data, convertToNvd3);
 
     $q.all([RaporttiService.haeTunnuslukuTilasto(tunnusluku.id,
                                                  _.assign( {organisaatiolajitunnus: organisaatiolaji}, filters),
                                                  chart.groupBy),
             OrganisaatioService.hae()])
       .then(([data, organisaatiot])=> {
-              $scope.data[id] = convertToNvd3(data, organisaatiot);
+
+              if (chart.options.chart.type === 'sunburstChart') {
+                $scope.params.charts[id].api.updateWithData(conversion(data, organisaatiot));
+              } else {
+                $scope.data[id] = conversion(data, organisaatiot);
+              }
             });
   }
 
