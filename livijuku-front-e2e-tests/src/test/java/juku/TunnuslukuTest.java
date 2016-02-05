@@ -15,7 +15,9 @@ public class TunnuslukuTest extends TestBase {
         /************************************************************
          * Taustatiedot ja yleiset tunnusluvut
          */
-
+        WorkAround.showMainMenu();
+        WorkAround.click(findElementByXPath("//a[@id='TTYT']"));
+        WorkAround.hideMainMenu();
         findElementById("taustatiedot-henkilosto").click();
         findElementById("taustatiedot-henkilosto").clear();
         findElementById("taustatiedot-henkilosto").sendKeys("1000");
@@ -54,7 +56,7 @@ public class TunnuslukuTest extends TestBase {
         findElementById("taustatiedot-pendeloivienosuus").sendKeys("12");
         findElementById("taustatiedot-henkiloautoliikenne").click();
         findElementById("taustatiedot-henkiloautoliikenne").clear();
-        findElementById("taustatiedot-henkiloautoliikenne").sendKeys("4342346,32");
+        findElementById("taustatiedot-henkiloautoliikenne").sendKeys("4342346");
         findElementById("taustatiedot-autoistumisaste").click();
         findElementById("taustatiedot-autoistumisaste").clear();
         findElementById("taustatiedot-autoistumisaste").sendKeys("567");
@@ -104,17 +106,22 @@ public class TunnuslukuTest extends TestBase {
         findElementById("lisatiedot").clear();
         findElementById("lisatiedot").sendKeys("Lisätietoa");
         WorkAround.click(findElementById("tallenna"));
+        WorkAround.showMainMenu();
     }
 
     private void tarkistaTaustatiedot() {
+        WorkAround.showMainMenu();
+        WorkAround.click(findElementByXPath("//a[@id='TTYT']"));
+        WorkAround.hideMainMenu();
         assertThat(findElementById("taustatiedot-henkilosto").getAttribute("value"), is(equalToIgnoringWhiteSpace("1000")));
         assertThat(findElementById("taustatiedot-konsulttipalvelu").getAttribute("value"), is(equalToIgnoringWhiteSpace("20 000,00 €")));
-        assertThat(findElementById("taustatiedot-henkiloautoliikenne").getAttribute("value"), is(equalToIgnoringWhiteSpace("4 342 346,32 ")));
+        assertThat(findElementById("taustatiedot-henkiloautoliikenne").getAttribute("value"), is(equalToIgnoringWhiteSpace("4 342 346,00 ")));
         assertThat(findElementById("taustatiedot-pysakkienlkm").getAttribute("value"), is(equalToIgnoringWhiteSpace("23")));
         assertThat(findElementById("taustatiedot-kertalippuvyohyke-1").getAttribute("value"), is(equalToIgnoringWhiteSpace("1,00 €")));
         assertThat(findElementById("taustatiedot-kausilippuvyohyke-4").getAttribute("value"), is(equalToIgnoringWhiteSpace("400,00 €")));
         assertThat(findElementById("taustatiedot-asiakastyytyvaisyys").getAttribute("value"), is(equalToIgnoringWhiteSpace("76,00 ")));
         assertThat(findElementById("lisatiedot").getAttribute("value"), is(equalToIgnoringWhiteSpace("Lisätietoa")));
+        WorkAround.showMainMenu();
     }
 
     private void syotaPsaBrutto() {
@@ -433,9 +440,13 @@ public class TunnuslukuTest extends TestBase {
         findElementById("lisatiedot").sendKeys("Testikommentti BR");
         findElementById("tallenna").click();
         WorkAround.click(findElementById("tallenna"));
+        WorkAround.showMainMenu();
     }
 
     private void tarkistaPsaBrutto() {
+        WorkAround.showMainMenu();
+        WorkAround.click(findElementByXPath("//a[@id='BR']"));
+        WorkAround.hideMainMenu();
         assertThat(findElementById("BR-linjakilometrit-talvi-0").getAttribute("value"), is(equalToIgnoringWhiteSpace("44,00 ")));
         assertThat(findElementById("BR-nousua-3").getAttribute("value"), is(equalToIgnoringWhiteSpace("7")));
         assertThat(findElementById("BR-vuorotarjonta-8").getAttribute("value"), is(equalToIgnoringWhiteSpace("5")));
@@ -445,6 +456,7 @@ public class TunnuslukuTest extends TestBase {
         assertThat(findElementById("BR-arvolippu-5").getAttribute("value"), is(equalToIgnoringWhiteSpace("0,00 €")));
         assertThat(findElementById("BR-kausilippu-11").getAttribute("value"), is(equalToIgnoringWhiteSpace("86,00 €")));
         assertThat(findElementById("lisatiedot").getAttribute("value"), is(equalToIgnoringWhiteSpace("Testikommentti BR")));
+        WorkAround.showMainMenu();
     }
 
     private void syotaPsaKOS() {
@@ -793,9 +805,13 @@ public class TunnuslukuTest extends TestBase {
         findElementById("lisatiedot").clear();
         findElementById("lisatiedot").sendKeys("KOS lisätiedot");
         WorkAround.click(findElementById("tallenna"));
+        WorkAround.showMainMenu();
     }
 
     private void tarkistaPsaKOS() {
+        WorkAround.showMainMenu();
+        WorkAround.click(findElementByXPath("//a[@id='KOS']"));
+        WorkAround.hideMainMenu();
         assertThat(findElementById("KOS-vuorotarjonta-talvi-0").getAttribute("value"), is(equalToIgnoringWhiteSpace("30000")));
         assertThat(findElementById("KOS-nousua-talvi-1").getAttribute("value"), is(equalToIgnoringWhiteSpace("22")));
         assertThat(findElementById("KOS-linjakilometrit-talvi-1").getAttribute("value"), is(equalToIgnoringWhiteSpace("777 777,00 ")));
@@ -806,6 +822,7 @@ public class TunnuslukuTest extends TestBase {
         assertThat(findElementById("KOS-arvolippu-5").getAttribute("value"), is(equalToIgnoringWhiteSpace("65,00 €")));
         assertThat(findElementById("KOS-kausilippu-11").getAttribute("value"), is(equalToIgnoringWhiteSpace("6,56 €")));
         assertThat(findElementById("lisatiedot").getAttribute("value"), is(equalToIgnoringWhiteSpace("KOS lisätiedot")));
+        WorkAround.showMainMenu();
     }
 
     private void syotaSA() {
@@ -999,15 +1016,20 @@ public class TunnuslukuTest extends TestBase {
         findElementById("lisatiedot").sendKeys("SA kommentit");
         findElementById("tallenna").click();
         WorkAround.click(findElementById("tallenna"));
+        WorkAround.showMainMenu();
     }
 
     private void tarkistaSA() {
+        WorkAround.showMainMenu();
+        WorkAround.click(findElementByXPath("//a[@id='SA']"));
+        WorkAround.hideMainMenu();
         assertThat(findElementById("SA-nousua-0").getAttribute("value"), is(equalToIgnoringWhiteSpace("23")));
         assertThat(findElementById("SA-vuorotarjonta-1").getAttribute("value"), is(equalToIgnoringWhiteSpace("5757")));
         assertThat(findElementById("SA-linjakilometrit-3").getAttribute("value"), is(equalToIgnoringWhiteSpace("876 869,00 ")));
         assertThat(findElementById("SA-liikennointikorvaus-2").getAttribute("value"), is(equalToIgnoringWhiteSpace("6 767,00 €")));
         assertThat(findElementById("SA-lipputulo-sl2").getAttribute("value"), is(equalToIgnoringWhiteSpace("547,00 €")));
         assertThat(findElementById("lisatiedot").getAttribute("value"), is(equalToIgnoringWhiteSpace("SA kommentit")));
+        WorkAround.showMainMenu();
     }
 
     private void syotaME() {
@@ -1163,13 +1185,21 @@ public class TunnuslukuTest extends TestBase {
         findElementById("ME-nousut-11").sendKeys("56876");
         findElementById("lisatiedot").click();
         findElementById("lisatiedot").clear();
-        findElementById("lisatiedot").sendKeys("6786");
-        findElementById("lisatiedot").click();
-        findElementById("lisatiedot").clear();
         findElementById("lisatiedot").sendKeys("ME kommentit");
         WorkAround.click(findElementById("tallenna"));
         WorkAround.showMainMenu();
-        WorkAround.click(findElementByXPath("//a[@id='TTYT']"));
+    }
+
+    private void tarkistaME() {
+        WorkAround.showMainMenu();
+        WorkAround.click(findElementByXPath("//a[@id='ME']"));
+        WorkAround.hideMainMenu();
+        assertThat(findElementById("ME-nousut-2").getAttribute("value"), is(equalToIgnoringWhiteSpace("465")));
+        assertThat(findElementById("ME-linjakilometrit-3").getAttribute("value"), is(equalToIgnoringWhiteSpace("6 876,00 ")));
+        assertThat(findElementById("ME-vuorotarjonta-8").getAttribute("value"), is(equalToIgnoringWhiteSpace("456")));
+        assertThat(findElementById("ME-liikennointikorvaus-0").getAttribute("value"), is(equalToIgnoringWhiteSpace("86,00 €")));
+        assertThat(findElementById("lisatiedot").getAttribute("value"), is(equalToIgnoringWhiteSpace("ME kommentit")));
+        WorkAround.showMainMenu();
     }
 
 
@@ -1185,18 +1215,16 @@ public class TunnuslukuTest extends TestBase {
         }
         WorkAround.hideMainMenu();
 
-        /*
         syotaTaustatiedot();
-        tarkistaTaustatiedot();
-
         syotaPsaBrutto();
-        tarkistaPsaBrutto();
-
         syotaPsaKOS();
-        tarkistaPsaKOS();
-*/
         syotaSA();
+        syotaME();
+
+        tarkistaTaustatiedot();
+        tarkistaPsaBrutto();
+        tarkistaPsaKOS();
         tarkistaSA();
-  //      syotaME();
+        tarkistaME();
     }
 }
