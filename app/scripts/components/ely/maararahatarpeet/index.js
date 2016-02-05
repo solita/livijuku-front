@@ -8,8 +8,8 @@ function errorMessage(nimi) {
 
 var maararahatarvetyyppiTooltips = {
   M: "Ennen 1.7.2014 kilpailutettu liikenne tai muu hankintalain nojalla hankittava liikenne.",
-  HK: "LIVIJUKU-714 - TODO: Liisa miettii tähän selitteen!"
-}
+  HK: "ELYn liikenteenharjoittajille maksama osuus Waltti-kuntakausilippujen ja Waltti-yleiskausilippujen välisestä asiakashinnan erotuksesta. (Osan maksaa ao. kunta myös suoraan liikenteenharjoittajille.)"
+};
 
 function maararahatarpeetController($scope) {
 
