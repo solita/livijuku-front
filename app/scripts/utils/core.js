@@ -58,3 +58,12 @@ export function cartesianProduct() {
         }));
     }, [ [] ]);
 };
+
+export function omitBy(object, predicate) {
+  _.reduce(object, (result, value, key) => {
+    if (predicate(value)) {
+      result[key] = value;
+    }
+    return result;
+  }, {});
+}
