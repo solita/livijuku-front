@@ -16,21 +16,26 @@
       </a>
     </li>
   </ul>
-  <ul ng-show="sallittu(user, 'view-hakemuskausi')">
-    <li ng-show="sallittu(user, 'view-hakemuskausi')">Tunnusluvut</li>
-    <li ng-show="sallittu(user, 'view-hakemuskausi')">
+  <ul ng-show="sallittu(user, 'view-hakemus')">
+    <li ng-show="sallittu(user, 'view-hakemus')">Tunnusluvut</li>
+    <li ng-show="sallittu(user, 'view-hakemus')">
       <a ui-sref-active="is-active" ui-sref="app.tunnusluku.syottaminen()">
         Tunnuslukujen syöttäminen
       </a>
     </li>
-    <li ng-show="sallittu(user, 'view-hakemuskausi')">
-      <a ui-sref-active="is-active" ui-sref="app.tunnusluku.raportit()">
-        Tunnuslukuraportit
+    <li>
+      <a ui-sref-active="is-active" ui-sref="app.tunnusluku.valtionavustuskuvaajat()">
+        Valtionavustuskuvaajat
       </a>
     </li>
-    <li ng-show="sallittu(user, 'view-hakemuskausi')">
-      <a ui-sref-active="is-active" ui-sref="app.yhteinen.seurantalomakedemo()">
-        Seurantalomake demo
+    <li>
+      <a ui-sref-active="is-active" ui-sref="app.tunnusluku.tunnuslukukuvaajat()">
+        Tunnuslukukuvaajat
+      </a>
+    </li>
+    <li>
+      <a ui-sref-active="is-active" ui-sref="app.tunnusluku.omakuvaaja()">
+        Oma kuvaaja tunnusluvuista
       </a>
     </li>
   </ul>
