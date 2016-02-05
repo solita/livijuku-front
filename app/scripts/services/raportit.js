@@ -24,12 +24,27 @@ const dimensio = {
   vuosi: _.range(2013, 2016)
 }
 
+function kuukausiToUTC(vuosikk) {
+  var year = parseInt(vuosikk.substring(0, 4));
+  var kuukausi = parseInt(vuosikk.substring(4));
+  return Date.UTC(year, (kuukausi - 1));
+}
+
 angular.module('services.tunnusluvut')
 
   .factory('RaporttiService', ['$http', function ($http) {
 
     return {
       haeTunnuslukuTilasto: function (tunnusluku, organisaatiolajitunnus, where, groupBy) {
+        var queryParams = _.map(c.omitBy(where, value => value !== 'ALL'), (value, key) => key + "=" + value).join('&');
+        var groupByQueryParams = _.map(groupBy, value => "group-by=" + value).join('&');
+
+        return $http.get('api/tilastot/' + tunnusluku + '/' + organisaatiolajitunnus + '?' + queryParams + '&' + groupByQueryParams).then(
+          res => groupBy[1] === 'kuukausi' ?
+          _.map(res.data, row => {row[1] = kuukausiToUTC(row[1]); return row}) :
+          res.data);
+      },
+      haeTunnuslukuTilastoDemo: function (tunnusluku, organisaatiolajitunnus, where, groupBy) {
         var laji = organisaatiolajitunnus;
 
         var column1 = laji ? _.filter(_.range(1, 36), isOrganisaatiolaji(laji)) : _.range(1, 36)
