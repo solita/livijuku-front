@@ -107,9 +107,14 @@ public class TunnuslukuTest extends TestBase {
     }
 
     private void tarkistaTaustatiedot() {
-        assertThat(findElementById("taustatiedot-konsulttipalvelu").getText(), is(equalTo("20000")));
-        assertThat(findElementById("taustatiedot-henkiloautoliikenne").getText(), is(equalTo("4342346,32")));
-        assertThat(findElementById("taustatiedot-kertalippuvyohyke-1").getText(), is(equalTo("1")));
+        assertThat(findElementById("taustatiedot-henkilosto").getAttribute("value"), is(equalTo("1000")));
+        assertThat(findElementById("taustatiedot-konsulttipalvelu").getAttribute("value"), is(equalTo("20 000,00 €")));
+        assertThat(findElementById("taustatiedot-henkiloautoliikenne").getAttribute("value"), is(equalTo("4 342 346,32 ")));
+        assertThat(findElementById("taustatiedot-pysakkienlkm").getAttribute("value"), is(equalTo("23")));
+        assertThat(findElementById("taustatiedot-kertalippuvyohyke-1").getAttribute("value"), is(equalTo("1,00 €")));
+        assertThat(findElementById("taustatiedot-kausilippuvyohyke-4").getAttribute("value"), is(equalTo("400,00 €")));
+        assertThat(findElementById("taustatiedot-asiakastyytyvaisyys").getAttribute("value"), is(equalTo("76,00 ")));
+        assertThat(findElementById("lisatiedot").getAttribute("value"), is(equalTo("Lisätietoa")));
     }
 
     private void syotaPsaBrutto() {
@@ -428,6 +433,18 @@ public class TunnuslukuTest extends TestBase {
         findElementById("lisatiedot").sendKeys("Testikommentti BR");
         findElementById("tallenna").click();
         WorkAround.click(findElementById("tallenna"));
+    }
+
+    private void tarkistaPsaBrutto() {
+        assertThat(findElementById("BR-linjakilometrit-talvi-0").getAttribute("value"), is(equalTo("44,00 ")));
+        assertThat(findElementById("BR-nousua-3").getAttribute("value"), is(equalTo("7")));
+        assertThat(findElementById("BR-vuorotarjonta-8").getAttribute("value"), is(equalTo("5")));
+        assertThat(findElementById("BR-lukumaara-3").getAttribute("value"), is(equalTo("13")));
+        assertThat(findElementById("BR-liikennointikorvaus-4").getAttribute("value"), is(equalTo("5 000,00 €")));
+        assertThat(findElementById("BR-kertalippu-1").getAttribute("value"), is(equalTo("1,00 €")));
+        assertThat(findElementById("BR-arvolippu-5").getAttribute("value"), is(equalTo("0,00 €")));
+        assertThat(findElementById("BR-kausilippu-11").getAttribute("value"), is(equalTo("86,00 €")));
+        assertThat(findElementById("lisatiedot").getAttribute("value"), is(equalTo("Testikommentti BR")));
     }
 
     private void syotaPsaKOS() {
@@ -773,11 +790,22 @@ public class TunnuslukuTest extends TestBase {
         findElementById("KOS-kausilippu-11").clear();
         findElementById("KOS-kausilippu-11").sendKeys("6,56");
         findElementById("lisatiedot").click();
-        findElementById("lisatiedot").sendKeys("\\9");
-        findElementById("lisatiedot").click();
         findElementById("lisatiedot").clear();
         findElementById("lisatiedot").sendKeys("KOS lisätiedot");
         WorkAround.click(findElementById("tallenna"));
+    }
+
+    private void tarkistaPsaKOS() {
+        assertThat(findElementById("KOS-vuorotarjonta-talvi-0").getAttribute("value"), is(equalTo("30000")));
+        assertThat(findElementById("KOS-nousua-talvi-1").getAttribute("value"), is(equalTo("22")));
+        assertThat(findElementById("KOS-linjakilometrit-talvi-1").getAttribute("value"), is(equalTo("777 777,00 ")));
+        assertThat(findElementById("KOS-nousua-1").getAttribute("value"), is(equalTo("6786")));
+        assertThat(findElementById("KOS-linjakilometrit-3").getAttribute("value"), is(equalTo("57 657,00 ")));
+        assertThat(findElementById("KOS-vuorotarjonta-11").getAttribute("value"), is(equalTo("7879")));
+        assertThat(findElementById("KOS-kertalippu-1").getAttribute("value"), is(equalTo("5 354,12 €")));
+        assertThat(findElementById("KOS-arvolippu-5").getAttribute("value"), is(equalTo("65,00 €")));
+        assertThat(findElementById("KOS-kausilippu-11").getAttribute("value"), is(equalTo("6,56 €")));
+        assertThat(findElementById("lisatiedot").getAttribute("value"), is(equalTo("KOS lisätiedot")));
     }
 
     private void syotaSA() {
@@ -1149,9 +1177,14 @@ public class TunnuslukuTest extends TestBase {
         WorkAround.hideMainMenu();
 
         syotaTaustatiedot();
-//        tarkistaTaustatiedot();
+        tarkistaTaustatiedot();
+
         syotaPsaBrutto();
+        tarkistaPsaBrutto();
+
         syotaPsaKOS();
+        tarkistaPsaKOS();
+
         syotaSA();
         syotaME();
     }
