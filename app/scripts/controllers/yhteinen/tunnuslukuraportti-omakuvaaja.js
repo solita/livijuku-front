@@ -428,12 +428,11 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
     var defaultFilter = _.map(_.filter(chart.filters, f => c.isDefinedNotNull(f.defaultValue)), f => [f.id, f.defaultValue])
     $scope.params.charts[id] = {filter: c.coalesce(_.zipObject(defaultFilter), {})};
 
-    const filterPath = 'params.charts[' + id + '].filter';
-    $scope.$watchCollection(filterPath,
-      filters => listener(id, chart, $scope.params.organisaatiolaji, filters));
+    const filterPath = '[params.organisaatiolaji, params.charts[' + id + '].filter]';
+    $scope.$watch(filterPath, ([organisaatiolaji, filter]) => listener(id, chart, organisaatiolaji, filter), true);
 
-    $scope.$watch('params.organisaatiolaji',
-      organisaatiolaji => listener(id, chart, organisaatiolaji, _.get($scope, filterPath)));
+    /*$scope.$watch('params.organisaatiolaji',
+      organisaatiolaji => listener(id, chart, organisaatiolaji, _.get($scope, filterPath)));*/
   });
 }
 
