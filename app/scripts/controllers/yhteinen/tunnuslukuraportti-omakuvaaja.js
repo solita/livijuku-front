@@ -412,9 +412,7 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
     }
     const conversion = c.coalesce(chart.data, convertToNvd3);
 
-    $q.all([RaporttiService.haeTunnuslukuTilasto(tunnusluku.id,
-                                                 _.assign( {organisaatiolajitunnus: organisaatiolaji}, filters),
-                                                 chart.groupBy),
+    $q.all([RaporttiService.haeTunnuslukuTilasto(tunnusluku.id, organisaatiolaji, filters, chart.groupBy),
             OrganisaatioService.hae()])
       .then(([data, organisaatiot])=> {
 

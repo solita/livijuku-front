@@ -29,8 +29,8 @@ angular.module('services.tunnusluvut')
   .factory('RaporttiService', ['$http', function ($http) {
 
     return {
-      haeTunnuslukuTilasto: function (tunnusluku, where, groupBy) {
-        var laji = where.organisaatiolajitunnus;
+      haeTunnuslukuTilasto: function (tunnusluku, organisaatiolajitunnus, where, groupBy) {
+        var laji = organisaatiolajitunnus;
 
         var column1 = laji ? _.filter(_.range(1, 36), isOrganisaatiolaji(laji)) : _.range(1, 36)
         var column2 = dimensio[groupBy[1]];
