@@ -51,7 +51,7 @@
                  class="form-control"
                  uib-datepicker-popup="d.M.yyyy"
                  ng-model="hakemus.hakuaika.alkupvm"
-                 datepicker-options="{{dateOptions}}"
+                 datepicker-options="dateOptions"
                  is-open="status.alkupvmOpen"
                  ng-required="true"
                  ng-model-options="{ allowInvalid: true }"
@@ -78,7 +78,7 @@
                  class="form-control"
                  uib-datepicker-popup="d.M.yyyy"
                  ng-model="hakemus.hakuaika.loppupvm"
-                 datepicker-options="{{dateOptions}}"
+                 datepicker-options="dateOptions"
                  is-open="status.loppupvmOpen"
                  ng-required="true"
                  show-button-bar="false" noenter readonly/>

@@ -344,6 +344,7 @@ public class HakemuskausiTest extends TestBase {
     private void uusiLiikennesuorite(String prefix, int suoritetyyppi, String nimi,
                                      String linjaautot, String taksit, String ajokilometrit,
                                      String matkustajamaara, String lipputulo, String nettohinta) {
+        WorkAround.hideMainMenu();
         // Luodaan rivi ja poistetaan se samantien
         WorkAround.click(findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)));
         WorkAround.click(findElementByXPath(String.format("//a[@id='%s-poistasuorite']", prefix)));
@@ -363,11 +364,13 @@ public class HakemuskausiTest extends TestBase {
         findElementByXPath(String.format("//input[@id='%s-lipputulo']", prefix)).sendKeys(lipputulo);
         findElementByXPath(String.format("//input[@id='%s-nettohinta']", prefix)).clear();
         findElementByXPath(String.format("//input[@id='%s-nettohinta']", prefix)).sendKeys(nettohinta);
+        WorkAround.showMainMenu();
     }
 
     private void uusiLippusuorite(String prefix, int lipputyyppi, String seutulippualue, String myynti,
                                   String matkat, String asiakashinta, String keskipituus,
                                   String lipputulot, String rahoitus) {
+        WorkAround.hideMainMenu();
         WorkAround.click(findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)));
         WorkAround.click(findElementByXPath(String.format("//a[@id='%s-poistasuorite']", prefix)));
         WorkAround.click(findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)));
@@ -390,6 +393,7 @@ public class HakemuskausiTest extends TestBase {
         findElementByXPath(String.format("//input[@id='%s-lipputulot']", prefix)).sendKeys(lipputulot);
         findElementByXPath(String.format("//input[@id='%s-rahoitus']", prefix)).clear();
         findElementByXPath(String.format("//input[@id='%s-rahoitus']", prefix)).sendKeys(rahoitus);
+        WorkAround.showMainMenu();
     }
 
     private void elyPerustiedot(String kaupunkilipputuki,
@@ -409,6 +413,7 @@ public class HakemuskausiTest extends TestBase {
     }
 
     private void uusiKehittamishanke(String nimi, String arvo, String kuvaus, int index) {
+        WorkAround.hideMainMenu();
         // Luodaan rivi ja poistetaan se samantien
         WorkAround.click(findElementByXPath("//button[@id='lisaakehittamishanke']"));
         WorkAround.click(findElementByXPath(String.format("//a[@id='poistakehittamishanke-%d']", index)));
@@ -419,9 +424,11 @@ public class HakemuskausiTest extends TestBase {
         findElementByXPath(String.format("//input[@id='arvo-%d']", index)).sendKeys(arvo);
         findElementByXPath(String.format("//input[@id='kuvaus-%d']", index)).clear();
         findElementByXPath(String.format("//input[@id='kuvaus-%d']", index)).sendKeys(kuvaus);
+        WorkAround.showMainMenu();
     }
 
     private void uusiMaararahatarve(String prefix, String sidotut, String uudet, String tulot, String kuvaus) {
+        WorkAround.hideMainMenu();
         findElementByXPath(String.format("//input[@id='%s-sidotut']", prefix)).clear();
         findElementByXPath(String.format("//input[@id='%s-sidotut']", prefix)).sendKeys(sidotut);
         findElementByXPath(String.format("//input[@id='%s-uudet']", prefix)).clear();
@@ -432,6 +439,7 @@ public class HakemuskausiTest extends TestBase {
         }
         findElementByXPath(String.format("//input[@id='%s-kuvaus']", prefix)).clear();
         findElementByXPath(String.format("//input[@id='%s-kuvaus']", prefix)).sendKeys(kuvaus);
+        WorkAround.showMainMenu();
     }
 
 

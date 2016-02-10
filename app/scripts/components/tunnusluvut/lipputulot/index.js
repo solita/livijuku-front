@@ -12,19 +12,19 @@ function lipputulotController($scope) {
   };
 
   $scope.kertalipputuloSumma = function () {
-    return _.sum($scope.lipputulo, 'kertalipputulo');
+    return _.sumBy($scope.lipputulo, 'kertalipputulo');
   };
 
   $scope.arvolipputuloSumma = function () {
-    return _.sum($scope.lipputulo, 'arvolipputulo');
+    return _.sumBy($scope.lipputulo, 'arvolipputulo');
   };
 
   $scope.kausilipputuloSumma = function () {
-    return _.sum($scope.lipputulo, 'kausilipputulo');
+    return _.sumBy($scope.lipputulo, 'kausilipputulo');
   };
 
   $scope.lipputuloSumma = function () {
-    return _.sum($scope.lipputulo, 'lipputulo');
+    return _.sumBy($scope.lipputulo, 'lipputulo');
   };
 
   $scope.kaikkilipputulotSumma = function () {

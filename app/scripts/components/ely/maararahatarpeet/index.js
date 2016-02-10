@@ -21,9 +21,9 @@ function maararahatarpeetController($scope) {
 
   $scope.yhteensa = function () {
     return _.sum(_.values($scope.hakemus.ely)) +
-           _.sum($scope.maararahatarpeet, 'sidotut') +
-           _.sum($scope.maararahatarpeet, 'uudet') -
-           _.sum($scope.maararahatarpeet, 'tulot');
+           _.sumBy($scope.maararahatarpeet, 'sidotut') +
+           _.sumBy($scope.maararahatarpeet, 'uudet') -
+           _.sumBy($scope.maararahatarpeet, 'tulot');
   };
 
   // oletusarvot ely-tietoihin:

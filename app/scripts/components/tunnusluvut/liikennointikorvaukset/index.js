@@ -12,15 +12,15 @@ function liikennointikorvauksetController($scope) {
   };
 
   $scope.nousukorvausSumma = function () {
-    return _.sum($scope.liikennointikorvaus, 'nousukorvaus');
+    return _.sumBy($scope.liikennointikorvaus, 'nousukorvaus');
   };
 
   $scope.nousutSumma = function () {
-    return _.sum($scope.liikennointikorvaus, 'nousut');
+    return _.sumBy($scope.liikennointikorvaus, 'nousut');
   };
 
   $scope.liikennointikorvausSumma = function () {
-    return _.sum($scope.liikennointikorvaus, 'korvaus');
+    return _.sumBy($scope.liikennointikorvaus, 'korvaus');
   };
 
   // error messages:

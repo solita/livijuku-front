@@ -45,6 +45,6 @@ module.exports = {
     return tilat;
   },
   find: function(id) {
-    return _.findWhere(tilat, {id: id});
+    return _.find(tilat, {id: id});
   }
 };

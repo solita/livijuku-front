@@ -19,7 +19,7 @@ function kalustoController($scope) {
   };
 
   $scope.kalustoSumma = function () {
-    return _.sum($scope.kalusto, 'lukumaara');
+    return _.sumBy($scope.kalusto, 'lukumaara');
   };
 
   // error messages:

@@ -65,10 +65,10 @@ angular.module('jukufrontApp')
               };
             }), 'organisaatiolajitunnus', $scope.lajitunnus);
 
-          $scope.kaikkiTarkastettu = _.all(hakemukset, 'hakemuksenTila', 'T');
-          $scope.haettuAvustusSum = _.sum(hakemukset, 'haettuAvustus');
-          $scope.myonnettavaAvustusSum = _.sum(hakemukset, 'myonnettavaAvustus');
-          $scope.muutosSum = _.sum(hakemukset, $scope.muutos);
+          $scope.kaikkiTarkastettu = _.every(hakemukset, 'hakemuksenTila', 'T');
+          $scope.haettuAvustusSum = _.sumBy(hakemukset, 'haettuAvustus');
+          $scope.myonnettavaAvustusSum = _.sumBy(hakemukset, 'myonnettavaAvustus');
+          $scope.muutosSum = _.sumBy(hakemukset, $scope.muutos);
 
           $scope.hakemuksetSuunnittelu = _.sortBy(hakemukset, 'hakija');
         }, StatusService.errorHandler);
@@ -102,19 +102,19 @@ angular.module('jukufrontApp')
     }
 
     $scope.hakemusKeskenerainen = safe(function (hakemus) {
-      return _.contains(['0', 'K', 'T0'], hakemus.hakemuksenTila);
+      return _.includes(['0', 'K', 'T0'], hakemus.hakemuksenTila);
     });
 
     $scope.hakemusPaatetty = safe(function (hakemus) {
-      return _.contains(['P', 'S'], hakemus.hakemuksenTila);
+      return _.includes(['P', 'S'], hakemus.hakemuksenTila);
     });
 
     $scope.hakemusVireilla = safe(function (hakemus) {
-      return _.contains(['V', 'TV'], hakemus.hakemuksenTila);
+      return _.includes(['V', 'TV'], hakemus.hakemuksenTila);
     });
 
     $scope.hakemusTarkastettu = safe(function (hakemus) {
-      return _.contains(['T', 'P', 'S'], hakemus.hakemuksenTila);
+      return _.includes(['T', 'P', 'S'], hakemus.hakemuksenTila);
     });
 
     $scope.hakemusTarkastamatta = safe(function (hakemus) {
@@ -122,7 +122,7 @@ angular.module('jukufrontApp')
     });
 
     $scope.hakemusVireilla = safe(function (hakemus) {
-      return _.contains(['V', 'TV'], hakemus.hakemuksenTila);
+      return _.includes(['V', 'TV'], hakemus.hakemuksenTila);
     });
 
     $scope.myonnettyLiikaa = function () {

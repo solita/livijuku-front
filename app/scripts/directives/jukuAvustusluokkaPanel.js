@@ -19,11 +19,11 @@ angular.module('jukufrontApp')
       controller: ['$scope', function ($scope) {
 
         $scope.kokonaisOmarahoitus = function (kohteet) {
-          return _.sum(kohteet, _.partial(h.avustuskohdeRahamaara, 'omarahoitus'));
+          return _.sumBy(kohteet, _.partial(h.avustuskohdeRahamaara, 'omarahoitus'));
         };
 
         $scope.kokonaisHaettavaAvustus = function (kohteet) {
-          return _.sum(kohteet, _.partial(h.avustuskohdeRahamaara, 'haettavaavustus'));
+          return _.sumBy(kohteet, _.partial(h.avustuskohdeRahamaara, 'haettavaavustus'));
         };
 
       }]

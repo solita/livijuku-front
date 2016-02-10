@@ -14,7 +14,7 @@ function haeHakemus(tyyppi, hakemus) {
     return hakemus;
   }
 
-  return _.findWhere(hakemus['other-hakemukset'], {
+  return _.find(hakemus['other-hakemukset'], {
     hakemustyyppitunnus: tyyppi
   });
 }
@@ -90,7 +90,7 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
     paatos: paatos,
     avustuskohdeluokat: hakemusPromise.then(isContentVisible(haeAvustuskohteet)),
     avustushakemusArvot: hakemusPromise.then(isContentVisible((hakemus) => {
-      if (_.contains(['MH1', 'MH2'], (hakemus.hakemustyyppitunnus))) {
+      if (_.includes(['MH1', 'MH2'], (hakemus.hakemustyyppitunnus))) {
         return haeAvustuskohteet(haeHakemus('AH0', hakemus));
       }
     })),
@@ -363,15 +363,15 @@ angular.module('jukufrontApp')
         var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
           return l.avustuskohteet;
         }));
-        return _.sum(avustuskohteet, _.partial(h.avustuskohdeRahamaara, 'haettavaavustus'));
+        return _.sumBy(avustuskohteet, _.partial(h.avustuskohdeRahamaara, 'haettavaavustus'));
       };
 
       $scope.sumHaettavaElyAvustus = function () {
         var maararahatarpeetSum =
           _.sum(_.values($scope.hakemus.ely)) +
-          _.sum($scope.maararahatarpeet, 'sidotut') + _.sum($scope.maararahatarpeet, 'uudet') - _.sum($scope.maararahatarpeet, 'tulot');
+          _.sumBy($scope.maararahatarpeet, 'sidotut') + _.sumBy($scope.maararahatarpeet, 'uudet') - _.sumBy($scope.maararahatarpeet, 'tulot');
 
-        var kehittamishankkeetSum = _.sum($scope.kehittamishankkeet, 'arvo');
+        var kehittamishankkeetSum = _.sumBy($scope.kehittamishankkeet, 'arvo');
         return (maararahatarpeetSum + kehittamishankkeetSum);
       };
 

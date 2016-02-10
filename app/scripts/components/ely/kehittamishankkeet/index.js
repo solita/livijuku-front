@@ -46,7 +46,7 @@ function kehittamishankkeetController($scope) {
   };
 
   $scope.yhteensa = function () {
-    return _.sum($scope.kehittamishankkeet, 'arvo');
+    return _.sumBy($scope.kehittamishankkeet, 'arvo');
   };
 
   $scope.arvoalueErrorMessage = errorMessage("");

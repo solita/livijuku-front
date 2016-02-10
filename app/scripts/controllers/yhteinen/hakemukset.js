@@ -4,7 +4,7 @@ var _ = require('lodash');
 var angular = require('angular');
 
 function haeOrganisaatio(id, organisaatiot) {
-  return _.findWhere(organisaatiot, {id});
+  return _.find(organisaatiot, {id});
 }
 
 angular.module('jukufrontApp')
@@ -64,7 +64,7 @@ angular.module('jukufrontApp')
           return hakemus.id;
         }
 
-        return _.findWhere(hakemukset, {
+        return _.find(hakemukset, {
           organisaatioid: hakemus.organisaatioid,
           hakemustyyppitunnus: tyyppi
         }).id;

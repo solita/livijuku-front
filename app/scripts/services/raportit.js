@@ -7,8 +7,8 @@ var c = require('utils/core');
 var Promise = require('bluebird');
 
 function isOrganisaatiolaji(laji) {
-  return id => laji === 'KS1' && _.contains([1, 10, 12, 13], id) ||
-               laji === 'KS2' && id < 15 && !_.contains([1, 10, 12, 13], id) ||
+  return id => laji === 'KS1' && _.includes([1, 10, 12, 13], id) ||
+               laji === 'KS2' && id < 15 && !_.includes([1, 10, 12, 13], id) ||
                laji === 'ELY' && id < 25 && id > 15 ||
                laji === 'KS3' && id > 24 ||
                laji === 'ALL'

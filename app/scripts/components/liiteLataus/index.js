@@ -113,7 +113,7 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
 
   $scope.uploadFiles = function (tiedostot) {
     if (tiedostot && tiedostot.length > 0) {
-      var tiedostojenKoko = _.sum(tiedostot, 'size');
+      var tiedostojenKoko = _.sumBy(tiedostot, 'size');
       if (tiedostojenKoko <= $scope.liitteitaLadattavissa()) {
         for (var i = 0; i < tiedostot.length; i++) {
           console.log('Upload filename:' + tiedostot[i].name + ' size:' + tiedostot[i].size + ' file:', tiedostot[i]);

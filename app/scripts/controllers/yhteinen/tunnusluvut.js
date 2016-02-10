@@ -67,6 +67,7 @@ angular.module('jukufrontApp')
         }
 
         $scope.vuositayttoaste = Math.floor((Math.random() * 100) + 1);
+        $scope.tayttoaste = t.laskeTayttoaste;
 
         $scope.isTabSelected = function isTabSelected(tyyppi) {
           return $state.current.tyyppi === tyyppi;
@@ -81,7 +82,7 @@ angular.module('jukufrontApp')
         OrganisaatioService.hae().then(
           organisaatiot => $scope.organisaatiot =
             _.filter(organisaatiot,
-              org => _.contains(['KS1', 'KS2', 'ELY'], org.lajitunnus)),
+              org => _.includes(['KS1', 'KS2', 'ELY'], org.lajitunnus)),
           StatusService.errorHandler);
 
         $scope.$watchGroup(["vuosi", "organisaatioId", "tyyppi()"], (id) => {
@@ -96,7 +97,7 @@ angular.module('jukufrontApp')
             inherit: true
           });
 
-          if (_.all(id, c.isDefinedNotNull)) {
+          if (_.every(id, c.isDefinedNotNull)) {
             loadTunnusluvut(id[0], id[1], id[2], $scope, TunnuslukuEditService, StatusService)
           }
         });

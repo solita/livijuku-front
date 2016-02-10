@@ -148,7 +148,7 @@ angular.module('jukufrontApp')
       }
     ];
 
-    $scope.tyypit = _.pluck($scope.avustusData, 'tyyppi');
+    $scope.tyypit = _.map($scope.avustusData, 'tyyppi');
     $scope.aktiivinenTyyppi = $scope.tyypit[0];
     $scope.aktiivinenOsajoukko = data.MYONNETTY;
     $scope.aktiivinenOrganisaatio = _.find($scope.avustusData, {'tyyppi': $scope.aktiivinenTyyppi}).organisaatiot[0];
@@ -271,10 +271,10 @@ angular.module('jukufrontApp')
       var myonnetty = [];
       var dataPerTyyppi = _.find($scope.avustusData, {'tyyppi': $scope.aktiivinenTyyppi});
       for (var vuosi in _.result(dataPerTyyppi, 'haetut')) {
-        haettu.push({x: vuosi, y: _.sum(_.result(dataPerTyyppi, data.HAETTU)[vuosi])});
+        haettu.push({x: vuosi, y: _.sumBy(_.result(dataPerTyyppi, data.HAETTU)[vuosi])});
       }
       for (var vuosi in _.result(dataPerTyyppi, 'myonnetyt')) {
-        myonnetty.push({x: vuosi, y: _.sum(_.result(dataPerTyyppi, data.MYONNETTY)[vuosi])});
+        myonnetty.push({x: vuosi, y: _.sumBy(_.result(dataPerTyyppi, data.MYONNETTY)[vuosi])});
       }
       return [{
         key: 'Haettu',

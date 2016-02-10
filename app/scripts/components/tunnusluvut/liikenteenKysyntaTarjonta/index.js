@@ -25,15 +25,15 @@ function kysyntaTarjontaController($scope) {
   };
 
   $scope.nousuaSumma = function () {
-    return _.sum($scope.liikennevuosi, 'nousut');
+    return _.sumBy($scope.liikennevuosi, 'nousut');
   };
 
   $scope.linjakilometritSumma = function () {
-    return _.sum($scope.liikennevuosi, 'linjakilometrit');
+    return _.sumBy($scope.liikennevuosi, 'linjakilometrit');
   };
 
   $scope.vuorotarjontaSumma = function () {
-    return _.sum($scope.liikennevuosi, 'lahdot');
+    return _.sumBy($scope.liikennevuosi, 'lahdot');
   };
 
   $scope.isPSA = t.isPSA($scope.tyyppi);
