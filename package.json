@@ -19,7 +19,7 @@
     "angular-ui-validate": "^1.2.2",
     "bluebird": "^3.2.2",
     "bootstrap": "^3.3.6",
-    "d3": "3.5.6",
+    "d3": "^3.5.14",
     "es5-shim": "^4.4.1",
     "iban": "0.0.6",
     "jquery": "^2.2.0",
@@ -28,7 +28,7 @@
     "ng-csv": "^0.3.6",
     "ng-currency": "solita/ng-currency#v0.8.x",
     "ng-file-upload": "8.0.6",
-    "nvd3": "1.8.1"
+    "nvd3": "^1.8.2"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.0",
