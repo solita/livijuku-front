@@ -82,7 +82,7 @@ const vuodet = {
 
 const vyohykemaarat = {
   $order: _.range(1, 7),
-  $nimi: _.identity,
+  $nimi: id => id === 1 ? 1 + ' vyöhyke' : id + ' vyöhykettä',
   $id: "vyohykemaara"
 };
 
