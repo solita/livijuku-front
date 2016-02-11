@@ -172,10 +172,10 @@ function group (data, idx, names) {
 }
 
 function convertToTree(name, names, data, organisaatiot) {
-  return [{
+  return data.length > 1 ? [{
     name: name,
     children: group (_.tail(data), 0, [ id => _.find(organisaatiot, {id: id}).nimi ].concat(names))
-  }];
+  }] : [];
 }
 
 const tunnusluvut = [{
