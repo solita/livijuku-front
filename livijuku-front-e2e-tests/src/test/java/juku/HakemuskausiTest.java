@@ -753,7 +753,7 @@ public class HakemuskausiTest extends TestBase {
 
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
-        takeScreenshot("ELY1");
+
         // Tarkasta hakemus
         WorkAround.click(Hakemuskaudet.tilaindikaattori(
                 Hakemuslaji.ELY, Hakemustila.TAYDENNETTY));
@@ -777,7 +777,6 @@ public class HakemuskausiTest extends TestBase {
 
         // Kirjaa sisään hakija
         login(User.ELY10);
-        takeScreenshot("ELY2");
         // Assertoi hakijana tila tarkastettu
         OmatHakemukset.hakemuksenTila(Hakemuslaji.ELY, Hakemustila.TARKASTETTU);
 
@@ -785,7 +784,6 @@ public class HakemuskausiTest extends TestBase {
         // Kirjaa sisään käsittelijä
         login(User.KATRI);
         // Päätä hakemus
-        takeScreenshot("ELY3");
         WorkAround.click(Hakemuskaudet.tilaindikaattori(Hakemuslaji.ELY, Hakemustila.TARKASTETTU));
         WorkAround.click(KaikkiHakemukset.suunnitteluJaPaatoksenteko(0));
 
@@ -794,7 +792,7 @@ public class HakemuskausiTest extends TestBase {
         findElementByXPath("//input[@id='maararaha']").sendKeys("1000000");
         findElementByXPath("//input[@id='ylijaama']").clear();
         findElementByXPath("//input[@id='ylijaama']").sendKeys("333000");
-        takeScreenshot("ELY4");
+
         // Myönnetään 200000 €
         WebElement epoMyonnettavaAvustus = Suunnittelu.hslMyonnettavaAvustus();
         epoMyonnettavaAvustus.clear();
@@ -812,10 +810,8 @@ public class HakemuskausiTest extends TestBase {
 
         // Kirjaa sisään päättäjä
         login(User.PAIVI);
-        takeScreenshot("ELY6");
         WorkAround.click(Hakemuskaudet.tilaindikaattori(Hakemuslaji.ELY, Hakemustila.TARKASTETTU));
         WorkAround.click(KaikkiHakemukset.suunnitteluJaPaatoksenteko(0));
-        takeScreenshot("ELY7");
         WorkAround.click(button("Tallenna ja hyväksy päätökset"));
         WorkAround.click(okOlenVarma());
         waitForAngularRequestsToFinish(driver);
@@ -823,7 +819,7 @@ public class HakemuskausiTest extends TestBase {
 
         // Kirjaa sisään hakija
         login(User.ELY10);
-        takeScreenshot("ELY8");
+
         // Assertoi tila päätetty
         WorkAround.click(spanWithHakemustila(Hakemustila.PAATETTY));
 
