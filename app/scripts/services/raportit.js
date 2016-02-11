@@ -36,7 +36,7 @@ angular.module('services.tunnusluvut')
 
     return {
       haeTunnuslukuTilasto: function (tunnusluku, organisaatiolajitunnus, where, groupBy) {
-        var queryParams = _.map(c.omitBy(where, value => value !== 'ALL'), (value, key) => key + "=" + value).join('&');
+        var queryParams = _.map(_.omitBy(where, value => value === 'ALL'), (value, key) => key + "=" + value).join('&');
         var groupByQueryParams = _.map(groupBy, value => "group-by=" + value).join('&');
 
         return $http.get('api/tilastot/' + tunnusluku + '/' + organisaatiolajitunnus + '?' + queryParams + '&' + groupByQueryParams).then(

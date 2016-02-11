@@ -426,7 +426,7 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
 
   _.forEach(charts, function(chart, id) {
     var defaultFilter = _.map(_.filter(chart.filters, f => c.isDefinedNotNull(f.defaultValue)), f => [f.id, f.defaultValue])
-    $scope.params.charts[id] = {filter: c.coalesce(_.zipObject(defaultFilter), {})};
+    $scope.params.charts[id] = {filter: c.coalesce(_.fromPairs(defaultFilter), {})};
 
     const filterPath = '[params.organisaatiolaji, params.charts[' + id + '].filter]';
     $scope.$watch(filterPath, ([organisaatiolaji, filter]) => listener(id, chart, organisaatiolaji, filter), true);
