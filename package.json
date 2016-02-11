@@ -27,7 +27,7 @@
     "lodash": "^4.3.0",
     "ng-csv": "^0.3.6",
     "ng-currency": "solita/ng-currency#v0.8.x",
-    "ng-file-upload": "8.0.6",
+    "ng-file-upload": "^11.2.3",
     "nvd3": "^1.8.2"
   },
   "devDependencies": {

@@ -195,6 +195,7 @@ public class TestBase {
 
     protected void postHakuohje(File fileToUpload, String xpath) {
         WebElement fileInput = findElementByXPath(xpath);
+        driver.executeScript("angular.element(arguments[0]).parent().removeAttr('style');", fileInput);
         driver.executeScript("angular.element(arguments[0]).css('visibility', 'visible').css('width','').css('height','');", fileInput);
         String hakuohje = fileToUpload.getAbsolutePath();
         fileInput.sendKeys(hakuohje);
@@ -210,30 +211,31 @@ public class TestBase {
     }
 
     protected void asetaAlkupaivat0101() {
+
         for (int i = 0; i < 4; i++) {
             WebElement muokkaaAikoja = findElementByCssSelector("#test-muokkaa-hakuaikoja-" + i);
-            muokkaaAikoja.click();
+            WorkAround.click(muokkaaAikoja);
 
             WebElement alkupv = findElementByCssSelector("#test-alkupvm-datepicker-button-" + i);
-            alkupv.click();
+            WorkAround.click(alkupv);
 
             WebElement vuosikuukausiValitsin =
                     findElementByCssSelector("#test-alkupvm-datepicker-" + i + " thead > tr:nth-child(1) > th:nth-child(2) button");
-            vuosikuukausiValitsin.click();
+            WorkAround.click(vuosikuukausiValitsin);
 
             WebElement vuosiValitsin = findElementByCssSelector("#test-alkupvm-datepicker-" + i + " thead tr:first-child th:nth-child(2) button");
-            vuosiValitsin.click();
+            WorkAround.click(vuosiValitsin);
 
             WebElement vuosi01 = findElementByCssSelector("#test-alkupvm-datepicker-" + i + " tbody tr:first-child td:first-child button");
-            vuosi01.click();
+            WorkAround.click(vuosi01);
 
             WebElement kuukausi01 = findElementByCssSelector("#test-alkupvm-datepicker-" + i + " tbody tr:first-child td:first-child button");
-            kuukausi01.click();
+            WorkAround.click(kuukausi01);
 
             WebElement paiva01 = findElementByCssSelector("#test-alkupvm-datepicker-" + i + " tbody tr:first-child td:nth-child(5) button");
-            paiva01.click();
+            WorkAround.click(paiva01);
 
-            findElementByCssSelector("#test-alkupvm-tallenna-" + i).click();
+            WorkAround.click(findElementByCssSelector("#test-alkupvm-tallenna-" + i));
             waitForAngularRequestsToFinish(driver);
         }
     }

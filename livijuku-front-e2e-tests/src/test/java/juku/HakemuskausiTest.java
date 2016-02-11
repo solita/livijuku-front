@@ -537,6 +537,7 @@ public class HakemuskausiTest extends TestBase {
                 + ".css('z-index', '1000001')"
                 + ".css('width','100px')"
                 + ".css('height','30px');", fileInput);
+        driver.executeScript("angular.element(arguments[0]).parent().removeAttr('style');", fileInput);
 
         String allekirjoitusliite = getPathToTestFile("JUKU_allekirjoitusoikeus.doc").toFile().getAbsolutePath();
 
