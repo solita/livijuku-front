@@ -43,9 +43,9 @@
 
     <nvd3 options='chart.options' data='data[chartid]' api="params.charts[chartid].api"></nvd3>
 
-    <a ng-csv="exportCsvMultibar(tunnuslukugraafi.data())" class="pull-right"
+    <a ng-csv="csv[chartid]" class="pull-right"
        filename="tunnuslukudata.csv"
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+       field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
 

@@ -402,6 +402,8 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
 
   // init chart data and chart params
   $scope.data = new Array(charts.length);
+  $scope.csv = new Array(charts.length);
+
   $scope.params.charts = new Array(charts.length);
 
   function listener(id, chart, organisaatiolaji, filters) {
@@ -416,6 +418,7 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
             OrganisaatioService.hae()])
       .then(([data, organisaatiot])=> {
 
+              $scope.csv[id] = data;
               if (chart.options.chart.type === 'sunburstChart') {
                 $scope.params.charts[id].api.updateWithData(conversion(data, organisaatiot));
               } else {
