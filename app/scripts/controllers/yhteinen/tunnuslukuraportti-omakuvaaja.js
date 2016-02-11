@@ -174,7 +174,7 @@ function group (data, idx, names) {
 function convertToTree(name, names, data, organisaatiot) {
   return [{
     name: name,
-    children: group (data, 0, [ id => _.find(organisaatiot, {id: id}).nimi ].concat(names))
+    children: group (_.tail(data), 0, [ id => _.find(organisaatiot, {id: id}).nimi ].concat(names))
   }];
 }
 
@@ -391,7 +391,7 @@ const tunnusluvut = [{
   }];
 
 function convertToNvd3(data, organisaatiot) {
-  return _.map(_.values(_.groupBy(data, row => row[0])),
+  return _.map(_.values(_.groupBy(_.tail(data), row => row[0])),
                rows => ({key: (_.find(organisaatiot, {id: rows[0][0]})).nimi,
                          values: _.map(rows, row => ({x: row[1], y: row[2]})) }));
 }
