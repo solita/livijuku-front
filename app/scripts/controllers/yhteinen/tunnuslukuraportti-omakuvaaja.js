@@ -412,7 +412,7 @@ const tunnusluvut = [{
   createAlueTunnusluku('henkilosto', 'Henkilöstö', 'suunnittelun ja organisaation henkilöstö', 'Henkilötyövuotta'),
   createAlueTunnusluku('pendeloivienosuus', 'Pendelöivienosuus', 'pendelöivien osuus (oman kunnan ulkopuolella työssäkäynti)', 'Prosenttia työssäkäyvistä (%)'),
   createAlueTunnusluku('henkiloautoliikennesuorite', 'Henkilöautoliikennesuorite', 'henkilöautoliikennesuorite', 'km / vuosi'),
-  createAlueTunnusluku('autoistumisaste', 'Autoistumisaste', 'autoistumisaste', 'Autoa/1000 asukasta'),
+  createAlueTunnusluku('autoistumisaste', 'Autoistumisaste', 'autoistumisaste', 'Autoa (kpl) / 1000 asukasta'),
   createAlueTunnusluku('asiakastyytyvaisyys', 'Asiakastyytyväisyys', 'tyytyväisten joukkoliikenteen käyttäjien osuus', 'Prosenttia (%)')];
 
 function convertToNvd3(data, organisaatiot) {
