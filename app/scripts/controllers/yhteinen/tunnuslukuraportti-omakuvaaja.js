@@ -90,8 +90,8 @@ function createChart(title, xLabel) {
   return {
     chart: {
       height: 450,
-      x: d => d.x,
-      y: d => d.y,
+      x: d => d[1],
+      y: d => d[2],
       yAxis: {
         axisLabel: ''
       },
@@ -393,7 +393,7 @@ const tunnusluvut = [{
 function convertToNvd3(data, organisaatiot) {
   return _.map(_.values(_.groupBy(_.tail(data), row => row[0])),
                rows => ({key: (_.find(organisaatiot, {id: rows[0][0]})).nimi,
-                         values: _.map(rows, row => ({x: row[1], y: row[2]})) }));
+                         values: rows}));
 }
 
 function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService) {
