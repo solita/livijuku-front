@@ -178,6 +178,20 @@ function convertToTree(name, names, data, organisaatiot) {
   }] : [];
 }
 
+function createAlueTunnusluku(id, nimi, desc, unit) {
+  return {
+    id: "alue-" + id,
+    nimi: "Alue - " + nimi,
+    charts: [{
+      title: "Alueen " + desc + " vuosittain tarkasteltuna",
+      yTitle: filter => unit,
+      groupBy: ["organisaatioid", "vuosi"],
+      filters: [],
+      options: createMultiBarChart(nimi, "Vuosi")
+    }]
+  }
+}
+
 const tunnusluvut = [{
     id: "nousut",
     nimi: "Nousut",
@@ -388,7 +402,18 @@ const tunnusluvut = [{
         }
       }
     }]
-  }];
+  },
+  createAlueTunnusluku('kuntamaara', 'Kuntamäärä', 'kuntien lukumäärä', 'Lukumäärä (kpl)'),
+  createAlueTunnusluku('vyohykemaara', 'Vyöhykemäärä', 'vyöhykkeiden lukumäärä', 'Lukumäärä (kpl)'),
+  createAlueTunnusluku('pysakkimaara', 'Pysäkkimäärä', 'pysäkkien lukumäärä', 'Lukumäärä (kpl)'),
+  createAlueTunnusluku('maapintaala', 'Maapintaala', 'maapintaala', 'Neliökilometri (km2)'),
+  createAlueTunnusluku('asukasmaara', 'Asukasmäärä', 'asukkaiden lukumäärä', 'Lukumäärä (kpl)'),
+  createAlueTunnusluku('tyopaikkamaara', 'Työpaikkamäärä', 'työpaikkojen lukumäärä', 'Lukumäärä (kpl)'),
+  createAlueTunnusluku('henkilosto', 'Henkilöstö', 'suunnittelun ja organisaation henkilöstö', 'Henkilötyövuotta'),
+  createAlueTunnusluku('pendeloivienosuus', 'Pendelöivienosuus', 'pendelöivien osuus (oman kunnan ulkopuolella työssäkäynti)', 'Prosenttia työssäkäyvistä (%)'),
+  createAlueTunnusluku('henkiloautoliikennesuorite', 'Henkilöautoliikennesuorite', 'henkilöautoliikennesuorite', 'km / vuosi'),
+  createAlueTunnusluku('autoistumisaste', 'Autoistumisaste', 'autoistumisaste', 'Autoa/1000 asukasta'),
+  createAlueTunnusluku('asiakastyytyvaisyys', 'Asiakastyytyväisyys', 'tyytyväisten joukkoliikenteen käyttäjien osuus', 'Prosenttia (%)')];
 
 function convertToNvd3(data, organisaatiot) {
   return _.map(_.values(_.groupBy(_.tail(data), row => row[0])),
