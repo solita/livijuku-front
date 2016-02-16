@@ -14,21 +14,86 @@ export function isPSA(tunnuslukutyyppi) {
   return _.includes(['BR', 'KOS'], tunnuslukutyyppi);
 }
 
+export const viikonpaivaluokat = ['A', 'LA', 'SU'];
+
+export const paastoluokat = ['E0', 'E1', 'E2', 'E3', 'E4', 'E5', 'E6'];
+
+/* Progress bar laskenta */
+
+export function laskeTayttoaste(tunnusluvut, tyyppi) {
+  return Math.round((laske(tunnusluvut) / haeMaksimi(tyyppi)) * 100);
+}
+
+export function laskeTayttoasteType(tunnusluvut, tyyppi) {
+  var tayttoaste = laskeTayttoaste(tunnusluvut, tyyppi);
+  if (tayttoaste > 80) return 'success';
+  else if (tayttoaste > 20) return 'warning';
+  else return 'danger';
+}
+const maksimipisteet = [
+  {
+    id: 'TTYT',
+    max: 17
+  },
+  {
+    id: 'BR',
+    max: 94
+  },
+  {
+    id: 'KOS',
+    max: 106
+  },
+  {
+    id: 'SA',
+    max: 60
+  },
+  {
+    id: 'ME',
+    max: 48
+  }
+];
+
 function tyhja(val) {
   return (_.isNaN(val) || _.isNil(val) || (val === ''));
 }
 
+function haeMaksimi(id) {
+  return _.find(maksimipisteet, {id: id}).max;
+}
+
 function laskeAlue(alue) {
-  var annetutArvot = _.omitBy(_.merge(_.omit(alue, 'kustannus'), alue.kustannus), tyhja);
-  return Object.keys(annetutArvot).length;
+  var annetutArvot = _.omitBy(_.merge(_.omit(alue, ['kustannus', 'kommentti']), alue.kustannus), tyhja);
+  return _.size(annetutArvot);
 }
 
 function laskeLippuhinta(lippuhinnat) {
   var annetutArvot = _.reject(lippuhinnat, function (n) {
-    return ((_.isNaN(n.kausilippuhinta) || _.isNil(n.kausilippuhinta)) && (_.isNaN(n.kertalippuhinta) || _.isNil(n.kertalippuhinta)));
+    return (tyhja(n.kausilippuhinta) && tyhja(n.kertalippuhinta));
   });
   // Jos yksikin kentta on taytetty, palautetaan 1 piste
-  if (annetutArvot.length > 0) return 1;
+  if (_.size(annetutArvot) > 0) return 1;
+  else return 0;
+}
+
+function laskeLiikenteenKysyntaJaTarjonta(arvot) {
+  var annetutArvot = _.reject(_.concat(_.map(arvot, 'lahdot'), _.map(arvot, 'linjakilometrit'), _.map(arvot, 'nousut')), tyhja);
+  return _.size(annetutArvot);
+}
+
+function laskeLiikennointikorvaus(arvot) {
+  var annetutArvot = _.reject(_.concat(_.map(arvot, 'korvaus'), _.map(arvot, 'nousukorvaus'), _.map(arvot, 'nousut')), tyhja);
+  return _.size(annetutArvot);
+}
+
+function laskeLipputulo(arvot) {
+  var annetutArvot = _.reject(_.concat(_.map(arvot, 'arvolipputulo'), _.map(arvot, 'kausilipputulo'), _.map(arvot, 'kertalipputulo'), _.map(arvot, 'lipputulo')), tyhja);
+  return _.size(annetutArvot);
+}
+
+function laskeKalusto(arvot) {
+  var annetutArvot = _.reject(_.map(arvot, 'lukumaara'), tyhja);
+  // Jos yksikin kentta on taytetty, palautetaan 1 piste
+  if (_.size(annetutArvot) > 0) return 1;
   else return 0;
 }
 
@@ -41,48 +106,16 @@ function laske(arvot) {
       pisteet = pisteet + laskeAlue(value);
     } else if (key === 'lippuhinta') {
       pisteet = pisteet + laskeLippuhinta(value);
+    } else if ((key === 'liikenneviikko') || (key === 'liikennevuosi')) {
+      pisteet = pisteet + laskeLiikenteenKysyntaJaTarjonta(value);
+    } else if (key === 'kalusto') {
+      pisteet = pisteet + laskeKalusto(value);
+    } else if (key === 'liikennointikorvaus') {
+      pisteet = pisteet + laskeLiikennointikorvaus(value);
+    } else if (key === 'lipputulo') {
+      pisteet = pisteet + laskeLipputulo(value);
     }
-    else {
-      pisteet = pisteet + 1;
-    }
-
   });
   return pisteet;
 }
-
-export function laskeTayttoaste(tunnusluvut, tyyppi) {
-  return Math.round((laske(tunnusluvut)/haeMaksimi(tyyppi))*100);
-}
-
-function haeMaksimi(id) {
-  return _.find(maksimipisteet, {id: id}).max;
-}
-
-const maksimipisteet = [
-  {
-    id: 'TTYT',
-    max: 18
-  },
-  {
-    id: 'BR',
-    max: 18
-  },
-  {
-    id: 'KOS',
-    max: 18
-  },
-  {
-    id: 'SA',
-    max: 18
-  },
-  {
-    id: 'ME',
-    max: 18
-  }
-];
-
-
-export const viikonpaivaluokat = ['A', 'LA', 'SU'];
-
-export const paastoluokat = ['E0', 'E1', 'E2', 'E3', 'E4', 'E5', 'E6'];
 

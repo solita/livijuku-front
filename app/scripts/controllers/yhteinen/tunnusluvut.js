@@ -68,6 +68,7 @@ angular.module('jukufrontApp')
 
         $scope.vuositayttoaste = Math.floor((Math.random() * 100) + 1);
         $scope.tayttoaste = t.laskeTayttoaste;
+        $scope.tayttoasteType = t.laskeTayttoasteType;
 
         $scope.isTabSelected = function isTabSelected(tyyppi) {
           return $state.current.tyyppi === tyyppi;
