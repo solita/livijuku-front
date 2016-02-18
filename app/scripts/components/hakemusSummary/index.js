@@ -18,7 +18,7 @@ module.exports = function () {
     replace: true,
     template: require('./index.html'),
     controller: ['$scope', function ($scope) {
-      $scope.hakemuksenTilat = _.filter(tilat.getAll(), (tila) => ['0', 'P'].indexOf(tila.id) === -1);
+      $scope.hakemuksenTilat = _.filter(tilat.getAll(), (tila) => ['0', 'P'].indexOf(tila.id));
       $scope.utils = hakemus;
       $scope.editing = false;
       $scope.status = {
