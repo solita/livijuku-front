@@ -39,7 +39,7 @@ angular.module('jukufrontApp')
     $scope.hasPaatos = function () {
       if (typeof $scope.paatos === 'undefined') return false;
       return $scope.paatos.paatosnumero > -1;
-    }
+    };
 
     $scope.asetaVanhaArvo = function (arvo) {
       $scope.vanhaArvo = arvo;
@@ -81,6 +81,10 @@ angular.module('jukufrontApp')
       PaatosService.tallenna($scope.hakemusid, paatosdata)
         .then(function () {
           StatusService.ok('PaatosService.tallenna()', 'Tallennus onnistui.');
+          SuunnitteluService.suunniteltuAvustus(parseFloat($scope.avustus), $scope.hakemusid)
+            .then(function () {
+            }, StatusService.errorHandler);
+
           $scope.paatosForm.$setPristine();
           haePaatosTiedot();
           switch (lisatoiminto) {
@@ -96,9 +100,7 @@ angular.module('jukufrontApp')
               PaatosService.hyvaksy($scope.hakemusid)
                 .then(function () {
                   StatusService.ok('PaatosService.hyvaksy(' + $scope.hakemusid + ')', 'Hakemus päivitettiin päätetyksi.');
-                  SuunnitteluService.suunniteltuAvustus(parseFloat($scope.avustus), $scope.hakemusid)
-                    .then(function () {
-                    }, StatusService.errorHandler);
+
                   $state.go('app.kasittelija.suunnittelu', {
                     tyyppi: $scope.tyyppi,
                     vuosi: $scope.vuosi,
