@@ -5,7 +5,8 @@
     </juku-form-row>
     <juku-form-row>
       <small><em>Tämän välilehden tietojen täyttöaste:</em></small>
-      <uib-progressbar animate="false" value="tayttoaste(tunnusluvut, 'TTYT')" type="{{tayttoasteType(tunnusluvut,'TTYT')}}"><b>{{tayttoaste(tunnusluvut,'TTYT')}}%</b>
+      <uib-progressbar animate="false" value="tayttoaste(tunnusluvut, 'TTYT')"
+                       type="{{tayttoasteType(tunnusluvut,'TTYT')}}"><b>{{tayttoaste(tunnusluvut,'TTYT')}}%</b>
       </uib-progressbar>
     </juku-form-row>
     <juku-form-row>
@@ -256,7 +257,8 @@
         <table class="table table-hover table-condensed">
           <thead>
             <th class="col-md-10">Toimivalta-alueen pysäkkien lukumäärä tie- ja katuverkolla (pysäkkitietoa tarjoaa mm.
-              <a href="http://www.digiroad.fi/Uusi_DR/pysakki/fi_FI/pysakki/" target="_blank">digiroad</a>)
+              <a href="http://www.digiroad.fi/aineisto/pysakkiaineisto/erillisirrotus/fi_FI/erillisirrotus/"
+                 target="_blank">digiroad</a>)
             </th>
             <th class="col-md-2">
               <form-group-compact label="Pysäkkien lukumääärä" errormessage="kokonaislukuErrorMessage">
@@ -285,7 +287,8 @@
             <tr>
               <td>Kertalipun hinta vyöhykkeittäin - aikuinen (€)</td>
               <td ng-repeat="vyohyke in tunnusluvut.lippuhinta" ng-form>
-                <form-group-compact label="Kertalippu vyöhyke {{vyohyke.vyohykemaara}}" errormessage="desimaaliErrorMessage">
+                <form-group-compact label="Kertalippu vyöhyke {{vyohyke.vyohykemaara}}"
+                                    errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-kertalippuvyohyke-{{vyohyke.vyohykemaara}}"
                          name="kertalippuvyohyke" type="text" placeholder="€ / kpl"
                          ng-currency="" numeric-only="" max="9999999999.99"
@@ -298,7 +301,8 @@
             <tr>
               <td>Kausilipun hinta vyöhykkeittäin - 30 päivää, aikuinen (€)</td>
               <td ng-repeat="vyohyke in tunnusluvut.lippuhinta" ng-form>
-                <form-group-compact label="Kausilippu vyöhyke {{vyohyke.vyohykemaara}}" errormessage="desimaaliErrorMessage">
+                <form-group-compact label="Kausilippu vyöhyke {{vyohyke.vyohykemaara}}"
+                                    errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-kausilippuvyohyke-{{vyohyke.vyohykemaara}}"
                          name="kausilippuvyohyke" type="text" placeholder="€ / kpl"
                          ng-currency="" numeric-only="" max="9999999999.99"
@@ -321,7 +325,11 @@
               </th>
             </tr>
           </thead>
-          <tbody><tr><td><i>Tiedot selviävät myöhemmin</i></td></tr></tbody>
+          <tbody>
+            <tr>
+              <td><i>Tiedot selviävät myöhemmin</i></td>
+            </tr>
+          </tbody>
           <tbody ng-if="false">
             <tr>
               <td class="col-md-8">Liikenteen ostot, € (siirtymäkaudella)</td>
@@ -369,7 +377,8 @@
             <tr>
               <td class="col-md-8">Informaatio ja maksujärjestelmien kehittäminen, €</td>
               <td class="col-md-4">
-                <form-group-compact label="Informaatio ja maksujärjestelmien kehittäminen" errormessage="desimaaliErrorMessage">
+                <form-group-compact label="Informaatio ja maksujärjestelmien kehittäminen"
+                                    errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-infomaksukeh" name="infomaksukeh" type="text"
                          class="form-control"
                          ng-currency="" numeric-only="" max="9999999999.99"
@@ -383,7 +392,8 @@
             <tr>
               <td class="col-md-8">Matkakeskusten tai matkapalvelukeskusten kehittäminen, €</td>
               <td class="col-md-4">
-                <form-group-compact label="Matkakeskusten tai matkapalvelukeskusten kehittäminen" errormessage="desimaaliErrorMessage">
+                <form-group-compact label="Matkakeskusten tai matkapalvelukeskusten kehittäminen"
+                                    errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-matkakeskeh" name="matkakeskeh" type="text"
                          class="form-control"
                          ng-currency="" numeric-only="" max="9999999999.99"
