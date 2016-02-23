@@ -123,6 +123,11 @@ function createMultiBarChart(title, xLabel, tickvalues) {
         type: 'multiBarChart',
         stacked: false,
         reduceXTicks: false,
+        tooltip: {
+          valueFormatter: function (d) {
+            return d;
+          }
+        },
         yAxis: {
           tickFormat: function (d) {
             return arvonTulostus(d);
@@ -143,6 +148,11 @@ function createLineChartKK(title, xLabel) {
     createChart(title, "Kuukausi"), {
       chart: {
         type: 'lineWithFocusChart',
+        tooltip: {
+          valueFormatter: function (d) {
+            return d;
+          }
+        },
         xAxis: {
           tickFormat: d => d3.time.format.utc("%m/%Y")(new Date(d))
         },
@@ -406,7 +416,7 @@ const tunnusluvut = [{
     groupBy: ["organisaatioid", "kustannuslajitunnus"],
     filters: [
       createFilter("Vuosi", vuodet, '2016')],
-    options: createMultiBarChart("Kustannukset", "Kustannuslaji",kustannuslajit)
+    options: createMultiBarChart("Kustannukset", "Kustannuslaji", kustannuslajit)
   }]
 }, {
   id: "lippuhinnat",
