@@ -116,7 +116,7 @@ function createChart(title, xLabel) {
   };
 };
 
-function createMultiBarChart(title, xLabel) {
+function createMultiBarChart(title, xLabel, tickvalues) {
   return _.merge(
     createChart(title, xLabel), {
       chart: {
@@ -126,6 +126,12 @@ function createMultiBarChart(title, xLabel) {
         yAxis: {
           tickFormat: function (d) {
             return arvonTulostus(d);
+          }
+        },
+        xAxis: {
+          tickFormat: function (d) {
+            if (typeof tickvalues !== 'undefined') return tickvalues[d];
+            else return d;
           }
         }
       }
@@ -282,7 +288,7 @@ const tunnusluvut = [{
     filters: [
       createFilter("Vuosi", vuodet, '2016'),
       createFilter("Sopimustyyppi", sopimustyypit)],
-    options: createMultiBarChart("Kysyntä", "Viikonpäiväluokka")
+    options: createMultiBarChart("Kysyntä", "Viikonpäiväluokka", viikonpaivaluokat)
   }]
 }, {
   id: "lahdot-viikko",
@@ -302,7 +308,7 @@ const tunnusluvut = [{
     filters: [
       createFilter("Vuosi", vuodet, '2016'),
       createFilter("Sopimustyyppi", sopimustyypit)],
-    options: createMultiBarChart("Tarjonta", "Viikonpäiväluokka")
+    options: createMultiBarChart("Tarjonta", "Viikonpäiväluokka", viikonpaivaluokat)
   }]
 }, {
   id: "linjakilometrit-viikko",
@@ -322,7 +328,7 @@ const tunnusluvut = [{
     filters: [
       createFilter("Vuosi", vuodet, '2016'),
       createFilter("Sopimustyyppi", sopimustyypit)],
-    options: createMultiBarChart("Tarjonta", "Viikonpäiväluokka")
+    options: createMultiBarChart("Tarjonta", "Viikonpäiväluokka", viikonpaivaluokat)
   }]
 }, {
   id: "liikennointikorvaus",
@@ -382,7 +388,7 @@ const tunnusluvut = [{
     filters: [
       createFilter("Vuosi", vuodet, '2016'),
       createFilter("Sopimustyyppi", sopimustyypit)],
-    options: createMultiBarChart("Kalusto", "Päästöluokka")
+    options: createMultiBarChart("Kalusto", "Päästöluokka", paastoluokat)
   }]
 }, {
   id: "kustannukset",
@@ -400,7 +406,7 @@ const tunnusluvut = [{
     groupBy: ["organisaatioid", "kustannuslajitunnus"],
     filters: [
       createFilter("Vuosi", vuodet, '2016')],
-    options: createMultiBarChart("Kustannukset", "Kustannuslaji")
+    options: createMultiBarChart("Kustannukset", "Kustannuslaji",kustannuslajit)
   }]
 }, {
   id: "lippuhinnat",
