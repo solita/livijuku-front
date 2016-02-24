@@ -1,0 +1,130 @@
+<form id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lippusuoritteet-form'}}" name="suoritteetForm">
+  <div class="table-responsive">
+    <table class="table table-hover table-condensed">
+      <tr>
+        <th class="col-md-2">{{kaupunkilippu ? "Kaupunkiliput" : "Seutulippu"}}</th>
+        <th>Myynti (kpl)</th>
+        <th>Matkat (kpl)</th>
+        <th>Asiakashinta</th>
+        <th>Lipuilla tehtyjen matkojen keskipituus</th>
+        <th>Lipputulot yhteensä</th>
+        <th>Valtion ja kuntien rahoitus yhteensä</th>
+        <th ng-hide="isReadonly()">Toiminnot</th>
+      </tr>
+      </thead>
+      <tfoot ng-if="suoritteet.length > 0">
+        <tr>
+          <td>
+            <span class="yhteensa">Yhteensä:</span>
+          </td>
+          <td>{{myyntiSumma() | currency : '' : 0}}</td>
+          <td>{{matkatSumma() | currency : '' : 0}}</td>
+          <td>{{asiakashintaSumma() | currency}}</td>
+          <td>{{keskipituusSumma() | currency : 'km'}}</td>
+          <td>{{lipputuloSumma() | currency}}</td>
+          <td>{{rahoitusSumma() | currency}}</td>
+          <td></td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr ng-if="suoritteet.length === 0">
+          <td colspan="10" class="text-info">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Tämä taulukko on tyhjä, koska yhtään
+            lippusuoritetta ei ole lisätty.
+          </td>
+        </tr>
+        <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">
+          <td ng-if="kaupunkilippu">
+            <form-group-compact label="Lipputyyppi">
+              <select id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lipputyyppi'}}" name="lipputyyppi"
+                      ng-model="rivi.lipputyyppitunnus" ng-disabled="isReadonly()"
+                      placeholder="Lipputyyppi" ng-options="tyyppi.tunnus as tyyppi.nimi for tyyppi in lipputyypit"
+                      required>
+                <option value="" selected disabled>Valitse lipputyyppi</option>
+              </select>
+            </form-group-compact>
+          </td>
+          <td ng-if="!kaupunkilippu">
+            <form-group-compact label="Seutulippualue" errormessage="seutulippualueErrorMessage">
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-seutulippualue'}}" name="seutulippualue"
+                     type="text" noenter ng-minlength="2" ng-maxlength="200" select-on-click
+                     ng-model="rivi.seutulippualue" ng-disabled="isReadonly()"
+                     placeholder="Seutulippualue" required>
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Myynti" errormessage="myyntiErrorMessage">
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-myynti'}}" name="myynti" type="text"
+                     required integer-only select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                     ng-model="rivi.myynti" ng-disabled="isReadonly()"
+                     placeholder="Myynti">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Matkat" errormessage="matkatErrorMessage">
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-matkat'}}" name="matkat" type="text"
+                     required integer-only select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                     ng-model="rivi.matkat" ng-disabled="isReadonly()"
+                     placeholder="Matkat">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Asiakashinta" errormessage="asiakashintaErrorMessage">
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-asiakashinta'}}" name="asiakashinta" type="text"
+                     class="form-control"
+                     ng-currency="" numeric-only=""
+                     noenter
+                     select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                     ng-model="rivi.asiakashinta" ng-disabled="isReadonly()"
+                     placeholder="Asiakashinta" required>
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Keskipituus" errormessage="keskipituusErrorMessage">
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-keskipituus'}}" name="keskipituus" type="text"
+                     class="form-control" numeric-km-only="" ng-currency=""
+                     currency-symbol="km"
+                     noenter
+                     select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                     ng-model="rivi.keskipituus" ng-disabled="isReadonly()"
+                     placeholder="Keskipituus" required>
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Lipputulot" errormessage="lipputulotErrorMessage">
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lipputulot'}}" name="lipputulot" type="text"
+                     class="form-control" ng-currency="" numeric-only=""
+                     noenter
+                     select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                     ng-model="rivi.lipputulo" ng-disabled="isReadonly()"
+                     placeholder="Lipputulot" required>
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Rahoitus" errormessage="rahoitusErrorMessage">
+              <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-rahoitus'}}" name="rahoitus" type="text"
+                     class="form-control" ng-currency="" numeric-only="" noenter
+                     select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                     ng-model="rivi.julkinenrahoitus" ng-disabled="isReadonly()"
+                     placeholder="Rahoitus" required>
+            </form-group-compact>
+          </td>
+          <td ng-hide="isReadonly()"><a id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-poistasuorite'}}" href=""
+                                        ng-click="poistaSuorite($index)"><span
+            class="glyphicon glyphicon-remove-sign"></span> Poista</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lisaasuorite'}}" ng-hide="isReadonly()"
+            class="btn btn-primary" ng-click="lisaaSuorite()">Lisää uusi rivi
+    </button>
+  </div>
+</form>
+

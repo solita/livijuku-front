@@ -1,0 +1,49 @@
+<div class="container">
+  <h1>JUKUn käyttäjätilin asetukset</h1>
+  <juku-form name="asetuksetForm">
+    <juku-form-section>
+      <h3>PERUSTIEDOT</h3>
+      <juku-form-row>
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Nimi</h5>
+
+            <p>{{nimi}}</p>
+          </div>
+          <div class="col-md-4">
+            <h5>Organisaatio</h5>
+
+            <p>{{$root.userOrganisaatio}}</p>
+          </div>
+          <div class="col-md-4">
+            <h5>Roolit</h5>
+
+            <p>{{roolit | erotteleRoolit}}</p>
+          </div>
+        </div>
+      </juku-form-row>
+      <juku-form-row>
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Käyttäjätunnus</h5>
+
+            <p>{{kayttajatunnus}}</p>
+          </div>
+          <div class="col-md-4">
+            <h5>Sähköposti</h5>
+
+            <p>{{sahkoposti}}</p>
+          </div>
+          <div class="col-md-4">
+          </div>
+        </div>
+      </juku-form-row>
+    </juku-form-section>
+    <juku-form-section>
+      <h3>SÄHKÖPOSTIASETUKSET</h3>
+      <juku-form-row>
+        <label><input type="checkbox" ng-model="sahkopostiviestit" ng-change="paivitaAsetus()"> Haluan vastaanottaa JUKU-palvelun lähettämiä sähköposteja.</label>
+      </juku-form-row>
+    </juku-form-section>
+  </juku-form>
+</div>

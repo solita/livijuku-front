@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <h1>Tunnuslukujen syöttäminen</h1>
+  </div>
+  <ng-form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm">
+    <juku-form-row>
+      <div class="col-md-4">
+        <select id="organisaatio" ng-model="selectedOrganisaatio" ng-disabled="isReadonly()"
+                placeholder="Valitse toimivaltainen viranomainen" class="form-control" required>
+          <option value="" selected disabled>Valitse toimivaltainen viranomainen</option>
+          <option ng-repeat="kunta in kunnat()" value="{{kunta.id}}">{{kunta.nimi}}</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <select id="vuosi" name="vuosi"
+                ng-model="selectedVuosi" ng-disabled="isReadonly()"
+                placeholder="Valitse vuosi" class="form-control" required>
+          <option value="" selected disabled>Valitse vuosi</option>
+          <option value="2012">2012</option>
+          <option value="2013">2013</option>
+          <option value="2014">2014</option>
+          <option value="2015">2015</option>
+        </select>
+      </div>
+    </juku-form-row>
+  </ng-form>
+  <juku-navigation>
+    <juku-tabs>
+      <juku-tab
+        ng-repeat="tyyppi in constants.tunnuslukuTyypit"
+        selected="isTabSelected(tyyppi)"
+        ng-click="toTab(tyyppi)">
+        {{ tyyppi | toStatisticName }}
+      </juku-tab>
+    </juku-tabs>
+  </juku-navigation>
+  <div ui-view></div>
+</div>

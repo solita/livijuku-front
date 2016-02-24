@@ -1,0 +1,63 @@
+<div class="sidebar">
+  <ul>
+    <li ng-show="sallittu(user, 'view-hakemuskausi')">
+      <a ui-sref-active="is-active" ui-sref="app.kasittelija.hakemuskaudenhallinta()">
+        Hakemuskaudet
+      </a>
+    </li>
+    <li ng-show="sallittu(user, 'view-oma-hakemus')">
+      <a ui-sref-active="is-active" ui-sref="app.hakija.hakemukset.omat()">
+        Omat hakemukset
+      </a>
+    </li>
+    <li ng-show="sallittu(user, 'view-hakemus')">
+      <a ui-sref-active="is-active" ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'AH0'})">
+        Kaikki hakemukset
+      </a>
+    </li>
+  </ul>
+  <ul ng-show="sallittu(user, 'view-hakemuskausi')">
+    <li ng-show="sallittu(user, 'view-hakemuskausi')">Tunnusluvut</li>
+    <li ng-show="sallittu(user, 'view-hakemuskausi')">
+      <a ui-sref-active="is-active" ui-sref="app.hakija.tunnusluku.syottaminen()">
+        Tunnuslukujen syöttäminen
+      </a>
+    </li>
+    <li ng-show="sallittu(user, 'view-hakemuskausi')">
+      <a ui-sref-active="is-active" ui-sref="app.hakija.tunnusluku.raportit()">
+        Tunnuslukuraportit
+      </a>
+    </li>
+    <li ng-show="sallittu(user, 'view-hakemuskausi')">
+      <a ui-sref-active="is-active" ui-sref="app.yhteinen.seurantalomakedemo()">
+        Seurantalomake demo
+      </a>
+    </li>
+  </ul>
+  <ul>
+    <li>
+      <div class="navbar__user__name">
+        {{user.etunimi}} {{user.sukunimi}}
+      </div>
+      <div class="navbar__user__org">
+        {{$root.userOrganisaatio}}
+      </div>
+    </li>
+    <li>
+      <a ui-sref-active="is-active" ui-sref="app.yhteinen.asetukset">
+        Asetukset
+      </a>
+    </li>
+    <li><a ui-sref-active="is-active" ui-sref="app.yhteinen.kayttajatiedot">
+      JUKUn käyttäjät
+    </a></li>
+    <li ng-hide="sallittu(user, 'view-hakemuskausi')"><a ui-sref-active="is-active" ui-sref="app.yhteinen.asiakastuki">
+      Asiakastuki
+    </a></li>
+    <li>
+      <a class="navbartxt" href="{{logoutUrl}}">
+        Kirjaudu ulos
+      </a>
+    </li>
+  </ul>
+</div>

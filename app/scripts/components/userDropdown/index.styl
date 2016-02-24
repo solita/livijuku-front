@@ -1,0 +1,24 @@
+.user-dropdown
+  .dropdown
+    min-width: 200px
+    &:hover
+      .dropdown-toggle__wrapper
+        background: #1F8AC8
+
+  a
+    user-select: none
+    color: #fff
+    &:hover
+      text-decoration: none
+
+  .navbar__user
+    font-weight: normal
+    .navbar__user__name
+      font-size: 0.9em
+    .navbar__user__name + .navbar__user__org
+      font-size: 0.7em
+      color: #eee
+
+  .dropdown-toggle__wrapper
+    border-left: 1px solid rgba(0, 0, 0, 0.15)
+    border-right: 1px solid rgba(0, 0, 0, 0.15)

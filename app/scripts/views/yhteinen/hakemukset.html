@@ -1,0 +1,104 @@
+<div class="container">
+  <div ng-show="hakemukset.hakemuskaudet.length === 0">
+    <p>Ei hakemuksia, koska hakemuskautta ei ole vielä avattu.</p>
+  </div>
+
+  <div ng-show="hakemukset.hakemuskaudet.length > 0">
+
+    <div class="navigation">
+      <juku-tabs>
+        <juku-tab
+          ng-repeat="tyyppi in constants.hakemustyypit"
+          ely="isEly(tyyppi)"
+          selected="isTabSelected(tyyppi)"
+          ui-sref="app.yhteinen.hakemukset.list({tyyppi: tyyppi})">
+          {{ tyyppi | toApplicationNamePlural }}
+          <juku-badge
+            number="hakemukset.hakemuksiaYhteensa(tyyppi, hakemukset.hakemuskaudet)"
+            ng-show="sallittu('kasittely-hakemus') || sallittu('hyvaksy-paatos')"/>
+        </juku-tab>
+      </juku-tabs>
+    </div>
+
+    <uib-accordion id="kaikki-hakemukset" close-others="false">
+        <uib-accordion-group is-open="hakemukset.yearsOpen[hakemuskausi.vuosi]" ng-repeat="hakemuskausi in hakemukset.hakemuskaudet">
+          <uib-accordion-heading>
+              <i class="pull-left glyphicon"
+                 ng-class="{
+                  'glyphicon-triangle-bottom': hakemukset.yearsOpen[hakemuskausi.vuosi],
+                  'glyphicon-triangle-right': !hakemukset.yearsOpen[hakemuskausi.vuosi]
+                  }"></i>
+
+              <span ng-show="hakemukset.tyyppi === 'AH0'">
+                JOUKKOLIIKENTEEN AVUSTUSHAKEMUKSET {{hakemuskausi.vuosi}}
+              </span>
+
+              <span ng-show="hakemukset.tyyppi === 'MH1'">
+                JOUKKOLIIKENTEEN MAKSATUSHAKEMUKSET AJALTA 1.1-30.6.{{hakemuskausi.vuosi}}
+              </span>
+
+              <span ng-show="hakemukset.tyyppi === 'MH2'">
+                JOUKKOLIIKENTEEN MAKSATUSHAKEMUKSET AJALTA 1.7-31.12.{{hakemuskausi.vuosi}}
+              </span>
+
+              <span ng-show="hakemukset.tyyppi === 'ELY'">
+                ELINKEINO, LIIKENNE JA YMPÄRISTÖKESKUSTEN HAKEMUKSET {{hakemuskausi.vuosi}}
+              </span>
+          </uib-accordion-heading>
+          <div class="row" ng-repeat="hakijatyyppi in constants.hakijaTyypit">
+            <div ng-if="hakemukset.hakemukset[hakemuskausi.vuosi][hakijatyyppi].length > 0">
+              <h4>{{hakijatyyppi | toApplicantName}}</h4>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <table
+                    st-table="displayedCollection"
+                    st-safe-src="hakemukset.hakemukset[hakemuskausi.vuosi][hakijatyyppi]"
+                    class="table table-hover">
+                    <thead>
+                    <tr>
+                      <th st-sort-default="true" st-sort="hakemukset.hakijanNimi">Hakija</th>
+                      <th st-sort="hakemustilatunnus">Hakemuksen tila</th>
+                      <th st-sort="muokkausaika">Viimeisin muutos</th>
+                      <th st-sort="diaarinumero">Diaarinumero</th>
+                      <th st-sort="kasittelijanimi">Käsittelijä</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="hakemus in displayedCollection"
+                        ng-click="hakemukset.siirryHakemukseen(hakemus, hakemuskausi, hakijatyyppi)">
+                      <td>{{hakemukset.hakijanNimi(hakemus)}}</td>
+                      <td>
+                        <hakemus-label tila="{{hakemus.hakemustilatunnus}}"></hakemus-label>
+                      </td>
+                      <td>{{hakemus.muokkausaika | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+                      <td>{{hakemus.diaarinumero}}</td>
+                      <td>{{hakemus.kasittelijanimi ? hakemus.kasittelijanimi : "Ei määritelty"}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                  <div class="pull-right">
+                    <juku-link-next
+                      ng-show="sallittu('kasittely-hakemus')"
+                      ui-sref="app.kasittelija.suunnittelu({
+                        vuosi: hakemuskausi.vuosi,
+                        tyyppi: hakemukset.tyyppi,
+                        lajitunnus: hakijatyyppi
+                      })">
+                      Suunnittelu ja päätöksenteko
+                    </juku-link-next>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-accordion-group>
+    </uib-accordion>
+  </div>
+</div>

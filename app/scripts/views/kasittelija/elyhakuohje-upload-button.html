@@ -1,0 +1,11 @@
+<button class="btn btn-primary"
+        ng-show="sallittu('modify-hakemuskausi')"
+        ngf-select ngf-change="uploadElyHakuohje($files, hakemuskausi)" accept="application/pdf" ngf-pattern=".pdf" name="elyhakuohje"
+        data-toggle="tooltip"
+        data-tooltip-trigger="mouseenter"
+        data-tooltip-placement="bottom"
+        uib-tooltip="Voimassaoleva hakuohje (PDF) ELY-keskusten määrärahojen hakemiseen v. {{hakemuskausi.vuosi}}">
+  <span>
+    {{ elyhakuohjeLadattu(hakemuskausi) ? 'Korvaa ladattu hakuohje':' Lataa hakuohje' }}
+  </span>
+</button>

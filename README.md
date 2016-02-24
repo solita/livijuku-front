@@ -10,13 +10,6 @@ Prerequisites
 
 You should have git and [Node.js](http://nodejs.org/) installed.
 
-Run
-
-    npm install -g bower grunt-cli
-
-to install the tools used in this project.
-
-
 Downloading the project
 -----------------------
 
@@ -30,8 +23,7 @@ Install the dependencies
 
 Cd to the project directory and run
 
-    npm install
-    bower install
+    build-dist.sh
 
 to install Node.js and JavaScript dependencies.
 
@@ -39,18 +31,17 @@ to install Node.js and JavaScript dependencies.
 Running the tests
 -------------
 
-Run the unit tests
+Run the end to end tests (requires backend and front running locally)
 
-    grunt test
+    teste2e.sh
 
-Run the unit tests continuously
+Run unit tests
 
-    grunt autotest
-
+    test-unit.sh
 
 Running the app
 ---------------
 
 Run the app locally on [http://localhost:9000](http://localhost:9000)
 
-    grunt serve
+    start-dev.sh

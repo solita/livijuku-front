@@ -1,0 +1,61 @@
+<div class="container">
+  <div ng-hide="sallittu('view-oma-hakemus')">
+    <p>Ei omien hakemusten katseluoikeutta.</p>
+  </div>
+  <div ng-show="hakemuskaudet.length === 0">
+    <p>Ei hakemuksia, koska hakemuskautta ei ole vielä avattu.</p>
+  </div>
+  <div ng-show="kaynnistetytHakemuskaudet.length > 0 && sallittu('view-oma-hakemus')">
+    <h3>KÄYNNISSÄ OLEVAT HAKEMUSKAUDET</h3>
+
+    <div ng-repeat="hakemuskausi in kaynnistetytHakemuskaudet | orderBy: 'vuosi': true">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-3 text-center">
+            <h1>{{hakemuskausi.vuosi}}</h1>
+            <a ng-if="!isELYhakija(hakemuskausi)" href="{{getHakuohjePdf(hakemuskausi.vuosi)}}"
+               target="_blank">Hakuohje</a>
+            <a ng-if="isELYhakija(hakemuskausi)" href="{{getElyHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">Hakuohje</a>
+            <br>
+            <br>
+          </div>
+
+          <div class="col-md-3 text-center" ng-repeat="hakemus in hakemuskausi.hakemukset">
+            <hakemus-laatikko
+              ng-click="valitseHakemus(utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus))"
+              title="{{ hakemus.hakemustyyppitunnus | toApplicationName }}"
+              ely="isELYhakemus(hakemus)"
+              hakemus="utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus)">
+            </hakemus-laatikko>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-show="suljetutHakemuskaudet.length > 0 && sallittu('view-oma-hakemus')">
+    <h3>PÄÄTETYT HAKEMUSKAUDET</h3>
+
+    <div ng-repeat="hakemuskausi in suljetutHakemuskaudet | orderBy: 'vuosi': true">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-3 text-center">
+            <h1>{{hakemuskausi.vuosi}}</h1>
+            <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">Hakuohje</a>
+            <br>
+            <br>
+          </div>
+
+          <div class="col-md-3 text-center" ng-repeat="hakemus in hakemuskausi.hakemukset">
+            <hakemus-laatikko
+              ng-click="valitseHakemus(utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus))"
+              title="{{ hakemus.hakemustyyppitunnus | toApplicationName }}"
+              ely="isELYhakemus(hakemus)"
+              hakemus="utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus)">
+            </hakemus-laatikko>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

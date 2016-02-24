@@ -1,0 +1,26 @@
+.sidebar
+  position: fixed
+  top: 0
+  bottom: 0
+  right: sidebarWidth * -1
+  width: sidebarWidth
+  background: #F5F5F5
+  padding-top: 50px
+  color: colors.text
+  border-left: 1px solid #ccc
+  transition: right 0.3s
+  ul
+    padding: 0
+    margin-top: 1em
+    list-style: none
+    border-top: 1px solid #ccc
+    &:first-child
+      margin-top: 0
+      border-top: 0
+  li
+    padding: 0.75em 1em
+  li:first-child
+    margin-top 0.5em
+
+body.is-collapsed .sidebar
+  right: 0

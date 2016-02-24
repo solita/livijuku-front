@@ -1,0 +1,23 @@
+<div class="avustusluokka panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">{{name}}</h4>
+  </div>
+  <div class="panel-body">
+    <div ng-transclude></div>
+    <div class="avustusluokka__summa">
+      <h4 ng-if="kohde.avustuskohteet[0].includealv">Yhteensä (ALV {{kohde.avustuskohteet[0].alv}}%):</h4>
+      <h4 ng-if="!kohde.avustuskohteet[0].includealv">Yhteensä (ALV 0%):</h4>
+      <div class="row">
+        <div id="test-{{kohde.tunnus}}" class="col-md-4">
+          Haettava valtionavustus: {{ kokonaisHaettavaAvustus(kohde.avustuskohteet) | currency }}
+        </div>
+        <div class="col-md-4">
+          Kunnan oma rahoitusosuus: {{ kokonaisOmarahoitus(kohde.avustuskohteet) | currency }}
+        </div>
+        <div class="col-md-4">
+          {{ kokonaisOmarahoitus(kohde.avustuskohteet) + kokonaisHaettavaAvustus(kohde.avustuskohteet) | currency }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

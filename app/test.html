@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <script>
+    function createCookie(name, value, days) {
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
+      }
+      else var expires = "";
+      document.cookie = name + "=" + value + expires + "; path=/";
+    }
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    var users = {
+      harri: {'user': 'juku_hakija', 'organization': 'helsingin ka', 'groups': 'juku_hakija'},
+      katri: {'user': 'juku_kasittelija', 'organization': 'liikennevirasto', 'groups': 'juku_kasittelija'},
+      paivi: {'user': 'juku_paatoksentekija', 'organization': 'liikennevirasto', 'groups': 'juku_paatoksentekija'},
+      ely1: {'user': 'juku_hakija_uus', 'organization': 'ELY', 'groups': 'juku_hakija'},
+      ely2: {'user': 'juku_hakija_var', 'organization': 'ELY', 'groups': 'juku_hakija'},
+      ely3: {'user': 'juku_hakija_kaa', 'organization': 'ELY', 'groups': 'juku_hakija'},
+      ely4: {'user': 'juku_hakija_pir', 'organization': 'ELY', 'groups': 'juku_hakija'},
+      ely8: {'user': 'juku_hakija_psa', 'organization': 'ELY', 'groups': 'juku_hakija'},
+      ely9: {'user': 'juku_hakija_ksu', 'organization': 'ELY', 'groups': 'juku_hakija'},
+      ely10: {'user': 'juku_hakija_epo', 'organization': 'ELY', 'groups': 'juku_hakija'},
+      ely12: {'user': 'juku_hakija_ppo', 'organization': 'ELY', 'groups': 'juku_hakija'},
+      ely14: {'user': 'juku_hakija_lap', 'organization': 'ELY', 'groups': 'juku_hakija'}
+    };
+
+    var id = getParameterByName('id');
+
+    createCookie('oam-remote-user', users[id].user, 1);
+    createCookie('oam-user-organization', users[id].organization, 1);
+    createCookie('oam-groups', users[id].groups, 1);
+    if (users[id].organization === 'ELY') {
+      createCookie('oam-user-department', id.substr(3), 1);
+    }
+    window.location.replace(".");
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

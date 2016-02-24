@@ -1,0 +1,16 @@
+<p>
+  <span ng-if="!hakuohjeLadattu(hakemuskausi)" class="text-muted">
+    Hakuohje suurille ja keskisuurille kaupunkiseuduille
+  </span>
+  <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" ng-if="hakuohjeLadattu(hakemuskausi)" target="_blank">
+    Hakuohje suurille ja keskisuurille kaupunkiseuduille</a>&nbsp;
+  <juku-upload-hakuohje-button></juku-upload-hakuohje-button>
+</p>
+<p>
+  <span ng-if="!elyhakuohjeLadattu(hakemuskausi)" class="text-muted">
+    Hakuohje ELY-keskuksille
+  </span>
+  <a href="{{getElyHakuohjePdf(hakemuskausi.vuosi)}}" ng-if="elyhakuohjeLadattu(hakemuskausi)" target="_blank">
+    Hakuohje ELY-keskuksille</a>&nbsp;
+  <juku-upload-elyhakuohje-button></juku-upload-elyhakuohje-button>
+</p>

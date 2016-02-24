@@ -1,0 +1,69 @@
+<div class="container">
+  <div ng-repeat="hakemuskausi in avoimetHakemuskaudet | orderBy: 'vuosi': true" class="well uusihakemuskausi">
+    <h2 class="hakemuskausi-otsikko">Hakemuskausi {{hakemuskausi.vuosi}}
+      <small
+        uib-tooltip="Avaamaton (ei käynnistetty) hakemuskausi näkyy hakijoille vasta sen jälkeen kun se on käynnistetty.">
+        Avaamaton
+      </small>
+    </h2>
+
+    <juku-hakemuskausi-tyypit></juku-hakemuskausi-tyypit>
+
+    <juku-hakuohje></juku-hakuohje>
+
+    <div class="row">
+      <div class="col-md-12">
+        <button
+          ng-disabled="!voiKaynnistaa(hakemuskausi)"
+          ng-click="kaynnistaHakemuskausi(hakemuskausi.vuosi)"
+          class="btn btn-success btn-lg pull-right">
+          Käynnistä hakemuskausi
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <h3>KÄYNNISSÄ OLEVAT HAKEMUSKAUDET</h3>
+
+  <div ng-repeat="hakemuskausi in kaynnistetytHakemuskaudet | orderBy: 'vuosi': true"
+       class="well kaynnistetty-hakemuskausi">
+
+    <h2 class="hakemuskausi-otsikko">Hakemuskausi {{hakemuskausi.vuosi}}</h2>
+
+    <juku-hakemuskausi-tyypit></juku-hakemuskausi-tyypit>
+
+    <juku-hakuohje></juku-hakuohje>
+
+    <div class="row">
+      <div class="col-md-12">
+        <button
+          class="btn btn-primary btn-lg pull-right"
+          juku-varmistusdialogi varmistusotsake="Hakemuskauden päättäminen"
+          varmistusteksti="Oletko varma, että haluat päättää käynnissäolevan hakemuskauden? Hakemuksiin ja hakemuskauden tietoihin ei ole mahdollista tehdä mitään muutoksia kauden päättämisen jälkeen."
+          operaatio="suljeHakemuskausi(hakemuskausi.vuosi)">
+          Päätä hakemuskausi
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <h3>SULJETUT HAKEMUSKAUDET</h3>
+
+  <div ng-repeat="hakemuskausi in suljetutHakemuskaudet | orderBy: 'vuosi': true" class="well">
+    <h2 class="hakemuskausi-otsikko">Hakemuskausi {{hakemuskausi.vuosi}}
+      <small>Suljettu</small>
+    </h2>
+
+    <juku-hakemuskausi-tyypit></juku-hakemuskausi-tyypit>
+
+    <p>
+      <a href="{{getHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">
+        Hakuohje suurille ja keskisuurille kaupunkiseuduille
+      </a>
+    </p>
+    <p>
+      <a href="{{getElyHakuohjePdf(hakemuskausi.vuosi)}}" target="_blank">
+        Hakuohje ELY-keskuksille</a>
+    </p>
+  </div>
+</div>

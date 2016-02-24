@@ -1,0 +1,20 @@
+<juku-form-section>
+  <h3>MÄÄRÄRAHATARPEET</h3>
+  <juku-ely-maararahatarpeet vuosi="hakemus.vuosi" hakemus="hakemus" maararahatarpeet="maararahatarpeet"
+                             maararahatarvetyypit="maararahatarvetyypit"
+                             is-readonly="!hakemusTallentaminenEnabled()"></juku-ely-maararahatarpeet>
+
+  <h3>KEHITTÄMISHANKKEIDEN ERITTELY HANKKEITTAIN</h3>
+  <juku-ely-kehittamishankkeet kehittamishankkeet="kehittamishankkeet"
+                               is-readonly="!hakemusTallentaminenEnabled()"></juku-ely-kehittamishankkeet>
+  <div class="row korostus">
+    <div class="col-md-9">
+      <h4>HAETTAVA VALTIONAVUSTUS YHTEENSÄ:</h4>
+    </div>
+    <div class="col-md-3">
+      <div class="pull-right">
+        <h4 id="sumHaettavaElyAvustus">{{sumHaettavaElyAvustus() | currency:"&euro;"}} (sis. alv)</h4>
+      </div>
+    </div>
+  </div>
+</juku-form-section>

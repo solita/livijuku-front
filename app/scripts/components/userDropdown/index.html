@@ -1,0 +1,30 @@
+<ul class="user-dropdown nav navbar-nav">
+  <li class="dropdown">
+    <div class="dropdown-toggle__wrapper">
+      <a href class="dropdown-toggle navbar__user">
+        <div class="navbar__user__name" ng-if="fullName(user)">
+          {{fullName(user)}}
+        </div>
+        <div class="navbar__user__org">
+          {{$root.userOrganisaatio}}
+        </div>
+      </a>
+    </div>
+    <ul class="dropdown-menu">
+      <li><a ui-sref-active="is-active" ui-sref="app.yhteinen.asetukset">
+        Asetukset
+      </a></li>
+      <li><a ui-sref-active="is-active" ui-sref="app.yhteinen.kayttajatiedot">
+        JUKUn käyttäjät
+      </a></li>
+      <li ng-hide="sallittu(user, 'view-hakemuskausi')"><a ui-sref-active="is-active" ui-sref="app.yhteinen.asiakastuki">
+        Asiakastuki
+      </a></li>
+      <li>
+        <a class="navbartxt" href="{{logoutUrl}}">
+          Kirjaudu ulos
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>

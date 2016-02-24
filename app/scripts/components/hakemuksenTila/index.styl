@@ -1,0 +1,22 @@
+.tilat
+  padding-top 0.25em
+  .label
+    margin: 0 1em
+    margin-left: 0
+    margin-bottom: 28px
+
+    &.is-upcoming
+      opacity: 0.5
+
+    &.is-selected
+      position: relative
+      &:after
+        content: ''
+        width: 16px
+        height: 16px
+        background: url('../images/tila_osoitin.svg')
+        background-size: 100% 100%
+        position: absolute
+        left: 50%
+        margin-left: -8px
+        bottom: -20px

@@ -1,0 +1,186 @@
+<ng-form id="{{liikennetyyppi + '-liikennesuoritteet-form'}}" name="suoritteetForm">
+  <div class="table-responsive">
+    <table class="table table-hover table-condensed">
+      <tr>
+        <th class="col-md-2">
+          <div uib-tooltip="Valitse suorite linja-, sopimus-, tai kokonaistasolla." tooltip-placement="top"
+               tooltip-append-to-body="true">
+            Suoritetyyppi&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+        </th>
+        <th class="col-md-2">
+          <div
+            uib-tooltip="Kirjoita suoritteen nimi, esimerkiksi linjan numero, sopimuksen nimi tai sopimuskokonaisuus."
+            tooltip-placement="top"
+            tooltip-append-to-body="true">
+            Suoritteen nimi&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+          </div>
+        </th>
+        <th>
+          <div uib-tooltip="Linja-autojen lukumäärä" tooltip-placement="top"
+               tooltip-append-to-body="true">
+            Linja-autot&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+          </div>
+        </th>
+        <th>
+          <div uib-tooltip="Taksien lukumäärä" tooltip-placement="top"
+               tooltip-append-to-body="true">
+            Taksit&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+          </div>
+        </th>
+        <th>
+          <div uib-tooltip="Paikallisliikenteen ajokilometrit"
+               tooltip-append-to-body="true">
+            Ajo&shy;kilometrit&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+          </div>
+        </th>
+        <th>
+          <div uib-tooltip="Paikallisliikenteen matkustajamäärä" tooltip-placement="top"
+               tooltip-append-to-body="true">
+            Matkus&shy;tajat&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+          </div>
+        </th>
+        <th>
+          <div uib-tooltip="Saadut matkalipputulot" tooltip-placement="top"
+               tooltip-append-to-body="true">
+            Lippu&shy;tulo&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+          </div>
+        </th>
+        <th>
+          <div uib-tooltip="Kaupungin liikennöitsijöille maksama hinta, sisältää valtionavun"
+               tooltip-placement="top"
+               tooltip-append-to-body="true">
+            Netto&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+          </div>
+        </th>
+        <th>
+          <div uib-tooltip="Lipputulo + nettohinta" tooltip-placement="top"
+               tooltip-append-to-body="true">
+            Brutto&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+          </div>
+        </th>
+        <th ng-hide="isReadonly()">Toiminnot</th>
+      </tr>
+      </thead>
+      <tfoot ng-if="suoritteet.length > 0">
+        <tr>
+          <td>
+            <span class="yhteensa">Yhteensä:</span>
+          </td>
+          <td></td>
+          <td>{{linjaautotSumma() | currency : '' : 0}}</td>
+          <td>{{taksitSumma() | currency : '' : 0}}</td>
+          <td>{{ajokmSumma() | currency : 'km'}}</td>
+          <td>{{matkustajatSumma() | currency : '' : 0}}</td>
+          <td>{{lipputuloSumma() | currency}}</td>
+          <td>{{nettohintaSumma() | currency}}</td>
+          <td>{{bruttohintaSumma() | currency}}</td>
+          <td></td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr ng-if="suoritteet.length === 0">
+          <td colspan="10" class="text-info">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Tämä taulukko on tyhjä, koska yhtään
+            liikennesuoritetta ei ole lisätty.
+          </td>
+        </tr>
+        <tr ng-repeat="rivi in suoritteet track by $index" ng-form="suorite">
+          <td>
+            <form-group-compact label="Suoritetyyppi" errormessage="">
+
+              <select id="{{liikennetyyppi + '-suoritetyyppi'}}" name="suoritetyyppi"
+                      ng-model="rivi.suoritetyyppitunnus" ng-disabled="isReadonly()"
+                      placeholder="Suoritetyyppi"
+                      ng-options="tyyppi.tunnus as tyyppi.nimi disable when (tyyppi.tunnus=='KS' && suoritteet.length>1) for tyyppi in suoritetyypit"
+                      required>
+                <option value="" selected disabled>Valitse suoritetyyppi</option>
+              </select>
+
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Nimi" errormessage="nimiErrorMessage">
+              <input id="{{liikennetyyppi + '-nimi'}}" name="nimi"
+                     type="text" noenter required ng-minlength="2" ng-maxlength="200"
+                     placeholder="Nimi"
+                     select-on-click
+                     ng-readonly="isReadonly()"
+                     ng-model="rivi.nimi">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Linja-autot" errormessage="linjaautotErrorMessage">
+              <input id="{{liikennetyyppi + '-linjaautot'}}" name="linjaautot"
+                     ng-model="rivi.linjaautot"
+                     placeholder="Linja-autot" noenter
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                     type="text" required integer-only select-on-click
+                     ng-readonly="isReadonly()">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Taksit" errormessage="taksitErrorMessage">
+              <input id="{{liikennetyyppi + '-taksit'}}" name="taksit"
+                     ng-model="rivi.taksit"
+                     placeholder="Taksit" noenter
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                     type="text" required integer-only select-on-click
+                     ng-readonly="isReadonly()">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Ajokilometrit" errormessage="ajokilometritErrorMessage">
+              <input id="{{liikennetyyppi + '-ajokilometrit'}}" name="ajokilometrit" type="text" class="form-control"
+                     numeric-km-only="" ng-currency=""
+                     ng-readonly="isReadonly()" required
+                     currency-symbol="km" placeholder="Ajokilometrit" noenter
+                     select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                     ng-model="rivi.ajokilometrit">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Matkustajamäärä" errormessage="matkustajamaaraErrorMessage">
+              <input id="{{liikennetyyppi + '-matkustajamaara'}}" name="matkustajamaara"
+                     placeholder="Matkustajamäärä"
+                     type="text" required integer-only
+                     ng-readonly="isReadonly()"
+                     noenter select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                     ng-model="rivi.matkustajamaara">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Lipputulo" errormessage="lipputuloErrorMessage">
+              <input id="{{liikennetyyppi + '-lipputulo'}}" name="lipputulo" type="text" class="form-control"
+                     ng-currency="" numeric-only="" placeholder="Lipputulo" noenter
+                     ng-readonly="isReadonly()" required
+                     select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                     ng-model="rivi.lipputulo">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Nettohinta" errormessage="nettohintaErrorMessage">
+              <input id="{{liikennetyyppi + '-nettohinta'}}" name="nettohinta" type="text" class="form-control"
+                     ng-currency="" numeric-only="" placeholder="Nettohinta" noenter
+                     ng-readonly="isReadonly()" required
+                     select-on-click
+                     ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
+                     ng-model="rivi.nettohinta">
+            </form-group-compact>
+          </td>
+          <td>{{laskeBruttohinta($index) | currency}}</td>
+          <td><a id="{{liikennetyyppi + '-poistasuorite'}}" href="" ng-click="poistaSuorite($index)"
+                 ng-hide="isReadonly()"><span
+            class="glyphicon glyphicon-remove-sign"></span> Poista</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button id="{{liikennetyyppi + '-lisaasuorite'}}" ng-hide="isReadonly()" class="btn btn-primary"
+            ng-click="lisaaSuorite()" ng-disabled="isKokonaissuorite()">Lisää uusi rivi
+    </button>
+  </div>
+</ng-form>
