@@ -16,6 +16,27 @@ const types = {
   ME: 'ME liikenne'
 };
 
+const tunnuslukuTooltips = {
+  HENKILOSTO: "Kuinka monta henkilötyövuotta viranomaisella kuluu ko. alueen joukkoliikenteen järjestämiseen, suunnitteluun ja asiakaspalvelutehtäviin. Henkilötyövuodet voi arvioida 0,2 htv:n tarkkuudella.",
+  ASIAKASPALVELU: "Ulkoistetut asiakaspalvelutehtävät, esimerkiksi matkakorttien hallinnointi.",
+  KONSULTTIPALVELU: "Ulkoiset asiantuntijapalvelut ja konsulttiselvitykset, esimerkiksi järjestelmien tekninen neuvonta, linjastojen suunnittelu, asiakastyytyväisyystutkimukset jne.",
+  LIPUNMYYNTIPALKKIOT: "Eri lipunmyyntikanaville maksetut palkkiot.",
+  TIETOJAMAKSUJARJ: "Tieto- ja maksujärjestelmien kustannukset vuositasolle jaettuna. Investoinnit sekä järjestelmien ja fyysisten laitteiden ylläpidon ja kehittämisen vuosikustannukset.",
+  MUUTPALVELUT: "Muut joukkoliikenteen järjestämiseen, kilpailuttamiseen tai suunnitteluun liittyvät kustannukset. Ei sisällä terminaalien, pysäkki-infran tai kunnossapidon kustannuksia.",
+  KUNTIENLKM: "Kuinka monen kunnan alueelle toimivalta-alue ulottuu?",
+  VYOHYKKEIDENLKM: "Kuinka monesta joukkoliikenteen lippuvyöhykkeestä alue koostuu? ELY-liikenteessä ilmoitetaan vyöhykemäärä siitä lippualueesta, jossa on eniten vyöhykkeitä.",
+  MAAPINTAALA:"Maapinta-ala on kokonaispinta-alaa kuvaavampi esimerkiksi Järvi-Suomessa. Tiedon avulla tarjontaa ja kysyntää voidaan suhteuttaa alueen kokoon.",
+  ASUKASMAARA:"Koko toimivalta-alue.",
+  TYOPAIKKAMAARA: "Koko toimivalta-alue.",
+  PENDELOIVIENOSUUS: "Kuinka monta prosenttia alueen kuntien työssäkäyvistä työskentelee toimivalta-alueen ulkopuolella?",
+  HENKILOAUTOLIIKENNE:"Koko toimivalta-alueen henkilöautoliikenteen suorite.",
+  AUTOISTUMISASTE: "Alueen kuntien asukasmäärällä painotettu keskiarvo autoistumisasteesta.",
+  PYSAKKIENLKM: "Kuinka monta fyysistä joukkoliikennepysäkkiä alueella sijaitsee? Tähän lasketaan mukaan kaikki ne pysäkit, joita voidaan käyttää toimivaltaisen viranomaisen liikenteessä.",
+  KERTALIPPU:"Hinta vyöhykkeittäin, 1-6 vyöhykettä.",
+  KAUSILIPPU:"Hinta vyöhykkeittäin, 1-6 vyöhykettä."
+
+};
+
 function loadTunnusluvut(vuosi, organisaatioid, tyyppi, scope, TunnuslukuEditService, StatusService) {
   Promise.props({
     liikennevuosi: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjonta(vuosi, organisaatioid, tyyppi) : undefined,
@@ -57,6 +78,8 @@ angular.module('jukufrontApp')
             StatusService.virhe('', 'Käyttäjällä ei ole käyttöoikeuksia tunnuslukutiedon hallintaan');
           }
         });
+
+        $scope.haeTunnuslukuTooltip = tunnus => tunnuslukuTooltips[tunnus];
 
         $scope.tunnuslukuTyyppiNimi = function (type) {
           return types[type];

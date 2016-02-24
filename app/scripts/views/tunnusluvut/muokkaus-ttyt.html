@@ -32,7 +32,14 @@
           </thead>
           <tbody>
             <tr>
-              <td class="col-md-8">Joukkoliikenteen suunnittelun ja organisaation henkilöstö</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('HENKILOSTO')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('HENKILOSTO')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Joukkoliikenteen suunnittelun ja organisaation henkilöstö&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('HENKILOSTO')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Henkilöstö" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-henkilosto" name="henkilosto"
@@ -60,7 +67,14 @@
           </thead>
           <tbody>
             <tr>
-              <td class="col-md-8">Asiakaspalvelu</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('ASIAKASPALVELU')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('ASIAKASPALVELU')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Asiakaspalvelu&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('ASIAKASPALVELU')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Asiakaspalvelu" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-asiakaspalvelu" name="asiakaspalvelu" type="text"
@@ -73,7 +87,14 @@
               </td>
             </tr>
             <tr>
-              <td class="col-md-8">Konsulttipalvelu</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('KONSULTTIPALVELU')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('KONSULTTIPALVELU')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Konsulttipalvelu&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('KONSULTTIPALVELU')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Konsulttipalvelu" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-konsulttipalvelu" name="konsulttipalvelu" type="text"
@@ -86,7 +107,14 @@
               </td>
             </tr>
             <tr>
-              <td class="col-md-8">Lipunmyyntipalkkiot</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('LIPUNMYYNTIPALKKIOT')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('LIPUNMYYNTIPALKKIOT')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Lipunmyyntipalkkiot&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('LIPUNMYYNTIPALKKIOT')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Lipunmyyntipalkkiot" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-lipunmyyntipalkkiot" name="lipunmyyntipalkkiot" type="text"
@@ -99,7 +127,14 @@
               </td>
             </tr>
             <tr>
-              <td class="col-md-8">Tieto-/maksujärjestelmät</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('TIETOJAMAKSUJARJ')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('TIETOJAMAKSUJARJ')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Tieto-/maksujärjestelmät&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('TIETOJAMAKSUJARJ')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Tietomaksujärjestelmät" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-tietomaksujarjestelmat" name="tietomaksujarjestelmat" type="text"
@@ -112,7 +147,14 @@
               </td>
             </tr>
             <tr>
-              <td class="col-md-8">Muut palvelut</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('MUUTPALVELUT')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('MUUTPALVELUT')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Muut palvelut&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('MUUTPALVELUT')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Muutpalvelut" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-muutpalvelut" name="muutpalvelut" type="text"
@@ -138,7 +180,14 @@
           </thead>
           <tbody>
             <tr>
-              <td class="col-md-8">Toimivalta-alueen kuntien lukumäärä</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('KUNTIENLKM')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('KUNTIENLKM')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Toimivalta-alueen kuntien lukumäärä&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('KUNTIENLKM')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Kuntien lukumääärä" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-kuntienlkm" name="kuntienlkm"
@@ -150,7 +199,14 @@
               </td>
             </tr>
             <tr>
-              <td class="col-md-8">Joukkoliikenteen lippujärjestelmän vyöhykkeiden määrä</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('VYOHYKKEIDENLKM')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('VYOHYKKEIDENLKM')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Joukkoliikenteen lippujärjestelmän vyöhykkeiden määrä&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('VYOHYKKEIDENLKM')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Vyöhykkeiden lukumääärä" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-vyohykkeidenlkm" name="vyohykkeidenlkm"
@@ -175,7 +231,14 @@
           </thead>
           <tbody>
             <tr>
-              <td class="col-md-8">Maapinta-ala, km2</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('MAAPINTAALA')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('MAAPINTAALA')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Maapinta-ala, km2&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('MAAPINTAALA')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Maapinta-ala" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-maapinta-ala" name="maapinta-ala"
@@ -189,9 +252,15 @@
               </td>
             </tr>
             <tr>
-              <td class="col-md-8">Asukasmäärä (<a
-                href="http://www.vrk.fi/default.aspx?id=278&docid=3973"
-                target="_blank">VRK:n asukaslukutilastot</a>)
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('ASUKASMAARA')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('ASUKASMAARA')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Asukasmäärä (<a
+                  href="http://www.vrk.fi/default.aspx?id=278&docid=3973"
+                  target="_blank">VRK:n asukaslukutilastot</a>)&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('MAAPINTAALA')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
               </td>
               <td class="col-md-4">
                 <form-group-compact label="Asukasmäärä" errormessage="kokonaislukuErrorMessage">
@@ -204,7 +273,14 @@
               </td>
             </tr>
             <tr>
-              <td class="col-md-8">Työpaikkamäärä</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('TYOPAIKKAMAARA')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('TYOPAIKKAMAARA')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Työpaikkamäärä&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('TYOPAIKKAMAARA')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Työpaikkamäärä" errormessage="kokonaislukuErrorMessage">
                   <input id="taustatiedot-tyopaikkamaara" name="tyopaikkamaara"
@@ -216,7 +292,14 @@
               </td>
             </tr>
             <tr>
-              <td class="col-md-8">Pendelöivien osuus alueella (oman kunnan ulkopuolella työssäkäynti)</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('PENDELOIVIENOSUUS')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('PENDELOIVIENOSUUS')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Pendelöivien osuus alueella (oman kunnan ulkopuolella työssäkäynti)&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('PENDELOIVIENOSUUS')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Pendelöivien osuus" errormessage="prosenttiErrorMessage">
                   <input id="taustatiedot-pendeloivienosuus" name="pendeloivienosuus"
@@ -228,7 +311,14 @@
               </td>
             </tr>
             <tr>
-              <td class="col-md-8">Henkilöautoliikenteen suorite (jos tiedossa)</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('HENKILOAUTOLIIKENNE')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('HENKILOAUTOLIIKENNE')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Henkilöautoliikenteen suorite (jos tiedossa)&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('HENKILOAUTOLIIKENNE')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Henkilöautoliikenne" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-henkiloautoliikenne" name="henkiloautoliikenne" type="text"
@@ -241,7 +331,14 @@
               </td>
             </tr>
             <tr>
-              <td class="col-md-8">Autoistumisaste</td>
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('AUTOISTUMISASTE')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('AUTOISTUMISASTE')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Autoistumisaste&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('AUTOISTUMISASTE')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td class="col-md-4">
                 <form-group-compact label="Autoistumisaste" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-autoistumisaste" name="autoistumisaste" type="text"
@@ -270,9 +367,16 @@
           </thead>
           <tbody>
             <tr>
-              <td class="col-md-8">Toimivalta-alueen pysäkkien lukumäärä tie- ja katuverkolla (pysäkkitietoa tarjoaa mm.
-                <a href="http://www.digiroad.fi/aineisto/pysakkiaineisto/erillisirrotus/fi_FI/erillisirrotus/"
-                   target="_blank">digiroad</a>)
+              <td class="col-md-8">
+                <div uib-tooltip="{{haeTunnuslukuTooltip('PYSAKKIENLKM')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('PYSAKKIENLKM')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Toimivalta-alueen pysäkkien lukumäärä tie- ja katuverkolla
+                  (pysäkkitietoa tarjoaa mm.
+                  <a href="http://www.digiroad.fi/aineisto/pysakkiaineisto/erillisirrotus/fi_FI/erillisirrotus/"
+                     target="_blank">digiroad</a>)&nbsp;<span
+                    ng-if="haeTunnuslukuTooltip('PYSAKKIENLKM')"
+                    class="text-info small glyphicon glyphicon-question-sign"></span></div>
               </td>
               <td class="col-md-4">
                 <form-group-compact label="Pysäkkien lukumääärä" errormessage="kokonaislukuErrorMessage">
@@ -300,7 +404,14 @@
           </thead>
           <tbody>
             <tr>
-              <td>Kertalipun hinta vyöhykkeittäin - aikuinen (€)</td>
+              <td>
+                <div uib-tooltip="{{haeTunnuslukuTooltip('KERTALIPPU')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('KERTALIPPU')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Kertalipun hinta vyöhykkeittäin - aikuinen (€)&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('KERTALIPPU')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td ng-repeat="vyohyke in tunnusluvut.lippuhinta" ng-form>
                 <form-group-compact label="Kertalippu vyöhyke {{vyohyke.vyohykemaara}}"
                                     errormessage="desimaaliErrorMessage">
@@ -314,7 +425,14 @@
               </td>
             </tr>
             <tr>
-              <td>Kausilipun hinta vyöhykkeittäin - 30 päivää, aikuinen (€)</td>
+              <td>
+                <div uib-tooltip="{{haeTunnuslukuTooltip('KAUSILIPPU')}}"
+                     tooltip-enable="haeTunnuslukuTooltip('KAUSILIPPU')"
+                     tooltip-placement="top"
+                     tooltip-append-to-body="true">Kausilipun hinta vyöhykkeittäin - 30 päivää, aikuinen (€)&nbsp;<span
+                  ng-if="haeTunnuslukuTooltip('KAUSILIPPU')"
+                  class="text-info small glyphicon glyphicon-question-sign"></span></div>
+              </td>
               <td ng-repeat="vyohyke in tunnusluvut.lippuhinta" ng-form>
                 <form-group-compact label="Kausilippu vyöhyke {{vyohyke.vyohykemaara}}"
                                     errormessage="desimaaliErrorMessage">
