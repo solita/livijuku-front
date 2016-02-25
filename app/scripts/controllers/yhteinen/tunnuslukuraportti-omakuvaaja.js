@@ -447,11 +447,11 @@ const tunnusluvut = [{
   createAlueTunnusluku('kuntamaara', 'Kuntamäärä', 'kuntien lukumäärä', 'Lukumäärä (kpl)'),
   createAlueTunnusluku('vyohykemaara', 'Vyöhykemäärä', 'vyöhykkeiden lukumäärä', 'Lukumäärä (kpl)'),
   createAlueTunnusluku('pysakkimaara', 'Pysäkkimäärä', 'pysäkkien lukumäärä', 'Lukumäärä (kpl)'),
-  createAlueTunnusluku('maapintaala', 'Maapintaala', 'maapintaala', 'Neliökilometri (km2)'),
+  createAlueTunnusluku('maapintaala', 'Maapinta-ala', 'maapintaala', 'Neliökilometri (km2)'),
   createAlueTunnusluku('asukasmaara', 'Asukasmäärä', 'asukkaiden lukumäärä', 'Lukumäärä (kpl)'),
   createAlueTunnusluku('tyopaikkamaara', 'Työpaikkamäärä', 'työpaikkojen lukumäärä', 'Lukumäärä (kpl)'),
   createAlueTunnusluku('henkilosto', 'Henkilöstö', 'suunnittelun ja organisaation henkilöstö', 'Henkilötyövuotta'),
-  createAlueTunnusluku('pendeloivienosuus', 'Pendelöivienosuus', 'pendelöivien osuus (oman kunnan ulkopuolella työssäkäynti)', 'Prosenttia työssäkäyvistä (%)'),
+  createAlueTunnusluku('pendeloivienosuus', 'Pendelöivien osuus', 'pendelöivien osuus (oman kunnan ulkopuolella työssäkäynti)', 'Prosenttia työssäkäyvistä (%)'),
   createAlueTunnusluku('henkiloautoliikennesuorite', 'Henkilöautoliikennesuorite', 'henkilöautoliikennesuorite', 'km / vuosi'),
   createAlueTunnusluku('autoistumisaste', 'Autoistumisaste', 'autoistumisaste', 'Autoa (kpl) / 1000 asukasta'),
   createAlueTunnusluku('asiakastyytyvaisyys', 'Asiakastyytyväisyys', 'tyytyväisten joukkoliikenteen käyttäjien osuus', 'Prosenttia (%)')];
