@@ -92,6 +92,11 @@ function arvonTulostus(arvo) {
   return arvo;
 }
 
+function arvonTulostusTooltip(arvo) {
+  if ((arvo <= 10) || (arvo % 1 !== 0)) return d3.format('.02f')(arvo);
+  else return arvo;
+}
+
 function createChart(title, xLabel) {
   return {
     chart: {
@@ -125,7 +130,7 @@ function createMultiBarChart(title, xLabel, tickvalues) {
         reduceXTicks: false,
         tooltip: {
           valueFormatter: function (d) {
-            return d;
+            return arvonTulostusTooltip(d);
           }
         },
         yAxis: {
@@ -150,7 +155,7 @@ function createLineChartKK(title, xLabel) {
         type: 'lineWithFocusChart',
         tooltip: {
           valueFormatter: function (d) {
-            return d;
+            return arvonTulostusTooltip(d);
           }
         },
         xAxis: {

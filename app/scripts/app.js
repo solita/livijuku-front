@@ -368,3 +368,4 @@ require('./filters/toClass');
 require('./filters/stateNameIncludes');
 require('./filters/toApplicationName');
 require('./filters/toApplicationNamePlural');
+require('./utils/d3-locale');
