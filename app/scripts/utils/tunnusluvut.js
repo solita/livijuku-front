@@ -22,7 +22,7 @@ export const paastoluokat = ['E0', 'E1', 'E2', 'E3', 'E4', 'E5', 'E6'];
 /* Progress bar laskenta */
 
 export function laskeTayttoaste(tunnusluvut, tyyppi) {
-  return Math.round(100 * laske(tunnusluvut) / (maksimipisteet[tyyppi] + (tunnusluvut.joukkoliikennetuki ? 3 : 0)));
+  return Math.round(100 * laske(tunnusluvut) / (maksimipisteet[tyyppi] + joukkoliikennetukipisteet(tunnusluvut)));
 }
 
 export function laskeTayttoasteType(tunnusluvut, tyyppi) {
@@ -38,6 +38,10 @@ const maksimipisteet = {
   SA: 60,
   ME: 48
 };
+
+function joukkoliikennetukipisteet(tunnusluvut) {
+  return tunnusluvut.joukkoliikennetuki ? 3 : 0;
+}
 
 function tyhja(val) {
   return (_.isNaN(val) || _.isNil(val) || (val === ''));
