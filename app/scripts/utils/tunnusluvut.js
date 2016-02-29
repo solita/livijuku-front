@@ -21,7 +21,7 @@ export const paastoluokat = ['E0', 'E1', 'E2', 'E3', 'E4', 'E5', 'E6'];
 /* Progress bar laskenta */
 
 export function laskeTayttoaste(tunnusluvut, tyyppi) {
-  return Math.round((laske(tunnusluvut) / haeMaksimi(tyyppi)) * 100);
+  return Math.round((laske(tunnusluvut) / maksimipisteet[tyyppi]) * 100);
 }
 
 export function laskeTayttoasteType(tunnusluvut, tyyppi) {
@@ -30,35 +30,16 @@ export function laskeTayttoasteType(tunnusluvut, tyyppi) {
   else if (tayttoaste > 20) return 'warning';
   else return 'danger';
 }
-const maksimipisteet = [
-  {
-    id: 'TTYT',
-    max: 17
-  },
-  {
-    id: 'BR',
-    max: 94
-  },
-  {
-    id: 'KOS',
-    max: 106
-  },
-  {
-    id: 'SA',
-    max: 60
-  },
-  {
-    id: 'ME',
-    max: 48
-  }
-];
+const maksimipisteet = {
+  TTYT: 17,
+  BR: 94,
+  KOS: 106,
+  SA: 60,
+  ME: 48
+};
 
 function tyhja(val) {
   return (_.isNaN(val) || _.isNil(val) || (val === ''));
-}
-
-function haeMaksimi(id) {
-  return _.find(maksimipisteet, {id: id}).max;
 }
 
 function laskeAlue(alue) {
