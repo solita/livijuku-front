@@ -132,7 +132,19 @@ angular.module('services.tunnusluvut', [])
       },
       tallennaAlue: function (vuosi, organisaatioid, alue) {
         return $http.put('api/alue/' + vuosi + '/' + organisaatioid, alue);
-      }
+      },
+
+      // joukkoliikennetuki
+      haeJoukkoliikennetuki: function (vuosi, organisaatioid) {
+        return $http.get('api/joukkoliikennetuki/' + vuosi + '/' + organisaatioid).then(res =>
+          (res.data === null || res.data.length === 0) ?
+            {PSA: null ,HK: null, K: null} :
+            _.mapValues(_.groupBy(res.data, 'avustuskohdeluokkatunnus'), group => _.first(group).tuki ));
+      },
+      tallennaJoukkoliikennetuki: function (vuosi, organisaatioid, joukkoliikennetuki) {
+        return $http.put('api/joukkoliikennetuki/' + vuosi + '/' + organisaatioid,
+          _.map(_.toPairs(joukkoliikennetuki), values => _.zipObject(['avustuskohdeluokkatunnus', 'tuki'], values)));
+      },
     }
   }])
 ;

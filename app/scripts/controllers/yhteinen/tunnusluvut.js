@@ -46,6 +46,7 @@ function loadTunnusluvut(vuosi, organisaatioid, tyyppi, scope, TunnuslukuEditSer
     lipputulo: t.isLipputuloSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeLipputulo(vuosi, organisaatioid, tyyppi) : undefined,
     lippuhinta: t.isSopimustyyppi(tyyppi) ? undefined : TunnuslukuEditService.haeLippuhinta(vuosi, organisaatioid),
     alue: t.isSopimustyyppi(tyyppi) ? undefined : TunnuslukuEditService.haeAlue(vuosi, organisaatioid),
+    joukkoliikennetuki: t.isSopimustyyppi(tyyppi) ? undefined : TunnuslukuEditService.haeJoukkoliikennetuki(vuosi, organisaatioid),
     kommentti: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeKommentti(vuosi, organisaatioid, tyyppi) : undefined
 
   }).then(
@@ -73,7 +74,7 @@ angular.module('jukufrontApp')
             $scope.hasOrganisaatioSelectPermission = true;
             $scope.organisaatioId = integerOrNull($state.params.organisaatioid);
           } else if (hasPermission(user, 'modify-omat-tunnusluvut')) {
-            $scope.organisaatioId = user.organisaatioid.toString();
+            $scope.organisaatioId = user.organisaatioid;
           } else {
             StatusService.virhe('', 'Käyttäjällä ei ole käyttöoikeuksia tunnuslukutiedon hallintaan');
           }
@@ -106,7 +107,7 @@ angular.module('jukufrontApp')
         OrganisaatioService.hae().then(
           organisaatiot => $scope.organisaatiot =
             _.filter(organisaatiot,
-              org => _.includes(['KS1', 'KS2', 'ELY'], org.lajitunnus)),
+              org => _.includes(['KS1', 'KS2', 'KS3', 'ELY'], org.lajitunnus)),
           StatusService.errorHandler);
 
         $scope.$watchGroup(["vuosi", "organisaatioId", "tyyppi()"], (id) => {
@@ -122,7 +123,8 @@ angular.module('jukufrontApp')
           });
 
           if (_.every(id, c.isDefinedNotNull)) {
-            loadTunnusluvut(id[0], id[1], id[2], $scope, TunnuslukuEditService, StatusService)
+            loadTunnusluvut(id[0], id[1], id[2], $scope, TunnuslukuEditService, StatusService);
+            OrganisaatioService.findById(_.parseInt($scope.organisaatioId)).then(org => {$scope.organisaatio = org}, StatusService.errorHandler);
           }
         });
 
@@ -154,6 +156,7 @@ angular.module('jukufrontApp')
             // Yleiset tiedot tab
             tallennusPromise.push(TunnuslukuEditService.tallennaLippuhinta($scope.vuosi, $scope.organisaatioId, $scope.tunnusluvut.lippuhinta));
             tallennusPromise.push(TunnuslukuEditService.tallennaAlue($scope.vuosi, $scope.organisaatioId, $scope.tunnusluvut.alue));
+            tallennusPromise.push(TunnuslukuEditService.tallennaJoukkoliikennetuki($scope.vuosi, $scope.organisaatioId, $scope.tunnusluvut.joukkoliikennetuki));
           }
 
           if (t.isPSA(tyyppi())) {

@@ -14,11 +14,11 @@
       <div class="row">
         <div class="col-md-6">
           <h5>Toimivaltainen viranomainen</h5>
-          {{$root.userOrganisaatio}}
+          {{organisaatio.nimi}}
         </div>
         <div class="col-md-6">
           <h5>Toimivaltaryhmä</h5>
-          {{$root.userLajitunnus | toApplicantName}}
+          {{organisaatio.lajitunnus | toApplicantName}}
         </div>
       </div>
     </juku-form-row>
@@ -449,104 +449,50 @@
         </table>
       </div>
     </juku-form-row>
-    <juku-form-row>
+    <juku-form-row ng-if="organisaatio.lajitunnus === 'KS3'">
       <div class="table-responsive">
         <table class="table table-hover table-condensed">
           <thead>
             <tr>
-              <th colspan="2">Viranomaisen saama valtion avustus / rahoitus
-              </th>
+              <th colspan="2">Viranomaisen saama joukkoliikennetuki</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><i>Tiedot selviävät myöhemmin</i></td>
-            </tr>
-          </tbody>
-          <tbody ng-if="false">
-            <tr>
-              <td class="col-md-8">Liikenteen ostot, € (siirtymäkaudella)</td>
+              <td class="col-md-8">Osuus ELYn myöntämästä rahasta, joka on käytetty liikenteen ostoihin (€)</td>
               <td class="col-md-4">
                 <form-group-compact label="Liikenteen ostot" errormessage="desimaaliErrorMessage">
-                  <input id="taustatiedot-liikenteenostot" name="liikenteenostot" type="text"
-                         class="form-control"
+                  <input id="joukkoliikenntuki-psa" name="joukkoliikenntuki-psa" type="text"
                          ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.liikenteenostot" ng-disabled="isReadonly()"
+                         ng-model="tunnusluvut.joukkoliikennetuki.PSA" ng-disabled="isReadonly()"
                          placeholder="€ / vuosi, alv 0">
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td class="col-md-8">Hintojen alentaminen, € (siirtymäkaudella, valtion lippusubventio on poistumassa)
-              </td>
+              <td class="col-md-8">Osuus ELYn myöntämästä rahasta, joka on käytetty hintavelvoitteisiin (€)</td>
               <td class="col-md-4">
-                <form-group-compact label="Hintojen alentaminen" errormessage="desimaaliErrorMessage">
-                  <input id="taustatiedot-hintojenalentaminen" name="hintojenalentaminen" type="text"
-                         class="form-control"
+                <form-group-compact label="Hintavelvoitteiden korvaaminen" errormessage="desimaaliErrorMessage">
+                  <input id="joukkoliikenntuki-hk" name="joukkoliikenntuki-hk" type="text"
                          ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.hintojenalentaminen" ng-disabled="isReadonly()"
-                         placeholder="€ / vuosi, alv 0">
+                         ng-model="tunnusluvut.joukkoliikennetuki.HK" ng-disabled="isReadonly()"
+                         placeholder="€ / vuosi, alv 10">
                 </form-group-compact>
               </td>
             </tr>
             <tr>
-              <td class="col-md-8">Valtion avustus sopimuskorvauksiin, €</td>
+              <td class="col-md-8">Osuus ELYn myöntämästä rahasta, joka on käytetty kehittämiseen (€)</td>
               <td class="col-md-4">
-                <form-group-compact label="Sopimuskorvaukset" errormessage="desimaaliErrorMessage">
-                  <input id="taustatiedot-sopimiskorvaukset" name="sopimiskorvaukset" type="text"
-                         class="form-control"
+                <form-group-compact label="Kehittäminen" errormessage="desimaaliErrorMessage">
+                  <input id="joukkoliikenntuki-k" name="joukkoliikenntuki-k" type="text"
                          ng-currency="" numeric-only="" max="9999999999.99"
                          noenter
                          select-on-click
-                         ng-model="taustatiedot.sopimiskorvaukset" ng-disabled="isReadonly()"
-                         placeholder="€ / vuosi, alv 0">
-                </form-group-compact>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-md-8">Informaatio ja maksujärjestelmien kehittäminen, €</td>
-              <td class="col-md-4">
-                <form-group-compact label="Informaatio ja maksujärjestelmien kehittäminen"
-                                    errormessage="desimaaliErrorMessage">
-                  <input id="taustatiedot-infomaksukeh" name="infomaksukeh" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only="" max="9999999999.99"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.infomaksukeh" ng-disabled="isReadonly()"
-                         placeholder="€ / vuosi, alv 0">
-                </form-group-compact>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-md-8">Matkakeskusten tai matkapalvelukeskusten kehittäminen, €</td>
-              <td class="col-md-4">
-                <form-group-compact label="Matkakeskusten tai matkapalvelukeskusten kehittäminen"
-                                    errormessage="desimaaliErrorMessage">
-                  <input id="taustatiedot-matkakeskeh" name="matkakeskeh" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only="" max="9999999999.99"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.matkakeskeh" ng-disabled="isReadonly()"
-                         placeholder="€ / vuosi, alv 0">
-                </form-group-compact>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-md-8">Muu kehittäminen, €</td>
-              <td class="col-md-4">
-                <form-group-compact label="Muu kehittäminen" errormessage="desimaaliErrorMessage">
-                  <input id="taustatiedot-muukeh" name="muukeh" type="text"
-                         class="form-control"
-                         ng-currency="" numeric-only="" max="9999999999.99"
-                         noenter
-                         select-on-click
-                         ng-model="taustatiedot.muukeh" ng-disabled="isReadonly()"
+                         ng-model="tunnusluvut.joukkoliikennetuki.K" ng-disabled="isReadonly()"
                          placeholder="€ / vuosi, alv 0">
                 </form-group-compact>
               </td>
