@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var c = require('utils/core');
 
 export function isSopimustyyppi(tunnuslukutyyppi) {
   return _.includes(['BR', 'KOS', 'SA', 'ME'], tunnuslukutyyppi);
@@ -21,7 +22,7 @@ export const paastoluokat = ['E0', 'E1', 'E2', 'E3', 'E4', 'E5', 'E6'];
 /* Progress bar laskenta */
 
 export function laskeTayttoaste(tunnusluvut, tyyppi) {
-  return Math.round((laske(tunnusluvut) / maksimipisteet[tyyppi]) * 100);
+  return Math.round(100 * laske(tunnusluvut) / (maksimipisteet[tyyppi] + (tunnusluvut.joukkoliikennetuki ? 3 : 0)));
 }
 
 export function laskeTayttoasteType(tunnusluvut, tyyppi) {
@@ -78,25 +79,25 @@ function laskeKalusto(arvot) {
   else return 0;
 }
 
+function laskeJoukkoliikennetuki(joukkoliikennetuki) {
+  return _.size(_.omitBy(joukkoliikennetuki, tyhja));
+}
 
-function laske(arvot) {
-  var pisteet = 0;
-  _.pickBy(arvot, function (value, key) {
-    if (_.isNil(value)) return;
-    else if (key === 'alue') {
-      pisteet = pisteet + laskeAlue(value);
-    } else if (key === 'lippuhinta') {
-      pisteet = pisteet + laskeLippuhinta(value);
-    } else if ((key === 'liikenneviikko') || (key === 'liikennevuosi')) {
-      pisteet = pisteet + laskeLiikenteenKysyntaJaTarjonta(value);
-    } else if (key === 'kalusto') {
-      pisteet = pisteet + laskeKalusto(value);
-    } else if (key === 'liikennointikorvaus') {
-      pisteet = pisteet + laskeLiikennointikorvaus(value);
-    } else if (key === 'lipputulo') {
-      pisteet = pisteet + laskeLipputulo(value);
-    }
-  });
-  return pisteet;
+const pistelaskenta = {
+  alue: laskeAlue,
+  lippuhinta: laskeLippuhinta,
+  joukkoliikennetuki: laskeJoukkoliikennetuki,
+  liikenneviikko: laskeLiikenteenKysyntaJaTarjonta,
+  liikennevuosi: laskeLiikenteenKysyntaJaTarjonta,
+  kalusto: laskeKalusto,
+  liikennointikorvaus: laskeLiikennointikorvaus,
+  lipputulo: laskeLipputulo
+};
+
+function laske(tunnusluvut) {
+  return _.reduce(tunnusluvut, function (pisteet, value, key) {
+    var laskenta = c.coalesce(pistelaskenta[key], v => 0);
+    return pisteet + (value ? laskenta(value) : 0);
+  }, 0);
 }
 
