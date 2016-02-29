@@ -37,17 +37,17 @@ const tunnuslukuTooltips = {
 
 };
 
-function loadTunnusluvut(vuosi, organisaatioid, tyyppi, scope, TunnuslukuEditService, StatusService) {
+function loadTunnusluvut(vuosi, organisaatio, tyyppi, scope, TunnuslukuEditService, StatusService) {
   Promise.props({
-    liikennevuosi: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjonta(vuosi, organisaatioid, tyyppi) : undefined,
-    liikenneviikko: t.isPSA(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjontaViikko(vuosi, organisaatioid, tyyppi) : undefined,
-    kalusto: t.isPSA(tyyppi) ? TunnuslukuEditService.haeKalusto(vuosi, organisaatioid, tyyppi) : undefined,
-    liikennointikorvaus: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeLiikennointikorvaus(vuosi, organisaatioid, tyyppi) : undefined,
-    lipputulo: t.isLipputuloSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeLipputulo(vuosi, organisaatioid, tyyppi) : undefined,
-    lippuhinta: t.isSopimustyyppi(tyyppi) ? undefined : TunnuslukuEditService.haeLippuhinta(vuosi, organisaatioid),
-    alue: t.isSopimustyyppi(tyyppi) ? undefined : TunnuslukuEditService.haeAlue(vuosi, organisaatioid),
-    joukkoliikennetuki: t.isSopimustyyppi(tyyppi) ? undefined : TunnuslukuEditService.haeJoukkoliikennetuki(vuosi, organisaatioid),
-    kommentti: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeKommentti(vuosi, organisaatioid, tyyppi) : undefined
+    liikennevuosi: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjonta(vuosi, organisaatio.id, tyyppi) : undefined,
+    liikenneviikko: t.isPSA(tyyppi) ? TunnuslukuEditService.haeKysyntaTarjontaViikko(vuosi, organisaatio.id, tyyppi) : undefined,
+    kalusto: t.isPSA(tyyppi) ? TunnuslukuEditService.haeKalusto(vuosi, organisaatio.id, tyyppi) : undefined,
+    liikennointikorvaus: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeLiikennointikorvaus(vuosi, organisaatio.id, tyyppi) : undefined,
+    lipputulo: t.isLipputuloSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeLipputulo(vuosi, organisaatio.id, tyyppi) : undefined,
+    lippuhinta: t.isSopimustyyppi(tyyppi) ? undefined : TunnuslukuEditService.haeLippuhinta(vuosi, organisaatio.id),
+    alue: t.isSopimustyyppi(tyyppi) ? undefined : TunnuslukuEditService.haeAlue(vuosi, organisaatio.id),
+    joukkoliikennetuki: (!t.isSopimustyyppi(tyyppi) && organisaatio.lajitunnus === 'KS3') ? TunnuslukuEditService.haeJoukkoliikennetuki(vuosi, organisaatio.id) : undefined,
+    kommentti: t.isSopimustyyppi(tyyppi) ? TunnuslukuEditService.haeKommentti(vuosi, organisaatio.id, tyyppi) : undefined
 
   }).then(
     tunnusluvut => scope.$evalAsync(scope => scope.tunnusluvut = tunnusluvut),
@@ -123,8 +123,10 @@ angular.module('jukufrontApp')
           });
 
           if (_.every(id, c.isDefinedNotNull)) {
-            loadTunnusluvut(id[0], id[1], id[2], $scope, TunnuslukuEditService, StatusService);
-            OrganisaatioService.findById(_.parseInt($scope.organisaatioId)).then(org => {$scope.organisaatio = org}, StatusService.errorHandler);
+            OrganisaatioService.findById(_.parseInt($scope.organisaatioId)).then(org => {
+              $scope.organisaatio = org;
+              loadTunnusluvut(id[0], org, id[2], $scope, TunnuslukuEditService, StatusService);
+            }, StatusService.errorHandler);
           }
         });
 
