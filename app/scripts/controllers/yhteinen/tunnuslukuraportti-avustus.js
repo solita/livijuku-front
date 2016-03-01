@@ -59,10 +59,27 @@ var avustusDetailGraph = {
   },
   title: {
     enable: true,
-    text: 'Haetut ryhmitelty organisaatioittain'
+    text: 'Haetut avustukset ryhmitelty organisaatioittain'
   },
   subtitle: subtitle
 };
+
+const avustustyypit = {
+  H: 'Haettu avustus',
+  M: 'Myönnetty avustus',
+  $nimi: id => avustustyypit[id]
+};
+
+const avustustyyppiDetailGraph = {
+  H: {
+    chart: {y: d =>  d[2]},
+    title: {text: 'Haetut avustukset ryhmitelty organisaatioittain'}
+  },
+  M: {
+    chart: {y: d =>  d[3]},
+    title: {text: 'Myönnetyt avustukset ryhmitelty organisaatioittain'}
+  }
+}
 
 angular.module('jukufrontApp')
   .controller('TunnuslukuraporttiAvustusCtrl',
@@ -79,7 +96,9 @@ angular.module('jukufrontApp')
           options: avustusDetailGraph
         }
 
-        $scope.organisaatiolaji = c.isBlank($state.params.organisaatiolaji) ? 'KS1' : $state.params.organisaatiolaji;
+        $scope.organisaatiolaji = _.find([$state.params.organisaatiolaji, 'KS1'], c.isNotBlank); //c.isBlank($state.params.organisaatiolaji) ? 'KS1' : $state.params.organisaatiolaji;
+        $scope.avustustyyppi = _.find([$state.params.avustustyyppi, 'H'], c.isNotBlank);
+
         subtitle.text = t.organisaatiolajit.$nimi($scope.organisaatiolaji);
 
         d.createTabFunctions($scope, 'organisaatiolaji');
@@ -87,10 +106,14 @@ angular.module('jukufrontApp')
           $state.go($state.current.name, {organisaatiolaji: tyyppi});
         };
 
+        $scope.$watch("avustustyyppi", (avustustyyppi) => {
+          _.merge(avustusDetailGraph, avustustyyppiDetailGraph[avustustyyppi]);
+        });
+
         RaporttiService.haeAvustus($scope.organisaatiolaji).then(avustukset => {
           $scope.avustus.data = _.map(_.values(_.groupBy(_.tail(avustukset), row => row[0])),
             rows => ({
-              key: rows[0][0] === 1 ? 'Myönnetty' : 'Haettu',
+              key: avustustyypit.$nimi(rows[0][0]),
               values: rows
             }))
         });

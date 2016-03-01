@@ -17,6 +17,8 @@ export function isBlank(string) {
   return (isNullOrUndefined(string) || /^\s*$/.test(string));
 }
 
+export const isNotBlank = txt => !isBlank(txt);
+
 /**
  * Round value to two decimals
  */

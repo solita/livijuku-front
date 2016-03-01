@@ -195,7 +195,7 @@ angular
        */
 
       .state('app.tunnusluku.valtionavustuskuvaajat', {
-        url: '/valtionavustuskuvaajat/:organisaatiolaji',
+        url: '/valtionavustuskuvaajat/:organisaatiolaji/:avustustyyppi',
         template: require('views/tunnusluvut/raportit-valtionavustuskuvaajat.html'),
         controller: 'TunnuslukuraporttiAvustusCtrl'
       })
