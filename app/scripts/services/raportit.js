@@ -57,6 +57,9 @@ angular.module('services.tunnusluvut')
       },
       haeAvustus: function (organisaatiolajitunnus) {
         return $http.get('api/avustus/' + organisaatiolajitunnus).then(res => res.data);
+      },
+      haeAvustusDetails: function (organisaatiolajitunnus) {
+        return $http.get('api/avustus-details/' + organisaatiolajitunnus).then(res => res.data);
       }
     }
   }])

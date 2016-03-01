@@ -26,13 +26,9 @@
   </div>
 
   <div class="row">
-    <nvd3 options='haettuMyonnettyOptions' data='haettuMyonnettyData' api="haettuMyonnettyApi"></nvd3>
-    <a ng-show="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())" class="pull-right view-link"
+    <nvd3 options='avustusdetail.options' data='avustusdetail.data' api="avustusdetail.api"></nvd3>
+    <a ng-csv="exportCsvMultibar(haettuMyonnettyData())" class="pull-right view-link"
        filename="Myönnetyt_jaoteltuna.csv"
-       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
-    </a>
-    <a ng-hide="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())" class="pull-right view-link"
-       filename="Haetut_jaoteltuna.csv"
        csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>

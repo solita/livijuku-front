@@ -30,6 +30,12 @@ export const organisaatiolajit = {
   $id: "organisaatiolajitunnus"
 };
 
+export function numberFormat(arvo) {
+  if (arvo >= 1000000) return (d3.format('.02f')(arvo / 1000000) + ' M');
+  else if ((arvo <= 10) && (arvo % 1 !== 0)) return d3.format('.02f')(arvo);
+  return arvo;
+}
+
 /* Progress bar laskenta */
 
 export function laskeTayttoaste(tunnusluvut, tyyppi) {
