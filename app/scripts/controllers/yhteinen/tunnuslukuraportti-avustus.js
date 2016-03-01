@@ -96,7 +96,7 @@ angular.module('jukufrontApp')
           options: avustusDetailGraph
         }
 
-        $scope.organisaatiolaji = _.find([$state.params.organisaatiolaji, 'KS1'], c.isNotBlank); //c.isBlank($state.params.organisaatiolaji) ? 'KS1' : $state.params.organisaatiolaji;
+        $scope.organisaatiolaji = _.find([$state.params.organisaatiolaji, 'KS1'], c.isNotBlank);
         $scope.avustustyyppi = _.find([$state.params.avustustyyppi, 'H'], c.isNotBlank);
 
         subtitle.text = t.organisaatiolajit.$nimi($scope.organisaatiolaji);
