@@ -11,55 +11,45 @@ var subtitle = {
   text: 'Suuret kaupunkiseudut'
 }
 
-var avustusGraph = {
-  chart: {
-    type: 'multiBarChart',
-    height: 450,
-    stacked: false,
-    showControls: false,
-    x: function (d) {
-      return d[1];
-    },
-    y: function (d) {
-      return d[2];
-    },
-    yAxis: {
-      axisLabel: '',
-      tickFormat: t.numberFormat
-    },
-    xAxis: {
-      axisLabel: 'Vuosi'
-    }
+var chartOptions = {
+  type: 'multiBarChart',
+  height: 450,
+  stacked: false,
+  showControls: false,
+  x: d =>  d[1],
+  y: d =>  d[2],
+  yAxis: {
+    axisLabel: '€',
+    tickFormat: t.numberFormat
   },
+  xAxis: {
+    axisLabel: 'Vuosi'
+  }
+}
+
+var avustusGraph = {
+  chart: chartOptions,
   title: {
     enable: true,
     text: 'Joukkoliikenteen valtionavustushakemukset ja päätökset'
   },
   subtitle: subtitle
-};
+}
 
 var avustusDetailGraph = {
-  chart: {
-    type: 'multiBarChart',
-    height: 450,
-    stacked: false,
-    x: function (d) {
-      return d[1];
-    },
-    y: function (d) {
-      return d[2];
-    },
-    yAxis: {
-      axisLabel: '',
-      tickFormat: t.numberFormat
-    },
-    xAxis: {
-      axisLabel: 'Vuosi'
-    }
-  },
+  chart: _.cloneDeep(chartOptions),
   title: {
     enable: true,
     text: 'Haetut avustukset ryhmitelty organisaatioittain'
+  },
+  subtitle: subtitle
+};
+
+var avustusPerAsukasGraph = {
+  chart: chartOptions,
+  title: {
+    enable: true,
+    text: 'Myönnetty avustus / asukas'
   },
   subtitle: subtitle
 };
@@ -90,11 +80,15 @@ angular.module('jukufrontApp')
 
         $scope.avustus = {
           options: avustusGraph
-        }
+        };
 
         $scope.avustusdetail = {
           options: avustusDetailGraph
-        }
+        };
+
+        $scope.avustusperasukas = {
+          options: avustusPerAsukasGraph
+        };
 
         $scope.organisaatiolaji = _.find([$state.params.organisaatiolaji, 'KS1'], c.isNotBlank);
         $scope.avustustyyppi = _.find([$state.params.avustustyyppi, 'H'], c.isNotBlank);
@@ -119,9 +113,19 @@ angular.module('jukufrontApp')
         });
 
         $q.all([RaporttiService.haeAvustusDetails($scope.organisaatiolaji),
-               OrganisaatioService.hae()])
+                OrganisaatioService.hae()])
           .then(([avustukset, organisaatiot]) => {
             $scope.avustusdetail.data = _.map(_.values(_.groupBy(_.tail(avustukset), row => row[0])),
+              rows => ({
+                key: (_.find(organisaatiot, {id: rows[0][0]})).nimi,
+                values: rows
+              }));
+        });
+
+        $q.all([RaporttiService.haeAvustusPerAsukasta($scope.organisaatiolaji),
+                OrganisaatioService.hae()])
+          .then(([avustukset, organisaatiot]) => {
+            $scope.avustusperasukas.data = _.map(_.values(_.groupBy(_.tail(avustukset), row => row[0])),
               rows => ({
                 key: (_.find(organisaatiot, {id: rows[0][0]})).nimi,
                 values: rows
