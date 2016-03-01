@@ -128,6 +128,7 @@ function createMultiBarChart(title, xLabel, tickvalues) {
         type: 'multiBarChart',
         stacked: false,
         reduceXTicks: false,
+        groupSpacing: 0.2,
         tooltip: {
           valueFormatter: function (d) {
             return arvonTulostusTooltip(d);
