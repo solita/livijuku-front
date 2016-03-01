@@ -19,6 +19,17 @@ export const viikonpaivaluokat = ['A', 'LA', 'SU'];
 
 export const paastoluokat = ['E0', 'E1', 'E2', 'E3', 'E4', 'E5', 'E6'];
 
+export const organisaatiolajit = {
+  ALL: 'Kaikki organisaatiot',
+  KS1: 'Suuret kaupunkiseudut',
+  KS2: 'Keskisuuret kaupunkiseudut',
+  KS3: 'Pienet kaupunkiseudut',
+  ELY: 'ELY-keskukset',
+  $order: ['ALL', 'KS1', 'KS2', 'KS3', 'ELY'],
+  $nimi: id => organisaatiolajit[id],
+  $id: "organisaatiolajitunnus"
+};
+
 /* Progress bar laskenta */
 
 export function laskeTayttoaste(tunnusluvut, tyyppi) {

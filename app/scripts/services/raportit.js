@@ -54,6 +54,9 @@ angular.module('services.tunnusluvut')
         var data = column3 ? c.cartesianProduct(column1, column2, column3) : c.cartesianProduct(column1, column2);
 
         return _.map(data, row => { row.push(Math.floor(Math.random() * 100)); return row });
+      },
+      haeAvustus: function (organisaatiolajitunnus) {
+        return $http.get('api/avustus/' + organisaatiolajitunnus).then(res => res.data);
       }
     }
   }])

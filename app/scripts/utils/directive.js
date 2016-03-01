@@ -56,3 +56,13 @@ export function maxlengthTextErrorMessage(maxlength) {
 export function combineErrorMessages() {
   return input => _.find(_.map(arguments, f => f(input)), c.isDefinedNotNull);
 }
+
+export function createTabFunctions($scope, tabProperty) {
+  $scope.isTabSelected = function(tyyppi) {
+    return $scope[tabProperty] === tyyppi;
+  };
+
+  $scope.toTab = function(tyyppi) {
+    $scope[tabProperty] = tyyppi;
+  };
+}

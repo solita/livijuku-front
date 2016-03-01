@@ -1,24 +1,24 @@
 <div class="container">
 
-  <h1>Valtionavustuskuvaajat</h1>
-
+  <div class="page-header">
+    <h1>Valtionavustuskuvaajat</h1>
+  </div>
 
   <juku-navigation>
     <juku-tabs>
       <juku-tab
-        ng-repeat="tyyppi in tyypit"
-        selected="isTabSelected(tyyppi)"
-        ely="isEly(tyyppi)"
-        ng-click="toTab(tyyppi)">
-        {{ tyyppi | toApplicantName }}
+        ng-repeat="(laji, value) in organisaatiolajit"
+        selected="isTabSelected(laji)"
+        ely="false"
+        ng-click="toTab(laji)">
+        {{ value }}
       </juku-tab>
     </juku-tabs>
   </juku-navigation>
-  <br>
+  <br><br>
 
   <div class="row">
-    <nvd3 options='haettuMyonnettyYhteensaOptions' data='haettuMyonnettyYhteensaData'
-          api="haettuMyonnettyYhteensaApi"></nvd3>
+    <nvd3 options='avustus.options' data='avustus.data' api="avustus.api"></nvd3>
     <a ng-csv="exportCsvMultibar(haettuMyonnettyYhteensaData())" class="pull-right view-link"
        filename="Joukkoliikenteen_valtionavustushakemukset_ja_päätökset.csv"
        csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV

@@ -195,9 +195,9 @@ angular
        */
 
       .state('app.tunnusluku.valtionavustuskuvaajat', {
-        url: '/valtionavustuskuvaajat',
+        url: '/valtionavustuskuvaajat/:organisaatiolaji',
         template: require('views/tunnusluvut/raportit-valtionavustuskuvaajat.html'),
-        controller: 'TunnuslukuraporttiCtrl'
+        controller: 'TunnuslukuraporttiAvustusCtrl'
       })
       .state('app.tunnusluku.tunnuslukukuvaajat', {
         url: '/tunnuslukukuvaajat',
@@ -340,6 +340,7 @@ require('./controllers/yhteinen/paanaytto');
 require('./controllers/yhteinen/tunnusluvut');
 require('./controllers/yhteinen/tunnuslukuraportti');
 require('./controllers/yhteinen/tunnuslukuraportti-omakuvaaja');
+require('./controllers/yhteinen/tunnuslukuraportti-avustus');
 require('./directives/alvmuunnos');
 require('./directives/jukuAvustusluokkaPanel');
 require('./directives/noenter');
