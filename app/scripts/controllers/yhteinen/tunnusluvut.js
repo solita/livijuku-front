@@ -66,13 +66,15 @@ angular.module('jukufrontApp')
       function ($scope, $state, OrganisaatioService, TunnuslukuEditService, StatusService, KayttajaService) {
 
         $scope.vuosi = integerOrNull($state.params.vuosi);
-        $scope.organisaatioId = null;
 
         $scope.hasOrganisaatioSelectPermission = false;
+
+        // talletetaan organisaatio id talteen - params objekti voi muuttua ennen kuin promisea kutsutaan
+        var organisaatioid = $state.params.organisaatioid;
         KayttajaService.hae().then(user => {
           if (hasPermission(user, 'modify-kaikki-tunnusluvut')) {
             $scope.hasOrganisaatioSelectPermission = true;
-            $scope.organisaatioId = integerOrNull($state.params.organisaatioid);
+            $scope.organisaatioId = integerOrNull(organisaatioid);
           } else if (hasPermission(user, 'modify-omat-tunnusluvut')) {
             $scope.organisaatioId = user.organisaatioid;
           } else {
