@@ -1,7 +1,8 @@
 <div class="container">
-  <div class="row">
-    <h1>Valtionavustuskuvaajat</h1>
-  </div>
+
+  <h1>Valtionavustuskuvaajat</h1>
+
+
   <juku-navigation>
     <juku-tabs>
       <juku-tab
@@ -13,49 +14,35 @@
       </juku-tab>
     </juku-tabs>
   </juku-navigation>
-  <div class="row">
-    <div class="col-md-10">
-    </div>
-    <div class="col-md-2 lataacsv">
-      <a ng-csv="exportCsvMultibar(haettuMyonnettyYhteensaData())"
-         filename="Joukkoliikenteen_valtionavustushakemukset_ja_päätökset.csv"
-         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span
-        class="glyphicon glyphicon-save"></span> Lataa CSV
-      </a>
-    </div>
-  </div>
+  <br>
+
   <div class="row">
     <nvd3 options='haettuMyonnettyYhteensaOptions' data='haettuMyonnettyYhteensaData'
           api="haettuMyonnettyYhteensaApi"></nvd3>
-  </div>
-  <div class="row">
-    <div class="col-md-10">
-    </div>
-    <div class="col-md-2 lataacsv">
-      <a ng-show="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
-         filename="Myönnetyt_jaoteltuna.csv"
-         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span
-        class="glyphicon glyphicon-save"></span> Lataa CSV
-      </a>
-      <a ng-hide="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())"
-         filename="Haetut_jaoteltuna.csv"
-         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span
-        class="glyphicon glyphicon-save"></span> Lataa CSV
-      </a>
-    </div>
-    <nvd3 options='haettuMyonnettyOptions' data='haettuMyonnettyData' api="haettuMyonnettyApi"></nvd3>
+    <a ng-csv="exportCsvMultibar(haettuMyonnettyYhteensaData())" class="pull-right view-link"
+       filename="Joukkoliikenteen_valtionavustushakemukset_ja_päätökset.csv"
+       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    </a>
   </div>
 
   <div class="row">
-    <div class="col-md-10">
-    </div>
-    <div class="col-md-2 lataacsv">
-      <a ng-csv="exportCsvMultibar(myonnettyPerAsukasData())"
-         filename="Myönnetty_asukas.csv"
-         csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span
-        class="glyphicon glyphicon-save"></span> Lataa CSV
-      </a>
-    </div>
-    <nvd3 options='myonnettyPerAsukasOptions' data='myonnettyPerAsukasData' api="myonnettyPerAsukasApi"></nvd3>
+    <nvd3 options='haettuMyonnettyOptions' data='haettuMyonnettyData' api="haettuMyonnettyApi"></nvd3>
+    <a ng-show="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())" class="pull-right view-link"
+       filename="Myönnetyt_jaoteltuna.csv"
+       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    </a>
+    <a ng-hide="isMyonnettyAktiivinen()" ng-csv="exportCsvMultibar(haettuMyonnettyData())" class="pull-right view-link"
+       filename="Haetut_jaoteltuna.csv"
+       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    </a>
   </div>
+
+  <div class="row">
+    <nvd3 options='myonnettyPerAsukasOptions' data='myonnettyPerAsukasData' api="myonnettyPerAsukasApi"></nvd3>
+    <a ng-csv="exportCsvMultibar(myonnettyPerAsukasData())" class="pull-right view-link"
+       filename="Myönnetty_asukas.csv"
+       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    </a>
+  </div>
+
 </div>
