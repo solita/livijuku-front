@@ -13,9 +13,10 @@ var subtitle = {
 
 var chartOptions = {
   type: 'multiBarChart',
-  height: 450,
+  height: 500,
   stacked: false,
   showControls: false,
+  tooltip: { valueFormatter: t.numberFormatTooltip },
   x: d =>  d[1],
   y: d =>  d[2],
   yAxis: {
