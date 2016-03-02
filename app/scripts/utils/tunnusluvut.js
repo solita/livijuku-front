@@ -36,7 +36,7 @@ export function numberFormat(arvo) {
 }
 
 export function numberFormatTooltip(arvo) {
-  return (arvo % 1) === 0 ? d3.format(',')(arvo) : d3.format('.02f')(arvo);
+  return (arvo % 1) === 0 ? d3.format(',')(arvo) : d3.format(',.02f')(arvo);
 }
 
 /* Progress bar laskenta */
