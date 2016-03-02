@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var angular = require('angular');
 var c = require('utils/core');
+var t = require('utils/tunnusluvut');
 
 function nimi(id) {
   return this[id];
@@ -86,17 +87,6 @@ const vyohykemaarat = {
   $id: "vyohykemaara"
 };
 
-function arvonTulostus(arvo) {
-  if (arvo >= 1000000) return (d3.format('.02f')(arvo / 1000000) + ' M');
-  else if ((arvo <= 10) && (arvo % 1 !== 0)) return d3.format('.02f')(arvo);
-  return arvo;
-}
-
-function arvonTulostusTooltip(arvo) {
-  if ((arvo <= 10) || (arvo % 1 !== 0)) return d3.format('.02f')(arvo);
-  else return arvo;
-}
-
 function createChart(title, xLabel) {
   return {
     chart: {
@@ -130,14 +120,10 @@ function createMultiBarChart(title, xLabel, tickvalues) {
         reduceXTicks: false,
         groupSpacing: 0.2,
         tooltip: {
-          valueFormatter: function (d) {
-            return arvonTulostusTooltip(d);
-          }
+          valueFormatter: t.numberFormatTooltip
         },
         yAxis: {
-          tickFormat: function (d) {
-            return arvonTulostus(d);
-          }
+          tickFormat: t.numberFormat
         },
         xAxis: {
           tickFormat: function (d) {
@@ -155,17 +141,13 @@ function createLineChartKK(title, xLabel) {
       chart: {
         type: 'lineWithFocusChart',
         tooltip: {
-          valueFormatter: function (d) {
-            return arvonTulostusTooltip(d);
-          }
+          valueFormatter: t.numberFormatTooltip
         },
         xAxis: {
           tickFormat: d => d3.time.format.utc("%m/%Y")(new Date(d))
         },
         yAxis: {
-          tickFormat: function (d) {
-            return arvonTulostus(d);
-          }
+          tickFormat: t.numberFormat
         },
         xScale: d3.time.scale.utc(),
         x2Axis: {

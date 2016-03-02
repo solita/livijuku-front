@@ -31,13 +31,12 @@ export const organisaatiolajit = {
 };
 
 export function numberFormat(arvo) {
-  if (arvo >= 1000000) return (d3.format('.02f')(arvo / 1000000) + ' M');
-  else return d3.format('.02f')(arvo);
+  if (arvo > 999) return d3.format('.4s')(arvo);
+  else return (arvo % 1) === 0 ? arvo : d3.format('.02f')(arvo);
 }
 
 export function numberFormatTooltip(arvo) {
-  if ((arvo <= 10) || (arvo % 1 !== 0)) return d3.format('.02f')(arvo);
-  else return arvo;
+  return (arvo % 1) === 0 ? d3.format(',')(arvo) : d3.format('.02f')(arvo);
 }
 
 /* Progress bar laskenta */
