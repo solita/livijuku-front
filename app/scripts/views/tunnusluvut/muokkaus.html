@@ -29,7 +29,7 @@
         <div class="alert alert-info" ng-hide="vuosi && organisaatioId">
           <p>
             <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-            Valitse alue ja vuosiluku
+            Valitse {{hasOrganisaatioSelectPermission ? 'alue ja ' : '' }}vuosi
           </p>
         </div>
         <div ng-if="tunnusluvut">
