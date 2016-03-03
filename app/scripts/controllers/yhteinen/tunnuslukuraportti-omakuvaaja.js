@@ -140,6 +140,7 @@ function createLineChartKK(title, xLabel) {
     createChart(title, "Kuukausi"), {
       chart: {
         type: 'lineWithFocusChart',
+        margin: { bottom: 70 },
         tooltip: {
           valueFormatter: t.numberFormatTooltip
         },
