@@ -9,16 +9,20 @@ var t = require('utils/tunnusluvut');
 var subtitle = {
   enable: true,
   text: 'Suuret kaupunkiseudut'
-}
+};
 
 var chartOptions = {
+  color: ['#aec7e8', '#1f77b4', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5',
+    '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5',
+    '#6b6ecf', '#b5cf6b', '#bd9e39', '#d6616b', '#a55194', '#9c9ede', '#cedb9c', '#e7ba52', '#ce6dbd', '#de9ed6',
+    '#3182bd', '#e6550d', '#fdae6b', '#31a354', '#969696'],
   type: 'multiBarChart',
   height: 500,
   stacked: false,
   showControls: false,
-  tooltip: { valueFormatter: t.numberFormatTooltip },
-  x: d =>  d[1],
-  y: d =>  d[2],
+  tooltip: {valueFormatter: t.numberFormatTooltip},
+  x: d => d[1],
+  y: d => d[2],
   yAxis: {
     axisLabel: '€',
     tickFormat: t.numberFormat
@@ -26,7 +30,7 @@ var chartOptions = {
   xAxis: {
     axisLabel: 'Vuosi'
   }
-}
+};
 
 var avustusGraph = {
   chart: chartOptions,
@@ -35,7 +39,7 @@ var avustusGraph = {
     text: 'Joukkoliikenteen valtionavustushakemukset ja päätökset'
   },
   subtitle: subtitle
-}
+};
 
 var avustusDetailGraph = {
   chart: _.cloneDeep(chartOptions),
@@ -63,14 +67,14 @@ const avustustyypit = {
 
 const avustustyyppiDetailGraph = {
   H: {
-    chart: {y: d =>  d[2]},
+    chart: {y: d => d[2]},
     title: {text: 'Haetut avustukset ryhmitelty organisaatioittain'}
   },
   M: {
-    chart: {y: d =>  d[3]},
+    chart: {y: d => d[3]},
     title: {text: 'Myönnetyt avustukset ryhmitelty organisaatioittain'}
   }
-}
+};
 
 angular.module('jukufrontApp')
   .controller('TunnuslukuraporttiAvustusCtrl',
@@ -91,13 +95,13 @@ angular.module('jukufrontApp')
           options: avustusPerAsukasGraph
         };
 
-        $scope.organisaatiolaji = _.find([$state.params.organisaatiolaji, 'KS1'], c.isNotBlank);
-        $scope.avustustyyppi = _.find([$state.params.avustustyyppi, 'H'], c.isNotBlank);
+        $scope.organisaatiolaji = _.find([$state.params.organisaatiolaji, 'ALL'], c.isNotBlank);
+        $scope.avustustyyppi = _.find([$state.params.avustustyyppi, 'M'], c.isNotBlank);
 
         subtitle.text = t.organisaatiolajit.$nimi($scope.organisaatiolaji);
 
         d.createTabFunctions($scope, 'organisaatiolaji');
-        $scope.toTab = function(tyyppi) {
+        $scope.toTab = function (tyyppi) {
           $state.go($state.current.name, {organisaatiolaji: tyyppi});
         };
 
@@ -114,22 +118,24 @@ angular.module('jukufrontApp')
         });
 
         $q.all([RaporttiService.haeAvustusDetails($scope.organisaatiolaji),
-                OrganisaatioService.hae()])
+            OrganisaatioService.hae()])
           .then(([avustukset, organisaatiot]) => {
             $scope.avustusdetail.data = _.map(_.values(_.groupBy(_.tail(avustukset), row => row[0])),
               rows => ({
                 key: (_.find(organisaatiot, {id: rows[0][0]})).nimi,
                 values: rows
               }));
-        });
+          });
 
         $q.all([RaporttiService.haeAvustusPerAsukasta($scope.organisaatiolaji),
-                OrganisaatioService.hae()])
+            OrganisaatioService.hae()])
           .then(([avustukset, organisaatiot]) => {
             $scope.avustusperasukas.data = _.map(_.values(_.groupBy(_.tail(avustukset), row => row[0])),
               rows => ({
                 key: (_.find(organisaatiot, {id: rows[0][0]})).nimi,
                 values: rows
               }));
-        });
-      }]);
+          });
+      }
+    ]
+  );

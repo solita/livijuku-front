@@ -90,6 +90,10 @@ const vyohykemaarat = {
 function createChart(title, xLabel) {
   return {
     chart: {
+      color: ['#aec7e8', '#1f77b4', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5',
+        '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5',
+        '#6b6ecf', '#b5cf6b', '#bd9e39', '#d6616b', '#a55194', '#9c9ede', '#cedb9c', '#e7ba52', '#ce6dbd', '#de9ed6',
+        '#3182bd', '#e6550d', '#fdae6b', '#31a354', '#969696'],
       height: 450,
       x: d => d[1],
       y: d => d[2],
@@ -140,7 +144,7 @@ function createLineChartKK(title, xLabel) {
     createChart(title, "Kuukausi"), {
       chart: {
         type: 'lineWithFocusChart',
-        margin: { bottom: 70 },
+        margin: {bottom: 70},
         tooltip: {
           valueFormatter: t.numberFormatTooltip
         },
@@ -159,7 +163,7 @@ function createLineChartKK(title, xLabel) {
         enable: true,
         text: 'Valitse tarkasteluväli'
 
-}
+      }
     });
 };
 
@@ -519,7 +523,7 @@ angular.module('jukufrontApp')
 
         $scope.organisaatiolajit = organisaatiolajit;
 
-        $scope.params.organisaatiolaji = 'KS1';
+        $scope.params.organisaatiolaji = 'ALL';
 
         $scope.isTabSelected = function isTabSelected(tyyppi) {
           return $scope.params.organisaatiolaji === tyyppi;
