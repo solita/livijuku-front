@@ -154,7 +154,12 @@ function createLineChartKK(title, xLabel) {
         x2Axis: {
           tickFormat: d => d3.time.format.utc("%m/%Y")(new Date(d))
         }
-      }
+      },
+      caption: {
+        enable: true,
+        text: 'Valitse tarkasteluväli'
+
+}
     });
 };
 
