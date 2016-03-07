@@ -67,6 +67,11 @@ angular.module('jukufrontApp')
 
         $scope.vuosi = integerOrNull($state.params.vuosi);
 
+        $scope.vuodet = [];
+        for (var i = new Date().getFullYear(); i >= 2013 ; i--) {
+          $scope.vuodet.push(i);
+        }
+
         $scope.hasOrganisaatioSelectPermission = false;
 
         // talletetaan organisaatio id talteen - params objekti voi muuttua ennen kuin promisea kutsutaan
