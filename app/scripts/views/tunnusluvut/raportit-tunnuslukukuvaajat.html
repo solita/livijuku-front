@@ -1,151 +1,64 @@
 <div class="container">
-  <div class="row">
+
+  <div class="page-header">
     <h1>Tunnuslukukuvaajat</h1>
   </div>
+
   <juku-navigation>
     <juku-tabs>
       <juku-tab
-        ng-repeat="tyyppi in tyypit"
-        selected="isTabSelected(tyyppi)"
-        ely="isEly(tyyppi)"
-        ng-click="toTab(tyyppi)">
-        {{ tyyppi | toApplicantName }}
+        ng-repeat="(laji, value) in organisaatiolajit"
+        selected="isTabSelected(laji)"
+        ely="false"
+        ng-click="toTab(laji)">
+        {{ value }}
       </juku-tab>
     </juku-tabs>
   </juku-navigation>
+  <br><br>
+
   <div class="row">
-    <nvd3 options='tyytyvaisyysOptions' data='tyytyvaisyysData' api="tyytyvaisyysApi"></nvd3>
-    <a ng-csv="exportCsvMultibar(tyytyvaisyysData())" class="pull-right lataacsv"
-       filename="Tyytyväisyys_joukkoliikenteeseen.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    <nvd3 options='asiakastyytyvaisyys.options' data='asiakastyytyvaisyys.data' api="asiakastyytyvaisyys.api"></nvd3>
+    <a ng-csv="exportCsvMultibar(haettuMyonnettyYhteensaData())" class="pull-right lataacsv"
+       filename="Joukkoliikenteen_valtionavustushakemukset_ja_päätökset.csv"
+       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
+  <br>
+
   <div class="row">
-    <nvd3 options='tuotantokustannusOptions' data='tuotantokustannusData'
-          api="tuotantokustannusApi"></nvd3>
-    <a ng-csv="exportCsvMultibar(tuotantokustannusData())" class="pull-right lataacsv"
-       filename="Tuotantokustannus.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    <nvd3 options='nousut.options' data='nousut.data' api="nousut.api"></nvd3>
+    <a ng-csv="exportCsvMultibar(haettuMyonnettyData())" class="pull-right lataacsv"
+       filename="Myönnetyt_jaoteltuna.csv"
+       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
+  <br>
+
   <div class="row">
-    <nvd3 options='MatkustajatOptions' data='psaMatkustajatData'
-          api="tyytyvaisyysApi2"></nvd3>
-    <a ng-csv="exportCsvMultibar(tyytyvaisyysData())" class="pull-right lataacsv"
-       filename="Tyytyväisyys_joukkoliikenteeseen.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    <nvd3 options='lahdot.options' data='lahdot.data' api="lahdot.api"></nvd3>
+    <a ng-csv="exportCsvMultibar(haettuMyonnettyData())" class="pull-right lataacsv"
+       filename="Myönnetyt_jaoteltuna.csv"
+       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
+  <br>
+
   <div class="row">
-    <nvd3 options='psaMatkustajatOptions' data='psaMatkustajatData'
-          api="psaMatkustajatApi"></nvd3>
-    <a ng-csv="exportCsvMultibar(psaMatkustajatData())" class="pull-right lataacsv"
-       filename="PSA_matkusajat.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    <nvd3 options='linjakilometrit.options' data='linjakilometrit.data' api="linjakilometrit.api"></nvd3>
+    <a ng-csv="exportCsvMultibar(haettuMyonnettyData())" class="pull-right lataacsv"
+       filename="Myönnetyt_jaoteltuna.csv"
+       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
+  <br>
+
   <div class="row">
-    <nvd3 options='siirtymaajanMatkustajatOptions' data='siirtymaajanMatkustajatData'
-          api="siirtymaajanMatkustajatApi"></nvd3>
-    <a ng-csv="exportCsvMultibar(siirtymaajanMatkustajatData())" class="pull-right lataacsv"
-       filename="Siirtymaajan_matkustajat.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    <nvd3 options='avustusperasukas.options' data='avustusperasukas.data' api="avustusperasukas.api"></nvd3>
+    <a ng-csv="exportCsvMultibar(myonnettyPerAsukasData())" class="pull-right lataacsv"
+       filename="Myönnetty_asukas.csv"
+       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
-  <div class="row">
-    <h2>Lähtöjen määrä</h2>
-  </div>
-  <div class="row">
-    <h3>Yhteensä</h3>
-    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
-          api="tyytyvaisyysApi5"></nvd3>
-    <a ng-csv="exportCsvMultibar(tyytyvaisyysData())" class="pull-right lataacsv"
-       filename="Tyytyväisyys_joukkoliikenteeseen.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
-    </a>
-  </div>
-  <div class="row">
-    <h3>PSA liikenne</h3>
-    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
-          api="tyytyvaisyysApi6"></nvd3>
-    <a ng-csv="exportCsvMultibar(tyytyvaisyysData())" class="pull-right lataacsv"
-       filename="Tyytyväisyys_joukkoliikenteeseen.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
-    </a>
-  </div>
-  <div class="row">
-    <h3>Siirtymäajan liikenne</h3>
-    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
-          api="tyytyvaisyysApi7"></nvd3>
-    <a ng-csv="exportCsvMultibar(tyytyvaisyysData())" class="pull-right lataacsv"
-       filename="Tyytyväisyys_joukkoliikenteeseen.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
-    </a>
-  </div>
-  <div class="row">
-    <h3>ME liikenne</h3>
-    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
-          api="tyytyvaisyysApi8"></nvd3>
-    <a ng-csv="exportCsvMultibar(tyytyvaisyysData())" class="pull-right lataacsv"
-       filename="Tyytyväisyys_joukkoliikenteeseen.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
-    </a>
-  </div>
-  <div class="row">
-    <h2>Linjakilometrit</h2>
-  </div>
-  <div class="row">
-    <h3>Yhteensä</h3>
-    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
-          api="tyytyvaisyysApi9"></nvd3>
-    <a ng-csv="exportCsvMultibar(tyytyvaisyysData())" class="pull-right lataacsv"
-       filename="Tyytyväisyys_joukkoliikenteeseen.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
-    </a>
-  </div>
-  <div class="row">
-    <h3>PSA liikenne</h3>
-    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
-          api="tyytyvaisyysApi10"></nvd3>
-    <a ng-csv="exportCsvMultibar(tyytyvaisyysData())" class="pull-right lataacsv"
-       filename="Tyytyväisyys_joukkoliikenteeseen.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
-    </a>
-  </div>
-  <div class="row">
-    <h3>Siirtymäajan liikenne</h3>
-    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
-          api="tyytyvaisyysApi11"></nvd3>
-    <a ng-csv="exportCsvMultibar(tyytyvaisyysData())" class="pull-right lataacsv"
-       filename="Tyytyväisyys_joukkoliikenteeseen.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
-    </a>
-  </div>
-  <div class="row">
-    <h3>ME liikenne</h3>
-    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
-          api="tyytyvaisyysApi12"></nvd3>
-    <a ng-csv="exportCsvMultibar(tyytyvaisyysData())" class="pull-right lataacsv"
-       filename="Tyytyväisyys_joukkoliikenteeseen.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
-    </a>
-  </div>
-  <div class="row">
-    <h2>Valtion rahoitus asukasta kohden</h2>
-    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
-          api="tyytyvaisyysApi13"></nvd3>
-    <a ng-csv="exportCsvMultibar(tyytyvaisyysData())" class="pull-right lataacsv"
-       filename="Tyytyväisyys_joukkoliikenteeseen.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
-    </a>
-  </div>
-  <div class="row">
-    <h2>TVV:n rahoitus asukasta kohden</h2>
-    <nvd3 options='tyytyvaisyysOptions2' data='tyytyvaisyysData'
-          api="tyytyvaisyysApi14"></nvd3>
-    <a ng-csv="exportCsvMultibar(tyytyvaisyysData())" class="pull-right lataacsv"
-       filename="Tyytyväisyys_joukkoliikenteeseen.csv" decimal-separator=","
-       csv-label="true" field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
-    </a>
-  </div>
+
 </div>

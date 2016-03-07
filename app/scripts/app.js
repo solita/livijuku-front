@@ -200,7 +200,7 @@ angular
         controller: 'TunnuslukuraporttiAvustusCtrl'
       })
       .state('app.tunnusluku.tunnuslukukuvaajat', {
-        url: '/tunnuslukukuvaajat',
+        url: '/tunnuslukukuvaajat/:organisaatiolaji',
         template: require('views/tunnusluvut/raportit-tunnuslukukuvaajat.html'),
         controller: 'TunnuslukuraporttiCtrl'
       })
