@@ -39,6 +39,14 @@ export function numberFormatTooltip(arvo) {
   return (arvo % 1) === 0 ? d3.format(',')(arvo) : d3.format(',.02f')(arvo);
 }
 
+export function toOrganisaatioSeriesNvd3(data, organisaatiot) {
+  return _.map(_.values(_.groupBy(_.tail(data), row => row[0])),
+              rows => ({
+                key: (_.find(organisaatiot, {id: rows[0][0]})).nimi,
+                values: rows
+              }));
+}
+
 /* Progress bar laskenta */
 
 export function laskeTayttoaste(tunnusluvut, tyyppi) {

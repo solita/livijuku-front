@@ -45,14 +45,6 @@ const createGraph = (title, ytitle) => ({
   }
 });
 
-function toOrganisaatioSeriesNvd3(data, organisaatiot) {
-  return _.map(_.values(_.groupBy(_.tail(data), row => row[0])),
-              rows => ({
-                key: (_.find(organisaatiot, {id: rows[0][0]})).nimi,
-                values: rows
-              }));
-}
-
 angular.module('jukufrontApp')
   .controller('TunnuslukuraporttiCtrl',
     ['$scope', '$state', '$timeout', '$window', '$q', 'RaporttiService', 'OrganisaatioService',
@@ -80,7 +72,7 @@ angular.module('jukufrontApp')
           $q.all([RaporttiService.haeTunnuslukuTilasto(tunnuslukuid, $scope.organisaatiolaji, {}, ['organisaatioid', 'vuosi']),
                 OrganisaatioService.hae()])
           .then(([data, organisaatiot]) => {
-            $scope[scopename].data = toOrganisaatioSeriesNvd3(data, organisaatiot);
+            $scope[scopename].data = t.toOrganisaatioSeriesNvd3(data, organisaatiot);
           })
         }
 
@@ -92,13 +84,13 @@ angular.module('jukufrontApp')
         $q.all([RaporttiService.haeAvustusPerAsukas($scope.organisaatiolaji),
                 OrganisaatioService.hae()])
           .then(([avustukset, organisaatiot]) => {
-            $scope.avustusperasukas.data = toOrganisaatioSeriesNvd3(avustukset, organisaatiot);
+            $scope.avustusperasukas.data = t.toOrganisaatioSeriesNvd3(avustukset, organisaatiot);
           });
 
         $q.all([RaporttiService.haeOmarahoitusPerAsukas($scope.organisaatiolaji),
                 OrganisaatioService.hae()])
           .then(([rahoitus, organisaatiot]) => {
-            $scope.omarahoitusperasukas.data = toOrganisaatioSeriesNvd3(rahoitus, organisaatiot);
+            $scope.omarahoitusperasukas.data = t.toOrganisaatioSeriesNvd3(rahoitus, organisaatiot);
           });
       }
     ]
