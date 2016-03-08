@@ -65,6 +65,7 @@ angular.module('jukufrontApp')
         $scope.lahdot = createGraph('Lähtöjen määrä', 'kpl');
         $scope.linjakilometrit = createGraph('Linjakilometrit', 'km');
         $scope.avustusperasukas = createGraph('Valtion rahoitus asukasta kohden', '€');
+        $scope.omarahoitusperasukas = createGraph('Toimivaltaisen viranomaisen omarahoitus asukasta kohden', '€');
 
         $scope.organisaatiolaji = _.find([$state.params.organisaatiolaji, 'ALL'], c.isNotBlank);
 
@@ -92,6 +93,12 @@ angular.module('jukufrontApp')
                 OrganisaatioService.hae()])
           .then(([avustukset, organisaatiot]) => {
             $scope.avustusperasukas.data = toOrganisaatioSeriesNvd3(avustukset, organisaatiot);
+          });
+
+        $q.all([RaporttiService.haeOmarahoitusPerAsukas($scope.organisaatiolaji),
+                OrganisaatioService.hae()])
+          .then(([rahoitus, organisaatiot]) => {
+            $scope.omarahoitusperasukas.data = toOrganisaatioSeriesNvd3(rahoitus, organisaatiot);
           });
       }
     ]

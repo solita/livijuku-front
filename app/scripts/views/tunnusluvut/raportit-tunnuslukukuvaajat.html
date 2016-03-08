@@ -61,4 +61,12 @@
     </a>
   </div>
 
+  <div class="row">
+    <nvd3 options='omarahoitusperasukas.options' data='omarahoitusperasukas.data' api="omarahoitusperasukas.api"></nvd3>
+    <a ng-csv="exportCsvMultibar(myonnettyPerAsukasData())" class="pull-right lataacsv"
+       filename="Myönnetty_asukas.csv"
+       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    </a>
+  </div>
+
 </div>

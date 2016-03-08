@@ -63,6 +63,9 @@ angular.module('services.tunnusluvut')
       },
       haeAvustusPerAsukasta: function (organisaatiolajitunnus) {
         return $http.get('api/avustus-asukas/' + organisaatiolajitunnus).then(res => res.data);
+      },
+      haeOmarahoitusPerAsukas: function (organisaatiolajitunnus) {
+        return $http.get('api/omarahoitus-asukas/' + organisaatiolajitunnus).then(res => res.data);
       }
     }
   }])
