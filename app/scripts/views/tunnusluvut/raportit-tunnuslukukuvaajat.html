@@ -19,53 +19,53 @@
 
   <div class="row">
     <nvd3 options='asiakastyytyvaisyys.options' data='asiakastyytyvaisyys.data' api="asiakastyytyvaisyys.api"></nvd3>
-    <a ng-csv="exportCsvMultibar(haettuMyonnettyYhteensaData())" class="pull-right lataacsv"
-       filename="Joukkoliikenteen_valtionavustushakemukset_ja_päätökset.csv"
-       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    <a ng-csv="asiakastyytyvaisyys.csv" class="pull-right lataacsv"
+       filename="asiakastyytyväisyys.csv"
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
   <br>
 
   <div class="row">
     <nvd3 options='nousut.options' data='nousut.data' api="nousut.api"></nvd3>
-    <a ng-csv="exportCsvMultibar(haettuMyonnettyData())" class="pull-right lataacsv"
-       filename="Myönnetyt_jaoteltuna.csv"
-       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    <a ng-csv="nousut.csv" class="pull-right lataacsv"
+       filename="nousut.csv"
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
   <br>
 
   <div class="row">
     <nvd3 options='lahdot.options' data='lahdot.data' api="lahdot.api"></nvd3>
-    <a ng-csv="exportCsvMultibar(haettuMyonnettyData())" class="pull-right lataacsv"
-       filename="Myönnetyt_jaoteltuna.csv"
-       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    <a ng-csv="lahdot.csv" class="pull-right lataacsv"
+       filename="lähdöt.csv"
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
   <br>
 
   <div class="row">
     <nvd3 options='linjakilometrit.options' data='linjakilometrit.data' api="linjakilometrit.api"></nvd3>
-    <a ng-csv="exportCsvMultibar(haettuMyonnettyData())" class="pull-right lataacsv"
-       filename="Myönnetyt_jaoteltuna.csv"
-       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    <a ng-csv="linjakilometrit.csv" class="pull-right lataacsv"
+       filename="linjakilometrit.csv"
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
   <br>
 
   <div class="row">
     <nvd3 options='avustusperasukas.options' data='avustusperasukas.data' api="avustusperasukas.api"></nvd3>
-    <a ng-csv="exportCsvMultibar(myonnettyPerAsukasData())" class="pull-right lataacsv"
-       filename="Myönnetty_asukas.csv"
-       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    <a ng-csv="avustusperasukas.csv" class="pull-right lataacsv"
+       filename="avustusperasukas.csv"
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
 
   <div class="row">
     <nvd3 options='omarahoitusperasukas.options' data='omarahoitusperasukas.data' api="omarahoitusperasukas.api"></nvd3>
-    <a ng-csv="exportCsvMultibar(myonnettyPerAsukasData())" class="pull-right lataacsv"
-       filename="Myönnetty_asukas.csv"
-       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    <a ng-csv="omarahoitusperasukas.csv" class="pull-right lataacsv"
+       filename="omarahoitusperasukas.csv"
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
 

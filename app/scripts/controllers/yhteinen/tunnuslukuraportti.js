@@ -72,6 +72,7 @@ angular.module('jukufrontApp')
           $q.all([RaporttiService.haeTunnuslukuTilasto(tunnuslukuid, $scope.organisaatiolaji, {}, ['organisaatioid', 'vuosi']),
                 OrganisaatioService.hae()])
           .then(([data, organisaatiot]) => {
+            $scope[scopename].csv = data;
             $scope[scopename].data = t.toOrganisaatioSeriesNvd3(data, organisaatiot);
           })
         }
@@ -81,17 +82,16 @@ angular.module('jukufrontApp')
         loadTunnusluku('lahdot', 'lahdot');
         loadTunnusluku('linjakilometrit', 'linjakilometrit');
 
-        $q.all([RaporttiService.haeAvustusPerAsukas($scope.organisaatiolaji),
-                OrganisaatioService.hae()])
+        function loadAvustusOrganisaatioTilasto(promise, scopename) {
+          $q.all([promise, OrganisaatioService.hae()])
           .then(([avustukset, organisaatiot]) => {
-            $scope.avustusperasukas.data = t.toOrganisaatioSeriesNvd3(avustukset, organisaatiot);
+            $scope[scopename].csv = avustukset;
+            $scope[scopename].data = t.toOrganisaatioSeriesNvd3(avustukset, organisaatiot);
           });
+        }
 
-        $q.all([RaporttiService.haeOmarahoitusPerAsukas($scope.organisaatiolaji),
-                OrganisaatioService.hae()])
-          .then(([rahoitus, organisaatiot]) => {
-            $scope.omarahoitusperasukas.data = t.toOrganisaatioSeriesNvd3(rahoitus, organisaatiot);
-          });
+        loadAvustusOrganisaatioTilasto(RaporttiService.haeAvustusPerAsukas($scope.organisaatiolaji), 'avustusperasukas');
+        loadAvustusOrganisaatioTilasto(RaporttiService.haeOmarahoitusPerAsukas($scope.organisaatiolaji), 'omarahoitusperasukas');
       }
     ]
   );
