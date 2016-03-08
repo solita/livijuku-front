@@ -65,12 +65,11 @@ angular.module('jukufrontApp')
 
       function ($scope, $state, OrganisaatioService, TunnuslukuEditService, StatusService, KayttajaService) {
 
-        $scope.vuosi = integerOrNull($state.params.vuosi);
+        var currentYear = new Date().getFullYear();
 
-        $scope.vuodet = [];
-        for (var i = new Date().getFullYear(); i >= 2013 ; i--) {
-          $scope.vuodet.push(i);
-        }
+        $scope.vuosi = c.coalesce(integerOrNull($state.params.vuosi), _.toString(currentYear - 1));
+
+        $scope.vuodet = _.range(currentYear, 2012, -1);
 
         $scope.hasOrganisaatioSelectPermission = false;
 
