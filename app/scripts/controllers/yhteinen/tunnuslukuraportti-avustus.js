@@ -127,7 +127,7 @@ angular.module('jukufrontApp')
               }));
           });
 
-        $q.all([RaporttiService.haeAvustusPerAsukasta($scope.organisaatiolaji),
+        $q.all([RaporttiService.haeAvustusPerAsukas($scope.organisaatiolaji),
             OrganisaatioService.hae()])
           .then(([avustukset, organisaatiot]) => {
             $scope.avustusperasukas.data = _.map(_.values(_.groupBy(_.tail(avustukset), row => row[0])),

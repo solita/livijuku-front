@@ -61,7 +61,7 @@ angular.module('services.tunnusluvut')
       haeAvustusDetails: function (organisaatiolajitunnus) {
         return $http.get('api/avustus-details/' + organisaatiolajitunnus).then(res => res.data);
       },
-      haeAvustusPerAsukasta: function (organisaatiolajitunnus) {
+      haeAvustusPerAsukas: function (organisaatiolajitunnus) {
         return $http.get('api/avustus-asukas/' + organisaatiolajitunnus).then(res => res.data);
       },
       haeOmarahoitusPerAsukas: function (organisaatiolajitunnus) {

@@ -89,7 +89,7 @@ angular.module('jukufrontApp')
         loadTunnusluku('lahdot', 'lahdot');
         loadTunnusluku('linjakilometrit', 'linjakilometrit');
 
-        $q.all([RaporttiService.haeAvustusPerAsukasta($scope.organisaatiolaji),
+        $q.all([RaporttiService.haeAvustusPerAsukas($scope.organisaatiolaji),
                 OrganisaatioService.hae()])
           .then(([avustukset, organisaatiot]) => {
             $scope.avustusperasukas.data = toOrganisaatioSeriesNvd3(avustukset, organisaatiot);
