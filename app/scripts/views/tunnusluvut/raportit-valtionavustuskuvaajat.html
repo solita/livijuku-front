@@ -26,9 +26,9 @@
 
   <div class="row">
     <nvd3 options='avustus.options' data='avustus.data' api="avustus.api"></nvd3>
-    <a ng-csv="exportCsvMultibar(haettuMyonnettyYhteensaData())" class="pull-right lataacsv"
+    <a ng-csv="avustus.csv" class="pull-right lataacsv"
        filename="Joukkoliikenteen_valtionavustushakemukset_ja_päätökset.csv"
-       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
   <br>
@@ -48,17 +48,17 @@
     </form>
 
     <nvd3 options='avustusdetail.options' data='avustusdetail.data' api="avustusdetail.api"></nvd3>
-    <a ng-csv="exportCsvMultibar(haettuMyonnettyData())" class="pull-right lataacsv"
-       filename="Myönnetyt_jaoteltuna.csv"
-       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    <a ng-csv="avustusdetail.csv" class="pull-right lataacsv"
+       filename="Myönnetyt_organisaatioittain.csv"
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
   <br>
   <div class="row">
     <nvd3 options='avustusperasukas.options' data='avustusperasukas.data' api="avustusperasukas.api"></nvd3>
-    <a ng-csv="exportCsvMultibar(myonnettyPerAsukasData())" class="pull-right lataacsv"
+    <a ng-csv="avustusperasukas.csv" class="pull-right lataacsv"
        filename="Myönnetty_asukas.csv"
-       csv-label="true" field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
 

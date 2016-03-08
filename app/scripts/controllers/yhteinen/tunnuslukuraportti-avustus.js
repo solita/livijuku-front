@@ -110,24 +110,24 @@ angular.module('jukufrontApp')
         });
 
         RaporttiService.haeAvustus($scope.organisaatiolaji).then(avustukset => {
+          $scope.avustus.csv = avustukset;
           $scope.avustus.data = _.map(_.values(_.groupBy(_.tail(avustukset), row => row[0])),
             rows => ({
               key: avustustyypit.$nimi(rows[0][0]),
               values: rows
-            }))
+            }));
         });
 
-        $q.all([RaporttiService.haeAvustusDetails($scope.organisaatiolaji),
-            OrganisaatioService.hae()])
+        function loadAvustusOrganisaatioTilasto(promise, scopename) {
+          $q.all([promise, OrganisaatioService.hae()])
           .then(([avustukset, organisaatiot]) => {
-            $scope.avustusdetail.data = t.toOrganisaatioSeriesNvd3(avustukset, organisaatiot);
+            $scope[scopename].csv = avustukset;
+            $scope[scopename].data = t.toOrganisaatioSeriesNvd3(avustukset, organisaatiot);
           });
+        }
 
-        $q.all([RaporttiService.haeAvustusPerAsukas($scope.organisaatiolaji),
-            OrganisaatioService.hae()])
-          .then(([avustukset, organisaatiot]) => {
-            $scope.avustusperasukas.data = t.toOrganisaatioSeriesNvd3(avustukset, organisaatiot);
-          });
+        loadAvustusOrganisaatioTilasto(RaporttiService.haeAvustusDetails($scope.organisaatiolaji), 'avustusdetail');
+        loadAvustusOrganisaatioTilasto(RaporttiService.haeAvustusPerAsukas($scope.organisaatiolaji), 'avustusperasukas');
       }
     ]
   );
