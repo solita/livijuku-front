@@ -205,7 +205,7 @@ angular
         controller: 'TunnuslukuraporttiCtrl'
       })
       .state('app.tunnusluku.omakuvaaja', {
-        url: '/omakuvaaja/:tunnuslukuid',
+        url: '/omakuvaaja/:tunnuslukuid/:organisaatiolaji',
         template: require('views/tunnusluvut/raportit-omakuvaaja.html'),
         controller: 'TunnuslukuraporttiOmakuvaajaCtrl'
       })

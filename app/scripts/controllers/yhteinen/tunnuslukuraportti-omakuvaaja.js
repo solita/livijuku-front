@@ -511,19 +511,20 @@ angular.module('jukufrontApp')
       function ($scope, $state, $timeout, $window, $q, RaporttiService, OrganisaatioService) {
 
         $scope.params = {
-          tunnuslukuid: $state.params.tunnuslukuid
+          tunnuslukuid: $state.params.tunnuslukuid,
+          organisaatiolaji: _.find([$state.params.organisaatiolaji, 'ALL'], c.isNotBlank)
         };
 
         $scope.$watch("params.tunnuslukuid", (id) => {
-          $state.go($state.current.name, {tunnuslukuid: id});
+          $state.go($state.current.name,
+            {tunnuslukuid: id,
+             organisaatiolaji: $scope.params.organisaatiolaji});
         });
 
         $scope.tunnusluvut = tunnusluvut;
         $scope.tunnusluku = _.find(tunnusluvut, {id: $state.params.tunnuslukuid});
 
         $scope.organisaatiolajit = organisaatiolajit;
-
-        $scope.params.organisaatiolaji = 'ALL';
 
         $scope.isTabSelected = function isTabSelected(tyyppi) {
           return $scope.params.organisaatiolaji === tyyppi;
