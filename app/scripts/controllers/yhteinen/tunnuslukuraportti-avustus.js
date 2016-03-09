@@ -36,7 +36,7 @@ var avustusGraph = {
   chart: chartOptions,
   title: {
     enable: true,
-    text: 'Joukkoliikenteen valtionavustushakemukset ja päätökset'
+    text: 'Joukkoliikenteen haetut ja myönnetyt avustukset'
   },
   subtitle: subtitle
 };
@@ -45,7 +45,7 @@ var avustusDetailGraph = {
   chart: _.cloneDeep(chartOptions),
   title: {
     enable: true,
-    text: 'Haetut avustukset ryhmitelty organisaatioittain'
+    text: 'Haetut avustukset organisaatioittain'
   },
   subtitle: subtitle
 };
@@ -68,11 +68,11 @@ const avustustyypit = {
 const avustustyyppiDetailGraph = {
   H: {
     chart: {y: d => d[2]},
-    title: {text: 'Haetut avustukset ryhmitelty organisaatioittain'}
+    title: {text: 'Haetut avustukset organisaatioittain'}
   },
   M: {
     chart: {y: d => d[3]},
-    title: {text: 'Myönnetyt avustukset ryhmitelty organisaatioittain'}
+    title: {text: 'Myönnetyt avustukset organisaatioittain'}
   }
 };
 
