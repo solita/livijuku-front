@@ -2,7 +2,7 @@
   <div class="page-header">
     <h1>Tunnuslukujen syöttäminen</h1>
   </div>
-  <form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm">
+  <form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm" class="form-inline">
     <juku-form-row>
       <div class="col-md-4 form-group input-lg" ng-show="hasOrganisaatioSelectPermission">
         <label for="organisaatio" class="sr-only">Organisaatio</label>
@@ -12,7 +12,7 @@
           <option ng-repeat="organisaatio in organisaatiot" value="{{organisaatio.id}}">{{organisaatio.nimi}}</option>
         </select>
       </div>
-      <div class="col-md-2 form-group input-lg">
+      <div class="col-md-2 form-group input-lg" ng-show="hasOrganisaatioSelectPermission">
         <label for="vuosi" class="sr-only">Vuosi</label>
         <select id="vuosi" name="vuosi"
                 ng-model="vuosi" ng-disabled="isReadonly()"
@@ -21,8 +21,16 @@
           <option ng-repeat="vuosi in vuodet" value="{{vuosi}}">{{vuosi}}</option>
         </select>
       </div>
+      <div class="col-md-6 form-group input-lg" ng-hide="hasOrganisaatioSelectPermission">
+        <label for="vuosi" class="col-md-4 form-control-label" ng-hide="hasOrganisaatioSelectPermission">Valitse vuosi:</label>
+        <select id="vuosi" name="vuosi"
+                ng-model="vuosi" ng-disabled="isReadonly()"
+                placeholder="Valitse vuosi" class="form-control" required>
+          <option value="" selected disabled>Valitse vuosi</option>
+          <option ng-repeat="vuosi in vuodet" value="{{vuosi}}">{{vuosi}}</option>
+        </select>
+      </div>
       <div class="col-md-6">
-
         <div class="alert alert-info" ng-hide="vuosi && organisaatioId">
           <p>
             <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
@@ -53,7 +61,9 @@
       <div ui-view></div>
       <juku-controls>
         <juku-controls-buttons>
-          <button id="tallenna" class="btn btn-success" data-ng-click="tallennaTunnusluvut()">Tallenna näytöllä olevat tiedot</button>
+          <button id="tallenna" class="btn btn-success" data-ng-click="tallennaTunnusluvut()">Tallenna näytöllä olevat
+            tiedot
+          </button>
         </juku-controls-buttons>
       </juku-controls>
     </div>
