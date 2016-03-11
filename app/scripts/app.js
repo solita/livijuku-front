@@ -45,6 +45,7 @@ require('angular-nvd3/dist/angular-nvd3.js');
 require('angular-sanitize');
 require('ng-csv');
 require('iban/iban.js');
+require('nya-bootstrap-select');
 
 angular
   .module('jukufrontApp', [
@@ -85,7 +86,8 @@ angular
     'ui.validate',
     'nvd3',
     'ngSanitize',
-    'ngCsv'
+    'ngCsv',
+    'nya.bootstrap.select'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 

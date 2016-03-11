@@ -2,27 +2,29 @@
   <div class="page-header">
     <h1>Tunnuslukujen syöttäminen</h1>
   </div>
-  <form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm">
+  <form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm" class="form-inline">
     <juku-form-row>
       <div class="col-md-4 form-group input-lg" ng-show="hasOrganisaatioSelectPermission">
         <label for="organisaatio" class="sr-only">Organisaatio</label>
-        <select id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
-                placeholder="Valitse toimivaltainen viranomainen" class="form-control" required>
-          <option value="" selected disabled>Valitse toimivaltainen viranomainen</option>
-          <option ng-repeat="organisaatio in organisaatiot" value="{{organisaatio.id}}">{{organisaatio.nimi}}</option>
-        </select>
+        <ol id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
+            title="Valitse toimivaltainen viranomainen" class="form-control nya-bs-select" size="20" required>
+          <li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
+            <a>{{ organisaatio.nimi }}</a>
+        </ol>
+      </div>
+      <div class="col-md-2" ng-hide="hasOrganisaatioSelectPermission">
+        <p class="tunnusluku-vuosi-label">Valitse vuosi:</p>
       </div>
       <div class="col-md-2 form-group input-lg">
         <label for="vuosi" class="sr-only">Vuosi</label>
-        <select id="vuosi" name="vuosi"
-                ng-model="vuosi" ng-disabled="isReadonly()"
-                placeholder="Valitse vuosi" class="form-control" required>
-          <option value="" selected disabled>Valitse vuosi</option>
-          <option ng-repeat="vuosi in vuodet" value="{{vuosi}}">{{vuosi}}</option>
-        </select>
+        <ol id="vuosi" name="vuosi"
+            ng-model="vuosi" ng-disabled="isReadonly()"
+            title="Valitse vuosi" class="form-control nya-bs-select" required>
+          <li nya-bs-option="v in vuodet">
+            <a>{{ v }}</a>
+        </ol>
       </div>
       <div class="col-md-6">
-
         <div class="alert alert-info" ng-hide="vuosi && organisaatioId">
           <p>
             <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
@@ -53,7 +55,9 @@
       <div ui-view></div>
       <juku-controls>
         <juku-controls-buttons>
-          <button id="tallenna" class="btn btn-success" data-ng-click="tallennaTunnusluvut()">Tallenna näytöllä olevat tiedot</button>
+          <button id="tallenna" class="btn btn-success" data-ng-click="tallennaTunnusluvut()">Tallenna näytöllä olevat
+            tiedot
+          </button>
         </juku-controls-buttons>
       </juku-controls>
     </div>
