@@ -67,7 +67,7 @@ angular.module('jukufrontApp')
 
         var currentYear = new Date().getFullYear();
 
-        $scope.vuosi = c.coalesce(integerOrNull($state.params.vuosi), _.toString(currentYear - 1));
+        $scope.vuosi = c.coalesce(integerOrNull($state.params.vuosi), currentYear - 1);
 
         $scope.vuodet = _.range(currentYear, 2012, -1);
 
