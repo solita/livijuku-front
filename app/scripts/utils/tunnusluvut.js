@@ -36,7 +36,8 @@ export function numberFormat(arvo) {
 }
 
 export function numberFormatTooltip(arvo) {
-  return (arvo % 1) === 0 ? d3.format(',')(arvo) : d3.format(',.02f')(arvo);
+  return c.isNullOrUndefined(arvo) ? "Tietoa ei määritetty" :
+    (arvo % 1) === 0 ? d3.format(',')(arvo) : d3.format(',.02f')(arvo);
 }
 
 export function toOrganisaatioSeriesNvd3(data, organisaatiot) {

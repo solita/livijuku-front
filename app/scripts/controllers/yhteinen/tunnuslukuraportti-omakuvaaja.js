@@ -454,13 +454,6 @@ const tunnusluvut = [{
   createAlueTunnusluku('autoistumisaste', 'Autoistumisaste', 'autoistumisaste', 'Autoa (kpl) / 1000 asukasta'),
   createAlueTunnusluku('asiakastyytyvaisyys', 'Asiakastyytyväisyys', 'tyytyväisten joukkoliikenteen käyttäjien osuus', 'Prosenttia (%)')];
 
-function convertToNvd3(data, organisaatiot) {
-  return _.map(_.values(_.groupBy(_.tail(data), row => row[0])),
-    rows => ({
-      key: (_.find(organisaatiot, {id: rows[0][0]})).nimi,
-      values: rows
-    }));
-}
 
 function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService) {
   var charts = $scope.tunnusluku.charts;
@@ -478,7 +471,7 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
       chart.options.subtitle.text = ytitle;
       chart.options.chart.yAxis.axisLabel = ytitle;
     }
-    const conversion = c.coalesce(chart.data, convertToNvd3);
+    const conversion = c.coalesce(chart.data, t.toOrganisaatioSeriesNvd3);
 
     $q.all([RaporttiService.haeTunnuslukuTilasto(tunnusluku.id, organisaatiolaji, filters, chart.groupBy),
         OrganisaatioService.hae()])
