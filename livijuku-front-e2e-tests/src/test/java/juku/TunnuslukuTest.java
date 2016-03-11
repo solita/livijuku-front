@@ -1210,9 +1210,7 @@ public class TunnuslukuTest extends TestBase {
 
         findElementById("tunnusluvut").click();
         findElementById("tunnusluvut-syottaminen").click();
-        if (!findElementByXPath("//select[@id='vuosi']/option[2]").isSelected()) {
-            WorkAround.click(findElementByXPath("//select[@id='vuosi']/option[2]"));
-        }
+
         WorkAround.hideMainMenu();
 
         syotaTaustatiedot();

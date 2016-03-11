@@ -28,7 +28,8 @@
     "ng-csv": "^0.3.6",
     "ng-currency": "solita/ng-currency#v0.8.x",
     "ng-file-upload": "^12.0.1",
-    "nvd3": "^1.8.2"
+    "nvd3": "^1.8.2",
+    "nya-bootstrap-select": "^2.0.11"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.0",

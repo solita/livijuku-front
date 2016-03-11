@@ -6,29 +6,23 @@
     <juku-form-row>
       <div class="col-md-4 form-group input-lg" ng-show="hasOrganisaatioSelectPermission">
         <label for="organisaatio" class="sr-only">Organisaatio</label>
-        <select id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
-                placeholder="Valitse toimivaltainen viranomainen" class="form-control" required>
-          <option value="" selected disabled>Valitse toimivaltainen viranomainen</option>
-          <option ng-repeat="organisaatio in organisaatiot" value="{{organisaatio.id}}">{{organisaatio.nimi}}</option>
-        </select>
+        <ol id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
+            title="Valitse toimivaltainen viranomainen" class="form-control nya-bs-select" size="20" required>
+          <li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
+            <a>{{ organisaatio.nimi }}</a>
+        </ol>
       </div>
-      <div class="col-md-2 form-group input-lg" ng-show="hasOrganisaatioSelectPermission">
-        <label for="org_vuosi" class="sr-only">Vuosi</label>
-        <select id="org_vuosi" name="vuosi"
-                ng-model="vuosi" ng-disabled="isReadonly()"
-                placeholder="Valitse vuosi" class="form-control" required>
-          <option value="" selected disabled>Valitse vuosi</option>
-          <option ng-repeat="vuosi in vuodet" value="{{vuosi}}">{{vuosi}}</option>
-        </select>
+      <div class="col-md-2" ng-hide="hasOrganisaatioSelectPermission">
+        <p class="tunnusluku-vuosi-label">Valitse vuosi:</p>
       </div>
-      <div class="col-md-6 form-group input-lg" ng-hide="hasOrganisaatioSelectPermission">
-        <label for="vuosi" class="col-md-4 form-control-label" ng-hide="hasOrganisaatioSelectPermission">Valitse vuosi:</label>
-        <select id="vuosi" name="vuosi"
-                ng-model="vuosi" ng-disabled="isReadonly()"
-                placeholder="Valitse vuosi" class="form-control" required>
-          <option value="" selected disabled>Valitse vuosi</option>
-          <option ng-repeat="vuosi in vuodet" value="{{vuosi}}">{{vuosi}}</option>
-        </select>
+      <div class="col-md-2 form-group input-lg">
+        <label for="vuosi" class="sr-only">Vuosi</label>
+        <ol id="vuosi" name="vuosi"
+            ng-model="vuosi" ng-disabled="isReadonly()"
+            title="Valitse vuosi" class="form-control nya-bs-select" required>
+          <li nya-bs-option="v in vuodet">
+            <a>{{ v }}</a>
+        </ol>
       </div>
       <div class="col-md-6">
         <div class="alert alert-info" ng-hide="vuosi && organisaatioId">
