@@ -56,7 +56,7 @@ function loadTunnusluvut(vuosi, organisaatio, tyyppi, scope, TunnuslukuEditServi
 
 function integerOrNull(txt) {
   var number = _.parseInt(txt);
-  return _.isFinite(number) ? txt : null;
+  return _.isFinite(number) ? number : null;
 }
 
 angular.module('jukufrontApp')
