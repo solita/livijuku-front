@@ -41,11 +41,31 @@ export function numberFormatTooltip(arvo) {
 }
 
 export function toOrganisaatioSeriesNvd3(data, organisaatiot) {
-  return _.map(_.values(_.groupBy(_.tail(data), row => row[0])),
-              rows => ({
+  var body = _.tail(data);
+  var xdimension = _.uniq(_.map(body, r => r[1]));
+  var organisaatiorows = _.values(_.groupBy(body, row => row[0]));
+
+  function augmentNullValues(rows) {
+    var oganisaatioid = rows[0][0];
+    var groupByX = _.mapValues(_.groupBy(rows, row => row[1]), v => _.first(v));
+    return _.map(xdimension, x => groupByX[x] ? groupByX[x] : [oganisaatioid, x, null, null]);
+  }
+  return _.map(organisaatiorows,
+               rows => ({
                 key: (_.find(organisaatiot, {id: rows[0][0]})).nimi,
-                values: rows
-              }));
+                values: augmentNullValues(rows)
+               }));
+}
+
+export function missingOrganisaatiot(data, allOrganisaatiot, organisaatiolajitunnus) {
+
+  var organisaatiotInData = _.uniq(_.map(_.tail(data), r => r[0]));
+
+  var organisaatiotInLaji = organisaatiolajitunnus === 'ALL' ?
+    _.filter(allOrganisaatiot, org => org.lajitunnus !== 'LV') :
+    _.filter(allOrganisaatiot, {lajitunnus: organisaatiolajitunnus});
+
+  return _.filter(organisaatiotInLaji, org => !_.includes(organisaatiotInData, org.id));
 }
 
 /* Progress bar laskenta */

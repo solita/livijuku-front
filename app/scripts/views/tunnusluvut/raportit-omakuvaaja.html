@@ -29,7 +29,7 @@
 
   <div ng-if="tunnusluku" ng-repeat="chart in tunnusluku.charts" ng-init="chartid = $index">
 
-    <h3>{{chart.options.type}}</h3>
+    <h3>{{chart.title}}</h3>
 
     <form id="tunnusluku-filter-form-{{chartid}}" name="tunnusluku-filter-form" class="form-inline tunnusluku-filter-form">
       <form-group label="{{filter.nimi}}" ng-repeat="filter in chart.filters">
@@ -47,6 +47,8 @@
        filename="tunnuslukudata.csv" decimal-separator=","
        field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
+
+    <p class="text-info" ng-if="missing[chartid]"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Tiedot puuttuvat kokonaan organisaatioilta: {{missing[chartid]}}</p>
   </div>
 
   <div ng-if="!tunnusluku">

@@ -200,7 +200,8 @@ function group(data, idx, names) {
 
 }
 
-function convertToTree(name, names, data, organisaatiot) {
+function convertToTree(name, names, alldata, organisaatiot) {
+  var data = _.filter(_.tail(alldata), r => c.isDefinedNotNull(r[r.length - 1]));
   return data.length > 1 ? [{
     name: name,
     children: group(_.tail(data), 0, [id => _.find(organisaatiot, {id: id}).nimi].concat(names))
@@ -462,6 +463,7 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
   // init chart data and chart params
   $scope.data = new Array(charts.length);
   $scope.csv = new Array(charts.length);
+  $scope.missing = new Array(charts.length);
 
   $scope.params.charts = new Array(charts.length);
 
@@ -478,6 +480,7 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
       .then(([data, organisaatiot])=> {
 
         $scope.csv[id] = data;
+        $scope.missing[id] = _.join(_.map(t.missingOrganisaatiot(data, organisaatiot, organisaatiolaji), 'nimi'), ', ');
         if (chart.options.chart.type === 'sunburstChart') {
           $scope.params.charts[id].api.updateWithData(conversion(data, organisaatiot));
         } else {
