@@ -15,9 +15,9 @@ public class TunnuslukuTest extends TestBase {
         /************************************************************
          * Taustatiedot ja yleiset tunnusluvut
          */
-        WorkAround.showMainMenu();
+
         WorkAround.click(findElementByXPath("//a[@id='TTYT']"));
-        WorkAround.hideMainMenu();
+
         findElementById("taustatiedot-henkilosto").click();
         findElementById("taustatiedot-henkilosto").clear();
         findElementById("taustatiedot-henkilosto").sendKeys("1000");
@@ -1211,6 +1211,7 @@ public class TunnuslukuTest extends TestBase {
         findElementById("tunnusluvut").click();
         findElementById("tunnusluvut-syottaminen").click();
 
+        WorkAround.sleep(WorkAround.Delay.MEDIUM);
         WorkAround.hideMainMenu();
 
         syotaTaustatiedot();
