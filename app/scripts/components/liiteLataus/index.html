@@ -20,18 +20,14 @@
       <div ng-show="liitteet.length > 0" class="response">
         <juku-file-details ng-repeat="liite in liitteet">
           <div ng-show="liite.liitenumero !== editoitavaLiite">
-            <juku-icon-link ng-show="isPdf(liite.nimipaate)"
-                            href="{{getLiitePdf(hakemusid,liite.liitenumero)}}"
+            <juku-icon-link ng-if="hasPermissionToViewLiite()"
+                            href="{{liiteHref(hakemusid, liite)}}"
                             target="_blank"
                             icon="file">
-              {{liite.nimiteksti}}.{{liite.nimipaate}}
+              {{liite.nimi}}
             </juku-icon-link>
-            <juku-icon-link ng-hide="isPdf(liite.nimipaate)"
-                            href="api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}"
-                            target="_blank"
-                            icon="file">
-              {{liite.nimiteksti}}.{{liite.nimipaate}}
-            </juku-icon-link>
+            <span ng-if="!hasPermissionToViewLiite()"> {{liite.nimi}} - </span>
+
             <span>{{formatFileSize(liite.bytesize)}}</span>
 
             <juku-file-actions>

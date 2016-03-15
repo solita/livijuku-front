@@ -27,9 +27,16 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
     return size;
   };
 
-  $scope.getLiitePdf = function (hakemusid, liitenumero) {
-    return pdf.getLiitePdfUrl(hakemusid, liitenumero);
-  };
+  $scope.hasPermissionToViewLiite = function() {
+    return $scope.sallittu('view-kaikki-liitteet') ||
+      ($scope.sallittu('view-omat-liitteet') && $scope.isOmaHakemus($scope.user));
+  }
+
+  $scope.liiteHref = function(hakemusid, liite) {
+    return liite.nimipaate === 'pdf' ?
+      pdf.getLiitePdfUrl(hakemusid, liite.liitenumero) :
+      'api/hakemus/' + hakemusid +'/liite/' + liite.liitenumero;
+  }
 
   $scope.haeLiitteetLaskeKoko = function () {
     LiiteService.haeKaikki($scope.hakemusid).then(function (response) {
@@ -50,10 +57,6 @@ function liitelatausController(LiiteService, $scope, StatusService, Upload) {
   function isEmpty(str) {
     return (!str || 0 === str.length);
   }
-
-  $scope.isPdf = function (paate) {
-    return (paate === 'pdf');
-  };
 
   $scope.liiteNimiOk = function (nimi) {
     if (isEmpty(nimi)) {
@@ -145,10 +148,8 @@ liitelatausController.$inject = ['LiiteService', '$scope', 'StatusService', 'Upl
 
 module.exports = function () {
   return {
-    transclude: true,
     restrict: 'E',
     template: require('./index.html'),
-    replace: true,
     controller: liitelatausController
   };
 };
