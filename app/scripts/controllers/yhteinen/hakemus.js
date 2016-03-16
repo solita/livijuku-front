@@ -128,12 +128,10 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
     kehittamishankkeet: ifElyhakemus(hakemus => ElyHakemusService.haeKehityshankkeet(hakemus.id), []),
     maararahatarvetyypit: ifElyhakemus(hakemus => ElyHakemusService.haeMaararahatarvetyypit(), []),
     maararahatarpeet: ifElyhakemus(hakemus => ElyHakemusService.haeMaararahatarpeet(hakemus.id), []),
-    psaLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PSA")),
-    palLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PAL")),
-    kaupunkilippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, function (suorite) {
-      return suorite.lipputyyppitunnus !== "SE";
-    })),
-    seutulippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, 'lipputyyppitunnus', "SE"))
+    psaLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, ['liikennetyyppitunnus', 'PSA'])),
+    palLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, ['liikennetyyppitunnus', 'PAL'])),
+    kaupunkilippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, suorite => suorite.lipputyyppitunnus !== "SE")),
+    seutulippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, ['lipputyyppitunnus', 'SE']))
   }).then(_.identity, StatusService.errorHandler);
 }
 
@@ -229,6 +227,8 @@ angular.module('jukufrontApp')
       $scope.haeHakemusPdf = function () {
         return pdf.getHakemusPdfUrl($scope.hakemusid);
       };
+
+      $scope.seurantatietoPdf = pdf.getSeurantatietoPdfUrl($scope.hakemusid);
 
       $scope.haeAvustushakemusPaatosPdf = function () {
         return pdf.getPaatosPdfUrl(haeHakemus('AH0', $scope.hakemus).id);
