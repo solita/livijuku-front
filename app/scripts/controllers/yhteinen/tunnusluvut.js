@@ -26,7 +26,7 @@ const tunnuslukuTooltips = {
   KUNTIENLKM: "Kuinka monen kunnan alueelle toimivalta-alue ulottuu?",
   VYOHYKKEIDENLKM: "Kuinka monesta joukkoliikenteen lippuvyöhykkeestä alue koostuu? ELY-liikenteessä ilmoitetaan vyöhykemäärä siitä lippualueesta, jossa on eniten vyöhykkeitä.",
   MAAPINTAALA:"Maapinta-ala on kokonaispinta-alaa kuvaavampi esimerkiksi Järvi-Suomessa. Tiedon avulla tarjontaa ja kysyntää voidaan suhteuttaa alueen kokoon.",
-  ASUKASMAARA:"Koko toimivalta-alue.",
+  ASUKASMAARA:"Ilmoita kaikkien toimivalta-alueen kuntien yhteenlaskettu asukasmäärä. Tilastokeskuksen palvelun valintalaatikoissa valitse toimivalta-alueesi kunnat, \"sukupuolet yhteensä\", kyseisen vuoden viimeisin saatavilla oleva asukasluku (esim. 31.12.2014) ja \"Ikäluokat yhteensä\". Tämän jälkeen paina \"Jatka\"-painiketta. Näytölle ilmestyy taulukko, jossa on valitsemiesi kuntien väkiluvut.",
   TYOPAIKKAMAARA: "Koko toimivalta-alue.",
   PENDELOIVIENOSUUS: "Kuinka monta prosenttia alueen kuntien työssäkäyvistä työskentelee toimivalta-alueen ulkopuolella?",
   HENKILOAUTOLIIKENNE:"Koko toimivalta-alueen henkilöautoliikenteen suorite.",
