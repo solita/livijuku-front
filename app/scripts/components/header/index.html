@@ -42,6 +42,15 @@
           class="header__button {{ 'app.tunnusluku' | includedByState | toClass:'is-active' }}">
           <juku-statistic-dropdown user="user"></juku-statistic-dropdown>
         </li>
+        <li class="header__button
+          {{ ('hakemukset' | stateNameIncludes:['app.yhteinen.kilpailutukset']) ||
+             ('app.yhteinen.kilpailutukset' | isState) && !isOwnApplication()
+            | toClass:'is-active'
+          }}" ng-show="sallittu(user, 'view-hakemus')">
+          <a class="header__link" ui-sref="app.yhteinen.kilpailutukset">
+            Kilpailutukset
+          </a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
