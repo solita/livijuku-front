@@ -26,6 +26,7 @@
 
   <div class="row">
     <nvd3 options='avustus.options' data='avustus.data' api="avustus.api"></nvd3>
+    <p ng-if="organisaatiolaji === 'ALL' || organisaatiolaji === 'ELY'" class="text-center">Vuodelta 2014 puuttuu ELY-keskusten haettu avustussumma</p>
     <a ng-csv="avustus.csv" class="pull-right lataacsv"
        filename="avustukset.csv"
        field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
