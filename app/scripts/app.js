@@ -143,6 +143,11 @@ angular
         url: '/asiakastuki',
         template: require('views/yhteinen/asiakastuki.html')
       })
+      .state('app.yhteinen.kilpailutukset', {
+        url: '/kilpailutukset',
+        template: require('views/yhteinen/kilpailutukset.html'),
+        controller: 'KilpailutuksetCtrl'
+      })
       /*
        * Hakija
        */
@@ -337,6 +342,7 @@ require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/asetukset');
 require('./controllers/yhteinen/hakemukset');
 require('./controllers/yhteinen/hakemus');
+require('./controllers/yhteinen/kilpailutukset');
 require('./controllers/yhteinen/kayttajatiedot');
 require('./controllers/yhteinen/paanaytto');
 require('./controllers/yhteinen/tunnusluvut');
