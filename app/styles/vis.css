@@ -471,7 +471,7 @@ input.vis-configuration.vis-config-range:focus::-ms-fill-upper {
   border-width: 1px;
   background-color: #D5DDF6;
   display: inline-block;
-  /*overflow: hidden;*/
+  font-size: 12px;
 }
 
 .vis-item.vis-selected {
@@ -510,7 +510,7 @@ input.vis-configuration.vis-config-range:focus::-ms-fill-upper {
 
 .vis-item.vis-range {
   border-style: solid;
-  border-radius: 2px;
+  border-radius: none;
   box-sizing: border-box;
 }
 
@@ -528,7 +528,7 @@ input.vis-configuration.vis-config-range:focus::-ms-fill-upper {
   height: 100%;
   padding: 0;
   margin: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .vis-item.vis-range .vis-item-content {
