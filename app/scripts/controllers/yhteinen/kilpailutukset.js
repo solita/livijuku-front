@@ -2,31 +2,47 @@
 
 var _ = require('lodash');
 var angular = require('angular');
-var vis = require('vis');
 
-angular.module('jukufrontApp').controller('KilpailutuksetCtrl', ['$scope', '$state', '$element', function ($scope, $state, $element) {
-	var container = $element.find('div')[1],
-		groups = [{
-			id: 1,
-			content: 'Tampere'
-		}, {
-			id: 2,
-			content: 'Helsinki'
-		}],
-		items = [
-    {id: 1, content: 'Kaupunki', start: '2013-04-20', group: 1},
-    {id: 2, content: 'Maaseutu', start: '2013-04-14', group: 1},
-    {id: 3, content: 'item 3', start: '2013-04-18', group: 2},
-    {id: 4, content: 'item 4', start: '2013-04-16', end: '2013-04-19', group: 1},
-    {id: 5, content: 'item 5', start: '2013-04-25', group: 2},
-    {id: 6, content: 'item 6', start: '2013-04-27', group: 2}
-  ],
-  	options = {};
+angular.module('jukufrontApp').controller('KilpailutuksetCtrl', ['$scope', '$state', '$element', 'OrganisaatioService', function ($scope, $state, $element, OrganisaatioService) {
 
-	// Create a Timeline
-  var timeline = new vis.Timeline(container);
-  timeline.setData({
-  	groups: groups,
-  	items: items
+  $scope.kalustonKokoMin = 0;
+  $scope.kalustonKokoRange = 9990;
+
+  $scope.updateKalustonKokoRange = function () {
+    $scope.kalustonKokoRange = parseInt($scope.kalustonKokoRange, 10) < parseInt($scope.kalustonKokoMin, 10) ? $scope.kalustonKokoMin : $scope.kalustonKokoRange;
+  };
+
+  OrganisaatioService.hae().then(response => {
+    $scope.organisaatiot = response;
   });
+
+  $scope.kilpailutukset = [{
+    id: 'kohde-1',
+    organisaatioId: 1,
+    name: 'Kohde 1',
+    dates: [new Date('2016-04-20'), new Date('2016-06-20'), new Date('2016-09-20'), new Date('2016-12-20'), new Date('2017-02-20'), new Date('2017-10-20'), new Date('2019-11-20')]
+  }, {
+    id: 'kohde-2',
+    organisaatioId: 1,
+    name: 'Kohde 2',
+    dates: [new Date('2016-03-01'), new Date('2016-06-30'), new Date('2016-10-01'), new Date('2017-01-01'), new Date('2017-04-05'), new Date('2018-10-05')]
+  }, {
+    id: 'kohde-1',
+    organisaatioId: 2,
+    name: 'Kohde 1',
+    dates: [new Date('2016-04-20'), new Date('2016-06-20'), new Date('2016-09-20'), new Date('2017-02-20'), new Date('2018-05-10'), new Date('2018-11-01')]
+  }];
+
+  $scope.timelineOptions = {
+    locales: {
+      fi: {
+        months: ['Tammi', 'Helmi', 'Maalis', 'Huhti', 'Touko', 'Kesä', 'Heinä', 'Elo', 'Syys', 'Loka', 'Marras', 'Joulu']
+      }
+    },
+    locale: 'fi',
+    min: new Date(2016, 1, 1),
+    max: new Date(2030, 1, 1),
+    stack: false
+  };
+
 }]);
