@@ -355,6 +355,7 @@ require('./directives/noenter');
 require('./directives/numericOnly');
 require('./directives/focusToInvalid');
 require('./directives/selectonclick');
+require('./directives/timeline');
 require('./services/auth');
 require('./services/avustuskohde');
 require('./services/seuranta');
