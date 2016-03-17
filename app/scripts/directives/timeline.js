@@ -10,8 +10,9 @@ angular.module('jukufrontApp')
         options: '<options',
         organisaatiot: '<organisaatiot',
       },
-      link: function(scope, element, attrs) {
+      link: function(scope, element, attributes) {
         var timeline = new vis.Timeline(element.find('div')[0]),
+          groups = [],
           items = [],
           colors = [
             { 0: '#0085c9', 1: '#ffffff' },
@@ -22,28 +23,38 @@ angular.module('jukufrontApp')
             { 0: 'orange', 1: '#ffffff' }
           ];
 
-        for (var i = 0; i < scope.kilpailutukset.length; i += 1) {
-          for (var ii = 0; ii < scope.kilpailutukset[i].dates.length - 1; ii += 1) {
-            items.push({
-              id: scope.kilpailutukset[i].organisaatioId + '-' + scope.kilpailutukset[i].id + '-' + ii,
-              content: ii === 0 ? scope.kilpailutukset[i].name : '&nbsp;',
-              start: scope.kilpailutukset[i].dates[ii],
-              end: scope.kilpailutukset[i].dates[ii + 1],
-              group: scope.kilpailutukset[i].organisaatioId,
-              subgroup: scope.kilpailutukset[i].id,
-              title: scope.kilpailutukset[i].name,
-              style: 'background-color: ' + (colors[ii][0] ? colors[ii][0] : 'brown') + '; color: ' + (colors[ii][1] ? colors[ii][1] : '#ffffff') + '; border: none;' +  (ii === 0 ? ' z-index: 100;' : '')
+        scope.$watch('organisaatiot', function(value) {
+          if (scope.organisaatiot && Object.keys(scope.organisaatiot).length) {
+            for (var i = 0; i < scope.organisaatiot.length; i += 1) {
+              groups.push({
+                id: scope.organisaatiot[i].id,
+                content: scope.organisaatiot[i].nimi
+              });
+            }
+
+            for (var i = 0; i < scope.kilpailutukset.length; i += 1) {
+              for (var ii = 0; ii < scope.kilpailutukset[i].dates.length - 1; ii += 1) {
+                items.push({
+                  id: scope.kilpailutukset[i].organisaatioId + '-' + scope.kilpailutukset[i].id + '-' + ii,
+                  content: ii === 0 ? scope.kilpailutukset[i].name : '&nbsp;',
+                  start: scope.kilpailutukset[i].dates[ii],
+                  end: scope.kilpailutukset[i].dates[ii + 1],
+                  group: scope.kilpailutukset[i].organisaatioId,
+                  subgroup: scope.kilpailutukset[i].id,
+                  title: scope.kilpailutukset[i].name,
+                  style: 'background-color: ' + (colors[ii][0] ? colors[ii][0] : 'brown') + '; color: ' + (colors[ii][1] ? colors[ii][1] : '#ffffff') + '; border: none;' +  (ii === 0 ? ' z-index: 2;' : '')
+                });
+              }
+            }
+
+            timeline.setOptions(scope.options);
+
+            timeline.setData({
+              groups: groups,
+              items: items
             });
           }
-        }
-
-        timeline.setOptions(scope.options);
-
-        timeline.setData({
-          groups: scope.organisaatiot,
-          items: items
         });
-
       },
       template: require('views/yhteinen/timeline.html')
     }
