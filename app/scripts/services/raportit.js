@@ -66,6 +66,9 @@ angular.module('services.tunnusluvut')
       },
       haeOmarahoitusPerAsukas: function (organisaatiolajitunnus) {
         return $http.get('api/omarahoitus-asukas/' + organisaatiolajitunnus).then(res => res.data);
+      },
+      haePSANettokustannus: function (organisaatiolajitunnus) {
+        return $http.get('api/psa-nettokustannus/' + organisaatiolajitunnus).then(res => res.data);
       }
     }
   }])

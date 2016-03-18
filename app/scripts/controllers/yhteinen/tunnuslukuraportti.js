@@ -58,6 +58,7 @@ angular.module('jukufrontApp')
         $scope.linjakilometrit = createGraph('Linjakilometrit', 'km');
         $scope.avustusperasukas = createGraph('Valtion rahoitus asukasta kohden', '€');
         $scope.omarahoitusperasukas = createGraph('Toimivaltaisen viranomaisen omarahoitus asukasta kohden', '€');
+        $scope.psanettokustannus = createGraph('PSA-liikenteen nettokustannukset (kunnan ja valtion maksama subventio)', '€');
 
         $scope.organisaatiolaji = _.find([$state.params.organisaatiolaji, 'ALL'], c.isNotBlank);
 
@@ -92,6 +93,8 @@ angular.module('jukufrontApp')
 
         loadAvustusOrganisaatioTilasto(RaporttiService.haeAvustusPerAsukas($scope.organisaatiolaji), 'avustusperasukas');
         loadAvustusOrganisaatioTilasto(RaporttiService.haeOmarahoitusPerAsukas($scope.organisaatiolaji), 'omarahoitusperasukas');
+
+        loadAvustusOrganisaatioTilasto(RaporttiService.haePSANettokustannus($scope.organisaatiolaji), 'psanettokustannus');
       }
     ]
   );

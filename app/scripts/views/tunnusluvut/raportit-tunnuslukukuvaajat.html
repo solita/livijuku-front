@@ -69,4 +69,12 @@
     </a>
   </div>
 
+  <div class="row">
+    <nvd3 options='psanettokustannus.options' data='psanettokustannus.data' api="psanettokustannus.api"></nvd3>
+    <a ng-csv="psanettokustannus.csv" class="pull-right lataacsv"
+       filename="psanettokustannus.csv"
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    </a>
+  </div>
+
 </div>
