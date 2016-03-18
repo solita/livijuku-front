@@ -145,6 +145,11 @@ angular.module('services.tunnusluvut', [])
         return $http.put('api/joukkoliikennetuki/' + vuosi + '/' + organisaatioid,
           _.map(_.toPairs(joukkoliikennetuki), values => _.zipObject(['avustuskohdeluokkatunnus', 'tuki'], values)));
       },
+
+      // täyttöaste
+      haeTayttoasteKokoVuosi: function (vuosi, organisaatioid) {
+        return $http.get('api/tunnusluku/tayttoaste/' + vuosi + '/' + organisaatioid).then(res => res.data);
+      }
     }
   }])
 ;

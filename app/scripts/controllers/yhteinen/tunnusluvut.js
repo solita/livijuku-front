@@ -59,6 +59,11 @@ function integerOrNull(txt) {
   return _.isFinite(number) ? number : null;
 }
 
+function loadTayttoaste($scope, TunnuslukuEditService, StatusService) {
+  TunnuslukuEditService.haeTayttoasteKokoVuosi($scope.vuosi, $scope.organisaatioId).then(
+    tayttoaste => { $scope.vuositayttoaste = _.round(tayttoaste * 100, 3) }, StatusService.errorHandler);
+}
+
 angular.module('jukufrontApp')
   .controller('TunnusluvutMuokkausCtrl',
     ['$scope', '$state', 'OrganisaatioService', 'TunnuslukuEditService', 'StatusService', 'KayttajaService',
@@ -96,7 +101,6 @@ angular.module('jukufrontApp')
           return $state.current.tyyppi;
         }
 
-        $scope.vuositayttoaste = Math.floor((Math.random() * 100) + 1);
         $scope.tayttoaste = t.laskeTayttoaste;
         $scope.tayttoasteType = t.laskeTayttoasteType;
 
@@ -129,6 +133,8 @@ angular.module('jukufrontApp')
           });
 
           if (_.every(id, c.isDefinedNotNull)) {
+            loadTayttoaste($scope, TunnuslukuEditService, StatusService);
+
             OrganisaatioService.findById(_.parseInt($scope.organisaatioId)).then(org => {
               $scope.organisaatio = org;
               loadTunnusluvut(id[0], org, id[2], $scope, TunnuslukuEditService, StatusService);
@@ -176,6 +182,7 @@ angular.module('jukufrontApp')
             function () {
               StatusService.ok('', 'Tunnuslukujen tallennus onnistui.');
               $scope.tunnusluvutForm.$setPristine();
+              loadTayttoaste($scope, TunnuslukuEditService, StatusService);
             },
             StatusService.errorHandler);
         };
