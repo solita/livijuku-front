@@ -322,9 +322,8 @@
               <td class="col-md-4">
                 <form-group-compact label="Henkilöautoliikenne" errormessage="desimaaliErrorMessage">
                   <input id="taustatiedot-henkiloautoliikenne" name="henkiloautoliikenne" type="text"
-                         numeric-only="" ng-currency="" max="9999999999.99"
-                         currency-symbol="" noenter
-                         select-on-click
+                         integer-only maxlength="9"
+                         noenter select-on-click
                          placeholder="Milj. km / vuosi"
                          ng-model="tunnusluvut.alue.henkiloautoliikennesuorite">
                 </form-group-compact>
