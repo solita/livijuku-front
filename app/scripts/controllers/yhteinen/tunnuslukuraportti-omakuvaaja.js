@@ -115,7 +115,7 @@ function createChart(title, xLabel) {
   };
 };
 
-function createMultiBarChart(title, xLabel, tickvalues) {
+function createMultiBarChart(title, xLabel, classification) {
   return _.merge(
     createChart(title, xLabel), {
       chart: {
@@ -130,10 +130,7 @@ function createMultiBarChart(title, xLabel, tickvalues) {
           tickFormat: t.numberFormat
         },
         xAxis: {
-          tickFormat: function (d) {
-            if (typeof tickvalues !== 'undefined') return tickvalues[d];
-            else return d;
-          }
+          tickFormat: d => (c.isDefinedNotNull(classification)) ? classification.$nimi(d) : d
         }
       }
     });
@@ -177,7 +174,7 @@ function filterInfoText(filter) {
     return c.isDefinedNotNull(v) && v !== 'ALL' ? luokka.$nimi(v) : null;
   }
 
-  var info = _.filter(_.map([sopimustyypit, paastoluokat, viikonpaivaluokat, kustannuslajit], txt), c.isDefinedNotNull).join(', ');
+  var info = _.filter(_.map([sopimustyypit, paastoluokat, viikonpaivaluokat, kustannuslajit, lippuhintaluokat], txt), c.isDefinedNotNull).join(', ');
   return info ? ' (' + info + ')' : '';
 }
 
@@ -422,12 +419,20 @@ const tunnusluvut = [{
   nimi: "Lippuhinnat",
   charts: [{
     title: "Lippuhinnat vuosittain tarkasteltuna",
-    yTitle: filter => "Lippuhinta" + filterInfoText(filter),
+    yTitle: filter => "Lippuhinta" + filterInfoText(filter) + ' €',
     groupBy: ["organisaatioid", "vuosi"],
     filters: [
       createFilter("Lipputyyppi", lippuhintaluokat, 'KE'),
       createFilter("Vyöhykemäärä", vyohykemaarat, '1')],
     options: createMultiBarChart("Lippuhinnat", "Vuosi")
+  }, {
+    title: "Vuoden lippuhinnat vyöhykeittäin",
+    yTitle: filter => "Lippuhinta" + filterInfoText(filter) + ' €',
+    groupBy: ["organisaatioid", "vyohykemaara"],
+    filters: [
+      createFilter("Vuosi", vuodet, '2016'),
+      createFilter("Lipputyyppi", lippuhintaluokat, 'KE')],
+    options: createMultiBarChart("Lippuhinnat", "Vyöhykemäärä", vyohykemaarat)
   }, {
     title: "Vuoden lippuhinnat vyöhykeittäin ja lipputyypeittäin",
     yTitle: filter => undefined,
