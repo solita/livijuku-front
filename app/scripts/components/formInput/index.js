@@ -4,7 +4,7 @@ var angular = require("angular");
 var _ = require("lodash");
 
 function assertInputIsDefined(input, element) {
-  if (!input) {
+  if (_.isEmpty(input)) {
     var message = "Input, select or textarea element is not found inside form-group component.";
     console.log(message, element);
     throw({message: message, element: element});
@@ -33,14 +33,14 @@ function formGroupDirective(template) {
     transclude: true,
     link: function(scope, element, attributes, form) {
 
-      var input = findInputElement(element)[0];
+      var input = findInputElement(element);
       assertInputIsDefined(input, element[0]);
 
-      scope.feedbackSupport = (input.tagName.toLowerCase() !== 'select');
+      scope.feedbackSupport = (input[0].tagName.toLowerCase() !== 'select');
 
-      angular.element(input).addClass("form-control");
+      input.addClass("form-control");
 
-      scope.name = input.getAttribute("name");
+      scope.name = input.attr("name");
 
       function findModelController() {
         return form[scope.name] || input.controller('ngModel');
@@ -49,12 +49,12 @@ function formGroupDirective(template) {
       scope.input = findModelController;
 
       var formGroupClasses = function() {
-        var input = findModelController();
+        var inputModel = findModelController();
         var classes = {
-          'has-feedback': input.$invalid && input.$touched && scope.feedbackSupport,
-          'has-error': input.$invalid && input.$touched,
-          'has-warning': input.$invalid && !input.$touched,
-          'has-success': input.$valid && input.$dirty
+          'has-feedback': inputModel.$invalid && inputModel.$touched && scope.feedbackSupport,
+          'has-error': inputModel.$invalid && inputModel.$touched,
+          'has-warning': inputModel.$invalid && !inputModel.$touched,
+          'has-success': inputModel.$valid && inputModel.$dirty
         };
 
         var activeClasses = _.filter(_.keys(classes), key => classes[key]);
