@@ -115,7 +115,7 @@ public class TunnuslukuTest extends TestBase {
 
         assertThat(findElementById("taustatiedot-henkilosto").getAttribute("value"), is(equalToIgnoringWhiteSpace("1000")));
         assertThat(findElementById("taustatiedot-konsulttipalvelu").getAttribute("value"), is(equalToIgnoringWhiteSpace("20 000,00 €")));
-        assertThat(findElementById("taustatiedot-henkiloautoliikenne").getAttribute("value"), is(equalToIgnoringWhiteSpace("4 342 346,00 ")));
+        assertThat(findElementById("taustatiedot-henkiloautoliikenne").getAttribute("value"), is(equalToIgnoringWhiteSpace("4342346")));
         assertThat(findElementById("taustatiedot-pysakkienlkm").getAttribute("value"), is(equalToIgnoringWhiteSpace("23")));
         assertThat(findElementById("taustatiedot-kertalippuvyohyke-1").getAttribute("value"), is(equalToIgnoringWhiteSpace("1,00 €")));
         assertThat(findElementById("taustatiedot-kausilippuvyohyke-4").getAttribute("value"), is(equalToIgnoringWhiteSpace("400,00 €")));

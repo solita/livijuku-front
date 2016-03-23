@@ -834,7 +834,7 @@ public class HakemuskausiTest extends TestBase {
         String expectedText2 = "liikenne- ja ympäristökeskuksille yhteensä 200 000 euroa valtion";
         assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText2),
                 containsNormalized(actual, expectedText2));
-        String expectedText3 = "Etelä-Pohjanmaa 200000 e";
+        String expectedText3 = "Etelä-Pohjanmaa ELY 200000 e";
         assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText3),
                 containsNormalized(actual, expectedText3));
     }
