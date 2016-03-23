@@ -10,7 +10,13 @@
           <tr>
             <th class="col-md-3">Kuukausi</th>
             <th class="col-md-3">Korvaus €/kk (alv 0)</th>
-            <th ng-if="tyyppi==='KOS'" class="col-md-3">Nousukorvaus €/kk (alv 0)</th>
+            <th ng-if="tyyppi==='KOS'" class="col-md-3">
+              <div uib-tooltip="Nousukorvaus täytetään, jos liikennöitsijälle maksetaan alla eriteltävien lipputulojen lisäksi erikseen sovittua nousukorvausta."
+                   tooltip-placement="top"
+                   tooltip-append-to-body="true">Nousukorvaus €/kk (alv 0)&nbsp;<span
+                class="text-info small glyphicon glyphicon-question-sign"></span>
+              </div>
+            </th>
             <th ng-if="tyyppi==='ME'" class="col-md-3">Nousua / kk</th>
           </tr>
         </thead>
