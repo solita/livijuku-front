@@ -188,9 +188,9 @@ angular.module('jukufrontApp')
         };
 
         // error messages:
-        $scope.desimaaliErrorMessage = d.maxErrorMessage("9999999999,99");
+        $scope.desimaaliErrorMessage = d.maxErrorMessage("9 999 999 999,99");
         $scope.prosenttiErrorMessage = d.maxErrorMessage("100,00");
-        $scope.kokonaislukuErrorMessage = d.maxlengthNumberErrorMessage("999999999");
+        $scope.kokonaislukuErrorMessage = d.maxlengthNumberErrorMessage("999 999 999");
       }
     ]
   );

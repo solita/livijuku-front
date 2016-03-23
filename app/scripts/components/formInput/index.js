@@ -77,7 +77,7 @@ function formGroupDirective(template) {
       scope.tooltipText = function() {
         var errorFn = scope.errormessage();
         if (errorFn) {
-          return (scope.errormessage())(scope.input());
+          return (scope.errormessage())(scope.input(), input);
         } else {
           return "";
         }
