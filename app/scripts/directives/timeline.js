@@ -9,6 +9,7 @@ angular.module('jukufrontApp')
         kilpailutukset: '<kilpailutukset',
         options: '<options',
         organisaatiot: '<organisaatiot',
+        events: '<events'
       },
       link: function(scope, element, attributes) {
         var timeline = new vis.Timeline(element.find('div')[0]),
@@ -60,10 +61,15 @@ angular.module('jukufrontApp')
 
             timeline.setOptions(scope.options);
 
+            Object.keys(scope.events).forEach(key => {
+              timeline.on(key, scope.events[key]);
+            });
+
             timeline.setData({
               groups: groups,
               items: items
             });
+
           }
         });
       },
