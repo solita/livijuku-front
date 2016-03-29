@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var angular = require('angular');
 
-angular.module('jukufrontApp').controller('KilpailutuksetCtrl', ['$scope', '$state', '$element', 'OrganisaatioService', function ($scope, $state, $element, OrganisaatioService) {
+angular.module('jukufrontApp').controller('KilpailutuksetCtrl', ['$scope', '$state', '$element', '$uibModal', 'OrganisaatioService', function ($scope, $state, $element, $uibModal, OrganisaatioService) {
 
   $scope.kalustonKokoMin = 0;
   $scope.kalustonKokoRange = 9990;
@@ -42,7 +42,16 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl', ['$scope', '$sta
     locale: 'fi',
     min: new Date(2016, 1, 1),
     max: new Date(2030, 1, 1),
-    stack: false
+    stack: false,
+    clickToUse: true
+  };
+
+  $scope.timelineEvents = {
+    select: (properties) => {
+      $state.go('app.kilpailutus', {
+        id: properties.items[0]
+      });
+    }
   };
 
 }]);
