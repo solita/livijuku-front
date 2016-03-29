@@ -20,15 +20,15 @@
 		 	</div>
 	    <div class="row">
 	      <div class="col-md-3 col-md-3">
-	      	<form-group label="Suunniteltu julkaisuaika" errormessage="seutulipputukiErrorMessage">
-		        <input id="tarjousPvm" name="tarjousPvm" type="date"
+	      	<form-group label="Suunniteltu julkaisuaika" errormessage="suunniteltuJulkaisuajankohtaErrorMessage">
+		        <input id="tarjousPvm" name="tarjousPvm" type="date" required
 	           ng-model="kilpailutus.tarjousPvm"
 	           ng-disabled="isReadonly()"
 	           placeholder="pp.kk.vvvv"/>
 		      </form-group>
 		    </div>
 		    <div class="col-md-3">
-	      	<form-group label="Tarjousten määräaika" errormessage="seutulipputukiErrorMessage">
+	      	<form-group label="Tarjousten määräaika" errormessage="tarjoustenMaaraaikaErrorMessage">
 		        <input id="paatosPvm" name="paatosPvm" type="date"
 	           ng-model="kilpailutus.paatosPvm"
 	           ng-disabled="isReadonly()"
@@ -36,16 +36,16 @@
 		      </form-group>
 		    </div>
 				<div class="col-md-3">
-	      	<form-group label="Ilmoitus voittajasta" errormessage="seutulipputukiErrorMessage">
-		        <input id="ilmoitusVoittajastaPvm" name="ilmoitusVoittajastaPvm" type="date"
+	      	<form-group label="Ilmoitus voittajasta" errormessage="ilmoitusVoittajastaErrorMessage">
+		        <input id="ilmoitusVoittajastaPvm" name="ilmoitusVoittajastaPvm" type="date" required
 	           ng-model="kilpailutus.ilmoitusVoittajastaPvm"
 	           ng-disabled="isReadonly()"
 	           placeholder="pp.kk.vvvv"/>
 		      </form-group>
 		    </div>
 				<div class="col-md-3">
-	      	<form-group label="Liikennöinnin aloittaminen" errormessage="seutulipputukiErrorMessage">
-		        <input id="liikennointiAlkaaPvm" name="liikennointiAlkaaPvm" type="date"
+	      	<form-group label="Liikennöinnin aloittaminen" errormessage="liikennoinninAloittaminenErrorMessage">
+		        <input id="liikennointiAlkaaPvm" name="liikennointiAlkaaPvm" type="date" required
 	           ng-model="kilpailutus.liikennointiAlkaaPvm"
 	           ng-disabled="isReadonly()"
 	           placeholder="pp.kk.vvvv"/>
@@ -54,15 +54,15 @@
 	    </div>
 	    <div class="row">
 	      <div class="col-md-12">
-		      <form-group label="Vaadittu kalusto" errormessage="seutulipputukiErrorMessage">
-		      	<textarea name="vaadittuKalusto" ng-model="kilpailutus.vaadittuKalusto"></textarea>
+		      <form-group label="Vaadittu kalusto" errormessage="vaadittuKalustoErrorMessage">
+		      	<textarea name="vaadittuKalusto" ng-model="kilpailutus.vaadittuKalusto" required></textarea>
 		      </form-group>
 		     </div>
 	    </div>
 	    <div class="row">
 	      <div class="col-md-12">
-	      	<form-group label="Lisätiedot" errormessage="seutulipputukiErrorMessage">
-		      	<textarea name="lisatiedot" ng-model="kilpailutus.lisatiedot"></textarea>
+	      	<form-group label="Lisätiedot" errormessage="lisatiedotErrorMessage">
+		      	<textarea name="lisatiedot" ng-model="kilpailutus.lisatiedot" required></textarea>
 	      	</form-group>
 	      </div>
 	    </div>
