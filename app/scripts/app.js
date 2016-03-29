@@ -114,6 +114,11 @@ angular
         }]
       })
       .state('app', root())
+      .state('app.kilpailutus', {
+        url: '/kilpailutukset/:id',
+        template: require('views/kilpailutukset/kilpailutus.html'),
+        controller: 'KilpailutusCtrl'
+      })
       .state('app.hakemus', {
         url: '/hakemukset/:id',
         template: require('views/hakemus/index.html'),
@@ -145,7 +150,7 @@ angular
       })
       .state('app.yhteinen.kilpailutukset', {
         url: '/kilpailutukset',
-        template: require('views/yhteinen/kilpailutukset.html'),
+        template: require('views/kilpailutukset/kilpailutukset.html'),
         controller: 'KilpailutuksetCtrl'
       })
       /*
@@ -343,6 +348,7 @@ require('./controllers/yhteinen/asetukset');
 require('./controllers/yhteinen/hakemukset');
 require('./controllers/yhteinen/hakemus');
 require('./controllers/yhteinen/kilpailutukset');
+require('./controllers/yhteinen/kilpailutus');
 require('./controllers/yhteinen/kayttajatiedot');
 require('./controllers/yhteinen/paanaytto');
 require('./controllers/yhteinen/tunnusluvut');
