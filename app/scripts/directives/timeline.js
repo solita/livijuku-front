@@ -37,7 +37,7 @@ angular.module('jukufrontApp')
               for (ii = 0; ii < scope.kilpailutukset[i].dates.length - 1; ii += 1) {
                 items.push({
                   id: scope.kilpailutukset[i].organisaatioId + '-' + scope.kilpailutukset[i].id + '-' + ii,
-                  content: ii === 0 ? scope.kilpailutukset[i].name : '&nbsp;',
+                  content: '&nbsp;',
                   start: scope.kilpailutukset[i].dates[ii],
                   end: scope.kilpailutukset[i].dates[ii + 1],
                   group: scope.kilpailutukset[i].organisaatioId,
@@ -55,9 +55,19 @@ angular.module('jukufrontApp')
                 group: scope.kilpailutukset[i].organisaatioId,
                 subgroup: scope.kilpailutukset[i].id,
                 title: scope.kilpailutukset[i].name,
-                style: 'background-color: transparent; color: white; border: none; z-index: 2;'
+                style: 'background-color: transparent; color: white; border: none; z-index: 2;',
+                linkToHilma: scope.kilpailutukset[i].linkToHilma
               });
+
             }
+
+            scope.options.template = (item) => {
+              if (item.linkToHilma) {
+                return '<p style="margin: 0;">' + item.content + ' <a class="link-to-hilma" href="' + item.linkToHilma + '">(Hilma)</a></p>';
+              } else {
+                return item.content;
+              }
+            };
 
             timeline.setOptions(scope.options);
 
