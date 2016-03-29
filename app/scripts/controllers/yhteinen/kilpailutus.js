@@ -2,8 +2,9 @@
 
 var _ = require('lodash');
 var angular = require('angular');
+var d = require('utils/directive');
 
-angular.module('jukufrontApp').controller('KilpailutusCtrl', ['$scope', '$state', '$element', '$uibModal', 'OrganisaatioService', function ($scope, $state, $element, $uibModal, OrganisaatioService) {
+angular.module('jukufrontApp').controller('KilpailutusCtrl', ['$scope', '$state', '$element', 'OrganisaatioService', function ($scope, $state, $element, OrganisaatioService) {
 
   OrganisaatioService.hae().then(response => {
     $scope.organisaatiot = response;
@@ -56,5 +57,7 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl', ['$scope', '$state'
   $scope.cancel = () => {
     $state.go('app.yhteinen.kilpailutukset');
   };
+
+  $scope.kohteenNimiErrorMessage = d.requiredErrorMessage('Kohteen nimi');
 
 }]);
