@@ -17,11 +17,8 @@ angular.module('jukufrontApp')
           items = [],
           colors = [
             { 0: '#0085c9', 1: '#ffffff' },
-            { 0: 'black', 1: '#ffffff' },
-            { 0: 'brown', 1: '#ffffff' },
-            { 0: 'grey', 1: '#ffffff' },
-            { 0: 'red', 1: '#ffffff' },
-            { 0: 'orange', 1: '#ffffff' }
+            { 0: 'lightblue', 1: '#ffffff' },
+            { 0: 'brown', 1: '#ffffff' }
           ], i, ii;
 
         scope.$watch('organisaatiot', function(value) {
@@ -63,7 +60,7 @@ angular.module('jukufrontApp')
 
             scope.options.template = (item) => {
               if (item.linkToHilma) {
-                return '<p style="margin: 0;">' + item.content + ' <a class="link-to-hilma" href="' + item.linkToHilma + '">(Hilma)</a></p>';
+                return '<p style="margin: 0;">' + item.content + ' <a class="link-to-hilma" href="' + item.linkToHilma + '" style="background-color: #ffffff; text-transform: uppercase; font-size: 10px; border-radius: 4px; padding: 0.2em;">Hilma</a></p>';
               } else {
                 return item.content;
               }
