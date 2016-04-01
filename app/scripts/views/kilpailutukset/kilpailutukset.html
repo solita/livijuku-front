@@ -1,6 +1,16 @@
 <div class="container">
-  <div class="page-header">
-    <h1>Kilpailutukset</h1>
+  <div class="row page-header">
+    <div class="col-xs-12 col-sm-8">
+      <h1 style="margin-bottom: 0; margin-top: 25px;">Kilpailutukset</h1>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <button
+        ng-click="luoKilpailutus()"
+        class="btn btn-success btn-lg pull-right"
+        style="margin-top: 20px; margin-bottom: 10px;">
+        Lisää kilpailutus
+      </button>
+    </div>
   </div>
 
   <form style="margin-bottom: 2em;">
@@ -31,23 +41,29 @@
 
   <div class="row">
     <div class="col-xs-12" style="padding-bottom: 1em;">
-      <div style="float: left;">
-        <div style="width: 20px; height: 20px; background-color: #0085c9; float: left;">
+      <div style="float: left; width: 220px;">
+        <div style="width: 20px; height: 20px; background-color: #2479B2; float: left;">
           &nbsp;
         </div>
-        <div style="margin-left: 2em; margin-right: 5em;">= Tarjousten jättäminen</div>
+        <div style="margin-left: 2em;">= Tarjousten jättäminen</div>
       </div>
-      <div style="float: left;">
-        <div style="width: 20px; height: 20px; background-color: lightblue; float: left;">
+      <div style="float: left; width: 220px;">
+        <div style="width: 20px; height: 20px; background-color: #35ACFF; float: left;">
           &nbsp;
         </div>
-        <div style="margin-left: 2em; margin-right: 5em;">= Tarjousten käsittely</div>
+        <div style="margin-left: 2em;">= Tarjousten käsittely</div>
       </div>
-      <div style="float: left;">
-        <div style="width: 20px; height: 20px; background-color: brown; float: left;">
+      <div style="float: left; width: 220px;">
+        <div style="width: 20px; height: 20px; background-color: #B27215; float: left;">
           &nbsp;
         </div>
-        <div style="margin-left: 2em; margin-right: 5em;">= Liikennöinnin valmistelu</div>
+        <div style="margin-left: 2em;">= Liikennöinnin valmistelu</div>
+      </div>
+      <div style="float: left; width: 220px;">
+        <div style="width: 20px; height: 20px; background-color: #FFA829; float: left;">
+          &nbsp;
+        </div>
+        <div style="margin-left: 2em;">= Liikennöinti</div>
       </div>
     </div>
   </div>

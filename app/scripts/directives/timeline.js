@@ -16,9 +16,10 @@ angular.module('jukufrontApp')
           groups = [],
           items = [],
           colors = [
-            { 0: '#0085c9', 1: '#ffffff' },
-            { 0: 'lightblue', 1: '#ffffff' },
-            { 0: 'brown', 1: '#ffffff' }
+            { 0: '#2479B2', 1: '#ffffff' },
+            { 0: '#35ACFF', 1: '#ffffff' },
+            { 0: '#B27215', 1: '#ffffff' },
+            { 0: '#FFA829', 1: '#ffffff' }
           ], i, ii;
 
         scope.$watch('organisaatiot', function(value) {
