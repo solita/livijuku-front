@@ -303,8 +303,9 @@
               <td class="col-md-4">
                 <form-group-compact label="Pendelöivien osuus" errormessage="prosenttiErrorMessage">
                   <input id="taustatiedot-pendeloivienosuus" name="pendeloivienosuus"
-                         placeholder="%-osuus työssäkäyvistä" noenter
-                         max="100" ng-currency currency-symbol="" select-on-click
+                         placeholder="%-osuus työssäkäyvistä"
+                         noenter select-on-click
+                         max="100" ng-currency currency-symbol="" numeric-only
                          ng-readonly="isReadonly()"
                          ng-model="tunnusluvut.alue.pendeloivienosuus">
                 </form-group-compact>
