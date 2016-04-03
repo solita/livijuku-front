@@ -15,6 +15,31 @@ export function template(content) {
   });
 }
 
+/**
+ * A case template directive consists of a map of templates.
+ * The current template is selected dynamically by the type parameter i.e. templates[scope.type].
+ * This mechanism is loosely based on blog post: http://onehungrymind.com/angularjs-dynamic-templates/
+ */
+export function caseTemplate(templates) {
+  return ['$compile', $compile => {
+    return {
+      restrict: 'E',
+      scope: {
+        type: "<type"
+      },
+      link: function(scope, element) {
+
+        var template = templates[scope.type];
+        if (c.isNullOrUndefined(template)) {
+          throw "Type: " + scope.type + " has no template."
+        }
+        element.html(template);
+        $compile(element.contents())(scope.$parent);
+      }
+    }
+  }];
+}
+
 export function bindModel() {
   return {
     restrict: 'A',
