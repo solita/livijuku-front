@@ -1,67 +1,100 @@
 <juku-form-section>
   <h3>SEURANTATIEDOT</h3>
-  <p>Täytä seurantatiedot avaamalla alla olevat seurantatieto-osiot kolmiopainikkeista ja lisää sen jälkeen tietoja
-    taulukoihin.</p>
+  <p>Täytä seurantatiedot avaamalla alla olevat seurantatieto-osiot kolmiopainikkeista ja lisää sen jälkeen tietoja taulukoihin.</p>
+  
   <uib-accordion close-others="false" class="accordionnopadding">
+    <!-- 1. -->
     <uib-accordion-group is-open="isOpenPSA">
       <uib-accordion-heading>
         <div class="panel-heading">
-          <div class="panel-title"><i class="pull-left glyphicon"
-                                      ng-class="{
+          <div class="panel-title">
+            <i class="pull-left glyphicon" ng-class="{
                 'glyphicon-triangle-bottom':isOpenPSA,
                 'glyphicon-triangle-right': !isOpenPSA
-                }"></i><span>Paikallisliikenne tai muu PSA:n mukainen liikenne</span></div>
+                }">
+            </i>
+            <span>Paikallisliikenne tai muu PSA:n mukainen liikenne</span>
+          </div>
         </div>
       </uib-accordion-heading>
-      <juku-seuranta-liikenne suoritteet="psaLiikenneSuoritteet" tyyppi="PSA" suoritetyypit="suoritetyypit"
-                              is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
+      <juku-seuranta-liikenne
+        suoritteet="psaLiikenneSuoritteet"
+        tyyppi="PSA"
+        suoritetyypit="suoritetyypit"
+        is-readonly="!hakemusTallentaminenEnabled()">
+      </juku-seuranta-liikenne>
     </uib-accordion-group>
+    <!-- 2. -->
     <uib-accordion-group is-open="isOpenPAL">
       <uib-accordion-heading>
         <div class="panel-heading">
-          <div class="panel-title"><i class="pull-left glyphicon"
-                                      ng-class="{
+          <div class="panel-title">
+            <i class="pull-left glyphicon" ng-class="{
                 'glyphicon-triangle-bottom':isOpenPAL,
                 'glyphicon-triangle-right': !isOpenPAL
-                }"></i><span>Palveluliikenne</span></div>
+                }">
+            </i>
+            <span>Palveluliikenne</span>
+          </div>
         </div>
       </uib-accordion-heading>
       <div>
-        <juku-seuranta-liikenne suoritteet="palLiikenneSuoritteet" tyyppi="PAL" suoritetyypit="suoritetyypit"
-                                is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
+        <juku-seuranta-liikenne
+          suoritteet="palLiikenneSuoritteet"
+          tyyppi="PAL"
+          suoritetyypit="suoritetyypit"
+          is-readonly="!hakemusTallentaminenEnabled()">
+        </juku-seuranta-liikenne>
       </div>
     </uib-accordion-group>
+    <!-- 3. -->
     <uib-accordion-group is-open="isOpenKAU">
       <uib-accordion-heading>
         <div class="panel-heading">
-          <div class="panel-title"><i class="pull-left glyphicon"
-                                      ng-class="{
+          <div class="panel-title">
+            <i class="pull-left glyphicon" ng-class="{
                 'glyphicon-triangle-bottom':isOpenKAU,
                 'glyphicon-triangle-right': !isOpenKAU
-                }"></i><span>Kaupunkiliput</span></div>
+                }">
+            </i>
+            <span>Kaupunkiliput</span>
+          </div>
         </div>
       </uib-accordion-heading>
       <div>
-        <juku-seuranta-lippu suoritteet="kaupunkilippuSuoritteet" kaupunkilippu="true" lipputyypit="lipputyypit"
-                             is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
+        <juku-seuranta-lippu
+          suoritteet="kaupunkilippuSuoritteet"
+          kaupunkilippu="true"
+          lipputyypit="lipputyypit"
+          is-readonly="!hakemusTallentaminenEnabled()">
+        </juku-seuranta-lippu>
       </div>
     </uib-accordion-group>
+    <!-- 4. -->
     <uib-accordion-group is-open="isOpenSEU">
       <uib-accordion-heading>
         <div class="panel-heading">
-          <div class="panel-title"><i class="pull-left glyphicon"
-                                      ng-class="{
+          <div class="panel-title">
+            <i class="pull-left glyphicon" ng-class="{
                 'glyphicon-triangle-bottom':isOpenSEU,
                 'glyphicon-triangle-right': !isOpenSEU
-                }"></i><span>Seutulippu</span></div>
+                }">
+            </i>
+            <span>Seutulippu</span>
+          </div>
         </div>
       </uib-accordion-heading>
       <div>
-        <juku-seuranta-lippu suoritteet="seutulippuSuoritteet" kaupunkilippu="false" lipputyypit="lipputyypit"
-                             is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
+        <juku-seuranta-lippu
+          suoritteet="seutulippuSuoritteet"
+          kaupunkilippu="false"
+          lipputyypit="lipputyypit"
+          is-readonly="!hakemusTallentaminenEnabled()">
+        </juku-seuranta-lippu>
       </div>
     </uib-accordion-group>
   </uib-accordion>
+
   <p>Voit tarkastella viimeisintä tallennettua versiota seurantatiedoista
     <a href="{{seurantatietoPdf}}" target="_blank">
       <span class="glyphicon glyphicon-file"></span>
