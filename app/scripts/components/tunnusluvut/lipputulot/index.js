@@ -1,6 +1,7 @@
 'use strict';
 var _ = require('lodash');
 var d = require('utils/directive');
+var c = require('utils/core');
 
 function lipputulotController($scope) {
 
@@ -11,20 +12,22 @@ function lipputulotController($scope) {
     return kuukaudet[kuukausi - 1];
   };
 
+  var property0 = path => c.property(path, 0, _.isNaN);
+
   $scope.kertalipputuloSumma = function () {
-    return _.sumBy($scope.lipputulo, 'kertalipputulo');
+    return _.sumBy($scope.lipputulo, property0('kertalipputulo'));
   };
 
   $scope.arvolipputuloSumma = function () {
-    return _.sumBy($scope.lipputulo, 'arvolipputulo');
+    return _.sumBy($scope.lipputulo, property0('arvolipputulo'));
   };
 
   $scope.kausilipputuloSumma = function () {
-    return _.sumBy($scope.lipputulo, 'kausilipputulo');
+    return _.sumBy($scope.lipputulo, property0('kausilipputulo'));
   };
 
   $scope.lipputuloSumma = function () {
-    return _.sumBy($scope.lipputulo, 'lipputulo');
+    return _.sumBy($scope.lipputulo, property0('lipputulo'));
   };
 
   $scope.kaikkilipputulotSumma = function () {

@@ -2,6 +2,7 @@
 var _ = require('lodash');
 var t = require('utils/tunnusluvut');
 var d = require('utils/directive');
+var c = require('utils/core');
 
 const kuukaudet = ["Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu",
   "Heinäkuu", "Elokuu", "Syyskuu", "Lokakuu", "Marraskuu", "Joulukuu"];
@@ -29,7 +30,7 @@ function kysyntaTarjontaController($scope) {
   };
 
   $scope.linjakilometritSumma = function () {
-    return _.sumBy($scope.liikennevuosi, 'linjakilometrit');
+    return _.sumBy($scope.liikennevuosi, c.property('linjakilometrit', 0, _.isNaN));
   };
 
   $scope.vuorotarjontaSumma = function () {

@@ -30,7 +30,7 @@ module.exports = function ($uibModal, HakemusService, StatusService, $state) {
         modalInstance.result.then(function (taydennysselite) {
           HakemusService.taydennyspyynto(parseInt(scope.hakemusid), taydennysselite)
             .then(function () {
-              StatusService.ok('HakemusService.taydennyspyynto(' + scope.hakemusid + ',' + taydennysselite + ')', 'Hakemus päivitettiin tädennettäväksi.');
+              StatusService.ok('HakemusService.taydennyspyynto(' + scope.hakemusid + ',' + taydennysselite + ')', 'Hakemus päivitettiin täydennettäväksi.');
               $state.go('app.yhteinen.hakemukset.list', {
                 tyyppi: scope.tyyppi
               });

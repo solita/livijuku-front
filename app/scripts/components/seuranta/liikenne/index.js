@@ -10,7 +10,7 @@ function errorMessage(nimi) {
 
 function haeMaksimiNumero(taulukko) {
   if (taulukko.length === 0) return 0;
-  return _.max(taulukko, 'numero').numero + 1;
+  return _.maxBy(taulukko, 'numero').numero + 1;
 }
 
 function liikenneController($scope) {
