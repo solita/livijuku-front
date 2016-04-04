@@ -63,7 +63,7 @@ angular.module('jukufrontApp')
                     haettuAvustus: hakemus['haettu-avustus'],
                     myonnettavaAvustus: hakemus['myonnettava-avustus']
                   };
-                }), 'organisaatiolajitunnus', $scope.lajitunnus);
+                }), ['organisaatiolajitunnus', $scope.lajitunnus]);
 
               $scope.kaikkiTarkastettu = _.every(hakemukset, 'hakemuksenTila', 'T');
               $scope.haettuAvustusSum = _.sumBy(hakemukset, 'haettuAvustus');

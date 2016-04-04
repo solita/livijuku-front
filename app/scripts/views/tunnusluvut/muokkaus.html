@@ -10,6 +10,7 @@
             title="Valitse toimivaltainen viranomainen" class="form-control nya-bs-select" size="20" required>
           <li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
             <a>{{ organisaatio.nimi }}</a>
+          </li>
         </ol>
       </div>
       <div class="col-md-2" ng-hide="hasOrganisaatioSelectPermission">
@@ -20,8 +21,9 @@
         <ol id="vuosi" name="vuosi"
             ng-model="vuosi" ng-disabled="isReadonly()"
             title="Valitse vuosi" class="form-control nya-bs-select" required>
-          <li nya-bs-option="v in vuodet">
+          <li nya-bs-option="v in vuodet" data-value="v">
             <a>{{ v }}</a>
+          </li>
         </ol>
       </div>
       <div class="col-md-6">
@@ -52,7 +54,7 @@
   </juku-navigation>
   <form name="tunnusluvutForm" novalidate juku-poistumisvaroitus>
     <div ng-if="tunnusluvut">
-      <div ui-view></div>
+      <tunnusluku-edit-forms type="tyyppi"></tunnusluku-edit-forms>
       <juku-controls>
         <juku-controls-buttons>
           <button id="tallenna" class="btn btn-success" data-ng-click="tallennaTunnusluvut()">Tallenna näytöllä olevat

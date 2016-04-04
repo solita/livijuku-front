@@ -61,3 +61,16 @@ export function cartesianProduct() {
     }, [ [] ]);
 };
 
+/**
+ * This is same as lodash property-function except this supports a default value.
+ * The default value is used when the value of the property is not defined i.e. isNotDefined === true.
+ * The default isNotDefined function is isNullOrDefined other suitable functions are e.g. isBlank, _.isNaN, _.isNull etc.
+ */
+export function property(path, defaultValue, isNotDefined) {
+  var p = _.property(path);
+  var isNotDefined = coalesce(isNotDefined, isNullOrUndefined);
+  return function(obj) {
+    var value = p(obj);
+    return isNotDefined(value) ? defaultValue : value;
+  };
+}

@@ -78,6 +78,40 @@ angular.module('jukufrontApp')
 
         $scope.hasOrganisaatioSelectPermission = false;
 
+        $scope.haeTunnuslukuTooltip = tunnus => tunnuslukuTooltips[tunnus];
+        $scope.tunnuslukuTyyppiNimi = function (type) {
+          return types[type];
+        };
+
+        $scope.tayttoaste = t.laskeTayttoaste;
+        $scope.tayttoasteType = t.laskeTayttoasteType;
+
+        $scope.tyyppi = _.find([$state.params.tyyppi, 'TTYT'], c.isNotBlank);
+        d.createTabFunctions($scope, 'tyyppi');
+
+        OrganisaatioService.hae().then(
+          organisaatiot => $scope.organisaatiot =
+            _.filter(organisaatiot,
+              org => _.includes(['KS1', 'KS2', 'KS3', 'ELY'], org.lajitunnus)),
+          StatusService.errorHandler);
+
+        $scope.$watchGroup(["vuosi", "organisaatioId", "tyyppi"], id => {
+          var stateId = [integerOrNull($state.params.vuosi),
+                         integerOrNull($state.params.organisaatioid),
+                         (c.isNotBlank($state.params.tyyppi) ? $state.params.tyyppi : null)];
+
+          if (!_.isEqual(id, stateId)) {
+
+            $state.go('app.tunnusluku.syottaminen', {vuosi: id[0], organisaatioid: id[1], tyyppi: id[2]}).then(
+              _.noop(),
+              function() {
+                $scope.vuosi = stateId[0];
+                $scope.organisaatioId = stateId[1];
+                $scope.tyyppi = stateId[2];
+              });
+          }
+        });
+
         // talletetaan organisaatio id talteen - params objekti voi muuttua ennen kuin promisea kutsutaan
         var organisaatioid = $state.params.organisaatioid;
         KayttajaService.hae().then(user => {
@@ -89,59 +123,16 @@ angular.module('jukufrontApp')
           } else {
             StatusService.virhe('', 'Käyttäjällä ei ole käyttöoikeuksia tunnuslukutiedon hallintaan');
           }
-        });
 
-        $scope.haeTunnuslukuTooltip = tunnus => tunnuslukuTooltips[tunnus];
-
-        $scope.tunnuslukuTyyppiNimi = function (type) {
-          return types[type];
-        };
-
-        function tyyppi() {
-          return $state.current.tyyppi;
-        }
-
-        $scope.tayttoaste = t.laskeTayttoaste;
-        $scope.tayttoasteType = t.laskeTayttoasteType;
-
-        $scope.isTabSelected = function isTabSelected(tyyppi) {
-          return $state.current.tyyppi === tyyppi;
-        };
-
-        $scope.tyyppi = tyyppi;
-
-        $scope.toTab = function toTab(tyyppi) {
-          $state.go('app.tunnusluku.syottaminen.' + tyyppi);
-        };
-
-        OrganisaatioService.hae().then(
-          organisaatiot => $scope.organisaatiot =
-            _.filter(organisaatiot,
-              org => _.includes(['KS1', 'KS2', 'KS3', 'ELY'], org.lajitunnus)),
-          StatusService.errorHandler);
-
-        $scope.$watchGroup(["vuosi", "organisaatioId", "tyyppi()"], (id) => {
-          $state.go($state.current.name, {vuosi: id[0], organisaatioid: id[1]}, {
-            // prevent the events onStart and onSuccess from firing
-            notify: false,
-            // prevent reload of the current state
-            reload: false,
-            // update location
-            location: true, //'replace',
-            // inherit the current params on the url
-            inherit: true
-          });
-
-          if (_.every(id, c.isDefinedNotNull)) {
+          if (_.every([$scope.vuosi, $scope.organisaatioId, $scope.tyyppi], c.isDefinedNotNull)) {
             loadTayttoaste($scope, TunnuslukuEditService, StatusService);
 
             OrganisaatioService.findById(_.parseInt($scope.organisaatioId)).then(org => {
-              $scope.organisaatio = org;
-              loadTunnusluvut(id[0], org, id[2], $scope, TunnuslukuEditService, StatusService);
-            }, StatusService.errorHandler);
+                $scope.organisaatio = org;
+                loadTunnusluvut($scope.vuosi, org, $scope.tyyppi, $scope, TunnuslukuEditService, StatusService);
+              }, StatusService.errorHandler);
           }
         });
-
 
         $scope.tallennaTunnusluvut = function () {
           StatusService.tyhjenna();
@@ -155,14 +146,14 @@ angular.module('jukufrontApp')
           var tallennusPromise = [];
 
           function pushTallennusPromise(saveFunction, data) {
-            tallennusPromise.push(saveFunction($scope.vuosi, $scope.organisaatioId, tyyppi(), data));
+            tallennusPromise.push(saveFunction($scope.vuosi, $scope.organisaatioId, $scope.tyyppi, data));
           }
 
-          if (t.isLipputuloSopimustyyppi(tyyppi())) {
+          if (t.isLipputuloSopimustyyppi($scope.tyyppi)) {
             pushTallennusPromise(TunnuslukuEditService.tallennaLipputulo, $scope.tunnusluvut.lipputulo);
           }
 
-          if (t.isSopimustyyppi(tyyppi())) {
+          if (t.isSopimustyyppi($scope.tyyppi)) {
             pushTallennusPromise(TunnuslukuEditService.tallennaKysyntaTarjonta, $scope.tunnusluvut.liikennevuosi);
             pushTallennusPromise(TunnuslukuEditService.tallennaLiikennointikorvaus, $scope.tunnusluvut.liikennointikorvaus);
             pushTallennusPromise(TunnuslukuEditService.tallennaKommentti, $scope.tunnusluvut.kommentti);
@@ -173,7 +164,7 @@ angular.module('jukufrontApp')
             tallennusPromise.push(TunnuslukuEditService.tallennaJoukkoliikennetuki($scope.vuosi, $scope.organisaatioId, $scope.tunnusluvut.joukkoliikennetuki));
           }
 
-          if (t.isPSA(tyyppi())) {
+          if (t.isPSA($scope.tyyppi)) {
             pushTallennusPromise(TunnuslukuEditService.tallennaKysyntaTarjontaViikko, $scope.tunnusluvut.liikenneviikko);
             pushTallennusPromise(TunnuslukuEditService.tallennaKalusto, $scope.tunnusluvut.kalusto);
           }

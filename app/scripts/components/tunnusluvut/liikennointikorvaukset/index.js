@@ -1,6 +1,7 @@
 'use strict';
 var _ = require('lodash');
 var d = require('utils/directive');
+var c = require('utils/core');
 
 function liikennointikorvauksetController($scope) {
 
@@ -12,7 +13,7 @@ function liikennointikorvauksetController($scope) {
   };
 
   $scope.nousukorvausSumma = function () {
-    return _.sumBy($scope.liikennointikorvaus, 'nousukorvaus');
+    return _.sumBy($scope.liikennointikorvaus, c.property('nousukorvaus', 0, _.isNaN));
   };
 
   $scope.nousutSumma = function () {
@@ -20,7 +21,7 @@ function liikennointikorvauksetController($scope) {
   };
 
   $scope.liikennointikorvausSumma = function () {
-    return _.sumBy($scope.liikennointikorvaus, 'korvaus');
+    return _.sumBy($scope.liikennointikorvaus, c.property('korvaus', 0, _.isNaN));
   };
 
   // error messages:

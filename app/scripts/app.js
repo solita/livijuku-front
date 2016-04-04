@@ -161,35 +161,9 @@ angular
 
       .state('app.tunnusluku', root('/tunnusluvut'))
       .state('app.tunnusluku.syottaminen', {
-        url: '/muokkaus/:vuosi/:organisaatioid',
+        url: '/muokkaus/:vuosi/:organisaatioid/:tyyppi',
         template: require('views/tunnusluvut/muokkaus.html'),
-        controller: 'TunnusluvutMuokkausCtrl',
-        redirectTo: 'app.tunnusluku.syottaminen.TTYT'
-      })
-      .state('app.tunnusluku.syottaminen.TTYT', {
-        url: '/ttyt',
-        tyyppi: 'TTYT',
-        template: require('views/tunnusluvut/muokkaus-ttyt.html')
-      })
-      .state('app.tunnusluku.syottaminen.BR', {
-        url: '/br',
-        tyyppi: 'BR',
-        template: require('views/tunnusluvut/muokkaus-psab.html')
-      })
-      .state('app.tunnusluku.syottaminen.KOS', {
-        url: '/kos',
-        tyyppi: 'KOS',
-        template: require('views/tunnusluvut/muokkaus-psak.html')
-      })
-      .state('app.tunnusluku.syottaminen.SA', {
-        url: '/sa',
-        tyyppi: 'SA',
-        template: require('views/tunnusluvut/muokkaus-sa.html')
-      })
-      .state('app.tunnusluku.syottaminen.ME', {
-        url: '/me',
-        tyyppi: 'ME',
-        template: require('views/tunnusluvut/muokkaus-me.html')
+        controller: 'TunnusluvutMuokkausCtrl'
       })
 
       /*
@@ -328,7 +302,13 @@ angular
   .directive('bindModel', directive.bindModel)
   .directive('formGroupCompact', require("components/formInput").formGroupCompact)
   .directive('formGroup', require("components/formInput").formGroup)
-  .directive('integerOnly', require("components/formInput").integerParser);
+  .directive('integerOnly', require("components/formInput").integerParser)
+  .directive('tunnuslukuEditForms', directive.caseTemplate(
+    {TTYT: require('views/tunnusluvut/muokkaus-ttyt.html'),
+     BR:   require('views/tunnusluvut/muokkaus-psab.html'),
+     KOS:  require('views/tunnusluvut/muokkaus-psak.html'),
+     SA:   require('views/tunnusluvut/muokkaus-sa.html'),
+     ME:   require('views/tunnusluvut/muokkaus-me.html')}));
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
