@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row page-header">
+    <div class="col-xs-12 col-sm-8">
+      <h1 style="margin-bottom: 0; margin-top: 25px;">Kilpailutukset</h1>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <button
+        ng-click="luoKilpailutus()"
+        class="btn btn-success btn-lg pull-right"
+        style="margin-top: 20px; margin-bottom: 10px;">
+        Lisää kilpailutus
+      </button>
+    </div>
+  </div>
+
+  <form style="margin-bottom: 2em;">
+  	<div class="row">
+  		<div class="col-xs-12 col-sm-6 col-md-3">
+		  	<h3>Organisaatio</h3>
+		  	<ol id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
+        	title="Näytä kaikki" class="form-control nya-bs-select" size="20" required multiple style="z-index: 10;">
+         	<li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
+          	<a>{{ organisaatio.nimi }}</a>
+        </ol>
+		  </div>
+		  <div class="col-xs-12 col-sm-6 col-md-3">
+  		  <h3>Kaluston koko</h3>
+		  	<label>
+		  		<span>Vähintään</span>
+		  		<span>{{ kalustonKokoMin }}</span>
+		  		<input type="range" min="0" max="9980" step="10" ng-model="kalustonKokoMin" ng-change="updateKalustonKokoRange()" style="width: 100px;" />
+		  	</label>
+		  	<label>
+		  		<span>Enintään</span>
+		  		<span>{{ kalustonKokoRange }}</span>
+		  		<input type="range" ng-attr-min="{{ kalustonKokoMin }}" max="9990" step="10" ng-model="kalustonKokoRange" style="width: 100px;" />
+		  	</label>
+		  </div>
+		</div>
+  </form>
+
+  <div class="row">
+    <div class="col-xs-12" style="padding-bottom: 1em;">
+      <div style="float: left; width: 220px;">
+        <div style="width: 20px; height: 20px; background-color: #2479B2; float: left;">
+          &nbsp;
+        </div>
+        <div style="margin-left: 2em;">= Tarjousten jättäminen</div>
+      </div>
+      <div style="float: left; width: 220px;">
+        <div style="width: 20px; height: 20px; background-color: #35ACFF; float: left;">
+          &nbsp;
+        </div>
+        <div style="margin-left: 2em;">= Tarjousten käsittely</div>
+      </div>
+      <div style="float: left; width: 220px;">
+        <div style="width: 20px; height: 20px; background-color: #B27215; float: left;">
+          &nbsp;
+        </div>
+        <div style="margin-left: 2em;">= Liikennöinnin valmistelu</div>
+      </div>
+      <div style="float: left; width: 220px;">
+        <div style="width: 20px; height: 20px; background-color: #FFA829; float: left;">
+          &nbsp;
+        </div>
+        <div style="margin-left: 2em;">= Liikennöinti</div>
+      </div>
+    </div>
+  </div>
+  <timeline
+  	organisaatiot="organisaatiot"
+  	kilpailutukset="kilpailutukset"
+  	options="timelineOptions"
+  	events="timelineEvents">
+  </timeline>
+
+</div>

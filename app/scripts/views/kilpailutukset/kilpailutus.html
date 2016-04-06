@@ -1,0 +1,76 @@
+<div class="container">
+	<div class="page-header">
+    <h1>Tulevan kilpailutuksen lisääminen / muokkaaminen</h1>
+  </div>
+	<div class="modal-body">
+	  <ng-form name="kilpailutusForm">
+			<div class="row">
+				<div class="col-md-12">
+		  		<label>Organisaatio</label>
+		  		<p class="form-control-static">{{ kilpailutus.organisaatio.nimi }}</p>
+		    </div>
+		   	<div class="col-md-12">
+			   	<form-group label="Kohteen nimi" errormessage="kohteenNimiErrorMessage">
+		        <input id="linjat" name="kohteenNimi" type="text" required
+	           ng-model="kilpailutus.linjat"
+	           ng-disabled="isReadonly()"
+	           placeholder="Ilmoita linja(t), joita sopimus koskee"/>
+		      </form-group>
+		     </div>
+		 	</div>
+	    <div class="row">
+	      <div class="col-md-3 col-md-3">
+	      	<form-group label="Suunniteltu julkaisuaika" errormessage="suunniteltuJulkaisuajankohtaErrorMessage">
+		        <input id="tarjousPvm" name="tarjousPvm" type="date" required
+	           ng-model="kilpailutus.tarjousPvm"
+	           ng-disabled="isReadonly()"
+	           placeholder="pp.kk.vvvv"/>
+		      </form-group>
+		    </div>
+		    <div class="col-md-3">
+	      	<form-group label="Tarjousten määräaika" errormessage="tarjoustenMaaraaikaErrorMessage">
+		        <input id="paatosPvm" name="paatosPvm" type="date"
+	           ng-model="kilpailutus.paatosPvm"
+	           ng-disabled="isReadonly()"
+	           placeholder="pp.kk.vvvv"/>
+		      </form-group>
+		    </div>
+				<div class="col-md-3">
+	      	<form-group label="Ilmoitus voittajasta" errormessage="ilmoitusVoittajastaErrorMessage">
+		        <input id="ilmoitusVoittajastaPvm" name="ilmoitusVoittajastaPvm" type="date" required
+	           ng-model="kilpailutus.ilmoitusVoittajastaPvm"
+	           ng-disabled="isReadonly()"
+	           placeholder="pp.kk.vvvv"/>
+		      </form-group>
+		    </div>
+				<div class="col-md-3">
+	      	<form-group label="Liikennöinnin aloittaminen" errormessage="liikennoinninAloittaminenErrorMessage">
+		        <input id="liikennointiAlkaaPvm" name="liikennointiAlkaaPvm" type="date" required
+	           ng-model="kilpailutus.liikennointiAlkaaPvm"
+	           ng-disabled="isReadonly()"
+	           placeholder="pp.kk.vvvv"/>
+		      </form-group>
+		    </div>
+	    </div>
+	    <div class="row">
+	      <div class="col-md-12">
+		      <form-group label="Vaadittu kalusto" errormessage="vaadittuKalustoErrorMessage">
+		      	<textarea name="vaadittuKalusto" ng-model="kilpailutus.vaadittuKalusto" required></textarea>
+		      </form-group>
+		     </div>
+	    </div>
+	    <div class="row">
+	      <div class="col-md-12">
+	      	<form-group label="Lisätiedot" errormessage="lisatiedotErrorMessage">
+		      	<textarea name="lisatiedot" ng-model="kilpailutus.lisatiedot" required></textarea>
+	      	</form-group>
+	      </div>
+	    </div>
+	    <p><a href="kilpailutus.linkToHilma">{{ kilpailutus.linkToHilma }}</a></p>
+	  </ng-form>
+	</div>
+	<div class="modal-footer">
+	  <button class="btn btn-primary pull-right" ng-click="ok()">Tallenna</button>
+	  <button class="btn btn-warning pull-left" ng-click="cancel()">Sulje</button>
+	</div>
+</div>

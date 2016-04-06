@@ -66,6 +66,7 @@
     "stringify": "^4.0.1",
     "traceur": "0.0.102",
     "vinyl-source-stream": "^1.1.0",
+    "vis": "^4.15.1",
     "watchify": "^3.7.0"
   },
   "engines": {

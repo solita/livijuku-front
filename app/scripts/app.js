@@ -114,6 +114,11 @@ angular
         }]
       })
       .state('app', root())
+      .state('app.kilpailutus', {
+        url: '/kilpailutukset/:id',
+        template: require('views/kilpailutukset/kilpailutus.html'),
+        controller: 'KilpailutusCtrl'
+      })
       .state('app.hakemus', {
         url: '/hakemukset/:id',
         template: require('views/hakemus/index.html'),
@@ -142,6 +147,11 @@ angular
       .state('app.yhteinen.asiakastuki', {
         url: '/asiakastuki',
         template: require('views/yhteinen/asiakastuki.html')
+      })
+      .state('app.yhteinen.kilpailutukset', {
+        url: '/kilpailutukset',
+        template: require('views/kilpailutukset/kilpailutukset.html'),
+        controller: 'KilpailutuksetCtrl'
       })
       /*
        * Hakija
@@ -317,6 +327,8 @@ require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/asetukset');
 require('./controllers/yhteinen/hakemukset');
 require('./controllers/yhteinen/hakemus');
+require('./controllers/yhteinen/kilpailutukset');
+require('./controllers/yhteinen/kilpailutus');
 require('./controllers/yhteinen/kayttajatiedot');
 require('./controllers/yhteinen/paanaytto');
 require('./controllers/yhteinen/tunnusluvut');
@@ -329,6 +341,7 @@ require('./directives/noenter');
 require('./directives/numericOnly');
 require('./directives/focusToInvalid');
 require('./directives/selectonclick');
+require('./directives/timeline');
 require('./services/auth');
 require('./services/avustuskohde');
 require('./services/seuranta');
