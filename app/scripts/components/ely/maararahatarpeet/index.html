@@ -10,7 +10,8 @@
                ng-model="hakemus.ely.kaupunkilipputuki"
                ng-disabled="isReadonly()"
                placeholder="Siirtymäajan sopimukset (€)"
-              select-on-click/>
+               select-on-click
+               class="Ps-0 cursor-auto" />
       </form-group>
     </div>
     <div class="col-md-3">
@@ -20,7 +21,8 @@
                ng-model="hakemus.ely.seutulipputuki"
                ng-disabled="isReadonly()"
                placeholder="Joukkoliikennetuki kunnille (€)"
-               select-on-click/>
+               select-on-click
+               class="Ps-0 cursor-auto" />
       </form-group>
     </div>
     <div class="col-md-3">
@@ -30,7 +32,8 @@
                ng-model="hakemus.ely.ostot"
                ng-disabled="isReadonly()"
                placeholder="Liikenteen ostot (€)"
-               select-on-click/>
+               select-on-click
+               class="Ps-0 cursor-auto" />
       </form-group>
     </div>
     <div class="col-md-3">
@@ -40,7 +43,8 @@
                ng-model="hakemus.ely.kehittaminen"
                ng-disabled="isReadonly()"
                placeholder="Kehittäminen (€)"
-               select-on-click/>
+               select-on-click
+               class="Ps-0 cursor-auto" />
       </form-group>
     </div>
   </div>
@@ -61,7 +65,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="maararahatarve in maararahatarpeet track by $index" ng-form>
+        <tr ng-repeat="maararahatarve in maararahatarpeet track by $index" ng-form class="cursor-auto bg-c-t__hover">
           <td>
             <div uib-tooltip="{{maararahatarvetyyppiTooltip(maararahatarve.maararahatarvetyyppitunnus)}}"
                  tooltip-enable="maararahatarvetyyppiTooltip(maararahatarve.maararahatarvetyyppitunnus)"
@@ -78,7 +82,8 @@
                      required ng-currency="" numeric-only="" max="9999999999.99"
                      noenter select-on-click
                      ng-model="maararahatarve.sidotut" ng-disabled="isReadonly()"
-                     placeholder="Sidotut">
+                     placeholder="Sidotut"
+                     class="Ps-0 cursor-auto">
             </form-group-compact>
           </td>
           <td>
@@ -87,7 +92,8 @@
                      required ng-currency="" numeric-only="" max="9999999999.99"
                      noenter select-on-click
                      ng-model="maararahatarve.uudet" ng-disabled="isReadonly()"
-                     placeholder="Uudet">
+                     placeholder="Uudet"
+                     class="Ps-0 cursor-auto">
             </form-group-compact>
           </td>
           <td>
@@ -96,7 +102,8 @@
                      required ng-currency="" numeric-only="" max="9999999999.99"
                      noenter select-on-click
                      ng-model="maararahatarve.tulot" ng-disabled="isReadonly()"
-                     placeholder="Tulot">
+                     placeholder="Tulot"
+                     class="Ps-0 cursor-auto">
             </form-group-compact>
           </td>
           <td>
@@ -106,7 +113,8 @@
                      maxlength="2000"
                      ng-model="maararahatarve.kuvaus"
                      ng-disabled="isReadonly()"
-                     placeholder="Kuvaus">
+                     placeholder="Kuvaus"
+                     class="Ps-0 cursor-auto">
             </form-group-compact>
           </td>
         </tr>
