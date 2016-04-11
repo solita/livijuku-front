@@ -552,7 +552,7 @@ input.vis-configuration.vis-config-range:focus::-ms-fill-upper {
 .vis-item .vis-item-content {
   white-space: nowrap;
   box-sizing: border-box;
-  padding: 40px;
+  padding: 5px;
 }
 
 .vis-item .vis-delete {
