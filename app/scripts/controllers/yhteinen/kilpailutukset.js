@@ -3,7 +3,9 @@
 var _ = require('lodash');
 var angular = require('angular');
 
-angular.module('jukufrontApp').controller('KilpailutuksetCtrl', ['$scope', '$state', '$element', '$uibModal', 'OrganisaatioService', function ($scope, $state, $element, $uibModal, OrganisaatioService) {
+angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
+  ['$scope', '$state', '$element', '$uibModal', 'StatusService', 'OrganisaatioService', 'KilpailutusService',
+  function ($scope, $state, $element, $uibModal, StatusService, OrganisaatioService, KilpailutusService) {
 
   $scope.kalustonKokoMin = 0;
   $scope.kalustonKokoRange = 9990;
@@ -12,9 +14,10 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl', ['$scope', '$sta
     $scope.kalustonKokoRange = parseInt($scope.kalustonKokoRange, 10) < parseInt($scope.kalustonKokoMin, 10) ? $scope.kalustonKokoMin : $scope.kalustonKokoRange;
   };
 
-  OrganisaatioService.hae().then(response => {
-    $scope.organisaatiot = response;
-  });
+  OrganisaatioService.hae().then(organisaatiot => {
+    $scope.organisaatiot = organisaatiot;
+  }, StatusService.errorHandler);
+
 
   $scope.kilpailutukset = [{
     id: 'kohde-1',
@@ -36,6 +39,17 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl', ['$scope', '$sta
     linkToHilma: 'http://www.hankintailmoitukset.fi/fi/'
   }];
 
+  /*
+  KilpailutusService.find().then( kilpailutukset => {
+    $scope.kilpailutukset = _.map(kilpailutukset, kilpailutus => {
+        kilpailutus.dates = [
+          kilpailutus.julkaisupvm,
+          kilpailutus.tarjouspaattymispvm];
+        return kilpailutus;
+      });
+  }, StatusService.errorHandler);
+  */
+
   $scope.timelineOptions = {
     locales: {
       fi: {
@@ -43,10 +57,10 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl', ['$scope', '$sta
       }
     },
     locale: 'fi',
-    min: new Date(2016, 1, 1),
-    max: new Date(2030, 1, 1),
+    //min: new Date(2016, 1, 1),
+    //max: new Date(2030, 1, 1),
     stack: false,
-    clickToUse: true
+    clickToUse: false
   };
 
   $scope.timelineEvents = {

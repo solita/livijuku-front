@@ -64,6 +64,7 @@ angular
     'services.common',
     'services.config',
     'services.tunnusluvut',
+    'services.kilpailutus',
     'filters.toApplicantName',
     'filters.toClass',
     'filters.stateNameIncludes',
@@ -359,6 +360,7 @@ require('./services/status');
 require('./services/suunnittelu');
 require('./services/tunnusluvut');
 require('./services/raportit');
+require('./services/kilpailutus');
 require('./filters/erotteleRoolit');
 require('./filters/toApplicantName');
 require('./filters/toClass');
