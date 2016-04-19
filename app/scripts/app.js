@@ -66,7 +66,6 @@ angular
     'services.tunnusluvut',
     'services.kilpailutus',
     'filters.toApplicantName',
-    'filters.toClass',
     'filters.stateNameIncludes',
     'filters.toApplicationName',
     'filters.toApplicationNamePlural',
@@ -368,7 +367,6 @@ require('./services/raportit');
 require('./services/kilpailutus');
 require('./filters/erotteleRoolit');
 require('./filters/toApplicantName');
-require('./filters/toClass');
 require('./filters/stateNameIncludes');
 require('./filters/toApplicationName');
 require('./filters/toApplicationNamePlural');
