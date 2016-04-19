@@ -1,6 +1,7 @@
 'use strict';
 var angular = require('angular');
 var vis = require('vis');
+var _ = require('lodash');
 
 export function timeline () {
   return {
@@ -22,14 +23,13 @@ export function timeline () {
           { 0: '#FFA829', 1: '#ffffff' }
         ], i, ii;
 
-      scope.$watch('organisaatiot', function(value) {
-        if (scope.organisaatiot && Object.keys(scope.organisaatiot).length) {
-          for (i = 0; i < scope.organisaatiot.length; i += 1) {
-            groups.push({
-              id: scope.organisaatiot[i].id,
-              content: scope.organisaatiot[i].nimi
-            });
-          }
+      scope.$watchGroup(["organisaatiot", "kilpailutukset"], ([organisaatiot, kilpailutukset]) => {
+        if (scope.organisaatiot && scope.kilpailutukset) {
+
+          groups = _.map(organisaatiot, org => ({
+              id: org.id,
+              content: org.nimi
+            }));
 
           for (i = 0; i < scope.kilpailutukset.length; i += 1) {
             for (ii = 0; ii < scope.kilpailutukset[i].dates.length - 1; ii += 1) {
