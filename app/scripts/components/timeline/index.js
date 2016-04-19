@@ -21,43 +21,47 @@ export function timeline () {
           { 0: '#35ACFF', 1: '#ffffff' },
           { 0: '#B27215', 1: '#ffffff' },
           { 0: '#FFA829', 1: '#ffffff' }
-        ], i, ii;
+        ];
 
       scope.$watchGroup(["organisaatiot", "kilpailutukset"], ([organisaatiot, kilpailutukset]) => {
         if (scope.organisaatiot && scope.kilpailutukset) {
 
-          groups = _.map(organisaatiot, org => ({
-              id: org.id,
-              content: org.nimi
+          groups = _.map(organisaatiot, organisaatio => ({
+              id: organisaatio.id,
+              content: organisaatio.nimi
             }));
 
-          for (i = 0; i < scope.kilpailutukset.length; i += 1) {
-            for (ii = 0; ii < scope.kilpailutukset[i].dates.length - 1; ii += 1) {
-              items.push({
-                id: scope.kilpailutukset[i].organisaatioId + '-' + scope.kilpailutukset[i].id + '-' + ii,
+          items = _.flatMap(kilpailutukset, kilpailutus => {
+            var subgroup = [];
+            var ii = 0;
+
+            for (ii = 0; ii < kilpailutus.dates.length - 1; ii += 1) {
+              subgroup.push({
+                id: kilpailutus.organisaatioId + '-' + kilpailutus.id + '-' + ii,
                 content: '&nbsp;',
-                start: scope.kilpailutukset[i].dates[ii],
-                end: scope.kilpailutukset[i].dates[ii + 1],
-                group: scope.kilpailutukset[i].organisaatioId,
-                subgroup: scope.kilpailutukset[i].id,
-                title: scope.kilpailutukset[i].name,
+                start: kilpailutus.dates[ii],
+                end: kilpailutus.dates[ii + 1],
+                group: kilpailutus.organisaatioId,
+                subgroup: kilpailutus.id,
+                title: kilpailutus.name,
                 style: 'background-color: ' + (colors[ii][0] ? colors[ii][0] : 'brown') + '; color: ' + (colors[ii][1] ? colors[ii][1] : '#ffffff') + '; border: none;'
               });
             }
 
-            items.push({
-              id: scope.kilpailutukset[i].organisaatioId + '-' + scope.kilpailutukset[i].id + '-' + ii,
-              content: scope.kilpailutukset[i].name,
-              start: scope.kilpailutukset[i].dates[0],
-              end: scope.kilpailutukset[i].dates[ii],
-              group: scope.kilpailutukset[i].organisaatioId,
-              subgroup: scope.kilpailutukset[i].id,
-              title: scope.kilpailutukset[i].name,
+            subgroup.push({
+              id: kilpailutus.organisaatioId + '-' + kilpailutus.id + '-' + ii,
+              content: kilpailutus.name,
+              start: _.first(kilpailutus.dates),
+              end: _.last(kilpailutus.dates),
+              group: kilpailutus.organisaatioId,
+              subgroup: kilpailutus.id,
+              title: kilpailutus.name,
               style: 'background-color: transparent; color: white; border: none; z-index: 2;',
-              linkToHilma: scope.kilpailutukset[i].linkToHilma
+              linkToHilma: kilpailutus.linkToHilma
             });
 
-          }
+            return subgroup;
+          });
 
           scope.options.template = (item) => {
             if (item.linkToHilma) {
