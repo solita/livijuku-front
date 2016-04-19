@@ -81,6 +81,6 @@ export function timeline () {
         }
       });
     },
-    template: require('views/yhteinen/timeline.html')
+    template: require('./index.html')
   }
 };
