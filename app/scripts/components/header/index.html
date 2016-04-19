@@ -30,7 +30,7 @@
         </li>
 
         <li class="header__button"
-            ng-class="{ 'is-active': ('hakemukset' | stateNameIncludes:['app.hakija.hakemukset.omat']) || ('app.hakemus' | isState) && !isOwnApplication() }"
+            ng-class="{ 'is-active': (('app.yhteinen.hakemukset.list' | isState) || ('app.hakemus' | isState)) && !isOwnApplication() }"
             ng-show="sallittu(user, 'view-hakemus')">
           <a class="header__link" ui-sref="app.yhteinen.hakemukset.list({tyyppi: getType()})">
             Kaikki hakemukset
