@@ -2,6 +2,7 @@
 var angular = require('angular');
 var vis = require('vis');
 var _ = require('lodash');
+var c = require('utils/core');
 
 export function timeline () {
   return {
@@ -13,43 +14,37 @@ export function timeline () {
       events: '<events'
     },
     link: function(scope, element, attributes) {
-      var timeline = new vis.Timeline(element.find('div')[0]),
-        groups = [],
-        items = [],
-        colors = [
-          { 0: '#2479B2', 1: '#ffffff' },
-          { 0: '#35ACFF', 1: '#ffffff' },
-          { 0: '#B27215', 1: '#ffffff' },
-          { 0: '#FFA829', 1: '#ffffff' }
+      var timeline = new vis.Timeline(element.find('div')[0]);
+      const colors = [
+          ['#2479B2', '#ffffff'],
+          ['#35ACFF', '#ffffff'],
+          ['#B27215', '#ffffff'],
+          ['#FFA829', '#ffffff']
         ];
 
       scope.$watchGroup(["organisaatiot", "kilpailutukset"], ([organisaatiot, kilpailutukset]) => {
         if (scope.organisaatiot && scope.kilpailutukset) {
 
-          groups = _.map(organisaatiot, organisaatio => ({
+          const groups = _.map(organisaatiot, organisaatio => ({
               id: organisaatio.id,
               content: organisaatio.nimi
             }));
 
-          items = _.flatMap(kilpailutukset, kilpailutus => {
-            var subgroup = [];
-            var ii = 0;
+          const items = _.flatMap(kilpailutukset, kilpailutus => {
 
-            for (ii = 0; ii < kilpailutus.dates.length - 1; ii += 1) {
-              subgroup.push({
-                id: kilpailutus.organisaatioId + '-' + kilpailutus.id + '-' + ii,
+            var subgroup = _.map(_.initial(kilpailutus.dates), (startDate, index) => ({
+                id: kilpailutus.organisaatioId + '-' + kilpailutus.id + '-' + index,
                 content: '&nbsp;',
-                start: kilpailutus.dates[ii],
-                end: kilpailutus.dates[ii + 1],
+                start: startDate,
+                end: kilpailutus.dates[index + 1],
                 group: kilpailutus.organisaatioId,
                 subgroup: kilpailutus.id,
                 title: kilpailutus.name,
-                style: 'background-color: ' + (colors[ii][0] ? colors[ii][0] : 'brown') + '; color: ' + (colors[ii][1] ? colors[ii][1] : '#ffffff') + '; border: none;'
-              });
-            }
+                style: 'background-color: ' + c.coalesce(colors[index][0], 'brown') + '; color: ' + c.coalesce(colors[index][1], '#ffffff') + '; border: none;'
+              }));
 
             subgroup.push({
-              id: kilpailutus.organisaatioId + '-' + kilpailutus.id + '-' + ii,
+              id: kilpailutus.organisaatioId + '-' + kilpailutus.id + '-' + (kilpailutus.dates.length - 1),
               content: kilpailutus.name,
               start: _.first(kilpailutus.dates),
               end: _.last(kilpailutus.dates),
@@ -73,8 +68,8 @@ export function timeline () {
 
           timeline.setOptions(scope.options);
 
-          Object.keys(scope.events).forEach(key => {
-            timeline.on(key, scope.events[key]);
+          _.map(scope.events, (event, key) => {
+            timeline.on(key, event);
           });
 
           timeline.setData({
