@@ -19,7 +19,9 @@ export function timeline () {
           ['#2479B2', '#ffffff'],
           ['#35ACFF', '#ffffff'],
           ['#B27215', '#ffffff'],
-          ['#FFA829', '#ffffff']
+          ['#FFA829', '#ffffff'],
+          ['#ff0000', '#ffffff'],
+          ['#ff6666', '#ffffff']
         ];
 
       scope.$watchGroup(["organisaatiot", "kilpailutukset"], ([organisaatiot, kilpailutukset]) => {
@@ -33,22 +35,22 @@ export function timeline () {
           const items = _.flatMap(kilpailutukset, kilpailutus => {
 
             var subgroup = _.map(_.initial(kilpailutus.dates), (startDate, index) => ({
-                id: kilpailutus.organisaatioId + '-' + kilpailutus.id + '-' + index,
+                id: kilpailutus.organisaatioid + '-' + kilpailutus.id + '-' + index,
                 content: '&nbsp;',
                 start: startDate,
                 end: kilpailutus.dates[index + 1],
-                group: kilpailutus.organisaatioId,
+                group: kilpailutus.organisaatioid,
                 subgroup: kilpailutus.id,
                 title: kilpailutus.name,
                 style: 'background-color: ' + c.coalesce(colors[index][0], 'brown') + '; color: ' + c.coalesce(colors[index][1], '#ffffff') + '; border: none;'
               }));
 
             subgroup.push({
-              id: kilpailutus.organisaatioId + '-' + kilpailutus.id + '-' + (kilpailutus.dates.length - 1),
+              id: kilpailutus.organisaatioid + '-' + kilpailutus.id + '-' + (kilpailutus.dates.length - 1),
               content: kilpailutus.name,
               start: _.first(kilpailutus.dates),
               end: _.last(kilpailutus.dates),
-              group: kilpailutus.organisaatioId,
+              group: kilpailutus.organisaatioid,
               subgroup: kilpailutus.id,
               title: kilpailutus.name,
               style: 'background-color: transparent; color: white; border: none; z-index: 2;',
