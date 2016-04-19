@@ -320,7 +320,8 @@ angular
      BR:   require('views/tunnusluvut/muokkaus-psab.html'),
      KOS:  require('views/tunnusluvut/muokkaus-psak.html'),
      SA:   require('views/tunnusluvut/muokkaus-sa.html'),
-     ME:   require('views/tunnusluvut/muokkaus-me.html')}));
+     ME:   require('views/tunnusluvut/muokkaus-me.html')}))
+  .directive('timeline', require("components/timeline").timeline);
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
@@ -343,7 +344,6 @@ require('./directives/noenter');
 require('./directives/numericOnly');
 require('./directives/focusToInvalid');
 require('./directives/selectonclick');
-require('./directives/timeline');
 require('./services/auth');
 require('./services/avustuskohde');
 require('./services/seuranta');
