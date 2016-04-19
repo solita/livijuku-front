@@ -115,11 +115,6 @@ angular
         }]
       })
       .state('app', root())
-      .state('app.kilpailutus', {
-        url: '/kilpailutukset/:id',
-        template: require('views/kilpailutukset/kilpailutus.html'),
-        controller: 'KilpailutusCtrl'
-      })
       .state('app.hakemus', {
         url: '/hakemukset/:id',
         template: require('views/hakemus/index.html'),
@@ -149,11 +144,21 @@ angular
         url: '/asiakastuki',
         template: require('views/yhteinen/asiakastuki.html')
       })
-      .state('app.yhteinen.kilpailutukset', {
+
+      /*
+       * Kilpailutusrekisteri
+       */
+      .state('app.kilpailutus', {
+        url: '/kilpailutukset/:id',
+        template: require('views/kilpailutukset/kilpailutus.html'),
+        controller: 'KilpailutusCtrl'
+      })
+      .state('app.kilpailutukset', {
         url: '/kilpailutukset',
         template: require('views/kilpailutukset/kilpailutukset.html'),
         controller: 'KilpailutuksetCtrl'
       })
+
       /*
        * Hakija
        */
