@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash');
+
 export function toISOString(date) {
   return date.toISOString().split('T')[0];
 }
@@ -15,4 +17,9 @@ export function convertDateToUTC(d) {
 export function getUTCDateTimestamp() {
   var now = new Date();
   return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0);
+}
+
+export function toLocalMidnight(isoDateString) {
+  const date = _.map(_.split(isoDateString, '-'), _.toNumber);
+  return new Date(date[0], date[1], date[2]);
 }

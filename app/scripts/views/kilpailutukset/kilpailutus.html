@@ -5,12 +5,12 @@
 		<div class="row">
 			<div class="col-md-12">
 	  		<label>Organisaatio</label>
-	  		<p class="form-control-static">{{ kilpailutus.organisaatio.nimi }}</p>
+	  		<p class="form-control-static">{{ organisaatio.nimi }}</p>
 	    </div>
 	   	<div class="col-sm-4 col-md-6">
 		   	<form-group label="Kohteen nimi" errormessage="kohteenNimiErrorMessage">
 	        <input id="linjat" name="kohteenNimi" type="text" required
-           ng-model="kilpailutus.linjat"
+           ng-model="kilpailutus.kohdenimi"
            ng-disabled="isReadonly()"
            placeholder="Ilmoita linja(t) tai reitit, joita sopimus koskee"/>
 	      </form-group>
@@ -21,7 +21,7 @@
                  class="form-control" placeholder="Arvo (€)"
                  ng-currency="" numeric-only="" max="9999999999.99"
                  noenter select-on-click
-                 ng-model="kilpailutus.kohteenArvioituArvo" ng-disabled="isReadonly()">
+                 ng-model="kilpailutus.kohdearvo" ng-disabled="isReadonly()">
 	      </form-group>
 	    </div>
 	    <div class="col-xs-12 col-sm-4 col-md-3">
@@ -31,13 +31,13 @@
                  type="text" required integer-only
                  ng-readonly="isReadonly()"
                  noenter select-on-click
-                 ng-model="kilpailutus.arvioKalustonMaarasta"
+                 ng-model="kilpailutus.kalusto"
                  class="cursor-auto">
         </form-group>
       </div>
       <div class="col-xs-12">
       	<form-group label="Lisätiedot" errormessage="lisatiedotErrorMessage">
-	      	<textarea name="lisatiedot" ng-model="kilpailutus.lisatiedot"></textarea>
+	      	<textarea name="lisatiedot" ng-model="kilpailutus.selite"></textarea>
       	</form-group>
       </div>
       <div class="col-xs-12">
@@ -49,7 +49,7 @@
       <div class="col-sm-6 col-md-3">
       	<form-group label="Tarjouksen julk. PVM" errormessage="tarjouksenJulkaisupaivamaaraErrorMessage">
 	        <input id="tarjouksenJulkaisupaivamaara" name="tarjouksenJulkaisupaivamaara" type="date" required
-           ng-model="kilpailutus.tarjouksenJulkaisupaivamaara"
+           ng-model="kilpailutus.julkaisupvm"
            ng-disabled="isReadonly()"
            placeholder="pp.kk.vvvv"/>
 	      </form-group>
@@ -57,7 +57,7 @@
 	    <div class="col-sm-6 col-md-3">
       	<form-group label="Tarjousajan päättyminen" errormessage="tarjousajanPaattyminenErrorMessage">
 	        <input id="tarjousajanPaattyminen" name="tarjousajanPaattyminen" type="date"
-           ng-model="kilpailutus.tarjousajanPaattyminen"
+           ng-model="kilpailutus.tarjouspaattymispvm"
            ng-disabled="isReadonly()"
            placeholder="pp.kk.vvvv"/>
 	      </form-group>
@@ -65,7 +65,7 @@
 			<div class="col-sm-6 col-md-3">
       	<form-group label="Hankintapäätös" errormessage="hankintaPaatosErrorMessage">
 	        <input id="hankintaPaatos" name="hankintaPaatos" type="date" required
-           ng-model="kilpailutus.hankintaPaatos"
+           ng-model="kilpailutus.hankintapaatospvm"
            ng-disabled="isReadonly()"
            placeholder="pp.kk.vvvv"/>
 	      </form-group>
@@ -161,13 +161,14 @@
     </div>
   </ng-form>
 
-  <juku-controls ng-show="sallittu('kasittely-hakemus')">
+  <juku-controls>
     <juku-controls-buttons class="full-width">
-      <button 
+      <button
       	juku-liikennointisopimuksen-tai-kilpailutuksen-poistodialogi
-      	data-ng-click="taydennyspyynto()" class="btn btn-danger Ms-0 pull-left">Poista liikennöintitieto</button>
-      <button data-ng-click="tarkastaHakemus()" class="btn btn-success pull-right">Tallenna ja sulje lomake</button>
-      <button data-ng-click="taydennyspyynto()" class="btn btn-warning pull-right">Sulje lomake</button>
+      	data-ng-click="remove()" class="btn btn-danger Ms-0 pull-left">Poista liikennöintitieto</button>
+
+      <button data-ng-click="save()" class="btn btn-success pull-right">Tallenna ja sulje lomake</button>
+      <button data-ng-click="cancel()" class="btn btn-warning pull-right">Sulje lomake</button>
     </juku-controls-buttons>
   </juku-controls>
 </div>

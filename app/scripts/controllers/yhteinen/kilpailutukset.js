@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var angular = require('angular');
 var c = require('utils/core');
+var t = require('utils/time');
 
 angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   ['$scope', '$state', '$element', '$uibModal', 'StatusService', 'OrganisaatioService', 'KilpailutusService',
@@ -58,7 +59,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
           throw "Kilpailutuksella " + kilpailutus.id + " ei ole yhtään päivämäärää."
         }
 
-        kilpailutus.dates = _.map(dates, (date, index) => new Date(c.isNotBlank(date) ?
+        kilpailutus.dates = _.map(dates, (date, index) => t.toLocalMidnight(c.isNotBlank(date) ?
           date :
           c.coalesce(_.find(_.slice(dates, index), c.isNotBlank), maxdate)))
 
@@ -85,7 +86,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
       let $target = jQuery(properties.event.target);
       if (!$target.hasClass('link-to-hilma')) {
         $state.go('app.kilpailutus', {
-          id: properties.items[0]
+          id: _.split(properties.items[0], '-')[1]
         });
       }
     }
