@@ -76,7 +76,7 @@
 			<div class="col-sm-6 col-md-3">
       	<form-group label="Liikennöinnin aloituspäivä" errormessage="liikennoinninAloituspaivaErrorMessage">
 	        <input id="liikennoinninAloituspaiva" name="liikennoinninAloituspaiva" type="date" required
-           ng-model="kilpailutus.liikennoinninAloituspaiva"
+           ng-model="kilpailutus.liikennointialoituspvm"
            ng-disabled="isReadonly()"
            placeholder="pp.kk.vvvv"/>
 	      </form-group>
@@ -84,7 +84,7 @@
     	<div class="col-sm-6 col-md-3">
       	<form-group label="Liikennöinnin päättyminen" errormessage="liikennoinninPaattyminenIlmanOptiotaErrorMessage">
 	        <input id="liikennoinninPaattyminenIlmanOptiota" name="liikennoinninPaattyminenIlmanOptiota" type="date" required
-           ng-model="kilpailutus.liikennoinninPaattyminenIlmanOptiota"
+           ng-model="kilpailutus.liikennointipaattymispvm"
            ng-disabled="isReadonly()"
            placeholder="pp.kk.vvvv"/>
 	      </form-group>
@@ -95,7 +95,7 @@
       <div class="col-sm-4 col-md-3">
       	<form-group label="Optiovuodet" errormessage="optiovuodetErrorMessage">
 	        <input id="optiovuodet" name="optiovuodet" type="text"
-           ng-model="kilpailutus.optiovuodet"
+           ng-model="kilpailutus.optioselite"
            ng-disabled="isReadonly()"
            placeholder="Optiovuodet"/>
 	      </form-group>
@@ -103,7 +103,7 @@
       <div class="col-sm-4 col-md-3">
       	<form-group label="Hankitun option päättyminen" errormessage="hankitunOptioKaudenPaattyminenErrorMessage">
 	        <input id="hankitunOptioKaudenPaattyminen" name="hankitunOptioKaudenPaattyminen" type="date"
-           ng-model="kilpailutus.hankitunOptioKaudenPaattyminen"
+           ng-model="kilpailutus.hankittuoptiopaattymispvm"
            ng-disabled="isReadonly()"
            placeholder="pp.kk.vvvv"/>
 	      </form-group>
@@ -111,7 +111,7 @@
       <div class="col-sm-4 col-md-3">
       	<form-group label="Optioiden päättyminen" errormessage="optioidenPaattyminenErrorMessage">
 	        <input id="optioidenPaattyminen" name="optioidenPaattyminen" type="date"
-           ng-model="kilpailutus.optioidenPaattyminen"
+           ng-model="kilpailutus.optiopaattymispvm"
            ng-disabled="isReadonly()"
            placeholder="pp.kk.vvvv"/>
 	      </form-group>
@@ -122,7 +122,7 @@
     	<div class="col-md-9">
 		   	<form-group label="Valittu liikennöitsijä">
 	        <input id="linjat" name="liikennoitsija" type="text"
-	         ng-model="kilpailutus.liikennoitsija"
+	         ng-model="kilpailutus.liikennoitsijanimi"
 	         ng-disabled="isReadonly()"
 	         placeholder="Liikennöitsijä"/>
 	      </form-group>
@@ -136,7 +136,7 @@
                  type="text" integer-only
                  ng-readonly="isReadonly()"
                  noenter select-on-click
-                 ng-model="kilpailutus.tarjoustenLukumaara"
+                 ng-model="kilpailutus.tarjousmaara"
                  class="cursor-auto">
         </form-group>
 	     </div>
@@ -146,7 +146,7 @@
                  class="form-control" placeholder="Hinta (€)"
                  ng-currency="" numeric-only="" max="9999999999.99"
                  noenter select-on-click
-                 ng-model="kilpailutus.voittaneenTarjouksenHinta" ng-disabled="isReadonly()">
+                 ng-model="kilpailutus.tarjoushinta1" ng-disabled="isReadonly()">
 	      </form-group>
 	    </div>
 	    <div class="col-sm-4 col-md-3">
@@ -155,7 +155,7 @@
                  class="form-control" placeholder="Hinta (€)"
                  ng-currency="" numeric-only="" max="9999999999.99"
                  noenter select-on-click
-                 ng-model="kilpailutus.toiseksiTulleenTarjouksenHinta" ng-disabled="isReadonly()">
+                 ng-model="kilpailutus.tarjoushinta2" ng-disabled="isReadonly()">
 	      </form-group>
 	    </div>
     </div>
