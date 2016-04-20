@@ -18,12 +18,12 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
           'liikennointialoituspvm',
           'liikennointipaattymispvm',
           'hankittuoptiopaattymispvm',
-          'optiopaattymispvm'], value => new Date(value));
+          'optiopaattymispvm'], value => c.isNotBlank(value) ? new Date(value) : null);
 
       $scope.organisaatio = _.find(organisaatiot, {id: kilpailutus.organisaatioid});
     }, StatusService.errorHandler);
 
-  $scope.cancel = () => {
+  $scope.cancel = function () {
     $state.go('app.kilpailutukset');
   };
 
