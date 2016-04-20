@@ -74,3 +74,11 @@ export function property(path, defaultValue, isNotDefined) {
     return isNotDefined(value) ? defaultValue : value;
   };
 }
+
+/**
+ * This is same as lodash update-function except this takes a list of paths, which are all modified using the updater.
+ */
+export function updateAll(object, paths, updater) {
+  _.forEach(paths, path => _.update(object, path, updater));
+  return object;
+}

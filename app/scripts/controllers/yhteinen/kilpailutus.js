@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var angular = require('angular');
 var d = require('utils/directive');
+var c = require('utils/core');
 
 angular.module('jukufrontApp').controller('KilpailutusCtrl',
   ['$scope', '$state', '$element', '$q', 'StatusService', 'OrganisaatioService', 'KilpailutusService',
@@ -10,7 +11,15 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
 
   $q.all([OrganisaatioService.hae(), KilpailutusService.get($state.params.id)]).then(
     ([organisaatiot, kilpailutus]) => {
-      $scope.kilpailutus = kilpailutus;
+      $scope.kilpailutus = c.updateAll(kilpailutus, [
+          'julkaisupvm',
+          'tarjouspaattymispvm',
+          'hankintapaatospvm',
+          'liikennointialoituspvm',
+          'liikennointipaattymispvm',
+          'hankittuoptiopaattymispvm',
+          'optiopaattymispvm'], value => new Date(value));
+
       $scope.organisaatio = _.find(organisaatiot, {id: kilpailutus.organisaatioid});
     }, StatusService.errorHandler);
 
