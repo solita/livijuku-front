@@ -18,6 +18,9 @@ angular.module('services.kilpailutus', [])
       },
       add: function (kilpailutus) {
         return $http.post('api/kilpailutus', kilpailutus);
+      },
+      delete: function (kilpailutus) {
+        return $http.delete('api/kilpailutus', kilpailutus);
       }
     };
   }]);

@@ -12,13 +12,12 @@ function ModalInstanceCtrl($scope, $uibModalInstance) {
 
 ModalInstanceCtrl.$inject = ['$scope', '$uibModalInstance'];
 
-module.exports = function ($uibModal, HakemusService, StatusService, $state) {
+module.exports = function ($uibModal, KilpailutusService, StatusService, $state) {
   return {
     restrict: 'A',
     replace: true,
     scope: {
-      hakemusid: "@",
-      tyyppi: "@"
+      kilpailutusid: "@"
     },
     link: function (scope, element, attrs) {
       element.bind('click', function () {
@@ -28,13 +27,11 @@ module.exports = function ($uibModal, HakemusService, StatusService, $state) {
           controller: ModalInstanceCtrl
         });
         modalInstance.result.then(function (taydennysselite) {
-          HakemusService.taydennyspyynto(parseInt(scope.hakemusid), taydennysselite)
+          KilpailutusService.delete(parseInt(scope.kilpailutusid))
             .then(function () {
-              StatusService.ok('HakemusService.taydennyspyynto(' + scope.hakemusid + ',' + taydennysselite + ')', 'Hakemus päivitettiin täydennettäväksi.');
-              $state.go('app.yhteinen.hakemukset.list', {
-                tyyppi: scope.tyyppi
-              });
-            }, StatusService.errorHandler);
+                StatusService.ok('', 'Kilpailutus poistettu.');
+                $state.go('app.kilpailutukset');
+              }, StatusService.errorHandler);
         }, function () {
           //Cancel
         });
@@ -44,4 +41,4 @@ module.exports = function ($uibModal, HakemusService, StatusService, $state) {
   };
 };
 
-module.exports.$inject = ['$uibModal', 'HakemusService', 'StatusService', '$state'];
+module.exports.$inject = ['$uibModal', 'KilpailutusService', 'StatusService', '$state'];

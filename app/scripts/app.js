@@ -268,7 +268,7 @@ angular
   .directive('jukuPoistumisvaroitus', require('components/poistumisvaroitus'))
   .directive('jukuVarmistusdialogi', require('components/varmistusdialogi'))
   .directive('jukuTaydennysdialogi', require('components/taydennysdialogi'))
-  .directive('jukuLiikennointisopimuksenTaiKilpailutuksenPoistodialogi', require('components/liikennointisopimuksenTaiKilpailutuksenPoistodialogi'))
+  .directive('jukuKilpailutusPoistodialogi', require('components/kilpailutus-poistodialogi'))
   .directive('hakemuksenTila', require('components/hakemuksenTila'))
   .directive('hakemusSummary', require('components/hakemusSummary'))
   .directive('hakemusPanel', require('components/hakemusPanel'))
