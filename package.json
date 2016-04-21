@@ -17,6 +17,7 @@
     "angular-ui-bootstrap": "^1.1.2",
     "angular-ui-router": "^0.2.18",
     "angular-ui-validate": "^1.2.2",
+    "angularjs-slider": "^2.11.0",
     "bluebird": "^3.3.1",
     "bootstrap": "^3.3.6",
     "d3": "^3.5.15",
