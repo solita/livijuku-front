@@ -65,8 +65,12 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
       }
     },
     locale: 'fi',
+    groupOrder: 'id',
     //min: new Date(2016, 1, 1),
     //max: new Date(2030, 1, 1),
+    margin: {
+      item: 6
+    },
     stack: false,
     clickToUse: false,
     orientation: 'both'
