@@ -16,7 +16,7 @@ angular.module('services.kilpailutus', [])
       save: function (kilpailutusid, kilpailutus) {
         return $http.put('api/kilpailutus/' + kilpailutusid, kilpailutus);
       },
-      add: function (kilpailutusid, kilpailutus) {
+      add: function (kilpailutus) {
         return $http.post('api/kilpailutus', kilpailutus);
       }
     };

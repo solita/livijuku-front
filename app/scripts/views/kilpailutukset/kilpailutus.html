@@ -3,10 +3,20 @@
   <ng-form name="kilpailutusForm">
   	<h3>Kohde</h3>
 		<div class="row">
-			<div class="col-md-12">
-	  		<label>Organisaatio</label>
-	  		<p class="form-control-static">{{ organisaatio.nimi }}</p>
+			<div class="col-md-6">
+
+        <form-group label="Organisaatio">
+        <ol id="organisaatio" ng-model="kilpailutus.organisaatioid" ng-disabled="isReadonly()"
+            title="Valitse toimivaltainen viranomainen" class="form-control nya-bs-select" size="20" required>
+          <li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
+            <a>{{ organisaatio.nimi }}</a>
+          </li>
+        </ol>
+        <!--p class="form-control-static">{{ organisaatio.nimi }}</p-->
+        </form-group>
 	    </div>
+    </div>
+    <div class="row">
 	   	<div class="col-sm-4 col-md-6">
 		   	<form-group label="Kohteen nimi" errormessage="kohteenNimiErrorMessage">
 	        <input id="linjat" name="kohteenNimi" type="text" required
@@ -14,7 +24,7 @@
            ng-disabled="isReadonly()"
            placeholder="Ilmoita linja(t) tai reitit, joita sopimus koskee"/>
 	      </form-group>
-	     </div>
+	    </div>
       <div class="col-xs-12 col-sm-4 col-md-3">
       	<form-group label="Kohteen arvioitu arvo" errormessage="kohteenArvioituArvoErrorMessage">
 	        <input id="kohteenArvioituArvo" name="kohteenArvioituArvo" type="text"
