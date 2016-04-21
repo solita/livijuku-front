@@ -46,6 +46,7 @@ require('angular-sanitize');
 require('ng-csv');
 require('iban/iban.js');
 require('nya-bootstrap-select');
+require('angularjs-slider');
 
 angular
   .module('jukufrontApp', [
@@ -86,7 +87,8 @@ angular
     'nvd3',
     'ngSanitize',
     'ngCsv',
-    'nya.bootstrap.select'
+    'nya.bootstrap.select',
+    'rzModule'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 

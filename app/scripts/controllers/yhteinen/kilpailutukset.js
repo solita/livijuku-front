@@ -12,6 +12,12 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   $scope.kalustonKokoMin = 0;
   $scope.kalustonKokoRange = 9990;
 
+  $scope.kalustokoko = {
+    min: 0,
+    max: 500,
+    options: {floor: 0, ceil: 500}
+  }
+
   $scope.updateKalustonKokoRange = function () {
     $scope.kalustonKokoRange = parseInt($scope.kalustonKokoRange, 10) < parseInt($scope.kalustonKokoMin, 10) ? $scope.kalustonKokoMin : $scope.kalustonKokoRange;
   };

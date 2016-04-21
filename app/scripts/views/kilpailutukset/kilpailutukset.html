@@ -16,27 +16,26 @@
   <form style="margin-bottom: 2em;">
   	<div class="row">
   		<div class="col-xs-12 col-sm-6 col-md-3">
-		  	<h3>Organisaatio</h3>
-		  	<ol id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
-        	title="Näytä kaikki" class="form-control nya-bs-select" size="20" required multiple style="z-index: 10;">
-         	<li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
-          	<a>{{ organisaatio.nimi }}</a>
-        </ol>
-		  </div>
-		  <div class="col-xs-12 col-sm-6 col-md-3">
-  		  <h3>Kaluston koko</h3>
-		  	<label>
-		  		<span>Vähintään</span>
-		  		<span>{{ kalustonKokoMin }}</span>
-		  		<input type="range" min="0" max="9980" step="10" ng-model="kalustonKokoMin" ng-change="updateKalustonKokoRange()" style="width: 100px;" />
-		  	</label>
-		  	<label>
-		  		<span>Enintään</span>
-		  		<span>{{ kalustonKokoRange }}</span>
-		  		<input type="range" ng-attr-min="{{ kalustonKokoMin }}" max="9990" step="10" ng-model="kalustonKokoRange" style="width: 100px;" />
-		  	</label>
+		  	<form-group label="Toimivaltainen viranomainen">
+  		  	<ol id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
+          	title="Näytä kaikki" class="form-control nya-bs-select" size="20" multiple style="z-index: 10;">
+           	<li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
+            	<a>{{ organisaatio.nimi }}</a>
+            </li>
+          </ol>
+        </form-group>
 		  </div>
 		</div>
+
+    <div class="row">
+      <div class="form-group col-xs-12 col-sm-6 col-md-3">
+        <label for="kalustokoko">Kaluston koko</label>
+        <rzslider id="kalustokoko"
+             rz-slider-model="kalustokoko.min"
+             rz-slider-high="kalustokoko.max"
+             rz-slider-options="kalustokoko.options"></rzslider>
+      </div>
+    </div>
   </form>
 
   <div class="row">
