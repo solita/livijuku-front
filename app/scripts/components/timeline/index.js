@@ -41,18 +41,18 @@ export function timeline () {
                 end: kilpailutus.dates[index + 1],
                 group: kilpailutus.organisaatioid,
                 subgroup: kilpailutus.id,
-                title: kilpailutus.name,
+                title: kilpailutus.kohdenimi,
                 style: 'background-color: ' + c.coalesce(colors[index][0], 'brown') + '; color: ' + c.coalesce(colors[index][1], '#ffffff') + '; border: none;'
               }));
 
             subgroup.push({
               id: kilpailutus.organisaatioid + '-' + kilpailutus.id + '-' + (kilpailutus.dates.length - 1),
-              content: kilpailutus.name,
+              content: kilpailutus.kohdenimi,
               start: _.first(kilpailutus.dates),
               end: _.last(kilpailutus.dates),
               group: kilpailutus.organisaatioid,
               subgroup: kilpailutus.id,
-              title: kilpailutus.name,
+              title: kilpailutus.kohdenimi,
               style: 'background-color: transparent; color: white; border: none; z-index: 2;',
               linkToHilma: kilpailutus.linkToHilma
             });
