@@ -9,18 +9,18 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   ['$scope', '$state', '$element', '$uibModal', 'StatusService', 'OrganisaatioService', 'KilpailutusService',
   function ($scope, $state, $element, $uibModal, StatusService, OrganisaatioService, KilpailutusService) {
 
-  $scope.kalustonKokoMin = 0;
-  $scope.kalustonKokoRange = 9990;
 
   $scope.kalustokoko = {
     min: 0,
-    max: 500,
-    options: {floor: 0, ceil: 500}
+    max: 100,
+    options: {floor: 0, ceil: 100}
   }
 
-  $scope.updateKalustonKokoRange = function () {
-    $scope.kalustonKokoRange = parseInt($scope.kalustonKokoRange, 10) < parseInt($scope.kalustonKokoMin, 10) ? $scope.kalustonKokoMin : $scope.kalustonKokoRange;
-  };
+  $scope.kohdearvo = {
+    min: 0,
+    max: 90000000,
+    options: {floor: 0, ceil: 90000000}
+  }
 
   OrganisaatioService.hae().then(organisaatiot => {
     $scope.organisaatiot = organisaatiot;

@@ -29,11 +29,30 @@
 
     <div class="row">
       <div class="form-group col-xs-12 col-sm-6 col-md-3">
-        <label for="kalustokoko">Kaluston koko</label>
+        <label for="kohdearvo">Kohteen arvioitu arvo (€)</label>
+        <rzslider id="kohdearvo"
+             rz-slider-model="kohdearvo.min"
+             rz-slider-high="kohdearvo.max"
+             rz-slider-options="kohdearvo.options"></rzslider>
+      </div>
+      <div class="form-group col-xs-12 col-sm-6 col-md-3">
+        <label for="kalustokoko">Kaluston määrä (kpl)</label>
         <rzslider id="kalustokoko"
              rz-slider-model="kalustokoko.min"
              rz-slider-high="kalustokoko.max"
              rz-slider-options="kalustokoko.options"></rzslider>
+      </div>
+
+      <div class="form-group col-xs-12 col-sm-6 col-md-6">
+        <label>Aikajanalla näytettävä ajanjakso</label>
+        <div class="checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="kilpailutuskausi"> Kilpailutuskausi
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="liikennointikausi"> Liikennöintikausi
+          </label>
+        </div>
       </div>
     </div>
   </form>
