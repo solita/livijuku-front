@@ -4,6 +4,7 @@ var _ = require('lodash');
 var angular = require('angular');
 var c = require('utils/core');
 var t = require('utils/time');
+var tl = require('utils/tunnusluvut');
 
 angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   ['$scope', '$state', '$element', '$uibModal', 'StatusService', 'OrganisaatioService', 'KilpailutusService',
@@ -21,6 +22,8 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
     max: 90000000,
     options: {floor: 0, ceil: 90000000}
   }
+
+  $scope.organisaatiolajit = tl.organisaatiolajit;
 
   OrganisaatioService.hae().then(organisaatiot => {
     $scope.organisaatiot = organisaatiot;
