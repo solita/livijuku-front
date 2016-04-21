@@ -89,12 +89,8 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
     };
 
 
-    $scope.kohteenNimiErrorMessage = d.requiredErrorMessage('Kohteen nimi');
-    $scope.suunniteltuJulkaisuajankohtaErrorMessage = d.requiredErrorMessage('Suunniteltu julkaisuajankohta');
-    $scope.tarjoustenMaaraaikaErrorMessage = d.requiredErrorMessage('Tarjousten määräaika');
-    $scope.ilmoitusVoittajastaErrorMessage = d.requiredErrorMessage('Ilmoitus voittajasta');
-    $scope.liikennoinninAloittaminenErrorMessage = d.requiredErrorMessage('Liikennöinnin aloittaminen');
-    $scope.vaadittuKalustoErrorMessage = d.requiredErrorMessage('Vaadittu kalusto');
-    $scope.lisatiedotErrorMessage = d.requiredErrorMessage('Lisätiedot');
+    $scope.kohdenimiErrorMessage = d.requiredErrorMessage('Kohteen nimi');
+    $scope.liikennointialoituspvmErrorMessage = d.requiredErrorMessage('Liikennöinnin aloittaminen');
+    $scope.liikennointipaattymispvmErrorMessage = d.requiredErrorMessage('Liikennöinnin päättäminen');
 
   }]);
