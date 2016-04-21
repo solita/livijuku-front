@@ -20,6 +20,7 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
   function ($scope, $state, $element, $q, StatusService, OrganisaatioService, KilpailutusService, KayttajaService) {
 
     const isNew = $state.params.id == 'new';
+    $scope.isNew = isNew;
 
     if (isNew) {
       $q.all([OrganisaatioService.hae(), KayttajaService.hae()]).then(
