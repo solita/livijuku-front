@@ -41,7 +41,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
           kilpailutus.hankintapaatospvm,
           kilpailutus.liikennointialoituspvm,
           kilpailutus.liikennointipaattymispvm,
-          kilpailutus.hankittuoptiopaattymispvm,
+          c.coalesce(kilpailutus.hankittuoptiopaattymispvm, kilpailutus.liikennointipaattymispvm),
           kilpailutus.optiopaattymispvm];
 
         const maxdate = _.max(dates);
