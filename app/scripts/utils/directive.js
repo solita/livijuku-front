@@ -91,3 +91,11 @@ export function createTabFunctions($scope, tabProperty) {
     $scope[tabProperty] = tyyppi;
   };
 }
+
+export function touchErrorFields(form) {
+  _.forEach(form.$error, function (error) {
+      _.forEach(error, function(errorField){
+          errorField.$setTouched();
+        });
+    });
+}

@@ -66,8 +66,11 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
 
     $scope.save = function () {
       StatusService.tyhjenna();
+
       if (!$scope.kilpailutusForm.$valid) {
         $scope.$emit('focus-invalid');
+        d.touchErrorFields($scope.kilpailutusForm);
+
         StatusService.virhe('', 'Korjaa lomakkeen virheet ennen tallentamista.');
         return;
       }
@@ -85,6 +88,7 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
 
       savePromise.then(function() {
         StatusService.ok('', 'Kilpailutuksen tallennus onnistui.');
+        $scope.kilpailutusForm.$setPristine();
         $state.go('app.kilpailutukset');
       }, StatusService.errorHandler);
     };
