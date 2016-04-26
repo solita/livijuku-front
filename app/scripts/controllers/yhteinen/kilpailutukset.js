@@ -54,6 +54,8 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
 
   $scope.$watchCollection('filter.organisaatiot', filterTimelineOrganisaatiot);
   $scope.$watchCollection('filter.organisaatiolajit', filterTimelineOrganisaatiot);
+  $scope.$watchGroup(['kalustokoko.min', 'kalustokoko.max', 'kohdearvo.min', 'kohdearvo.max'],
+    filterTimelineKilpailutukset);
 
   function findOrganisaatiotInLajit(lajitunnukset) {
     return _.isEmpty(lajitunnukset) ? [] :
@@ -75,10 +77,24 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
     }
   }
 
+  const between = (arvo, interval) => arvo >= interval.min && arvo <= interval.max;
+  const isMaxInterval = (interval) => interval.min === interval.options.floor && interval.max === interval.options.ceil
+
+  function filterTimelineKilpailutukset() {
+    if (! (isMaxInterval($scope.kalustokoko) && isMaxInterval($scope.kohdearvo))) {
+      $scope.timeline.kilpailutukset = _.filter(
+        $scope.kilpailutukset,
+        kilpailutus => between(kilpailutus.kalusto, $scope.kalustokoko) &&
+                       between(kilpailutus.kohdearvo, $scope.kohdearvo) );
+    } else {
+      $scope.timeline.kilpailutukset = $scope.kilpailutukset;
+    }
+  }
+
   loadKilpailutukset();
 
   function loadKilpailutukset() {
-    KilpailutusService.find($scope.filter).then( kilpailutukset => {
+    KilpailutusService.find().then( kilpailutukset => {
       $scope.kilpailutukset = _.map(kilpailutukset, kilpailutus => {
           const dates = [
             kilpailutus.julkaisupvm,
@@ -101,6 +117,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
 
           return kilpailutus;
         });
+      $scope.timeline.kilpailutukset = $scope.kilpailutukset;
     }, StatusService.errorHandler);
   }
 
