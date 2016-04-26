@@ -47,6 +47,7 @@ require('ng-csv');
 require('iban/iban.js');
 require('nya-bootstrap-select');
 require('angularjs-slider');
+require('ng-tags-input')
 
 angular
   .module('jukufrontApp', [
@@ -88,7 +89,8 @@ angular
     'ngSanitize',
     'ngCsv',
     'nya.bootstrap.select',
-    'rzModule'
+    'rzModule',
+    'ngTagsInput'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 

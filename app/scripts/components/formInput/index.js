@@ -12,7 +12,7 @@ function assertInputIsDefined(input, element) {
 }
 
 function findInputElement(element) {
-  const inputElements = ['input', 'select', 'textarea', 'ol'];
+  const inputElements = ['input', 'select', 'textarea', 'ol', 'tags-input'];
   for (var i = 0; i < inputElements.length; i++) {
     var input = element.find(inputElements[i]);
     if (input.length > 0) {
@@ -36,9 +36,11 @@ function formGroupDirective(template) {
       var input = findInputElement(element);
       assertInputIsDefined(input, element[0]);
 
-      scope.feedbackSupport = !_.includes(['select', 'ol'], input[0].tagName.toLowerCase());
+      scope.feedbackSupport = !_.includes(['select', 'ol', 'tags-input'], input[0].tagName.toLowerCase());
 
-      input.addClass("form-control");
+      if (!_.includes(['tags-input'], input[0].tagName.toLowerCase())) {
+        input.addClass("form-control");
+      }
 
       scope.name = input.attr("name");
 

@@ -15,28 +15,41 @@
   <form style="margin-bottom: 2em;">
   	<div class="row">
 	  	<form-group label="Toimivaltainen viranomainen" class="col-xs-12 col-sm-6 col-md-4">
-		  	<ol id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
-        	title="Näytä kaikki" class="form-control nya-bs-select" size="20" multiple style="z-index: 10;">
-         	<li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
-          	<a>{{ organisaatio.nimi }}</a>
-          </li>
-        </ol>
+        <tags-input id="organisaatio-filter" name="organisaatio-filter"
+                    placeholder="Rajoita viranomaisia"
+                    ng-model="filter.organisaatiot" add-from-autocomplete-only="true"
+                    display-property="nimi" key-property="id" replace-spaces-with-dashes="false">
+          <auto-complete source="findOrganisaatio($query)" display-property="nimi" min-length="1"
+                         load-on-focus="true" load-on-empty="true" max-results-to-show="30">
+          </auto-complete>
+        </tags-input>
       </form-group>
-      <form-group label="Toimivalta-alue" class="col-xs-12 col-sm-6 col-md-4">
-        <ol id="organisaatiolajitunnus" ng-model="organisaatioId" ng-disabled="isReadonly()"
+
+      <form-group label="Toimivaltaryhmä" class="col-xs-12 col-sm-6 col-md-4">
+        <tags-input id="organisaatiolaji-filter" name="organisaatiolaji-filter"
+                    placeholder="Rajoita viranomaisia toimivaltaryhmällä"
+                    ng-model="filter.organisaatiolajit"  add-from-autocomplete-only="true"
+                    display-property="nimi" key-property="id" replace-spaces-with-dashes="false">
+          <auto-complete source="findOrganisaatiolaji($query)" display-property="nimi" min-length="1"
+                         load-on-focus="true" load-on-empty="true"></auto-complete>
+        </tags-input>
+
+        <!--ol id="organisaatiolajitunnus" ng-model="organisaatioId" ng-disabled="isReadonly()"
           title="Näytä kaikki" class="form-control nya-bs-select" size="20" multiple style="z-index: 10;">
           <li nya-bs-option="lajitunnus in organisaatiolajit.$order" data-value="lajitunnus">
             <a>{{ organisaatiolajit.$nimi(lajitunnus) }}</a>
           </li>
-        </ol>
+        </ol-->
       </form-group>
       <form-group label="Kilpailutusalue" class="col-xs-12 col-sm-6 col-md-4">
-        <ol id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
-          title="Näytä kaikki" class="form-control nya-bs-select" size="20" multiple style="z-index: 10;">
-          <li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
-            <a>{{ organisaatio.nimi }}</a>
-          </li>
-        </ol>
+        <tags-input id="kilpailutusalue-filter" name="kilpailutusalue-filter"
+                    placeholder="Rajoita viranomaisia"
+                    ng-model="kilpailutusalueFilter" add-from-autocomplete-only="true"
+                    display-property="nimi" key-property="id" replace-spaces-with-dashes="false">
+          <auto-complete source="findOrganisaatio($query)" display-property="nimi" min-length="1"
+                         load-on-focus="true" load-on-empty="true">
+          </auto-complete>
+        </tags-input>
       </form-group>
 		</div>
 

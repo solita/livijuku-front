@@ -23,11 +23,28 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
     options: {floor: 0, ceil: 90000000}
   }
 
-  $scope.organisaatiolajit = tl.organisaatiolajit;
+  $scope.filter = {
+    organisaatiot: [],
+    organisaatiolajit: []
+  };
+
+  //$scope.organisaatiolajit = tl.organisaatiolajit;
+  $scope.findOrganisaatiolaji = function (query) {
+    return _.map(_.filter(tl.organisaatiolajit.$order, id => id !== 'ALL'), id => ({id: id, nimi: tl.organisaatiolajit.$nimi(id)}));
+  };
 
   OrganisaatioService.hae().then(organisaatiot => {
     $scope.organisaatiot = organisaatiot;
   }, StatusService.errorHandler);
+
+  $scope.findOrganisaatio = function (query) {
+    if (c.isBlank(query)) {
+      return $scope.organisaatiot;
+    } else {
+      var re = new RegExp(".*" + _.lowerCase(query) + '.*');
+      return _.filter($scope.organisaatiot, org => re.test(_.lowerCase(org.nimi)));
+    }
+  }
 
   $scope.newKilpailutus = function () {
     $state.go('app.kilpailutus', {id: 'new'});
