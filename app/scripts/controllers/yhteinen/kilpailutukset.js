@@ -52,13 +52,28 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
     $state.go('app.kilpailutus', {id: 'new'});
   }
 
-  $scope.$watchCollection('filter.organisaatiot', organisaatiot => {
+  $scope.$watchCollection('filter.organisaatiot', filterTimelineOrganisaatiot);
+  $scope.$watchCollection('filter.organisaatiolajit', filterTimelineOrganisaatiot);
+
+  function findOrganisaatiotInLajit(lajitunnukset) {
+    return _.isEmpty(lajitunnukset) ? [] :
+      _.filter($scope.organisaatiot,
+               org => _.includes(lajitunnukset, org.lajitunnus))
+  }
+
+  function filterTimelineOrganisaatiot() {
+    var organisaatiolajitunnukset = _.map($scope.filter.organisaatiolajit, laji => laji.id);
+
+    var organisaatiot = _.unionBy(
+      $scope.filter.organisaatiot, findOrganisaatiotInLajit(organisaatiolajitunnukset),
+      org => org.id);
+
     if (_.isEmpty(organisaatiot)) {
       $scope.timeline.organisaatiot = $scope.organisaatiot;
     } else {
-      $scope.timeline.organisaatiot = _.clone(organisaatiot);
+      $scope.timeline.organisaatiot = organisaatiot;
     }
-  });
+  }
 
   loadKilpailutukset();
 
