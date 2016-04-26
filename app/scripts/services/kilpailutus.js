@@ -2,6 +2,7 @@
 
 var angular = require('angular');
 var _ = require('lodash');
+var c = require('utils/core');
 
 angular.module('services.kilpailutus', [])
 
@@ -11,6 +12,9 @@ angular.module('services.kilpailutus', [])
         return $http.get('api/kilpailutus/' + kilpailutusid).then(res => res.data);
       },
       find: function () {
+        //var organisaatioids = _.map(organizationFilter.organisaatiot, org => "organisaatioid=" + org.id)
+        //var query = _.join(organisaatioids, '&');
+        //return $http.get('api/kilpailutukset' + (c.isNotBlank(query) ? '?' + query : '')).then(res => res.data);
         return $http.get('api/kilpailutukset').then(res => res.data);
       },
       save: function (kilpailutusid, kilpailutus) {

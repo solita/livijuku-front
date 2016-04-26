@@ -16,7 +16,7 @@
   	<div class="row">
 	  	<form-group label="Toimivaltainen viranomainen" class="col-xs-12 col-sm-6 col-md-4">
         <tags-input id="organisaatio-filter" name="organisaatio-filter"
-                    placeholder="Rajoita viranomaisia"
+                    placeholder="Suodata aikajanaa valitsemalla viranomaisia"
                     ng-model="filter.organisaatiot" add-from-autocomplete-only="true"
                     display-property="nimi" key-property="id" replace-spaces-with-dashes="false">
           <auto-complete source="findOrganisaatio($query)" display-property="nimi" min-length="1"
@@ -27,7 +27,7 @@
 
       <form-group label="Toimivaltaryhmä" class="col-xs-12 col-sm-6 col-md-4">
         <tags-input id="organisaatiolaji-filter" name="organisaatiolaji-filter"
-                    placeholder="Rajoita viranomaisia toimivaltaryhmällä"
+                    placeholder="Suodata aikajanaa valitsemalla toimivaltaryhmiä"
                     ng-model="filter.organisaatiolajit"  add-from-autocomplete-only="true"
                     display-property="nimi" key-property="id" replace-spaces-with-dashes="false">
           <auto-complete source="findOrganisaatiolaji($query)" display-property="nimi" min-length="1"
@@ -43,7 +43,7 @@
       </form-group>
       <form-group label="Kilpailutusalue" class="col-xs-12 col-sm-6 col-md-4">
         <tags-input id="kilpailutusalue-filter" name="kilpailutusalue-filter"
-                    placeholder="Rajoita viranomaisia"
+                    placeholder="Suodata aikajanaa valitsemalla kilpailutusryhmiä"
                     ng-model="kilpailutusalueFilter" add-from-autocomplete-only="true"
                     display-property="nimi" key-property="id" replace-spaces-with-dashes="false">
           <auto-complete source="findOrganisaatio($query)" display-property="nimi" min-length="1"
@@ -122,10 +122,10 @@
       </div>
   </div>
   <timeline
-  	organisaatiot="organisaatiot"
+  	organisaatiot="timeline.organisaatiot"
   	kilpailutukset="kilpailutukset"
-  	options="timelineOptions"
-  	events="timelineEvents">
+  	options="timeline.options"
+  	events="timeline.events">
   </timeline>
 
 </div>

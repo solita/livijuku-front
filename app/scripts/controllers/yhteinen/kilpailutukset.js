@@ -10,6 +10,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   ['$scope', '$state', '$element', '$uibModal', 'StatusService', 'OrganisaatioService', 'KilpailutusService',
   function ($scope, $state, $element, $uibModal, StatusService, OrganisaatioService, KilpailutusService) {
 
+  $scope.timeline = {};
 
   $scope.kalustokoko = {
     min: 0,
@@ -35,6 +36,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
 
   OrganisaatioService.hae().then(organisaatiot => {
     $scope.organisaatiot = organisaatiot;
+    $scope.timeline.organisaatiot = organisaatiot;
   }, StatusService.errorHandler);
 
   $scope.findOrganisaatio = function (query) {
@@ -50,32 +52,44 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
     $state.go('app.kilpailutus', {id: 'new'});
   }
 
-  KilpailutusService.find().then( kilpailutukset => {
-    $scope.kilpailutukset = _.map(kilpailutukset, kilpailutus => {
-        const dates = [
-          kilpailutus.julkaisupvm,
-          kilpailutus.tarjouspaattymispvm,
-          kilpailutus.hankintapaatospvm,
-          kilpailutus.liikennointialoituspvm,
-          kilpailutus.liikennointipaattymispvm,
-          c.coalesce(kilpailutus.hankittuoptiopaattymispvm, kilpailutus.liikennointipaattymispvm),
-          kilpailutus.optiopaattymispvm];
+  $scope.$watchCollection('filter.organisaatiot', organisaatiot => {
+    if (_.isEmpty(organisaatiot)) {
+      $scope.timeline.organisaatiot = $scope.organisaatiot;
+    } else {
+      $scope.timeline.organisaatiot = _.clone(organisaatiot);
+    }
+  });
 
-        const maxdate = _.max(dates);
+  loadKilpailutukset();
 
-        if (c.isBlank(maxdate)) {
-          throw "Kilpailutuksella " + kilpailutus.id + " ei ole yhtään päivämäärää."
-        }
+  function loadKilpailutukset() {
+    KilpailutusService.find($scope.filter).then( kilpailutukset => {
+      $scope.kilpailutukset = _.map(kilpailutukset, kilpailutus => {
+          const dates = [
+            kilpailutus.julkaisupvm,
+            kilpailutus.tarjouspaattymispvm,
+            kilpailutus.hankintapaatospvm,
+            kilpailutus.liikennointialoituspvm,
+            kilpailutus.liikennointipaattymispvm,
+            c.coalesce(kilpailutus.hankittuoptiopaattymispvm, kilpailutus.liikennointipaattymispvm),
+            kilpailutus.optiopaattymispvm];
 
-        kilpailutus.dates = _.map(dates, (date, index) => t.toLocalMidnight(c.isNotBlank(date) ?
-          date :
-          c.coalesce(_.find(_.slice(dates, index), c.isNotBlank), maxdate)))
+          const maxdate = _.max(dates);
 
-        return kilpailutus;
-      });
-  }, StatusService.errorHandler);
+          if (c.isBlank(maxdate)) {
+            throw "Kilpailutuksella " + kilpailutus.id + " ei ole yhtään päivämäärää."
+          }
 
-  $scope.timelineOptions = {
+          kilpailutus.dates = _.map(dates, (date, index) => t.toLocalMidnight(c.isNotBlank(date) ?
+            date :
+            c.coalesce(_.find(_.slice(dates, index), c.isNotBlank), maxdate)))
+
+          return kilpailutus;
+        });
+    }, StatusService.errorHandler);
+  }
+
+  $scope.timeline.options = {
     locales: {
       fi: {
         months: ['Tammi', 'Helmi', 'Maalis', 'Huhti', 'Touko', 'Kesä', 'Heinä', 'Elo', 'Syys', 'Loka', 'Marras', 'Joulu']
@@ -93,7 +107,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
     orientation: 'both'
   };
 
-  $scope.timelineEvents = {
+  $scope.timeline.events = {
     select: (properties) => {
       let $target = jQuery(properties.event.target);
       if (!$target.hasClass('link-to-hilma')) {
