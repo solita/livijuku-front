@@ -49,9 +49,20 @@
 	      	<textarea name="lisatiedot" ng-model="kilpailutus.selite"></textarea>
       	</form-group>
       </div>
-      <div class="col-xs-12">
-      	<p><a href="kilpailutus.linkToHilma">{{ kilpailutus.linkToHilma }}</a></p>
-     	</div>
+    </div>
+    <div class="row">
+      <form-group label="Linkki hilmaan" class="col-md-6">
+        <input id="hilmalinkki" name="hilmalinkki" type="text"
+         ng-model="kilpailutus.hilmalinkki"
+         ng-disabled="isReadonly()"
+         placeholder="Linkki kilpailutuksen tietoihin hilma-järjestelmässä"/>
+      </form-group>
+      <form-group label="Linkki kilpailutuksen asiakirjoihin" class="col-md-6">
+        <input id="asiakirjalinkki" name="asiakirjalinkki" type="text"
+         ng-model="kilpailutus.asiakirjalinkki"
+         ng-disabled="isReadonly()"
+         placeholder="Linkki kilpailutuksen asiakirjoihin"/>
+      </form-group>
     </div>
   	<h3>Kilpailutus</h3>
     <div class="row">

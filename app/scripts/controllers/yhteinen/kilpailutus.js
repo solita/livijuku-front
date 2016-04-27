@@ -41,6 +41,9 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
 
             optioselite: null,
 
+            hilmalinkki: null,
+            asiakirjalinkki: null,
+
             liikennoitsijanimi: null,
             tarjousmaara:  null,
             tarjoushinta1: null,

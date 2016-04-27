@@ -55,8 +55,8 @@ export function timeline () {
               group: kilpailutus.organisaatioid,
               subgroup: kilpailutus.id,
               title: kilpailutus.kohdenimi,
-              style: 'background-color: transparent; color: white; border: 1px solid transparent; z-index: 2; height: 24px; line-height: 10px;',
-              linkToHilma: kilpailutus.linkToHilma
+              style: 'background-color: transparent; color: white; border: 1px solid transparent; z-index: 2; height: 24px; line-height: 10px; ',
+              linkToHilma: kilpailutus.hilmalinkki
             });
 
             return subgroup;
@@ -64,8 +64,9 @@ export function timeline () {
 
           scope.options.template = (item) => {
             if (item.linkToHilma) {
-              return '<p style="margin: 0;">' + item.content + ' <a class="link-to-hilma" href="' + item.linkToHilma +
-                '" style="background-color: #ffffff; text-transform: uppercase; font-size: 10px; border-radius: 4px; padding: 0.2em;">Hilma</a></p>';
+              //return '<p>' + item.content + ' &nbsp; <span class="label label-default">Hilma</span> </p>';
+              return '<p>' + item.content + ' &nbsp; <a class="link-to-hilma" href="http://' + item.linkToHilma +
+                '" style="background-color: #ffffff; font-size: 10px; border-radius: 4px; padding: 0.2em; vertical-align: middle;">Hilma</a></p>';
             } else {
               return item.content;
             }
