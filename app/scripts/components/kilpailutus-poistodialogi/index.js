@@ -17,7 +17,7 @@ module.exports = function ($uibModal, KilpailutusService, StatusService, $state)
     restrict: 'A',
     replace: true,
     scope: {
-      kilpailutusid: "@"
+      kilpailutusid: "<"
     },
     link: function (scope, element, attrs) {
       element.bind('click', function () {
