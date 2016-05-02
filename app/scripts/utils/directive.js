@@ -92,6 +92,7 @@ export function createTabFunctions($scope, tabProperty) {
   };
 }
 
+// see: http://stackoverflow.com/questions/30628611/programmatically-set-all-form-fields-to-ng-touched-on-form-submission
 export function touchErrorFields(form) {
   _.forEach(form.$error, function (error) {
       _.forEach(error, function(errorField){
