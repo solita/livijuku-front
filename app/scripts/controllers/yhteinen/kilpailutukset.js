@@ -21,7 +21,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   $scope.kohdearvo = {
     min: 0,
     max: 90000000,
-    options: {floor: 0, ceil: 90000000}
+    options: {floor: 0, ceil: 90000000, step: 1000, translate: tl.numberFormatTooltip}
   }
 
   $scope.filter = {
