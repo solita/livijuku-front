@@ -56,6 +56,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   $scope.$watchCollection('filter.organisaatiolajit', filterTimelineOrganisaatiot);
   $scope.$watchGroup(['kalustokoko.min', 'kalustokoko.max', 'kohdearvo.min', 'kohdearvo.max'],
     filterTimelineKilpailutukset);
+  $scope.$watchGroup(['kilpailutuskausi', 'liikennointikausi'], loadKilpailutukset);
 
   function findOrganisaatiotInLajit(lajitunnukset) {
     return _.isEmpty(lajitunnukset) ? [] :
@@ -93,17 +94,21 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
 
   loadKilpailutukset();
 
+  const showKausi = (show, value) => show || (!$scope.kilpailutuskausi &&  !$scope.liikennointikausi) ? value : null;
+  const showKilpailutuskausi = (date) => showKausi($scope.kilpailutuskausi, date);
+  const showLiikennointikausi = (date) => showKausi($scope.liikennointikausi, date);
+
   function loadKilpailutukset() {
     KilpailutusService.find().then( kilpailutukset => {
       $scope.kilpailutukset = _.map(kilpailutukset, kilpailutus => {
           const dates = [
-            kilpailutus.julkaisupvm,
-            kilpailutus.tarjouspaattymispvm,
-            kilpailutus.hankintapaatospvm,
+            showKilpailutuskausi(kilpailutus.julkaisupvm),
+            showKilpailutuskausi(kilpailutus.tarjouspaattymispvm),
+            showKilpailutuskausi(kilpailutus.hankintapaatospvm),
             kilpailutus.liikennointialoituspvm,
-            kilpailutus.liikennointipaattymispvm,
-            c.coalesce(kilpailutus.hankittuoptiopaattymispvm, kilpailutus.liikennointipaattymispvm),
-            kilpailutus.optiopaattymispvm];
+            showLiikennointikausi(kilpailutus.liikennointipaattymispvm),
+            showLiikennointikausi(c.coalesce(kilpailutus.hankittuoptiopaattymispvm, kilpailutus.liikennointipaattymispvm)),
+            showLiikennointikausi(kilpailutus.optiopaattymispvm)];
 
           const maxdate = _.max(dates);
 
@@ -117,7 +122,8 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
 
           return kilpailutus;
         });
-      $scope.timeline.kilpailutukset = $scope.kilpailutukset;
+
+      filterTimelineKilpailutukset();
     }, StatusService.errorHandler);
   }
 
