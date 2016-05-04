@@ -21,6 +21,13 @@ window.jQuery = require('jquery');
 window.d3 = require('d3/d3.js');
 
 /**
+ * Moment js -kirjasto pitää laittaa window muuttujaan,
+ * koska muuten vis.js kirjasto käyttää omaa moment kirjastoa, johon ei ole ladattu suomen kieltä.
+ */
+window.moment = require('moment');
+require('moment/locale/fi');
+
+/**
  * Alustava xsrf-token arvo, jota käytetään ensimmäiseen backend-pyyntöön.
  * Ensimmäisessä pyynnössä backend antaa vastauksena tietoturvallisen satunnaisluvun.
  * CRSF-hyökkäys esto perustuu double submit cookie -malliin.
@@ -47,7 +54,7 @@ require('ng-csv');
 require('iban/iban.js');
 require('nya-bootstrap-select');
 require('angularjs-slider');
-require('ng-tags-input')
+require('ng-tags-input');
 
 angular
   .module('jukufrontApp', [

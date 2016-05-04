@@ -20,8 +20,8 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
 
   $scope.kohdearvo = {
     min: 0,
-    max: 90000000,
-    options: {floor: 0, ceil: 90000000, step: 1000, translate: tl.numberFormatTooltip}
+    max: 10000000,
+    options: {floor: 0, ceil: 10000000, step: 1000, translate: tl.numberFormatTooltip}
   }
 
   $scope.filter = {
@@ -128,11 +128,6 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   }
 
   $scope.timeline.options = {
-    locales: {
-      fi: {
-        months: ['Tammi', 'Helmi', 'Maalis', 'Huhti', 'Touko', 'Kesä', 'Heinä', 'Elo', 'Syys', 'Loka', 'Marras', 'Joulu']
-      }
-    },
     locale: 'fi',
     groupOrder: 'id',
     //min: new Date(2016, 1, 1),
