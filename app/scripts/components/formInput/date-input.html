@@ -1,0 +1,29 @@
+
+<div class="input-group">
+
+  <input id="{{id}}-input"
+         name="{{name}}"
+         type="text"
+         class="form-control"
+         uib-datepicker-popup="d.M.yyyy"
+         alt-input-formats="['d!.M!.yy', 'd!.M!.yyyy']"
+         ng-model="model" ng-model-options="{ timezone: 'UTC' }"
+         placeholder="pp.kk.vvvv"
+         datepicker-options="dateOptions"
+         is-open="isOpen"
+         ng-required="required"
+         show-button-bar="false" noenter/>
+
+  <span class="input-group-btn">
+    <button
+      type="button"
+      class="btn"
+      ng-class= "{ 'btn-default': !isError(), 'btn-danger': isError() }"
+      id="{{id}}-popup-button"
+      ng-click="togglePopupCalendar($event)">
+      <i class="glyphicon glyphicon-calendar"></i>
+    </button>
+  </span>
+</div>
+
+
