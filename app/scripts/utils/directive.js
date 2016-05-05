@@ -79,7 +79,7 @@ export function maxlengthTextErrorMessage(maxlength) {
 }
 
 export function dateErrorMessage(input) {
-  return input.$error.date ? 'Päivämäärä on virheellisen muotoinen. Sallittu muoto on päivä.kuukausi.vuosi. Etunollat ei ole pakollisia päivissä eikä kuukausissa ja vuosi voidaan määrittää neljällä tai kahdella numerolla.' : null;
+  return input.$error.date ? 'Päivämäärä on virheellisen muotoinen. Sallittu muoto on päivä.kuukausi.vuosi. Vuosiluku on mahdollista määrittää neljällä tai kahdella numerolla.' : null;
 }
 
 export function combineErrorMessages() {

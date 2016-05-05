@@ -39,6 +39,11 @@ function formGroupDirective(template) {
       var input = findInputElement(element);
       assertInputIsDefined(input, element[0]);
 
+      /*
+       * Feedback icons only work with textual <input class="form-control"> elements.
+       * They also do not work with input group with the add-on on the right.
+       * See https://github.com/twbs/bootstrap/issues/12551
+       */
       scope.feedbackSupport = elementNameIn(input[0], ['input']);
 
       if (elementNameIn(input[0], ['input', 'select', 'textarea', 'ol'])) {
@@ -148,6 +153,10 @@ export function dateInput() {
         altInputFormats: ['dd.MM.yyyy']
       };
 
+      /*
+       * Class has-error does not change the color of buttons in an input-group
+       * For buttons has-error color is obtained using class: btn-danger.
+       */
       $scope.isError = function () {
         return form[$scope.name].$invalid && form[$scope.name].$touched;
       }
