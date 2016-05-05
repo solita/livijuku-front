@@ -329,6 +329,7 @@ angular
   .directive('formGroupCompact', require("components/formInput").formGroupCompact)
   .directive('formGroup', require("components/formInput").formGroup)
   .directive('integerOnly', require("components/formInput").integerParser)
+  .directive('dateInput', require("components/formInput").dateInput)
   .directive('tunnuslukuEditForms', directive.caseTemplate(
     {TTYT: require('views/tunnusluvut/muokkaus-ttyt.html'),
      BR:   require('views/tunnusluvut/muokkaus-psab.html'),

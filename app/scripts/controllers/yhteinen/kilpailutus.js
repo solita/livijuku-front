@@ -22,6 +22,12 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
     const isNew = $state.params.id == 'new';
     $scope.isNew = isNew;
 
+    $scope.dateOptions = {
+      formatYear: 'yyyy',
+      startingDay: 1,
+      formatMonth: 'MM'
+    };
+
     if (isNew) {
       $q.all([OrganisaatioService.hae(), KayttajaService.hae()]).then(
         ([organisaatiot, user]) => {
@@ -99,6 +105,8 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
 
     $scope.kohdenimiErrorMessage = d.requiredErrorMessage('Kohteen nimi');
     $scope.liikennointialoituspvmErrorMessage = d.requiredErrorMessage('Liikennöinnin aloittaminen');
-    $scope.liikennointipaattymispvmErrorMessage = d.requiredErrorMessage('Liikennöinnin päättäminen');
+    $scope.liikennointipaattymispvmErrorMessage = d.combineErrorMessages(
+      d.dateErrorMessage,
+      d.requiredErrorMessage('Liikennöinnin päättäminen'));
 
   }]);

@@ -95,18 +95,18 @@
 	 	<div class="row">
 			<div class="col-sm-6 col-md-3">
       	<form-group label="Liikennöinnin aloituspäivä" errormessage="liikennointialoituspvmErrorMessage">
-	        <input id="liikennointialoituspvm" name="liikennointialoituspvm" type="date" required
-           ng-model="kilpailutus.liikennointialoituspvm"
-           ng-disabled="isReadonly()"
-           placeholder="pp.kk.vvvv"/>
+	        <date-input id="liikennointialoituspvm" name="liikennointialoituspvm" required
+                      model="kilpailutus.liikennointialoituspvm"
+                      input-disabled="isReadonly()">
+          </date-input>
 	      </form-group>
 	    </div>
     	<div class="col-sm-6 col-md-3">
       	<form-group label="Liikennöinnin päättyminen" errormessage="liikennointipaattymispvmErrorMessage">
-	        <input id="liikennointipaattymispvm" name="liikennointipaattymispvm" type="date" required
-           ng-model="kilpailutus.liikennointipaattymispvm"
-           ng-disabled="isReadonly()"
-           placeholder="pp.kk.vvvv"/>
+	        <date-input id="liikennointipaattymispvm" name="liikennointipaattymispvm" required
+                      model="kilpailutus.liikennointipaattymispvm"
+                      input-disabled="isReadonly()">
+          </date-input>
 	      </form-group>
 	    </div>
 	  </div>
