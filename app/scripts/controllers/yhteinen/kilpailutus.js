@@ -104,9 +104,17 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
 
 
     $scope.kohdenimiErrorMessage = d.requiredErrorMessage('Kohteen nimi');
+
+    $scope.julkaisupvmErrorMessage = d.dateErrorMessage;
+    $scope.tarjouspaattymispvmErrorMessage = d.dateErrorMessage;
+    $scope.hankintapaatospvmErrorMessage = d.dateErrorMessage;
+
     $scope.liikennointialoituspvmErrorMessage = d.requiredErrorMessage('Liikennöinnin aloittaminen');
     $scope.liikennointipaattymispvmErrorMessage = d.combineErrorMessages(
       d.dateErrorMessage,
       d.requiredErrorMessage('Liikennöinnin päättäminen'));
+
+    $scope.hankittuoptiopaattymispvmErrorMessage = d.dateErrorMessage;
+    $scope.optiopaattymispvmErrorMessage = d.dateErrorMessage;
 
   }]);

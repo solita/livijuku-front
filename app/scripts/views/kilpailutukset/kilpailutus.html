@@ -67,27 +67,27 @@
   	<h3>Kilpailutus</h3>
     <div class="row">
       <div class="col-sm-6 col-md-3">
-      	<form-group label="Tarjouksen julkaisupäivä">
-	        <input id="julkaisupvm" name="julkaisupvm" type="date"
-           ng-model="kilpailutus.julkaisupvm"
-           ng-disabled="isReadonly()"
-           placeholder="pp.kk.vvvv"/>
+      	<form-group label="Tarjouksen julkaisupäivä" errormessage="julkaisupvmErrorMessage">
+	        <date-input id="julkaisupvm" name="julkaisupvm" type="text"
+           model="kilpailutus.julkaisupvm"
+           input-disabled="isReadonly()">
+          </date-input>
 	      </form-group>
 	    </div>
 	    <div class="col-sm-6 col-md-3">
-      	<form-group label="Tarjousajan päättyminen">
-	        <input id="tarjouspaattymispvm" name="tarjouspaattymispvm" type="date"
-           ng-model="kilpailutus.tarjouspaattymispvm"
-           ng-disabled="isReadonly()"
-           placeholder="pp.kk.vvvv"/>
+      	<form-group label="Tarjousajan päättyminen" errormessage="tarjouspaattymispvmErrorMessage">
+	        <date-input id="tarjouspaattymispvm" name="tarjouspaattymispvm" type="text"
+           model="kilpailutus.tarjouspaattymispvm"
+           input-disabled="isReadonly()">
+          </date-input>
 	      </form-group>
 	    </div>
 			<div class="col-sm-6 col-md-3">
-      	<form-group label="Hankintapäätös">
-	        <input id="hankintapaatospvm" name="hankintapaatospvm" type="date"
-           ng-model="kilpailutus.hankintapaatospvm"
-           ng-disabled="isReadonly()"
-           placeholder="pp.kk.vvvv"/>
+      	<form-group label="Hankintapäätös" errormessage="hankintapaatospvmErrorMessage">
+	        <date-input id="hankintapaatospvm" name="hankintapaatospvm" type="text"
+           model="kilpailutus.hankintapaatospvm"
+           input-disabled="isReadonly()">
+          </date-input>
 	      </form-group>
 	    </div>
 	  </div>
@@ -121,19 +121,19 @@
 	      </form-group>
       </div>
       <div class="col-sm-4 col-md-3">
-      	<form-group label="Hankitun option päättyminen">
-	        <input id="hankittuoptiopaattymispvm" name="hankittuoptiopaattymispvm" type="date"
-           ng-model="kilpailutus.hankittuoptiopaattymispvm"
-           ng-disabled="isReadonly()"
-           placeholder="pp.kk.vvvv"/>
+      	<form-group label="Hankitun option päättyminen" errormessage="hankittuoptiopaattymispvmErrorMessage">
+	        <date-input id="hankittuoptiopaattymispvm" name="hankittuoptiopaattymispvm" type="text"
+           model="kilpailutus.hankittuoptiopaattymispvm"
+           input-disabled="isReadonly()">
+          </date-input>
 	      </form-group>
       </div>
       <div class="col-sm-4 col-md-3">
-      	<form-group label="Optioiden päättyminen">
-	        <input id="optiopaattymispvm" name="optiopaattymispvm" type="date"
-           ng-model="kilpailutus.optiopaattymispvm"
-           ng-disabled="isReadonly()"
-           placeholder="pp.kk.vvvv"/>
+      	<form-group label="Optioiden päättyminen" errormessage="optiopaattymispvmErrorMessage">
+	        <date-input id="optiopaattymispvm" name="optiopaattymispvm" type="text"
+           model="kilpailutus.optiopaattymispvm"
+           input-disabled="isReadonly()">
+          </date-input>
 	      </form-group>
       </div>
     </div>
