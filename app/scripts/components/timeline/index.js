@@ -65,7 +65,7 @@ export function timeline () {
           scope.options.template = (item) => {
             if (item.linkToHilma) {
               //return '<p>' + item.content + ' &nbsp; <span class="label label-default">Hilma</span> </p>';
-              return '<p>' + item.content + ' &nbsp; <a class="link-to-hilma" href="http://' + item.linkToHilma +
+              return '<p>' + item.content + ' &nbsp; <a class="link-to-hilma" target="_blank" href="' + item.linkToHilma +
                 '" style="background-color: #ffffff; font-size: 10px; border-radius: 4px; padding: 0.2em; vertical-align: middle;">Hilma</a></p>';
             } else {
               return item.content;
