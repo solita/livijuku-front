@@ -555,6 +555,11 @@ input.vis-configuration.vis-config-range:focus::-ms-fill-upper {
   padding: 5px;
 }
 
+.vis-item-overflow:hover {
+  background-color: rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
 .vis-item .vis-delete {
   background: url('img/timeline/delete.png') no-repeat center;
   position: absolute;
