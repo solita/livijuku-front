@@ -91,6 +91,10 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
 
       kilpailutusEdit.id = undefined;
 
+      if (kilpailutusEdit.hilmalinkki.indexOf('http') !== 0) {
+        kilpailutusEdit.hilmalinkki = 'https://' + kilpailutusEdit.hilmalinkki;
+      }
+
       const savePromise = isNew ?
         KilpailutusService.add(kilpailutusEdit) :
         KilpailutusService.save($scope.kilpailutus.id, kilpailutusEdit);
