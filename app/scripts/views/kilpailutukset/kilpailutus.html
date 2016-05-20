@@ -24,26 +24,50 @@
            placeholder="Ilmoita linja(t) tai reitit, joita sopimus koskee"/>
 	      </form-group>
 	    </div>
-      <div class="col-xs-12 col-sm-4 col-md-3">
-      	<form-group label="Kohteen arvioitu arvo">
-	        <input id="kohdearvo" name="kohdearvo" type="text"
-                 placeholder="Arvo (€)"
-                 ng-currency="" numeric-only="" max="9999999999.99"
-                 noenter select-on-click
-                 ng-model="kilpailutus.kohdearvo" ng-disabled="isReadonly()">
-	      </form-group>
-	    </div>
-	    <div class="col-xs-12 col-sm-4 col-md-3">
-	      <form-group label="Arvio kaluston määrästä">
-          <input id="kalusto" name="kalusto"
-                 placeholder="Esim. 8"
-                 type="text" integer-only
-                 ng-readonly="isReadonly()"
-                 noenter select-on-click
-                 ng-model="kilpailutus.kalusto"
-                 class="cursor-auto">
+		</div>
+		<div class="row">
+			<div class="col-sm-4 col-md-3">
+        <form-group label="Sopimustyyppi">
+					<!-- TODO: Tämä on kopioitu organisaatiokohdasta. Vaihdetaan valinnoiksi:
+					Bruttomalli
+					Kysyntäkannustemalli
+					Käyttöoikeussopimus (reitti)
+					Käyttöoikeussopimus (alue)
+					Ei tiedossa
+				 -->
+          <ol id="sopimustyyppi" ng-model="kilpailutus.organisaatioid" ng-disabled="isReadonly()"
+              title="Valitse sopimustyyppi" class="nya-bs-select" size="20" required>
+						<li>
+							<a>Valitse sopimusmalli</a>
+						</li>
+						<li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
+              <a>{{ organisaatio.nimi }}</a>
+            </li>
+          </ol>
         </form-group>
-      </div>
+	    </div>
+			<div class="col-xs-12 col-sm-4 col-md-3">
+				<form-group label="Kohteen arvioitu arvo">
+					<input id="kohdearvo" name="kohdearvo" type="text"
+								 placeholder="Arvo (€)"
+								 ng-currency="" numeric-only="" max="9999999999.99"
+								 noenter select-on-click
+								 ng-model="kilpailutus.kohdearvo" ng-disabled="isReadonly()">
+				</form-group>
+			</div>
+			<div class="col-xs-12 col-sm-4 col-md-3">
+				<form-group label="Arvio kaluston määrästä">
+					<input id="kalusto" name="kalusto"
+								 placeholder="Esim. 8"
+								 type="text" integer-only
+								 ng-readonly="isReadonly()"
+								 noenter select-on-click
+								 ng-model="kilpailutus.kalusto"
+								 class="cursor-auto">
+				</form-group>
+			</div>
+		</div>
+		<div class="row">
       <div class="col-xs-12">
       	<form-group label="Lisätiedot">
 	      	<textarea name="lisatiedot" ng-model="kilpailutus.selite"></textarea>
@@ -51,11 +75,11 @@
       </div>
     </div>
     <div class="row">
-      <form-group label="Linkki hilmaan" class="col-md-6">
+      <form-group label="Linkki HILMA-järjestelmään" class="col-md-6">
         <input id="hilmalinkki" name="hilmalinkki" type="text"
          ng-model="kilpailutus.hilmalinkki"
          ng-disabled="isReadonly()"
-         placeholder="Linkki kilpailutuksen tietoihin hilma-järjestelmässä"/>
+         placeholder="Linkki kilpailutuksen tietoihin HILMA-järjestelmässä"/>
       </form-group>
       <form-group label="Linkki kilpailutuksen asiakirjoihin" class="col-md-6">
         <input id="asiakirjalinkki" name="asiakirjalinkki" type="text"
