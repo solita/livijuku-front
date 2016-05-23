@@ -113,7 +113,9 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
     $scope.tarjouspaattymispvmErrorMessage = d.dateErrorMessage;
     $scope.hankintapaatospvmErrorMessage = d.dateErrorMessage;
 
-    $scope.liikennointialoituspvmErrorMessage = d.requiredErrorMessage('Liikennöinnin aloittaminen');
+    $scope.liikennointialoituspvmErrorMessage = d.combineErrorMessages(
+      d.dateErrorMessage,
+      d.requiredErrorMessage('Liikennöinnin aloittaminen'));
     $scope.liikennointipaattymispvmErrorMessage = d.combineErrorMessages(
       d.dateErrorMessage,
       d.requiredErrorMessage('Liikennöinnin päättäminen'));
