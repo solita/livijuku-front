@@ -92,8 +92,6 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
     }
   }
 
-  loadKilpailutukset();
-
   const showKausi = (show, value) => show || (!$scope.kilpailutuskausi &&  !$scope.liikennointikausi) ? value : null;
   const showKilpailutuskausi = (date) => showKausi($scope.kilpailutuskausi, date);
   const showLiikennointikausi = (date) => showKausi($scope.liikennointikausi, date);
