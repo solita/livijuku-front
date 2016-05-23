@@ -36,11 +36,17 @@
             Kaikki hakemukset
           </a>
         </li>
-        <li
-          class="header__button"
-          ng-class = "{'is-active': ('app.tunnusluku' | includedByState) }">
+
+        <li class="header__button" ng-class="{'is-active': tunnusluvutTabActive()}">
+          <a id="tunnusluvut-syottaminen" class="header__link" ui-sref="app.tunnusluku.syottaminen()">
+            Tunnuslukujen syöttäminen
+          </a>
+        </li>
+
+        <li class="header__button" ng-class = "{'is-active': ('app.tilastot' | includedByState) }">
           <juku-statistic-dropdown user="user"></juku-statistic-dropdown>
         </li>
+
         <li class="header__button"
             ng-class="{'is-active': ('app.kilpailutus' | isState) || ('app.kilpailutukset' | isState) }">
           <a class="header__link" ui-sref="app.kilpailutukset">

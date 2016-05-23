@@ -195,17 +195,18 @@ angular
        * Tunnuslukujen raportointi
        */
 
-      .state('app.tunnusluku.valtionavustuskuvaajat', {
+      .state('app.tilastot', root('/tunnusluvut'))
+      .state('app.tilastot.valtionavustuskuvaajat', {
         url: '/valtionavustuskuvaajat/:organisaatiolaji/:avustustyyppi',
         template: require('views/tunnusluvut/raportit-valtionavustuskuvaajat.html'),
         controller: 'TunnuslukuraporttiAvustusCtrl'
       })
-      .state('app.tunnusluku.tunnuslukukuvaajat', {
+      .state('app.tilastot.tunnuslukukuvaajat', {
         url: '/tunnuslukukuvaajat/:organisaatiolaji',
         template: require('views/tunnusluvut/raportit-tunnuslukukuvaajat.html'),
         controller: 'TunnuslukuraporttiCtrl'
       })
-      .state('app.tunnusluku.omakuvaaja', {
+      .state('app.tilastot.omakuvaaja', {
         url: '/omakuvaaja/:tunnuslukuid/:organisaatiolaji',
         template: require('views/tunnusluvut/raportit-omakuvaaja.html'),
         controller: 'TunnuslukuraporttiOmakuvaajaCtrl'
