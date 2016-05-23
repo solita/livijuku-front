@@ -19,25 +19,25 @@
   <ul>
     <li ng-show="sallittu(user, 'view-hakemus')">
       <a ui-sref-active="is-active" ui-sref="app.tunnusluku.syottaminen()" ng-click="uncollapse()">
-        Tunnuslukujen syöttäminen
+        Tunnusluvut
       </a>
     </li>
   </ul>
   <ul ng-show="sallittu(user, 'view-hakemus')">
-    <li ng-show="sallittu(user, 'view-hakemus')">Tilastot</li>
+    <li ng-show="sallittu(user, 'view-hakemus')" class="f-12 f-uppercase Ms-xxs">Tilastot</li>
     <li>
       <a ui-sref-active="is-active" ui-sref="app.tilastot.valtionavustuskuvaajat()" ng-click="uncollapse()">
-        Valtionavustuskuvaajat
+        Valtionavustukset
       </a>
     </li>
     <li>
       <a ui-sref-active="is-active" ui-sref="app.tilastot.tunnuslukukuvaajat()" ng-click="uncollapse()">
-        Tunnuslukukuvaajat
+        Perustunnusluvut
       </a>
     </li>
     <li>
       <a ui-sref-active="is-active" ui-sref="app.tilastot.omakuvaaja()" ng-click="uncollapse()">
-        Oma kuvaaja tunnusluvuista
+        Kaikki tunnusluvut
       </a>
     </li>
   </ul>
