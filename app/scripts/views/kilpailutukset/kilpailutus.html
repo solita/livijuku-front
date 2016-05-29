@@ -28,20 +28,10 @@
 		<div class="row">
 			<div class="col-sm-4 col-md-3">
         <form-group label="Sopimustyyppi">
-					<!-- TODO: Tämä on kopioitu organisaatiokohdasta. Vaihdetaan valinnoiksi:
-					Bruttomalli
-					Kysyntäkannustemalli
-					Käyttöoikeussopimus (reitti)
-					Käyttöoikeussopimus (alue)
-					Ei tiedossa
-				 -->
-          <ol id="sopimustyyppi" ng-model="kilpailutus.organisaatioid" ng-disabled="isReadonly()"
-              title="Valitse sopimustyyppi" class="nya-bs-select" size="20" required>
-						<li>
-							<a>Valitse sopimusmalli</a>
-						</li>
-						<li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
-              <a>{{ organisaatio.nimi }}</a>
+          <ol id="sopimustyyppi" ng-model="kilpailutus.sopimusmallitunnus" ng-disabled="isReadonly()"
+              title="Valitse sopimustyyppi" class="nya-bs-select" size="20">
+						<li nya-bs-option="sopimusmalli in sopimusmallit" data-value="sopimusmalli.tunnus">
+              <a>{{ sopimusmalli.nimi }}</a>
             </li>
           </ol>
         </form-group>

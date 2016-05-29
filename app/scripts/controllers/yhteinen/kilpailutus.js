@@ -36,6 +36,7 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
             kohdearvo: null,
             kalusto:   null,
             selite:    null,
+            sopimusmallitunnus: null,
 
             julkaisupvm:               null,
             tarjouspaattymispvm:       null,
@@ -69,6 +70,10 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
         }, StatusService.errorHandler);
     }
 
+    KilpailutusService.findSopimusmallit().then(sopimusmallit => {
+      $scope.sopimusmallit = _.concat( {tunnus: null, nimi: "Valitse sopimusmalli"}, sopimusmallit);
+    }, StatusService.errorHandler);
+
     $scope.cancel = function () {
       $state.go('app.kilpailutukset');
     };
@@ -91,7 +96,8 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
 
       kilpailutusEdit.id = undefined;
 
-      if (kilpailutusEdit.hilmalinkki.indexOf('http') !== 0) {
+      if (c.isNotBlank(kilpailutusEdit.hilmalinkki) &&
+          kilpailutusEdit.hilmalinkki.indexOf('http') !== 0) {
         kilpailutusEdit.hilmalinkki = 'https://' + kilpailutusEdit.hilmalinkki;
       }
 

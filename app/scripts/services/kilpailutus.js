@@ -7,6 +7,7 @@ var c = require('utils/core');
 angular.module('services.kilpailutus', [])
 
   .factory('KilpailutusService', ['$http', function ($http) {
+    var sopimusmallitPromise = $http.get('api/kilpailutus/sopimusmallit').then(res => res.data);
     return {
       get: function (kilpailutusid) {
         return $http.get('api/kilpailutus/' + kilpailutusid).then(res => res.data);
@@ -22,6 +23,9 @@ angular.module('services.kilpailutus', [])
       },
       delete: function (kilpailutusid) {
         return $http.delete('api/kilpailutus/'+ kilpailutusid);
+      },
+      findSopimusmallit: function () {
+        return sopimusmallitPromise;
       }
     };
   }]);
