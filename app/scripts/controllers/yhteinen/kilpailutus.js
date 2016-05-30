@@ -166,8 +166,9 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
       $state.go('app.kilpailutukset');
     };
 
-    $scope.sopimusmalli = function() {
-      return _.find($scope.sopimusmallit, {tunnus: $scope.kilpailutus.sopimusmallitunnus});
+    $scope.sopimusmallinimi = function() {
+      const sopimusmalli = _.find($scope.sopimusmallit, {tunnus: $scope.kilpailutus.sopimusmallitunnus});
+      return sopimusmalli && sopimusmalli.tunnus ? sopimusmalli.nimi : 'Ei tiedossa';
     };
 
     $scope.save = function () {

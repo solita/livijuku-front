@@ -13,7 +13,7 @@
           </ol>
         </form-group>
       </div>
-      <div class="ol-md-6  col-lg-4" ng-hide="hasOrganisaatioSelectPermission">
+      <div class="col-md-6 col-lg-4" ng-hide="hasOrganisaatioSelectPermission">
         <div class="form-group" >
           <label class="control-label">Organisaatio</label>
           <div>
@@ -43,7 +43,7 @@
         <div class="form-group" ng-if="isReadonly">
           <label class="control-label">Sopimustyyppi</label>
           <div>
-            <p class="form-control-static">{{ sopimusmalli().nimi }}</p>
+            <p class="form-control-static">{{ sopimusmallinimi() }}</p>
           </div>
         </div>
 	    </div>
@@ -257,11 +257,11 @@
 
   <juku-controls>
     <juku-controls-buttons class="full-width">
-      <button ng-show="!isNew"
+      <button ng-show="!isNew && !isReadonly"
       	juku-kilpailutus-poistodialogi kilpailutusid="kilpailutus.id"
         class="btn btn-danger Ms-0 pull-left">Poista kilpailutus</button>
 
-      <button data-ng-click="save()" class="btn btn-success pull-right">Tallenna ja sulje lomake</button>
+      <button data-ng-click="save()" class="btn btn-success pull-right" ng-hide="isReadonly">Tallenna ja sulje lomake</button>
       <button data-ng-click="cancel()" class="btn btn-warning pull-right">Sulje lomake</button>
     </juku-controls-buttons>
   </juku-controls>
