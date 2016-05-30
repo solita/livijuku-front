@@ -3,40 +3,51 @@
   <ng-form name="kilpailutusForm" focus-to-invalid juku-poistumisvaroitus kilpailutus-pvm-validator>
   	<h3>Kohde</h3>
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-6 col-lg-4" ng-show="hasOrganisaatioSelectPermission">
         <form-group label="Organisaatio">
-          <ol id="organisaatio" ng-model="kilpailutus.organisaatioid" ng-disabled="isReadonly()"
+          <ol id="organisaatio" ng-model="kilpailutus.organisaatioid"
               title="Valitse toimivaltainen viranomainen" class="nya-bs-select" size="20" required>
             <li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
               <a>{{ organisaatio.nimi }}</a>
             </li>
           </ol>
-          <!--p class="form-control-static">{{ organisaatio.nimi }}</p-->
         </form-group>
+      </div>
+      <div class="ol-md-6  col-lg-4" ng-hide="hasOrganisaatioSelectPermission">
+        <div class="form-group" >
+          <label class="control-label">Organisaatio</label>
+          <div>
+            <p class="form-control-static">{{ organisaatio.nimi }}</p>
+          </div>
+        </div>
 	    </div>
-    </div>
-    <div class="row">
-	   	<div class="col-sm-4 col-md-6">
+	   	<div class="col-md-6 col-lg-6">
 		   	<form-group label="Kohteen nimi" errormessage="kohdenimiErrorMessage">
 	        <input id="kohdenimi" name="kohdenimi" type="text" required maxlength="200"
            ng-model="kilpailutus.kohdenimi"
-           ng-disabled="isReadonly()"
+           ng-readonly="isReadonly"
            placeholder="Ilmoita linja(t) tai reitit, joita sopimus koskee"/>
 	      </form-group>
 	    </div>
 		</div>
 		<div class="row">
-			<div class="col-sm-4 col-md-3">
-        <form-group label="Sopimustyyppi">
-          <ol id="sopimustyyppi" ng-model="kilpailutus.sopimusmallitunnus" ng-disabled="isReadonly()"
+			<div class="col-md-4">
+        <form-group label="Sopimustyyppi" ng-if="!isReadonly">
+          <ol id="sopimustyyppi" ng-model="kilpailutus.sopimusmallitunnus"
               title="Valitse sopimustyyppi" class="nya-bs-select" size="20">
 						<li nya-bs-option="sopimusmalli in sopimusmallit" data-value="sopimusmalli.tunnus">
               <a>{{ sopimusmalli.nimi }}</a>
             </li>
           </ol>
         </form-group>
+        <div class="form-group" ng-if="isReadonly">
+          <label class="control-label">Sopimustyyppi</label>
+          <div>
+            <p class="form-control-static">{{ sopimusmalli().nimi }}</p>
+          </div>
+        </div>
 	    </div>
-			<div class="col-xs-12 col-sm-4 col-md-3">
+			<div class="col-md-4 col-lg-3">
 				<form-group
 					label="Kohteen arvioitu arvo"
 					uib-tooltip="Hankinnan koko sopimuskauden arvioitu arvo optiokausineen"
@@ -48,10 +59,10 @@
 								 placeholder="Arvo (€)"
 								 ng-currency="" numeric-only="" max="9999999999.99"
 								 noenter select-on-click
-								 ng-model="kilpailutus.kohdearvo" ng-disabled="isReadonly()">
+								 ng-model="kilpailutus.kohdearvo" ng-readonly="isReadonly">
 				</form-group>
 			</div>
-			<div class="col-xs-12 col-sm-4 col-md-3">
+			<div class="col-md-4 col-lg-3">
 				<form-group
 					label="Arvio kaluston määrästä"
 					uib-tooltip="Arvio liikennöitsijältä vaadittavasta kaluston määrästä"
@@ -60,9 +71,9 @@
 					tooltip-append-to-body="true">
 					<span class="text-info small glyphicon glyphicon-question-sign"></span>
 					<input id="kalusto" name="kalusto"
-								 placeholder="Esim. 8"
+								 placeholder="Lukumäärä (kpl)"
 								 type="text" integer-only
-								 ng-readonly="isReadonly()"
+								 ng-readonly="isReadonly"
 								 noenter select-on-click
 								 ng-model="kilpailutus.kalusto"
 								 class="cursor-auto">
@@ -72,7 +83,8 @@
 		<div class="row">
       <div class="col-xs-12">
       	<form-group label="Lisätiedot">
-	      	<textarea name="lisatiedot" ng-model="kilpailutus.selite" rows="10" maxlength="20000" placeholder="Lisätietoja tarjousten vertailuperusteista, vaadittavasta kalustosta (koko, euroluokka) ja muusta kilpailutukseen liittyvästä"></textarea>
+	      	<textarea name="lisatiedot" ng-model="kilpailutus.selite" rows="10" ng-readonly="isReadonly"
+            maxlength="20000" placeholder="Lisätietoja tarjousten vertailuperusteista, vaadittavasta kalustosta (koko, euroluokka) ja muusta kilpailutukseen liittyvästä"></textarea>
       	</form-group>
       </div>
     </div>
@@ -87,7 +99,7 @@
 				<span class="text-info small glyphicon glyphicon-question-sign"></span>
         <input id="hilmalinkki" name="hilmalinkki" type="text"
          ng-model="kilpailutus.hilmalinkki"
-         ng-disabled="isReadonly()"
+         ng-readonly="isReadonly"
          placeholder="Linkki kilpailutuksen tietoihin HILMA-järjestelmässä"/>
       </form-group>
       <form-group
@@ -100,7 +112,7 @@
 				<span class="text-info small glyphicon glyphicon-question-sign"></span>
         <input id="asiakirjalinkki" name="asiakirjalinkki" type="text"
          ng-model="kilpailutus.asiakirjalinkki"
-         ng-disabled="isReadonly()"
+         ng-readonly="isReadonly"
          placeholder="Linkki kilpailutuksen asiakirjoihin"/>
       </form-group>
     </div>
@@ -110,7 +122,7 @@
       	<form-group label="Tarjouspyynnön julkaisupäivä" errormessage="julkaisupvmErrorMessage">
 	        <date-input id="julkaisupvm" name="julkaisupvm" type="text"
            model="kilpailutus.julkaisupvm"
-           input-disabled="isReadonly()">
+           input-readonly="isReadonly">
           </date-input>
 	      </form-group>
 	    </div>
@@ -118,7 +130,7 @@
       	<form-group label="Tarjousajan päättyminen" errormessage="tarjouspaattymispvmErrorMessage">
 	        <date-input id="tarjouspaattymispvm" name="tarjouspaattymispvm" type="text"
            model="kilpailutus.tarjouspaattymispvm"
-           input-disabled="isReadonly()">
+           input-readonly="isReadonly">
           </date-input>
 	      </form-group>
 	    </div>
@@ -126,7 +138,7 @@
       	<form-group label="Hankintapäätös" errormessage="hankintapaatospvmErrorMessage">
 	        <date-input id="hankintapaatospvm" name="hankintapaatospvm" type="text"
            model="kilpailutus.hankintapaatospvm"
-           input-disabled="isReadonly()">
+           input-readonly="isReadonly">
           </date-input>
 	      </form-group>
 	    </div>
@@ -137,7 +149,7 @@
       	<form-group label="Liikennöinnin aloituspäivä" errormessage="liikennointialoituspvmErrorMessage">
 	        <date-input id="liikennointialoituspvm" name="liikennointialoituspvm" required
                       model="kilpailutus.liikennointialoituspvm"
-                      input-disabled="isReadonly()">
+                      input-readonly="isReadonly">
           </date-input>
 	      </form-group>
 	    </div>
@@ -145,7 +157,7 @@
       	<form-group label="Liikennöinnin päättyminen" errormessage="liikennointipaattymispvmErrorMessage">
 	        <date-input id="liikennointipaattymispvm" name="liikennointipaattymispvm" required
                       model="kilpailutus.liikennointipaattymispvm"
-                      input-disabled="isReadonly()">
+                      input-readonly="isReadonly">
           </date-input>
 	      </form-group>
 	    </div>
@@ -163,7 +175,7 @@
 	        <input id="optioselite" name="optioselite" type="text"
            ng-model="kilpailutus.optioselite"
            maxlength="1000"
-           ng-disabled="isReadonly()"
+           ng-readonly="isReadonly"
            placeholder="Optiokaudet"/>
 	      </form-group>
       </div>
@@ -178,7 +190,7 @@
 					<span class="text-info small glyphicon glyphicon-question-sign"></span>
 	        <date-input id="hankittuoptiopaattymispvm" name="hankittuoptiopaattymispvm" type="text"
            model="kilpailutus.hankittuoptiopaattymispvm"
-           input-disabled="isReadonly()">
+           input-readonly="isReadonly">
           </date-input>
 	      </form-group>
       </div>
@@ -193,7 +205,7 @@
 					<span class="text-info small glyphicon glyphicon-question-sign"></span>
 	        <date-input id="optiopaattymispvm" name="optiopaattymispvm" type="text"
            model="kilpailutus.optiopaattymispvm"
-           input-disabled="isReadonly()">
+           input-readonly="isReadonly">
           </date-input>
 	      </form-group>
       </div>
@@ -205,8 +217,8 @@
 	        <input id="liikennoitsijanimi" name="liikennoitsijanimi" type="text"
 	         ng-model="kilpailutus.liikennoitsijanimi"
            maxlength="200"
-	         ng-disabled="isReadonly()"
-	         placeholder="Liikennöitsijä"/>
+	         ng-readonly="isReadonly"
+	         placeholder="Liikennöitsijän nimi"/>
 	      </form-group>
 	    </div>
 	  </div>
@@ -216,7 +228,7 @@
           <input id="tarjousmaara" name="tarjousmaara"
                  placeholder="Esim. 18"
                  type="text" integer-only
-                 ng-readonly="isReadonly()"
+                 ng-readonly="isReadonly"
                  noenter select-on-click
                  ng-model="kilpailutus.tarjousmaara"
                  class="cursor-auto">
@@ -228,7 +240,7 @@
                  class="form-control" placeholder="Hinta (€)"
                  ng-currency="" numeric-only="" max="9999999999.99"
                  noenter select-on-click
-                 ng-model="kilpailutus.tarjoushinta1" ng-disabled="isReadonly()">
+                 ng-model="kilpailutus.tarjoushinta1" ng-readonly="isReadonly">
 	      </form-group>
 	    </div>
 	    <div class="col-sm-4 col-md-4">
@@ -237,7 +249,7 @@
                  class="form-control" placeholder="Hinta (€)"
                  ng-currency="" numeric-only="" max="9999999999.99"
                  noenter select-on-click
-                 ng-model="kilpailutus.tarjoushinta2" ng-disabled="isReadonly()">
+                 ng-model="kilpailutus.tarjoushinta2" ng-readonly="isReadonly">
 	      </form-group>
 	    </div>
     </div>

@@ -5,6 +5,7 @@ var angular = require('angular');
 var d = require('utils/directive');
 var c = require('utils/core');
 var t = require('utils/time');
+var u = require('utils/user');
 
 const kilpailutusPVMProperties = [
   'julkaisupvm',
@@ -92,6 +93,17 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
       formatMonth: 'MM'
     };
 
+    function setEditState(user, kilpailutus) {
+      if (u.hasPermission(user, 'modify-kaikki-kilpailutukset')) {
+        $scope.hasOrganisaatioSelectPermission = true;
+        $scope.isReadonly = false;
+      } else if (u.hasPermission(user, 'modify-omat-kilpailutukset') && (user.organisaatioid === kilpailutus.organisaatioid)) {
+        $scope.isReadonly = false;
+      } else {
+        $scope.isReadonly = true;
+      }
+    }
+
     if (isNew) {
       $q.all([OrganisaatioService.hae(), KayttajaService.hae()]).then(
         ([organisaatiot, user]) => {
@@ -121,16 +133,28 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
             tarjoushinta2: null
           };
           $scope.organisaatio = _.find(organisaatiot, {id: user.organisaatioid});
-          $scope.organisaatiot = organisaatiot;
+          $scope.organisaatiot = u.filterNotLivi(organisaatiot);
+
+          setEditState(user, $scope.kilpailutus);
+
+          if (u.hasPermission(user, 'modify-kaikki-kilpailutukset')) {
+            $scope.kilpailutus.organisaatioid = null;
+          } else if ($scope.isReadonly) {
+            StatusService.virhe('', 'Käyttäjällä ei ole käyttöoikeuksia kilpailutustiedon lisäämiseen');
+          }
+
         }, StatusService.errorHandler);
     } else {
-      $q.all([OrganisaatioService.hae(), KilpailutusService.get($state.params.id)]).then(
-        ([organisaatiot, kilpailutus]) => {
+      $q.all([OrganisaatioService.hae(), KilpailutusService.get($state.params.id), KayttajaService.hae()]).then(
+        ([organisaatiot, kilpailutus, user]) => {
           $scope.kilpailutus = c.updateAll(kilpailutus, kilpailutusPVMProperties, value => c.isNotBlank(value) ? new Date(value) : null);
 
           $scope.organisaatio = _.find(organisaatiot, {id: kilpailutus.organisaatioid});
 
-          $scope.organisaatiot = organisaatiot;
+          $scope.organisaatiot = u.filterNotLivi(organisaatiot);
+
+          setEditState(user, kilpailutus);
+
         }, StatusService.errorHandler);
     }
 
@@ -140,6 +164,10 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
 
     $scope.cancel = function () {
       $state.go('app.kilpailutukset');
+    };
+
+    $scope.sopimusmalli = function() {
+      return _.find($scope.sopimusmallit, {tunnus: $scope.kilpailutus.sopimusmallitunnus});
     };
 
     $scope.save = function () {
