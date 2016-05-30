@@ -26,21 +26,12 @@ const kilpailutusPVMNames = {
   optiopaattymispvm:         'optioiden päättyminen'
 };
 
-function createLessThanValidator(scope, path) {
+function createOrderValidator(scope, path, orderrelation) {
   return function(modelValue, viewValue) {
     var othervalue = _.get(scope, path);
     return c.isNullOrUndefined(modelValue) ||
            c.isNullOrUndefined(othervalue) ||
-           modelValue < othervalue;
-  }
-}
-
-function createGtThanValidator(scope, path) {
-  return function(modelValue, viewValue) {
-    var othervalue = _.get(scope, path);
-    return c.isNullOrUndefined(modelValue) ||
-           c.isNullOrUndefined(othervalue) ||
-           modelValue > othervalue;
+           orderrelation(modelValue, othervalue);
   }
 }
 
@@ -49,27 +40,27 @@ angular.module('jukufrontApp').directive('kilpailutusPvmValidator', function () 
     require: 'form',
     link: function(scope, elem, attr, form) {
 
-      function setValidators(properties, errortype, validatorFn) {
+      function setValidators(properties, errortype, orderrelation) {
         _.forEach(_.initial(properties), (property, index) => {
           _.forEach(_.slice(properties, index + 1), (otherProperty) => {
-            form[property].$validators[errortype + '-' + otherProperty] = validatorFn(scope, 'kilpailutus.' + otherProperty);
+            form[property].$validators[errortype + '-' + otherProperty] = createOrderValidator(scope, 'kilpailutus.' + otherProperty, orderrelation);
           });
         })
       }
 
-      setValidators(kilpailutusPVMProperties, 'less-than', createLessThanValidator);
-      setValidators(_.reverse(_.clone(kilpailutusPVMProperties)), 'gt-than', createGtThanValidator);
+      setValidators(kilpailutusPVMProperties, 'less-than', (modelValue, othervalue) => modelValue < othervalue);
+      setValidators(_.reverse(_.clone(kilpailutusPVMProperties)), 'gt-than', (modelValue, othervalue) => modelValue > othervalue);
+
+      form.hankittuoptiopaattymispvm.$validators['less-than-optiopaattymispvm'] =
+        createOrderValidator(scope, 'kilpailutus.optiopaattymispvm', (modelValue, othervalue) => modelValue <= othervalue);
+
+      form.optiopaattymispvm.$validators['gt-than-hankittuoptiopaattymispvm'] =
+        createOrderValidator(scope, 'kilpailutus.hankittuoptiopaattymispvm', (modelValue, othervalue) => modelValue >= othervalue);
 
 
       function validate() {
         _.forEach(kilpailutusPVMProperties, (property, index) => {
-          const currentErrors = _.size(form[property].$error);
           form[property].$validate();
-
-          // if validation has caused more errors then mark the control touched
-          if (currentErrors < _.size(form[property].$error)) {
-            form[property].$setTouched();
-          }
         });
       }
 

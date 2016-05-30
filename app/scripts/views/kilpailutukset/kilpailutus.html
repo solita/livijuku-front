@@ -18,7 +18,7 @@
     <div class="row">
 	   	<div class="col-sm-4 col-md-6">
 		   	<form-group label="Kohteen nimi" errormessage="kohdenimiErrorMessage">
-	        <input id="kohdenimi" name="kohdenimi" type="text" required
+	        <input id="kohdenimi" name="kohdenimi" type="text" required maxlength="200"
            ng-model="kilpailutus.kohdenimi"
            ng-disabled="isReadonly()"
            placeholder="Ilmoita linja(t) tai reitit, joita sopimus koskee"/>
@@ -72,7 +72,7 @@
 		<div class="row">
       <div class="col-xs-12">
       	<form-group label="Lisätiedot">
-	      	<textarea name="lisatiedot" ng-model="kilpailutus.selite" rows="10" placeholder="Lisätietoja tarjousten vertailuperusteista, vaadittavasta kalustosta (koko, euroluokka) ja muusta kilpailutukseen liittyvästä"></textarea>
+	      	<textarea name="lisatiedot" ng-model="kilpailutus.selite" rows="10" maxlength="20000" placeholder="Lisätietoja tarjousten vertailuperusteista, vaadittavasta kalustosta (koko, euroluokka) ja muusta kilpailutukseen liittyvästä"></textarea>
       	</form-group>
       </div>
     </div>
@@ -162,6 +162,7 @@
 					<span class="text-info small glyphicon glyphicon-question-sign"></span>
 	        <input id="optioselite" name="optioselite" type="text"
            ng-model="kilpailutus.optioselite"
+           maxlength="1000"
            ng-disabled="isReadonly()"
            placeholder="Optiokaudet"/>
 	      </form-group>
@@ -203,6 +204,7 @@
 		   	<form-group label="Valittu liikennöitsijä">
 	        <input id="liikennoitsijanimi" name="liikennoitsijanimi" type="text"
 	         ng-model="kilpailutus.liikennoitsijanimi"
+           maxlength="200"
 	         ng-disabled="isReadonly()"
 	         placeholder="Liikennöitsijä"/>
 	      </form-group>
