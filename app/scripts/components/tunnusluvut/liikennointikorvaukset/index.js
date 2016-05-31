@@ -24,6 +24,10 @@ function liikennointikorvauksetController($scope) {
     return _.sumBy($scope.liikennointikorvaus, c.property('korvaus', 0, _.isNaN));
   };
 
+  $scope.kuntakorvausSumma = function () {
+    return _.sumBy($scope.liikennointikorvaus, c.property('kuntakorvaus', 0, _.isNaN));
+  };
+
   // error messages:
   $scope.korvausErrorMessage = d.maxErrorMessage("9999999999,99");
   $scope.nousutErrorMessage = d.maxlengthNumberErrorMessage("999 999 999");
@@ -34,6 +38,7 @@ module.exports = function () {
     restrict: 'E',
     scope: {
       liikennointikorvaus: '=liikennointikorvaus',
+      organisaatio: '<organisaatio',
       isReadonly: '&isReadonly',
       tyyppi: '@tyyppi'
     },
