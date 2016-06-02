@@ -76,7 +76,7 @@ const sopimustyypit = {
 };
 
 const vuodet = {
-  $order: _.range(2013, 2017).reverse(),
+  $order: _.range(2013, new Date().getFullYear() + 1).reverse(),
   $nimi: _.identity,
   $id: "vuosi"
 };
