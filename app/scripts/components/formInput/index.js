@@ -136,7 +136,8 @@ export function dateInput() {
     scope: {
       model: '=',
       name: '@',
-      id: '@'
+      id: '@',
+      readonly: '<inputReadonly'
     },
     require: "^form",
     restrict: 'E',
@@ -145,6 +146,7 @@ export function dateInput() {
 
       $scope.isOpen = false;
       $scope.required = c.isDefinedNotNull(attributes.required);
+      $scope.readonly = c.coalesce($scope.readonly, false);
 
       $scope.dateOptions = {
         formatYear: 'yyyy',

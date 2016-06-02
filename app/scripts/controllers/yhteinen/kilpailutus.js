@@ -5,6 +5,7 @@ var angular = require('angular');
 var d = require('utils/directive');
 var c = require('utils/core');
 var t = require('utils/time');
+var u = require('utils/user');
 
 const kilpailutusPVMProperties = [
   'julkaisupvm',
@@ -14,6 +15,70 @@ const kilpailutusPVMProperties = [
   'liikennointipaattymispvm',
   'hankittuoptiopaattymispvm',
   'optiopaattymispvm'];
+
+
+const kilpailutusPVMNames = {
+  julkaisupvm:               'tarjouspyynnön julkaisupäivä',
+  tarjouspaattymispvm:       'tarjousajan päättyminen',
+  hankintapaatospvm:         'hankintapäätös',
+  liikennointialoituspvm:    'liikennöinnin aloituspäivä',
+  liikennointipaattymispvm:  'liikennöinnin päättyminen',
+  hankittuoptiopaattymispvm: 'käyttöönotetun option päättyminen',
+  optiopaattymispvm:         'optioiden päättyminen'
+};
+
+function createOrderValidator(scope, path, orderrelation) {
+  return function(modelValue, viewValue) {
+    var othervalue = _.get(scope, path);
+    return c.isNullOrUndefined(modelValue) ||
+           c.isNullOrUndefined(othervalue) ||
+           orderrelation(modelValue, othervalue);
+  }
+}
+
+angular.module('jukufrontApp').directive('kilpailutusPvmValidator', function () {
+  return {
+    require: 'form',
+    link: function(scope, elem, attr, form) {
+
+      function setValidators(properties, errortype, orderrelation) {
+        _.forEach(_.initial(properties), (property, index) => {
+          _.forEach(_.slice(properties, index + 1), (otherProperty) => {
+            form[property].$validators[errortype + '-' + otherProperty] = createOrderValidator(scope, 'kilpailutus.' + otherProperty, orderrelation);
+          });
+        })
+      }
+
+      setValidators(kilpailutusPVMProperties, 'less-than', (modelValue, othervalue) => modelValue < othervalue);
+      setValidators(_.reverse(_.clone(kilpailutusPVMProperties)), 'gt-than', (modelValue, othervalue) => modelValue > othervalue);
+
+      form.hankittuoptiopaattymispvm.$validators['less-than-optiopaattymispvm'] =
+        createOrderValidator(scope, 'kilpailutus.optiopaattymispvm', (modelValue, othervalue) => modelValue <= othervalue);
+
+      form.optiopaattymispvm.$validators['gt-than-hankittuoptiopaattymispvm'] =
+        createOrderValidator(scope, 'kilpailutus.hankittuoptiopaattymispvm', (modelValue, othervalue) => modelValue >= othervalue);
+
+
+      function validate() {
+        _.forEach(kilpailutusPVMProperties, (property, index) => {
+          form[property].$validate();
+        });
+      }
+
+      scope.$watchGroup(_.map(kilpailutusPVMProperties, p => 'kilpailutus.' + p), validate);
+    }
+  };
+});
+
+const lessThanErrorMessages = _.mapValues(_.mapKeys(kilpailutusPVMNames, (value, key) => 'less-than-' + key), v => nimi => nimi + ' pitää olla aikaisemmin kuin ' + v);
+const gtThanErrorMessages = _.mapValues(_.mapKeys(kilpailutusPVMNames, (value, key) => 'gt-than-' + key), v => nimi => nimi + ' pitää olla myöhemmin kuin ' + v);
+
+function createOrderErrorMessage(nimi, errormessages) {
+  return function (input) {
+    const error = _.first(_.values(_.pick(errormessages, _.keys(input.$error))));
+    return error ? error(nimi) : null;
+  }
+}
 
 angular.module('jukufrontApp').controller('KilpailutusCtrl',
   ['$scope', '$state', '$element', '$q', 'StatusService', 'OrganisaatioService', 'KilpailutusService', 'KayttajaService',
@@ -28,6 +93,17 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
       formatMonth: 'MM'
     };
 
+    function setEditState(user, kilpailutus) {
+      if (u.hasPermission(user, 'modify-kaikki-kilpailutukset')) {
+        $scope.hasOrganisaatioSelectPermission = true;
+        $scope.isReadonly = false;
+      } else if (u.hasPermission(user, 'modify-omat-kilpailutukset') && (user.organisaatioid === kilpailutus.organisaatioid)) {
+        $scope.isReadonly = false;
+      } else {
+        $scope.isReadonly = true;
+      }
+    }
+
     if (isNew) {
       $q.all([OrganisaatioService.hae(), KayttajaService.hae()]).then(
         ([organisaatiot, user]) => {
@@ -36,6 +112,7 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
             kohdearvo: null,
             kalusto:   null,
             selite:    null,
+            sopimusmallitunnus: null,
 
             julkaisupvm:               null,
             tarjouspaattymispvm:       null,
@@ -56,21 +133,42 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
             tarjoushinta2: null
           };
           $scope.organisaatio = _.find(organisaatiot, {id: user.organisaatioid});
-          $scope.organisaatiot = organisaatiot;
+          $scope.organisaatiot = u.filterNotLivi(organisaatiot);
+
+          setEditState(user, $scope.kilpailutus);
+
+          if (u.hasPermission(user, 'modify-kaikki-kilpailutukset')) {
+            $scope.kilpailutus.organisaatioid = null;
+          } else if ($scope.isReadonly) {
+            StatusService.virhe('', 'Käyttäjällä ei ole käyttöoikeuksia kilpailutustiedon lisäämiseen');
+          }
+
         }, StatusService.errorHandler);
     } else {
-      $q.all([OrganisaatioService.hae(), KilpailutusService.get($state.params.id)]).then(
-        ([organisaatiot, kilpailutus]) => {
+      $q.all([OrganisaatioService.hae(), KilpailutusService.get($state.params.id), KayttajaService.hae()]).then(
+        ([organisaatiot, kilpailutus, user]) => {
           $scope.kilpailutus = c.updateAll(kilpailutus, kilpailutusPVMProperties, value => c.isNotBlank(value) ? new Date(value) : null);
 
           $scope.organisaatio = _.find(organisaatiot, {id: kilpailutus.organisaatioid});
 
-          $scope.organisaatiot = organisaatiot;
+          $scope.organisaatiot = u.filterNotLivi(organisaatiot);
+
+          setEditState(user, kilpailutus);
+
         }, StatusService.errorHandler);
     }
 
+    KilpailutusService.findSopimusmallit().then(sopimusmallit => {
+      $scope.sopimusmallit = _.concat( {tunnus: null, nimi: "Valitse sopimusmalli"}, sopimusmallit);
+    }, StatusService.errorHandler);
+
     $scope.cancel = function () {
       $state.go('app.kilpailutukset');
+    };
+
+    $scope.sopimusmallinimi = function() {
+      const sopimusmalli = _.find($scope.sopimusmallit, {tunnus: $scope.kilpailutus.sopimusmallitunnus});
+      return sopimusmalli && sopimusmalli.tunnus ? sopimusmalli.nimi : 'Ei tiedossa';
     };
 
     $scope.save = function () {
@@ -91,7 +189,8 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
 
       kilpailutusEdit.id = undefined;
 
-      if (kilpailutusEdit.hilmalinkki.indexOf('http') !== 0) {
+      if (c.isNotBlank(kilpailutusEdit.hilmalinkki) &&
+          kilpailutusEdit.hilmalinkki.indexOf('http') !== 0) {
         kilpailutusEdit.hilmalinkki = 'https://' + kilpailutusEdit.hilmalinkki;
       }
 
@@ -106,21 +205,32 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
       }, StatusService.errorHandler);
     };
 
-
     $scope.kohdenimiErrorMessage = d.requiredErrorMessage('Kohteen nimi');
 
-    $scope.julkaisupvmErrorMessage = d.dateErrorMessage;
-    $scope.tarjouspaattymispvmErrorMessage = d.dateErrorMessage;
-    $scope.hankintapaatospvmErrorMessage = d.dateErrorMessage;
+    function createNotRequiredKilpailutusPVMErrorMessage(nimi) {
+      return d.combineErrorMessages(d.dateErrorMessage,
+        createOrderErrorMessage(nimi, lessThanErrorMessages),
+        createOrderErrorMessage(nimi, gtThanErrorMessages));
+    }
 
-    $scope.liikennointialoituspvmErrorMessage = d.combineErrorMessages(
-      d.dateErrorMessage,
-      d.requiredErrorMessage('Liikennöinnin aloittaminen'));
-    $scope.liikennointipaattymispvmErrorMessage = d.combineErrorMessages(
-      d.dateErrorMessage,
-      d.requiredErrorMessage('Liikennöinnin päättäminen'));
+    function createRequiredKilpailutusPVMErrorMessage(nimi) {
+      return d.combineErrorMessages(
+        d.dateErrorMessage,
+        d.requiredErrorMessage(nimi),
+        createOrderErrorMessage(nimi, lessThanErrorMessages),
+        createOrderErrorMessage(nimi, gtThanErrorMessages));
+    }
 
-    $scope.hankittuoptiopaattymispvmErrorMessage = d.dateErrorMessage;
-    $scope.optiopaattymispvmErrorMessage = d.dateErrorMessage;
+    $scope.julkaisupvmErrorMessage = createNotRequiredKilpailutusPVMErrorMessage('Tarjouspyynnön julkaisupäivä');
+    $scope.tarjouspaattymispvmErrorMessage = createNotRequiredKilpailutusPVMErrorMessage('Tarjousajan päättyminen');
+    $scope.hankintapaatospvmErrorMessage = createNotRequiredKilpailutusPVMErrorMessage('Hankintapäätös');
+
+    $scope.liikennointialoituspvmErrorMessage = createRequiredKilpailutusPVMErrorMessage('Liikennöinnin aloittaminen');
+    $scope.liikennointipaattymispvmErrorMessage = createRequiredKilpailutusPVMErrorMessage('Liikennöinnin päättäminen');
+
+    $scope.hankittuoptiopaattymispvmErrorMessage = createNotRequiredKilpailutusPVMErrorMessage('Käyttöönotetun option päättyminen');
+    $scope.optiopaattymispvmErrorMessage = createNotRequiredKilpailutusPVMErrorMessage('Optioiden päättyminen');
 
   }]);
+
+

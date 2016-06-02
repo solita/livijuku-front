@@ -5,6 +5,7 @@ var angular = require('angular');
 var c = require('utils/core');
 var t = require('utils/time');
 var tl = require('utils/tunnusluvut');
+var u = require('utils/user');
 
 angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   ['$scope', '$state', '$element', '$uibModal', 'StatusService', 'OrganisaatioService', 'KilpailutusService',
@@ -35,8 +36,8 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   };
 
   OrganisaatioService.hae().then(organisaatiot => {
-    $scope.organisaatiot = organisaatiot;
-    $scope.timeline.organisaatiot = organisaatiot;
+    $scope.organisaatiot = u.filterNotLivi(organisaatiot);
+    $scope.timeline.organisaatiot = $scope.organisaatiot;
   }, StatusService.errorHandler);
 
   $scope.findOrganisaatio = function (query) {

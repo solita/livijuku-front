@@ -12,9 +12,10 @@
          datepicker-options="dateOptions"
          is-open="isOpen"
          ng-required="required"
+         ng-readonly="readonly"
          show-button-bar="false" noenter/>
 
-  <span class="input-group-btn">
+  <span class="input-group-btn" ng-hide="readonly">
     <button
       type="button"
       class="btn"

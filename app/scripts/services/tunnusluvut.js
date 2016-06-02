@@ -62,6 +62,7 @@ angular.module('services.tunnusluvut', [])
         () => _.map(_.range(1, 13), kuukausi => ({
           kuukausi: kuukausi,
           korvaus: null,
+          kuntakorvaus: null,
           nousukorvaus: null,
           nousut: null
         }))),
