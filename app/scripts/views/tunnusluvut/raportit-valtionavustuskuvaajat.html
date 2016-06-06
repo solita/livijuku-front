@@ -51,14 +51,6 @@
     </a>
   </div>
 
-  <div class="row Mb-xl">
-    <nvd3 options='avustusdetail.options' data='avustusdetail.data' api="avustusdetail.api"></nvd3>
-    <a ng-csv="avustusdetail.csv" class="pull-right lataacsv"
-       filename="avustus-organisaatioittain.csv"
-       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
-    </a>
-  </div>
-
   <div class="row">
     <nvd3 options='avustusperasukas.options' data='avustusperasukas.data' api="avustusperasukas.api"></nvd3>
     <a ng-csv="avustusperasukas.csv" class="pull-right lataacsv"
