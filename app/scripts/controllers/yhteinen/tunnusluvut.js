@@ -115,6 +115,8 @@ angular.module('jukufrontApp')
         // talletetaan organisaatio id talteen - params objekti voi muuttua ennen kuin promisea kutsutaan
         var organisaatioid = $state.params.organisaatioid;
         KayttajaService.hae().then(user => {
+          $scope.hasLoadAllTunnusluvutPermission = hasPermission(user, 'view-kaikki-tunnusluvut');
+
           if (hasPermission(user, 'modify-kaikki-tunnusluvut')) {
             $scope.hasOrganisaatioSelectPermission = true;
             $scope.organisaatioId = integerOrNull(organisaatioid);
