@@ -136,7 +136,9 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
     },
     stack: false,
     clickToUse: false,
-    orientation: 'both'
+    orientation: 'both',
+    zoomMin: 604800000,
+    zoomMax: 1262400000000
   };
 
   $scope.timeline.events = {
