@@ -68,6 +68,15 @@ export function missingOrganisaatiot(data, allOrganisaatiot, organisaatiolajitun
   return _.filter(organisaatiotInLaji, org => !_.includes(organisaatiotInData, org.id));
 }
 
+/**
+ * Muuta vuosi+kuukausi (esim. 201601) tieto unix ajanhetkeksi.
+ */
+export function kuukausiToUTC(vuosikk) {
+  var year = parseInt(vuosikk.substring(0, 4));
+  var kuukausi = parseInt(vuosikk.substring(4));
+  return Date.UTC(year, (kuukausi - 1));
+}
+
 /* Progress bar laskenta */
 
 export function laskeTayttoaste(tunnusluvut, tyyppi) {

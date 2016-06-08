@@ -461,6 +461,16 @@ const tunnusluvut = [{
   createAlueTunnusluku('asiakastyytyvaisyys', 'Asiakastyytyväisyys', 'tyytyväisten joukkoliikenteen käyttäjien osuus', 'Prosenttia (%)')];
 
 
+function convertVuosiKKToUnixtime(data) {
+  var header = _.head(data);
+  var body = _.tail(data);
+  return header[1] === 'vuosikk' ?
+    _.concat([header], _.map(body, row => _.update(_.clone(row), 1, t.kuukausiToUTC))) :
+    data;
+}
+
+const defaultConversion = (data, organisaatiot) => t.toOrganisaatioSeriesNvd3(convertVuosiKKToUnixtime(data), organisaatiot);
+
 function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService) {
   var charts = $scope.tunnusluku.charts;
   var tunnusluku = $scope.tunnusluku;
@@ -478,7 +488,7 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
       chart.options.subtitle.text = ytitle;
       chart.options.chart.yAxis.axisLabel = ytitle;
     }
-    const conversion = c.coalesce(chart.data, t.toOrganisaatioSeriesNvd3);
+    const conversion = c.coalesce(chart.data, defaultConversion);
 
     $q.all([RaporttiService.haeTunnuslukuTilasto(tunnusluku.id, organisaatiolaji, filters, chart.groupBy),
         OrganisaatioService.hae()])
