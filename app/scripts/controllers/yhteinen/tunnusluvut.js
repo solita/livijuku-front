@@ -32,6 +32,7 @@ const tunnuslukuTooltips = {
   HENKILOAUTOLIIKENNE:"Koko toimivalta-alueen henkilöautoliikenteen suorite.",
   AUTOISTUMISASTE: "Alueen kuntien asukasmäärällä painotettu keskiarvo autoistumisasteesta.",
   PYSAKKIENLKM: "Kuinka monta fyysistä joukkoliikennepysäkkiä alueella sijaitsee? Tähän lasketaan mukaan kaikki ne pysäkit, joita voidaan käyttää toimivaltaisen viranomaisen liikenteessä.",
+  LIPPUHINTA: 'Lippujen asiakashinnat ilmoitetaan arvonlisäverollisena',
   KERTALIPPU:"Hinta vyöhykkeittäin, 1-6 vyöhykettä.",
   KAUSILIPPU:"Hinta vyöhykkeittäin, 1-6 vyöhykettä."
 
