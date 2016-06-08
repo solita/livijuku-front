@@ -494,7 +494,8 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
         OrganisaatioService.hae()])
       .then(([data, organisaatiot])=> {
 
-        $scope.csv[id] = data;
+        $scope.csv[id] = t.addOrganisaationimiColumn(data, organisaatiot);
+
         $scope.missing[id] = _.join(_.map(t.missingOrganisaatiot(data, organisaatiot, organisaatiolaji), 'nimi'), ', ');
         if (chart.options.chart.type === 'sunburstChart') {
           $scope.params.charts[id].api.updateWithData(conversion(data, organisaatiot));

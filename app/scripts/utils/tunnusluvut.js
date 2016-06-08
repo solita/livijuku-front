@@ -77,6 +77,24 @@ export function kuukausiToUTC(vuosikk) {
   return Date.UTC(year, (kuukausi - 1));
 }
 
+/**
+ * Lisää organisaatio nimi sarake taulukkomuotoiseen dataan. Datassa organisaatioId on 1. sarake. Nimi tulee 2. sarakkeeksi.
+ */
+export function addOrganisaationimiColumn(data, organisaatiot) {
+  const header = _.clone(_.head(data));
+
+  // Note: splice is a mutating operation
+  header.splice(1, 0, 'organisaationimi');
+
+  const body = _.map(_.tail(data), row => {
+    var result = _.clone(row);
+    result.splice(1, 0, _.find(organisaatiot, {id: row[0]}).nimi);
+    return result;
+  });
+
+  return _.concat([header], body);
+}
+
 /* Progress bar laskenta */
 
 export function laskeTayttoaste(tunnusluvut, tyyppi) {
