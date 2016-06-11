@@ -97,9 +97,15 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   const showKilpailutuskausi = (date) => showKausi($scope.kilpailutuskausi, date);
   const showLiikennointikausi = (date) => showKausi($scope.liikennointikausi, date);
 
+  function filterKilpailutuksetForKilpailutuskausi(kilpailutukset) {
+    return $scope.kilpailutuskausi && !$scope.liikennointikausi ?
+      _.filter(kilpailutukset, k => _.some([k.julkaisupvm, k.tarjouspaattymispvm, k.hankintapaatospvm], c.isDefinedNotNull)) :
+      kilpailutukset;
+  }
+
   function loadKilpailutukset() {
     KilpailutusService.find().then( kilpailutukset => {
-      $scope.kilpailutukset = _.map(kilpailutukset, kilpailutus => {
+      $scope.kilpailutukset = _.map(filterKilpailutuksetForKilpailutuskausi(kilpailutukset), kilpailutus => {
           const dates = [
             showKilpailutuskausi(kilpailutus.julkaisupvm),
             showKilpailutuskausi(kilpailutus.tarjouspaattymispvm),
