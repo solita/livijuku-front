@@ -69,7 +69,7 @@ export function timeline ($timeout) {
               linkToHilma: kilpailutus.hilmalinkki
             });
 
-            return subgroup;
+            return _.filter(subgroup, i => i.start.getTime() !== i.end.getTime());
           });
 
           scope.options.template = (item) => {
