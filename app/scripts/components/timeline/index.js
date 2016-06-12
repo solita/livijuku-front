@@ -24,6 +24,14 @@ export function timeline ($timeout) {
           ['#cfeff2', '#ffffff', '1px dashed #66CCD6; border-left-style: solid']
         ];
 
+      timeline.on('changed', function() {
+        if (scope.redrawing) {
+          scope.$apply(function() {
+            scope.redrawing = false;
+          });
+        }
+      });
+
       var processtimeline = null;
 
       scope.$watchGroup(["organisaatiot", "kilpailutukset"], ([organisaatiot, kilpailutukset]) => {
@@ -90,7 +98,7 @@ export function timeline ($timeout) {
               items: items
             });
 
-            scope.redrawing = false;
+            scope.redrawing = true;
 
           }, 1000);
 
