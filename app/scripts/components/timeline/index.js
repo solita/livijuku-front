@@ -4,7 +4,7 @@ var vis = require('vis');
 var _ = require('lodash');
 var c = require('utils/core');
 
-export function timeline () {
+export function timeline ($timeout) {
   return {
     restrict: 'EA',
     scope: {
@@ -23,6 +23,8 @@ export function timeline () {
           ['#66CCD6', '#ffffff', '1px solid #66CCD6'],
           ['#cfeff2', '#ffffff', '1px dashed #66CCD6; border-left-style: solid']
         ];
+
+      var processtimeline = null;
 
       scope.$watchGroup(["organisaatiot", "kilpailutukset"], ([organisaatiot, kilpailutukset]) => {
         if (scope.organisaatiot && scope.kilpailutukset) {
@@ -72,16 +74,25 @@ export function timeline () {
             }
           };
 
-          timeline.setOptions(scope.options);
+          scope.redrawing = true;
 
-          _.map(scope.events, (event, key) => {
-            timeline.on(key, event);
-          });
+          $timeout.cancel(processtimeline);
 
-          timeline.setData({
-            groups: groups,
-            items: items
-          });
+          processtimeline = $timeout(function() {
+            timeline.setOptions(scope.options);
+
+            _.map(scope.events, (event, key) => {
+              timeline.on(key, event);
+            });
+
+            timeline.setData({
+              groups: groups,
+              items: items
+            });
+
+            scope.redrawing = false;
+
+          }, 1000);
 
         }
       });

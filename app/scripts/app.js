@@ -337,7 +337,7 @@ angular
      KOS:  require('views/tunnusluvut/muokkaus-psak.html'),
      SA:   require('views/tunnusluvut/muokkaus-sa.html'),
      ME:   require('views/tunnusluvut/muokkaus-me.html')}))
-  .directive('timeline', require("components/timeline").timeline);
+  .directive('timeline', ['$timeout', require("components/timeline").timeline]);
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
