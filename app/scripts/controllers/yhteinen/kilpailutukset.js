@@ -8,8 +8,8 @@ var tl = require('utils/tunnusluvut');
 var u = require('utils/user');
 
 angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
-  ['$scope', '$state', '$element', '$uibModal', 'StatusService', 'OrganisaatioService', 'KilpailutusService',
-  function ($scope, $state, $element, $uibModal, StatusService, OrganisaatioService, KilpailutusService) {
+  ['$scope', '$state', '$element', '$uibModal', '$q', 'StatusService', 'OrganisaatioService', 'KilpailutusService', 'KayttajaService',
+  function ($scope, $state, $element, $uibModal, $q, StatusService, OrganisaatioService, KilpailutusService, KayttajaService) {
 
   $scope.timeline = {};
 
@@ -29,6 +29,14 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
     organisaatiot: [],
     organisaatiolajit: []
   };
+
+  $q.all([OrganisaatioService.hae(), KayttajaService.hae()]).then(
+    ([organisaatiot, user]) => {
+
+      const org = _.find(organisaatiot, {id: user.organisaatioid});
+      $scope.filter.organisaatiot = org.lajitunnus !== 'LV' ? [org] : [];
+
+    }, StatusService.errorHandler);
 
   //$scope.organisaatiolajit = tl.organisaatiolajit;
   $scope.findOrganisaatiolaji = function (query) {
