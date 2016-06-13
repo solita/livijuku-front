@@ -113,7 +113,7 @@ export function timeline ($timeout) {
 
             scope.redrawing = true;
 
-          }, 1000);
+          }, c.isDefinedNotNull(processtimeline) ? 1000 : 0);
 
         }
       });
