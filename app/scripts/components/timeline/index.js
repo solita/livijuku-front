@@ -42,7 +42,10 @@ export function timeline ($timeout) {
               content: organisaatio.nimi
             }));
 
-          const items = _.flatMap(kilpailutukset, kilpailutus => {
+          const organisaatioIds = _.map(organisaatiot, 'id')
+          const visibleKilpailutukset = _.filter(kilpailutukset, kilpailutus => _.includes(organisaatioIds, kilpailutus.organisaatioid));
+
+          const items = _.flatMap(visibleKilpailutukset, kilpailutus => {
 
             const allIntervals = _.map(_.initial(kilpailutus.dates), (startDate, index) => ({
               index: index,
