@@ -115,15 +115,8 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
             showLiikennointikausi(c.coalesce(kilpailutus.hankittuoptiopaattymispvm, kilpailutus.liikennointipaattymispvm)),
             showLiikennointikausi(kilpailutus.optiopaattymispvm)];
 
-          const maxdate = _.max(dates);
 
-          if (c.isBlank(maxdate)) {
-            throw "Kilpailutuksella " + kilpailutus.id + " ei ole yhtään päivämäärää."
-          }
-
-          kilpailutus.dates = _.map(dates, (date, index) => t.toLocalMidnight(c.isNotBlank(date) ?
-            date :
-            c.coalesce(_.find(_.slice(dates, index), c.isNotBlank), maxdate)))
+          kilpailutus.dates = _.map(dates, date => c.isNotBlank(date) ? t.toLocalMidnight(date) : null);
 
           return kilpailutus;
         });

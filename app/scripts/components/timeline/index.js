@@ -44,24 +44,37 @@ export function timeline ($timeout) {
 
           const items = _.flatMap(kilpailutukset, kilpailutus => {
 
-            var subgroup = _.map(_.initial(kilpailutus.dates), (startDate, index) => ({
-                id: kilpailutus.organisaatioid + '-' + kilpailutus.id + '-' + index,
+            const allIntervals = _.map(_.initial(kilpailutus.dates), (startDate, index) => ({
+              index: index,
+              start: startDate,
+              end: _.find(_.slice(kilpailutus.dates, index + 1), c.isDefinedNotNull)
+            }));
+            const intervals = _.filter(allIntervals,
+              interval => _.every(_.values(interval), c.isDefinedNotNull) &&
+                          !_.isEqual(interval.start, interval.end));
+
+            if (_.isEmpty(intervals)) {
+              throw "Kilpailutuksella " + kilpailutus.id + " ei ole määritelty kahta päivämäärää."
+            }
+
+            var subgroup = _.map(intervals, interval => ({
+                id: kilpailutus.organisaatioid + '-' + kilpailutus.id + '-' + interval.index,
                 type: 'range',
                 content: '&nbsp;',
-                start: startDate,
-                end: kilpailutus.dates[index + 1],
+                start: interval.start,
+                end: interval.end,
                 group: kilpailutus.organisaatioid,
                 subgroup: kilpailutus.id,
                 title: kilpailutus.kohdenimi,
-                style: 'background-color: ' + colors[index][0] + '; color: ' + colors[index][1] + '; border: ' + colors[index][2] + '; height: 24px;'
+                style: 'background-color: ' + colors[interval.index][0] + '; color: ' + colors[interval.index][1] + '; border: ' + colors[interval.index][2] + '; height: 24px;'
               }));
 
             subgroup.push({
               id: kilpailutus.organisaatioid + '-' + kilpailutus.id + '-' + (kilpailutus.dates.length - 1),
               //type: 'background',
               content: kilpailutus.kohdenimi,
-              start: _.first(kilpailutus.dates),
-              end: _.last(kilpailutus.dates),
+              start: _.first(intervals).start,
+              end: _.last(intervals).end,
               group: kilpailutus.organisaatioid,
               subgroup: kilpailutus.id,
               title: kilpailutus.kohdenimi,
@@ -69,7 +82,7 @@ export function timeline ($timeout) {
               linkToHilma: kilpailutus.hilmalinkki
             });
 
-            return _.filter(subgroup, i => i.start.getTime() !== i.end.getTime());
+            return subgroup;
           });
 
           scope.options.template = (item) => {
