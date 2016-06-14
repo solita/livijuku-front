@@ -29,7 +29,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
 
   $scope.filter = {
     organisaatiot: null,
-    organisaatiolajit: []
+    organisaatiolajit: null
   };
 
   function parseIntList(txt) {
@@ -92,23 +92,25 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   }
 
   function filterTimelineOrganisaatiot() {
-    var organisaatiolajitunnukset = _.map($scope.filter.organisaatiolajit, laji => laji.id);
+    if (_.every(_.values($scope.filter), c.isDefinedNotNull)) {
+      var organisaatiolajitunnukset = _.map($scope.filter.organisaatiolajit, laji => laji.id);
 
-    var organisaatiot = _.unionBy(
-      $scope.filter.organisaatiot, findOrganisaatiotInLajit(organisaatiolajitunnukset),
-      org => org.id);
+      var organisaatiot = _.unionBy(
+        $scope.filter.organisaatiot, findOrganisaatiotInLajit(organisaatiolajitunnukset),
+        org => org.id);
 
-    if (_.isEmpty(organisaatiot)) {
-      $scope.timeline.organisaatiot = $scope.organisaatiot;
-    } else {
-      $scope.timeline.organisaatiot = organisaatiot;
+      if (_.isEmpty(organisaatiot)) {
+        $scope.timeline.organisaatiot = $scope.organisaatiot;
+      } else {
+        $scope.timeline.organisaatiot = organisaatiot;
+      }
+
+      // see http://stackoverflow.com/questions/20884551/set-url-query-parameters-without-state-change-using-angular-ui-router
+      $state.go('app.kilpailutukset',
+        {organisaatiot: _.join(_.map($scope.filter.organisaatiot, 'id'), ','),
+         organisaatiolajit: _.join(_.map($scope.filter.organisaatiolajit, 'id'), ',')},
+        {location: true, notify: false, reload: false});
     }
-
-    // see http://stackoverflow.com/questions/20884551/set-url-query-parameters-without-state-change-using-angular-ui-router
-    $state.go('app.kilpailutukset',
-      {organisaatiot: _.join(_.map($scope.filter.organisaatiot, 'id'), ','),
-       organisaatiolajit: _.join(_.map($scope.filter.organisaatiolajit, 'id'), ',')},
-      {location: true, notify: false, reload: false});
   }
 
   const between = (arvo, interval) => arvo >= interval.min && arvo <= interval.max;
