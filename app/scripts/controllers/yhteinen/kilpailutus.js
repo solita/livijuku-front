@@ -163,7 +163,8 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
     }, StatusService.errorHandler);
 
     $scope.cancel = function () {
-      $state.go('app.kilpailutukset');
+      history.back();
+      //$state.go('app.kilpailutukset');
     };
 
     $scope.sopimusmallinimi = function() {

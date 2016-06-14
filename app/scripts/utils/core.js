@@ -22,7 +22,6 @@ export const isNotBlank = txt => !isBlank(txt);
 /**
  * Round value to two decimals
  */
-
 export function roundTwoDecimals(number) {
   return Math.round(number*100)/100;
 }
@@ -49,6 +48,10 @@ var findFirstDefinedValue = _.partialRight(_.find, isDefinedNotNull);
 
 export function coalesce() {
   return findFirstDefinedValue(arguments)
+}
+
+export function maybe(fn, maybenull, defaultvalue) {
+  return isDefinedNotNull(maybenull) ? fn(maybenull) : defaultvalue;
 }
 
 export function cartesianProduct() {

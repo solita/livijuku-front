@@ -7,6 +7,8 @@ var t = require('utils/time');
 var tl = require('utils/tunnusluvut');
 var u = require('utils/user');
 
+const organisaatiolajit = _.map(_.filter(tl.organisaatiolajit.$order, id => id !== 'ALL'), id => ({id: id, nimi: tl.organisaatiolajit.$nimi(id)}));
+
 angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   ['$scope', '$state', '$element', '$uibModal', '$q', 'StatusService', 'OrganisaatioService', 'KilpailutusService', 'KayttajaService',
   function ($scope, $state, $element, $uibModal, $q, StatusService, OrganisaatioService, KilpailutusService, KayttajaService) {
@@ -26,27 +28,43 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
   }
 
   $scope.filter = {
-    organisaatiot: [],
+    organisaatiot: null,
     organisaatiolajit: []
   };
 
-  $q.all([OrganisaatioService.hae(), KayttajaService.hae()]).then(
-    ([organisaatiot, user]) => {
+  function parseIntList(txt) {
+    return _.filter(_.map(txt.split(','), _.parseInt), _.isFinite);
+  }
 
-      const org = _.find(organisaatiot, {id: user.organisaatioid});
-      $scope.filter.organisaatiot = org.lajitunnus !== 'LV' ? [org] : [];
+  function parseTunnusList(txt) {
+    return _.map(_.filter(_.map(txt.split(','), _.trim), _.isNotBlank), _.toUpper);
+  }
+
+  $q.all([OrganisaatioService.hae(), KayttajaService.hae()]).then(([organisaatiot, user]) => {
+
+      const kilpailutusOrganisaatiot = u.filterNotLivi(organisaatiot);
+
+      const organisaatioIds = c.isNotBlank($state.params.organisaatiot) ? parseIntList($state.params.organisaatiot) : [];
+
+      const selectedOrganisaatiot = _.isEmpty(organisaatioIds) ? [] : _.filter(kilpailutusOrganisaatiot, org => _.includes(organisaatioIds, org.id));
+
+      const defaultOrganisaatio = _.find(kilpailutusOrganisaatiot, { id: user.organisaatioid });
+
+      $scope.filter.organisaatiot = !_.isEmpty(selectedOrganisaatiot) ?
+        selectedOrganisaatiot :
+        (c.isDefinedNotNull(defaultOrganisaatio) ? [defaultOrganisaatio] : []);
+
+      $scope.organisaatiot = kilpailutusOrganisaatiot;
+
+      $scope.filter.organisaatiolajit = c.isNotBlank($state.params.organisaatiolajit) ?
+        _.filter(organisaatiolajit, laji => _.includes(parseTunnusList($state.params.organisaatiolajit), laji.id)) : [];
 
     }, StatusService.errorHandler);
 
   //$scope.organisaatiolajit = tl.organisaatiolajit;
   $scope.findOrganisaatiolaji = function (query) {
-    return _.map(_.filter(tl.organisaatiolajit.$order, id => id !== 'ALL'), id => ({id: id, nimi: tl.organisaatiolajit.$nimi(id)}));
+    return organisaatiolajit;
   };
-
-  OrganisaatioService.hae().then(organisaatiot => {
-    $scope.organisaatiot = u.filterNotLivi(organisaatiot);
-    $scope.timeline.organisaatiot = $scope.organisaatiot;
-  }, StatusService.errorHandler);
 
   $scope.findOrganisaatio = function (query) {
     if (c.isBlank(query)) {
@@ -85,6 +103,11 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
     } else {
       $scope.timeline.organisaatiot = organisaatiot;
     }
+
+    $state.go('app.kilpailutukset',
+      {organisaatiot: _.join(_.map($scope.filter.organisaatiot, 'id'), ','),
+       organisaatiolajit: _.join(_.map($scope.filter.organisaatiolajit, 'id'), ',')},
+      {location: true, reload: false});
   }
 
   const between = (arvo, interval) => arvo >= interval.min && arvo <= interval.max;

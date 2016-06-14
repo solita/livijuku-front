@@ -163,7 +163,7 @@ angular
         controller: 'KilpailutusCtrl'
       })
       .state('app.kilpailutukset', {
-        url: '/kilpailutukset',
+        url: '/kilpailutukset?organisaatiot&organisaatiolajit',
         template: require('views/kilpailutukset/kilpailutukset.html'),
         controller: 'KilpailutuksetCtrl'
       })
