@@ -104,6 +104,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
       $scope.timeline.organisaatiot = organisaatiot;
     }
 
+    // see http://stackoverflow.com/questions/20884551/set-url-query-parameters-without-state-change-using-angular-ui-router
     $state.go('app.kilpailutukset',
       {organisaatiot: _.join(_.map($scope.filter.organisaatiot, 'id'), ','),
        organisaatiolajit: _.join(_.map($scope.filter.organisaatiolajit, 'id'), ',')},
