@@ -202,7 +202,9 @@ angular.module('jukufrontApp').controller('KilpailutusCtrl',
       savePromise.then(function() {
         StatusService.ok('', 'Kilpailutuksen tallennus onnistui.');
         $scope.kilpailutusForm.$setPristine();
-        $state.go('app.kilpailutukset');
+        //$state.go('app.kilpailutukset');
+        history.back();
+
       }, StatusService.errorHandler);
     };
 
