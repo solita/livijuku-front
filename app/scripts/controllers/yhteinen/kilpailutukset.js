@@ -107,7 +107,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
     $state.go('app.kilpailutukset',
       {organisaatiot: _.join(_.map($scope.filter.organisaatiot, 'id'), ','),
        organisaatiolajit: _.join(_.map($scope.filter.organisaatiolajit, 'id'), ',')},
-      {location: true, reload: false});
+      {location: true, notify: false, reload: false});
   }
 
   const between = (arvo, interval) => arvo >= interval.min && arvo <= interval.max;
