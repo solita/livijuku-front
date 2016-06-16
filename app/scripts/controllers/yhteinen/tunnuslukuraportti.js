@@ -31,7 +31,8 @@ const chartOptions = ytitle => ({
   },
   xAxis: {
     axisLabel: 'Vuosi'
-  }
+  },
+  noData: "Tiedot puuttuvat kokonaan"
 });
 
 const createGraph = (title, ytitle) => ({

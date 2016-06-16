@@ -29,7 +29,8 @@ var chartOptions = {
   },
   xAxis: {
     axisLabel: 'Vuosi'
-  }
+  },
+  noData: "Tiedot puuttuvat kokonaan"
 };
 
 var avustusGraph = {

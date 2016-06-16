@@ -23,3 +23,7 @@ export function toLocalMidnight(isoDateString) {
   const date = _.map(_.split(isoDateString, '-'), _.toNumber);
   return new Date(date[0], date[1] - 1, date[2]);
 }
+
+export function currentYear() {
+  return new Date().getFullYear();
+}
