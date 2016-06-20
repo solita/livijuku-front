@@ -113,7 +113,7 @@ angular.module('jukufrontApp').controller('KilpailutuksetCtrl',
     }
   }
 
-  const between = (arvo, interval) => arvo >= interval.min && arvo <= interval.max;
+  const between = (arvo, interval) => (arvo >= interval.min && arvo <= interval.max) || c.isNullOrUndefined(arvo);
   const isMaxInterval = (interval) => interval.min === interval.options.floor && interval.max === interval.options.ceil
 
   function filterTimelineKilpailutukset() {
