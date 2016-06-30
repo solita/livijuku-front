@@ -430,7 +430,7 @@ const tunnusluvut = [{
       createFilter("Vyöhykemäärä", vyohykemaarat, '1')],
     options: createMultiBarChart("Lippuhinnat", "Vuosi")
   }, {
-    title: "Vuoden lippuhinnat vyöhykeittäin",
+    title: "Vuoden lippuhinnat vyöhykkeittäin",
     yTitle: filter => "Lippuhinta" + filterInfoText(filter) + ' €',
     groupBy: ["organisaatioid", "vyohykemaara"],
     filters: [
@@ -438,7 +438,7 @@ const tunnusluvut = [{
       createFilter("Lipputyyppi", lippuhintaluokat, 'KE')],
     options: createMultiBarChart("Lippuhinnat", "Vyöhykemäärä", vyohykemaarat)
   }, {
-    title: "Vuoden lippuhinnat vyöhykeittäin ja lipputyypeittäin",
+    title: "Vuoden lippuhinnat vyöhykkeittäin ja lipputyypeittäin",
     yTitle: filter => undefined,
     data: _.partial(convertToTree, "Lippuhinnat", [vyohykemaarat.$nimi, lippuhintaluokat.$nimi]),
     groupBy: ["organisaatioid", "vyohykemaara", "lippuhintaluokkatunnus"],
