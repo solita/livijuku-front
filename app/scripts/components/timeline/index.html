@@ -1,0 +1,8 @@
+<div class="alert alert-info" ng-if="redrawing">
+  <p>
+    <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Aikajanaa päivitetään. Päivityksen aikana on mahdollista että suodatusvalinnat eivät ole käytössä.
+  </p>
+</div>
+<p class="f-10 M-0" ng-hide="redrawing">Voit zoomata aikajanaa hiiren rullalla. Aikajanan vieritys onnistuu liikuttamalla hiirtä vasen nappi pohjassa.</p>
+<div class="visualization" ng-class="{'timeline-hide': redrawing}"></div>
+

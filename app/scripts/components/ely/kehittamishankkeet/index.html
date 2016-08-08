@@ -29,7 +29,7 @@
                          noenter ng-minlength="2" ng-maxlength="200"
                          select-on-click
                          ng-model="kehittamishanke.nimi"
-                         ng-disabled="isReadonly()"
+                         ng-readonly="isReadonly()"
                          placeholder="Nimi" required>
                 </form-group-compact>
               </td>
@@ -39,7 +39,7 @@
                          class="form-control" ng-currency="" numeric-only=""
                          noenter
                          select-on-click
-                         ng-model="kehittamishanke.arvo" ng-disabled="isReadonly()"
+                         ng-model="kehittamishanke.arvo" ng-readonly="isReadonly()"
                          ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                          placeholder="Arvo" uib-tooltip="{{maararahatarve.sidotuttooltip}}" tooltip-placement="top"
                          tooltip-append-to-body="true">
@@ -51,7 +51,7 @@
                          noenter
                          select-on-click
                          ng-maxlength="200"
-                         ng-disabled="isReadonly()"
+                         ng-readonly="isReadonly()"
                          ng-model="kehittamishanke.kuvaus"
                          placeholder="Kuvaus">
                 </form-group-compact>

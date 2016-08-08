@@ -1,41 +1,50 @@
 <div class="sidebar">
   <ul>
     <li ng-show="sallittu(user, 'view-hakemuskausi')">
-      <a ui-sref-active="is-active" ui-sref="app.kasittelija.hakemuskaudenhallinta()">
+      <a ui-sref-active="is-active" ui-sref="app.kasittelija.hakemuskaudenhallinta()" ng-click="uncollapse()">
         Hakemuskaudet
       </a>
     </li>
     <li ng-show="sallittu(user, 'view-oma-hakemus')">
-      <a ui-sref-active="is-active" ui-sref="app.hakija.hakemukset.omat()">
+      <a ui-sref-active="is-active" ui-sref="app.hakija.hakemukset.omat()" ng-click="uncollapse()">
         Omat hakemukset
       </a>
     </li>
     <li ng-show="sallittu(user, 'view-hakemus')">
-      <a ui-sref-active="is-active" ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'AH0'})">
+      <a ui-sref-active="is-active" ui-sref="app.yhteinen.hakemukset.list({tyyppi: 'AH0'})" ng-click="uncollapse()">
         Kaikki hakemukset
       </a>
     </li>
   </ul>
-  <ul ng-show="sallittu(user, 'view-hakemus')">
-    <li ng-show="sallittu(user, 'view-hakemus')">Tunnusluvut</li>
+  <ul>
     <li ng-show="sallittu(user, 'view-hakemus')">
-      <a ui-sref-active="is-active" ui-sref="app.tunnusluku.syottaminen()">
-        Tunnuslukujen syöttäminen
+      <a ui-sref-active="is-active" ui-sref="app.tunnusluku.syottaminen()" ng-click="uncollapse()">
+        Tunnusluvut
+      </a>
+    </li>
+  </ul>
+  <ul ng-show="sallittu(user, 'view-hakemus')">
+    <li ng-show="sallittu(user, 'view-hakemus')" class="f-12 f-uppercase Ms-xxs">Tilastot</li>
+    <li>
+      <a ui-sref-active="is-active" ui-sref="app.tilastot.valtionavustuskuvaajat()" ng-click="uncollapse()">
+        Valtionavustukset
       </a>
     </li>
     <li>
-      <a ui-sref-active="is-active" ui-sref="app.tunnusluku.valtionavustuskuvaajat()">
-        Valtionavustuskuvaajat
+      <a ui-sref-active="is-active" ui-sref="app.tilastot.tunnuslukukuvaajat()" ng-click="uncollapse()">
+        Perustunnusluvut
       </a>
     </li>
     <li>
-      <a ui-sref-active="is-active" ui-sref="app.tunnusluku.tunnuslukukuvaajat()">
-        Tunnuslukukuvaajat
+      <a ui-sref-active="is-active" ui-sref="app.tilastot.omakuvaaja()" ng-click="uncollapse()">
+        Kaikki tunnusluvut
       </a>
     </li>
+  </ul>
+  <ul>
     <li>
-      <a ui-sref-active="is-active" ui-sref="app.tunnusluku.omakuvaaja()">
-        Oma kuvaaja tunnusluvuista
+      <a ui-sref-active="is-active" ui-sref="app.kilpailutukset()" ng-click="uncollapse()">
+        Kilpailutukset
       </a>
     </li>
   </ul>
@@ -49,18 +58,18 @@
       </div>
     </li>
     <li>
-      <a ui-sref-active="is-active" ui-sref="app.yhteinen.asetukset">
+      <a ui-sref-active="is-active" ui-sref="app.yhteinen.asetukset" ng-click="uncollapse()">
         Asetukset
       </a>
     </li>
-    <li><a ui-sref-active="is-active" ui-sref="app.yhteinen.kayttajatiedot">
+    <li><a ui-sref-active="is-active" ui-sref="app.yhteinen.kayttajatiedot" ng-click="uncollapse()">
       JUKUn käyttäjät
     </a></li>
-    <li ng-hide="sallittu(user, 'view-hakemuskausi')"><a ui-sref-active="is-active" ui-sref="app.yhteinen.asiakastuki">
+    <li ng-hide="sallittu(user, 'view-hakemuskausi')"><a ui-sref-active="is-active" ui-sref="app.yhteinen.asiakastuki" ng-click="uncollapse()">
       Asiakastuki
     </a></li>
     <li>
-      <a class="navbartxt" href="{{logoutUrl}}">
+      <a class="navbartxt" href="{{logoutUrl}}" ng-click="uncollapse()">
         Kirjaudu ulos
       </a>
     </li>

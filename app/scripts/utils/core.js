@@ -22,7 +22,6 @@ export const isNotBlank = txt => !isBlank(txt);
 /**
  * Round value to two decimals
  */
-
 export function roundTwoDecimals(number) {
   return Math.round(number*100)/100;
 }
@@ -51,6 +50,10 @@ export function coalesce() {
   return findFirstDefinedValue(arguments)
 }
 
+export function maybe(fn, maybenull, defaultvalue) {
+  return isDefinedNotNull(maybenull) ? fn(maybenull) : defaultvalue;
+}
+
 export function cartesianProduct() {
     return _.reduce(arguments, function(a, b) {
         return _.flatten(_.map(a, function(x) {
@@ -73,4 +76,12 @@ export function property(path, defaultValue, isNotDefined) {
     var value = p(obj);
     return isNotDefined(value) ? defaultValue : value;
   };
+}
+
+/**
+ * This is same as lodash update-function except this takes a list of paths, which are all modified using the updater.
+ */
+export function updateAll(object, paths, updater) {
+  _.forEach(paths, path => _.update(object, path, updater));
+  return object;
 }

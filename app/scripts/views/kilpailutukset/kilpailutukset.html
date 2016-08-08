@@ -1,0 +1,136 @@
+<div class="container">
+
+  <div class="flex flex-d-c r-sm-flex-d-r flex-ai-c">
+    <div class="flex-1">
+      <h1 class="Mb-md">Kilpailutukset</h1>
+    </div>
+    <div class="Mb-xl r-sm-M-0">
+      <button
+        ng-click="newKilpailutus()"
+        class="btn btn-success btn-md pull-right">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Lisää kilpailutus tai liikennöintisopimus
+      </button>
+    </div>
+  </div>
+
+  <form class="P-xl well">
+  	<div class="row">
+	  	<form-group label="Toimivaltainen viranomainen" class="col-xs-12 col-sm-6 col-md-6">
+        <tags-input id="organisaatio-filter" name="organisaatio-filter"
+                    placeholder="Suodata aikajanaa valitsemalla viranomaisia"
+                    ng-model="filter.organisaatiot" add-from-autocomplete-only="true"
+                    display-property="nimi" key-property="id" replace-spaces-with-dashes="false">
+          <auto-complete source="findOrganisaatio($query)" display-property="nimi" min-length="1"
+                         load-on-focus="true" load-on-empty="true" max-results-to-show="30">
+          </auto-complete>
+        </tags-input>
+      </form-group>
+
+      <form-group label="Toimivaltaryhmä" class="col-xs-12 col-sm-6 col-md-6">
+        <tags-input id="organisaatiolaji-filter" name="organisaatiolaji-filter"
+                    placeholder="Suodata aikajanaa valitsemalla toimivaltaryhmiä"
+                    ng-model="filter.organisaatiolajit"  add-from-autocomplete-only="true"
+                    display-property="nimi" key-property="id" replace-spaces-with-dashes="false">
+          <auto-complete source="findOrganisaatiolaji($query)" display-property="nimi" min-length="1"
+                         load-on-focus="true" load-on-empty="true"></auto-complete>
+        </tags-input>
+
+        <!--ol id="organisaatiolajitunnus" ng-model="organisaatioId" ng-disabled="isReadonly()"
+          title="Näytä kaikki" class="form-control nya-bs-select" size="20" multiple style="z-index: 10;">
+          <li nya-bs-option="lajitunnus in organisaatiolajit.$order" data-value="lajitunnus">
+            <a>{{ organisaatiolajit.$nimi(lajitunnus) }}</a>
+          </li>
+        </ol-->
+      </form-group>
+      <!--form-group label="Kilpailutusalue" class="col-xs-12 col-sm-6 col-md-4">
+        <tags-input id="kilpailutusalue-filter" name="kilpailutusalue-filter"
+                    placeholder="Suodata aikajanaa valitsemalla kilpailutusryhmiä"
+                    ng-model="kilpailutusalueFilter" add-from-autocomplete-only="true"
+                    display-property="nimi" key-property="id" replace-spaces-with-dashes="false">
+          <auto-complete source="findOrganisaatio($query)" display-property="nimi" min-length="1"
+                         load-on-focus="true" load-on-empty="true">
+          </auto-complete>
+        </tags-input>
+      </form-group-->
+		</div>
+
+    <div class="row">
+      <div class="form-group col-xs-12 col-sm-6 col-md-4">
+        <label for="kohdearvo">Kohteen arvioitu arvo (€)</label>
+        <rzslider id="kohdearvo"
+             rz-slider-model="kohdearvo.min"
+             rz-slider-high="kohdearvo.max"
+             rz-slider-options="kohdearvo.options"></rzslider>
+      </div>
+      <div class="form-group col-xs-12 col-sm-6 col-md-4">
+        <label for="kalustokoko">Kaluston määrä (kpl)</label>
+        <rzslider id="kalustokoko"
+             rz-slider-model="kalustokoko.min"
+             rz-slider-high="kalustokoko.max"
+             rz-slider-options="kalustokoko.options"></rzslider>
+      </div>
+
+      <div class="form-group col-xs-12 col-sm-6 col-md-4">
+        <label>Aikajanalla näytettävä ajanjakso</label>
+        <div class="checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="kilpailutuskausi" name="kilpailutuskausi" ng-model="kilpailutuskausi"> Kilpailutuskausi
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="liikennointikausi" name="liikennointikausi" ng-model="liikennointikausi"> Liikennöintikausi
+          </label>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="row My-xl">
+    <div class="col-xs-12 col-sm-6 col-md-4 Mb-xs">
+      <div style="width: 20px; height: 20px; background-color: #3385D6; float: left;">
+        &nbsp;
+      </div>
+      <div style="margin-left: 2em;">Tarjousaika</div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 Mb-xs">
+      <div style="width: 20px; height: 20px; background-color: #C266EB; float: left;">
+        &nbsp;
+      </div>
+      <div style="margin-left: 2em;"> Tarjousten käsittely ja hankintapäätös</div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 Mb-xs">
+      <div style="width: 20px; height: 20px; background-color: #FFA033; float: left;">
+        &nbsp;
+      </div>
+      <div style="margin-left: 2em;"> Liikennöinnin valmistelu</div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 Mb-xs">
+      <div style="width: 20px; height: 20px; background-color: #33BB33; float: left;">
+        &nbsp;
+      </div>
+      <div style="margin-left: 2em;"> Liikennöinti (sopimuskausi)</div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 Mb-xs">
+      <div style="width: 20px; height: 20px; background-color: #66CCD6; float: left;">
+        &nbsp;
+      </div>
+      <div style="margin-left: 2em;"> Hankitut optiot</div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 Mb-xs">
+      <div style="width: 20px; height: 20px; background-color: #cfeff2; border: 1px dashed #66CCD6; float: left;">
+        &nbsp;
+      </div>
+      <div style="margin-left: 2em;"> Optiot kokonaisuudessaan</div>
+    </div>
+  </div>
+
+  <timeline
+  	organisaatiot="timeline.organisaatiot"
+  	kilpailutukset="timeline.kilpailutukset"
+  	options="timeline.options"
+  	events="timeline.events">
+  </timeline>
+
+  <p class="Mt-md">
+    <a href="api/kilpailutukset/csv/kilpailutukset.csv"><span class="glyphicon glyphicon-save"></span> Lataa kaikki kilpailutukset csv-tiedostona</a>
+  </p>
+</div>

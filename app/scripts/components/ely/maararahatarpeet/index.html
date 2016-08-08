@@ -8,7 +8,7 @@
         <input id="kaupunkilipputuki" name="kaupunkilipputuki" type="text"
                required ng-currency="" numeric-only max="9999999999.99"
                ng-model="hakemus.ely.kaupunkilipputuki"
-               ng-disabled="isReadonly()"
+               ng-readonly="isReadonly()"
                placeholder="Siirtymäajan sopimukset (€)"
               select-on-click/>
       </form-group>
@@ -18,7 +18,7 @@
         <input id="seutulipputuki" name="seutulipputuki" type="text"
                ng-currency="" numeric-only required max="9999999999.99"
                ng-model="hakemus.ely.seutulipputuki"
-               ng-disabled="isReadonly()"
+               ng-readonly="isReadonly()"
                placeholder="Joukkoliikennetuki kunnille (€)"
                select-on-click/>
       </form-group>
@@ -28,7 +28,7 @@
         <input id="ostot" name="ostot" type="text"
                ng-currency="" numeric-only required max="9999999999.99"
                ng-model="hakemus.ely.ostot"
-               ng-disabled="isReadonly()"
+               ng-readonly="isReadonly()"
                placeholder="Liikenteen ostot (€)"
                select-on-click/>
       </form-group>
@@ -38,7 +38,7 @@
         <input id="kehittaminen" name="kehittaminen" type="text"
                ng-currency="" numeric-only required max="9999999999.99"
                ng-model="hakemus.ely.kehittaminen"
-               ng-disabled="isReadonly()"
+               ng-readonly="isReadonly()"
                placeholder="Kehittäminen (€)"
                select-on-click/>
       </form-group>
@@ -77,7 +77,7 @@
               <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-sidotut'}}" name="sidotut" type="text"
                      required ng-currency="" numeric-only="" max="9999999999.99"
                      noenter select-on-click
-                     ng-model="maararahatarve.sidotut" ng-disabled="isReadonly()"
+                     ng-model="maararahatarve.sidotut" ng-readonly="isReadonly()"
                      placeholder="Sidotut">
             </form-group-compact>
           </td>
@@ -86,7 +86,7 @@
               <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-uudet'}}" name="uudet" type="text"
                      required ng-currency="" numeric-only="" max="9999999999.99"
                      noenter select-on-click
-                     ng-model="maararahatarve.uudet" ng-disabled="isReadonly()"
+                     ng-model="maararahatarve.uudet" ng-readonly="isReadonly()"
                      placeholder="Uudet">
             </form-group-compact>
           </td>
@@ -95,7 +95,7 @@
               <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-tulot'}}" name="tulot" type="text"
                      required ng-currency="" numeric-only="" max="9999999999.99"
                      noenter select-on-click
-                     ng-model="maararahatarve.tulot" ng-disabled="isReadonly()"
+                     ng-model="maararahatarve.tulot" ng-readonly="isReadonly()"
                      placeholder="Tulot">
             </form-group-compact>
           </td>
@@ -105,7 +105,7 @@
                      noenter select-on-click
                      maxlength="2000"
                      ng-model="maararahatarve.kuvaus"
-                     ng-disabled="isReadonly()"
+                     ng-readonly="isReadonly()"
                      placeholder="Kuvaus">
             </form-group-compact>
           </td>

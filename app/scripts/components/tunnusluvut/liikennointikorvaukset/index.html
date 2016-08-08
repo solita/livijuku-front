@@ -10,6 +10,13 @@
           <tr>
             <th class="col-md-3">Kuukausi</th>
             <th class="col-md-3">Korvaus €/kk (alv 0)</th>
+            <th ng-if="organisaatio.lajitunnus === 'ELY' && tyyppi !== 'ME'" class="col-md-3">
+              <div uib-tooltip="Kuntien maksama osuus korvauksesta."
+                   tooltip-placement="top"
+                   tooltip-append-to-body="true">Kuntakorvaus €/kk (alv 0)&nbsp;<span
+                class="text-info small glyphicon glyphicon-question-sign"></span>
+              </div>
+            </th>
             <th ng-if="tyyppi==='KOS'" class="col-md-3">
               <div uib-tooltip="Nousukorvaus täytetään, jos liikennöitsijälle maksetaan alla eriteltävien lipputulojen lisäksi erikseen sovittua nousukorvausta."
                    tooltip-placement="top"
@@ -26,6 +33,7 @@
               <span class="yhteensa">Yhteensä:</span>
             </td>
             <td>{{liikennointikorvausSumma() | currency : '€ / vuosi' : 2}}</td>
+            <td ng-if="organisaatio.lajitunnus === 'ELY' && tyyppi !== 'ME'">{{kuntakorvausSumma() | currency : '€ / vuosi' : 2}}</td>
             <td ng-if="tyyppi==='KOS'">{{nousukorvausSumma() | currency : '€ / vuosi' : 2}}</td>
             <td ng-if="tyyppi==='ME'">{{nousutSumma() | currency : 'nousua / vuosi' : 0}}</td>
           </tr>
@@ -40,6 +48,15 @@
                        currency-symbol="€" noenter placeholder="Korvaus (€)"
                        select-on-click
                        ng-model="rivi.korvaus">
+              </form-group-compact>
+            </td>
+            <td ng-if="organisaatio.lajitunnus === 'ELY' && tyyppi!=='ME'">
+              <form-group-compact label="Kuntien maksama liikennöintikorvaus" errormessage="korvausErrorMessage">
+                <input id="{{tyyppi + '-liikennointikorvaus-'+$index}}" name="kuntakorvaus" type="text"
+                       numeric-only ng-currency="" max="9999999999.99"
+                       currency-symbol="€" noenter placeholder="Kuntien maksama korvaus (€)"
+                       select-on-click
+                       ng-model="rivi.kuntakorvaus">
               </form-group-compact>
             </td>
             <td ng-if="tyyppi==='KOS'">

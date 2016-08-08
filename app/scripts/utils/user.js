@@ -27,3 +27,7 @@ export function isHakija(user) {
 export function isKasittelija(user) {
   return hasPermission(user, 'kasittely-hakemus');
 }
+
+export function filterNotLivi(organisaatiot) {
+  return _.filter(organisaatiot, org => org.lajitunnus !== 'LV');
+}

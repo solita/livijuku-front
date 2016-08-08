@@ -1,9 +1,5 @@
 <div class="container">
-
-  <div class="page-header">
-    <h1>Tunnuslukukuvaajat</h1>
-  </div>
-
+  <h1 class="Mb-md">Perustunnusluvut</h1>
   <juku-navigation>
     <juku-tabs>
       <juku-tab
@@ -17,43 +13,39 @@
   </juku-navigation>
   <br><br>
 
-  <div class="row">
+  <div class="row Mb-xl">
     <nvd3 options='asiakastyytyvaisyys.options' data='asiakastyytyvaisyys.data' api="asiakastyytyvaisyys.api"></nvd3>
     <a ng-csv="asiakastyytyvaisyys.csv" class="pull-right lataacsv"
        filename="asiakastyytyväisyys.csv"
        field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
-  <br>
 
-  <div class="row">
+  <div class="row Mb-xl">
     <nvd3 options='nousut.options' data='nousut.data' api="nousut.api"></nvd3>
     <a ng-csv="nousut.csv" class="pull-right lataacsv"
        filename="nousut.csv"
        field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
-  <br>
 
-  <div class="row">
+  <div class="row Mb-xl">
     <nvd3 options='lahdot.options' data='lahdot.data' api="lahdot.api"></nvd3>
     <a ng-csv="lahdot.csv" class="pull-right lataacsv"
        filename="lähdöt.csv"
        field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
-  <br>
 
-  <div class="row">
+  <div class="row Mb-xl">
     <nvd3 options='linjakilometrit.options' data='linjakilometrit.data' api="linjakilometrit.api"></nvd3>
     <a ng-csv="linjakilometrit.csv" class="pull-right lataacsv"
        filename="linjakilometrit.csv"
        field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
     </a>
   </div>
-  <br>
 
-  <div class="row">
+  <div class="row Mb-xl">
     <nvd3 options='avustusperasukas.options' data='avustusperasukas.data' api="avustusperasukas.api"></nvd3>
     <a ng-csv="avustusperasukas.csv" class="pull-right lataacsv"
        filename="avustusperasukas.csv"
@@ -61,7 +53,7 @@
     </a>
   </div>
 
-  <div class="row">
+  <div class="row Mb-xl">
     <nvd3 options='omarahoitusperasukas.options' data='omarahoitusperasukas.data' api="omarahoitusperasukas.api"></nvd3>
     <a ng-csv="omarahoitusperasukas.csv" class="pull-right lataacsv"
        filename="omarahoitusperasukas.csv"

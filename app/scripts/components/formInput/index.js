@@ -2,6 +2,7 @@
 
 var angular = require("angular");
 var _ = require("lodash");
+var c = require("utils/core");
 
 function assertInputIsDefined(input, element) {
   if (_.isEmpty(input)) {
@@ -12,7 +13,7 @@ function assertInputIsDefined(input, element) {
 }
 
 function findInputElement(element) {
-  const inputElements = ['input', 'select', 'textarea'];
+  const inputElements = ['date-input', 'input', 'select', 'textarea', 'ol', 'tags-input'];
   for (var i = 0; i < inputElements.length; i++) {
     var input = element.find(inputElements[i]);
     if (input.length > 0) {
@@ -20,6 +21,8 @@ function findInputElement(element) {
     }
   }
 }
+
+const elementNameIn = (element, nameList) => _.includes(nameList, element.tagName.toLowerCase());
 
 function formGroupDirective(template) {
   return {
@@ -36,9 +39,16 @@ function formGroupDirective(template) {
       var input = findInputElement(element);
       assertInputIsDefined(input, element[0]);
 
-      scope.feedbackSupport = (input[0].tagName.toLowerCase() !== 'select');
+      /*
+       * Feedback icons only work with textual <input class="form-control"> elements.
+       * They also do not work with input group with the add-on on the right.
+       * See https://github.com/twbs/bootstrap/issues/12551
+       */
+      scope.feedbackSupport = elementNameIn(input[0], ['input']);
 
-      input.addClass("form-control");
+      if (elementNameIn(input[0], ['input', 'select', 'textarea', 'ol'])) {
+        input.addClass("form-control");
+      }
 
       scope.name = input.attr("name");
 
@@ -46,7 +56,7 @@ function formGroupDirective(template) {
         return form[scope.name] || input.controller('ngModel');
       }
 
-      scope.input = findModelController;
+      scope.inputModel = findModelController;
 
       var formGroupClasses = function() {
         var inputModel = findModelController();
@@ -77,7 +87,7 @@ function formGroupDirective(template) {
       scope.tooltipText = function() {
         var errorFn = scope.errormessage();
         if (errorFn) {
-          return (scope.errormessage())(scope.input(), input);
+          return (scope.errormessage())(findModelController(), input);
         } else {
           return "";
         }
@@ -119,4 +129,43 @@ export function integerParser() {
       });
     }
   }
+}
+
+export function dateInput() {
+  return {
+    scope: {
+      model: '=',
+      name: '@',
+      id: '@',
+      readonly: '<inputReadonly'
+    },
+    require: "^form",
+    restrict: 'E',
+    template: require('./date-input.html'),
+    link: function ($scope, element, attributes, form) {
+
+      $scope.isOpen = false;
+      $scope.required = c.isDefinedNotNull(attributes.required);
+      $scope.readonly = c.coalesce($scope.readonly, false);
+
+      $scope.dateOptions = {
+        formatYear: 'yyyy',
+        startingDay: 1,
+        formatMonth: 'MM',
+        altInputFormats: ['dd.MM.yyyy']
+      };
+
+      /*
+       * Class has-error does not change the color of buttons in an input-group
+       * For buttons has-error color is obtained using class: btn-danger.
+       */
+      $scope.isError = function () {
+        return form[$scope.name].$invalid && form[$scope.name].$touched;
+      }
+
+      $scope.togglePopupCalendar = function (ev) {
+        $scope.isOpen = !$scope.isOpen;
+      };
+    }
+  };
 }

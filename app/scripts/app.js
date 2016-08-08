@@ -21,6 +21,13 @@ window.jQuery = require('jquery');
 window.d3 = require('d3/d3.js');
 
 /**
+ * Moment js -kirjasto pitää laittaa window muuttujaan,
+ * koska muuten vis.js kirjasto käyttää omaa moment kirjastoa, johon ei ole ladattu suomen kieltä.
+ */
+window.moment = require('moment');
+require('moment/locale/fi');
+
+/**
  * Alustava xsrf-token arvo, jota käytetään ensimmäiseen backend-pyyntöön.
  * Ensimmäisessä pyynnössä backend antaa vastauksena tietoturvallisen satunnaisluvun.
  * CRSF-hyökkäys esto perustuu double submit cookie -malliin.
@@ -46,6 +53,8 @@ require('angular-sanitize');
 require('ng-csv');
 require('iban/iban.js');
 require('nya-bootstrap-select');
+require('angularjs-slider');
+require('ng-tags-input');
 
 angular
   .module('jukufrontApp', [
@@ -64,9 +73,8 @@ angular
     'services.common',
     'services.config',
     'services.tunnusluvut',
+    'services.kilpailutus',
     'filters.toApplicantName',
-    'filters.toClass',
-    'filters.stateNameIncludes',
     'filters.toApplicationName',
     'filters.toApplicationNamePlural',
     'filters.erotteleRoolit',
@@ -87,7 +95,9 @@ angular
     'nvd3',
     'ngSanitize',
     'ngCsv',
-    'nya.bootstrap.select'
+    'nya.bootstrap.select',
+    'rzModule',
+    'ngTagsInput'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -143,6 +153,21 @@ angular
         url: '/asiakastuki',
         template: require('views/yhteinen/asiakastuki.html')
       })
+
+      /*
+       * Kilpailutusrekisteri
+       */
+      .state('app.kilpailutus', {
+        url: '/kilpailutukset/:id',
+        template: require('views/kilpailutukset/kilpailutus.html'),
+        controller: 'KilpailutusCtrl'
+      })
+      .state('app.kilpailutukset', {
+        url: '/kilpailutukset?organisaatiot&organisaatiolajit',
+        template: require('views/kilpailutukset/kilpailutukset.html'),
+        controller: 'KilpailutuksetCtrl'
+      })
+
       /*
        * Hakija
        */
@@ -170,17 +195,18 @@ angular
        * Tunnuslukujen raportointi
        */
 
-      .state('app.tunnusluku.valtionavustuskuvaajat', {
+      .state('app.tilastot', root('/tunnusluvut'))
+      .state('app.tilastot.valtionavustuskuvaajat', {
         url: '/valtionavustuskuvaajat/:organisaatiolaji/:avustustyyppi',
         template: require('views/tunnusluvut/raportit-valtionavustuskuvaajat.html'),
         controller: 'TunnuslukuraporttiAvustusCtrl'
       })
-      .state('app.tunnusluku.tunnuslukukuvaajat', {
+      .state('app.tilastot.tunnuslukukuvaajat', {
         url: '/tunnuslukukuvaajat/:organisaatiolaji',
         template: require('views/tunnusluvut/raportit-tunnuslukukuvaajat.html'),
         controller: 'TunnuslukuraporttiCtrl'
       })
-      .state('app.tunnusluku.omakuvaaja', {
+      .state('app.tilastot.omakuvaaja', {
         url: '/omakuvaaja/:tunnuslukuid/:organisaatiolaji',
         template: require('views/tunnusluvut/raportit-omakuvaaja.html'),
         controller: 'TunnuslukuraporttiOmakuvaajaCtrl'
@@ -254,6 +280,7 @@ angular
   .directive('jukuPoistumisvaroitus', require('components/poistumisvaroitus'))
   .directive('jukuVarmistusdialogi', require('components/varmistusdialogi'))
   .directive('jukuTaydennysdialogi', require('components/taydennysdialogi'))
+  .directive('jukuKilpailutusPoistodialogi', require('components/kilpailutus-poistodialogi'))
   .directive('hakemuksenTila', require('components/hakemuksenTila'))
   .directive('hakemusSummary', require('components/hakemusSummary'))
   .directive('hakemusPanel', require('components/hakemusPanel'))
@@ -303,12 +330,14 @@ angular
   .directive('formGroupCompact', require("components/formInput").formGroupCompact)
   .directive('formGroup', require("components/formInput").formGroup)
   .directive('integerOnly', require("components/formInput").integerParser)
+  .directive('dateInput', require("components/formInput").dateInput)
   .directive('tunnuslukuEditForms', directive.caseTemplate(
     {TTYT: require('views/tunnusluvut/muokkaus-ttyt.html'),
      BR:   require('views/tunnusluvut/muokkaus-psab.html'),
      KOS:  require('views/tunnusluvut/muokkaus-psak.html'),
      SA:   require('views/tunnusluvut/muokkaus-sa.html'),
-     ME:   require('views/tunnusluvut/muokkaus-me.html')}));
+     ME:   require('views/tunnusluvut/muokkaus-me.html')}))
+  .directive('timeline', ['$timeout', require("components/timeline").timeline]);
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
@@ -317,6 +346,8 @@ require('./controllers/kasittelija/suunnittelu');
 require('./controllers/yhteinen/asetukset');
 require('./controllers/yhteinen/hakemukset');
 require('./controllers/yhteinen/hakemus');
+require('./controllers/yhteinen/kilpailutukset');
+require('./controllers/yhteinen/kilpailutus');
 require('./controllers/yhteinen/kayttajatiedot');
 require('./controllers/yhteinen/paanaytto');
 require('./controllers/yhteinen/tunnusluvut');
@@ -345,10 +376,9 @@ require('./services/status');
 require('./services/suunnittelu');
 require('./services/tunnusluvut');
 require('./services/raportit');
+require('./services/kilpailutus');
 require('./filters/erotteleRoolit');
 require('./filters/toApplicantName');
-require('./filters/toClass');
-require('./filters/stateNameIncludes');
 require('./filters/toApplicationName');
 require('./filters/toApplicationNamePlural');
 require('./utils/d3-locale');

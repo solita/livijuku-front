@@ -33,6 +33,11 @@ function headerController($scope, $rootScope, $stateParams, $filter, KayttajaSer
     return $filter('isState')('app.hakija.hakemukset.omat') ||
       ($filter('isState')('app.hakemus') && $scope.isOwnApplication());
   };
+
+  $scope.tunnusluvutTabActive = function () {
+    return $filter('isState')('app.tunnusluku.syottaminen') ||
+      ($filter('isState')('app.tunnusluku') && $scope.isOwnApplication());
+  };
 }
 
 headerController.$inject = ['$scope', '$rootScope', '$stateParams', '$filter', 'KayttajaService', 'HakemusService'];

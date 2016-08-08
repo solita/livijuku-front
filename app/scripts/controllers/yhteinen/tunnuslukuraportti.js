@@ -31,7 +31,8 @@ const chartOptions = ytitle => ({
   },
   xAxis: {
     axisLabel: 'Vuosi'
-  }
+  },
+  noData: "Tiedot puuttuvat kokonaan"
 });
 
 const createGraph = (title, ytitle) => ({
@@ -73,7 +74,7 @@ angular.module('jukufrontApp')
           $q.all([RaporttiService.haeTunnuslukuTilasto(tunnuslukuid, $scope.organisaatiolaji, {}, ['organisaatioid', 'vuosi']),
                 OrganisaatioService.hae()])
           .then(([data, organisaatiot]) => {
-            $scope[scopename].csv = data;
+            $scope[scopename].csv = t.addOrganisaationimiColumn(data, organisaatiot);
             $scope[scopename].data = t.toOrganisaatioSeriesNvd3(data, organisaatiot);
           })
         }
@@ -86,7 +87,7 @@ angular.module('jukufrontApp')
         function loadAvustusOrganisaatioTilasto(promise, scopename) {
           $q.all([promise, OrganisaatioService.hae()])
           .then(([avustukset, organisaatiot]) => {
-            $scope[scopename].csv = avustukset;
+            $scope[scopename].csv = t.addOrganisaationimiColumn(avustukset, organisaatiot);
             $scope[scopename].data = t.toOrganisaatioSeriesNvd3(avustukset, organisaatiot);
           });
         }

@@ -1,0 +1,268 @@
+<div class="container">
+	<h1>Kilpailutuksen (tai liikennöintisopimuksen) tiedot</h1>
+  <ng-form name="kilpailutusForm" focus-to-invalid juku-poistumisvaroitus kilpailutus-pvm-validator>
+  	<h3>Kohde</h3>
+		<div class="row">
+			<div class="col-md-6 col-lg-4" ng-show="hasOrganisaatioSelectPermission">
+        <form-group label="Organisaatio">
+          <ol id="organisaatio" ng-model="kilpailutus.organisaatioid"
+              title="Valitse toimivaltainen viranomainen" class="nya-bs-select" size="20" required>
+            <li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
+              <a>{{ organisaatio.nimi }}</a>
+            </li>
+          </ol>
+        </form-group>
+      </div>
+      <div class="col-md-6 col-lg-4" ng-hide="hasOrganisaatioSelectPermission">
+        <div class="form-group" >
+          <label class="control-label">Organisaatio</label>
+          <div>
+            <p class="form-control-static">{{ organisaatio.nimi }}</p>
+          </div>
+        </div>
+	    </div>
+	   	<div class="col-md-6 col-lg-6">
+		   	<form-group label="Kohteen nimi" errormessage="kohdenimiErrorMessage">
+	        <input id="kohdenimi" name="kohdenimi" type="text" required maxlength="200"
+           ng-model="kilpailutus.kohdenimi"
+           ng-readonly="isReadonly"
+           placeholder="Ilmoita linja(t) tai reitit, joita sopimus koskee"/>
+	      </form-group>
+	    </div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+        <form-group label="Sopimustyyppi" ng-if="!isReadonly">
+          <ol id="sopimustyyppi" ng-model="kilpailutus.sopimusmallitunnus"
+              title="Valitse sopimustyyppi" class="nya-bs-select" size="20">
+						<li nya-bs-option="sopimusmalli in sopimusmallit" data-value="sopimusmalli.tunnus">
+              <a>{{ sopimusmalli.nimi }}</a>
+            </li>
+          </ol>
+        </form-group>
+        <div class="form-group" ng-if="isReadonly">
+          <label class="control-label">Sopimustyyppi</label>
+          <div>
+            <p class="form-control-static">{{ sopimusmallinimi() }}</p>
+          </div>
+        </div>
+	    </div>
+			<div class="col-md-4 col-lg-3">
+				<form-group
+					label="Kohteen arvioitu arvo"
+					uib-tooltip="Hankinnan koko sopimuskauden arvioitu arvo optiokausineen"
+					tooltip-enable="true"
+					tooltip-placement="top"
+					tooltip-append-to-body="true">
+					<span class="text-info small glyphicon glyphicon-question-sign"></span>
+					<input id="kohdearvo" name="kohdearvo" type="text"
+								 placeholder="Arvo (€)"
+								 ng-currency="" numeric-only="" max="9999999999.99"
+								 noenter select-on-click
+								 ng-model="kilpailutus.kohdearvo" ng-readonly="isReadonly">
+				</form-group>
+			</div>
+			<div class="col-md-4 col-lg-3">
+				<form-group
+					label="Arvio kaluston määrästä"
+					uib-tooltip="Arvio liikennöitsijältä vaadittavasta kaluston määrästä"
+					tooltip-enable="true"
+					tooltip-placement="top"
+					tooltip-append-to-body="true">
+					<span class="text-info small glyphicon glyphicon-question-sign"></span>
+					<input id="kalusto" name="kalusto"
+								 placeholder="Lukumäärä (kpl)"
+								 type="text" integer-only
+								 ng-readonly="isReadonly"
+								 noenter select-on-click
+								 ng-model="kilpailutus.kalusto"
+								 class="cursor-auto">
+				</form-group>
+			</div>
+		</div>
+		<div class="row">
+      <div class="col-xs-12">
+      	<form-group label="Lisätiedot">
+	      	<textarea name="lisatiedot" ng-model="kilpailutus.selite" rows="10" ng-readonly="isReadonly"
+            maxlength="20000" placeholder="Lisätietoja tarjousten vertailuperusteista, vaadittavasta kalustosta (koko, euroluokka) ja muusta kilpailutukseen liittyvästä"></textarea>
+      	</form-group>
+      </div>
+    </div>
+    <div class="row">
+      <form-group
+				label="Linkki HILMA-järjestelmään"
+				class="col-md-6"
+				uib-tooltip="Linkki ajantasaisimpaan Hilma-ilmoitukseen (ennakkoilmoitus, hankintailmoitus, jälki-ilmoitus)"
+				tooltip-enable="true"
+				tooltip-placement="top"
+				tooltip-append-to-body="true">
+				<span class="text-info small glyphicon glyphicon-question-sign"></span>
+        <input id="hilmalinkki" name="hilmalinkki" type="text"
+         ng-model="kilpailutus.hilmalinkki"
+         ng-readonly="isReadonly"
+         placeholder="Linkki kilpailutuksen tietoihin HILMA-järjestelmässä"/>
+      </form-group>
+      <form-group
+				label="Linkki kilpailutuksen asiakirjoihin"
+				class="col-md-6"
+				uib-tooltip="Esim. linkki sähköiseen kilpailutusjärjestelmään. Hankintailmoitus tulee olla julkaistuna HILMAssa"
+				tooltip-enable="true"
+				tooltip-placement="top"
+				tooltip-append-to-body="true">
+				<span class="text-info small glyphicon glyphicon-question-sign"></span>
+        <input id="asiakirjalinkki" name="asiakirjalinkki" type="text"
+         ng-model="kilpailutus.asiakirjalinkki"
+         ng-readonly="isReadonly"
+         placeholder="Linkki kilpailutuksen asiakirjoihin"/>
+      </form-group>
+    </div>
+  	<h3>Kilpailutus</h3>
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+      	<form-group label="Tarjouspyynnön julkaisupäivä" errormessage="julkaisupvmErrorMessage">
+	        <date-input id="julkaisupvm" name="julkaisupvm" type="text"
+           model="kilpailutus.julkaisupvm"
+           input-readonly="isReadonly">
+          </date-input>
+	      </form-group>
+	    </div>
+	    <div class="col-sm-6 col-md-4">
+      	<form-group label="Tarjousajan päättyminen" errormessage="tarjouspaattymispvmErrorMessage">
+	        <date-input id="tarjouspaattymispvm" name="tarjouspaattymispvm" type="text"
+           model="kilpailutus.tarjouspaattymispvm"
+           input-readonly="isReadonly">
+          </date-input>
+	      </form-group>
+	    </div>
+			<div class="col-sm-6 col-md-4">
+      	<form-group label="Hankintapäätös" errormessage="hankintapaatospvmErrorMessage">
+	        <date-input id="hankintapaatospvm" name="hankintapaatospvm" type="text"
+           model="kilpailutus.hankintapaatospvm"
+           input-readonly="isReadonly">
+          </date-input>
+	      </form-group>
+	    </div>
+	  </div>
+    <h3>Liikennöinti</h3>
+	 	<div class="row">
+			<div class="col-sm-6 col-md-4">
+      	<form-group label="Liikennöinnin aloituspäivä" errormessage="liikennointialoituspvmErrorMessage">
+	        <date-input id="liikennointialoituspvm" name="liikennointialoituspvm" required
+                      model="kilpailutus.liikennointialoituspvm"
+                      input-readonly="isReadonly">
+          </date-input>
+	      </form-group>
+	    </div>
+    	<div class="col-sm-6 col-md-4">
+      	<form-group label="Liikennöinnin päättyminen" errormessage="liikennointipaattymispvmErrorMessage">
+	        <date-input id="liikennointipaattymispvm" name="liikennointipaattymispvm" required
+                      model="kilpailutus.liikennointipaattymispvm"
+                      input-readonly="isReadonly">
+          </date-input>
+	      </form-group>
+	    </div>
+	  </div>
+   	<h3>Optiot</h3>
+    <div class="row">
+      <div class="col-sm-4">
+      	<form-group
+					label="Optiokaudet"
+					uib-tooltip="Hankintailmoituksessa mainitut optiokaudet, esim. ”2 + 1 vuotta” tai ”6 + 6 kk”"
+					tooltip-enable="true"
+					tooltip-placement="top"
+					tooltip-append-to-body="true">
+					<span class="text-info small glyphicon glyphicon-question-sign"></span>
+	        <input id="optioselite" name="optioselite" type="text"
+           ng-model="kilpailutus.optioselite"
+           maxlength="1000"
+           ng-readonly="isReadonly"
+           placeholder="Optiokaudet"/>
+	      </form-group>
+      </div>
+      <div class="col-sm-4">
+      	<form-group
+					label="Käyttöönotetun option päättyminen"
+					errormessage="hankittuoptiopaattymispvmErrorMessage"
+					uib-tooltip="Käyttöönotetun ja sovitun optiokauden päättymispäivämäärä"
+					tooltip-enable="true"
+					tooltip-placement="top"
+					tooltip-append-to-body="true">
+					<span class="text-info small glyphicon glyphicon-question-sign"></span>
+	        <date-input id="hankittuoptiopaattymispvm" name="hankittuoptiopaattymispvm" type="text"
+           model="kilpailutus.hankittuoptiopaattymispvm"
+           input-readonly="isReadonly">
+          </date-input>
+	      </form-group>
+      </div>
+      <div class="col-sm-4">
+      	<form-group
+					label="Optioiden päättyminen"
+					errormessage="optiopaattymispvmErrorMessage"
+					uib-tooltip="Viimeisimmän mahdollisen optiokauden päättymispäivä huomioimatta sitä, onko sen käyttöönotosta sovittu vai ei"
+					tooltip-enable="true"
+					tooltip-placement="top"
+					tooltip-append-to-body="true">
+					<span class="text-info small glyphicon glyphicon-question-sign"></span>
+	        <date-input id="optiopaattymispvm" name="optiopaattymispvm" type="text"
+           model="kilpailutus.optiopaattymispvm"
+           input-readonly="isReadonly">
+          </date-input>
+	      </form-group>
+      </div>
+    </div>
+   	<h3>Tietoa kilpailutuksesta</h3>
+    <div class="row">
+    	<div class="col-xs-12">
+		   	<form-group label="Valittu liikennöitsijä">
+	        <input id="liikennoitsijanimi" name="liikennoitsijanimi" type="text"
+	         ng-model="kilpailutus.liikennoitsijanimi"
+           maxlength="200"
+	         ng-readonly="isReadonly"
+	         placeholder="Liikennöitsijän nimi"/>
+	      </form-group>
+	    </div>
+	  </div>
+	  <div class="row">
+      <div class="col-sm-4 col-md-4">
+      	<form-group label="Tarjousten lukumäärä">
+          <input id="tarjousmaara" name="tarjousmaara"
+                 placeholder="Esim. 18"
+                 type="text" integer-only
+                 ng-readonly="isReadonly"
+                 noenter select-on-click
+                 ng-model="kilpailutus.tarjousmaara"
+                 class="cursor-auto">
+        </form-group>
+	     </div>
+	    <div class="col-sm-4 col-md-4">
+	    	<form-group label="Voittaneen tarjouksen hinta">
+	        <input id="tarjoushinta1" name="tarjoushinta1" type="text"
+                 class="form-control" placeholder="Hinta (€)"
+                 ng-currency="" numeric-only="" max="9999999999.99"
+                 noenter select-on-click
+                 ng-model="kilpailutus.tarjoushinta1" ng-readonly="isReadonly">
+	      </form-group>
+	    </div>
+	    <div class="col-sm-4 col-md-4">
+	    	<form-group label="Toiseksi tulleen hinta">
+	        <input id="tarjoushinta2" name="tarjoushinta2" type="text"
+                 class="form-control" placeholder="Hinta (€)"
+                 ng-currency="" numeric-only="" max="9999999999.99"
+                 noenter select-on-click
+                 ng-model="kilpailutus.tarjoushinta2" ng-readonly="isReadonly">
+	      </form-group>
+	    </div>
+    </div>
+  </ng-form>
+
+  <juku-controls>
+    <juku-controls-buttons class="full-width">
+      <button ng-show="!isNew && !isReadonly"
+      	juku-kilpailutus-poistodialogi kilpailutusid="kilpailutus.id"
+        class="btn btn-danger Ms-0 pull-left">Poista kilpailutus</button>
+
+      <button data-ng-click="save()" class="btn btn-success pull-right" ng-hide="isReadonly">Tallenna ja sulje lomake</button>
+      <button data-ng-click="cancel()" class="btn btn-warning pull-right">Sulje lomake</button>
+    </juku-controls-buttons>
+  </juku-controls>
+</div>

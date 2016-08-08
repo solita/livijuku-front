@@ -22,25 +22,36 @@
           </a>
         </li>
 
-        <li class="header__button {{ ownApplicationTabActive() | toClass:'is-active' }}"
+        <li class="header__button" ng-class="{'is-active': ownApplicationTabActive()}"
             ng-show="sallittu(user, 'view-oma-hakemus')">
           <a class="header__link" ui-sref="app.hakija.hakemukset.omat()">
             Omat hakemukset
           </a>
         </li>
 
-        <li class="header__button
-          {{ ('hakemukset' | stateNameIncludes:['app.hakija.hakemukset.omat']) ||
-             ('app.hakemus' | isState) && !isOwnApplication()
-            | toClass:'is-active'
-          }}" ng-show="sallittu(user, 'view-hakemus')">
+        <li class="header__button"
+            ng-class="{ 'is-active': (('app.yhteinen.hakemukset.list' | isState) || ('app.hakemus' | isState)) && !isOwnApplication() }"
+            ng-show="sallittu(user, 'view-hakemus')">
           <a class="header__link" ui-sref="app.yhteinen.hakemukset.list({tyyppi: getType()})">
             Kaikki hakemukset
           </a>
         </li>
-        <li
-          class="header__button {{ 'app.tunnusluku' | includedByState | toClass:'is-active' }}">
+
+        <li class="header__button" ng-class="{'is-active': tunnusluvutTabActive()}">
+          <a id="tunnusluvut-syottaminen" class="header__link" ui-sref="app.tunnusluku.syottaminen()">
+            Tunnusluvut
+          </a>
+        </li>
+
+        <li class="header__button" ng-class = "{'is-active': ('app.tilastot' | includedByState) }">
           <juku-statistic-dropdown user="user"></juku-statistic-dropdown>
+        </li>
+
+        <li class="header__button"
+            ng-class="{'is-active': ('app.kilpailutus' | isState) || ('app.kilpailutukset' | isState) }">
+          <a class="header__link" ui-sref="app.kilpailutukset">
+            Kilpailutukset
+          </a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

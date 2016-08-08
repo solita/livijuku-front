@@ -101,6 +101,10 @@
 .nya-bs-select.btn-group .dropdown-menu li small {
   padding-left: 0.5em;
 }
+.nya-bs-option.selected a {
+  background-color: #0085c9;
+  color: #fff;
+}
 .nya-bs-select.btn-group .dropdown-menu li.selected a .check-mark {
   position: absolute;
   display: inline-block;

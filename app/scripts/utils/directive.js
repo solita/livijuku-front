@@ -78,6 +78,10 @@ export function maxlengthTextErrorMessage(maxlength) {
   }
 }
 
+export function dateErrorMessage(input) {
+  return input.$error.date ? 'Päivämäärä on virheellisen muotoinen. Sallittu muoto on päivä.kuukausi.vuosi. Vuosiluku on mahdollista määrittää neljällä tai kahdella numerolla.' : null;
+}
+
 export function combineErrorMessages() {
   return input => _.find(_.map(arguments, f => f(input)), c.isDefinedNotNull);
 }
@@ -90,4 +94,13 @@ export function createTabFunctions($scope, tabProperty) {
   $scope.toTab = function(tyyppi) {
     $scope[tabProperty] = tyyppi;
   };
+}
+
+// see: http://stackoverflow.com/questions/30628611/programmatically-set-all-form-fields-to-ng-touched-on-form-submission
+export function touchErrorFields(form) {
+  _.forEach(form.$error, function (error) {
+      _.forEach(error, function(errorField){
+          errorField.$setTouched();
+        });
+    });
 }

@@ -1,14 +1,18 @@
 'use strict';
 
-function sidebarController($scope, ConfigService) {
+function sidebarController($scope, $rootScope, ConfigService) {
   $scope.sallittu = require('utils/user').hasPermission;
+
+  $scope.uncollapse = function () {
+    $rootScope.isCollapsed = false;
+  };
 
   ConfigService.hae().then(function (response) {
     $scope.logoutUrl = response.logoutUrl;
   });
 }
 
-sidebarController.$inject = ['$scope', 'ConfigService'];
+sidebarController.$inject = ['$scope', '$rootScope', 'ConfigService'];
 
 module.exports = function () {
   return {

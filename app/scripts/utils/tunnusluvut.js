@@ -68,6 +68,33 @@ export function missingOrganisaatiot(data, allOrganisaatiot, organisaatiolajitun
   return _.filter(organisaatiotInLaji, org => !_.includes(organisaatiotInData, org.id));
 }
 
+/**
+ * Muuta vuosi+kuukausi (esim. 201601) tieto unix ajanhetkeksi.
+ */
+export function kuukausiToUTC(vuosikk) {
+  var year = parseInt(vuosikk.substring(0, 4));
+  var kuukausi = parseInt(vuosikk.substring(4));
+  return Date.UTC(year, (kuukausi - 1));
+}
+
+/**
+ * Lisää organisaatio nimi sarake taulukkomuotoiseen dataan. Datassa organisaatioId on 1. sarake. Nimi tulee 2. sarakkeeksi.
+ */
+export function addOrganisaationimiColumn(data, organisaatiot) {
+  const header = _.clone(_.head(data));
+
+  // Note: splice is a mutating operation
+  header.splice(1, 0, 'organisaationimi');
+
+  const body = _.map(_.tail(data), row => {
+    var result = _.clone(row);
+    result.splice(1, 0, _.find(organisaatiot, {id: row[0]}).nimi);
+    return result;
+  });
+
+  return _.concat([header], body);
+}
+
 /* Progress bar laskenta */
 
 export function laskeTayttoaste(tunnusluvut, tyyppi) {

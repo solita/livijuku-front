@@ -4,6 +4,7 @@ var _ = require('lodash');
 var angular = require('angular');
 var c = require('utils/core');
 var t = require('utils/tunnusluvut');
+var time = require('utils/time');
 
 function nimi(id) {
   return this[id];
@@ -76,7 +77,7 @@ const sopimustyypit = {
 };
 
 const vuodet = {
-  $order: _.range(2013, 2017).reverse(),
+  $order: _.range(2013, time.currentYear() + 1).reverse(),
   $nimi: _.identity,
   $id: "vuosi"
 };
@@ -102,7 +103,8 @@ function createChart(title, xLabel) {
       },
       xAxis: {
         axisLabel: xLabel
-      }
+      },
+      noData: "Tiedot puuttuvat kokonaan"
     },
     title: {
       enable: true,
@@ -219,6 +221,8 @@ function createAlueTunnusluku(id, nimi, desc, unit) {
   }
 }
 
+const defaultYear = _.toString(time.currentYear() - 1);
+
 const tunnusluvut = [{
   id: "nousut",
   nimi: "Nousut",
@@ -292,7 +296,7 @@ const tunnusluvut = [{
     yTitle: filter => "Nousut" + filterInfoText(filter) + " / päivä vuonna " + filter.vuosi,
     groupBy: ["organisaatioid", "viikonpaivaluokkatunnus"],
     filters: [
-      createFilter("Vuosi", vuodet, '2016'),
+      createFilter("Vuosi", vuodet, defaultYear),
       createFilter("Sopimustyyppi", sopimustyypit)],
     options: createMultiBarChart("Kysyntä", "Viikonpäiväluokka", viikonpaivaluokat)
   }]
@@ -312,7 +316,7 @@ const tunnusluvut = [{
     yTitle: filter => "Lähdöt" + filterInfoText(filter) + " / päivä vuonna " + filter.vuosi,
     groupBy: ["organisaatioid", "viikonpaivaluokkatunnus"],
     filters: [
-      createFilter("Vuosi", vuodet, '2016'),
+      createFilter("Vuosi", vuodet, defaultYear),
       createFilter("Sopimustyyppi", sopimustyypit)],
     options: createMultiBarChart("Tarjonta", "Viikonpäiväluokka", viikonpaivaluokat)
   }]
@@ -332,7 +336,7 @@ const tunnusluvut = [{
     yTitle: filter => "Linjakilometrit" + filterInfoText(filter) + " / päivä vuonna " + filter.vuosi,
     groupBy: ["organisaatioid", "viikonpaivaluokkatunnus"],
     filters: [
-      createFilter("Vuosi", vuodet, '2016'),
+      createFilter("Vuosi", vuodet, defaultYear),
       createFilter("Sopimustyyppi", sopimustyypit)],
     options: createMultiBarChart("Tarjonta", "Viikonpäiväluokka", viikonpaivaluokat)
   }]
@@ -392,7 +396,7 @@ const tunnusluvut = [{
     yTitle: filter => "Kaluston lukumäärä" + filterInfoText(filter) + ' vuonna ' + filter.vuosi,
     groupBy: ["organisaatioid", "paastoluokkatunnus"],
     filters: [
-      createFilter("Vuosi", vuodet, '2016'),
+      createFilter("Vuosi", vuodet, defaultYear),
       createFilter("Sopimustyyppi", sopimustyypit)],
     options: createMultiBarChart("Kalusto", "Päästöluokka", paastoluokat)
   }]
@@ -411,7 +415,7 @@ const tunnusluvut = [{
     yTitle: filter => "Kustannukset (€)" + filterInfoText(filter) + ' vuonna ' + filter.vuosi,
     groupBy: ["organisaatioid", "kustannuslajitunnus"],
     filters: [
-      createFilter("Vuosi", vuodet, '2016')],
+      createFilter("Vuosi", vuodet, defaultYear)],
     options: createMultiBarChart("Kustannukset", "Kustannuslaji", kustannuslajit)
   }]
 }, {
@@ -426,19 +430,19 @@ const tunnusluvut = [{
       createFilter("Vyöhykemäärä", vyohykemaarat, '1')],
     options: createMultiBarChart("Lippuhinnat", "Vuosi")
   }, {
-    title: "Vuoden lippuhinnat vyöhykeittäin",
+    title: "Vuoden lippuhinnat vyöhykkeittäin",
     yTitle: filter => "Lippuhinta" + filterInfoText(filter) + ' €',
     groupBy: ["organisaatioid", "vyohykemaara"],
     filters: [
-      createFilter("Vuosi", vuodet, '2016'),
+      createFilter("Vuosi", vuodet, defaultYear),
       createFilter("Lipputyyppi", lippuhintaluokat, 'KE')],
     options: createMultiBarChart("Lippuhinnat", "Vyöhykemäärä", vyohykemaarat)
   }, {
-    title: "Vuoden lippuhinnat vyöhykeittäin ja lipputyypeittäin",
+    title: "Vuoden lippuhinnat vyöhykkeittäin ja lipputyypeittäin",
     yTitle: filter => undefined,
     data: _.partial(convertToTree, "Lippuhinnat", [vyohykemaarat.$nimi, lippuhintaluokat.$nimi]),
     groupBy: ["organisaatioid", "vyohykemaara", "lippuhintaluokkatunnus"],
-    filters: [createFilter("Vuosi", vuodet, '2016')],
+    filters: [createFilter("Vuosi", vuodet, defaultYear)],
     options: {
       chart: {
         type: 'sunburstChart',
@@ -461,6 +465,16 @@ const tunnusluvut = [{
   createAlueTunnusluku('asiakastyytyvaisyys', 'Asiakastyytyväisyys', 'tyytyväisten joukkoliikenteen käyttäjien osuus', 'Prosenttia (%)')];
 
 
+function convertVuosiKKToUnixtime(data) {
+  var header = _.head(data);
+  var body = _.tail(data);
+  return header[1] === 'vuosikk' ?
+    _.concat([header], _.map(body, row => _.update(_.clone(row), 1, t.kuukausiToUTC))) :
+    data;
+}
+
+const defaultConversion = (data, organisaatiot) => t.toOrganisaatioSeriesNvd3(convertVuosiKKToUnixtime(data), organisaatiot);
+
 function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService) {
   var charts = $scope.tunnusluku.charts;
   var tunnusluku = $scope.tunnusluku;
@@ -478,13 +492,14 @@ function watchParamsAndRefresh($scope, $q, RaporttiService, OrganisaatioService)
       chart.options.subtitle.text = ytitle;
       chart.options.chart.yAxis.axisLabel = ytitle;
     }
-    const conversion = c.coalesce(chart.data, t.toOrganisaatioSeriesNvd3);
+    const conversion = c.coalesce(chart.data, defaultConversion);
 
     $q.all([RaporttiService.haeTunnuslukuTilasto(tunnusluku.id, organisaatiolaji, filters, chart.groupBy),
         OrganisaatioService.hae()])
       .then(([data, organisaatiot])=> {
 
-        $scope.csv[id] = data;
+        $scope.csv[id] = t.addOrganisaationimiColumn(data, organisaatiot);
+
         $scope.missing[id] = _.join(_.map(t.missingOrganisaatiot(data, organisaatiot, organisaatiolaji), 'nimi'), ', ');
         if (chart.options.chart.type === 'sunburstChart') {
           $scope.params.charts[id].api.updateWithData(conversion(data, organisaatiot));
