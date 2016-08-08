@@ -1,4 +1,4 @@
-<div class="header navbar navbar-fixed-top" role="navigation">
+<div id="navheader" class="header navbar navbar-fixed-top" role="navigation">
   <div class="container">
     <a ui-sref="redirect()">
       <img src="images/juku_logo.svg" class="logo"/>
@@ -22,7 +22,8 @@
           </a>
         </li>
 
-        <li class="header__button {{ ownApplicationTabActive() | toClass:'is-active' }}" ng-show="sallittu(user, 'view-oma-hakemus')">
+        <li class="header__button {{ ownApplicationTabActive() | toClass:'is-active' }}"
+            ng-show="sallittu(user, 'view-oma-hakemus')">
           <a class="header__link" ui-sref="app.hakija.hakemukset.omat()">
             Omat hakemukset
           </a>
@@ -38,13 +39,15 @@
           </a>
         </li>
         <li
-          class="header__button {{ 'app.hakija.tunnusluku' | includedByState | toClass:'is-active' }}"
-          ng-show="sallittu(user, 'view-hakemuskausi')">
+          class="header__button {{ 'app.tunnusluku' | includedByState | toClass:'is-active' }}">
           <juku-statistic-dropdown user="user"></juku-statistic-dropdown>
         </li>
       </ul>
-
-      <juku-user-dropdown user="user"></juku-user-dropdown>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <juku-user-dropdown user="user"></juku-user-dropdown>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

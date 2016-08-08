@@ -16,8 +16,12 @@ angular.module('jukufrontApp')
       });
     };
 
+    $scope.hasHakemuksia = function(hakemuskausi){
+        return (hakemuskausi.hakemukset.length>0);
+    };
+
     $scope.haeHakemus = function haeHakemus(hakemuskausi, tyyppi) {
-      return _.findWhere(hakemuskausi.hakemukset, {
+      return _.find(hakemuskausi.hakemukset, {
         hakemustyyppitunnus: tyyppi
       });
     };
@@ -32,7 +36,7 @@ angular.module('jukufrontApp')
 
     $scope.isELYhakija = function (hakemuskausi) {
       return (_.find(hakemuskausi.hakemukset, function (hakemus) {
-        return _.contains(['ELY'], hakemus.hakemustyyppitunnus)
+        return _.includes(['ELY'], hakemus.hakemustyyppitunnus)
       }) !== undefined);
     };
 

@@ -15,8 +15,12 @@ export function hakemusKaynnissa(hakemus) {
          !hakemusSuljettu(hakemus);
 }
 
+export function hakemusHakuaikaAktiivinen(hakemus) {
+  return (new Date() > new Date(hakemus.hakuaika.alkupvm));
+}
+
 export function haeHakemus(hakemuskausi, tyyppitunnus) {
-  return _.findWhere(hakemuskausi.hakemukset, {
+  return _.find(hakemuskausi.hakemukset, {
     hakemustyyppitunnus: tyyppitunnus
   });
 }
@@ -25,7 +29,7 @@ export function hakemuksiaYhteensa(hakemus) {
   return _.reduce(hakemus.hakemustilat, (memo, tila) => memo + tila.count, 0);
 }
 export function hakemuksiaTilassa(hakemus, tila) {
-  var hakemusTilassa = _.findWhere(hakemus.hakemustilat, {hakemustilatunnus: tila});
+  var hakemusTilassa = _.find(hakemus.hakemustilat, {hakemustilatunnus: tila});
   return hakemusTilassa ? hakemusTilassa.count : 0;
 }
 
@@ -52,5 +56,5 @@ export function hakemustyyppiFlags(hakemustyyppitunnus) {
 }
 
 export function isMaksatushakemus(hakemustyyppitunnus) {
-  return _.contains(['MH1', 'MH2'], hakemustyyppitunnus)
+  return _.includes(['MH1', 'MH2'], hakemustyyppitunnus)
 }

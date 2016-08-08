@@ -35,7 +35,7 @@ public class WorkAround {
     public static void scrollIntoView(WebElement element) {
         //driver.executeScript("arguments[0].scrollIntoView(true);", element);
         int elementPosition = element.getLocation().getY();
-        String js = String.format("window.scroll(0, %s)", elementPosition - 60);
+        String js = String.format("window.scroll(0, %s)", elementPosition - 80);
         TestBase.driver.executeScript(js);
     }
 
@@ -48,12 +48,12 @@ public class WorkAround {
     }
 
     public static void hideMainMenu() {
-        String hideScript = "jQuery($x(\"//*[contains(@class, 'header')]\")[0]).hide()";
+        String hideScript = "jQuery('#navheader').hide()";
         TestBase.driver.executeScript(hideScript);
     }
 
     public static void showMainMenu() {
-        String hideScript = "jQuery($x(\"//*[contains(@class, 'header')]\")[0]).show()";
+        String hideScript = "jQuery('#navheader').show()";
         TestBase.driver.executeScript(hideScript);
     }
 }

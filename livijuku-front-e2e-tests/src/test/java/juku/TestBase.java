@@ -1,21 +1,7 @@
 package juku;
 
-import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
-import static java.lang.Thread.sleep;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.AssertJUnit.assertTrue;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
+import com.paulhammant.ngwebdriver.AngularModelAccessor;
+import com.paulhammant.ngwebdriver.ByAngular;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -29,6 +15,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
@@ -43,8 +30,21 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import com.paulhammant.ngwebdriver.AngularModelAccessor;
-import com.paulhammant.ngwebdriver.ByAngular;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
+import static java.lang.Thread.sleep;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.AssertJUnit.assertTrue;
 
 public class TestBase {
 
@@ -105,15 +105,15 @@ public class TestBase {
         HARRI("juku_hakija", "juku_hakija", "helsingin ka", ""),
         KATRI("juku_kasittelija", "juku_kasittelija", "liikennevirasto", ""),
         PAIVI("juku_paatoksentekija", "juku_paatoksentekija", "liikennevirasto", ""),
-        ELY1("juku_hakija_uus","juku_hakija","ELY","1"),
-        ELY2("juku_hakija_var","juku_hakija","ELY","2"),
-        ELY3("juku_hakija_kaa","juku_hakija","ELY","3"),
-        ELY4("juku_hakija_pir","juku_hakija","ELY","4"),
-        ELY8("juku_hakija_psa","juku_hakija","ELY","8"),
-        ELY9("juku_hakija_ksu","juku_hakija","ELY","9"),
-        ELY10("juku_hakija_epo","juku_hakija","ELY","10"),
-        ELY12("juku_hakija_ppo","juku_hakija","ELY","12"),
-        ELY14("juku_hakija_lap","juku_hakija","ELY","14");
+        ELY1("juku_hakija_uus", "juku_hakija", "ELY", "1"),
+        ELY2("juku_hakija_var", "juku_hakija", "ELY", "2"),
+        ELY3("juku_hakija_kaa", "juku_hakija", "ELY", "3"),
+        ELY4("juku_hakija_pir", "juku_hakija", "ELY", "4"),
+        ELY8("juku_hakija_psa", "juku_hakija", "ELY", "8"),
+        ELY9("juku_hakija_ksu", "juku_hakija", "ELY", "9"),
+        ELY10("juku_hakija_epo", "juku_hakija", "ELY", "10"),
+        ELY12("juku_hakija_ppo", "juku_hakija", "ELY", "12"),
+        ELY14("juku_hakija_lap", "juku_hakija", "ELY", "14");
 
 
         private final String login;
@@ -195,6 +195,7 @@ public class TestBase {
 
     protected void postHakuohje(File fileToUpload, String xpath) {
         WebElement fileInput = findElementByXPath(xpath);
+        driver.executeScript("angular.element(arguments[0]).parent().removeAttr('style');", fileInput);
         driver.executeScript("angular.element(arguments[0]).css('visibility', 'visible').css('width','').css('height','');", fileInput);
         String hakuohje = fileToUpload.getAbsolutePath();
         fileInput.sendKeys(hakuohje);
@@ -210,30 +211,31 @@ public class TestBase {
     }
 
     protected void asetaAlkupaivat0101() {
+
         for (int i = 0; i < 4; i++) {
             WebElement muokkaaAikoja = findElementByCssSelector("#test-muokkaa-hakuaikoja-" + i);
-            muokkaaAikoja.click();
+            WorkAround.click(muokkaaAikoja);
 
             WebElement alkupv = findElementByCssSelector("#test-alkupvm-datepicker-button-" + i);
-            alkupv.click();
+            WorkAround.click(alkupv);
 
             WebElement vuosikuukausiValitsin =
                     findElementByCssSelector("#test-alkupvm-datepicker-" + i + " thead > tr:nth-child(1) > th:nth-child(2) button");
-            vuosikuukausiValitsin.click();
+            WorkAround.click(vuosikuukausiValitsin);
 
             WebElement vuosiValitsin = findElementByCssSelector("#test-alkupvm-datepicker-" + i + " thead tr:first-child th:nth-child(2) button");
-            vuosiValitsin.click();
+            WorkAround.click(vuosiValitsin);
 
             WebElement vuosi01 = findElementByCssSelector("#test-alkupvm-datepicker-" + i + " tbody tr:first-child td:first-child button");
-            vuosi01.click();
+            WorkAround.click(vuosi01);
 
             WebElement kuukausi01 = findElementByCssSelector("#test-alkupvm-datepicker-" + i + " tbody tr:first-child td:first-child button");
-            kuukausi01.click();
+            WorkAround.click(kuukausi01);
 
             WebElement paiva01 = findElementByCssSelector("#test-alkupvm-datepicker-" + i + " tbody tr:first-child td:nth-child(5) button");
-            paiva01.click();
+            WorkAround.click(paiva01);
 
-            findElementByCssSelector("#test-alkupvm-tallenna-" + i).click();
+            WorkAround.click(findElementByCssSelector("#test-alkupvm-tallenna-" + i));
             waitForAngularRequestsToFinish(driver);
         }
     }
@@ -261,9 +263,9 @@ public class TestBase {
     private void avaaKausi() {
         login(User.KATRI);
 
-        postHakuohje(getPathToTestFile("test.pdf").toFile(),"//input[@type='file' and @name='hakuohje']");
+        postHakuohje(getPathToTestFile("test.pdf").toFile(), "//input[@type='file' and @name='hakuohje']");
         waitForAngularRequestsToFinish(driver);
-        postHakuohje(getPathToTestFile("test.pdf").toFile(),"//input[@type='file' and @name='elyhakuohje']");
+        postHakuohje(getPathToTestFile("test.pdf").toFile(), "//input[@type='file' and @name='elyhakuohje']");
 
         boolean kaynnistaNapinTilaEnnen =
                 findElementByXPath("//button[%s]", containsText("Käynnistä hakemuskausi")).isEnabled();
@@ -466,6 +468,11 @@ public class TestBase {
         return driver.findElementByCssSelector(css);
     }
 
+    public static WebElement findElementById(String text) {
+        waitForAngularRequestsToFinish(driver);
+        return driver.findElement(By.id(text));
+    }
+
     public static WebElement findElementByLinkText(String text) {
         waitForAngularRequestsToFinish(driver);
         return driver.findElementByLinkText(text);
@@ -489,7 +496,7 @@ public class TestBase {
     public static WebElement getElementByXPath(String xpath, Object... n) {
         List<WebElement> elements = findElementsByXPath(xpath, n);
 
-        Assert.assertFalse(elements.isEmpty(), "Yhtään haluttua elementtiä: " + xpath + " ei löytynyt" );
+        Assert.assertFalse(elements.isEmpty(), "Yhtään haluttua elementtiä: " + xpath + " ei löytynyt");
         Assert.assertEquals(elements.size(), 1, "Ehtojen mukaisia " + xpath + " elementtejä löytyi enemmän kuin yksi.");
 
         return elements.get(0);

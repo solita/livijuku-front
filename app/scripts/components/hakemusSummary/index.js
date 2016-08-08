@@ -18,7 +18,7 @@ module.exports = function () {
     replace: true,
     template: require('./index.html'),
     controller: ['$scope', function ($scope) {
-      $scope.hakemuksenTilat = _.filter(tilat.getAll(), (tila) => ['0', 'M'].indexOf(tila.id) === -1);
+      $scope.hakemuksenTilat = _.filter(tilat.getAll(), (tila) => ['0', 'P'].indexOf(tila.id));
       $scope.utils = hakemus;
       $scope.editing = false;
       $scope.status = {
@@ -29,6 +29,14 @@ module.exports = function () {
         formatYear: 'yyyy',
         startingDay: 1,
         formatMonth: 'MM'
+      };
+
+      $scope.hakemuskausiAvaamaton = function () {
+        return $scope.hakemuskaudenTila === 'A';
+      };
+
+      $scope.hakemuskausiKaynnissa = function () {
+        return $scope.hakemuskaudenTila === 'K';
       };
 
       $scope.hakemuskausiSuljettu = function () {

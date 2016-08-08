@@ -4,50 +4,57 @@ var angular = require("angular");
 var _ = require("lodash");
 
 function assertInputIsDefined(input, element) {
-  if (!input) {
-    var message = "Input or select element is not found inside form-group component.";
+  if (_.isEmpty(input)) {
+    var message = "Input, select or textarea element is not found inside form-group component.";
     console.log(message, element);
     throw({message: message, element: element});
   }
 }
 
-export function formGroupCompact() {
+function findInputElement(element) {
+  const inputElements = ['input', 'select', 'textarea'];
+  for (var i = 0; i < inputElements.length; i++) {
+    var input = element.find(inputElements[i]);
+    if (input.length > 0) {
+      return input;
+    }
+  }
+}
+
+function formGroupDirective(template) {
   return {
     restrict: "E",
     require: "^form",
     scope: {
       label: "@label",
-      //input: "&input",
-      //name: "&name",
       errormessage: "&errormessage"
     },
-    template: require("./input-compact.html"),
+    template: template,
     transclude: true,
     link: function(scope, element, attributes, form) {
-      var input = element[0].getElementsByTagName("input")[0];
-      if (!input) {
-        input = element[0].getElementsByTagName("select")[0];
-        scope.feedbackSupport = false;
-      } else {
-        scope.feedbackSupport = true;
-      }
 
+      var input = findInputElement(element);
       assertInputIsDefined(input, element[0]);
 
-      angular.element(input).addClass("form-control");
+      scope.feedbackSupport = (input[0].tagName.toLowerCase() !== 'select');
 
-      scope.name = input.getAttribute("name");
-      scope.input = function() {
-        return form[scope.name];
-      };
+      input.addClass("form-control");
+
+      scope.name = input.attr("name");
+
+      function findModelController() {
+        return form[scope.name] || input.controller('ngModel');
+      }
+
+      scope.input = findModelController;
 
       var formGroupClasses = function() {
-        var input = form[scope.name];
+        var inputModel = findModelController();
         var classes = {
-          'has-feedback': input.$invalid && input.$touched && scope.feedbackSupport,
-          'has-error': input.$invalid && input.$touched,
-          'has-warning': input.$invalid && !input.$touched,
-          'has-success': input.$valid && input.$dirty
+          'has-feedback': inputModel.$invalid && inputModel.$touched && scope.feedbackSupport,
+          'has-error': inputModel.$invalid && inputModel.$touched,
+          'has-warning': inputModel.$invalid && !inputModel.$touched,
+          'has-success': inputModel.$valid && inputModel.$dirty
         };
 
         var activeClasses = _.filter(_.keys(classes), key => classes[key]);
@@ -70,7 +77,7 @@ export function formGroupCompact() {
       scope.tooltipText = function() {
         var errorFn = scope.errormessage();
         if (errorFn) {
-          return (scope.errormessage())(scope.input());
+          return (scope.errormessage())(scope.input(), input);
         } else {
           return "";
         }
@@ -78,6 +85,9 @@ export function formGroupCompact() {
     }
   }
 }
+
+export const formGroupCompact = _.constant(formGroupDirective(require("./input-compact.html")));
+export const formGroup = _.constant(formGroupDirective(require("./input.html")));
 
 function assertModelCtrlIsDefined(modelCtrl, element) {
   if (!modelCtrl) {
@@ -107,72 +117,6 @@ export function integerParser() {
         }
         return null;
       });
-    }
-  }
-}
-
-export function formGroup() {
-  return {
-    restrict: "E",
-    require: "^form",
-    scope: {
-      label: "@label",
-      errormessage: "&errormessage"
-    },
-    template: require("./input.html"),
-    transclude: true,
-    link: function(scope, element, attributes, form) {
-      var input = element[0].getElementsByTagName("input")[0];
-      if (!input) {
-        input = element[0].getElementsByTagName("select")[0];
-        scope.feedbackSupport = false;
-      } else {
-        scope.feedbackSupport = true;
-      }
-
-      assertInputIsDefined(input, element[0]);
-
-      angular.element(input).addClass("form-control");
-
-      scope.name = input.getAttribute("name");
-      scope.input = function() {
-        return form[scope.name];
-      };
-
-      var formGroupClasses = function() {
-        var input = form[scope.name];
-        var classes = {
-          'has-feedback': input.$invalid && input.$touched && scope.feedbackSupport,
-          'has-error': input.$invalid && input.$touched,
-          'has-warning': input.$invalid && !input.$touched,
-          'has-success': input.$valid && input.$dirty
-        };
-
-        var activeClasses = _.filter(_.keys(classes), key => classes[key]);
-        return activeClasses.join(" ");
-      };
-
-      /*
-       * ng-class direktiivi ei toimi oikein vaan nopealla syötteellä
-       * joku virheluokista saattaa jäädä päälle.
-       *
-       * Tämän ongelman takia bootstrapin validaatiotilaluokkien
-       * asettaminen tehdään tässä käsin.
-       */
-      var body = element.children();
-      scope.$watch(formGroupClasses, function(v) {
-        body.removeClass('has-feedback has-error has-warning has-success');
-        body.addClass(v);
-      });
-
-      scope.tooltipText = function() {
-        var errorFn = scope.errormessage();
-        if (errorFn) {
-          return (scope.errormessage())(scope.input());
-        } else {
-          return "";
-        }
-      }
     }
   }
 }

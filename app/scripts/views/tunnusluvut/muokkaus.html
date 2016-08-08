@@ -1,0 +1,68 @@
+<div class="container" focus-to-invalid>
+  <div class="page-header">
+    <h1>Tunnuslukujen syöttäminen</h1>
+  </div>
+  <form id="tunnusluvutValintaForm" name="tunnusluvutValintaForm" class="form-inline">
+    <juku-form-row>
+      <div class="col-md-4 form-group input-lg" ng-show="hasOrganisaatioSelectPermission">
+        <label for="organisaatio" class="sr-only">Organisaatio</label>
+        <ol id="organisaatio" ng-model="organisaatioId" ng-disabled="isReadonly()"
+            title="Valitse toimivaltainen viranomainen" class="form-control nya-bs-select" size="20" required>
+          <li nya-bs-option="organisaatio in organisaatiot" data-value="organisaatio.id">
+            <a>{{ organisaatio.nimi }}</a>
+          </li>
+        </ol>
+      </div>
+      <div class="col-md-2" ng-hide="hasOrganisaatioSelectPermission">
+        <p class="tunnusluku-vuosi-label">Valitse vuosi:</p>
+      </div>
+      <div class="col-md-2 form-group input-lg">
+        <label for="vuosi" class="sr-only">Vuosi</label>
+        <ol id="vuosi" name="vuosi"
+            ng-model="vuosi" ng-disabled="isReadonly()"
+            title="Valitse vuosi" class="form-control nya-bs-select" required>
+          <li nya-bs-option="v in vuodet" data-value="v">
+            <a>{{ v }}</a>
+          </li>
+        </ol>
+      </div>
+      <div class="col-md-6">
+        <div class="alert alert-info" ng-hide="vuosi && organisaatioId">
+          <p>
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            Valitse {{hasOrganisaatioSelectPermission ? 'alue ja ' : '' }}vuosi
+          </p>
+        </div>
+        <div ng-if="tunnusluvut">
+          <small><em>Koko vuoden tallennettujen tunnuslukujen täyttöaste tietokannassa:</em></small>
+          <uib-progressbar animate="false" value="vuositayttoaste" type="success"><b>{{vuositayttoaste}}%</b>
+          </uib-progressbar>
+        </div>
+      </div>
+    </juku-form-row>
+  </form>
+  <juku-navigation>
+    <juku-tabs>
+      <juku-tab
+        ng-repeat="tyyppi in constants.tunnuslukuTyypit"
+        id="{{tyyppi}}"
+        selected="isTabSelected(tyyppi)"
+        ng-click="toTab(tyyppi)">
+        {{ tunnuslukuTyyppiNimi(tyyppi) }}
+      </juku-tab>
+    </juku-tabs>
+  </juku-navigation>
+  <form name="tunnusluvutForm" novalidate juku-poistumisvaroitus>
+    <div ng-if="tunnusluvut">
+      <tunnusluku-edit-forms type="tyyppi"></tunnusluku-edit-forms>
+      <juku-controls>
+        <juku-controls-buttons>
+          <button id="tallenna" class="btn btn-success" data-ng-click="tallennaTunnusluvut()">Tallenna näytöllä olevat
+            tiedot
+          </button>
+        </juku-controls-buttons>
+      </juku-controls>
+    </div>
+  </form>
+  <br/>
+</div>

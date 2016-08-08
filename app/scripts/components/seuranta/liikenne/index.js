@@ -10,7 +10,7 @@ function errorMessage(nimi) {
 
 function haeMaksimiNumero(taulukko) {
   if (taulukko.length === 0) return 0;
-  return _.max(taulukko, 'numero').numero + 1;
+  return _.maxBy(taulukko, 'numero').numero + 1;
 }
 
 function liikenneController($scope) {
@@ -51,19 +51,19 @@ function liikenneController($scope) {
   };
 
   $scope.linjaautotSumma = function () {
-    return _.sum($scope.suoritteet, 'linjaautot');
+    return _.sumBy($scope.suoritteet, 'linjaautot');
   };
 
   $scope.taksitSumma = function () {
-    return _.sum($scope.suoritteet, 'taksit');
+    return _.sumBy($scope.suoritteet, 'taksit');
   };
 
   $scope.ajokmSumma = function () {
-    return _.sum($scope.suoritteet, 'ajokilometrit');
+    return _.sumBy($scope.suoritteet, 'ajokilometrit');
   };
 
   $scope.lipputuloSumma = function () {
-    return _.sum($scope.suoritteet, 'lipputulo');
+    return _.sumBy($scope.suoritteet, 'lipputulo');
   };
 
   $scope.bruttohintaSumma = function () {
@@ -71,11 +71,11 @@ function liikenneController($scope) {
   };
 
   $scope.matkustajatSumma = function () {
-    return _.sum($scope.suoritteet, 'matkustajamaara');
+    return _.sumBy($scope.suoritteet, 'matkustajamaara');
   };
 
   $scope.nettohintaSumma = function () {
-    return _.sum($scope.suoritteet, 'nettohinta');
+    return _.sumBy($scope.suoritteet, 'nettohinta');
   };
 
   $scope.isKokonaissuorite = function () {

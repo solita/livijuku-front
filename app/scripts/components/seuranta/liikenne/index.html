@@ -1,65 +1,67 @@
-<ng-form id="{{liikennetyyppi + '-liikennesuoritteet-form'}}" name="suoritteetForm">
+<ng-form id="{{liikennetyyppi + '-liikennesuoritteet-form'}}" name="suoritteetForm" class="liikenne">
   <div class="table-responsive">
     <table class="table table-hover table-condensed">
-      <tr>
-        <th class="col-md-2">
-          <div uib-tooltip="Valitse suorite linja-, sopimus-, tai kokonaistasolla." tooltip-placement="top"
-               tooltip-append-to-body="true">
-            Suoritetyyppi&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
-        </th>
-        <th class="col-md-2">
-          <div
-            uib-tooltip="Kirjoita suoritteen nimi, esimerkiksi linjan numero, sopimuksen nimi tai sopimuskokonaisuus."
-            tooltip-placement="top"
-            tooltip-append-to-body="true">
-            Suoritteen nimi&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
-          </div>
-        </th>
-        <th>
-          <div uib-tooltip="Linja-autojen lukumäärä" tooltip-placement="top"
-               tooltip-append-to-body="true">
-            Linja-autot&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
-          </div>
-        </th>
-        <th>
-          <div uib-tooltip="Taksien lukumäärä" tooltip-placement="top"
-               tooltip-append-to-body="true">
-            Taksit&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
-          </div>
-        </th>
-        <th>
-          <div uib-tooltip="Paikallisliikenteen ajokilometrit"
-               tooltip-append-to-body="true">
-            Ajo&shy;kilometrit&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
-          </div>
-        </th>
-        <th>
-          <div uib-tooltip="Paikallisliikenteen matkustajamäärä" tooltip-placement="top"
-               tooltip-append-to-body="true">
-            Matkus&shy;tajat&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
-          </div>
-        </th>
-        <th>
-          <div uib-tooltip="Saadut matkalipputulot" tooltip-placement="top"
-               tooltip-append-to-body="true">
-            Lippu&shy;tulo&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
-          </div>
-        </th>
-        <th>
-          <div uib-tooltip="Kaupungin liikennöitsijöille maksama hinta, sisältää valtionavun"
-               tooltip-placement="top"
-               tooltip-append-to-body="true">
-            Netto&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
-          </div>
-        </th>
-        <th>
-          <div uib-tooltip="Lipputulo + nettohinta" tooltip-placement="top"
-               tooltip-append-to-body="true">
-            Brutto&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
-          </div>
-        </th>
-        <th ng-hide="isReadonly()">Toiminnot</th>
-      </tr>
+      <thead>
+        <tr>
+          <th class="col-md-2">
+            <div uib-tooltip="Valitse suorite linja-, sopimus-, tai kokonaistasolla." tooltip-placement="top"
+                 tooltip-append-to-body="true">
+              Suoritetyyppi&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th class="col-md-2">
+            <div
+              uib-tooltip="Kirjoita suoritteen nimi, esimerkiksi linjan numero, sopimuksen nimi tai sopimuskokonaisuus."
+              tooltip-placement="top"
+              tooltip-append-to-body="true">
+              Suoritteen nimi&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th>
+            <div uib-tooltip="Linja-autojen lukumäärä" tooltip-placement="top"
+                 tooltip-append-to-body="true">
+              Linja-autot&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th>
+            <div uib-tooltip="Taksien lukumäärä" tooltip-placement="top"
+                 tooltip-append-to-body="true">
+              Taksit&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th>
+            <div uib-tooltip="Paikallisliikenteen ajokilometrit"
+                 tooltip-append-to-body="true">
+              Ajo&shy;kilometrit&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th>
+            <div uib-tooltip="Paikallisliikenteen matkustajamäärä" tooltip-placement="top"
+                 tooltip-append-to-body="true">
+              Matkus&shy;tajat&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th>
+            <div uib-tooltip="Saadut matkalipputulot" tooltip-placement="top"
+                 tooltip-append-to-body="true">
+              Lippu&shy;tulo&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th>
+            <div uib-tooltip="Kaupungin liikennöitsijöille maksama hinta, sisältää valtionavun"
+                 tooltip-placement="top"
+                 tooltip-append-to-body="true">
+              Netto&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th>
+            <div uib-tooltip="Lipputulo + nettohinta" tooltip-placement="top"
+                 tooltip-append-to-body="true">
+              Brutto&nbsp;<span class="text-info small glyphicon glyphicon-question-sign"></span>
+            </div>
+          </th>
+          <th ng-hide="isReadonly()">Toiminnot</th>
+        </tr>
       </thead>
       <tfoot ng-if="suoritteet.length > 0">
         <tr>
@@ -131,7 +133,7 @@
           <td>
             <form-group-compact label="Ajokilometrit" errormessage="ajokilometritErrorMessage">
               <input id="{{liikennetyyppi + '-ajokilometrit'}}" name="ajokilometrit" type="text" class="form-control"
-                     numeric-km-only="" ng-currency=""
+                     numeric-only="" ng-currency=""
                      ng-readonly="isReadonly()" required
                      currency-symbol="km" placeholder="Ajokilometrit" noenter
                      select-on-click

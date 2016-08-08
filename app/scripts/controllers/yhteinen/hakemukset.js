@@ -4,7 +4,7 @@ var _ = require('lodash');
 var angular = require('angular');
 
 function haeOrganisaatio(id, organisaatiot) {
-  return _.findWhere(organisaatiot, {id});
+  return _.find(organisaatiot, {id});
 }
 
 angular.module('jukufrontApp')
@@ -19,11 +19,16 @@ angular.module('jukufrontApp')
     '$scope',
     function ($rootScope, HakemuskausiService, $stateParams, StatusService, OrganisaatioService, $q, $state, $scope) {
 
-      this.displayed = [];
-      this.tyyppi = $stateParams.tyyppi;
-      //this.hakemuskaudet = [];
+      function haeHakijatyypinHakemukset(hakijatyyppi, hakemukset, organisaatiot) {
+        return _.filter(hakemukset, function (hakemus) {
+          var org = haeOrganisaatio(hakemus.organisaatioid, organisaatiot);
+          return hakijatyyppi === org.lajitunnus;
+        });
+      }
+      $scope.hakemukset = [];
+      $scope.hakemukset.tyyppi = $stateParams.tyyppi;
 
-      this.sallittu = function (oikeus) {
+      $scope.hakemukset.sallittu = function (oikeus) {
         if (typeof $rootScope.user !== 'undefined') {
           for (var i = 0; i < $rootScope.user.privileges.length; i++) {
             if ($rootScope.user.privileges[i] === oikeus) {
@@ -34,19 +39,11 @@ angular.module('jukufrontApp')
         }
       };
 
-
-      this.hakijanNimi = (hakemus) => {
-        return haeOrganisaatio(hakemus.organisaatioid, this.organisaatiot).nimi;
+      $scope.hakemukset.hakijanNimi = (hakemus) => {
+        return haeOrganisaatio(hakemus.organisaatioid, $scope.hakemukset.organisaatiot).nimi;
       };
 
-      this.hakijatyypinHakemukset = function hakijatyypinHakemukset(hakijatyyppi, hakemuskausi) {
-        return _(hakemuskausi.hakemukset).filter((hakemus) => {
-          const organisaatio = haeOrganisaatio(hakemus.organisaatioid, this.organisaatiot);
-          return hakijatyyppi === organisaatio.lajitunnus && this.tyyppi === hakemus.hakemustyyppitunnus;
-        }).value();
-      };
-
-      this.hakemuksiaYhteensa = function hakemuksiaYhteensa(tyyppi, hakemuskaudet) {
+      $scope.hakemukset.hakemuksiaYhteensa = function hakemuksiaYhteensa(tyyppi, hakemuskaudet) {
         return _.reduce(hakemuskaudet, function (sum, hakemuskausi) {
           return sum + _.filter(hakemuskausi.hakemukset, hakemus =>
               ['V', 'TV'].indexOf(hakemus.hakemustilatunnus) > -1 && hakemus.hakemustyyppitunnus === tyyppi
@@ -62,18 +59,18 @@ angular.module('jukufrontApp')
         return $scope.hakemukset.tyyppi === tyyppi;
       };
 
-      this.hakemustyypinId = function hakemustyypinId(tyyppi, hakemus, hakemukset) {
+      $scope.hakemukset.hakemustyypinId = function hakemustyypinId(tyyppi, hakemus, hakemukset) {
         if (hakemus.hakemustyyppitunnus === tyyppi) {
           return hakemus.id;
         }
 
-        return _.findWhere(hakemukset, {
+        return _.find(hakemukset, {
           organisaatioid: hakemus.organisaatioid,
           hakemustyyppitunnus: tyyppi
         }).id;
       };
 
-      this.siirryHakemukseen = function siirryHakemukseen(hakemus, hakemuskausi, hakijatyyppi) {
+      $scope.hakemukset.siirryHakemukseen = function siirryHakemukseen(hakemus, hakemuskausi, hakijatyyppi) {
         $state.go('app.hakemus', {
           id: hakemus.id
         });
@@ -84,32 +81,28 @@ angular.module('jukufrontApp')
           OrganisaatioService.hae()
         ])
         .then(([hakemuskaudet, organisaatiot]) => {
-          this.organisaatiot = organisaatiot;
+          $scope.hakemukset.organisaatiot = organisaatiot;
+          $scope.hakemukset.hakemuskaudet = hakemuskaudet;
 
-          this.hakemuskaudet = _(hakemuskaudet)
-            .filter(hakemuskausi => hakemuskausi.hakemukset.length > 0)
-            .sortBy('vuosi').reverse().value();
+          var tyyppisuodatettu = [];
+          _.forEach(hakemuskaudet, function (hakemuskausi) {
+            if (hakemuskausi.hakemukset.length > 0) {
+              var hakemuksetHakemustyyppitunnus = _.filter(hakemuskausi.hakemukset, {'hakemustyyppitunnus': $stateParams.tyyppi});
+              if (hakemuksetHakemustyyppitunnus.length > 0) {
+                var hakijatyypit = {};
+                _.forEach($rootScope.constants.hakijaTyypit, function (hakijatyyppi) {
+                  var hakijatyypinHakemukset = haeHakijatyypinHakemukset(hakijatyyppi, hakemuksetHakemustyyppitunnus, organisaatiot);
+                  if (hakijatyypinHakemukset.length > 0) {
+                    hakijatyypit[hakijatyyppi] = hakijatyypinHakemukset;
+                  }
+                });
+                tyyppisuodatettu.push({'vuosi':hakemuskausi.vuosi, 'hakemuskaudenhakemukset':hakijatyypit});
+              }
+            }
+          });
+          $scope.hakemukset.hakemukset = _.sortBy(tyyppisuodatettu,'vuosi').reverse();
 
-          /*
-           * Cachetusta smart tablea varten
-           * {
-           2011: {
-           ELY: [hakemus]
-           KS1: [hakemus]
-           KS2: [hakemus]
-           },
-           2012: ...
-           * }
-           */
-
-          this.hakemukset = _(this.hakemuskaudet).map((hakemuskausi) => {
-            var hakijatyypit = _.zipObject($rootScope.constants.hakijaTyypit.map((tyyppi) => {
-              return [tyyppi, this.hakijatyypinHakemukset(tyyppi, hakemuskausi)];
-            }));
-            return [hakemuskausi.vuosi, hakijatyypit];
-          }).zipObject().value();
-
-          this.yearsOpen = _.reduce(this.hakemuskaudet,
+          $scope.hakemukset.yearsOpen = _.reduce($scope.hakemukset.hakemukset,
             (memo, kausi) => _.set(memo, kausi.vuosi, true), {});
 
         }, StatusService.errorHandler);

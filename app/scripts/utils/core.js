@@ -17,6 +17,8 @@ export function isBlank(string) {
   return (isNullOrUndefined(string) || /^\s*$/.test(string));
 }
 
+export const isNotBlank = txt => !isBlank(txt);
+
 /**
  * Round value to two decimals
  */
@@ -47,4 +49,28 @@ var findFirstDefinedValue = _.partialRight(_.find, isDefinedNotNull);
 
 export function coalesce() {
   return findFirstDefinedValue(arguments)
+}
+
+export function cartesianProduct() {
+    return _.reduce(arguments, function(a, b) {
+        return _.flatten(_.map(a, function(x) {
+            return _.map(b, function(y) {
+                return x.concat([y]);
+            });
+        }));
+    }, [ [] ]);
+};
+
+/**
+ * This is same as lodash property-function except this supports a default value.
+ * The default value is used when the value of the property is not defined i.e. isNotDefined === true.
+ * The default isNotDefined function is isNullOrDefined other suitable functions are e.g. isBlank, _.isNaN, _.isNull etc.
+ */
+export function property(path, defaultValue, isNotDefined) {
+  var p = _.property(path);
+  var isNotDefined = coalesce(isNotDefined, isNullOrUndefined);
+  return function(obj) {
+    var value = p(obj);
+    return isNotDefined(value) ? defaultValue : value;
+  };
 }

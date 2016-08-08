@@ -10,12 +10,10 @@ function errorMessage(nimi) {
 
 function haeMaksimiNumero(taulukko) {
   if (taulukko.length === 0) return 0;
-  return _.max(taulukko, 'numero').numero + 1;
+  return _.maxBy(taulukko, 'numero').numero + 1;
 }
 
 function kehittamishankkeetController($scope) {
-
-  $scope.kehittamishankkeet2 = [];
 
   $scope.lisaaKehittamishanke = function () {
     var uusi = {
@@ -46,7 +44,7 @@ function kehittamishankkeetController($scope) {
   };
 
   $scope.yhteensa = function () {
-    return _.sum($scope.kehittamishankkeet, 'arvo');
+    return _.sumBy($scope.kehittamishankkeet, 'arvo');
   };
 
   $scope.arvoalueErrorMessage = errorMessage("");

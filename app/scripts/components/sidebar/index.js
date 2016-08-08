@@ -1,7 +1,7 @@
 'use strict';
 
 function sidebarController($scope, ConfigService) {
-  $scope.sallittu = require('utils/hasPermission');
+  $scope.sallittu = require('utils/user').hasPermission;
 
   ConfigService.hae().then(function (response) {
     $scope.logoutUrl = response.logoutUrl;

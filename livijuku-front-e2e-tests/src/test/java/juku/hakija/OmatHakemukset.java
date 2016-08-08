@@ -1,12 +1,8 @@
 package juku.hakija;
 
-import static juku.TestBase.Hakemuslaji;
-import static juku.TestBase.Hakemustila;
-import static juku.TestBase.containsText;
-import static juku.TestBase.findElementByXPath;
-import static juku.TestBase.hasClass;
-
 import org.openqa.selenium.WebElement;
+
+import static juku.TestBase.*;
 
 /**
  * Created by petrisi on 16.9.15.

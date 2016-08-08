@@ -1,101 +1,124 @@
-<ng-form id="maararahatarpeet-form" name="maararahatarpeetForm">
-  <juku-form-row>
-    <div class="col-md-6">
-      <form-group label="Siirtymäajan sopimukset" errormessage="sasopimuksetErrorMessage">
-        <input id="siirtymaaikasopimukset" name="siirtymaaikasopimukset" type="text" ng-currency="" numeric-only="" class="form-control"
-               ng-model="hakemus.ely.siirtymaaikasopimukset"
-               ng-init="hakemus.ely.siirtymaaikasopimukset = hakemus.ely.siirtymaaikasopimukset || 0"
+<ng-form id="maararahatarpeet-form" name="maararahatarpeetForm" class="maararahatarpeet">
+
+  <h4>Joukkoliikennetuki kunnille</h4>
+
+  <div class="row">
+    <div class="col-md-3">
+      <form-group label="Lipputuki - kaupunkilippu" errormessage="kaupunkilipputukiErrorMessage">
+        <input id="kaupunkilipputuki" name="kaupunkilipputuki" type="text"
+               required ng-currency="" numeric-only max="9999999999.99"
+               ng-model="hakemus.ely.kaupunkilipputuki"
                ng-disabled="isReadonly()"
-               placeholder="Siirtymäajan sopimukset"
-               ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
-               required select-on-click/>
+               placeholder="Siirtymäajan sopimukset (€)"
+              select-on-click/>
       </form-group>
     </div>
-    <div class="col-md-6">
-      <form-group label="Joukkoliikennetuki kunnille" errormessage="jltkunnilleErrorMessage">
-        <input id="joukkoliikennetukikunnat" name="joukkoliikennetukikunnat" type="text" ng-currency="" numeric-only="" class="form-control"
-               ng-model="hakemus.ely.joukkoliikennetukikunnat"
-               ng-init="hakemus.ely.joukkoliikennetukikunnat = hakemus.ely.joukkoliikennetukikunnat || 0"
+    <div class="col-md-3">
+      <form-group label="Lipputuki - seutulippu" errormessage="seutulipputukiErrorMessage">
+        <input id="seutulipputuki" name="seutulipputuki" type="text"
+               ng-currency="" numeric-only required max="9999999999.99"
+               ng-model="hakemus.ely.seutulipputuki"
                ng-disabled="isReadonly()"
-               placeholder="Joukkoliikennetuki kunnille"
-               ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
-               required select-on-click/>
+               placeholder="Joukkoliikennetuki kunnille (€)"
+               select-on-click/>
       </form-group>
     </div>
-  </juku-form-row>
+    <div class="col-md-3">
+      <form-group label="Liikenteen ostot" errormessage="ostotErrorMessage">
+        <input id="ostot" name="ostot" type="text"
+               ng-currency="" numeric-only required max="9999999999.99"
+               ng-model="hakemus.ely.ostot"
+               ng-disabled="isReadonly()"
+               placeholder="Liikenteen ostot (€)"
+               select-on-click/>
+      </form-group>
+    </div>
+    <div class="col-md-3">
+      <form-group label="Kehittäminen" errormessage="kehittaminenErrorMessage">
+        <input id="kehittaminen" name="kehittaminen" type="text"
+               ng-currency="" numeric-only required max="9999999999.99"
+               ng-model="hakemus.ely.kehittaminen"
+               ng-disabled="isReadonly()"
+               placeholder="Kehittäminen (€)"
+               select-on-click/>
+      </form-group>
+    </div>
+  </div>
+
   <hr>
-  <juku-form-row>
-    <div class="col-md-12">
-      <div class="table-responsive">
-        <table class="table table-hover table-condensed">
-          <thead>
-            <tr>
-              <th class="col-md-3 ekarivi">Määrärahatarve</th>
-              <th class="ekarivi">Sidotut</th>
-              <th class="ekarivi">Uudet</th>
-              <th class="ekarivi">Tulot</th>
-              <th class="col-md-4 ekarivi">Kuvaus</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="maararahatarve in maararahatarpeet track by $index" ng-form>
-              <td>{{haeNimi(maararahatarve.maararahatarvetyyppitunnus)}}</td>
-              <td>
-                <form-group-compact label="Sidotut" errormessage="arvoalueErrorMessage">
-                  <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-sidotut'}}" name="sidotut" type="text"
-                         class="form-control" ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="maararahatarve.sidotut" ng-disabled="isReadonly()"
-                         ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
-                         placeholder="Sidotut">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Uudet" errormessage="arvoalueErrorMessage">
-                  <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-uudet'}}" name="uudet" type="text"
-                         class="form-control" ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="maararahatarve.uudet" ng-disabled="isReadonly()"
-                         ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
-                         placeholder="Uudet">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact ng-if="maararahatarve.hasOwnProperty('tulot')" label="Uudet" errormessage="arvoalueErrorMessage">
-                  <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-tulot'}}" name="tulot" type="text"
-                         class="form-control" ng-currency="" numeric-only=""
-                         noenter
-                         select-on-click
-                         ng-model="maararahatarve.tulot" ng-disabled="isReadonly()"
-                         ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
-                         placeholder="Tulot">
-                </form-group-compact>
-              </td>
-              <td>
-                <form-group-compact label="Kuvaus" errormessage="kuvausErrorMessage">
-                  <input id="{{maararahatarve.maararahatarvetyyppitunnus +'-kuvaus'}}" name="kuvaus" type="text"
-                         noenter
-                         select-on-click
-                         ng-maxlength="2000"
-                         ng-model="maararahatarve.kuvaus"
-                         ng-disabled="isReadonly()"
-                         placeholder="Kuvaus">
-                </form-group-compact>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </juku-form-row>
-  <juku-form-row>
+
+  <h4>Joukkoliikennetuki liikenteen ostoihin</h4>
+
+  <div class="table-responsive">
+    <table class="table table-hover table-condensed">
+      <thead>
+        <tr>
+          <th class="col-md-3 ekarivi">Määrärahatarve</th>
+          <th class="ekarivi">Sidotut</th>
+          <th class="ekarivi">Uudet</th>
+          <th class="ekarivi">Tulot</th>
+          <th class="col-md-4 ekarivi">Kuvaus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="maararahatarve in maararahatarpeet track by $index" ng-form>
+          <td>
+            <div uib-tooltip="{{maararahatarvetyyppiTooltip(maararahatarve.maararahatarvetyyppitunnus)}}"
+                 tooltip-enable="maararahatarvetyyppiTooltip(maararahatarve.maararahatarvetyyppitunnus)"
+                 tooltip-placement="top"
+                 tooltip-append-to-body="true">
+            {{haeNimi(maararahatarve.maararahatarvetyyppitunnus)}}&nbsp;<span
+              ng-if="maararahatarvetyyppiTooltip(maararahatarve.maararahatarvetyyppitunnus)"
+              class="text-info small glyphicon glyphicon-question-sign"></span>
+            </div>
+          </td>
+          <td>
+            <form-group-compact label="Sidotut" errormessage="errorMessage">
+              <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-sidotut'}}" name="sidotut" type="text"
+                     required ng-currency="" numeric-only="" max="9999999999.99"
+                     noenter select-on-click
+                     ng-model="maararahatarve.sidotut" ng-disabled="isReadonly()"
+                     placeholder="Sidotut">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Uudet" errormessage="errorMessage">
+              <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-uudet'}}" name="uudet" type="text"
+                     required ng-currency="" numeric-only="" max="9999999999.99"
+                     noenter select-on-click
+                     ng-model="maararahatarve.uudet" ng-disabled="isReadonly()"
+                     placeholder="Uudet">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact ng-if="maararahatarve.hasOwnProperty('tulot')" label="Uudet" errormessage="errorMessage">
+              <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-tulot'}}" name="tulot" type="text"
+                     required ng-currency="" numeric-only="" max="9999999999.99"
+                     noenter select-on-click
+                     ng-model="maararahatarve.tulot" ng-disabled="isReadonly()"
+                     placeholder="Tulot">
+            </form-group-compact>
+          </td>
+          <td>
+            <form-group-compact label="Kuvaus" errormessage="kuvausErrorMessage">
+              <input id="{{maararahatarve.maararahatarvetyyppitunnus +'-kuvaus'}}" name="kuvaus" type="text"
+                     noenter select-on-click
+                     maxlength="2000"
+                     ng-model="maararahatarve.kuvaus"
+                     ng-disabled="isReadonly()"
+                     placeholder="Kuvaus">
+            </form-group-compact>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
     <div class="col-md-12">
       <h4>MENOT YHTEENSÄ: <span id="menotyhteensa" uib-tooltip="Siirtymäajan sopimukset + Joukkoliikennetuki + Sidotut + Uudet - Tulot"
                                 tooltip-placement="top"
                                 tooltip-append-to-body="true">{{yhteensa() | currency}}</span></h4>
     </div>
-  </juku-form-row>
-  <juku-form-row></juku-form-row>
+  </div>
 </ng-form>

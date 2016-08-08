@@ -1,23 +1,22 @@
 package juku;
 
-import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.List;
-
-import org.openqa.selenium.WebElement;
-import org.testng.annotations.Test;
-
 import juku.hakija.OmatHakemukset;
 import juku.kasittelija.Hakemuskaudet;
 import juku.kasittelija.KaikkiHakemukset;
 import juku.kasittelija.Suunnittelu;
 import juku.yhteinen.Hakemus;
+import org.openqa.selenium.WebElement;
+import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
+
+import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 public class HakemuskausiTest extends TestBase {
 
@@ -345,6 +344,7 @@ public class HakemuskausiTest extends TestBase {
     private void uusiLiikennesuorite(String prefix, int suoritetyyppi, String nimi,
                                      String linjaautot, String taksit, String ajokilometrit,
                                      String matkustajamaara, String lipputulo, String nettohinta) {
+        WorkAround.hideMainMenu();
         // Luodaan rivi ja poistetaan se samantien
         WorkAround.click(findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)));
         WorkAround.click(findElementByXPath(String.format("//a[@id='%s-poistasuorite']", prefix)));
@@ -364,11 +364,13 @@ public class HakemuskausiTest extends TestBase {
         findElementByXPath(String.format("//input[@id='%s-lipputulo']", prefix)).sendKeys(lipputulo);
         findElementByXPath(String.format("//input[@id='%s-nettohinta']", prefix)).clear();
         findElementByXPath(String.format("//input[@id='%s-nettohinta']", prefix)).sendKeys(nettohinta);
+        WorkAround.showMainMenu();
     }
 
     private void uusiLippusuorite(String prefix, int lipputyyppi, String seutulippualue, String myynti,
                                   String matkat, String asiakashinta, String keskipituus,
                                   String lipputulot, String rahoitus) {
+        WorkAround.hideMainMenu();
         WorkAround.click(findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)));
         WorkAround.click(findElementByXPath(String.format("//a[@id='%s-poistasuorite']", prefix)));
         WorkAround.click(findElementByXPath(String.format("//button[@id='%s-lisaasuorite']", prefix)));
@@ -391,16 +393,27 @@ public class HakemuskausiTest extends TestBase {
         findElementByXPath(String.format("//input[@id='%s-lipputulot']", prefix)).sendKeys(lipputulot);
         findElementByXPath(String.format("//input[@id='%s-rahoitus']", prefix)).clear();
         findElementByXPath(String.format("//input[@id='%s-rahoitus']", prefix)).sendKeys(rahoitus);
+        WorkAround.showMainMenu();
     }
 
-    private void elyPerustiedot(String siirtymaaikasopimukset, String joukkoliikennetukikunnat) {
-        findElementByXPath("//input[@id='siirtymaaikasopimukset']").clear();
-        findElementByXPath("//input[@id='siirtymaaikasopimukset']").sendKeys(siirtymaaikasopimukset);
-        findElementByXPath("//input[@id='joukkoliikennetukikunnat']").clear();
-        findElementByXPath("//input[@id='joukkoliikennetukikunnat']").sendKeys(joukkoliikennetukikunnat);
+    private void elyPerustiedot(String kaupunkilipputuki,
+                                String seutulipputuki,
+                                String ostot,
+                                String kehittaminen) {
+        setInputValue("kaupunkilipputuki", kaupunkilipputuki);
+        setInputValue("seutulipputuki", seutulipputuki);
+        setInputValue("ostot", ostot);
+        setInputValue("kehittaminen", kehittaminen);
+    }
+
+    private void setInputValue(String id, String value) {
+        final String xpath = "//input[@id='" + id + "']";
+        findElementByXPath(xpath).clear();
+        findElementByXPath(xpath).sendKeys(value);
     }
 
     private void uusiKehittamishanke(String nimi, String arvo, String kuvaus, int index) {
+        WorkAround.hideMainMenu();
         // Luodaan rivi ja poistetaan se samantien
         WorkAround.click(findElementByXPath("//button[@id='lisaakehittamishanke']"));
         WorkAround.click(findElementByXPath(String.format("//a[@id='poistakehittamishanke-%d']", index)));
@@ -411,9 +424,11 @@ public class HakemuskausiTest extends TestBase {
         findElementByXPath(String.format("//input[@id='arvo-%d']", index)).sendKeys(arvo);
         findElementByXPath(String.format("//input[@id='kuvaus-%d']", index)).clear();
         findElementByXPath(String.format("//input[@id='kuvaus-%d']", index)).sendKeys(kuvaus);
+        WorkAround.showMainMenu();
     }
 
     private void uusiMaararahatarve(String prefix, String sidotut, String uudet, String tulot, String kuvaus) {
+        WorkAround.hideMainMenu();
         findElementByXPath(String.format("//input[@id='%s-sidotut']", prefix)).clear();
         findElementByXPath(String.format("//input[@id='%s-sidotut']", prefix)).sendKeys(sidotut);
         findElementByXPath(String.format("//input[@id='%s-uudet']", prefix)).clear();
@@ -424,6 +439,7 @@ public class HakemuskausiTest extends TestBase {
         }
         findElementByXPath(String.format("//input[@id='%s-kuvaus']", prefix)).clear();
         findElementByXPath(String.format("//input[@id='%s-kuvaus']", prefix)).sendKeys(kuvaus);
+        WorkAround.showMainMenu();
     }
 
 
@@ -521,6 +537,7 @@ public class HakemuskausiTest extends TestBase {
                 + ".css('z-index', '1000001')"
                 + ".css('width','100px')"
                 + ".css('height','30px');", fileInput);
+        driver.executeScript("angular.element(arguments[0]).parent().removeAttr('style');", fileInput);
 
         String allekirjoitusliite = getPathToTestFile("JUKU_allekirjoitusoikeus.doc").toFile().getAbsolutePath();
 
@@ -548,7 +565,7 @@ public class HakemuskausiTest extends TestBase {
         // Täytetään kenttiin arvot
 
         // Perustiedot
-        elyPerustiedot("10000", "20000");
+        elyPerustiedot("10000", "20000", "10000", "20000");
 
         // Lisää allekirjoitusliite
         lisaaAllekirjoitusLiite();
@@ -654,6 +671,9 @@ public class HakemuskausiTest extends TestBase {
         // TODO Assertoi hakijana myös hakemuksen tila ja bread crumbs.
         WorkAround.click(OmatHakemukset.hakemuksenTila(Hakemuslaji.ELY, Hakemustila.KESKENERAINEN));
 
+        // Perustiedot
+        elyPerustiedot("15000", "20000", "15000", "20000");
+
         // Lisää allekirjoitusliite
         lisaaAllekirjoitusLiite();
 
@@ -667,7 +687,7 @@ public class HakemuskausiTest extends TestBase {
         // Täytetään kenttiin arvot
 
         // Perustiedot
-        elyPerustiedot("15000", "20000");
+        elyPerustiedot("15000", "20000", "15000", "20000");
 
         // Määrärahatarve
         uusiMaararahatarve("BS", "1000", "2000", "3000", "Bruttosopimus kuvaus");
@@ -676,7 +696,7 @@ public class HakemuskausiTest extends TestBase {
 
         // Tarkistetaan hakemuksen menot yhteensä kenttä
         WebElement menotYhteensa = findElementByXPath("//span[@id='menotyhteensa']");
-        assertThat(menotYhteensa.getText(), is(equalTo("49 000,00 €")));
+        assertThat(menotYhteensa.getText(), is(equalTo("84 000,00 €")));
 
         // Kehittämishankkeet
         uusiKehittamishanke("Kehittämishanke1", "123433", "Kehittämishanke 1 kuvaus", 0);
@@ -688,7 +708,7 @@ public class HakemuskausiTest extends TestBase {
 
         // Tarkistetaan hakemuksen kokonaissumma-kenttä
         WebElement elyhakemusYhteensa = findElementByXPath("//h4[@id='sumHaettavaElyAvustus']");
-        assertThat(elyhakemusYhteensa.getText(), is(equalTo("283 655,00 € (sis. alv)")));
+        assertThat(elyhakemusYhteensa.getText(), is(equalTo("318 655,00 € (sis. alv)")));
 
         // Tallenna hakemus
         WorkAround.click(Hakemus.tallennaHakemus());
@@ -785,9 +805,9 @@ public class HakemuskausiTest extends TestBase {
 
         // Tarkistetaan summat
         WebElement avustuksetYhteensa = findElementByXPath("//td[@id='haettuavustussumma']");
-        assertThat(avustuksetYhteensa.getText(), is(equalTo("523 655,00 €")));
+        assertThat(avustuksetYhteensa.getText(), is(equalTo("798 655,00 €")));
         WebElement muutosYhteensa = findElementByXPath("//td[@id='haettumuutossumma']");
-        assertThat(muutosYhteensa.getText(), is(equalTo("-323 655,00 €")));
+        assertThat(muutosYhteensa.getText(), is(equalTo("-598 655,00 €")));
 
         // Kirjaa sisään päättäjä
         login(User.PAIVI);
@@ -814,7 +834,7 @@ public class HakemuskausiTest extends TestBase {
         String expectedText2 = "liikenne- ja ympäristökeskuksille yhteensä 200 000 euroa valtion";
         assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText2),
                 containsNormalized(actual, expectedText2));
-        String expectedText3 = "Etelä-Pohjanmaa 200000 e";
+        String expectedText3 = "Etelä-Pohjanmaa ELY 200000 e";
         assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText3),
                 containsNormalized(actual, expectedText3));
     }

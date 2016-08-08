@@ -18,6 +18,7 @@ var directive = require('utils/directive');
  * - http://api.jquery.com/offset/
  */
 window.jQuery = require('jquery');
+window.d3 = require('d3/d3.js');
 
 /**
  * Alustava xsrf-token arvo, jota käytetään ensimmäiseen backend-pyyntöön.
@@ -39,12 +40,12 @@ require('ng-currency');
 require('angular-bootstrap-show-errors');
 require('angular-ui-validate');
 require('angular-i18n/angular-locale_fi-fi');
-require('d3/d3.js');
 require('nvd3/build/nv.d3.js');
 require('angular-nvd3/dist/angular-nvd3.js');
 require('angular-sanitize');
 require('ng-csv');
 require('iban/iban.js');
+require('nya-bootstrap-select');
 
 angular
   .module('jukufrontApp', [
@@ -62,8 +63,8 @@ angular
     'services.paatos',
     'services.common',
     'services.config',
+    'services.tunnusluvut',
     'filters.toApplicantName',
-    'filters.toStatisticName',
     'filters.toClass',
     'filters.stateNameIncludes',
     'filters.toApplicationName',
@@ -85,7 +86,8 @@ angular
     'ui.validate',
     'nvd3',
     'ngSanitize',
-    'ngCsv'
+    'ngCsv',
+    'nya.bootstrap.select'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -96,7 +98,7 @@ angular
         abstract: true,
         template: '<ui-view></ui-view>'
       };
-      if(url) {
+      if (url) {
         opts.url = url;
       }
       return opts;
@@ -105,8 +107,8 @@ angular
     $stateProvider
       .state('redirect', {
         url: '/',
-        controller: ['$state', 'KayttajaService', function($state, KayttajaService) {
-          KayttajaService.hae().then(function(user) {
+        controller: ['$state', 'KayttajaService', function ($state, KayttajaService) {
+          KayttajaService.hae().then(function (user) {
             $state.go(defaultView(user));
           });
         }]
@@ -125,8 +127,7 @@ angular
       .state('app.yhteinen.hakemukset.list', {
         url: '/:tyyppi',
         template: require('views/yhteinen/hakemukset.html'),
-        controller: 'KaikkiHakemuksetCtrl',
-        controllerAs: 'hakemukset'
+        controller: 'KaikkiHakemuksetCtrl'
       })
       .state('app.yhteinen.kayttajatiedot', {
         url: '/kayttajatiedot',
@@ -153,52 +154,36 @@ angular
         template: require('views/hakija/hakemukset.html'),
         controller: 'HakijaHakemuksetCtrl'
       }))
-      .state('app.hakija.tunnusluku', root('/tunnusluvut'))
-      .state('app.hakija.tunnusluku.syottaminen', {
-        url: '/syottaminen',
-        template: require('views/yhteinen/tunnuslukujenSyottaminen.html'),
-        controller: 'HakijaTunnusluvutCtrl',
-        redirectTo: 'app.hakija.tunnusluku.syottaminen.TTYT'
+
+      /*
+       * Tunnuslukujen syöttäminen
+       */
+
+      .state('app.tunnusluku', root('/tunnusluvut'))
+      .state('app.tunnusluku.syottaminen', {
+        url: '/muokkaus/:vuosi/:organisaatioid/:tyyppi',
+        template: require('views/tunnusluvut/muokkaus.html'),
+        controller: 'TunnusluvutMuokkausCtrl'
       })
-      .state('app.hakija.tunnusluku.syottaminen.TTYT', {
-        url: '/ttyt',
-        template: require('views/yhteinen/tunnuslukujenSyottaminen-ttyt.html'),
-        controller: 'HakijaTunnusluvutCtrl'
+
+      /*
+       * Tunnuslukujen raportointi
+       */
+
+      .state('app.tunnusluku.valtionavustuskuvaajat', {
+        url: '/valtionavustuskuvaajat/:organisaatiolaji/:avustustyyppi',
+        template: require('views/tunnusluvut/raportit-valtionavustuskuvaajat.html'),
+        controller: 'TunnuslukuraporttiAvustusCtrl'
       })
-      .state('app.hakija.tunnusluku.syottaminen.PSAB', {
-        url: '/psab',
-        template: require('views/yhteinen/tunnuslukujenSyottaminen-psab.html'),
-        controller: 'HakijaTunnusluvutCtrl'
-      })
-      .state('app.hakija.tunnusluku.syottaminen.PSAK', {
-        url: '/psak',
-        template: require('views/yhteinen/tunnuslukujenSyottaminen-psak.html'),
-        controller: 'HakijaTunnusluvutCtrl'
-      })
-      .state('app.hakija.tunnusluku.syottaminen.SL', {
-        url: '/sl',
-        template: require('views/yhteinen/tunnuslukujenSyottaminen-sl.html'),
-        controller: 'HakijaTunnusluvutCtrl'
-      })
-      .state('app.hakija.tunnusluku.syottaminen.ME', {
-        url: '/me',
-        template: require('views/yhteinen/tunnuslukujenSyottaminen-me.html'),
-        controller: 'HakijaTunnusluvutCtrl'
-      })
-      .state('app.hakija.tunnusluku.valtionavustuskuvaajat', {
-        url: '/valtionavustuskuvaajat',
-        template: require('views/yhteinen/tunnuslukuraportit-valtionavustuskuvaajat.html'),
+      .state('app.tunnusluku.tunnuslukukuvaajat', {
+        url: '/tunnuslukukuvaajat/:organisaatiolaji',
+        template: require('views/tunnusluvut/raportit-tunnuslukukuvaajat.html'),
         controller: 'TunnuslukuraporttiCtrl'
       })
-      .state('app.hakija.tunnusluku.tunnuslukukuvaajat', {
-        url: '/tunnuslukukuvaajat',
-        template: require('views/yhteinen/tunnuslukuraportit-tunnuslukukuvaajat.html'),
-        controller: 'TunnuslukuraporttiCtrl'
-      })
-      .state('app.hakija.tunnusluku.omakuvaaja', {
-        url: '/omakuvaaja',
-        template: require('views/yhteinen/tunnuslukuraportit-omakuvaaja.html'),
-        controller: 'TunnuslukuraporttiCtrl'
+      .state('app.tunnusluku.omakuvaaja', {
+        url: '/omakuvaaja/:tunnuslukuid/:organisaatiolaji',
+        template: require('views/tunnusluvut/raportit-omakuvaaja.html'),
+        controller: 'TunnuslukuraporttiOmakuvaajaCtrl'
       })
 
       /*
@@ -222,12 +207,12 @@ angular
         controller: 'KasittelijaPaatosCtrl'
       }));
 
-      $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/');
   }])
   .config(['$httpProvider', function ($httpProvider) {
     //http://stackoverflow.com/questions/16098430/angular-ie-caching-issue-for-http
     //initialize get if not there
-    if(!$httpProvider.defaults.headers.get) {
+    if (!$httpProvider.defaults.headers.get) {
       $httpProvider.defaults.headers.get = {};
     }
 
@@ -245,10 +230,10 @@ angular
       hakemustyypit: ['AH0', 'MH1', 'MH2', 'ELY'],
       hakemuksenTilat: hakemuksenTilat.getAll(),
       hakijaTyypit: ['KS1', 'KS2', 'ELY'],
-      tunnuslukuTyypit: ['TTYT','PSAB','PSAK','SL','ME']
+      tunnuslukuTyypit: ['TTYT', 'BR', 'KOS', 'SA', 'ME']
     };
 
-    $rootScope.$on('$stateChangeStart', function(evt, to, params) {
+    $rootScope.$on('$stateChangeStart', function (evt, to, params) {
       if (to.redirectTo) {
         evt.preventDefault();
         $state.go(to.redirectTo, params)
@@ -296,8 +281,12 @@ angular
   .directive('jukuConfirmation', require('components/confirmation'))
   .directive('jukuStatisticDropdown', require('components/statisticDropdown'))
   .directive('jukuPaatosTiedot', require('components/paatosTiedot'))
-  .directive('jukuTunnusluvutKysynta', require('components/tunnusluvut/kysynta'))
-  .directive('jukuTunnusluvutTarjonta', require('components/tunnusluvut/tarjonta'))
+  .directive('jukuTunnusluvutLiikenteenKysyntaTarjonta', require('components/tunnusluvut/liikenteenKysyntaTarjonta'))
+  .directive('jukuTunnusluvutLisatiedot', require('components/tunnusluvut/lisatiedot'))
+  .directive('jukuTunnusluvutKalusto', require('components/tunnusluvut/kalusto'))
+  .directive('jukuTunnusluvutLipputulot', require('components/tunnusluvut/lipputulot'))
+  .directive('jukuTunnusluvutLiikennointikorvaukset', require('components/tunnusluvut/liikennointikorvaukset'))
+  .directive('jukuTunnusluvutTarjouskilpailut', require('components/tunnusluvut/tarjouskilpailut'))
   .directive('jukuSeurantaLiikenne', require('components/seuranta/liikenne'))
   .directive('jukuSeurantaLippu', require('components/seuranta/lippu'))
   .directive('jukuElyForms', directive.template(require('views/hakemus/ely-forms.html')))
@@ -313,7 +302,13 @@ angular
   .directive('bindModel', directive.bindModel)
   .directive('formGroupCompact', require("components/formInput").formGroupCompact)
   .directive('formGroup', require("components/formInput").formGroup)
-  .directive('integerOnly', require("components/formInput").integerParser);
+  .directive('integerOnly', require("components/formInput").integerParser)
+  .directive('tunnuslukuEditForms', directive.caseTemplate(
+    {TTYT: require('views/tunnusluvut/muokkaus-ttyt.html'),
+     BR:   require('views/tunnusluvut/muokkaus-psab.html'),
+     KOS:  require('views/tunnusluvut/muokkaus-psak.html'),
+     SA:   require('views/tunnusluvut/muokkaus-sa.html'),
+     ME:   require('views/tunnusluvut/muokkaus-me.html')}));
 
 require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
@@ -326,12 +321,12 @@ require('./controllers/yhteinen/kayttajatiedot');
 require('./controllers/yhteinen/paanaytto');
 require('./controllers/yhteinen/tunnusluvut');
 require('./controllers/yhteinen/tunnuslukuraportti');
+require('./controllers/yhteinen/tunnuslukuraportti-omakuvaaja');
+require('./controllers/yhteinen/tunnuslukuraportti-avustus');
 require('./directives/alvmuunnos');
 require('./directives/jukuAvustusluokkaPanel');
 require('./directives/noenter');
 require('./directives/numericOnly');
-require('./directives/numericIntegerOnly');
-require('./directives/numericKmOnly');
 require('./directives/focusToInvalid');
 require('./directives/selectonclick');
 require('./services/auth');
@@ -348,10 +343,12 @@ require('./services/organisaatio');
 require('./services/paatos');
 require('./services/status');
 require('./services/suunnittelu');
+require('./services/tunnusluvut');
+require('./services/raportit');
 require('./filters/erotteleRoolit');
 require('./filters/toApplicantName');
 require('./filters/toClass');
 require('./filters/stateNameIncludes');
 require('./filters/toApplicationName');
 require('./filters/toApplicationNamePlural');
-require('./filters/toStatisticName');
+require('./utils/d3-locale');

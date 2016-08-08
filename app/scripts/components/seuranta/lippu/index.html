@@ -1,16 +1,17 @@
 <form id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lippusuoritteet-form'}}" name="suoritteetForm">
   <div class="table-responsive">
     <table class="table table-hover table-condensed">
-      <tr>
-        <th class="col-md-2">{{kaupunkilippu ? "Kaupunkiliput" : "Seutulippu"}}</th>
-        <th>Myynti (kpl)</th>
-        <th>Matkat (kpl)</th>
-        <th>Asiakashinta</th>
-        <th>Lipuilla tehtyjen matkojen keskipituus</th>
-        <th>Lipputulot yhteensä</th>
-        <th>Valtion ja kuntien rahoitus yhteensä</th>
-        <th ng-hide="isReadonly()">Toiminnot</th>
-      </tr>
+      <thead>
+        <tr>
+          <th class="col-md-2">{{kaupunkilippu ? "Kaupunkiliput" : "Seutulippu"}}</th>
+          <th>Myynti (kpl)</th>
+          <th>Matkat (kpl)</th>
+          <th>Asiakashinta</th>
+          <th>Lipuilla tehtyjen matkojen keskipituus</th>
+          <th>Lipputulot yhteensä</th>
+          <th>Valtion ja kuntien rahoitus yhteensä</th>
+          <th ng-hide="isReadonly()">Toiminnot</th>
+        </tr>
       </thead>
       <tfoot ng-if="suoritteet.length > 0">
         <tr>
@@ -85,7 +86,7 @@
           <td>
             <form-group-compact label="Keskipituus" errormessage="keskipituusErrorMessage">
               <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-keskipituus'}}" name="keskipituus" type="text"
-                     class="form-control" numeric-km-only="" ng-currency=""
+                     class="form-control" numeric-only="" ng-currency=""
                      currency-symbol="km"
                      noenter
                      select-on-click

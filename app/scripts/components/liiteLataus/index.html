@@ -4,7 +4,7 @@
   </div>
   <div class="panel-body">
     <div ng-show="hakemusTallentaminenEnabled()">
-      <p>Hakemukseen täytyy lisätä vähintään yksi liite (allekirjoitusoikeuslomake) ennen hakemuksen lähettämistä. Järjestelmä ei tarkasta liitteiden sisältöä.</p>
+      <p ng-if="!isELYhakemus">Hakemukseen täytyy lisätä vähintään yksi liite (allekirjoitusoikeuslomake) ennen hakemuksen lähettämistä. Järjestelmä ei tarkasta liitteiden sisältöä.</p>
       <div ngf-drop="uploadFiles($files)" class="drop-box"
            ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
            ngf-multiple="true" ngf-allow-dir="false" ngf-drop-available="dropAvailable">
@@ -20,18 +20,14 @@
       <div ng-show="liitteet.length > 0" class="response">
         <juku-file-details ng-repeat="liite in liitteet">
           <div ng-show="liite.liitenumero !== editoitavaLiite">
-            <juku-icon-link ng-show="isPdf(liite.nimipaate)"
-                            href="{{getLiitePdf(hakemusid,liite.liitenumero)}}"
+            <juku-icon-link ng-if="hasPermissionToViewLiite()"
+                            href="{{liiteHref(hakemusid, liite)}}"
                             target="_blank"
                             icon="file">
-              {{liite.nimiteksti}}.{{liite.nimipaate}}
+              {{liite.nimi}}
             </juku-icon-link>
-            <juku-icon-link ng-hide="isPdf(liite.nimipaate)"
-                            href="api/hakemus/{{hakemusid}}/liite/{{liite.liitenumero}}"
-                            target="_blank"
-                            icon="file">
-              {{liite.nimiteksti}}.{{liite.nimipaate}}
-            </juku-icon-link>
+            <span ng-if="!hasPermissionToViewLiite()"> {{liite.nimi}} - </span>
+
             <span>{{formatFileSize(liite.bytesize)}}</span>
 
             <juku-file-actions>

@@ -1,0 +1,32 @@
+<div class="container">
+  <juku-form-row>
+    <h2>PSA käyttöoikeussopimusliikenteen tunnusluvut (KOS) {{vuosi}}</h2>
+  </juku-form-row>
+  <juku-form-row>
+    <small><em>Tämän välilehden tietojen täyttöaste:</em></small>
+    <uib-progressbar animate="false" value="tayttoaste(tunnusluvut,'KOS')" type="{{tayttoasteType(tunnusluvut,'KOS')}}"><b>{{tayttoaste(tunnusluvut,'KOS')}}%</b>
+    </uib-progressbar>
+  </juku-form-row>
+  <juku-form-row>
+    <juku-tunnusluvut-liikenteen-kysynta-tarjonta tyyppi="KOS"
+                                                  liikennevuosi="tunnusluvut.liikennevuosi"
+                                                  liikenneviikko="tunnusluvut.liikenneviikko">
+    </juku-tunnusluvut-liikenteen-kysynta-tarjonta>
+  </juku-form-row>
+  <juku-form-row>
+    <juku-tunnusluvut-kalusto tyyppi="KOS" kalusto="tunnusluvut.kalusto"></juku-tunnusluvut-kalusto>
+  </juku-form-row>
+  <juku-form-row>
+    <juku-tunnusluvut-liikennointikorvaukset liikennointikorvaus="tunnusluvut.liikennointikorvaus"
+                                             tyyppi="KOS"></juku-tunnusluvut-liikennointikorvaukset>
+  </juku-form-row>
+  <juku-form-row>
+    <juku-tunnusluvut-lipputulot lipputulo="tunnusluvut.lipputulo" tyyppi="KOS"></juku-tunnusluvut-lipputulot>
+  </juku-form-row>
+  <juku-form-row ng-if="false">
+    <juku-tunnusluvut-tarjouskilpailut tyyppi="KOS"></juku-tunnusluvut-tarjouskilpailut>
+  </juku-form-row>
+  <juku-form-row>
+    <juku-tunnusluvut-lisatiedot lisatiedot="tunnusluvut.kommentti" tyyppi="KOS"></juku-tunnusluvut-lisatiedot>
+  </juku-form-row>
+</div>

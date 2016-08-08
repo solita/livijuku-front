@@ -37,9 +37,9 @@ angular.module('jukufrontApp')
       rootScopePromise.then(data => _.merge($rootScope, data), statusService.errorHandler);
 
       function convertAvustuskohdeluokittelu(data) {
-        return _.mapValues(_.indexBy(data, 'tunnus'),
+        return _.mapValues(_.keyBy(data, 'tunnus'),
           function(l) {
-            l.avustuskohdelajit = _.indexBy(l.avustuskohdelajit, 'tunnus');
+            l.avustuskohdelajit = _.keyBy(l.avustuskohdelajit, 'tunnus');
             return l;
           })};
   }]);

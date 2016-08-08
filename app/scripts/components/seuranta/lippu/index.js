@@ -10,9 +10,8 @@ function errorMessage(nimi) {
 
 function haeMaksimiNumero(taulukko) {
   if (taulukko.length === 0) return 0;
-  return _.max(taulukko, 'numero').numero + 1;
+  return _.maxBy(taulukko, 'numero').numero + 1;
 }
-
 
 function lippuController($scope) {
 
@@ -50,27 +49,27 @@ function lippuController($scope) {
   };
 
   $scope.myyntiSumma = function () {
-    return _.sum($scope.suoritteet, 'myynti');
+    return _.sumBy($scope.suoritteet, 'myynti');
   };
 
   $scope.matkatSumma = function () {
-    return _.sum($scope.suoritteet, 'matkat');
+    return _.sumBy($scope.suoritteet, 'matkat');
   };
 
   $scope.asiakashintaSumma = function () {
-    return _.sum($scope.suoritteet, 'asiakashinta');
+    return _.sumBy($scope.suoritteet, 'asiakashinta');
   };
 
   $scope.keskipituusSumma = function () {
-    return _.sum($scope.suoritteet, 'keskipituus');
+    return _.sumBy($scope.suoritteet, 'keskipituus');
   };
 
   $scope.lipputuloSumma = function () {
-    return _.sum($scope.suoritteet, 'lipputulo');
+    return _.sumBy($scope.suoritteet, 'lipputulo');
   };
 
   $scope.rahoitusSumma = function () {
-    return _.sum($scope.suoritteet, 'julkinenrahoitus');
+    return _.sumBy($scope.suoritteet, 'julkinenrahoitus');
   };
 
   $scope.seutulippualueErrorMessage = function (input) {

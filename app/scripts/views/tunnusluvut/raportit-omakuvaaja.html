@@ -1,0 +1,63 @@
+<div class="container">
+
+  <div class="page-header">
+    <h1>Oma kuvaaja tunnusluvuista</h1>
+  </div>
+
+  <form id="tunnusluku-valinta-form" name="tunnusluku-valinta-form" class="form-inline tunnusluku-valinta-form">
+    <form-group label="Valitse tarkasteltava tunnusluku">
+        <select id="tunnusluku" ng-model="params.tunnuslukuid"
+                placeholder="Valitse tunnusluku" name="tunnuslukuValinta">
+          <option value="" selected disabled>Valitse tunnusluku</option>
+          <option ng-repeat="tunnusluku in tunnusluvut" value="{{tunnusluku.id}}">{{tunnusluku.nimi}}</option>
+        </select>
+    </form-group>
+  </form>
+
+  <juku-navigation>
+    <juku-tabs>
+      <juku-tab
+        ng-repeat="(laji, value) in organisaatiolajit"
+        selected="isTabSelected(laji)"
+        ely="isEly(laji)"
+        ng-click="toTab(laji)">
+        {{ value }}
+      </juku-tab>
+    </juku-tabs>
+  </juku-navigation>
+  <br>
+
+  <div ng-if="tunnusluku" ng-repeat="chart in tunnusluku.charts" ng-init="chartid = $index">
+
+    <h3>{{chart.title}}</h3>
+
+    <form id="tunnusluku-filter-form-{{chartid}}" name="tunnusluku-filter-form" class="form-inline tunnusluku-filter-form">
+      <form-group label="{{filter.nimi}}" ng-repeat="filter in chart.filters">
+          <select id="tunnusluku-filter-form-{{filter.id}}" ng-model="params.charts[chartid].filter[filter.id]"
+                  placeholder="Valitse tunnusluku" name="tunnuslukuValinta">
+            <option value="" selected disabled>Valitse rajoite</option>
+            <option ng-repeat="id in filter.values.$order" value="{{id}}">{{filter.values.$nimi(id)}}</option>
+          </select>
+      </form-group>
+    </form>
+
+    <nvd3 options='chart.options' data='data[chartid]' api="params.charts[chartid].api"></nvd3>
+
+    <a ng-csv="csv[chartid]" class="pull-right lataacsv"
+       filename="tunnuslukudata.csv" decimal-separator=","
+       field-separator=";" add-bom="true"><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    </a>
+
+    <p class="text-info" ng-if="missing[chartid]"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Tiedot puuttuvat kokonaan organisaatioilta: {{missing[chartid]}}</p>
+  </div>
+
+  <div ng-if="!tunnusluku">
+
+    <div class="alert alert-info">
+      <p>
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+        Valitse tunnusluku
+      </p>
+    </div>
+  </div>
+</div>

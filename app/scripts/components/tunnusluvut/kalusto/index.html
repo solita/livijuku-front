@@ -1,0 +1,39 @@
+<ng-form id="kalustoform" name="kalustoForm" class="kalusto">
+  <juku-form-row>
+    <h3>Kalusto päästöluokittain</h3>
+    <p>Sopimusten mukainen kalustomäärä päästöluokittain.</p>
+    <div class="table-responsive">
+      <table class="table table-hover table-condensed">
+        <thead>
+          <tr>
+            <th class="col-md-3">Päästöluokka</th>
+            <th class="col-md-3">Linja-autojen lukumäärä</th>
+          </tr>
+        </thead>
+        <tfoot ng-if="kalusto.length > 0">
+          <tr class="total">
+            <td>
+              <span class="yhteensa">Yhteensä:</span>
+            </td>
+            <td>{{kalustoSumma() | currency : 'linja-autoa' : 0}}</td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr ng-repeat="rivi in kalusto track by $index" ng-form>
+            <td>{{paastoluokkaNimi(rivi.paastoluokkatunnus)}}</td>
+            <td>
+              <form-group-compact label="Linja-autojen lukumäärä" errormessage="lukumaaraErrorMessage">
+                <input id="{{tyyppi + '-lukumaara-'+$index}}" name="lukumaara"
+                       integer-only maxlength="9"
+                       placeholder="Lukumäärä (kpl)"
+                       ng-readonly="isReadonly()"
+                       noenter select-on-click
+                       ng-model="rivi.lukumaara">
+              </form-group-compact>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </juku-form-row>
+</ng-form>

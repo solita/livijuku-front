@@ -25,7 +25,7 @@
       </juku-tab>
     </juku-tabs>
   </juku-navigation>
-  <juku-form name="hakemusForm" juku-poistumisvaroitus="{{hakemusKeskenerainen()}}">
+  <juku-form name="hakemusForm" juku-poistumisvaroitus="{{hakemusKeskenerainen()}}" novalidate>
     <h1>Joukkoliikenteen {{hakemus.hakemustyyppitunnus | toApplicationName}} {{hakemus.vuosi}}</h1>
 
     <!-- Käsittelijä -->
@@ -66,7 +66,7 @@
       </juku-form-row>
       <juku-form-row>
         <h5>Hakemuksen tila</h5>
-        <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}" tyyppi="{{hakemus.hakemustyyppitunnus}}"/>
+        <hakemuksen-tila tila="{{hakemus.hakemustilatunnus}}"/>
       </juku-form-row>
       <juku-form-row ng-hide="hakemusKeskenerainen()">
         <h5>Käsittelijä</h5>
@@ -103,13 +103,13 @@
       </juku-form-row>
 
       <juku-form-row ng-if="isMaksatushakemus && !maksatushakemus1PaatosOlemassa()">
-        <h5>HAETTAVISSA OLEVA AVUSTUS AJALLE 1.1.-30.6.{{hakemus.vuosi}}</h5>
+        <h5>HAETTAVISSA OLEVA AVUSTUS AJALLE 1.1. - 30.6.{{hakemus.vuosi}}</h5>
         <span ng-if="avustushakemusPaatosOlemassa()">{{haettavaAvustusMH1() | currency:"&euro;"}}</span>
         <span ng-if="!avustushakemusPaatosOlemassa()">Avustushakemuksella ei ole vielä päätöstä</span>
       </juku-form-row>
 
       <juku-form-row ng-if="isMaksatushakemus && maksatushakemus1PaatosOlemassa()">
-        <h5>MAKSETAAN AJALTA 1.1.-30.6.{{hakemus.vuosi}}</h5>
+        <h5>MAKSETAAN AJALTA 1.1. - 30.6.{{hakemus.vuosi}}</h5>
         {{maksatushakemus1Paatos.myonnettyavustus | currency:"&euro;"}} &nbsp;
         <juku-icon-link
           href="{{haeMaksatushakemus1PaatosPdf()}}"
@@ -127,8 +127,8 @@
       </juku-form-row>
 
       <juku-form-row ng-if="isMaksatushakemus2 && hasPaatos()">
-        <h5>MAKSETAAN AJALTA 1.1.-30.6.{{hakemus.vuosi}}</h5>
-        {{maksatushakemus1Paatos.myonnettyavustus | currency:"&euro;"}} &nbsp;
+        <h5>MAKSETAAN AJALTA 1.7. - 31.12.{{hakemus.vuosi}}</h5>
+        {{paatos.myonnettyavustus | currency:"&euro;"}} &nbsp;
         <juku-icon-link
           href="{{haePaatosPdf()}}"
           title="Avaa päätös"
@@ -172,26 +172,24 @@
     <juku-avustuskohteet ng-if="!isELYhakemus"></juku-avustuskohteet>
 
     <!-- Seurantatiedot -->
-    <juku-seuranta-forms ng-if="isMaksatushakemus"></juku-seuranta-forms>
+    <juku-seuranta-forms ng-if="isMaksatushakemus && hakemus.contentvisible"></juku-seuranta-forms>
 
     <!-- ELY-hakemusten tiedot -->
-    <juku-ely-forms ng-if="isELYhakemus"></juku-ely-forms>
+    <juku-ely-forms ng-if="isELYhakemus && hakemus.contentvisible"></juku-ely-forms>
     <juku-form-section>
 
 
-      <juku-form-section ng-show="isAvustushakemus">
+      <juku-form-section ng-show="isAvustushakemus && hakemus.contentvisible">
         <juku-ohje-avustushakemus></juku-ohje-avustushakemus>
       </juku-form-section>
 
-      <juku-form-section ng-show="isMaksatushakemus">
+      <juku-form-section ng-show="isMaksatushakemus && hakemus.contentvisible">
         <juku-ohje-maksatushakemus></juku-ohje-maksatushakemus>
       </juku-form-section>
 
-      <juku-form-section>
+      <juku-form-section ng-show="hakemus.contentvisible">
         <juku-liite-lataus></juku-liite-lataus>
       </juku-form-section>
-
-
       <h3>
         HAKEMUKSEN PÄIVÄMÄÄRÄ JA HAKIJA
       </h3>
@@ -220,9 +218,9 @@
 
       <!-- Hakija -->
       <juku-confirmation class="korostus"
-        ng-show="!isELYhakemus && isHakija(user) && isOmaHakemus(user) && hakemusKeskenerainen()"
-        ng-model="allekirjoitusliitetty"
-        ng-disabled="!hakemusKeskenerainen() || !liitteetOlemassa()">
+                         ng-show="!isELYhakemus && isHakija(user) && isOmaHakemus(user) && hakemusKeskenerainen()"
+                         ng-model="allekirjoitusliitetty"
+                         ng-disabled="!hakemusKeskenerainen() || !liitteetOlemassa()">
         Olen liittänyt hakemukseen tarvittavat lisätiedot mukaanlukien liitteen allekirjoitusoikeudesta.
       </juku-confirmation>
 

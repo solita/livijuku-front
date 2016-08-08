@@ -1,19 +1,12 @@
 <ng-form id="kehittamishankkeet-form" name="kehittamishankkeetForm" class="kehittamishankkeet">
-  <juku-form-row>
-    <div class="col-md-12">
       <div class="table-responsive">
         <table class="table table-hover table-condensed">
           <thead>
             <tr>
-              <th class="col-md-4 ekarivi" uib-tooltip="Kehittämishankkeiden (jatkuvat/uudet) erittely hankkeittain"
-                  tooltip-placement="top" tooltip-append-to-body="true">Kehittämishankkeen (jatkuvat/uudet) nimi
-              </th>
-              <th class="col-md-2 ekarivi">Arvo</th>
-              <th class="col-md-5 ekarivi"
-                  uib-tooltip="Kehittämishankkeen ajanjakso (vuodet eli onko hanke jatkuva vai uusi), lyhyt perustelu hankkeelle"
-                  tooltip-placement="top" tooltip-append-to-body="true">Kuvaus
-              </th>
-              <th class="col-md-1 ekarivi" ng-hide="isReadonly() || kehittamishankkeet.length === 0">Toiminnot</th>
+              <th class="col-md-4">Kehittämishankkeen (jatkuvat/uudet) nimi</th>
+              <th class="col-md-2">ELY:n osuus</th>
+              <th class="col-md-5">Kuvaus hankkeesta, hankkeen kesto ja muut rahoittajat</th>
+              <th class="col-md-1" ng-hide="isReadonly() || kehittamishankkeet.length === 0">Toiminnot</th>
             </tr>
           </thead>
           <tfoot ng-if="kehittamishankkeet.length > 0">
@@ -41,7 +34,7 @@
                 </form-group-compact>
               </td>
               <td>
-                <form-group-compact label="Arvo" errormessage="arvoalueErrorMessage">
+                <form-group-compact label="ELYn osuus" errormessage="arvoalueErrorMessage">
                   <input id="{{'arvo-'+$index}}" name="arvo" type="text"
                          class="form-control" ng-currency="" numeric-only=""
                          noenter
@@ -70,10 +63,10 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="kehittamishankkeet-controls">
         <button id="lisaakehittamishanke" ng-hide="isReadonly()" class="btn btn-primary"
                 ng-click="lisaaKehittamishanke()">Lisää uusi rivi
         </button>
       </div>
-    </div>
-  </juku-form-row>
 </ng-form>

@@ -1,6 +1,8 @@
 <juku-form-section>
   <h3>SEURANTATIEDOT</h3>
-  <uib-accordion close-others="false">
+  <p>Täytä seurantatiedot avaamalla alla olevat seurantatieto-osiot kolmiopainikkeista ja lisää sen jälkeen tietoja
+    taulukoihin.</p>
+  <uib-accordion close-others="false" class="accordionnopadding">
     <uib-accordion-group is-open="isOpenPSA">
       <uib-accordion-heading>
         <div class="panel-heading">
@@ -11,9 +13,8 @@
                 }"></i><span>Paikallisliikenne tai muu PSA:n mukainen liikenne</span></div>
         </div>
       </uib-accordion-heading>
-      <div>
-        <juku-seuranta-liikenne suoritteet="psaLiikenneSuoritteet" tyyppi="PSA" suoritetyypit="suoritetyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
-      </div>
+      <juku-seuranta-liikenne suoritteet="psaLiikenneSuoritteet" tyyppi="PSA" suoritetyypit="suoritetyypit"
+                              is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
     </uib-accordion-group>
     <uib-accordion-group is-open="isOpenPAL">
       <uib-accordion-heading>
@@ -26,7 +27,8 @@
         </div>
       </uib-accordion-heading>
       <div>
-        <juku-seuranta-liikenne suoritteet="palLiikenneSuoritteet" tyyppi="PAL" suoritetyypit="suoritetyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
+        <juku-seuranta-liikenne suoritteet="palLiikenneSuoritteet" tyyppi="PAL" suoritetyypit="suoritetyypit"
+                                is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-liikenne>
       </div>
     </uib-accordion-group>
     <uib-accordion-group is-open="isOpenKAU">
@@ -40,7 +42,8 @@
         </div>
       </uib-accordion-heading>
       <div>
-        <juku-seuranta-lippu suoritteet="kaupunkilippuSuoritteet" kaupunkilippu="true" lipputyypit="lipputyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
+        <juku-seuranta-lippu suoritteet="kaupunkilippuSuoritteet" kaupunkilippu="true" lipputyypit="lipputyypit"
+                             is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
       </div>
     </uib-accordion-group>
     <uib-accordion-group is-open="isOpenSEU">
@@ -54,9 +57,16 @@
         </div>
       </uib-accordion-heading>
       <div>
-        <juku-seuranta-lippu suoritteet="seutulippuSuoritteet" kaupunkilippu="false" lipputyypit="lipputyypit" is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
+        <juku-seuranta-lippu suoritteet="seutulippuSuoritteet" kaupunkilippu="false" lipputyypit="lipputyypit"
+                             is-readonly="!hakemusTallentaminenEnabled()"></juku-seuranta-lippu>
       </div>
     </uib-accordion-group>
   </uib-accordion>
+  <p>Voit tarkastella viimeisintä tallennettua versiota seurantatiedoista
+    <a href="{{seurantatietoPdf}}" target="_blank">
+      <span class="glyphicon glyphicon-file"></span>
+      pdf-dokumenttina.
+    </a> Huomaa että tallentamattomat muutokset eivät näy tässä pdf-dokumentissa.
+  </p>
 </juku-form-section>
 

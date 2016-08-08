@@ -1,9 +1,9 @@
 'use strict';
 
 var {extend} = require('lodash');
-var {isHakija} = require('utils/user');
+var u = require('utils/user');
 
-module.exports.restrictRoute = function restrictRoute(fn, routeConfig) {
+export function restrictRoute(fn, routeConfig) {
   return extend({}, routeConfig, {
     resolve: {
       hasPermission: ['KayttajaService', '$q', function(KayttajaService) {
@@ -17,9 +17,12 @@ module.exports.restrictRoute = function restrictRoute(fn, routeConfig) {
   });
 };
 
-module.exports.defaultView = function defaultView(user) {
-  if(isHakija(user)) {
+export function defaultView(user) {
+  if(u.isHakija(user)) {
     return 'app.hakija.hakemukset.omat';
+  } else if (u.isKasittelija(user)) {
+    return 'app.kasittelija.hakemuskaudenhallinta';
+  } else {
+    return 'app.tunnusluku.syottaminen';
   }
-  return 'app.kasittelija.hakemuskaudenhallinta';
 };

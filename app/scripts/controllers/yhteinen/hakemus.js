@@ -5,7 +5,7 @@ var angular = require('angular');
 var c = require('utils/core');
 var h = require('utils/hakemus');
 var pdf = require('utils/pdfurl');
-var hasPermission = require('utils/hasPermission');
+var hasPermission = require('utils/user').hasPermission;
 var Promise = require('bluebird');
 var IBAN = require('iban');
 
@@ -14,7 +14,7 @@ function haeHakemus(tyyppi, hakemus) {
     return hakemus;
   }
 
-  return _.findWhere(hakemus['other-hakemukset'], {
+  return _.find(hakemus['other-hakemukset'], {
     hakemustyyppitunnus: tyyppi
   });
 }
@@ -90,7 +90,7 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
     paatos: paatos,
     avustuskohdeluokat: hakemusPromise.then(isContentVisible(haeAvustuskohteet)),
     avustushakemusArvot: hakemusPromise.then(isContentVisible((hakemus) => {
-      if (_.contains(['MH1', 'MH2'], (hakemus.hakemustyyppitunnus))) {
+      if (_.includes(['MH1', 'MH2'], (hakemus.hakemustyyppitunnus))) {
         return haeAvustuskohteet(haeHakemus('AH0', hakemus));
       }
     })),
@@ -128,12 +128,10 @@ function loadInitialData(common, $stateParams, AvustuskohdeService, LiikenneSuor
     kehittamishankkeet: ifElyhakemus(hakemus => ElyHakemusService.haeKehityshankkeet(hakemus.id), []),
     maararahatarvetyypit: ifElyhakemus(hakemus => ElyHakemusService.haeMaararahatarvetyypit(), []),
     maararahatarpeet: ifElyhakemus(hakemus => ElyHakemusService.haeMaararahatarpeet(hakemus.id), []),
-    psaLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PSA")),
-    palLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, 'liikennetyyppitunnus', "PAL")),
-    kaupunkilippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, function (suorite) {
-      return suorite.lipputyyppitunnus !== "SE";
-    })),
-    seutulippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, 'lipputyyppitunnus', "SE"))
+    psaLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, ['liikennetyyppitunnus', 'PSA'])),
+    palLiikenneSuoritteet: liikenneSuoritteet.then(suoritteet => _.filter(suoritteet, ['liikennetyyppitunnus', 'PAL'])),
+    kaupunkilippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, suorite => suorite.lipputyyppitunnus !== "SE")),
+    seutulippuSuoritteet: lippuSuoritteet.then(suoritteet => _.filter(suoritteet, ['lipputyyppitunnus', 'SE']))
   }).then(_.identity, StatusService.errorHandler);
 }
 
@@ -229,6 +227,8 @@ angular.module('jukufrontApp')
       $scope.haeHakemusPdf = function () {
         return pdf.getHakemusPdfUrl($scope.hakemusid);
       };
+
+      $scope.seurantatietoPdf = pdf.getSeurantatietoPdfUrl($scope.hakemusid);
 
       $scope.haeAvustushakemusPaatosPdf = function () {
         return pdf.getPaatosPdfUrl(haeHakemus('AH0', $scope.hakemus).id);
@@ -363,12 +363,15 @@ angular.module('jukufrontApp')
         var avustuskohteet = _.flatten(_.map($scope.avustuskohdeluokat, function (l) {
           return l.avustuskohteet;
         }));
-        return _.sum(avustuskohteet, _.partial(h.avustuskohdeRahamaara, 'haettavaavustus'));
+        return _.sumBy(avustuskohteet, _.partial(h.avustuskohdeRahamaara, 'haettavaavustus'));
       };
 
       $scope.sumHaettavaElyAvustus = function () {
-        var maararahatarpeetSum = $scope.hakemus.ely.siirtymaaikasopimukset + $scope.hakemus.ely.joukkoliikennetukikunnat + _.sum($scope.maararahatarpeet, 'sidotut') + _.sum($scope.maararahatarpeet, 'uudet') - _.sum($scope.maararahatarpeet, 'tulot');
-        var kehittamishankkeetSum = _.sum($scope.kehittamishankkeet, 'arvo');
+        var maararahatarpeetSum =
+          _.sum(_.values($scope.hakemus.ely)) +
+          _.sumBy($scope.maararahatarpeet, 'sidotut') + _.sumBy($scope.maararahatarpeet, 'uudet') - _.sumBy($scope.maararahatarpeet, 'tulot');
+
+        var kehittamishankkeetSum = _.sumBy($scope.kehittamishankkeet, 'arvo');
         return (maararahatarpeetSum + kehittamishankkeetSum);
       };
 

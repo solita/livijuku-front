@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var c = require('utils/core');
 var angular = require('angular');
-var hasPermission = require('utils/hasPermission');
+var hasPermission = require('utils/user').hasPermission;
 var Promise = require('bluebird');
 
 angular.module('jukufrontApp')

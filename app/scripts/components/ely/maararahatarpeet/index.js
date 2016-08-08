@@ -1,12 +1,15 @@
 'use strict';
 var _ = require('lodash');
+var d = require('utils/directive');
 
 function errorMessage(nimi) {
-  return function (input) {
-    return input.$error.required ? nimi + ' on pakollinen tieto.' :
-      input.$error.sallittuArvo ? 'Arvon tulee olla välillä 0 - 999 999 999,99 €.' : '';
-  }
+  return d.combineErrorMessages(d.requiredErrorMessage(nimi), d.maxErrorMessage("9 999 999 999,99"));
 }
+
+var maararahatarvetyyppiTooltips = {
+  M: "Ennen 1.7.2014 kilpailutettu liikenne tai muu hankintalain nojalla hankittava liikenne.",
+  HK: "ELYn liikenteenharjoittajille maksama osuus Waltti-kuntakausilippujen ja Waltti-yleiskausilippujen välisestä asiakashinnan erotuksesta. (Osan maksaa ao. kunta myös suoraan liikenteenharjoittajille.)"
+};
 
 function maararahatarpeetController($scope) {
 
@@ -14,35 +17,32 @@ function maararahatarpeetController($scope) {
     return _.find($scope.maararahatarvetyypit, {'tunnus': tunnus}).nimi;
   };
 
+  $scope.maararahatarvetyyppiTooltip = tunnus => maararahatarvetyyppiTooltips[tunnus];
+
   $scope.yhteensa = function () {
-    return $scope.hakemus.ely.siirtymaaikasopimukset + $scope.hakemus.ely.joukkoliikennetukikunnat + _.sum($scope.maararahatarpeet, 'sidotut') + _.sum($scope.maararahatarpeet, 'uudet') - _.sum($scope.maararahatarpeet, 'tulot');
+    return _.sum(_.values($scope.hakemus.ely)) +
+           _.sumBy($scope.maararahatarpeet, 'sidotut') +
+           _.sumBy($scope.maararahatarpeet, 'uudet') -
+           _.sumBy($scope.maararahatarpeet, 'tulot');
   };
 
-  $scope.sallittuArvo = function (value) {
-    if (typeof value === 'undefined') {
-      return false;
-    } else if (typeof value === 'string') {
-      var floatarvo;
-      floatarvo = $scope.euroSyoteNumeroksi(value);
-      return (floatarvo >= 0 && floatarvo <= 999999999.99);
-    } else if (typeof value === 'number') {
-      return (value >= 0 && value <= 999999999.99);
+  // oletusarvot ely-tietoihin:
+  if (!$scope.hakemus.ely) {
+    $scope.hakemus.ely = {
+      kaupunkilipputuki: 0,
+      seutulipputuki: 0,
+      ostot: 0,
+      kehittaminen: 0
     }
-    return true;
-  };
+  }
 
-  $scope.sasopimuksetErrorMessage = errorMessage("Siirtymäajan sopimukset");
-  $scope.jltkunnilleErrorMessage = errorMessage("Joukkoliikennetuki kunnille");
-  $scope.arvoalueErrorMessage = errorMessage("");
+  $scope.kaupunkilipputukiErrorMessage = errorMessage("Kaupunkilipputuki");
+  $scope.seutulipputukiErrorMessage = errorMessage("Seutulipputuki");
+  $scope.ostotErrorMessage = errorMessage("Liikenteen ostot");
+  $scope.kehittaminenErrorMessage = errorMessage("Kehittäminen");
 
-  $scope.nimiErrorMessage = function(input) {
-    return input.$error.required ? 'Nimi on pakollinen tiedto.' :
-      input.$error.minlength ? 'Nimen pituus pitää olla vähintään 2 merkkiä.' :
-      input.$error.maxlength ? 'Nimen pituus saa olla enintään 200 merkkiä.' : '';
-  };
-  $scope.kuvausErrorMessage = function(input) {
-    return input.$error.maxlength ? 'Kuvauksen pituus saa olla enintään 2000 merkkiä.' : '';
-  };
+  $scope.errorMessage = errorMessage("Arvo");
+  $scope.kuvausErrorMessage = d.maxlengthTextErrorMessage("2000");
 }
 
 module.exports = function () {

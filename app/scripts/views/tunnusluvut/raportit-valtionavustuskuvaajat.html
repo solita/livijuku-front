@@ -1,0 +1,66 @@
+<div class="container">
+
+  <div class="page-header">
+    <h1>Valtionavustuskuvaajat</h1>
+  </div>
+
+  <juku-navigation>
+    <juku-tabs>
+      <juku-tab
+        ng-repeat="(laji, value) in organisaatiolajit"
+        selected="isTabSelected(laji)"
+        ely="false"
+        ng-click="toTab(laji)">
+        {{ value }}
+      </juku-tab>
+    </juku-tabs>
+  </juku-navigation>
+  <br><br>
+
+  <p ng-if="organisaatiolaji === 'KS3'">
+    Pienet kaupunkiseudut saavat joukkoliikennetukensa ELY keskusten kautta.
+    ELY välittää osan saamastaan valtion avustuksesta pienille kaupunkiseuduille ja muille toimivalta-alueensa kunnille.
+    Pienten kaupunkiseutujen tuki näytetään eriteltynä vain tällä välilehdellä ja tuesta näytetään vain myönnetty avustus.
+    Kaikki välilehdellä ja ELY-välilehdellä tämä tuki sisältyy ELY:jen saamaan tukeen.
+  </p>
+
+  <div class="row">
+    <nvd3 options='avustus.options' data='avustus.data' api="avustus.api"></nvd3>
+    <p ng-if="organisaatiolaji === 'ALL' || organisaatiolaji === 'ELY'" class="text-center">Vuodelta 2014 puuttuu ELY-keskusten haettu avustussumma</p>
+    <a ng-csv="avustus.csv" class="pull-right lataacsv"
+       filename="avustukset.csv"
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    </a>
+  </div>
+  <br>
+  <div class="row">
+    <form id="avustustyyppi-valinta-form" name="avustustyyppi-valinta-form" class="form-inline tunnusluku-filter-form">
+      <fieldset ng-disabled="organisaatiolaji === 'KS3'">
+        <div class="form-group">
+          <label for="avustustyyppi" class="radio inline control-label">Valitse avustustieto jota halutaan tarkastella organisaatioittain:</label>
+          <label class="radio-inline">
+            <input type="radio" name="avustustyyppi" id="avustustyyppi-h" value="H" ng-model="avustustyyppi"> Haettu avustus
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="avustustyyppi" id="avustustyyppi-m" value="M" ng-model="avustustyyppi"> Myönnetty avustus
+          </label>
+        </div>
+      </fieldset>
+    </form>
+
+    <nvd3 options='avustusdetail.options' data='avustusdetail.data' api="avustusdetail.api"></nvd3>
+    <a ng-csv="avustusdetail.csv" class="pull-right lataacsv"
+       filename="avustus-organisaatioittain.csv"
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    </a>
+  </div>
+  <br>
+  <div class="row">
+    <nvd3 options='avustusperasukas.options' data='avustusperasukas.data' api="avustusperasukas.api"></nvd3>
+    <a ng-csv="avustusperasukas.csv" class="pull-right lataacsv"
+       filename="avustus-asukastakohti.csv"
+       field-separator=";" add-bom="true" decimal-separator=","><span class="glyphicon glyphicon-save"></span> Lataa CSV
+    </a>
+  </div>
+
+</div>
