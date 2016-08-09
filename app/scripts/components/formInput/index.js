@@ -131,6 +131,68 @@ export function integerParser() {
   }
 }
 
+export function floatDirective(formatFloat) {
+  return function() {
+    return {
+      require: 'ngModel',
+      link: function(scope, element, attrs, modelCtrl) {
+
+        assertModelCtrlIsDefined(modelCtrl, element);
+
+        var scale = _.find([parseInt(attrs.scale), 2], _.isFinite);
+        var max = parseFloat(attrs.max);
+        var min = parseFloat(attrs.min);
+
+        function toDecimalString(integerPart, fractionPart, decimalPoint) {
+          return integerPart + (c.isDefinedNotNull(fractionPart) ? decimalPoint + fractionPart : '');
+        }
+
+        modelCtrl.$parsers.unshift(function (inputValue) {
+          if (c.isDefinedNotNull(inputValue)) {
+            var parts = _.split(inputValue, ',', 2);
+            var removeInvalidChars = txt => _.replace(txt, /[^\d\s]/g, '');
+
+            var integer = removeInvalidChars(parts[0]);
+            var fraction = c.isDefinedNotNull(parts[1]) ? removeInvalidChars(parts[1]).substring(0, scale) : null;
+
+            var validDecimalInput = toDecimalString(integer, fraction, ',');
+
+            if (!_.isEqual(validDecimalInput, inputValue)) {
+              modelCtrl.$setViewValue(validDecimalInput);
+              modelCtrl.$render();
+            }
+
+            function parse(txt) {
+              var result = parseFloat(_.replace(txt, /\s/g, ''));
+              return _.isFinite(result) ? result : undefined;
+            }
+
+            return c.isNotBlank(inputValue) ? parse(toDecimalString(integer, fraction, '.')) : null;
+          }
+          return null;
+        });
+
+        element.on("blur", function () {
+          if (modelCtrl.$valid && !_.isEqual(modelCtrl.$viewValue, formatFloat(modelCtrl.$modelValue))) {
+            modelCtrl.$viewValue = formatFloat(modelCtrl.$modelValue);
+            modelCtrl.$render();
+          };
+        });
+
+        modelCtrl.$formatters.unshift(formatFloat);
+
+        if (_.isFinite(max)) {
+          modelCtrl.$validators.max = modelValue => c.isNullOrUndefined(modelValue) || modelValue <= max;
+        }
+
+        if (_.isFinite(min)) {
+          modelCtrl.$validators.min = modelValue => c.isNullOrUndefined(modelValue) || modelValue >= min;
+        }
+      }
+    }
+  }
+}
+
 export function dateInput() {
   return {
     scope: {

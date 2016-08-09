@@ -54,6 +54,12 @@ export function bindModel() {
     }
 }};
 
+export function formatFloat(value) {
+  var parts = _.split(_.toString(value), '.');
+  parts[0] = _.replace(parts[0], /\B(?=(\d{3})+(?!\d))/g, ' ');
+  return _.join(parts, ',');
+}
+
 export function requiredErrorMessage(nimi) {
   return function (input) {
     return input.$error.required ? nimi + ' on pakollinen tieto.' : null;
@@ -64,6 +70,10 @@ export function maxErrorMessage(maxvalue) {
   return function (input) {
     return input.$error.max ? 'Arvo on liian suuri. Maksimiarvo on ' + maxvalue : null;
   }
+}
+
+export function maxNumberErrorMessage(input, element) {
+  return input.$error.max ? 'Arvo on liian suuri. Maksimiarvo on ' + formatFloat(element.attr('max')) : null;
 }
 
 export function maxlengthNumberErrorMessage(maxvalue) {
@@ -83,7 +93,7 @@ export function dateErrorMessage(input) {
 }
 
 export function combineErrorMessages() {
-  return input => _.find(_.map(arguments, f => f(input)), c.isDefinedNotNull);
+  return (input, element) => _.find(_.map(arguments, f => f(input, element)), c.isDefinedNotNull);
 }
 
 export function createTabFunctions($scope, tabProperty) {

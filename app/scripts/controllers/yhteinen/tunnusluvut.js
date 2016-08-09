@@ -182,6 +182,7 @@ angular.module('jukufrontApp')
         };
 
         // error messages:
+        $scope.floatErrorMessage = d.combineErrorMessages(input => input.$error.parse ? 'Virheellisen muotoinen numero' : null, d.maxNumberErrorMessage);
         $scope.desimaaliErrorMessage = d.maxErrorMessage("9 999 999 999,99");
         $scope.prosenttiErrorMessage = d.maxErrorMessage("100,00");
         $scope.kokonaislukuErrorMessage = d.maxlengthNumberErrorMessage("999 999 999");
