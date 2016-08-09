@@ -17,7 +17,7 @@ const types = {
 };
 
 const tunnuslukuTooltips = {
-  HENKILOSTO: "Kuinka monta henkilötyövuotta viranomaisella kuluu ko. alueen joukkoliikenteen järjestämiseen, suunnitteluun ja asiakaspalvelutehtäviin. Henkilötyövuodet voi arvioida 0,2 htv:n tarkkuudella.",
+  HENKILOSTO: "Kuinka monta henkilötyövuotta viranomaisella kuluu ko. alueen joukkoliikenteen järjestämiseen, suunnitteluun ja asiakaspalvelutehtäviin. Henkilötyövuodet voi arvioida 0,1 htv:n tarkkuudella.",
   ASIAKASPALVELU: "Ulkoistetut asiakaspalvelutehtävät, esimerkiksi matkakorttien hallinnointi.",
   KONSULTTIPALVELU: "Ulkoiset asiantuntijapalvelut ja konsulttiselvitykset, esimerkiksi järjestelmien tekninen neuvonta, linjastojen suunnittelu, asiakastyytyväisyystutkimukset jne.",
   LIPUNMYYNTIPALKKIOT: "Eri lipunmyyntikanaville maksetut palkkiot.",
