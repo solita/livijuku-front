@@ -143,31 +143,39 @@ export function floatDirective(formatFloat) {
         var max = parseFloat(attrs.max);
         var min = parseFloat(attrs.min);
 
-        function toDecimalString(integerPart, fractionPart, decimalPoint) {
-          return integerPart + (c.isDefinedNotNull(fractionPart) ? decimalPoint + fractionPart : '');
-        }
-
         modelCtrl.$parsers.unshift(function (inputValue) {
           if (c.isDefinedNotNull(inputValue)) {
             var parts = _.split(inputValue, ',', 2);
-            var removeInvalidChars = txt => _.replace(txt, /[^\d\s]/g, '');
+            var removeInvalidChars = txt => _.replace(txt, /\D/g, '');
 
             var integer = removeInvalidChars(parts[0]);
             var fraction = c.isDefinedNotNull(parts[1]) ? removeInvalidChars(parts[1]).substring(0, scale) : null;
 
-            var validDecimalInput = toDecimalString(integer, fraction, ',');
+            var resultValue = parse(integer + (c.isNotBlank(fraction) ? '.' + fraction : ''));
 
+            /*
+            var validDecimalInput = c.isDefinedNotNull(resultValue) ?
+              formatFloat(resultValue) + (_.isEqual(fraction, '') ? ',' : '') : '';
             if (!_.isEqual(validDecimalInput, inputValue)) {
               modelCtrl.$setViewValue(validDecimalInput);
               modelCtrl.$render();
             }
+            */
+
+            var validDecimalInput = integer + (c.isDefinedNotNull(fraction) ? ',' + fraction : '')
+            if (!_.isEqual(validDecimalInput, _.replace(inputValue, /\s/g, ''))) {
+              modelCtrl.$setViewValue(c.isDefinedNotNull(resultValue) ?
+                formatFloat(resultValue) + (_.isEqual(fraction, '') ? ',' : '') : '');
+              modelCtrl.$render();
+            }
+
 
             function parse(txt) {
-              var result = parseFloat(_.replace(txt, /\s/g, ''));
+              var result = parseFloat(txt);
               return _.isFinite(result) ? result : undefined;
             }
 
-            return c.isNotBlank(inputValue) ? parse(toDecimalString(integer, fraction, '.')) : null;
+            return resultValue;
           }
           return null;
         });
