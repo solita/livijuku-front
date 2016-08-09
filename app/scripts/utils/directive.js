@@ -54,6 +54,10 @@ export function bindModel() {
     }
 }};
 
+/*
+ * Format float values using finnish conventions
+ * see http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+ */
 export function formatFloat(value) {
   var parts = _.split(_.toString(value), '.');
   parts[0] = _.replace(parts[0], /\B(?=(\d{3})+(?!\d))/g, ' ');
