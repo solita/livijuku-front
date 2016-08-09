@@ -154,6 +154,7 @@ export function floatDirective(formatFloat) {
             var resultValue = parse(integer + (c.isNotBlank(fraction) ? '.' + fraction : ''));
 
             /*
+            // In this version formatting is performed online
             var validDecimalInput = c.isDefinedNotNull(resultValue) ?
               formatFloat(resultValue) + (_.isEqual(fraction, '') ? ',' : '') : '';
             if (!_.isEqual(validDecimalInput, inputValue)) {
@@ -164,15 +165,19 @@ export function floatDirective(formatFloat) {
 
             var validDecimalInput = integer + (c.isDefinedNotNull(fraction) ? ',' + fraction : '')
             if (!_.isEqual(validDecimalInput, _.replace(inputValue, /\s/g, ''))) {
-              modelCtrl.$setViewValue(c.isDefinedNotNull(resultValue) ?
-                formatFloat(resultValue) + (_.isEqual(fraction, '') ? ',' : '') : '');
+              modelCtrl.$setViewValue(
+                _.replace(parts[0], /[^\d\s]/g, '') +
+                (c.isDefinedNotNull(fraction) ? ',' + fraction : ''));
               modelCtrl.$render();
             }
 
 
             function parse(txt) {
-              var result = parseFloat(txt);
-              return _.isFinite(result) ? result : undefined;
+              if (c.isNotBlank(txt)) {
+                var result = parseFloat(txt);
+                return _.isFinite(result) ? result : undefined;
+              }
+              return null;
             }
 
             return resultValue;
