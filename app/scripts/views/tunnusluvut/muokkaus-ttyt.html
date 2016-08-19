@@ -41,15 +41,14 @@
                   class="text-info small glyphicon glyphicon-question-sign"></span></div>
               </td>
               <td class="col-md-4">
-                <form-group-compact label="Henkilöstö" errormessage="kokonaislukuErrorMessage">
+                <form-group-compact label="Henkilöstö" errormessage="floatErrorMessage">
                   <input id="taustatiedot-henkilosto" name="henkilosto"
                          ng-model="tunnusluvut.alue.henkilosto"
                          class="form-control notbold"
-                         placeholder="henkilötyövuotta" noenter
-                         integer-only maxlength="9"
+                         placeholder="henkilötyövuotta"
+                         float scale="1" max="999999999.9"
                          ng-readonly="isReadonly()"
-                         noenter
-                         select-on-click>
+                         noenter select-on-click>
                 </form-group-compact>
               </td>
             </tr>
