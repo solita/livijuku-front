@@ -131,6 +131,81 @@ export function integerParser() {
   }
 }
 
+export function floatDirective(formatFloat) {
+  return function() {
+    return {
+      require: 'ngModel',
+      link: function(scope, element, attrs, modelCtrl) {
+
+        assertModelCtrlIsDefined(modelCtrl, element);
+
+        var scale = _.find([parseInt(attrs.scale), 2], _.isFinite);
+        var max = parseFloat(attrs.max);
+        var min = parseFloat(attrs.min);
+
+        modelCtrl.$parsers.unshift(function (inputValue) {
+          if (c.isDefinedNotNull(inputValue)) {
+            var parts = _.split(inputValue, ',', 2);
+            var removeInvalidChars = txt => _.replace(txt, /\D/g, '');
+
+            var integer = removeInvalidChars(parts[0]);
+            var fraction = c.isDefinedNotNull(parts[1]) ? removeInvalidChars(parts[1]).substring(0, scale) : null;
+
+            var resultValue = parse(integer + (c.isNotBlank(fraction) ? '.' + fraction : ''));
+
+            /*
+            // In this version formatting is performed online
+            var validDecimalInput = c.isDefinedNotNull(resultValue) ?
+              formatFloat(resultValue) + (_.isEqual(fraction, '') ? ',' : '') : '';
+            if (!_.isEqual(validDecimalInput, inputValue)) {
+              modelCtrl.$setViewValue(validDecimalInput);
+              modelCtrl.$render();
+            }
+            */
+
+            var validDecimalInput = integer + (c.isDefinedNotNull(fraction) ? ',' + fraction : '')
+            if (!_.isEqual(validDecimalInput, _.replace(inputValue, /\s/g, ''))) {
+              modelCtrl.$setViewValue(
+                _.replace(parts[0], /[^\d\s]/g, '') +
+                (c.isDefinedNotNull(fraction) ? ',' + fraction : ''));
+              modelCtrl.$render();
+            }
+
+
+            function parse(txt) {
+              if (c.isNotBlank(txt)) {
+                var result = parseFloat(txt);
+                return _.isFinite(result) ? result : undefined;
+              }
+              return null;
+            }
+
+            return resultValue;
+          }
+          return null;
+        });
+
+        element.on("blur", function () {
+          if (modelCtrl.$valid && !_.isEqual(modelCtrl.$viewValue, formatFloat(modelCtrl.$modelValue))) {
+            modelCtrl.$viewValue = formatFloat(modelCtrl.$modelValue);
+            modelCtrl.$render();
+          };
+        });
+
+        modelCtrl.$formatters.unshift(formatFloat);
+
+        if (_.isFinite(max)) {
+          modelCtrl.$validators.max = modelValue => c.isNullOrUndefined(modelValue) || modelValue <= max;
+        }
+
+        if (_.isFinite(min)) {
+          modelCtrl.$validators.min = modelValue => c.isNullOrUndefined(modelValue) || modelValue >= min;
+        }
+      }
+    }
+  }
+}
+
 export function dateInput() {
   return {
     scope: {

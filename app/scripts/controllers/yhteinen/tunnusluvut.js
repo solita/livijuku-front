@@ -17,7 +17,7 @@ const types = {
 };
 
 const tunnuslukuTooltips = {
-  HENKILOSTO: "Kuinka monta henkilötyövuotta viranomaisella kuluu ko. alueen joukkoliikenteen järjestämiseen, suunnitteluun ja asiakaspalvelutehtäviin. Henkilötyövuodet voi arvioida 0,2 htv:n tarkkuudella.",
+  HENKILOSTO: "Kuinka monta henkilötyövuotta viranomaisella kuluu ko. alueen joukkoliikenteen järjestämiseen, suunnitteluun ja asiakaspalvelutehtäviin. Henkilötyövuodet voi arvioida 0,1 htv:n tarkkuudella.",
   ASIAKASPALVELU: "Ulkoistetut asiakaspalvelutehtävät, esimerkiksi matkakorttien hallinnointi.",
   KONSULTTIPALVELU: "Ulkoiset asiantuntijapalvelut ja konsulttiselvitykset, esimerkiksi järjestelmien tekninen neuvonta, linjastojen suunnittelu, asiakastyytyväisyystutkimukset jne.",
   LIPUNMYYNTIPALKKIOT: "Eri lipunmyyntikanaville maksetut palkkiot.",
@@ -182,6 +182,7 @@ angular.module('jukufrontApp')
         };
 
         // error messages:
+        $scope.floatErrorMessage = d.combineErrorMessages(input => input.$error.parse ? 'Virheellisen muotoinen numero' : null, d.maxNumberErrorMessage);
         $scope.desimaaliErrorMessage = d.maxErrorMessage("9 999 999 999,99");
         $scope.prosenttiErrorMessage = d.maxErrorMessage("100,00");
         $scope.kokonaislukuErrorMessage = d.maxlengthNumberErrorMessage("999 999 999");
