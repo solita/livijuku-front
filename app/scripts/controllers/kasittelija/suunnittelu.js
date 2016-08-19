@@ -65,7 +65,7 @@ angular.module('jukufrontApp')
                   };
                 }), ['organisaatiolajitunnus', $scope.lajitunnus]);
 
-              $scope.kaikkiTarkastettu = _.every(hakemukset, 'hakemuksenTila', 'T');
+              $scope.kaikkiTarkastettu = _.every(hakemukset, { hakemuksenTila: 'T' });
               $scope.haettuAvustusSum = _.sumBy(hakemukset, 'haettuAvustus');
               $scope.myonnettavaAvustusSum = _.sumBy(hakemukset, 'myonnettavaAvustus');
               $scope.muutosSum = _.sumBy(hakemukset, $scope.muutos);
@@ -280,6 +280,8 @@ angular.module('jukufrontApp')
             return 'Käyttäjällä ei ole oikeutta hyväksyä päätöstä.';
           } else if (core.isDefinedNotNull($scope.paatos.voimaantuloaika)) {
             return 'Päätökset on jo hyväksytty.';
+          } else if (!$scope.kaikkiTarkastettu) {
+            return 'Päätökset voi hyväksyä vasta sitten kun kaikki hakemukset on tarkastettu.';
           }
         };
 
