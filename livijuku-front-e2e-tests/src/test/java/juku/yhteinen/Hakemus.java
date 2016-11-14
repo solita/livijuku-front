@@ -1,6 +1,5 @@
 package juku.yhteinen;
 
-import com.thoughtworks.selenium.SeleneseTestNgHelper;
 import juku.TestBase;
 import org.openqa.selenium.WebElement;
 
@@ -19,10 +18,10 @@ public class Hakemus {
     public static WebElement uniqueFileInput() {
         List<WebElement> fileInputs = TestBase.driver.findElementsByXPath("//input[@type='file']");
         if (fileInputs.size()>1) {
-            SeleneseTestNgHelper.fail("Sivulla on useita //input[@type='file'] elementtejä. Odotettiin täsmälleen yhtä.");
+            throw new AssertionError("Sivulla on useita //input[@type='file'] elementtejä. Odotettiin täsmälleen yhtä.");
         }
         else if (fileInputs.size()==0) {
-            SeleneseTestNgHelper.fail("Sivulla ei ole yhtään //input[@type='file'] elementtiä. Odotettiin täsmälleen yhtä.");
+            throw new AssertionError("Sivulla ei ole yhtään //input[@type='file'] elementtiä. Odotettiin täsmälleen yhtä.");
         }
         return fileInputs.get(0);
     }
