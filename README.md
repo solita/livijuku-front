@@ -63,6 +63,16 @@ using ssh it is easy to forward it to the required local ports e.g.
 
     ssh -L localhost:1521:192.168.50.1:1521 -L localhost:50000:192.168.50.1:50000 localhost
 
+### Supported browser versions
+
+End to end tests only support firefox version 46. Install the correct firefox version:
+ 1. apt-get remove firefox
+ 2. wget https://ftp.mozilla.org/pub/firefox/releases/46.0/linux-x86_64/en-US/firefox-46.0.tar.bz2
+ 3. mv firefox-46.0.tar.bz2 /opt/.
+ 4. cd /opt
+ 5. tar -xvf firefox-46.0.tar.bz2
+ 6. sudo ln -s /opt/firefox/firefox /usr/bin/firefox
+
 Running the application in development mode
 ---------------
 
