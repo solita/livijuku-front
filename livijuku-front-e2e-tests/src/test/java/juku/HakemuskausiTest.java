@@ -147,7 +147,7 @@ public class HakemuskausiTest extends TestBase {
         assertThat(String.format("Päätös PDF sisältää tekstin %s", expectedText),
                 containsNormalized(actual, expectedText));
         String expectedText2 = "Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle \n"
-                + "toimivaltaisena viranomaisena valtionavustuksena enintään 12 400 euroa";
+                + "toimivaltaisena viranomaisena valtionavustusta enintään 12 400 euroa";
         assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText2),
                 containsNormalized(actual, expectedText2));
 
