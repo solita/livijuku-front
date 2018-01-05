@@ -203,11 +203,10 @@
     </juku-form-section>
     <juku-form-section ng-if="isElyhakemus()">
       <juku-controls>
-
         <juku-controls-buttons>
           <button juku-varmistusdialogi varmistusotsake="Päätöksen hyväksyminen"
                   varmistusteksti="Oletko varma, että haluat hyväksyä kaikkien ELY-hakemusten päätökset? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
-                  operaatio="hyvaksyElyPaatokset()"
+                  operaatio="hyvaksyElyPaatokset(true)"
                   class="pull-right btn btn-success disabled-button-tooltip"
                   ng-disabled="!isHyvaksyPaatosEnabled()">Tallenna ja hyväksy päätökset
 
@@ -226,6 +225,44 @@
           </button>
         </juku-controls-buttons>
       </juku-controls>
+    </juku-form-section>
+    <juku-form-section ng-if="isElyhakemus()">
+      <h3>Asiahallinta</h3>
+
+      <p>
+        Asiahallinta toimii epäluotettavasti ja asiahallinnassa on suunnitteluvirheitä,
+        jotka vaikeuttavat luotettavan asiahallintaintegraation toteuttamista.
+        Nämä ongelmat tulevat esiin erityisesti ELY-päätösten osalta, jossa kerralla hyväksytään n kpl päätöksiä.
+      </p>
+      <p>
+        Jos päätösten hyväksymisten vienti asiahallintaan epäonnistuu, niin asiahallinnasta pitää
+        manuaalisesti peruuttaa mahdolliset onnistuneet päätökset ennen kuin
+        hyväksymistä voi yrittää uudestaan tästä järjestelmästä. Kaikki ELY-hakemusasiat
+        pitää olla asiahallinnassa tarkastettu-tilassa ennen kuin päätösten hyväksymisen
+        voi tehdä onnistuneesti.
+      </p>
+      <p>
+        Joskus asiahallinta voi mennä niin sekaisin että ELY-päätökset kannattaa
+        hyväksyä manuaalisesti asiahallinnassa ja sitten tehdä hyväksyntä tässä järjestelmässä
+        ilman asiahallintaintegraatiota. Alapuolella oleva toiminto on tarkoitettu
+        tätä käyttötarkoitusta varten.
+      </p>
+
+      <juku-controls>
+        <juku-controls-buttons>
+          <button juku-varmistusdialogi varmistusotsake="Päätöksen hyväksyminen ilman asiahallintaa"
+                  varmistusteksti="Oletko varma, että asiahallinta on niin sekaisin että haluat hyväksyä kaikkien ELY-hakemusten päätökset ilman asiahallintaintegraatiota? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
+                  operaatio="hyvaksyElyPaatokset(false)"
+                  class="pull-right btn btn-success disabled-button-tooltip"
+                  ng-disabled="!isHyvaksyPaatosEnabled()">Tallenna ja hyväksy päätökset (Ei asiahallintaa)
+
+            <div uib-tooltip="{{hyvaksyPaatosDisabledTooltip()}}"
+                 class="disabled-button-tooltip-text"
+                 ng-if="!isHyvaksyPaatosEnabled()"></div>
+          </button>
+        </juku-controls-buttons>
+      </juku-controls>
+
     </juku-form-section>
   </div>
   <juku-navigation-links>
