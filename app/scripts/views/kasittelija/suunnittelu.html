@@ -203,11 +203,10 @@
     </juku-form-section>
     <juku-form-section ng-if="isElyhakemus()">
       <juku-controls>
-
         <juku-controls-buttons>
           <button juku-varmistusdialogi varmistusotsake="Päätöksen hyväksyminen"
                   varmistusteksti="Oletko varma, että haluat hyväksyä kaikkien ELY-hakemusten päätökset? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
-                  operaatio="hyvaksyElyPaatokset()"
+                  operaatio="hyvaksyElyPaatokset(true)"
                   class="pull-right btn btn-success disabled-button-tooltip"
                   ng-disabled="!isHyvaksyPaatosEnabled()">Tallenna ja hyväksy päätökset
 
@@ -226,6 +225,33 @@
           </button>
         </juku-controls-buttons>
       </juku-controls>
+    </juku-form-section>
+    <juku-form-section ng-if="isElyhakemus()">
+      <h3>Päätösten tekeminen ilman asianhallintaa</h3>
+
+      <p>
+        Käytä toiminnallisuutta, mikäli et halua viedä päätöksiä automaattisesti asianhallintaan.
+        Tällöin päätökset tulee viedä manuaalisesti asianhallintaan. Toiminnallisuutta tulee käyttää
+        vain asianhallinnan virhetilanteissa, joissa päätöksiä ei voi viedä JUKUn kautta.
+        Kaikki ELY-hakemusasiat pitää olla asiahallinnassa tarkastettu-tilassa ennen kuin
+        toiminnallisuutta voi käyttää.
+      </p>
+
+      <juku-controls>
+        <juku-controls-buttons>
+          <button juku-varmistusdialogi varmistusotsake="Päätöksen hyväksyminen ilman asiahallintaa"
+                  varmistusteksti="Oletko varma, että haluat hyväksyä kaikkien ELY-hakemusten päätökset ilman asiahallintaintegraatiota? Päätöksen hyväksymistä ei ole mahdollista peruuttaa ja päätöstä ei ole mahdollista muuttaa hyväksymisen jälkeen."
+                  operaatio="hyvaksyElyPaatokset(false)"
+                  class="pull-right btn btn-success disabled-button-tooltip"
+                  ng-disabled="!isHyvaksyPaatosEnabled()">Tallenna ja hyväksy päätökset (Ei asiahallintaa)
+
+            <div uib-tooltip="{{hyvaksyPaatosDisabledTooltip()}}"
+                 class="disabled-button-tooltip-text"
+                 ng-if="!isHyvaksyPaatosEnabled()"></div>
+          </button>
+        </juku-controls-buttons>
+      </juku-controls>
+
     </juku-form-section>
   </div>
   <juku-navigation-links>

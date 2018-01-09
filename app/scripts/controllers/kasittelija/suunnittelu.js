@@ -239,13 +239,13 @@ angular.module('jukufrontApp')
           tallennaElyPaatokset();
         };
 
-        $scope.hyvaksyElyPaatokset = function () {
+        $scope.hyvaksyElyPaatokset = function (enableAsiahallinta) {
           if (!$scope.suunnitteluForm.$valid) {
             StatusService.virhe('hyvaksyPaatokset', 'Korjaa suunnittelulomakkeen virheet ennen tallentamista.');
             return;
           }
           tallennaElyPaatokset().then(() =>
-            PaatosService.hyvaksyElyPaatokset($scope.vuosi).then(
+            PaatosService.hyvaksyElyPaatokset($scope.vuosi, enableAsiahallinta).then(
               () => {
                 StatusService.ok('', 'Ely hakemusten päätökset on hyväksytty');
                 haeSuunnitteluData();
