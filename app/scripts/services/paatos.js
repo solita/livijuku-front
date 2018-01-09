@@ -1,6 +1,8 @@
 'use strict';
 
 var angular = require('angular');
+var c = require('utils/core');
+
 angular.module('services.paatos', [])
 
   .factory('PaatosService', ['$http', function ($http) {
@@ -28,8 +30,9 @@ angular.module('services.paatos', [])
       tallennaPaatokset: function (paatokset) {
         return $http.put('api/paatokset', paatokset);
       },
-      hyvaksyElyPaatokset: function (vuosi) {
-        return $http.post('api/hakemuskausi/' + vuosi + '/ely/hyvaksy-paatokset');
+      hyvaksyElyPaatokset: function (vuosi, enableAsiahallinta) {
+        return $http.post('api/hakemuskausi/' + vuosi + '/ely/hyvaksy-paatokset?asiahallinta='
+          + c.coalesce(enableAsiahallinta, true));
       },
       haeElyPaatos: function(vuosi) {
         return $http.get('api/hakemuskausi/' + vuosi + '/ely-paatos').then(res => res.data);
