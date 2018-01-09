@@ -16,12 +16,12 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="viranomainen in toimivaltaiset">
-      <td>{{viranomainen.etunimi}} {{viranomainen.sukunimi}}</td>
-      <td>{{viranomainen.organisaationimi}}</td>
-      <td>{{viranomainen.roolit | erotteleRoolit}}</td>
-      <td>{{viranomainen.sahkoposti}}</td>
-      <td>{{viranomainen.kirjautumisaika | date:'dd.MM.yyyy HH:mm:ss'}}</td>
+    <tr ng-repeat="kayttaja in toimivaltaiset">
+      <td>{{kayttaja.etunimi}} {{kayttaja.sukunimi}}</td>
+      <td>{{kayttaja.organisaationimi}}</td>
+      <td>{{kayttaja.roolit | erotteleRoolit}}</td>
+      <td>{{kayttaja.sahkoposti}}</td>
+      <td>{{kayttaja.kirjautumisaika | date:'dd.MM.yyyy HH:mm:ss'}}</td>
       <td ng-if="hasDeleteKayttajaPermission">
         <juku-delete-kayttaja-link></juku-delete-kayttaja-link>
       </td>
@@ -41,10 +41,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="henkilo in liikennevirasto">
-      <td>{{henkilo.etunimi}} {{henkilo.sukunimi}}</td>
-      <td>{{henkilo.roolit | erotteleRoolit}}</td>
-      <td>{{henkilo.sahkoposti}}</td>
+    <tr ng-repeat="kayttaja in liikennevirasto">
+      <td>{{kayttaja.etunimi}} {{kayttaja.sukunimi}}</td>
+      <td>{{kayttaja.roolit | erotteleRoolit}}</td>
+      <td>{{kayttaja.sahkoposti}}</td>
       <td ng-if="hasDeleteKayttajaPermission">
         <juku-delete-kayttaja-link></juku-delete-kayttaja-link>
       </td>

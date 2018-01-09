@@ -147,7 +147,7 @@ public class HakemuskausiTest extends TestBase {
         assertThat(String.format("Päätös PDF sisältää tekstin %s", expectedText),
                 containsNormalized(actual, expectedText));
         String expectedText2 = "Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle \n"
-                + "toimivaltaisena viranomaisena valtionavustuksena enintään 12 400 euroa";
+                + "toimivaltaisena viranomaisena valtionavustusta enintään 12 400 euroa";
         assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText2),
                 containsNormalized(actual, expectedText2));
 
@@ -614,7 +614,7 @@ public class HakemuskausiTest extends TestBase {
         String actual = httpGetPdfText(pdfUrl, User.HARRI);
 
         String expected = "Hakija: Helsingin seudun liikenne\n" +
-                "Hakija hakee vuonna 2017 suurten kaupunkiseutujen joukkoliikenteen \n" +
+                "Hakija hakee vuonna 2018 suurten kaupunkiseutujen joukkoliikenteen \n" +
                 "valtionavustusta 12 400 euroa. Haettu avustus jakautuu seuraavasti:\n" +
                 "PSA:n mukaisen liikenteen hankinta (alv 0%)\n" +
                 "Paikallisliikenne 1 000 e\n" +

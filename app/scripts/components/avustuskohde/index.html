@@ -1,13 +1,14 @@
 <div class="row avustuskohde">
   <ng-form name="{{getName('form')}}">
-    <juku-form-row ng-show="hakemustyyppi=='AH0' || (tyyppi!='AH0' && vertailuarvot().avustushakemusHaettavaAvustus>0)">
+    <juku-form-row>
       <div class="col-md-12">
         <h5>{{name}}</h5>
       </div>
       <div class="col-md-4">
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Haettava valtionavustus</label>
-          <div class="input-group">
+
+          <div class="input-group" ng-show="hakemustyyppi=='AH0' || vertailuarvot().avustushakemusHaettavaAvustus>0">
             <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" numeric-only="" noenter
                    select-on-click
                    alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
@@ -17,6 +18,8 @@
                    ui-validate="{sallittuArvoHaettavaavustus: 'sallittuArvo($value)'}"/>
             <span ng-hide="isReadonly()" class="input-group-addon">alv {{ alv ? kohde.alv : 0 }}%</span>
           </div>
+
+          <p class="form-control-static text-info" ng-show="hakemustyyppi!='AH0' && vertailuarvot().avustushakemusHaettavaAvustus==0">Ei haettu avustusta.</p>
 
           <p class="help-block ng-invalid-sallittu-arvo-haettavaavustus">
             Arvon tulee olla välillä 0 - 999 999 999,99 € (sis. ALV).
@@ -53,14 +56,6 @@
           alv {{kohde.alv}} %</p>
         <p class="form-control-static" ng-hide="alv">{{yhteensa(kohde,alv) | currency:"&euro;"}}
           alv 0 %</p>
-      </div>
-    </juku-form-row>
-    <juku-form-row ng-show="hakemustyyppi!='AH0' && vertailuarvot().avustushakemusHaettavaAvustus==0">
-      <div class="col-md-12">
-        <h5>{{name}}</h5>
-      </div>
-      <div class="col-md-12">
-        <p>Ei haettu avustusta.</p>
       </div>
     </juku-form-row>
   </ng-form>
