@@ -7,5 +7,5 @@
   export NODE_ENV=production
   rm -rf dist
   npm run build
-  ./fetch-pdfjs.sh
+  ./unzip-pdfjs.sh
 )
