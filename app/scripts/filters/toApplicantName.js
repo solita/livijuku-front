@@ -7,7 +7,7 @@ const types = {
   KS2: 'Keskisuuret kaupunkiseudut',
   KS3: 'Pienet kaupunkiseudut',
   ELY: 'ELY-keskukset',
-  LV: 'Liikennevirasto'
+  LV: 'Liikenne- ja viestintävirasto'
 };
 
 angular.module('filters.toApplicantName', [])
