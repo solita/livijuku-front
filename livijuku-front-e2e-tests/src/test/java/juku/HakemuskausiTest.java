@@ -634,7 +634,7 @@ public class HakemuskausiTest extends TestBase {
                 "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 37 200 euroa.\n" +
                 "Lähettäjä: <hakijan nimi, joka on lähettänyt hakemuksen>\n" +
                 "Liitteet\n" +
-                "Liikennevirasto - esikatselu - hakemus on keskeneräinen\n" +
+                "Liikenne- ja viestintävirasto - esikatselu - hakemus on keskeneräinen\n" +
                 "1 (1)\n";
 
         assertThat("Hakemuksen esikatselussa pitää näkyä rahasummat.", containsNormalized(actual, expected));
