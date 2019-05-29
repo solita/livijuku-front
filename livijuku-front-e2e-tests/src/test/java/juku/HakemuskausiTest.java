@@ -614,7 +614,7 @@ public class HakemuskausiTest extends TestBase {
         String actual = httpGetPdfText(pdfUrl, User.HARRI);
 
         String expected = "Hakija: Helsingin seudun liikenne\n" +
-                "Hakija hakee vuonna 2018 suurten kaupunkiseutujen joukkoliikenteen \n" +
+                "Hakija hakee vuonna 2020 suurten kaupunkiseutujen joukkoliikenteen \n" +
                 "valtionavustusta 12 400 euroa. Haettu avustus jakautuu seuraavasti:\n" +
                 "PSA:n mukaisen liikenteen hankinta (alv 0%)\n" +
                 "Paikallisliikenne 1 000 e\n" +
@@ -634,7 +634,7 @@ public class HakemuskausiTest extends TestBase {
                 "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 37 200 euroa.\n" +
                 "Lähettäjä: <hakijan nimi, joka on lähettänyt hakemuksen>\n" +
                 "Liitteet\n" +
-                "Liikennevirasto - esikatselu - hakemus on keskeneräinen\n" +
+                "Liikenne- ja viestintävirasto - esikatselu - hakemus on keskeneräinen\n" +
                 "1 (1)\n";
 
         assertThat("Hakemuksen esikatselussa pitää näkyä rahasummat.", containsNormalized(actual, expected));

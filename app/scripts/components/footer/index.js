@@ -26,7 +26,7 @@ module.exports = function () {
           </div>
 
           <span class="footer__domain">
-            Liikennevirasto
+            Traficom
           </span>
         </div>
       </div>
