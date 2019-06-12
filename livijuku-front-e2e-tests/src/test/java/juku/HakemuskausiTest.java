@@ -6,6 +6,7 @@ import juku.kasittelija.KaikkiHakemukset;
 import juku.kasittelija.Suunnittelu;
 import juku.yhteinen.Hakemus;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -142,14 +143,11 @@ public class HakemuskausiTest extends TestBase {
         String paatosHref = findElementByLinkText("Avaa päätös (PDF)").getAttribute("href");
         String actual = httpGetPdfText(paatosHref, User.HARRI);
 
-        String expectedText = " suurten kaupunkiseutujen joukkoliikenteen \n"
-                + "valtionavustusta 12 400 euroa.";
-        assertThat(String.format("Päätös PDF sisältää tekstin %s", expectedText),
-                containsNormalized(actual, expectedText));
-        String expectedText2 = "Liikennevirasto on hakemuksen perusteella päättänyt myöntää hakijalle \n"
-                + "toimivaltaisena viranomaisena valtionavustusta enintään 12 400 euroa";
-        assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText2),
-                containsNormalized(actual, expectedText2));
+        String expectedText = "Hakija hakee vuodelle 2020 suurten kaupunkiseutujen joukkoliikenteen valtionavustusta 12 400 euroa.";
+        assertContains(actual, expectedText, "Päätös");
+
+        String expectedText2 = "Liikenne- ja viestintävirasto myöntää hakijalle joukkoliikenteen valtionavustusta enintään 12 400 euroa";
+        assertContains(actual, expectedText2, "Päätös");
 
         /*****************************************************
          * 1. maksatushakemus
@@ -617,28 +615,27 @@ public class HakemuskausiTest extends TestBase {
                 "Hakija hakee vuonna 2020 suurten kaupunkiseutujen joukkoliikenteen \n" +
                 "valtionavustusta 12 400 euroa. Haettu avustus jakautuu seuraavasti:\n" +
                 "PSA:n mukaisen liikenteen hankinta (alv 0%)\n" +
-                "Paikallisliikenne 1 000 e\n" +
-                "Integroitupalvelulinja 1 000 e\n" +
-                "Muu PSA:n mukaisen liikenteen järjestäminen 1 000 e\n" +
+                "Paikallisliikenne 1 000 €\n" +
+                "Integroitupalvelulinja 1 000 €\n" +
+                "Muu PSA:n mukaisen liikenteen järjestäminen 1 000 €\n" +
                 "Hintavelvoitteiden korvaaminen (alv 10%)\n" +
-                "Seutulippu 1 100 e\n" +
-                "Kaupunkilippu tai kuntalippu 1 100 e\n" +
-                "Liityntälippu 1 100 e\n" +
-                "Työmatkalippu 1 100 e\n" +
+                "Seutulippu 1 100 €\n" +
+                "Kaupunkilippu tai kuntalippu 1 100 €\n" +
+                "Liityntälippu 1 100 €\n" +
+                "Työmatkalippu 1 100 €\n" +
                 "Liikenteen suunnittelu ja kehittämishankkeet (alv 0%)\n" +
-                "Informaatio ja maksujärjestelmien kehittäminen 1 000 e\n" +
-                "Matkapalvelukeskuksen suunnittelu ja kehittäminen 1 000 e\n" +
-                "Matkakeskuksen suunnittelu ja kehittäminen 1 000 e\n" +
-                "Raitiotien suunnittelu 1 000 e\n" +
-                "Muu hanke 1 000 e\n" +
+                "Informaatio ja maksujärjestelmien kehittäminen 1 000 €\n" +
+                "Matkapalvelukeskuksen suunnittelu ja kehittäminen 1 000 €\n" +
+                "Matkakeskuksen suunnittelu ja kehittäminen 1 000 €\n" +
+                "Raitiotien suunnittelu 1 000 €\n" +
+                "Muu hanke 1 000 €\n" +
                 "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 37 200 euroa.\n" +
                 "Lähettäjä: <hakijan nimi, joka on lähettänyt hakemuksen>\n" +
                 "Liitteet\n" +
                 "Liikenne- ja viestintävirasto - esikatselu - hakemus on keskeneräinen\n" +
                 "1 (1)\n";
 
-        assertThat("Hakemuksen esikatselussa pitää näkyä rahasummat.", containsNormalized(actual, expected));
-
+        assertContains(actual, expected, "Hakemus");
     }
 
     @Test
@@ -839,11 +836,18 @@ public class HakemuskausiTest extends TestBase {
                 containsNormalized(actual, expectedText3));
     }
 
+    private static void assertContains(String actual, String expected, String pdfType) {
+        Assert.assertTrue(normalize(actual).contains(normalize(expected)),
+                pdfType + " pdf: \n'" + normalize(actual) +
+                        "'\n does not contain: \n" + normalize(expected));
+    }
 
-    private boolean containsNormalized(String actual, String expected) {
-        String a = actual.replaceAll("\\s+", " ");
-        String b = expected.replaceAll("\\s+", " ");
-        return a.contains(b);
+    private static String normalize(String txt) {
+        return txt.replaceAll("\\s+", " ");
+    }
+
+    private static boolean containsNormalized(String actual, String expected) {
+        return normalize(actual).contains(normalize(expected));
     }
 
 }
