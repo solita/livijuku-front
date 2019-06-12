@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -123,7 +122,7 @@ public class HakemuskausiTest extends TestBase {
         spanWithHakemustila(Hakemustila.TARKASTETTU);
         findElementByXPath("//textarea[1]").sendKeys("Päätöstekstiä");
         WorkAround.click(button("Tallenna tiedot"));
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
 
         // Kirjaa sisään päättäjä
         login(User.PAIVI);
@@ -132,7 +131,7 @@ public class HakemuskausiTest extends TestBase {
         WorkAround.click(Suunnittelu.paatoksentekoon());
         WorkAround.click(button("Tallenna ja hyväksy päätös"));
         WorkAround.click(okOlenVarma());
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
 
         // Kirjaa sisään hakija
         login(User.HARRI);
@@ -191,7 +190,7 @@ public class HakemuskausiTest extends TestBase {
         WorkAround.click(button("Palauta täydennettäväksi"));
         findElementByCssSelector("#taydennysselite").sendKeys("Ole hyvä ja täydennä.");
         WorkAround.click(okOlenVarma());
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
 
         Hakemus.tarkistaHakemuksenTila(hakemuslaji, Hakemustila.TAYDENNETTAVANA);
 
@@ -255,7 +254,7 @@ public class HakemuskausiTest extends TestBase {
         spanWithHakemustila(Hakemustila.TARKASTETTU);
         findElementByXPath("//textarea[1]").sendKeys("maksatuksen päätöstekstiä");
         WorkAround.click(button("Tallenna tiedot"));
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
 
         // Kirjaa sisään päättäjä
         login(User.PAIVI);
@@ -264,7 +263,7 @@ public class HakemuskausiTest extends TestBase {
         WorkAround.click(Suunnittelu.paatoksentekoon());
         WorkAround.click(button("Tallenna ja hyväksy päätös"));
         WorkAround.click(okOlenVarma());
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
 
         // Kirjaa sisään hakija
         login(User.HARRI);
@@ -500,7 +499,7 @@ public class HakemuskausiTest extends TestBase {
     }
 
     private void tarkistaInputKentanTila(String luokka) {
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         List<WebElement> inputkentat = findElementsByXPath(String.format("//input[%s]",
                 hasClass(luokka)));
 
@@ -511,20 +510,20 @@ public class HakemuskausiTest extends TestBase {
 
     private void tarkistaLiitteetjaLahetaHakemus() {
         WorkAround.click(checkbox("Olen liittänyt hakemukseen tarvittavat"));
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         lahetaHakemus();
     }
 
     private void lahetaHakemus() {
         WorkAround.click(button("Tallenna ja lähetä hakemus"));
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
 
         WorkAround.click(okOlenVarma());
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
     }
 
     private void lisaaAllekirjoitusLiite() throws IOException {
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
 
         WebElement fileInput = Hakemus.uniqueFileInput();
 
@@ -547,7 +546,7 @@ public class HakemuskausiTest extends TestBase {
         fileInput.sendKeys(allekirjoitusliite);
 
         // Odotetaan, että liite tallentuu
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
     }
 
     private void lahetaDummyElyHakemus(User user) throws IOException, URISyntaxException {
@@ -798,7 +797,7 @@ public class HakemuskausiTest extends TestBase {
 
         findElementByXPath("//textarea[@id='paatosteksti']").sendKeys("Päätöstekstiä");
         WorkAround.click(button("Tallenna päätösten tiedot"));
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
 
         // Tarkistetaan summat
         WebElement avustuksetYhteensa = findElementByXPath("//td[@id='haettuavustussumma']");
@@ -812,7 +811,7 @@ public class HakemuskausiTest extends TestBase {
         WorkAround.click(KaikkiHakemukset.suunnitteluJaPaatoksenteko(0));
         WorkAround.click(button("Tallenna ja hyväksy päätökset"));
         WorkAround.click(okOlenVarma());
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
 
 
         // Kirjaa sisään hakija

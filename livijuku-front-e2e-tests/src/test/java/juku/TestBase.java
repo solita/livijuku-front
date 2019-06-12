@@ -1,7 +1,6 @@
 package juku;
 
-import com.paulhammant.ngwebdriver.AngularModelAccessor;
-import com.paulhammant.ngwebdriver.ByAngular;
+import com.paulhammant.ngwebdriver.NgWebDriver;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -12,15 +11,17 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
+import org.apache.pdfbox.io.RandomAccessBuffer;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.util.PDFTextStripper;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
@@ -41,7 +42,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish.waitForAngularRequestsToFinish;
 import static java.lang.Thread.sleep;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.AssertJUnit.assertTrue;
@@ -51,7 +51,8 @@ public class TestBase {
     public static final String TEST_RESTORE_POINT = "bf_test";
     private static final String SUITE_RESTORE_POINT = "bf_suite";
     public static final RemoteWebDriver driver = createDriver();
-    public static ByAngular ng;
+    public static final NgWebDriver ngDriver = new NgWebDriver(driver);
+
     private PoolingHttpClientConnectionManager connectionManager;
     private static final int DEFAULT_IMPLICIT_WAIT_MS = 6000;
 
@@ -146,7 +147,7 @@ public class TestBase {
     }
 
     public static WebElement button(String text) {
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         return findElementByXPath("//button[%s and %s]",
                 containsText(text),
                 isVisible());
@@ -164,7 +165,7 @@ public class TestBase {
 
             // Poistettu käytöstä, kun aiheutti välillä kahden selaimen aukeamisen yhden sijaan
             //fp.setPreference("webdriver.load.strategy", "unstable"); // As of 2.19. from 2.9 - 2.18 use 'fast'
-            drv = new FirefoxDriver(fp);
+            drv = new FirefoxDriver(new FirefoxOptions().setProfile(fp));
         }
         drv.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
         setImplicitTimeout(drv, DEFAULT_IMPLICIT_WAIT_MS);
@@ -176,17 +177,17 @@ public class TestBase {
     }
 
     public static String isVisible() {
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         return "not(self::*[@disabled] or ancestor::*[@disabled]) and not(ancestor::*[contains(concat( ' ', @class, ' '), ' ng-hide ')])";
     }
 
     protected WebElement okOlenVarma() {
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         return findElementByXPath("//button[%s]", containsText("Kyllä"));
     }
 
     public static WebElement spanWithHakemustila(Hakemustila tila) {
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         return findElementByXPath("//span[%s and %s and %s]",
                 containsText(tila.getName()),
                 hasClass(tila.getCssClass()),
@@ -236,7 +237,7 @@ public class TestBase {
             WorkAround.click(paiva01);
 
             WorkAround.click(findElementByCssSelector("#test-alkupvm-tallenna-" + i));
-            waitForAngularRequestsToFinish(driver);
+            waitForAngularRequestsToFinish();
         }
     }
 
@@ -244,8 +245,7 @@ public class TestBase {
     public void setupSuite() {
         createRestorePoint(SUITE_RESTORE_POINT);
         login(User.KATRI);
-        ng = new ByAngular(driver);
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
 
         connectionManager = new PoolingHttpClientConnectionManager();
         // Increase max total connection to 200
@@ -264,7 +264,7 @@ public class TestBase {
         login(User.KATRI);
 
         postHakuohje(getPathToTestFile("test.pdf").toFile(), "//input[@type='file' and @name='hakuohje']");
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         postHakuohje(getPathToTestFile("test.pdf").toFile(), "//input[@type='file' and @name='elyhakuohje']");
 
         boolean kaynnistaNapinTilaEnnen =
@@ -275,7 +275,7 @@ public class TestBase {
         asetaAlkupaivat0101();
 
         button("Käynnistä hakemuskausi").click();
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
 
         boolean kaynnistaNappiNakyy = true;
         for (int i = 0; i < 25; i++) {
@@ -405,7 +405,7 @@ public class TestBase {
         try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
             HttpEntity entity = response.getEntity();
             try (InputStream pdfStream = entity.getContent()) {
-                PDFParser testPDF = new PDFParser(pdfStream);
+                PDFParser testPDF = new PDFParser(new RandomAccessBuffer(pdfStream));
                 testPDF.parse();
                 try (PDDocument document = testPDF.getPDDocument()) {
                     result = new PDFTextStripper().getText(document);
@@ -427,10 +427,10 @@ public class TestBase {
 
     public static void login(User user) {
         driver.get(baseUrl());
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         setUser(user);
         driver.get(baseUrl());
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
     }
 
     public static String hasClass(String classname) {
@@ -464,32 +464,32 @@ public class TestBase {
     }
 
     public static WebElement findElementByCssSelector(String css) {
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         return driver.findElementByCssSelector(css);
     }
 
     public static WebElement findElementById(String text) {
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         return driver.findElement(By.id(text));
     }
 
     public static WebElement findElementByLinkText(String text) {
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         return driver.findElementByLinkText(text);
     }
 
     public static WebElement findElementByXPath(String xpath) {
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         return driver.findElementByXPath(xpath);
     }
 
     public static List<WebElement> findElementsByXPath(String xpath, Object... n) {
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         return driver.findElementsByXPath(String.format(xpath, n));
     }
 
     public static WebElement findElementByXPath(String xpath, Object... n) {
-        waitForAngularRequestsToFinish(driver);
+        waitForAngularRequestsToFinish();
         return driver.findElementByXPath(String.format(xpath, n));
     }
 
@@ -503,8 +503,10 @@ public class TestBase {
     }
 
     public static String getScopeVariableValue(WebElement we, String variableName) {
-        AngularModelAccessor modelAccessor = new AngularModelAccessor(driver);
-        return modelAccessor.retrieveAsString(we, variableName);
+        return ngDriver.retrieveAsString(we, variableName);
     }
 
+    public static void waitForAngularRequestsToFinish() {
+        ngDriver.waitForAngularRequestsToFinish();
+    }
 }
