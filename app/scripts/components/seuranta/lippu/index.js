@@ -30,8 +30,8 @@ function lippuController($scope) {
 
   $scope.lisaaSuorite = function () {
     var uusi = {
-      lipputyyppitunnus: $scope.kaupunkilippu ? '' : 'SE',
-      seutulippualue: '',
+      lipputyyppitunnus: $scope.kaupunkilippu ? null : 'SE',
+      seutulippualue: null,
       numero: haeMaksimiNumero($scope.suoritteet),
       myynti: 0,
       matkat: 0,

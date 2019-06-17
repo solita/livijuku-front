@@ -43,6 +43,7 @@ require('angular-elastic');
 require('ng-file-upload');
 require('angular-animate');
 require('angular-ui-router');
+require('angular-ui-router/release/stateEvents');
 require('ng-currency');
 require('angular-bootstrap-show-errors');
 require('angular-ui-validate');
@@ -89,6 +90,9 @@ angular
     'toastr',
     'ngAnimate',
     'ui.router',
+    // The $stateChange* events are deprecated in 1.0.
+    // see https://github.com/angular-ui/ui-router/issues/2720
+    'ui.router.state.events',
     'ng-currency',
     'ui.bootstrap.showErrors',
     'ui.validate',
@@ -188,7 +192,14 @@ angular
       .state('app.tunnusluku.syottaminen', {
         url: '/muokkaus/:vuosi/:organisaatioid/:tyyppi',
         template: require('views/tunnusluvut/muokkaus.html'),
-        controller: 'TunnusluvutMuokkausCtrl'
+        controller: 'TunnusluvutMuokkausCtrl',
+        // optional path parameters
+        // see https://stackoverflow.com/questions/30225424/angular-ui-router-more-optional-parameters-in-one-state
+        params: {
+          vuosi: { squash: true, value: null },
+          organisaatioid: { squash: true, value: null },
+          tyyppi: { squash: true, value: null }
+        }
       })
 
       /*
@@ -199,17 +210,28 @@ angular
       .state('app.tilastot.valtionavustuskuvaajat', {
         url: '/valtionavustuskuvaajat/:organisaatiolaji/:avustustyyppi',
         template: require('views/tunnusluvut/raportit-valtionavustuskuvaajat.html'),
-        controller: 'TunnuslukuraporttiAvustusCtrl'
+        controller: 'TunnuslukuraporttiAvustusCtrl',
+        params: {
+          organisaatiolaji: { squash: true, value: null },
+          avustustyyppi: { squash: true, value: null }
+        }
       })
       .state('app.tilastot.tunnuslukukuvaajat', {
         url: '/tunnuslukukuvaajat/:organisaatiolaji',
         template: require('views/tunnusluvut/raportit-tunnuslukukuvaajat.html'),
-        controller: 'TunnuslukuraporttiCtrl'
+        controller: 'TunnuslukuraporttiCtrl',
+        params: {
+          organisaatiolaji: { squash: true, value: null }
+        }
       })
       .state('app.tilastot.omakuvaaja', {
         url: '/omakuvaaja/:tunnuslukuid/:organisaatiolaji',
         template: require('views/tunnusluvut/raportit-omakuvaaja.html'),
-        controller: 'TunnuslukuraporttiOmakuvaajaCtrl'
+        controller: 'TunnuslukuraporttiOmakuvaajaCtrl',
+        params: {
+          tunnuslukuid: { squash: false, value: null },
+          organisaatiolaji: { squash: true, value: null }
+        }
       })
 
       /*

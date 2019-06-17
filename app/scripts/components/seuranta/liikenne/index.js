@@ -31,7 +31,7 @@ function liikenneController($scope) {
   $scope.lisaaSuorite = function () {
     var uusi = {
       liikennetyyppitunnus: $scope.liikennetyyppi,
-      suoritetyyppitunnus: '',
+      suoritetyyppitunnus: null,
       numero: haeMaksimiNumero($scope.suoritteet),
       nimi: '',
       linjaautot: 0,
