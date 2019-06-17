@@ -119,7 +119,7 @@ public class TunnuslukuTest extends TestBase {
         assertThat(findElementById("taustatiedot-pysakkienlkm").getAttribute("value"), is(equalToIgnoringWhiteSpace("23")));
         assertThat(findElementById("taustatiedot-kertalippuvyohyke-1").getAttribute("value"), is(equalToIgnoringWhiteSpace("1,00 €")));
         assertThat(findElementById("taustatiedot-kausilippuvyohyke-4").getAttribute("value"), is(equalToIgnoringWhiteSpace("400,00 €")));
-        assertThat(findElementById("taustatiedot-asiakastyytyvaisyys").getAttribute("value"), is(equalToIgnoringWhiteSpace("76,00 ")));
+        assertThat(findElementById("taustatiedot-asiakastyytyvaisyys").getAttribute("value"), is(equalToIgnoringWhiteSpace("76,00")));
         assertThat(findElementById("lisatiedot").getAttribute("value"), is(equalToIgnoringWhiteSpace("Lisätietoa")));
 
     }
@@ -447,7 +447,7 @@ public class TunnuslukuTest extends TestBase {
 
         WorkAround.click(findElementByXPath("//a[@id='BR']"));
 
-        assertThat(findElementById("BR-linjakilometrit-talvi-0").getAttribute("value"), is(equalToIgnoringWhiteSpace("44,00 ")));
+        assertThat(findElementById("BR-linjakilometrit-talvi-0").getAttribute("value"), is(equalToIgnoringWhiteSpace("44,00")));
         assertThat(findElementById("BR-nousua-3").getAttribute("value"), is(equalToIgnoringWhiteSpace("7")));
         assertThat(findElementById("BR-vuorotarjonta-8").getAttribute("value"), is(equalToIgnoringWhiteSpace("5")));
         assertThat(findElementById("BR-lukumaara-3").getAttribute("value"), is(equalToIgnoringWhiteSpace("13")));
@@ -814,9 +814,9 @@ public class TunnuslukuTest extends TestBase {
 
         assertThat(findElementById("KOS-vuorotarjonta-talvi-0").getAttribute("value"), is(equalToIgnoringWhiteSpace("30000")));
         assertThat(findElementById("KOS-nousua-talvi-1").getAttribute("value"), is(equalToIgnoringWhiteSpace("22")));
-        assertThat(findElementById("KOS-linjakilometrit-talvi-1").getAttribute("value"), is(equalToIgnoringWhiteSpace("777 777,00 ")));
+        assertThat(findElementById("KOS-linjakilometrit-talvi-1").getAttribute("value"), is(equalToIgnoringWhiteSpace("777 777,00")));
         assertThat(findElementById("KOS-nousua-1").getAttribute("value"), is(equalToIgnoringWhiteSpace("6786")));
-        assertThat(findElementById("KOS-linjakilometrit-3").getAttribute("value"), is(equalToIgnoringWhiteSpace("57 657,00 ")));
+        assertThat(findElementById("KOS-linjakilometrit-3").getAttribute("value"), is(equalToIgnoringWhiteSpace("57 657,00")));
         assertThat(findElementById("KOS-vuorotarjonta-11").getAttribute("value"), is(equalToIgnoringWhiteSpace("7879")));
         assertThat(findElementById("KOS-kertalippu-1").getAttribute("value"), is(equalToIgnoringWhiteSpace("5 354,12 €")));
         assertThat(findElementById("KOS-arvolippu-5").getAttribute("value"), is(equalToIgnoringWhiteSpace("65,00 €")));
@@ -1025,7 +1025,7 @@ public class TunnuslukuTest extends TestBase {
 
         assertThat(findElementById("SA-nousua-0").getAttribute("value"), is(equalToIgnoringWhiteSpace("23")));
         assertThat(findElementById("SA-vuorotarjonta-1").getAttribute("value"), is(equalToIgnoringWhiteSpace("5757")));
-        assertThat(findElementById("SA-linjakilometrit-3").getAttribute("value"), is(equalToIgnoringWhiteSpace("876 869,00 ")));
+        assertThat(findElementById("SA-linjakilometrit-3").getAttribute("value"), is(equalToIgnoringWhiteSpace("876 869,00")));
         assertThat(findElementById("SA-liikennointikorvaus-2").getAttribute("value"), is(equalToIgnoringWhiteSpace("6 767,00 €")));
         assertThat(findElementById("SA-lipputulo-sl2").getAttribute("value"), is(equalToIgnoringWhiteSpace("547,00 €")));
         assertThat(findElementById("lisatiedot").getAttribute("value"), is(equalToIgnoringWhiteSpace("SA kommentit")));
@@ -1195,7 +1195,7 @@ public class TunnuslukuTest extends TestBase {
         WorkAround.click(findElementByXPath("//a[@id='ME']"));
 
         assertThat(findElementById("ME-nousut-2").getAttribute("value"), is(equalToIgnoringWhiteSpace("465")));
-        assertThat(findElementById("ME-linjakilometrit-3").getAttribute("value"), is(equalToIgnoringWhiteSpace("6 876,00 ")));
+        assertThat(findElementById("ME-linjakilometrit-3").getAttribute("value"), is(equalToIgnoringWhiteSpace("6 876,00")));
         assertThat(findElementById("ME-vuorotarjonta-8").getAttribute("value"), is(equalToIgnoringWhiteSpace("456")));
         assertThat(findElementById("ME-liikennointikorvaus-0").getAttribute("value"), is(equalToIgnoringWhiteSpace("86,00 €")));
         assertThat(findElementById("lisatiedot").getAttribute("value"), is(equalToIgnoringWhiteSpace("ME kommentit")));
