@@ -59,9 +59,13 @@ export function bindModel() {
  * see http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
  */
 export function formatFloat(value) {
-  var parts = _.split(_.toString(value), '.');
+  const parts = _.split(_.toString(value), '.');
   parts[0] = _.replace(parts[0], /\B(?=(\d{3})+(?!\d))/g, ' ');
   return _.join(parts, ',');
+}
+
+export function formatFloatToFixed(scale, value) {
+  return formatFloat(_.round(value, scale).toFixed(scale));
 }
 
 export function requiredErrorMessage(nimi) {

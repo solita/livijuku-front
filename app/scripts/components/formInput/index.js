@@ -1,8 +1,6 @@
 'use strict';
-
-var angular = require("angular");
-var _ = require("lodash");
-var c = require("utils/core");
+import * as c from 'utils/core';
+import * as _ from 'lodash';
 
 function assertInputIsDefined(input, element) {
   if (_.isEmpty(input)) {
@@ -132,6 +130,36 @@ export function integerParser() {
 }
 
 export function floatDirective(formatFloat) {
+  const removeInvalidChars = txt => _.replace(txt, /[^\d\s]/g, '');
+  const removeSpace = txt => _.replace(txt, /\s/g, '');
+
+  function join(parts, separator) {
+    return _.join(_.filter(parts, c.isNotBlank), separator);
+  }
+
+  function split(inputValue, preferredPointPosition) {
+    const position = inputValue[preferredPointPosition] === ',' ?
+      preferredPointPosition : _.indexOf(inputValue, ',');
+
+    return position > -1 ?
+      [inputValue.substring(0, position), inputValue.substring(position)] :
+      [inputValue];
+  }
+
+  function toValidInput(inputValue, unit, preferredPointPosition) {
+    const parts = _.map(split(inputValue, preferredPointPosition), removeInvalidChars);
+
+    return _.join(parts, ',') +
+      (_.endsWith(_.trim(inputValue), unit) ? unit : '');
+  }
+
+  function parseInput(validInput, scale) {
+    const v1 = removeSpace(validInput);
+    const v2 = _.startsWith(v1, ',') ? '0' + v1 : v1;
+    const result = parseFloat(_.replace(v2, /\,/g, '.'));
+    return _.isFinite(result) ? _.round(result, scale) : undefined;
+  }
+
   return function() {
     return {
       require: 'ngModel',
@@ -139,60 +167,51 @@ export function floatDirective(formatFloat) {
 
         assertModelCtrlIsDefined(modelCtrl, element);
 
-        var scale = _.find([parseInt(attrs.scale), 2], _.isFinite);
-        var max = parseFloat(attrs.max);
-        var min = parseFloat(attrs.min);
+        const scale = _.find([parseInt(attrs.scale), 2], _.isFinite);
+        const max = parseFloat(attrs.max);
+        const min = parseFloat(attrs.min);
+        const unit = _.trim(attrs.unit);
+
+        const format = number => c.isDefinedNotNull(number) ?
+          join([formatFloat(scale, number), unit], ' ') : '';
+
+        function setViewValue(newValue) {
+          const start = element[0].selectionStart;
+          const end = element[0].selectionEnd;
+
+          modelCtrl.$setViewValue(newValue);
+          modelCtrl.$render();
+
+          // restore from variables...
+          try {
+            element[0].setSelectionRange(start - 1, end - 1);
+          } catch (e) {
+            // if setting selection range fails - do nothing
+          }
+        }
 
         modelCtrl.$parsers.unshift(function (inputValue) {
-          if (c.isDefinedNotNull(inputValue)) {
-            var parts = _.split(inputValue, ',', 2);
-            var removeInvalidChars = txt => _.replace(txt, /\D/g, '');
 
-            var integer = removeInvalidChars(parts[0]);
-            var fraction = c.isDefinedNotNull(parts[1]) ? removeInvalidChars(parts[1]).substring(0, scale) : null;
-
-            var resultValue = parse(integer + (c.isNotBlank(fraction) ? '.' + fraction : ''));
-
-            /*
-            // In this version formatting is performed online
-            var validDecimalInput = c.isDefinedNotNull(resultValue) ?
-              formatFloat(resultValue) + (_.isEqual(fraction, '') ? ',' : '') : '';
-            if (!_.isEqual(validDecimalInput, inputValue)) {
-              modelCtrl.$setViewValue(validDecimalInput);
-              modelCtrl.$render();
-            }
-            */
-
-            var validDecimalInput = integer + (c.isDefinedNotNull(fraction) ? ',' + fraction : '')
-            if (!_.isEqual(validDecimalInput, _.replace(inputValue, /\s/g, ''))) {
-              modelCtrl.$setViewValue(
-                _.replace(parts[0], /[^\d\s]/g, '') +
-                (c.isDefinedNotNull(fraction) ? ',' + fraction : ''));
-              modelCtrl.$render();
+          if (c.isNotBlank(inputValue)) {
+            const validInput = toValidInput(inputValue, unit, element[0].selectionStart - 1);
+            if (!_.isEqual(validInput, inputValue)) {
+              setViewValue(validInput);
             }
 
-
-            function parse(txt) {
-              if (c.isNotBlank(txt)) {
-                var result = parseFloat(txt);
-                return _.isFinite(result) ? result : undefined;
-              }
-              return null;
-            }
-
-            return resultValue;
+            return parseInput(validInput, scale);
           }
           return null;
         });
 
         element.on("blur", function () {
-          if (modelCtrl.$valid && !_.isEqual(modelCtrl.$viewValue, formatFloat(modelCtrl.$modelValue))) {
-            modelCtrl.$viewValue = formatFloat(modelCtrl.$modelValue);
+          const canonicalValue = format(modelCtrl.$modelValue);
+          if (modelCtrl.$valid && !_.isEqual(modelCtrl.$viewValue, canonicalValue)) {
+            modelCtrl.$viewValue = canonicalValue;
             modelCtrl.$render();
           };
         });
 
-        modelCtrl.$formatters.unshift(formatFloat);
+        modelCtrl.$formatters.unshift(format);
 
         if (_.isFinite(max)) {
           modelCtrl.$validators.max = modelValue => c.isNullOrUndefined(modelValue) || modelValue <= max;
