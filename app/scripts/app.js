@@ -352,7 +352,7 @@ angular
   .directive('formGroupCompact', require("components/formInput").formGroupCompact)
   .directive('formGroup', require("components/formInput").formGroup)
   .directive('integerOnly', require("components/formInput").integerParser)
-  .directive('float', require("components/formInput").floatDirective(directive.formatFloatToFixed))
+  .directive('float', require("components/formInput").floatDirective)
   .directive('dateInput', require("components/formInput").dateInput)
   .directive('tunnuslukuEditForms', directive.caseTemplate(
     {TTYT: require('views/tunnusluvut/muokkaus-ttyt.html'),

@@ -1,6 +1,7 @@
 'use strict';
 import * as c from 'utils/core';
 import * as _ from 'lodash';
+import * as f from './float-directive';
 
 function assertInputIsDefined(input, element) {
   if (_.isEmpty(input)) {
@@ -129,97 +130,64 @@ export function integerParser() {
   }
 }
 
-export function floatDirective(formatFloat) {
-  const removeInvalidChars = txt => _.replace(txt, /[^\d\s]/g, '');
-  const removeSpace = txt => _.replace(txt, /\s/g, '');
+export function floatDirective() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, modelCtrl) {
 
-  function join(parts, separator) {
-    return _.join(_.filter(parts, c.isNotBlank), separator);
-  }
+      assertModelCtrlIsDefined(modelCtrl, element);
 
-  function split(inputValue, preferredPointPosition) {
-    const position = inputValue[preferredPointPosition] === ',' ?
-      preferredPointPosition : _.indexOf(inputValue, ',');
+      const scale = _.find([parseInt(attrs.scale), 2], _.isFinite);
+      const max = parseFloat(attrs.max);
+      const min = parseFloat(attrs.min);
+      const unit = _.trim(attrs.unit);
 
-    return position > -1 ?
-      [inputValue.substring(0, position), inputValue.substring(position)] :
-      [inputValue];
-  }
+      const format = _.partialRight(f.format, scale, unit);
 
-  function toValidInput(inputValue, unit, preferredPointPosition) {
-    const parts = _.map(split(inputValue, preferredPointPosition), removeInvalidChars);
+      function setViewValue(newValue) {
+        const start = element[0].selectionStart;
+        const end = element[0].selectionEnd;
 
-    return _.join(parts, ',') +
-      (_.endsWith(_.trim(inputValue), unit) ? unit : '');
-  }
+        modelCtrl.$setViewValue(newValue);
+        modelCtrl.$render();
 
-  function parseInput(validInput, scale) {
-    const v1 = removeSpace(validInput);
-    const v2 = _.startsWith(v1, ',') ? '0' + v1 : v1;
-    const result = parseFloat(_.replace(v2, /\,/g, '.'));
-    return _.isFinite(result) ? _.round(result, scale) : undefined;
-  }
+        // restore from variables...
+        try {
+          element[0].setSelectionRange(start - 1, end - 1);
+        } catch (e) {
+          // if setting selection range fails - do nothing
+        }
+      }
 
-  return function() {
-    return {
-      require: 'ngModel',
-      link: function(scope, element, attrs, modelCtrl) {
+      modelCtrl.$parsers.unshift(function (inputValue) {
 
-        assertModelCtrlIsDefined(modelCtrl, element);
+        if (c.isNotBlank(inputValue)) {
+          const validInput = f.toValidInput(inputValue, unit, element[0].selectionStart - 1);
+          if (!_.isEqual(validInput, inputValue)) {
+            setViewValue(validInput);
+          }
 
-        const scale = _.find([parseInt(attrs.scale), 2], _.isFinite);
-        const max = parseFloat(attrs.max);
-        const min = parseFloat(attrs.min);
-        const unit = _.trim(attrs.unit);
+          return f.parseInput(validInput, scale);
+        }
+        return null;
+      });
 
-        const format = number => c.isDefinedNotNull(number) ?
-          join([formatFloat(scale, number), unit], ' ') : '';
-
-        function setViewValue(newValue) {
-          const start = element[0].selectionStart;
-          const end = element[0].selectionEnd;
-
-          modelCtrl.$setViewValue(newValue);
+      element.on("blur", function () {
+        const canonicalValue = format(modelCtrl.$modelValue);
+        if (modelCtrl.$valid && !_.isEqual(modelCtrl.$viewValue, canonicalValue)) {
+          modelCtrl.$viewValue = canonicalValue;
           modelCtrl.$render();
+        };
+      });
 
-          // restore from variables...
-          try {
-            element[0].setSelectionRange(start - 1, end - 1);
-          } catch (e) {
-            // if setting selection range fails - do nothing
-          }
-        }
+      modelCtrl.$formatters.unshift(format);
 
-        modelCtrl.$parsers.unshift(function (inputValue) {
+      if (_.isFinite(max)) {
+        modelCtrl.$validators.max = modelValue => c.isNullOrUndefined(modelValue) || modelValue <= max;
+      }
 
-          if (c.isNotBlank(inputValue)) {
-            const validInput = toValidInput(inputValue, unit, element[0].selectionStart - 1);
-            if (!_.isEqual(validInput, inputValue)) {
-              setViewValue(validInput);
-            }
-
-            return parseInput(validInput, scale);
-          }
-          return null;
-        });
-
-        element.on("blur", function () {
-          const canonicalValue = format(modelCtrl.$modelValue);
-          if (modelCtrl.$valid && !_.isEqual(modelCtrl.$viewValue, canonicalValue)) {
-            modelCtrl.$viewValue = canonicalValue;
-            modelCtrl.$render();
-          };
-        });
-
-        modelCtrl.$formatters.unshift(format);
-
-        if (_.isFinite(max)) {
-          modelCtrl.$validators.max = modelValue => c.isNullOrUndefined(modelValue) || modelValue <= max;
-        }
-
-        if (_.isFinite(min)) {
-          modelCtrl.$validators.min = modelValue => c.isNullOrUndefined(modelValue) || modelValue >= min;
-        }
+      if (_.isFinite(min)) {
+        modelCtrl.$validators.min = modelValue => c.isNullOrUndefined(modelValue) || modelValue >= min;
       }
     }
   }
