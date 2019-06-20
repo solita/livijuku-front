@@ -9,9 +9,9 @@
           <label>Haettava valtionavustus</label>
 
           <div class="input-group" ng-show="hakemustyyppi=='AH0' || vertailuarvot().avustushakemusHaettavaAvustus>0">
-            <input name="{{getName('haettavaavustus')}}" type="text" ng-currency="" numeric-only="" noenter
+            <input name="{{getName('haettavaavustus')}}" type="text" numeric-only unit="€" noenter
                    select-on-click
-                   alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
+                   alvmuunnos="{{alv ? kohde.alv : 0}}"
                    ng-readonly="isReadonly()" class="form-control"
                    ng-model-options="{ allowInvalid: true }"
                    ng-model="kohde.haettavaavustus"
@@ -31,8 +31,8 @@
         <div class="form-group" show-errors="{showSuccess: true}">
           <label>Kunnan oma rahoitusosuus</label>
           <div class="input-group">
-            <input name="{{getName('omarahoitus')}}" type="text" ng-currency="" numeric-only="" noenter select-on-click
-                   alvmuunnos="{prosentti: {{kohde.alv}}, alvmukana: {{alv}}}"
+            <input name="{{getName('omarahoitus')}}" type="text" numeric-only unit="€" noenter select-on-click
+                   alvmuunnos="{{alv ? kohde.alv : 0}}"
                    class="form-control"
                    ng-model-options="{ allowInvalid: true }"
                    ng-readonly="isReadonly()" ng-model="kohde.omarahoitus"
@@ -42,10 +42,12 @@
           </div>
 
           <p class="help-block ng-invalid-sallittu-arvo-omarahoitus">Arvon tulee olla välillä 0 - 999 999 999,99 € (sis.
-            ALV).</p>
+            ALV).
+          </p>
 
           <p class="help-block ng-invalid-omarahoitus-riittava">Oma rahoitusosuus tulee olla vähintään
-            {{100-avustusprosentti}}% kokonaiskuluista.</p>
+            {{100-avustusprosentti}}% kokonaiskuluista.
+          </p>
 
         </div>
       </div>

@@ -180,7 +180,7 @@ export function floatDirective() {
         };
       });
 
-      modelCtrl.$formatters.unshift(format);
+      modelCtrl.$formatters.push(format);
 
       if (_.isFinite(max)) {
         modelCtrl.$validators.max = modelValue => c.isNullOrUndefined(modelValue) || modelValue <= max;

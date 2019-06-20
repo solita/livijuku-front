@@ -79,7 +79,7 @@
             <form-group-compact label="Asiakashinta" errormessage="asiakashintaErrorMessage">
               <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-asiakashinta'}}" name="asiakashinta" type="text"
                      class="form-control cursor-auto"
-                     ng-currency="" numeric-only=""
+                     numeric-only="" unit="€"
                      noenter
                      select-on-click
                      ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
@@ -90,8 +90,7 @@
           <td>
             <form-group-compact label="Keskipituus" errormessage="keskipituusErrorMessage">
               <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-keskipituus'}}" name="keskipituus" type="text"
-                     class="form-control cursor-auto" numeric-only="" ng-currency=""
-                     currency-symbol="km"
+                     class="form-control cursor-auto" numeric-only unit="km"
                      noenter
                      select-on-click
                      ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
@@ -102,7 +101,7 @@
           <td>
             <form-group-compact label="Lipputulot" errormessage="lipputulotErrorMessage">
               <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-lipputulot'}}" name="lipputulot" type="text"
-                     class="form-control cursor-auto" ng-currency="" numeric-only=""
+                     class="form-control cursor-auto" numeric-only unit="€"
                      noenter
                      select-on-click
                      ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
@@ -113,7 +112,7 @@
           <td>
             <form-group-compact label="Rahoitus" errormessage="rahoitusErrorMessage">
               <input id="{{(kaupunkilippu ? 'kaupunki' : 'seutu') + '-rahoitus'}}" name="rahoitus" type="text"
-                     class="form-control cursor-auto" ng-currency="" numeric-only="" noenter
+                     class="form-control cursor-auto" numeric-only unit="€" noenter
                      select-on-click
                      ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                      ng-model="rivi.julkinenrahoitus" ng-disabled="isReadonly()"

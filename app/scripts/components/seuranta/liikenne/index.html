@@ -152,9 +152,9 @@
           <td>
             <form-group-compact label="Ajokilometrit" errormessage="ajokilometritErrorMessage">
               <input id="{{liikennetyyppi + '-ajokilometrit'}}" name="ajokilometrit" type="text" class="form-control cursor-auto"
-                     numeric-only="" ng-currency=""
+                     numeric-only unit="km"
                      ng-readonly="isReadonly()" required
-                     currency-symbol="km" placeholder="Ajokilometrit" noenter
+                     placeholder="Ajokilometrit" noenter
                      select-on-click
                      ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
                      ng-model="rivi.ajokilometrit">
@@ -175,7 +175,7 @@
           <td>
             <form-group-compact label="Lipputulo" errormessage="lipputuloErrorMessage">
               <input id="{{liikennetyyppi + '-lipputulo'}}" name="lipputulo" type="text" class="form-control cursor-auto"
-                     ng-currency="" numeric-only="" placeholder="Lipputulo" noenter
+                     numeric-only unit="€" placeholder="Lipputulo" noenter
                      ng-readonly="isReadonly()" required
                      select-on-click
                      ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"
@@ -185,7 +185,7 @@
           <td>
             <form-group-compact label="Nettohinta" errormessage="nettohintaErrorMessage">
               <input id="{{liikennetyyppi + '-nettohinta'}}" name="nettohinta" type="text" class="form-control cursor-auto"
-                     ng-currency="" numeric-only="" placeholder="Nettohinta" noenter
+                     numeric-only unit="€" placeholder="Nettohinta" noenter
                      ng-readonly="isReadonly()" required
                      select-on-click
                      ui-validate="{sallittuArvo: 'sallittuArvo($value)'}"

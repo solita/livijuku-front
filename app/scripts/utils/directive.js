@@ -60,7 +60,7 @@ export function bindModel() {
  */
 export function formatFloat(value) {
   const parts = _.split(_.toString(value), '.');
-  parts[0] = _.replace(parts[0], /\B(?=(\d{3})+(?!\d))/g, ' ');
+  parts[0] = _.replace(parts[0], /\B(?=(\d{3})+(?!\d))/g, '\xa0');
   return _.join(parts, ',');
 }
 

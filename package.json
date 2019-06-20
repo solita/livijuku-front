@@ -28,7 +28,6 @@
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "ng-csv": "^0.3.6",
-    "ng-currency": "github:solita/ng-currency#v0.8.x",
     "ng-file-upload": "^12.2.13",
     "ng-tags-input": "^3.2.0",
     "nvd3": "^1.8.6",
@@ -68,7 +67,6 @@
     "node-notifier": "^4.5.0",
     "rimraf": "^2.5.2",
     "stringify": "^4.0.1",
-    "traceur": "0.0.111",
     "vinyl-source-stream": "^1.1.0",
     "vis": "^4.15.1",
     "watchify": "^3.7.0"

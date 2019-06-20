@@ -42,7 +42,7 @@
               <form-group-compact label="Voittajan hinta" errormessage="voittajanhintaErrorMessage">
                 <input id="{{tyyppi + '-tarjouskohteet-voittaja-'+$index}}" name="voittajanhinta" type="text"
                        class="form-control"
-                       ng-currency="" numeric-only=""
+                       numeric-only="" unit="€"
                        noenter
                        select-on-click
                        ng-model="rivi.voittajanhinta" ng-disabled="isReadonly()"
@@ -54,7 +54,7 @@
                 <input id="{{tyyppi + '-tarjouskohteet-toiseksitullut-'+$index}}" name="toiseksitulleenhinta"
                        type="text"
                        class="form-control"
-                       ng-currency="" numeric-only=""
+                       numeric-only="" unit="€"
                        noenter
                        select-on-click
                        ng-model="rivi.toiseksitulleenhinta" ng-disabled="isReadonly()"

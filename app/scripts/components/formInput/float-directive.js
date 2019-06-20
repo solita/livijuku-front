@@ -53,4 +53,4 @@ export function parseInput(validInput, scale) {
 }
 
 export const format = (number, scale, unit) => c.isDefinedNotNull(number) ?
-  join([d.formatFloatToFixed(scale, number), unit], ' ') : '';
+  join([d.formatFloatToFixed(scale, number), unit], '\xa0') : '';

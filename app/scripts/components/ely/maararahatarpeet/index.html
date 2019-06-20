@@ -6,7 +6,7 @@
     <div class="col-md-3">
       <form-group label="Lipputuki - kaupunkilippu" errormessage="kaupunkilipputukiErrorMessage">
         <input id="kaupunkilipputuki" name="kaupunkilipputuki" type="text"
-               required ng-currency="" numeric-only max="9999999999.99"
+               required numeric-only unit="€"  max="9999999999.99"
                ng-model="hakemus.ely.kaupunkilipputuki"
                ng-readonly="isReadonly()"
                placeholder="Siirtymäajan sopimukset (€)"
@@ -16,7 +16,7 @@
     <div class="col-md-3">
       <form-group label="Lipputuki - seutulippu" errormessage="seutulipputukiErrorMessage">
         <input id="seutulipputuki" name="seutulipputuki" type="text"
-               ng-currency="" numeric-only required max="9999999999.99"
+               numeric-only unit="€" required max="9999999999.99"
                ng-model="hakemus.ely.seutulipputuki"
                ng-readonly="isReadonly()"
                placeholder="Joukkoliikennetuki kunnille (€)"
@@ -26,7 +26,7 @@
     <div class="col-md-3">
       <form-group label="Liikenteen ostot" errormessage="ostotErrorMessage">
         <input id="ostot" name="ostot" type="text"
-               ng-currency="" numeric-only required max="9999999999.99"
+               numeric-only unit="€" required max="9999999999.99"
                ng-model="hakemus.ely.ostot"
                ng-readonly="isReadonly()"
                placeholder="Liikenteen ostot (€)"
@@ -36,7 +36,7 @@
     <div class="col-md-3">
       <form-group label="Kehittäminen" errormessage="kehittaminenErrorMessage">
         <input id="kehittaminen" name="kehittaminen" type="text"
-               ng-currency="" numeric-only required max="9999999999.99"
+               numeric-only unit="€" required max="9999999999.99"
                ng-model="hakemus.ely.kehittaminen"
                ng-readonly="isReadonly()"
                placeholder="Kehittäminen (€)"
@@ -75,7 +75,7 @@
           <td>
             <form-group-compact label="Sidotut" errormessage="errorMessage">
               <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-sidotut'}}" name="sidotut" type="text"
-                     required ng-currency="" numeric-only="" max="9999999999.99"
+                     required numeric-only="" unit="€" max="9999999999.99"
                      noenter select-on-click
                      ng-model="maararahatarve.sidotut" ng-readonly="isReadonly()"
                      placeholder="Sidotut">
@@ -84,7 +84,7 @@
           <td>
             <form-group-compact label="Uudet" errormessage="errorMessage">
               <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-uudet'}}" name="uudet" type="text"
-                     required ng-currency="" numeric-only="" max="9999999999.99"
+                     required numeric-only="" unit="€" max="9999999999.99"
                      noenter select-on-click
                      ng-model="maararahatarve.uudet" ng-readonly="isReadonly()"
                      placeholder="Uudet">
@@ -93,7 +93,7 @@
           <td>
             <form-group-compact ng-if="maararahatarve.hasOwnProperty('tulot')" label="Uudet" errormessage="errorMessage">
               <input id="{{maararahatarve.maararahatarvetyyppitunnus + '-tulot'}}" name="tulot" type="text"
-                     required ng-currency="" numeric-only="" max="9999999999.99"
+                     required numeric-only="" unit="€" max="9999999999.99"
                      noenter select-on-click
                      ng-model="maararahatarve.tulot" ng-readonly="isReadonly()"
                      placeholder="Tulot">

@@ -44,7 +44,6 @@ require('ng-file-upload');
 require('angular-animate');
 require('angular-ui-router');
 require('angular-ui-router/release/stateEvents');
-require('ng-currency');
 require('angular-bootstrap-show-errors');
 require('angular-ui-validate');
 require('angular-i18n/angular-locale_fi-fi');
@@ -93,7 +92,6 @@ angular
     // The $stateChange* events are deprecated in 1.0.
     // see https://github.com/angular-ui/ui-router/issues/2720
     'ui.router.state.events',
-    'ng-currency',
     'ui.bootstrap.showErrors',
     'ui.validate',
     'nvd3',
@@ -352,7 +350,7 @@ angular
   .directive('formGroupCompact', require("components/formInput").formGroupCompact)
   .directive('formGroup', require("components/formInput").formGroup)
   .directive('integerOnly', require("components/formInput").integerParser)
-  .directive('float', require("components/formInput").floatDirective)
+  .directive('numericOnly', require("components/formInput").floatDirective)
   .directive('dateInput', require("components/formInput").dateInput)
   .directive('tunnuslukuEditForms', directive.caseTemplate(
     {TTYT: require('views/tunnusluvut/muokkaus-ttyt.html'),
@@ -380,7 +378,6 @@ require('./controllers/yhteinen/tunnuslukuraportti-avustus');
 require('./directives/alvmuunnos');
 require('./directives/jukuAvustusluokkaPanel');
 require('./directives/noenter');
-require('./directives/numericOnly');
 require('./directives/focusToInvalid');
 require('./directives/selectonclick');
 require('./services/auth');

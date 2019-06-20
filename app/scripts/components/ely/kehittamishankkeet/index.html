@@ -36,7 +36,7 @@
               <td>
                 <form-group-compact label="ELYn osuus" errormessage="arvoalueErrorMessage">
                   <input id="{{'arvo-'+$index}}" name="arvo" type="text"
-                         class="form-control" ng-currency="" numeric-only=""
+                         class="form-control" numeric-only unit="€"
                          noenter
                          select-on-click
                          ng-model="kehittamishanke.arvo" ng-readonly="isReadonly()"

@@ -35,38 +35,12 @@ module.exports = function () {
       };
 
       $scope.omarahoitusRiittava = function (omarahoitus, haettavarahoitus) {
-        var omarahoitus2, haettavarahoitus2;
-
-        if ((typeof omarahoitus === 'undefined') || (typeof haettavarahoitus === 'undefined')) {
-          return true;
-        }
-
-        if (typeof omarahoitus === 'string') {
-          omarahoitus2 = $scope.euroSyoteNumeroksi(omarahoitus);
-        }
-        if (typeof haettavarahoitus === 'string') {
-          haettavarahoitus2 = $scope.euroSyoteNumeroksi(haettavarahoitus);
-        }
-        if (typeof omarahoitus === 'number') {
-          omarahoitus2 = parseFloat(omarahoitus);
-        }
-        if (typeof haettavarahoitus === 'number') {
-          haettavarahoitus2 = parseFloat(haettavarahoitus);
-        }
-        return (((100 - $scope.avustusprosentti) / 100) * (haettavarahoitus2 + omarahoitus2)) <= omarahoitus2;
+        return c.isNullOrUndefined(omarahoitus) || c.isNullOrUndefined(haettavarahoitus) ||
+          (((100 - $scope.avustusprosentti) / 100) * (haettavarahoitus + omarahoitus)) <= omarahoitus;
       };
 
-      $scope.sallittuArvo = function (value) {
-        if (typeof value === 'undefined') {
-          return false;
-        } else if (typeof value === 'string') {
-          var floatarvo;
-          floatarvo = $scope.euroSyoteNumeroksi(value);
-          return (floatarvo >= 0 && floatarvo <= 999999999.99);
-        } else if (typeof value === 'number') {
-          return (value >= 0 && value <= 999999999.99);
-        }
-        return true;
+      $scope.sallittuArvo = function (number) {
+        return c.isDefinedNotNull(number) && number >= 0 && number <= 999999999.99;
       };
 
       $scope.yhteensa = function (kohde, alv) {

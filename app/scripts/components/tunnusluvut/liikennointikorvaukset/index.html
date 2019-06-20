@@ -44,8 +44,8 @@
             <td>
               <form-group-compact label="Maksetty liikennöintikorvaus" errormessage="korvausErrorMessage">
                 <input id="{{tyyppi + '-liikennointikorvaus-'+$index}}" name="liikennointikorvaus" type="text"
-                       numeric-only="" ng-currency="" max="9999999999.99"
-                       currency-symbol="€" noenter placeholder="Korvaus (€)"
+                       numeric-only unit="€" max="9999999999.99"
+                       noenter placeholder="Korvaus (€)"
                        select-on-click
                        ng-model="rivi.korvaus">
               </form-group-compact>
@@ -53,8 +53,8 @@
             <td ng-if="organisaatio.lajitunnus === 'ELY' && tyyppi!=='ME'">
               <form-group-compact label="Kuntien maksama liikennöintikorvaus" errormessage="korvausErrorMessage">
                 <input id="{{tyyppi + '-liikennointikorvaus-'+$index}}" name="kuntakorvaus" type="text"
-                       numeric-only ng-currency="" max="9999999999.99"
-                       currency-symbol="€" noenter placeholder="Kuntien maksama korvaus (€)"
+                       numeric-only unit="€" max="9999999999.99"
+                       noenter placeholder="Kuntien maksama korvaus (€)"
                        select-on-click
                        ng-model="rivi.kuntakorvaus">
               </form-group-compact>
@@ -62,8 +62,8 @@
             <td ng-if="tyyppi==='KOS'">
               <form-group-compact label="Nousukorvaus" errormessage="korvausErrorMessage">
                 <input id="{{tyyppi + '-nousukorvaus-'+$index}}" name="nousukorvaus" type="text"
-                       numeric-only="" ng-currency="" max="9999999999.99"
-                       currency-symbol="€" noenter placeholder="Nousukorvaus (€)"
+                       numeric-only unit="€" max="9999999999.99"
+                       noenter placeholder="Nousukorvaus (€)"
                        select-on-click
                        ng-model="rivi.nousukorvaus">
               </form-group-compact>

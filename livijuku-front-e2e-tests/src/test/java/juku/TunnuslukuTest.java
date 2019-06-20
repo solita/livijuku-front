@@ -113,7 +113,7 @@ public class TunnuslukuTest extends TestBase {
 
         WorkAround.click(findElementByXPath("//a[@id='TTYT']"));
 
-        assertThat(findElementById("taustatiedot-henkilosto").getAttribute("value"), is(equalToIgnoringWhiteSpace("1 000")));
+        assertThat(findElementById("taustatiedot-henkilosto").getAttribute("value"), is(equalToIgnoringWhiteSpace("1 000,0")));
         assertThat(findElementById("taustatiedot-konsulttipalvelu").getAttribute("value"), is(equalToIgnoringWhiteSpace("20 000,00 €")));
         assertThat(findElementById("taustatiedot-henkiloautoliikenne").getAttribute("value"), is(equalToIgnoringWhiteSpace("4342346")));
         assertThat(findElementById("taustatiedot-pysakkienlkm").getAttribute("value"), is(equalToIgnoringWhiteSpace("23")));

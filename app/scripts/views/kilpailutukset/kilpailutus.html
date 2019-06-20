@@ -57,7 +57,7 @@
 					<span class="text-info small glyphicon glyphicon-question-sign"></span>
 					<input id="kohdearvo" name="kohdearvo" type="text"
 								 placeholder="Arvo (€)"
-								 ng-currency="" numeric-only="" max="9999999999.99"
+								 numeric-only unit="€" max="9999999999.99"
 								 noenter select-on-click
 								 ng-model="kilpailutus.kohdearvo" ng-readonly="isReadonly">
 				</form-group>
@@ -238,7 +238,7 @@
 	    	<form-group label="Voittaneen tarjouksen hinta">
 	        <input id="tarjoushinta1" name="tarjoushinta1" type="text"
                  class="form-control" placeholder="Hinta (€)"
-                 ng-currency="" numeric-only="" max="9999999999.99"
+                 numeric-only unit="€" max="9999999999.99"
                  noenter select-on-click
                  ng-model="kilpailutus.tarjoushinta1" ng-readonly="isReadonly">
 	      </form-group>
@@ -247,7 +247,7 @@
 	    	<form-group label="Toiseksi tulleen hinta">
 	        <input id="tarjoushinta2" name="tarjoushinta2" type="text"
                  class="form-control" placeholder="Hinta (€)"
-                 ng-currency="" numeric-only="" max="9999999999.99"
+                 numeric-only unit="€" max="9999999999.99"
                  noenter select-on-click
                  ng-model="kilpailutus.tarjoushinta2" ng-readonly="isReadonly">
 	      </form-group>

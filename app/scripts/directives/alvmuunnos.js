@@ -1,38 +1,28 @@
 'use strict';
 var angular = require('angular');
 var _ = require('lodash');
+var c = require('utils/core');
+
 angular.module('jukufrontApp')
   .directive('alvmuunnos', function () {
     return {
       require: 'ngModel',
       link: function (scope, element, attributes, ngModel) {
-        if (!ngModel) return;
-        var prosentti = 0;
-        var alvmukana = false;
+
+        var alvPercentage = 0;
         attributes.$observe('alvmuunnos', function(value) {
-          var obj = scope.$eval(value);
-          if ((prosentti!=obj.prosentti) || (alvmukana!=obj.alvmukana)){
-            prosentti = obj.prosentti;
-            alvmukana = obj.alvmukana;
-            ngModel.$viewValue = _.reduceRight(ngModel.$formatters, function(prev, fn) {
-              return fn(prev);
-            }, ngModel.$modelValue);
-            return ngModel.$render();
+          var newALV = parseFloat(value);
+          if (alvPercentage !== newALV){
+            alvPercentage = newALV;
+            ngModel.$processModelValue();
           }
         });
+
         ngModel.$parsers.push(function toModel(input){
-          if (alvmukana){
-            return input/(1+(prosentti/100));
-          } else {
-            return input;
-          }
+          return c.maybe(value => value / (1 + (alvPercentage/100)), input, null);
         });
         ngModel.$formatters.push(function toView(input){
-          if (alvmukana){
-            return (1+prosentti/100)*input;
-          } else {
-            return input;
-          }
+          return c.maybe(value => (1 + alvPercentage/100) * value, input, null);
         });
       }
     }
