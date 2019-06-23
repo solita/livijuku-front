@@ -173,10 +173,8 @@ export function floatDirective() {
       });
 
       element.on("blur", function () {
-        const canonicalValue = format(modelCtrl.$modelValue);
-        if (modelCtrl.$valid && !_.isEqual(modelCtrl.$viewValue, canonicalValue)) {
-          modelCtrl.$viewValue = canonicalValue;
-          modelCtrl.$render();
+        if (modelCtrl.$valid) {
+          modelCtrl.$processModelValue();
         };
       });
 
