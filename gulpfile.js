@@ -3,7 +3,7 @@
 var autoprefixer = require('gulp-autoprefixer');
 var browserify = require('browserify');
 var browserSync = require('browser-sync');
-var es = require('event-stream');
+var merge = require('merge-stream');
 var fs = require('fs');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
@@ -115,22 +115,13 @@ function handleError(err) {
   return this.emit('end');
 };
 
-gulp.task('templates', ['styles', 'scripts'], function () {
-  var resources = gulp.src(paths.inject.resources, {read: false});
-  var pipeline = gulp.src(paths.templates.source)
-    .pipe(inject(resources, {ignorePath: 'dist', removeTags: true, addRootSlash: false}))
-    .pipe(gulp.dest(paths.templates.destination));
-
-  return pipeline;
-});
-
 gulp.task('assets', function () {
   return gulp.src(paths.assets.source)
     .pipe(gulp.dest(paths.assets.destination));
 });
 
 gulp.task('copy', function () {
-  return es.merge(paths.copy.map(function (file) {
+  return merge(paths.copy.map(function (file) {
     return gulp.src(file.source)
       .pipe(gulp.dest(file.destination));
   }));
@@ -225,7 +216,6 @@ gulp.task('styles', function () {
       'include css': true
     }))
     .pipe(autoprefixer({
-      browsers: ['last 2 versions', 'ie >= 9'],
       cascade: false
     }))
     .pipe(sourcemaps.write())
@@ -244,9 +234,18 @@ gulp.task('styles', function () {
   return pipeline;
 });
 
-gulp.task('watch', ['scripts'], function () {
-  gulp.watch(paths.styles.watch, ['styles']);
-  gulp.watch(paths.templates.watch, ['templates']);
+gulp.task('templates', gulp.series('styles', 'scripts', function () {
+  var resources = gulp.src(paths.inject.resources, {read: false});
+  var pipeline = gulp.src(paths.templates.source)
+    .pipe(inject(resources, {ignorePath: 'dist', removeTags: true, addRootSlash: false}))
+    .pipe(gulp.dest(paths.templates.destination));
+
+  return pipeline;
+}));
+
+gulp.task('watch', gulp.series('scripts', function () {
+  gulp.watch(paths.styles.watch, gulp.series('styles'));
+  gulp.watch(paths.templates.watch, gulp.series('templates'));
 
   var bundle = watchify(getBrowserify());
 
@@ -258,7 +257,9 @@ gulp.task('watch', ['scripts'], function () {
       .pipe(gulp.dest(paths.scripts.destination))
       .pipe(browserSync.reload({stream: true}));
   }).emit('update');
-});
+}));
 
-gulp.task('build', ['styles', 'assets', 'copy', 'scripts', 'templates']);
-gulp.task('default', ['styles', 'assets', 'copy', 'templates', 'watch', 'server']);
+gulp.task('build', gulp.series('styles', 'assets', 'copy', 'scripts', 'templates'));
+gulp.task('default', gulp.parallel(
+  gulp.series('styles', 'assets', 'copy', 'templates', 'watch'),
+  'server'));
