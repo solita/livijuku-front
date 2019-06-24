@@ -32,7 +32,7 @@
             <label>Määräraha vuosi {{vuosi}}</label>
 
             <input id="maararaha" name="maararaha" type="text" numeric-only unit="€"
-                   class="form-control"
+                   class="form-control" required
                    ng-focus="asetaVanhaArvo(maararaha)"
                    ng-model-options="{ allowInvalid: true }"
                    ng-model="maararaha"
@@ -50,7 +50,7 @@
           <div class="form-group" show-errors="{showSuccess: true}">
             <label>Siirtomääräraha vuodelta {{vuosi-1}}</label>
             <input id="ylijaama" name="ylijaama" type="text" numeric-only unit="€"
-                   class="form-control"
+                   class="form-control" required
                    ng-focus="asetaVanhaArvo(ylijaama)"
                    ng-model-options="{ allowInvalid: true }"
                    ng-model="ylijaama"
