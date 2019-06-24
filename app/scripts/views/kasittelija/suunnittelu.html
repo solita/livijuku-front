@@ -110,7 +110,7 @@
                    class="form-group"
                    show-errors="{showSuccess: true}">
                 <input id="avustus_{{hakemus.hakemusId}}" name="avustus_{{hakemus.hakemusId}}" type="text"
-                       numeric-only unit="€" class="form-control"
+                       numeric-only unit="€" required class="form-control"
                        ng-model="hakemus.myonnettavaAvustus"
                        ng-model-options="{ allowInvalid: true }"
                        ui-validate="{sallittuAvustus: 'sallittuAvustus(hakemus.myonnettavaAvustus,hakemus.haettuAvustus, hakemus.hakemuksenTila)'}"
