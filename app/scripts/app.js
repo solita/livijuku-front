@@ -98,7 +98,7 @@ angular
     'ngSanitize',
     'ngCsv',
     'nya.bootstrap.select',
-    'rzModule',
+    'rzSlider',
     'ngTagsInput'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {

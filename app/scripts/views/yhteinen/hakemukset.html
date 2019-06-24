@@ -21,7 +21,7 @@
   <div ng-show="hakemukset.hakemukset.length > 0">
 
     <uib-accordion id="kaikki-hakemukset" close-others="false">
-      <uib-accordion-group is-open="hakemukset.yearsOpen[hakemuskausi.vuosi]"
+      <div uib-accordion-group is-open="hakemukset.yearsOpen[hakemuskausi.vuosi]"
                            ng-repeat="hakemuskausi in hakemukset.hakemukset">
         <uib-accordion-heading>
           <i class="pull-left glyphicon"
@@ -97,7 +97,7 @@
             </div>
           </div>
         </div>
-      </uib-accordion-group>
+      </div>
     </uib-accordion>
   </div>
 </div>

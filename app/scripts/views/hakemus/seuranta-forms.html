@@ -4,7 +4,7 @@
   
   <uib-accordion close-others="false" class="accordionnopadding">
     <!-- 1. -->
-    <uib-accordion-group is-open="isOpenPSA">
+    <div uib-accordion-group is-open="isOpenPSA">
       <uib-accordion-heading>
         <div class="panel-heading">
           <div class="panel-title">
@@ -23,9 +23,9 @@
         suoritetyypit="suoritetyypit"
         is-readonly="!hakemusTallentaminenEnabled()">
       </juku-seuranta-liikenne>
-    </uib-accordion-group>
+    </div>
     <!-- 2. -->
-    <uib-accordion-group is-open="isOpenPAL">
+    <div uib-accordion-group is-open="isOpenPAL">
       <uib-accordion-heading>
         <div class="panel-heading">
           <div class="panel-title">
@@ -46,9 +46,9 @@
           is-readonly="!hakemusTallentaminenEnabled()">
         </juku-seuranta-liikenne>
       </div>
-    </uib-accordion-group>
+    </div>
     <!-- 3. -->
-    <uib-accordion-group is-open="isOpenKAU">
+    <div uib-accordion-group is-open="isOpenKAU">
       <uib-accordion-heading>
         <div class="panel-heading">
           <div class="panel-title">
@@ -69,9 +69,9 @@
           is-readonly="!hakemusTallentaminenEnabled()">
         </juku-seuranta-lippu>
       </div>
-    </uib-accordion-group>
+    </div>
     <!-- 4. -->
-    <uib-accordion-group is-open="isOpenSEU">
+    <div uib-accordion-group is-open="isOpenSEU">
       <uib-accordion-heading>
         <div class="panel-heading">
           <div class="panel-title">
@@ -92,7 +92,7 @@
           is-readonly="!hakemusTallentaminenEnabled()">
         </juku-seuranta-lippu>
       </div>
-    </uib-accordion-group>
+    </div>
   </uib-accordion>
 
   <p>Voit tarkastella viimeisintä tallennettua versiota seurantatiedoista
