@@ -179,8 +179,8 @@ gulp.task('server', function () {
     var cookies = parseCookies(req);
 
     var cookieKeys = [
-      'oam-remote-user',
-      'oam-groups',
+      'iv-user',
+      'iv-groups',
       'oam-user-first-name',
       'oam-user-last-name',
       'oam-user-organization',

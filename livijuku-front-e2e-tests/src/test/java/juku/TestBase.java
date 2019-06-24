@@ -396,8 +396,8 @@ public class TestBase {
         // PDF viewer pois URL:sta
         String uusiUrl = url.replace("pdf/web/viewer.html?file=../../", "");
         HttpGet httpGet = new HttpGet(uusiUrl);
-        httpGet.addHeader("oam-remote-user", user.getLogin());
-        httpGet.addHeader("oam-groups", user.getGroup());
+        httpGet.addHeader("iv-user", user.getLogin());
+        httpGet.addHeader("iv-groups", user.getGroup());
         httpGet.addHeader("oam-user-organization", user.getOrganization());
         httpGet.addHeader("oam-user-department", user.getDepartment());
 
@@ -447,9 +447,10 @@ public class TestBase {
     }
 
     public static void setUser(User user) {
-        driver.executeScript("document.cookie='oam-remote-user=" + user.getLogin() + "';"
+        driver.executeScript(
+                "document.cookie='iv-user=" + user.getLogin() + "';"
                 + "document.cookie='oam-user-organization=" + user.getOrganization() + "';"
-                + "document.cookie='oam-groups=" + user.getGroup() + "';"
+                + "document.cookie='iv-groups=" + user.getGroup() + "';"
                 + "document.cookie='oam-user-department=" + user.getDepartment() + "';"
                 + "console.log('Cookies:', document.cookie);");
     }
