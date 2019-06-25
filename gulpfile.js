@@ -181,10 +181,10 @@ gulp.task('server', function () {
     var cookieKeys = [
       'iv-user',
       'iv-groups',
-      'oam-user-first-name',
-      'oam-user-last-name',
-      'oam-user-organization',
-      'oam-user-department'
+      'givenname',
+      'sn',
+      'o',
+      'ou'
     ];
 
     cookieKeys.forEach(function (key) {
