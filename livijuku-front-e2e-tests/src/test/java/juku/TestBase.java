@@ -103,18 +103,18 @@ public class TestBase {
     }
 
     public enum User {
-        HARRI("juku_hakija", "juku_hakija", "helsingin ka", ""),
+        HARRI("juku_hakija", "juku_hakija", "069205", ""),
         KATRI("juku_kasittelija", "juku_kasittelija", "liikennevirasto", ""),
         PAIVI("juku_paatoksentekija", "juku_paatoksentekija", "liikennevirasto", ""),
-        ELY1("juku_hakija_uus", "juku_hakija", "ELY", "1"),
-        ELY2("juku_hakija_var", "juku_hakija", "ELY", "2"),
-        ELY3("juku_hakija_kaa", "juku_hakija", "ELY", "3"),
-        ELY4("juku_hakija_pir", "juku_hakija", "ELY", "4"),
-        ELY8("juku_hakija_psa", "juku_hakija", "ELY", "8"),
-        ELY9("juku_hakija_ksu", "juku_hakija", "ELY", "9"),
-        ELY10("juku_hakija_epo", "juku_hakija", "ELY", "10"),
-        ELY12("juku_hakija_ppo", "juku_hakija", "ELY", "12"),
-        ELY14("juku_hakija_lap", "juku_hakija", "ELY", "14");
+        ELY1("juku_hakija_uus", "juku_hakija", "060432", ""),
+        ELY2("juku_hakija_var", "juku_hakija", "060448", ""),
+        ELY3("juku_hakija_kaa", "juku_hakija", "060434", ""),
+        ELY4("juku_hakija_pir", "juku_hakija", "060439", ""),
+        ELY8("juku_hakija_psa", "juku_hakija", "061054", ""),
+        ELY9("juku_hakija_ksu", "juku_hakija", "060436", ""),
+        ELY10("juku_hakija_epo", "juku_hakija", "061060", ""),
+        ELY12("juku_hakija_ppo", "juku_hakija", "060673", ""),
+        ELY14("juku_hakija_lap", "juku_hakija", "060671", "");
 
 
         private final String login;
@@ -396,10 +396,10 @@ public class TestBase {
         // PDF viewer pois URL:sta
         String uusiUrl = url.replace("pdf/web/viewer.html?file=../../", "");
         HttpGet httpGet = new HttpGet(uusiUrl);
-        httpGet.addHeader("iv-user", user.getLogin());
-        httpGet.addHeader("iv-groups", user.getGroup());
-        httpGet.addHeader("oam-user-organization", user.getOrganization());
-        httpGet.addHeader("oam-user-department", user.getDepartment());
+        addHeader(httpGet, UserHeader.USER, user.getLogin());
+        addHeader(httpGet, UserHeader.GROUPS, user.getGroup());
+        addHeader(httpGet, UserHeader.ORGANIZATION, user.getOrganization());
+        addHeader(httpGet, UserHeader.DEPARTMENT, user.getDepartment());
 
         System.out.println("************************************");
         try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
@@ -419,6 +419,10 @@ public class TestBase {
             System.out.println("************************************");
         }
         return result;
+    }
+
+    private static void addHeader(HttpGet httpGet, UserHeader header, String value) {
+        httpGet.addHeader(header.headerName, value);
     }
 
     private String oracleServiceUrl() {
@@ -448,11 +452,15 @@ public class TestBase {
 
     public static void setUser(User user) {
         driver.executeScript(
-                "document.cookie='iv-user=" + user.getLogin() + "';"
-                + "document.cookie='oam-user-organization=" + user.getOrganization() + "';"
-                + "document.cookie='iv-groups=" + user.getGroup() + "';"
-                + "document.cookie='oam-user-department=" + user.getDepartment() + "';"
-                + "console.log('Cookies:', document.cookie);");
+                cookieHeader(UserHeader.USER, user.getLogin()) +
+                cookieHeader(UserHeader.ORGANIZATION, user.getOrganization()) +
+                cookieHeader(UserHeader.GROUPS, user.getGroup()) +
+                cookieHeader(UserHeader.DEPARTMENT, user.getDepartment()) +
+                "console.log('Cookies:', document.cookie);");
+    }
+
+    private static String cookieHeader(UserHeader header, String value) {
+        return "document.cookie='" + header.headerName + "=" + value + "';";
     }
 
     private void revertTo(String restorePoint) {

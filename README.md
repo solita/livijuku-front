@@ -1,25 +1,19 @@
 Juku käyttöliittymä
 ===================
 
-Liikenneviraston joukkoliikenteen rahoitus-, kustannus- ja suoritetietojen keräys- ja seurantajärjestelmän käyttöliittymä.
+Liikenne- ja viestintäviraston Juku -järjestelmän käyttöliittymä.
 
-Tämä käyttöliittymä on tarkoitettu vain viranomaiskäyttöön ja on näkyvissä Liikenneviraston extranetin kautta.
+Tämä käyttöliittymä on tarkoitettu vain viranomaiskäyttöön ja on näkyvissä Liikenne- ja viestintäviraston extranetin kautta.
 Käyttö edellyttää extranet-tunnukset.
 
-Julkinen käyttöliittymä löytyy: https://juku.liikennevirasto.fi/ 
+Julkinen käyttöliittymä löytyy: https://juku.traficom.fi/ 
 - github: https://github.com/solita/livijuku-public-front
-
-Download the project
---------------------
-
-Clone this repo
-
-    git clone <repo url>
 
 Prerequisites
 -------------
 
-You should have git and [Node.js](nodejs) installed. Recommended development os is linux or osx; windows is not supported.
+You should have git and [Node.js](nodejs) installed. 
+Recommended development os is linux or osx; windows is not supported.
 The required nodejs version is defined in `.nvmrc`. 
 The recommended tool to manage nodejs versions is [nvm].
 
@@ -40,6 +34,14 @@ This program installs the npm components and builds the project.
 
 The build creates `dist`-directory, which contains the compiled application.
 
+Development usage
+--------------
+
+Run the app locally on [http://localhost:9000](http://localhost:9000)
+
+    start-dev.sh
+
+This requires that the backend is available at: `localhost:8080` (See [livijuku]).
 
 Running the tests
 -------------
@@ -54,7 +56,8 @@ Run unit tests
     
 The end to end tests requires that
  - the frontend application is available at: `http://localhost:9000` 
- - the database services are available at: `http://juku:juku@localhost:50000/juku/`
+ - backend is available at: `localhost:8080`
+ - the database test services are available at: `http://juku:juku@localhost:50000/juku/`
 
 The frontend can be served using: `start-dev.sh`
 
@@ -65,22 +68,11 @@ using ssh it is easy to forward it to the required local ports e.g.
 
 ### Supported browser versions
 
-End to end tests only support firefox version 46. Install the correct firefox version:
- 1. apt-get remove firefox
- 2. wget https://ftp.mozilla.org/pub/firefox/releases/46.0/linux-x86_64/en-US/firefox-46.0.tar.bz2
- 3. mv firefox-46.0.tar.bz2 /opt/.
- 4. cd /opt
- 5. tar -xvf firefox-46.0.tar.bz2
- 6. sudo ln -s /opt/firefox/firefox /usr/bin/firefox
+Currently newest chrome and firefox is supported.
 
-Running the application in development mode
----------------
-
-Run the app locally on [http://localhost:9000](http://localhost:9000)
-
-    start-dev.sh
-
-This requires that the backend is available at: `localhost:8082`
+However end to end tests might not work with all firefox versions. 
+You can download old firefox versions from here: https://ftp.mozilla.org/pub/firefox/releases/
 
 [nvm]: https://github.com/creationix/nvm
 [nodejs]: http://nodejs.org/
+[livijuku]: https://github.com/solita/livijuku
