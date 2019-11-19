@@ -27,13 +27,6 @@ window.d3 = require('d3/d3.js');
 window.moment = require('moment');
 require('moment/locale/fi');
 
-/**
- * Alustava xsrf-token arvo, jota käytetään ensimmäiseen backend-pyyntöön.
- * Ensimmäisessä pyynnössä backend antaa vastauksena tietoturvallisen satunnaisluvun.
- * CRSF-hyökkäys esto perustuu double submit cookie -malliin.
- */
-document.cookie = "XSRF-TOKEN=unsecure-" + Math.random() + "; path=/";
-
 require('angular-toastr');
 require('angular-resource');
 require('angular-loading-bar');
