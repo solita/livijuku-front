@@ -192,7 +192,7 @@ gulp.task('server', function () {
         req.headers[key] = cookies[key];
       }
     });
-
+    req.headers['x-api-key'] = 'abcd';
     next();
   }
 
