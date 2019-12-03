@@ -11,5 +11,4 @@ npm prune
 export NODE_ENV=production
 rm -rf dist
 npm run build
-./unzip-pdfjs.sh
 
