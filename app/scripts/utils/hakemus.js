@@ -58,3 +58,14 @@ export function hakemustyyppiFlags(hakemustyyppitunnus) {
 export function isMaksatushakemus(hakemustyyppitunnus) {
   return _.includes(['MH1', 'MH2'], hakemustyyppitunnus)
 }
+
+export const hakemustyypit = {
+  ALL: 'Kaikki hakemustyypit',
+  AH0: 'Avustushakemus',
+  MH1: '1. Maksatushakemus',
+  MH2: '2. Maksatushakemus',
+  ELY: 'ELY hakemus',
+  $order: ['ALL', 'AH0', 'MH1', 'MH2', 'ELY'],
+  $nimi: id => hakemustyypit[id],
+  $id: "hakemustyyppitunnus"
+};

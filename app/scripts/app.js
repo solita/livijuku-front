@@ -51,6 +51,7 @@ require('ng-tags-input');
 
 angular
   .module('jukufrontApp', [
+    'services.asiakirjamalli',
     'services.auth',
     'services.avustuskohde',
     'services.seuranta',
@@ -147,6 +148,20 @@ angular
       .state('app.yhteinen.asiakastuki', {
         url: '/asiakastuki',
         template: require('views/yhteinen/asiakastuki.html')
+      })
+
+      /*
+       * Asiakirjamallit
+       */
+      .state('app.asiakirjamallit', {
+        url: '/asiakirjamallit',
+        template: require('views/yhteinen/asiakirjamallit.html'),
+        controller: 'AsiakirjamallitCtrl'
+      })
+      .state('app.asiakirjamalli', {
+        url: '/asiakirjamalli/:id',
+        template: require('views/yhteinen/asiakirjamalli.html'),
+        controller: 'AsiakirjamalliCtrl'
       })
 
       /*
@@ -357,6 +372,7 @@ require('./controllers/hakija/hakemukset');
 require('./controllers/kasittelija/hakemuskaudenHallinta');
 require('./controllers/kasittelija/paatos');
 require('./controllers/kasittelija/suunnittelu');
+require('./controllers/yhteinen/asiakirjamalli');
 require('./controllers/yhteinen/asetukset');
 require('./controllers/yhteinen/hakemukset');
 require('./controllers/yhteinen/hakemus');
@@ -374,6 +390,7 @@ require('./directives/noenter');
 require('./directives/focusToInvalid');
 require('./directives/selectonclick');
 require('./services/auth');
+require('./services/asiakirjamalli');
 require('./services/avustuskohde');
 require('./services/seuranta');
 require('./services/common');

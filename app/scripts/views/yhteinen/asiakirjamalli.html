@@ -1,0 +1,59 @@
+<div class="container">
+  <h1>Asiakirjamalli</h1>
+
+  <p>Kohdistustiedot määrittävät mihin hakemukseen ja organisaatioon tätä asiakirjamallia käytetään.</p>
+
+  <ng-form name="asiakirjamalliForm" juku-poistumisvaroitus>
+    <h3>Kohdistustiedot</h3>
+    <div class="row">
+      <form-group label="Voimaantulovuosi" class="col-md-6 col-lg-4">
+        <ol id="voimaantulovuosi" ng-model="asiakirjamalli.voimaantulovuosi"
+            title="Valitse asiakirjamallin voimaantulovuosi" class="nya-bs-select" size="20" required>
+          <li nya-bs-option="year in years">
+            <a>{{ year }}</a>
+          </li>
+        </ol>
+      </form-group>
+      <form-group label="Hakemustyyppi" class="col-md-6 col-lg-4">
+        <ol id="hakemustyyppitunnus" ng-model="asiakirjamalli.hakemustyyppitunnus"
+            title="Valitse asiakirjamallin voimaantulovuosi" class="nya-bs-select" size="20">
+          <li nya-bs-option="hakemustyyppi in hakemustyypit" data-value="hakemustyyppi.id">
+            <a>{{ hakemustyyppi.nimi }}</a>
+          </li>
+        </ol>
+      </form-group>
+      <form-group label="Organisaatiolaji" class="col-md-6 col-lg-4">
+        <ol id="organisaatiolajitunnus" ng-model="asiakirjamalli.organisaatiolajitunnus"
+            title="Valitse organisaatiolaji" class="nya-bs-select" size="20">
+          <li nya-bs-option="organisaatiolaji in organisaatiolajit" data-value="organisaatiolaji.id">
+            <a>{{ organisaatiolaji.nimi }}</a>
+          </li>
+        </ol>
+      </form-group>
+    </div>
+    <h3>Asiakirjan kuvaus</h3>
+    <p>
+      Asiakirja luodaan täydentämällä puuttuvat kohdat tästä asiakirjan kuvauksesta.
+      Täydennetävät kohdat merkitään tunnuksella <code>{tiedon nimi}</code>
+    </p>
+    <div class="row">
+      <textarea id="asiakirjamalli"
+        name="asiakirjamalli"
+        ng-model="asiakirjamalli.sisalto">
+      </textarea>
+    </div>
+
+  </ng-form>
+
+  <juku-controls>
+    <juku-controls-buttons class="full-width">
+      <button ng-show="!isNew"
+              class="btn btn-danger Ms-0 pull-left">Poista asiakirjamalli
+      </button>
+
+      <button data-ng-click="save()" class="btn btn-success pull-right" ng-hide="isReadonly">Tallenna ja sulje lomake</button>
+      <button data-ng-click="preview()" class="btn btn-success pull-right">Esikatsele</button>
+      <button data-ng-click="cancel()" class="btn btn-warning pull-right">Sulje lomake</button>
+    </juku-controls-buttons>
+  </juku-controls>
+</div>
