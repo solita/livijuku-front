@@ -196,6 +196,16 @@ gulp.task('server', function () {
     next();
   }
 
+  function addContentSecurityPolicy(req, res, next) {
+    res.setHeader('Content-Security-Policy',
+      "default-src 'self'; " +
+      " script-src 'self' 'unsafe-eval' 'unsafe-inline' ; " +
+      " style-src 'self' 'unsafe-inline' http://fonts.googleapis.com/ ; " +
+      " img-src 'self' data: ; " +
+      " font-src 'self' http://fonts.gstatic.com/ ");
+    next();
+  }
+
   return browserSync({
     port: 9000,
     open: false,
@@ -203,7 +213,7 @@ gulp.task('server', function () {
     ghostMode: false,
     server: {
       baseDir: './dist',
-      middleware: [addAuthenticationHeaders, proxyAPIRequests]
+      middleware: [addAuthenticationHeaders, proxyAPIRequests, addContentSecurityPolicy]
     }
   });
 });
