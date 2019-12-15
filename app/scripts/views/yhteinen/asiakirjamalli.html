@@ -1,10 +1,19 @@
 <div class="container">
   <h1>Asiakirjamalli</h1>
-
-  <p>Kohdistustiedot määrittävät mihin hakemukseen ja organisaatioon tätä asiakirjamallia käytetään.</p>
+  <p ng-if="asiakirjamalli.asiakirjalajitunnus == 'H'">
+    Tämän asiakirjamallin pohjalta luodaan hakemusasiakirjoja.
+  </p>
+  <p ng-if="asiakirjamalli.asiakirjalajitunnus == 'P'">
+    Tämän asiakirjamallin pohjalta luodaan päätösasiakirjoja.
+  </p>
 
   <ng-form name="asiakirjamalliForm" juku-poistumisvaroitus>
     <h3>Kohdistustiedot</h3>
+    <p>
+      Kohdistustiedot määrittävät mihin hakemukseen ja organisaatioon tätä asiakirjamallia käytetään.
+      Hakemukselle valitaan uusin hakemustyyppiin ja organisaatiolajiin soveltuva asiakirjamalli,
+      joka tulee voimaan hakemuskautena tai aikaisemmin.
+    </p>
     <div class="row">
       <form-group label="Voimaantulovuosi" class="col-md-6 col-lg-4">
         <ol id="voimaantulovuosi" ng-model="asiakirjamalli.voimaantulovuosi"
@@ -47,7 +56,11 @@
 
   <juku-controls>
     <juku-controls-buttons class="full-width">
-      <button ng-show="!isNew"
+      <button ng-show="!isNew" juku-varmistusdialogi
+              varmistusotsake="Asiakirjamallin poistaminen"
+              varmistusteksti="Oletko varma että haluat merkitä asiakirjamallin poistetuksi?"
+              varmistusteksti2="Asiakirjamallin poistamista ei voi peruuttaa."
+              operaatio="delete()"
               class="btn btn-danger Ms-0 pull-left">Poista asiakirjamalli
       </button>
 

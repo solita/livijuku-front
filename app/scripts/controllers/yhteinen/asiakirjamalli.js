@@ -45,6 +45,14 @@ angular.module('jukufrontApp')
           history.back();
         };
 
+        $scope.delete = function () {
+          AsiakirjamalliService.delete($stateParams.id)
+            .then(function () {
+              StatusService.ok('', 'Asiakirjamalli poistettu.');
+              $state.go('app.asiakirjamallit');
+            }, StatusService.errorHandler);
+        };
+
         $scope.save = function() {
           StatusService.tyhjenna();
 

@@ -7,5 +7,6 @@ angular.module('services.asiakirjamalli', [])
       findAll: () => $http.get('api/asiakirjamallit').then(response => response.data),
       findById: (id) => $http.get('api/asiakirjamalli/' + id).then(response => response.data),
       save: (id, asiakirjamalli) => $http.put('api/asiakirjamalli/' + id, asiakirjamalli),
-      add: asiakirjamalli => $http.post('api/asiakirjamalli', asiakirjamalli)
+      add: asiakirjamalli => $http.post('api/asiakirjamalli', asiakirjamalli),
+      delete: (id) => $http.delete('api/asiakirjamalli/'+ id)
     })]);
