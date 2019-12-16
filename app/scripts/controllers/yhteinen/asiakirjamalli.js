@@ -6,6 +6,9 @@ import * as angular from 'angular';
 import * as tl from 'utils/tunnusluvut';
 import * as  time from 'utils/time';
 import * as  hakemus from 'utils/hakemus';
+import * as  c from 'utils/core';
+
+const active = asiakirjamalli => c.isNullOrUndefined(asiakirjamalli.poistoaika);
 
 angular.module('jukufrontApp')
 
@@ -13,8 +16,17 @@ angular.module('jukufrontApp')
   .controller('AsiakirjamallitCtrl',
     ['$scope', '$state', 'AsiakirjamalliService', 'StatusService',
     function ($scope, $state, AsiakirjamalliService, StatusService) {
+      $scope.isEmpty = _.isEmpty;
       AsiakirjamalliService.findAll().then(asiakirjamallit => {
-          $scope.asiakirjamallit = asiakirjamallit;
+
+          $scope.hakemusasiakirjamallit = _.filter(asiakirjamallit, _.overEvery([
+            _.matches({ asiakirjalajitunnus: 'H' }),
+            active]));
+
+          $scope.paatosasiakirjamallit = _.filter(asiakirjamallit, _.overEvery([
+            _.matches({ asiakirjalajitunnus: 'P' }),
+            active]));
+
         }, StatusService.errorHandler);
 
       $scope.edit = id => $state.go('app.asiakirjamalli', { id: id });

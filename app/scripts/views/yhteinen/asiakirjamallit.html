@@ -2,50 +2,59 @@
   <h1>Asiakirjamallit</h1>
 
   <h3>Hakemusasiakirjat</h3>
-  <table st-table="display" st-safe-src="asiakirjamallit" class="table table-condensed">
-    <thead>
-    <tr>
-      <th st-sort="voimaantulovuosi" st-sort-default="true">Voimaantulovuosi</th>
-      <th st-sort="hakemustyyppitunnus">Hakemustyyppi</th>
-      <th st-sort="organisaatiolajitunnus">Organisaatiolaji</th>
-      <th>Toiminnot</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="asiakirjamalli in display">
-      <td>{{asiakirjamalli.voimaantulovuosi}}</td>
-      <td>{{asiakirjamalli.hakemustyyppitunnus}}</td>
-      <td>{{asiakirjamalli.organisaatiolajitunnus}}</td>
-      <td>
-        <a href="" ng-click="edit(asiakirjamalli.id)">
-          <span class="glyphicon glyphicon-pencil"></span> Muokkaa
-        </a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-
+  <div ng-if="!isEmpty(hakemusasiakirjamallit)">
+    <table st-table="display" st-safe-src="hakemusasiakirjamallit" class="table table-condensed">
+      <thead>
+      <tr>
+        <th st-sort="voimaantulovuosi" st-sort-default="true">Voimaantulovuosi</th>
+        <th st-sort="hakemustyyppitunnus">Hakemustyyppi</th>
+        <th st-sort="organisaatiolajitunnus">Organisaatiolaji</th>
+        <th>Toiminnot</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="asiakirjamalli in display">
+        <td>{{asiakirjamalli.voimaantulovuosi}}</td>
+        <td>{{asiakirjamalli.hakemustyyppitunnus}}</td>
+        <td>{{asiakirjamalli.organisaatiolajitunnus}}</td>
+        <td>
+          <a href="" ng-click="edit(asiakirjamalli.id)">
+            <span class="glyphicon glyphicon-pencil"></span> Muokkaa
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <p ng-if="isEmpty(hakemusasiakirjamallit)">
+    Hakemusasiakirjamalleja ei ole tallennettu.
+  </p>
   <h3>Päätösasiakirjat</h3>
-  <table st-table="display" st-safe-src="asiakirjamallit" class="table table-condensed">
-    <thead>
-    <tr>
-      <th st-sort="voimaantulovuosi" st-sort-default="true">Voimaantulovuosi</th>
-      <th st-sort="hakemustyyppitunnus">Hakemustyyppi</th>
-      <th st-sort="organisaatiolajitunnus">Organisaatiolaji</th>
-      <th>Toiminnot</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="asiakirjamalli in display">
-      <td>{{asiakirjamalli.voimaantulovuosi}}</td>
-      <td>{{asiakirjamalli.hakemustyyppitunnus}}</td>
-      <td>{{asiakirjamalli.organisaatiolajitunnus}}</td>
-      <td>
-        <a href="" ng-click="edit(asiakirjamalli.id)">
-          <span class="glyphicon glyphicon-pencil"></span> Muokkaa
-        </a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <div ng-if="!isEmpty(paatosasiakirjamallit)">
+    <table st-table="display" st-safe-src="paatosasiakirjamallit" class="table table-condensed">
+      <thead>
+      <tr>
+        <th st-sort="voimaantulovuosi" st-sort-default="true">Voimaantulovuosi</th>
+        <th st-sort="hakemustyyppitunnus">Hakemustyyppi</th>
+        <th st-sort="organisaatiolajitunnus">Organisaatiolaji</th>
+        <th>Toiminnot</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="asiakirjamalli in display">
+        <td>{{asiakirjamalli.voimaantulovuosi}}</td>
+        <td>{{asiakirjamalli.hakemustyyppitunnus}}</td>
+        <td>{{asiakirjamalli.organisaatiolajitunnus}}</td>
+        <td>
+          <a href="" ng-click="edit(asiakirjamalli.id)">
+            <span class="glyphicon glyphicon-pencil"></span> Muokkaa
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <p ng-if="isEmpty(paatosasiakirjamallit)">
+    Päätösasiakirjamalleja ei ole tallennettu.
+  </p>
 </div>
