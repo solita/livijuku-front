@@ -20,7 +20,7 @@
         <td>
           <a href="" ng-click="edit(asiakirjamalli.id)">
             <span class="glyphicon glyphicon-pencil"></span> Muokkaa
-          </a>
+          </a> &nbsp;
           <a href="" operaatio="delete(asiakirjamalli.id)"
              juku-varmistusdialogi
              varmistusotsake="Asiakirjamallin poistaminen"
@@ -36,6 +36,9 @@
   <p ng-if="isEmpty(hakemusasiakirjamallit)">
     Hakemusasiakirjamalleja ei ole tallennettu.
   </p>
+  <a href="" ng-click="add('H')">
+    <span class="glyphicon glyphicon-plus-sign"></span> Lisää uusi hakemusasiakirjamalli
+  </a>
   <h3>Päätösasiakirjat</h3>
   <div ng-if="!isEmpty(paatosasiakirjamallit)">
     <table st-table="display" st-safe-src="paatosasiakirjamallit" class="table table-condensed">
@@ -55,8 +58,8 @@
         <td>
           <a href="" ng-click="edit(asiakirjamalli.id)">
             <span class="glyphicon glyphicon-pencil"></span> Muokkaa
-          </a>
-          <a href="" ng-click="delete(asiakirjamalli.id)"
+          </a> &nbsp;
+          <a href="" operaatio="delete(asiakirjamalli.id)"
              juku-varmistusdialogi
              varmistusotsake="Asiakirjamallin poistaminen"
              varmistusteksti="Oletko varma että haluat merkitä asiakirjamallin poistetuksi?"
@@ -71,4 +74,7 @@
   <p ng-if="isEmpty(paatosasiakirjamallit)">
     Päätösasiakirjamalleja ei ole tallennettu.
   </p>
+  <a href="" ng-click="add('P')">
+    <span class="glyphicon glyphicon-plus-sign"></span> Lisää uusi päätösasiakirjamalli
+  </a>
 </div>

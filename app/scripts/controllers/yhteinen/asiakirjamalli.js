@@ -36,6 +36,9 @@ angular.module('jukufrontApp')
 
       $scope.edit = id => $state.go('app.asiakirjamalli', { id: id });
 
+      $scope.add = asiakirjalajitunnus =>
+        $state.go('app.asiakirjamalli', { id: 'new', asiakirjalajitunnus: asiakirjalajitunnus });
+
       $scope.delete = id => {
         AsiakirjamalliService.delete(id)
           .then(function () {
@@ -81,7 +84,7 @@ angular.module('jukufrontApp')
         $scope.save = function() {
           StatusService.tyhjenna();
 
-          const asiakirjamalliEdit = _.omit($scope.asiakirjamalli, ['id']);
+          const asiakirjamalliEdit = _.omit($scope.asiakirjamalli, ['id', 'poistoaika']);
           asiakirjamalliEdit.sisalto = editor.value();
           const savePromise = isNew ?
             AsiakirjamalliService.add(asiakirjamalliEdit) :
@@ -95,8 +98,17 @@ angular.module('jukufrontApp')
           }, StatusService.errorHandler);
         };
 
-        AsiakirjamalliService.findById($stateParams.id).then(asiakirjamalli => {
-          editor.value(asiakirjamalli.sisalto);
-          $scope.asiakirjamalli = asiakirjamalli;
-        }, StatusService.errorHandler);
+        if (!isNew) {
+          AsiakirjamalliService.findById($stateParams.id).then(asiakirjamalli => {
+            editor.value(asiakirjamalli.sisalto);
+            $scope.asiakirjamalli = asiakirjamalli;
+          }, StatusService.errorHandler);
+        } else {
+          $scope.asiakirjamalli = {
+            voimaantulovuosi: time.currentYear(),
+            asiakirjalajitunnus: c.coalesce($stateParams.asiakirjalajitunnus, 'H'),
+            hakemustyyppitunnus: null,
+            organisaatiolajitunnus: null
+          }
+        }
       }]);

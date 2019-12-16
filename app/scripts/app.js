@@ -160,6 +160,9 @@ angular
       })
       .state('app.asiakirjamalli', {
         url: '/asiakirjamalli/:id',
+        params: {
+          asiakirjalajitunnus: null
+        },
         template: require('views/yhteinen/asiakirjamalli.html'),
         controller: 'AsiakirjamalliCtrl'
       })
