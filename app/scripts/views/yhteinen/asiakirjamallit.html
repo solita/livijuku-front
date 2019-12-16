@@ -15,11 +15,18 @@
       <tbody>
       <tr ng-repeat="asiakirjamalli in display">
         <td>{{asiakirjamalli.voimaantulovuosi}}</td>
-        <td>{{asiakirjamalli.hakemustyyppitunnus}}</td>
-        <td>{{asiakirjamalli.organisaatiolajitunnus}}</td>
+        <td>{{hakemustyyppinimi(asiakirjamalli.hakemustyyppitunnus)}}</td>
+        <td>{{organisaatiolajinimi(asiakirjamalli.organisaatiolajitunnus)}}</td>
         <td>
           <a href="" ng-click="edit(asiakirjamalli.id)">
             <span class="glyphicon glyphicon-pencil"></span> Muokkaa
+          </a>
+          <a href="" operaatio="delete(asiakirjamalli.id)"
+             juku-varmistusdialogi
+             varmistusotsake="Asiakirjamallin poistaminen"
+             varmistusteksti="Oletko varma että haluat merkitä asiakirjamallin poistetuksi?"
+             varmistusteksti2="Asiakirjamallin poistamista ei voi peruuttaa.">
+            <span class="glyphicon glyphicon-remove-sign"></span> Poista
           </a>
         </td>
       </tr>
@@ -42,12 +49,19 @@
       </thead>
       <tbody>
       <tr ng-repeat="asiakirjamalli in display">
-        <td>{{asiakirjamalli.voimaantulovuosi}}</td>
-        <td>{{asiakirjamalli.hakemustyyppitunnus}}</td>
-        <td>{{asiakirjamalli.organisaatiolajitunnus}}</td>
+        <td>{{ asiakirjamalli.voimaantulovuosi }}</td>
+        <td>{{ hakemustyyppinimi(asiakirjamalli.hakemustyyppitunnus) }}</td>
+        <td>{{ organisaatiolajinimi(asiakirjamalli.organisaatiolajitunnus) }}</td>
         <td>
           <a href="" ng-click="edit(asiakirjamalli.id)">
             <span class="glyphicon glyphicon-pencil"></span> Muokkaa
+          </a>
+          <a href="" ng-click="delete(asiakirjamalli.id)"
+             juku-varmistusdialogi
+             varmistusotsake="Asiakirjamallin poistaminen"
+             varmistusteksti="Oletko varma että haluat merkitä asiakirjamallin poistetuksi?"
+             varmistusteksti2="Asiakirjamallin poistamista ei voi peruuttaa.">
+            <span class="glyphicon glyphicon-remove-sign"></span> Poista
           </a>
         </td>
       </tr>

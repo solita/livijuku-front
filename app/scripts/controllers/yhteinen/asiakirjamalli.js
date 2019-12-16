@@ -17,6 +17,11 @@ angular.module('jukufrontApp')
     ['$scope', '$state', 'AsiakirjamalliService', 'StatusService',
     function ($scope, $state, AsiakirjamalliService, StatusService) {
       $scope.isEmpty = _.isEmpty;
+      $scope.organisaatiolajinimi =
+          tunnus => c.coalesce(tl.organisaatiolajit.$nimi(tunnus), 'Kaikki organisaatiot');
+      $scope.hakemustyyppinimi =
+          tunnus => c.coalesce(hakemus.hakemustyypit.$nimi(tunnus), 'Kaikki hakemukset');
+
       AsiakirjamalliService.findAll().then(asiakirjamallit => {
 
           $scope.hakemusasiakirjamallit = _.filter(asiakirjamallit, _.overEvery([
@@ -30,6 +35,14 @@ angular.module('jukufrontApp')
         }, StatusService.errorHandler);
 
       $scope.edit = id => $state.go('app.asiakirjamalli', { id: id });
+
+      $scope.delete = id => {
+        AsiakirjamalliService.delete(id)
+          .then(function () {
+            StatusService.ok('', 'Asiakirjamalli poistettu.');
+            $state.reload();
+          }, StatusService.errorHandler);
+      };
   }])
 
   /* Asiakirjamalli sivu */
@@ -61,7 +74,7 @@ angular.module('jukufrontApp')
           AsiakirjamalliService.delete($stateParams.id)
             .then(function () {
               StatusService.ok('', 'Asiakirjamalli poistettu.');
-              $state.go('app.asiakirjamallit');
+              history.back();
             }, StatusService.errorHandler);
         };
 
