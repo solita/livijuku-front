@@ -64,8 +64,13 @@
               class="btn btn-danger Ms-0 pull-left">Poista asiakirjamalli
       </button>
 
-      <button data-ng-click="save()" class="btn btn-success pull-right" ng-hide="isReadonly">Tallenna ja sulje lomake</button>
-      <button data-ng-click="preview()" class="btn btn-success pull-right">Esikatsele</button>
+      <button data-ng-click="save()" class="btn btn-success pull-right" ng-hide="isReadonly">
+        <span ng-if="!isNew">Tallenna ja sulje lomake</span>
+        <span ng-if="isNew">Lisää uusi asiakirjamalli</span>
+      </button>
+      <button data-ng-click="preview()" ng-if="!isNew" class="btn btn-success pull-right">
+        Tallenna ja esikatsele
+      </button>
       <button data-ng-click="cancel()" class="btn btn-warning pull-right">Sulje lomake</button>
     </juku-controls-buttons>
   </juku-controls>

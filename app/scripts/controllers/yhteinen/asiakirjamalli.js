@@ -50,8 +50,8 @@ angular.module('jukufrontApp')
 
   /* Asiakirjamalli sivu */
   .controller('AsiakirjamalliCtrl',
-    ['$scope', '$stateParams', '$state', 'AsiakirjamalliService', 'StatusService',
-      function ($scope, $stateParams, $state, AsiakirjamalliService, StatusService) {
+    ['$scope', '$stateParams', '$state', '$window', 'AsiakirjamalliService', 'StatusService',
+      function ($scope, $stateParams, $state, $window, AsiakirjamalliService, StatusService) {
 
         $scope.years = _.range(2016, time.currentYear() + 1);
         $scope.organisaatiolajit = _.map(
@@ -81,7 +81,7 @@ angular.module('jukufrontApp')
             }, StatusService.errorHandler);
         };
 
-        $scope.save = function() {
+        const save = (success) => function() {
           StatusService.tyhjenna();
 
           const asiakirjamalliEdit = _.omit($scope.asiakirjamalli, ['id', 'poistoaika']);
@@ -91,12 +91,17 @@ angular.module('jukufrontApp')
             AsiakirjamalliService.save($scope.asiakirjamalli.id, asiakirjamalliEdit);
 
           savePromise.then(function() {
-            StatusService.ok('', 'Asiakirjamallin tallennus onnistui.');
+            StatusService.ok('', 'Muutokset tallennettu asiakirjamalliin.');
             $scope.asiakirjamalliForm.$setPristine();
-            history.back();
+            success();
 
           }, StatusService.errorHandler);
         };
+
+        $scope.save = save(() => history.back());
+        $scope.preview = save(() => {
+          $window.location.href = `api/asiakirjamalli/${$stateParams.id}/preview`;
+        });
 
         if (!isNew) {
           AsiakirjamalliService.findById($stateParams.id).then(asiakirjamalli => {

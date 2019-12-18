@@ -25,6 +25,9 @@
           <a href="" ng-click="edit(asiakirjamalli.id)">
             <span class="glyphicon glyphicon-pencil"></span> Muokkaa
           </a> &nbsp;
+          <a ng-href="api/asiakirjamalli/{{asiakirjamalli.id}}/preview">
+            <span class="glyphicon glyphicon-search"></span> Esikatsele
+          </a> &nbsp;
           <a href="" operaatio="delete(asiakirjamalli.id)"
              juku-varmistusdialogi
              varmistusotsake="Asiakirjamallin poistaminen"
@@ -62,6 +65,9 @@
         <td>
           <a href="" ng-click="edit(asiakirjamalli.id)">
             <span class="glyphicon glyphicon-pencil"></span> Muokkaa
+          </a> &nbsp;
+          <a ng-href="api/asiakirjamalli/{{asiakirjamalli.id}}/preview">
+            <span class="glyphicon glyphicon-search"></span> Esikatsele
           </a> &nbsp;
           <a href="" operaatio="delete(asiakirjamalli.id)"
              juku-varmistusdialogi
