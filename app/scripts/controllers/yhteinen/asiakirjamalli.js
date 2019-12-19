@@ -106,6 +106,7 @@ angular.module('jukufrontApp')
         if (!isNew) {
           AsiakirjamalliService.findById($stateParams.id).then(asiakirjamalli => {
             editor.value(asiakirjamalli.sisalto);
+            editor.codemirror.refresh();
             $scope.asiakirjamalli = asiakirjamalli;
           }, StatusService.errorHandler);
         } else {
