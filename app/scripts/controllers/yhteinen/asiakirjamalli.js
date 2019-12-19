@@ -1,7 +1,7 @@
 'use strict';
 
 import * as _ from 'lodash';
-import * as simplemde from 'simplemde';
+import {default as simplemde} from 'simplemde';
 import * as angular from 'angular';
 import * as tl from 'utils/tunnusluvut';
 import * as  time from 'utils/time';
@@ -64,9 +64,11 @@ angular.module('jukufrontApp')
         const isNew = $state.params.id == 'new';
         $scope.isNew = isNew;
 
-        const editor = new simplemde.default({
+        const editor = new simplemde({
           element: document.getElementById('asiakirjamalli'),
-          spellChecker: false
+          spellChecker: false,
+          autoDownloadFontAwesome: false,
+          toolbar: toolbar
         });
 
         $scope.cancel = function () {
@@ -118,3 +120,87 @@ angular.module('jukufrontApp')
           }
         }
       }]);
+
+const toolbar = [
+  {
+    name: "bold",
+    action: simplemde.toggleBold,
+    className: "fa fa-bold",
+    title: "Bold"
+  },
+  {
+    name: "italic",
+    action: simplemde.toggleItalic,
+    className: "fa fa-italic",
+    title: "Italic",
+  },
+  {
+    name: "heading",
+    action: simplemde.toggleHeadingSmaller,
+    className: "fas fa-heading",
+    title: "Heading",
+    default: true
+  },
+  "|",
+  {
+    name: "unordered-list",
+    action: simplemde.toggleUnorderedList,
+    className: "fa fa-list-ul",
+    title: "Generic List",
+  },
+  {
+    name: "ordered-list",
+    action: simplemde.toggleOrderedList,
+    className: "fa fa-list-ol",
+    title: "Numbered List",
+  },
+  {
+    name: "table",
+    action: simplemde.drawTable,
+    className: "fa fa-table",
+    title: "Insert Table"
+  },
+  "|",
+  {
+    name: "preview",
+    action: simplemde.togglePreview,
+    className: "fa fa-eye no-disable",
+    title: "Toggle Preview",
+    default: true
+  },
+  {
+    name: "side-by-side",
+    action: simplemde.toggleSideBySide,
+    className: "fa fa-columns no-disable no-mobile",
+    title: "Toggle Side by Side",
+    default: true
+  },
+  {
+    name: "fullscreen",
+    action: simplemde.toggleFullScreen,
+    className: "fa fa-arrows-alt no-disable no-mobile",
+    title: "Toggle Fullscreen",
+    default: true
+  },
+  "|",
+  {
+    name: "undo",
+    action: simplemde.undo,
+    className: "fas fa-undo no-disable",
+    title: "Undo"
+  },
+  {
+    name: "redo",
+    action: simplemde.redo,
+    className: "fas fa-redo no-disable",
+    title: "Redo"
+  },
+  "|",
+  {
+    name: "guide",
+    action: "https://simplemde.com/markdown-guide",
+    className: "fa fa-question-circle",
+    title: "Markdown Guide",
+    default: true
+  }
+];

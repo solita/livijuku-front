@@ -45,7 +45,8 @@ var paths = {
     source: [
       './app/assets/**/*.*',
       './app/assets/.*',
-      './node_modules/bootstrap/dist/fonts*/*.*'
+      './node_modules/bootstrap/dist/fonts*/*.*',
+      './node_modules/@fortawesome/fontawesome-free/webfonts*/*.*'
     ],
     watch: './app/assets/**/*.*',
     destination: './dist/'
