@@ -19,12 +19,6 @@ export function hakemusHakuaikaAktiivinen(hakemus) {
   return (new Date() > new Date(hakemus.hakuaika.alkupvm));
 }
 
-export function haeHakemus(hakemuskausi, tyyppitunnus) {
-  return _.find(hakemuskausi.hakemukset, {
-    hakemustyyppitunnus: tyyppitunnus
-  });
-}
-
 export function hakemuksiaYhteensa(hakemus) {
   return _.reduce(hakemus.hakemustilat, (memo, tila) => memo + tila.count, 0);
 }
@@ -69,3 +63,6 @@ export const hakemustyypit = {
   $nimi: id => hakemustyypit[id],
   $id: "hakemustyyppitunnus"
 };
+
+export const orderHakemukset = hakemukset =>
+  _.sortBy(hakemukset, h => _.indexOf(hakemustyypit.$order, h.hakemustyyppitunnus));

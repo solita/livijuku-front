@@ -1,14 +1,14 @@
 'use strict';
 
-var _ = require('lodash');
-var angular = require('angular');
-var hakemusUtils = require('utils/hakemus');
-var pdf = require('utils/pdfurl');
+import * as _ from 'lodash';
+import * as angular from 'angular';
+import * as hakemus from 'utils/hakemus';
+import * as  pdf from 'utils/pdfurl';
 
 angular.module('jukufrontApp')
   .controller('HakijaHakemuksetCtrl', ['$scope', '$state', 'HakemuskausiService', 'StatusService', function ($scope, $state, HakemuskausiService, StatusService) {
 
-    $scope.utils = hakemusUtils;
+    $scope.orderHakemukset = hakemus.orderHakemukset;
 
     $scope.valitseHakemus = function (hakemus) {
       $state.go('app.hakemus', {
@@ -18,12 +18,6 @@ angular.module('jukufrontApp')
 
     $scope.hasHakemuksia = function(hakemuskausi){
         return (hakemuskausi.hakemukset.length>0);
-    };
-
-    $scope.haeHakemus = function haeHakemus(hakemuskausi, tyyppi) {
-      return _.find(hakemuskausi.hakemukset, {
-        hakemustyyppitunnus: tyyppi
-      });
     };
 
     $scope.getHakuohjePdf = function (vuosi) {
