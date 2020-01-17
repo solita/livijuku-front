@@ -22,12 +22,12 @@
             <br>
           </div>
 
-          <div class="col-md-3 text-center" ng-repeat="hakemus in hakemuskausi.hakemukset">
+          <div class="col-md-3 text-center" ng-repeat="hakemus in orderHakemukset(hakemuskausi.hakemukset)">
             <hakemus-laatikko
-              ng-click="valitseHakemus(utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus))"
+              ng-click="valitseHakemus(hakemus)"
               title="{{ hakemus.hakemustyyppitunnus | toApplicationName }}"
               ely="isELYhakemus(hakemus)"
-              hakemus="utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus)">
+              hakemus="hakemus">
             </hakemus-laatikko>
           </div>
         </div>
@@ -47,12 +47,12 @@
             <br>
           </div>
 
-          <div class="col-md-3 text-center" ng-repeat="hakemus in hakemuskausi.hakemukset">
+          <div class="col-md-3 text-center" ng-repeat="hakemus in orderHakemukset(hakemuskausi.hakemukset)">
             <hakemus-laatikko
-              ng-click="valitseHakemus(utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus))"
+              ng-click="valitseHakemus(hakemus)"
               title="{{ hakemus.hakemustyyppitunnus | toApplicationName }}"
               ely="isELYhakemus(hakemus)"
-              hakemus="utils.haeHakemus(hakemuskausi, hakemus.hakemustyyppitunnus)">
+              hakemus="hakemus">
             </hakemus-laatikko>
           </div>
         </div>

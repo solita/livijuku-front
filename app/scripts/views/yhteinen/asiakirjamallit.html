@@ -1,0 +1,90 @@
+<div class="container">
+  <h1>Asiakirjamallit</h1>
+  <p>
+    Asiakirjamallien pohjalta täydennetään järjestelmän muodostamat asiakirjat.
+    Hakemukselle valitaan uusin hakemustyyppiin ja organisaatiolajiin soveltuva asiakirjamalli,
+    joka tulee voimaan hakemuskautena tai aikaisemmin.
+  </p>
+  <h3>Hakemusasiakirjat</h3>
+  <div ng-if="!isEmpty(hakemusasiakirjamallit)">
+    <table st-table="display" st-safe-src="hakemusasiakirjamallit" class="table table-condensed">
+      <thead>
+      <tr>
+        <th st-sort="voimaantulovuosi" st-sort-default="true">Voimaantulovuosi</th>
+        <th st-sort="hakemustyyppitunnus">Hakemustyyppi</th>
+        <th st-sort="organisaatiolajitunnus">Organisaatiolaji</th>
+        <th>Toiminnot</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="asiakirjamalli in display">
+        <td>{{asiakirjamalli.voimaantulovuosi}}</td>
+        <td>{{hakemustyyppinimi(asiakirjamalli.hakemustyyppitunnus)}}</td>
+        <td>{{organisaatiolajinimi(asiakirjamalli.organisaatiolajitunnus)}}</td>
+        <td>
+          <a href="" ng-click="edit(asiakirjamalli.id)">
+            <span class="glyphicon glyphicon-pencil"></span> Muokkaa
+          </a> &nbsp;
+          <a ng-href="api/asiakirjamalli/{{asiakirjamalli.id}}/preview">
+            <span class="glyphicon glyphicon-search"></span> Esikatsele
+          </a> &nbsp;
+          <a href="" operaatio="delete(asiakirjamalli.id)"
+             juku-varmistusdialogi
+             varmistusotsake="Asiakirjamallin poistaminen"
+             varmistusteksti="Oletko varma että haluat merkitä asiakirjamallin poistetuksi?"
+             varmistusteksti2="Asiakirjamallin poistamista ei voi peruuttaa.">
+            <span class="glyphicon glyphicon-remove-sign"></span> Poista
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <p ng-if="isEmpty(hakemusasiakirjamallit)">
+    Hakemusasiakirjamalleja ei ole tallennettu.
+  </p>
+  <a href="" ng-click="add('H')">
+    <span class="glyphicon glyphicon-plus-sign"></span> Lisää uusi hakemusasiakirjamalli
+  </a>
+  <h3>Päätösasiakirjat</h3>
+  <div ng-if="!isEmpty(paatosasiakirjamallit)">
+    <table st-table="display" st-safe-src="paatosasiakirjamallit" class="table table-condensed">
+      <thead>
+      <tr>
+        <th st-sort="voimaantulovuosi" st-sort-default="true">Voimaantulovuosi</th>
+        <th st-sort="hakemustyyppitunnus">Hakemustyyppi</th>
+        <th st-sort="organisaatiolajitunnus">Organisaatiolaji</th>
+        <th>Toiminnot</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="asiakirjamalli in display">
+        <td>{{ asiakirjamalli.voimaantulovuosi }}</td>
+        <td>{{ hakemustyyppinimi(asiakirjamalli.hakemustyyppitunnus) }}</td>
+        <td>{{ organisaatiolajinimi(asiakirjamalli.organisaatiolajitunnus) }}</td>
+        <td>
+          <a href="" ng-click="edit(asiakirjamalli.id)">
+            <span class="glyphicon glyphicon-pencil"></span> Muokkaa
+          </a> &nbsp;
+          <a ng-href="api/asiakirjamalli/{{asiakirjamalli.id}}/preview">
+            <span class="glyphicon glyphicon-search"></span> Esikatsele
+          </a> &nbsp;
+          <a href="" operaatio="delete(asiakirjamalli.id)"
+             juku-varmistusdialogi
+             varmistusotsake="Asiakirjamallin poistaminen"
+             varmistusteksti="Oletko varma että haluat merkitä asiakirjamallin poistetuksi?"
+             varmistusteksti2="Asiakirjamallin poistamista ei voi peruuttaa.">
+            <span class="glyphicon glyphicon-remove-sign"></span> Poista
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <p ng-if="isEmpty(paatosasiakirjamallit)">
+    Päätösasiakirjamalleja ei ole tallennettu.
+  </p>
+  <a href="" ng-click="add('P')">
+    <span class="glyphicon glyphicon-plus-sign"></span> Lisää uusi päätösasiakirjamalli
+  </a>
+</div>

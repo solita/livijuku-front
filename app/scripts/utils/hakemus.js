@@ -19,12 +19,6 @@ export function hakemusHakuaikaAktiivinen(hakemus) {
   return (new Date() > new Date(hakemus.hakuaika.alkupvm));
 }
 
-export function haeHakemus(hakemuskausi, tyyppitunnus) {
-  return _.find(hakemuskausi.hakemukset, {
-    hakemustyyppitunnus: tyyppitunnus
-  });
-}
-
 export function hakemuksiaYhteensa(hakemus) {
   return _.reduce(hakemus.hakemustilat, (memo, tila) => memo + tila.count, 0);
 }
@@ -58,3 +52,17 @@ export function hakemustyyppiFlags(hakemustyyppitunnus) {
 export function isMaksatushakemus(hakemustyyppitunnus) {
   return _.includes(['MH1', 'MH2'], hakemustyyppitunnus)
 }
+
+export const hakemustyypit = {
+  ALL: 'Kaikki hakemustyypit',
+  AH0: 'Avustushakemus',
+  MH1: '1. Maksatushakemus',
+  MH2: '2. Maksatushakemus',
+  ELY: 'ELY hakemus',
+  $order: ['ALL', 'AH0', 'MH1', 'MH2', 'ELY'],
+  $nimi: id => hakemustyypit[id],
+  $id: "hakemustyyppitunnus"
+};
+
+export const orderHakemukset = hakemukset =>
+  _.sortBy(hakemukset, h => _.indexOf(hakemustyypit.$order, h.hakemustyyppitunnus));

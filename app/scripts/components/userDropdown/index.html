@@ -11,15 +11,26 @@
       </a>
     </div>
     <ul class="dropdown-menu">
-      <li><a ui-sref-active="is-active" ui-sref="app.yhteinen.asetukset">
+      <li>
+        <a ui-sref-active="is-active" ui-sref="app.yhteinen.asetukset">
         Asetukset
-      </a></li>
-      <li><a ui-sref-active="is-active" ui-sref="app.yhteinen.kayttajatiedot">
-        JUKUn käyttäjät
-      </a></li>
-      <li ng-hide="sallittu(user, 'view-hakemuskausi')"><a ui-sref-active="is-active" ui-sref="app.yhteinen.asiakastuki">
+        </a>
+      </li>
+      <li ng-show="sallittu(user, 'view-asiakirjamalli')">
+        <a ui-sref-active="is-active" ui-sref="app.asiakirjamallit">
+          Asiakirjamallit
+        </a>
+      </li>
+      <li>
+        <a ui-sref-active="is-active" ui-sref="app.yhteinen.kayttajatiedot">
+        Käyttäjät
+        </a>
+      </li>
+      <li>
+        <a ui-sref-active="is-active" ui-sref="app.yhteinen.asiakastuki">
         Asiakastuki
-      </a></li>
+        </a>
+      </li>
       <li>
         <a class="navbartxt" href="{{logoutUrl}}">
           Kirjaudu ulos

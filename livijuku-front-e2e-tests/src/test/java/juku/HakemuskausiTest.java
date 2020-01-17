@@ -629,12 +629,12 @@ public class HakemuskausiTest extends TestBase {
                 "Raitiotien suunnittelu 1 000 €\n" +
                 "Muu hanke 1 000 €\n" +
                 "Hakija osoittaa omaa rahoitusta näihin kohteisiin yhteensä 37 200 euroa.\n" +
-                "Lähettäjä: <hakijan nimi, joka on lähettänyt hakemuksen>\n" +
-                "Liitteet\n" +
-                "Liikenne- ja viestintävirasto - esikatselu - hakemus on keskeneräinen\n" +
-                "1 (1)\n";
+                "Lähettäjä: <hakijan nimi, joka on lähettänyt hakemuksen>\n";
 
         assertContains(actual, expected, "Hakemus");
+
+        String footer = "Liikenne- ja viestintävirasto - esikatselu - hakemus on keskeneräinen";
+        assertContains(actual, footer, "Hakemus");
     }
 
     @Test
@@ -830,7 +830,7 @@ public class HakemuskausiTest extends TestBase {
         String expectedText2 = "liikenne- ja ympäristökeskuksille yhteensä 200 000 euroa valtion";
         assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText2),
                 containsNormalized(actual, expectedText2));
-        String expectedText3 = "Etelä-Pohjanmaa ELY 200000 e";
+        String expectedText3 = "Etelä-Pohjanmaa ELY 200 000 €";
         assertThat(String.format("Päätös PDF sisältää tekstin %s.", expectedText3),
                 containsNormalized(actual, expectedText3));
     }
