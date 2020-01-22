@@ -11,4 +11,5 @@ npm prune
 export NODE_ENV=production
 rm -rf dist
 npm run build
+touch dist/index.html
 
