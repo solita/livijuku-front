@@ -51,14 +51,7 @@ var paths = {
     watch: './app/assets/**/*.*',
     destination: './dist/'
   },
-  copy: [{
-    source: './node_modules/ng-file-upload/dist/*.swf',
-    destination: './dist/scripts/ie9/'
-  },
-    {
-      source: './node_modules/ng-file-upload/dist/FileAPI.min.js',
-      destination: './dist/scripts/ie9/'
-    },
+  copy: [
     {
       source: './node_modules/es5-shim/es5-shim.min.js',
       destination: './dist/scripts/ie9/'
