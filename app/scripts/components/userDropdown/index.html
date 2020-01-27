@@ -21,7 +21,7 @@
           Asiakirjamallit
         </a>
       </li>
-      <li>
+      <li ng-show="sallittu(user, 'view-non-livi-kayttaja')">
         <a ui-sref-active="is-active" ui-sref="app.yhteinen.kayttajatiedot">
         Käyttäjät
         </a>
