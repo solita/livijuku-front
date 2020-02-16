@@ -34,24 +34,7 @@
           <auto-complete source="findOrganisaatiolaji($query)" display-property="nimi" min-length="1"
                          load-on-focus="true" load-on-empty="true"></auto-complete>
         </tags-input>
-
-        <!--ol id="organisaatiolajitunnus" ng-model="organisaatioId" ng-disabled="isReadonly()"
-          title="Näytä kaikki" class="form-control nya-bs-select" size="20" multiple style="z-index: 10;">
-          <li nya-bs-option="lajitunnus in organisaatiolajit.$order" data-value="lajitunnus">
-            <a>{{ organisaatiolajit.$nimi(lajitunnus) }}</a>
-          </li>
-        </ol-->
       </form-group>
-      <!--form-group label="Kilpailutusalue" class="col-xs-12 col-sm-6 col-md-4">
-        <tags-input id="kilpailutusalue-filter" name="kilpailutusalue-filter"
-                    placeholder="Suodata aikajanaa valitsemalla kilpailutusryhmiä"
-                    ng-model="kilpailutusalueFilter" add-from-autocomplete-only="true"
-                    display-property="nimi" key-property="id" replace-spaces-with-dashes="false">
-          <auto-complete source="findOrganisaatio($query)" display-property="nimi" min-length="1"
-                         load-on-focus="true" load-on-empty="true">
-          </auto-complete>
-        </tags-input>
-      </form-group-->
 		</div>
 
     <div class="row">
@@ -84,42 +67,30 @@
     </div>
   </form>
 
-  <div class="row My-xl">
+  <div class="row My-xl kilpailutus-legend">
     <div class="col-xs-12 col-sm-6 col-md-4 Mb-xs">
-      <div style="width: 20px; height: 20px; background-color: #3385D6; float: left;">
-        &nbsp;
-      </div>
-      <div style="margin-left: 2em;">Tarjousaika</div>
+      <div class="item tarjous"></div>
+      <div class="caption">Tarjousaika</div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 Mb-xs">
-      <div style="width: 20px; height: 20px; background-color: #C266EB; float: left;">
-        &nbsp;
-      </div>
-      <div style="margin-left: 2em;"> Tarjousten käsittely ja hankintapäätös</div>
+      <div class="item hankinta"></div>
+      <div class="caption"> Tarjousten käsittely ja hankintapäätös</div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 Mb-xs">
-      <div style="width: 20px; height: 20px; background-color: #FFA033; float: left;">
-        &nbsp;
-      </div>
-      <div style="margin-left: 2em;"> Liikennöinnin valmistelu</div>
+      <div class="item valmistelu"></div>
+      <div class="caption"> Liikennöinnin valmistelu</div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 Mb-xs">
-      <div style="width: 20px; height: 20px; background-color: #33BB33; float: left;">
-        &nbsp;
-      </div>
-      <div style="margin-left: 2em;"> Liikennöinti (sopimuskausi)</div>
+      <div class="item liikennointi"></div>
+      <div class="caption"> Liikennöinti (sopimuskausi)</div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 Mb-xs">
-      <div style="width: 20px; height: 20px; background-color: #66CCD6; float: left;">
-        &nbsp;
-      </div>
-      <div style="margin-left: 2em;"> Hankitut optiot</div>
+      <div class="item hankitut-optiot"></div>
+      <div class="caption"> Hankitut optiot</div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 Mb-xs">
-      <div style="width: 20px; height: 20px; background-color: #cfeff2; border: 1px dashed #66CCD6; float: left;">
-        &nbsp;
-      </div>
-      <div style="margin-left: 2em;"> Optiot kokonaisuudessaan</div>
+      <div class="item kaikki-optiot"></div>
+      <div class="caption"> Optiot kokonaisuudessaan</div>
     </div>
   </div>
 
