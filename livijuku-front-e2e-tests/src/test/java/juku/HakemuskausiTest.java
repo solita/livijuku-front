@@ -490,12 +490,12 @@ public class HakemuskausiTest extends TestBase {
     private void tarkistaHakemuksenSummakentat() {
         //Tarkistetaan hakemuksen valisumma kentat
         assertThat(findElementByXPath("//div[@id='test-PSA']").getText(), is(equalTo("Haettava valtionavustus: 2 727,27 €")));
-        assertThat(findElementByXPath("//div[@id='test-HK']").getText(), is(equalTo("Haettava valtionavustus: 4 000,00 €")));
-        assertThat(findElementByXPath("//div[@id='test-K']").getText(), is(equalTo("Haettava valtionavustus: 4 032,25 €")));
+        assertThat(findElementByXPath("//div[@id='test-PK']").getText(), is(equalTo("Haettava valtionavustus: 909,09 €")));
+        assertThat(findElementByXPath("//div[@id='test-K']").getText(), is(equalTo("Haettava valtionavustus: 3 225,80 €")));
 
         // Tarkistetaan hakemuksen yhteensa kentta
         List<WebElement> h4s = findElementsByXPath("//h4[@class='ng-binding']");
-        assertThat(h4s.get(1).getText(), is(equalTo("10 759,52 €")));
+        assertThat(h4s.get(1).getText(), is(equalTo("6 862,16 €")));
     }
 
     private void tarkistaInputKentanTila(String luokka) {
