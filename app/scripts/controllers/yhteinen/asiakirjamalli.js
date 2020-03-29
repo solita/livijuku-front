@@ -88,6 +88,12 @@ angular.module('jukufrontApp')
 
           const asiakirjamalliEdit = _.omit($scope.asiakirjamalli, ['id', 'poistoaika']);
           asiakirjamalliEdit.sisalto = editor.value();
+
+          if (c.isBlank(asiakirjamalliEdit.sisalto)) {
+            StatusService.virhe('', 'Asiakirjan kuvaus ei saa olla tyhjä.');
+            return;
+          }
+
           const savePromise = isNew ?
             AsiakirjamalliService.add(asiakirjamalliEdit) :
             AsiakirjamalliService.save($scope.asiakirjamalli.id, asiakirjamalliEdit);
