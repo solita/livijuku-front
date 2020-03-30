@@ -123,7 +123,9 @@ angular.module('jukufrontApp')
             asiakirjalajitunnus: c.coalesce($stateParams.asiakirjalajitunnus, 'H'),
             hakemustyyppitunnus: null,
             organisaatiolajitunnus: null
-          }
+          };
+          editor.value('');
+          editor.codemirror.refresh();
         }
       }]);
 
