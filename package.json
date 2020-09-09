@@ -61,7 +61,7 @@
     "gulp-stylus": "^2.3.0",
     "gulp-uglify": "^3.0.2",
     "gulp-util": "^3.0.7",
-    "http-proxy": "^1.18.0",
+    "http-proxy": "^1.18.1",
     "jshint-stylish": "^2.1.0",
     "json3": "^3.3.2",
     "lodash.template": "^4.5.0",
