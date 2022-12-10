@@ -47,7 +47,7 @@
     "browserify": "^16.5.0",
     "debug": "^4.1.1",
     "esm": "^3.2.25",
-    "express": "^4.13.4",
+    "express": "^4.17.3",
     "express-cache-response-directive": "^1.0.0",
     "express-http-proxy": "^1.6.0",
     "gulp": "^4.0.2",
