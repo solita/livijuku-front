@@ -43,7 +43,7 @@
     "angular-scenario": "^1.7.9",
     "babel-plugin-transform-inline-environment-variables": "^6.5.0",
     "babelify": "^10.0.0",
-    "browser-sync": "^2.11.1",
+    "browser-sync": "^2.29.1",
     "browserify": "^16.5.0",
     "debug": "^4.1.1",
     "esm": "^3.2.25",
